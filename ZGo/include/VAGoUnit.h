@@ -1,7 +1,9 @@
 #ifndef VAGOUNIT_H
 #define VAGOUNIT_H
 
-class VAGoUnit
+#include "VAGoMoveable.h"
+
+class VAGoUnit : public VAGoMoveable
 {
 public:
     VAGoUnit();

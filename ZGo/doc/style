@@ -99,7 +99,7 @@
     
 ## 当前工程
 
-* 类命名方式：[MVC][IAC]Go*，[MVC]指的是Model、View、Controller，[IAC]指的是Interface、Abstract、Class，Go作为冗余标记，后面接类名。
+* 类命名方式：[MVC][AC]Go*，[MVC]指的是Model、View、Controller，[AC]指的是Abstract、Class，Go作为冗余标记，后面接类名。
 * 不考虑插件式，全部逻辑使用硬编码。
 * 使用中文注释。
     

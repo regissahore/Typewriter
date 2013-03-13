@@ -1,15 +1,13 @@
-#ifndef MCGOOPERATORFACTORY_H
-#define MCGOOPERATORFACTORY_H
-/**
- * 用于实例化对应的操作符，在类中定义了与操作符对应的类型号。
- * @author ZHG <CyberZHG@gmail.com>
- */
-#include "MAGoOperator.h"
+#ifndef VCGOUNITFACTORY_H
+#define VCGOUNITFACTORY_H
 
-class MCGoOperatorFactory
+#include "VAGoUnit.h"
+
+class VCGoUnitFactory : public VAGoUnit
 {
 public:
-    enum OperatorType {
+    enum UnitType
+    {
         OPERATOR_TEST = 0,
         OPERATOR_1 = 1,
         OPERATOR_2 = 2,
@@ -27,10 +25,10 @@ public:
         OPERATOR_14 = 14,
         OPERATOR_15 = 15,
         OPERATOR_16 = 16,
-        OPERATOR_17 = 17
+        OPERATOR_17 = 17,
+        OPERATOR_SERIES_SET = 18
     };
-
-    static MAGoOperator* getOperator(OperatorType type);
+    static VAGoUnit* getUnit(UnitType type);
 };
 
-#endif // MCGOOPERATORFACTORY_H
+#endif // VCGOUNITFACTORY_H

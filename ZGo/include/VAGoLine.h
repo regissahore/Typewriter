@@ -1,7 +1,9 @@
 #ifndef VAGOLINE_H
 #define VAGOLINE_H
 
-class VAGoLine
+#include "VAGoDrawable.h"
+
+class VAGoLine : public VAGoDrawable
 {
 public:
     VAGoLine();
