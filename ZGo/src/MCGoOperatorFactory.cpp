@@ -18,45 +18,76 @@
 #include "MCGoOperator17.h"
 #include "MCGoOperatorTest.h"
 
+/**
+ * 获得GO操作符的对象。
+ * @param type 操作符的类型。
+ * @param id 操作符的ID。
+ * @return 实例化后的对象，如果类型不存在返回空指针。
+ */
 MAGoOperator* MCGoOperatorFactory::getOperator(OperatorType type)
 {
+    MAGoOperator* go = 0L;
     switch(type)
     {
     case OPERATOR_1:
-        return new MCGoOperator1();
+        go = new MCGoOperator1();
+        break;
     case OPERATOR_2:
-        return new MCGoOperator2();
+        go = new MCGoOperator2();
+        break;
     case OPERATOR_3:
-        return new MCGoOperator3();
+        go = new MCGoOperator3();
+        break;
     case OPERATOR_4:
-        return new MCGoOperator4();
+        go = new MCGoOperator4();
+        break;
     case OPERATOR_5:
-        return new MCGoOperator5();
+        go = new MCGoOperator5();
+        break;
     case OPERATOR_6:
-        return new MCGoOperator6();
+        go = new MCGoOperator6();
+        break;
     case OPERATOR_7:
-        return new MCGoOperator7();
+        go = new MCGoOperator7();
+        break;
     case OPERATOR_8:
-        return new MCGoOperator8();
+        go = new MCGoOperator8();
+        break;
     case OPERATOR_9:
-        return new MCGoOperator9();
+        go = new MCGoOperator9();
+        break;
     case OPERATOR_10:
-        return new MCGoOperator10();
+        go = new MCGoOperator10();
+        break;
     case OPERATOR_11:
-        return new MCGoOperator11();
+        go = new MCGoOperator11();
+        break;
     case OPERATOR_12:
-        return new MCGoOperator12();
+        go = new MCGoOperator12();
+        break;
     case OPERATOR_13:
-        return new MCGoOperator13();
+        go = new MCGoOperator13();
+        break;
     case OPERATOR_14:
-        return new MCGoOperator14();
+        go = new MCGoOperator14();
+        break;
     case OPERATOR_15:
-        return new MCGoOperator15();
+        go = new MCGoOperator15();
+        break;
     case OPERATOR_16:
-        return new MCGoOperator16();
+        go = new MCGoOperator16();
+        break;
     case OPERATOR_17:
-        return new MCGoOperator17();
-    default:
-        return new MCGoOperatorTest();
+        go = new MCGoOperator17();
+        break;
+    case OPERATOR_TEST:
+        go = new MCGoOperatorTest();
+        break;
     }
+    if (go)
+    {
+        go->setId(this->id());
+        go->setType(type);
+    }
+    return go;
 }

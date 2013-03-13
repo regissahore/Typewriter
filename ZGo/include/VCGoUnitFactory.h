@@ -28,7 +28,7 @@ public:
         OPERATOR_17 = 17,
         OPERATOR_SERIES_SET = 18
     };
-    static VAGoUnit* getUnit(UnitType type);
+    VAGoUnit* getUnit(UnitType type);
 };
 
 #endif // VCGOUNITFACTORY_H

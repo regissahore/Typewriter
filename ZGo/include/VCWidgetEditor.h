@@ -1,7 +1,11 @@
 #ifndef VCWIDGETEDITOR_H
 #define VCWIDGETEDITOR_H
-
+/**
+ * GO法的编辑器。
+ * @author ZHG <CyberZHG@gmail.com>
+ */
 #include <QWidget>
+#include "VCGoEditorTab.h"
 
 namespace Ui {
 class VCWidgetEditor;

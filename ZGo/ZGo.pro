@@ -65,7 +65,12 @@ SOURCES += src/main.cpp \
     src/VCGoOperator17.cpp \
     src/VCGoOperatorTest.cpp \
     src/VCGoUnitFactory.cpp \
-    src/VCGoSeriesSet.cpp
+    src/VCGoSeriesSet.cpp \
+    src/VCGoView.cpp \
+    src/MAGoItem.cpp \
+    src/MCGoAutoIncrementalFactory.cpp \
+    src/VCGoScene.cpp \
+    src/VCGoEditorTab.cpp
 
 HEADERS  += \
     include/VCMainWindow.h \
@@ -119,7 +124,12 @@ HEADERS  += \
     include/VCGoOperator17.h \
     include/VCGoOperatorTest.h \
     include/VCGoUnitFactory.h \
-    include/VCGoSeriesSet.h
+    include/VCGoSeriesSet.h \
+    include/VCGoView.h \
+    include/MAGoItem.h \
+    include/MCGoAutoIncrementalFactory.h \
+    include/VCGoScene.h \
+    include/VCGoEditorTab.h
 
 FORMS    += \
     form/VCMainWindow.ui \
@@ -128,4 +138,5 @@ FORMS    += \
     form/VCDockConsole.ui \
     form/VCWidgetDrawing.ui \
     form/VCDockTool.ui \
-    form/VCWidgetEditor.ui
+    form/VCWidgetEditor.ui \
+    form/VCGoEditorTab.ui

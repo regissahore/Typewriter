@@ -5,8 +5,9 @@
  * GO操作符的抽象实现。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include "MAGoItem.h"
 
-class MAGoOperator
+class MAGoOperator : public MAGoItem
 {
 public:
     MAGoOperator();
