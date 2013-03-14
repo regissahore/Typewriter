@@ -4,9 +4,13 @@
  * 基本的GO法编辑器。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <QLabel>
 #include <QWidget>
+#include <QSplitter>
+#include <QGridLayout>
 #include <QGraphicsView>
 #include "view/editorabstract.h"
+#include "view/viewgo.h"
 
 class EditorGO : public EditorAbstract
 {
@@ -15,7 +19,7 @@ public:
     explicit EditorGO(QWidget *parent = 0);
     
 protected:
-    QGraphicsView *view;
+    ViewGO *view;
 };
 
 #endif // EDITORGO_H

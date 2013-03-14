@@ -6,7 +6,7 @@
 
 QT       += core gui
 
-TARGET = ZGo
+TARGET = ZGO2
 TEMPLATE = app
 
 INCLUDEPATH += ./include
@@ -21,7 +21,10 @@ SOURCES += \
     src/view/editorabstract.cpp \
     src/view/editorwelcome.cpp \
     src/view/editorfactory.cpp \
-    src/model/factoryabstract.cpp
+    src/model/factoryabstract.cpp \
+    src/view/scenego.cpp \
+    src/view/viewgo.cpp \
+    src/view/graphicsview.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -30,5 +33,8 @@ HEADERS += \
     include/view/editorabstract.h \
     include/view/editorwelcome.h \
     include/view/editorfactory.h \
-    include/model/factoryabstract.h
+    include/model/factoryabstract.h \
+    include/view/scenego.h \
+    include/view/viewgo.h \
+    include/view/graphicsview.h
 
