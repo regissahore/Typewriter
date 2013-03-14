@@ -18,11 +18,17 @@ SOURCES += \
     src/view/mainwindow.cpp \
     src/view/editor.cpp \
     src/view/editorgo.cpp \
-    src/view/editorabstract.cpp
+    src/view/editorabstract.cpp \
+    src/view/editorwelcome.cpp \
+    src/view/editorfactory.cpp \
+    src/model/factoryabstract.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
     include/view/editor.h \
     include/view/editorgo.h \
-    include/view/editorabstract.h
+    include/view/editorabstract.h \
+    include/view/editorwelcome.h \
+    include/view/editorfactory.h \
+    include/model/factoryabstract.h
 
