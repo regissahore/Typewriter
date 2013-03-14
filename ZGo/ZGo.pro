@@ -14,18 +14,11 @@ INCLUDEPATH += ./include
 TRANSLATIONS += lang/Lang_CH.ts
 
 SOURCES += src/main.cpp \
-    src/VCMainWindow.cpp \
     src/MAGoOperator.cpp \
     src/MAGoSignal.cpp \
     src/MCGoOperatorFactory.cpp \
     src/VAGoUnit.cpp \
     src/VAGoLine.cpp \
-    src/VCDockProject.cpp \
-    src/VCDockParameter.cpp \
-    src/VCDockConsole.cpp \
-    src/VCWidgetDrawing.cpp \
-    src/VCDockTool.cpp \
-    src/VCWidgetEditor.cpp \
     src/VAGoDrawable.cpp \
     src/VAGoMoveable.cpp \
     src/MCGoOperatorTest.cpp \
@@ -70,21 +63,21 @@ SOURCES += src/main.cpp \
     src/MAGoItem.cpp \
     src/MCGoAutoIncrementalFactory.cpp \
     src/VCGoScene.cpp \
-    src/VCGoEditorTab.cpp
+    src/VCGoEditorTab.cpp \
+    src/VCGoEditor.cpp \
+    src/VCGoMainWindow.cpp \
+    src/VCGoDrawing.cpp \
+    src/VCGoDockConsole.cpp \
+    src/VCGoDockProject.cpp \
+    src/VCGoDockParameter.cpp \
+    src/VCGoDockTool.cpp
 
 HEADERS  += \
-    include/VCMainWindow.h \
     include/MAGoOperator.h \
     include/MAGoSignal.h \
     include/MCGoOperatorFactory.h \
     include/VAGoUnit.h \
     include/VAGoLine.h \
-    include/VCDockProject.h \
-    include/VCDockParameter.h \
-    include/VCDockConsole.h \
-    include/VCWidgetDrawing.h \
-    include/VCDockTool.h \
-    include/VCWidgetEditor.h \
     include/VAGoDrawable.h \
     include/VAGoMoveable.h \
     include/MCGoOperatorTest.h \
@@ -129,14 +122,21 @@ HEADERS  += \
     include/MAGoItem.h \
     include/MCGoAutoIncrementalFactory.h \
     include/VCGoScene.h \
-    include/VCGoEditorTab.h
+    include/VCGoEditorTab.h \
+    include/VCGoDockConsole.h \
+    include/VCGoDockParameter.h \
+    include/VCGoDockProject.h \
+    include/VCGoDockTool.h \
+    include/VCGoMainWindow.h \
+    include/VCGoDrawing.h \
+    include/VCGoEditor.h
 
 FORMS    += \
-    form/VCMainWindow.ui \
-    form/VCDockProject.ui \
-    form/VCDockParameter.ui \
-    form/VCDockConsole.ui \
-    form/VCWidgetDrawing.ui \
-    form/VCDockTool.ui \
-    form/VCWidgetEditor.ui \
-    form/VCGoEditorTab.ui
+    form/VCGoEditorTab.ui \
+    form/VCGoDockConsole.ui \
+    form/VCGoDockParameter.ui \
+    form/VCGoDockProject.ui \
+    form/VCGoDockTool.ui \
+    form/VCGoEditor.ui \
+    form/VCGoMainWindow.ui \
+    form/VCGoDrawing.ui

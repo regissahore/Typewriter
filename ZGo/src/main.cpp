@@ -1,10 +1,10 @@
 #include <QtGui/QApplication>
-#include "VCMainWindow.h"
+#include "VCGoMainWindow.h"
 
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    VCMainWindow w;
+    VCGoMainWindow w;
     w.show();
     
     return a.exec();

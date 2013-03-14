@@ -17,6 +17,28 @@ QRectF VAGoDrawable::boundingRect() const
 }
 
 /**
+ * 绘制图形。
+ * @param painter 绘制工具。
+ * @param option 图形选项。
+ * @param widget 绘制的窗体。
+ */
+void VAGoDrawable::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
+{
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
+    this->paint(painter);
+}
+
+/**
+ * 绘制图形。
+ * @param painter 绘制工具。
+ */
+void VAGoDrawable::paint(QPainter *painter)
+{
+    Q_UNUSED(painter);
+}
+
+/**
  * 返回当前图形长度。
  * @return 长度。
  */

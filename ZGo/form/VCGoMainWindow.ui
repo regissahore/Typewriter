@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VCMainWindow</class>
- <widget class="QMainWindow" name="VCMainWindow">
+ <class>VCGoMainWindow</class>
+ <widget class="QMainWindow" name="VCGoMainWindow">
   <property name="geometry">
    <rect>
     <x>0</x>

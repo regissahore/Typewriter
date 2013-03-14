@@ -1,9 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <author/>
- <comment/>
- <exportmacro/>
- <class>VCWidgetDrawing</class>
- <widget class="QWidget" name="VCWidgetDrawing">
+ <class>VCGoDockProject</class>
+ <widget class="QDockWidget" name="VCGoDockProject">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -13,9 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Form</string>
+   <string>Project</string>
   </property>
+  <widget class="QWidget" name="dockWidgetContents"/>
  </widget>
- <pixmapfunction/>
+ <resources/>
  <connections/>
 </ui>

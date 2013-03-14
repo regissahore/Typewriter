@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VCDockTool</class>
- <widget class="QDockWidget" name="VCDockTool">
+ <class>VCGoDockConsole</class>
+ <widget class="QDockWidget" name="VCGoDockConsole">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Tool</string>
+   <string>Console</string>
   </property>
   <widget class="QWidget" name="dockWidgetContents"/>
  </widget>

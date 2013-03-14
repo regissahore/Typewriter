@@ -13,7 +13,8 @@ class VAGoDrawable : QGraphicsItem
 public:
     VAGoDrawable();
     QRectF boundingRect() const;
-    void virtual paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) = 0;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
+    void paint(QPainter *painter);
     qreal width(void) const;
     qreal height(void) const;
     QSize size(void) const;

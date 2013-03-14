@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VCWidgetEditor</class>
- <widget class="QWidget" name="VCWidgetEditor">
+ <class>VCGoEditor</class>
+ <widget class="QWidget" name="VCGoEditor">
   <property name="geometry">
    <rect>
     <x>0</x>

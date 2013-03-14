@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>VCDockProject</class>
- <widget class="QDockWidget" name="VCDockProject">
+ <class>VCGoDrawing</class>
+ <widget class="QWidget" name="VCGoDrawing">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -11,9 +11,8 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Project</string>
+   <string>Form</string>
   </property>
-  <widget class="QWidget" name="dockWidgetContents"/>
  </widget>
  <resources/>
  <connections/>

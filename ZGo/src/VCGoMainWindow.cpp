@@ -1,13 +1,13 @@
-#include "VCMainWindow.h"
-#include "ui_VCMainWindow.h"
+#include "VCGoMainWindow.h"
+#include "ui_VCGoMainWindow.h"
 
 /**
  * 构造函数，初始化界面。
  * @param parent 父窗体。
  */
-VCMainWindow::VCMainWindow(QWidget *parent) :
+VCGoMainWindow::VCGoMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::VCMainWindow)
+    ui(new Ui::VCGoMainWindow)
 {
     this->ui->setupUi(this);
     this->initDockWidget();
@@ -17,7 +17,7 @@ VCMainWindow::VCMainWindow(QWidget *parent) :
 /**
  * 析构函数。
  */
-VCMainWindow::~VCMainWindow()
+VCGoMainWindow::~VCGoMainWindow()
 {
     this->clearCentralWidget();
     this->clearDockWidget();
@@ -27,7 +27,7 @@ VCMainWindow::~VCMainWindow()
 /**
  * 当菜单项“关闭”被点击时触发，关闭现在的程序。
  */
-void VCMainWindow::on_actionClose_triggered()
+void VCGoMainWindow::on_actionClose_triggered()
 {
     this->close();
 }
@@ -35,22 +35,22 @@ void VCMainWindow::on_actionClose_triggered()
 /**
  * 初始化各个停靠栏。
  */
-void VCMainWindow::initDockWidget(void)
+void VCGoMainWindow::initDockWidget(void)
 {
-    this->dockConsole = new VCDockConsole(this);
+    this->dockConsole = new VCGoDockConsole(this);
     this->addDockWidget(Qt::BottomDockWidgetArea, this->dockConsole);
-    this->dockParameter = new VCDockParameter(this);
+    this->dockParameter = new VCGoDockParameter(this);
     this->addDockWidget(Qt::RightDockWidgetArea, this->dockParameter);
-    this->dockProject = new VCDockProject(this);
+    this->dockProject = new VCGoDockProject(this);
     this->addDockWidget(Qt::RightDockWidgetArea, this->dockProject);
-    this->dockTool = new VCDockTool(this);
+    this->dockTool = new VCGoDockTool(this);
     this->addDockWidget(Qt::LeftDockWidgetArea, this->dockTool);
 }
 
 /**
  * 删除各个停靠栏。
  */
-void VCMainWindow::clearDockWidget(void)
+void VCGoMainWindow::clearDockWidget(void)
 {
     if (this->dockConsole)
     {
@@ -77,16 +77,16 @@ void VCMainWindow::clearDockWidget(void)
 /**
  * 初始化编辑器。
  */
-void VCMainWindow::initCentralWidget(void)
+void VCGoMainWindow::initCentralWidget(void)
 {
-    this->editor = new VCWidgetEditor(this);
+    this->editor = new VCGoEditor(this);
     this->setCentralWidget(this->editor);
 }
 
 /**
  * 删除编辑器。
  */
-void VCMainWindow::clearCentralWidget(void)
+void VCGoMainWindow::clearCentralWidget(void)
 {
     if (this->editor)
     {
