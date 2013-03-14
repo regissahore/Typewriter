@@ -4,8 +4,8 @@
  * 构造函数。
  * @param parent 父窗体。
  */
-ViewGO::ViewGO(QWidget *parent) : View(parent)
+ViewGO::ViewGO(QWidget *parent) : GraphicsView(parent)
 {
     this->_scene = new SceneGO(this);
-    this->view()->setScene(this->_scene);
+    this->setScene(this->_scene);
 }

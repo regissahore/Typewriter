@@ -8,7 +8,7 @@
 #include "view/graphicsview.h"
 #include "view/scenego.h"
 
-class ViewGO : public View
+class ViewGO : public GraphicsView
 {
     Q_OBJECT
 public:

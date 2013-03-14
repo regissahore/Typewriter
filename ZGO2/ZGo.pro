@@ -24,7 +24,9 @@ SOURCES += \
     src/model/factoryabstract.cpp \
     src/view/scenego.cpp \
     src/view/viewgo.cpp \
-    src/view/graphicsview.cpp
+    src/view/graphicsview.cpp \
+    src/view/itemdrawable.cpp \
+    src/view/itemmoveable.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -36,5 +38,7 @@ HEADERS += \
     include/model/factoryabstract.h \
     include/view/scenego.h \
     include/view/viewgo.h \
-    include/view/graphicsview.h
+    include/view/graphicsview.h \
+    include/view/itemdrawable.h \
+    include/view/itemmoveable.h
 

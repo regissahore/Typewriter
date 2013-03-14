@@ -15,39 +15,18 @@ class GraphicsView : public QGraphicsView
 {
     Q_OBJECT
 public:
-    GraphicsView(View *view);
-
-protected:
-    View *view() const;
-    bool isCtrlPressed();
-    void setCtrlPressed(bool value);
-    void wheelEvent(QWheelEvent *event);
-    void keyPressEvent(QKeyEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
-
-private:
-    View *_view; /** 用于现实的视图。 */
-    bool _ctrlPressed; /** Ctrl键是否按下。 */
-};
-
-class View : public QFrame
-{
-    Q_OBJECT
-public:
-    View(QWidget *parent);
-    QGraphicsView *view() const;
+    explicit GraphicsView(QWidget *parent);
     qreal zoom() const;
     void setZoom(qreal value);
-
-public slots:
     void zoomIn(int level = 1);
     void zoomOut(int level = 1);
 
-private slots:
+protected:
+    //View *view() const;
     void setupMatrix();
+    void wheelEvent(QWheelEvent *event);
 
 private:
-    GraphicsView *_graphicsView;
     qreal _zoom;
 };
 
