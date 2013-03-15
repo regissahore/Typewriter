@@ -3,7 +3,7 @@
 /**
  * 构造函数。
  */
-ItemDrawable::ItemDrawable()
+ItemDrawable::ItemDrawable(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     this->setSize(40, 40);
 }

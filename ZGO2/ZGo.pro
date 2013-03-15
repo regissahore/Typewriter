@@ -33,7 +33,8 @@ SOURCES += \
     src/model/gosignal.cpp \
     src/model/goiomodel.cpp \
     src/model/nameditem.cpp \
-    src/view/itemgooperator.cpp
+    src/view/itemgooperator.cpp \
+    src/view/itemarrow.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -54,5 +55,6 @@ HEADERS += \
     include/model/gosignal.h \
     include/model/goiomodel.h \
     include/model/nameditem.h \
-    include/view/itemgooperator.h
+    include/view/itemgooperator.h \
+    include/view/itemarrow.h
 

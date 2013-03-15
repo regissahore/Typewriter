@@ -2,7 +2,7 @@
 #define SCENEGO_H
 
 #include <QGraphicsScene>
-#include "view/itemmoveable.h"
+#include "view/itemgooperator.h"
 
 class SceneGO : public QGraphicsScene
 {

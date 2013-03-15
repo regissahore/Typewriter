@@ -4,13 +4,16 @@
  * 基本的可绘制图形。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include "qmath.h"
 #include <QPainter>
 #include <QGraphicsItem>
+
+const double PI = acos(-1.0);
 
 class ItemDrawable : public QGraphicsItem
 {
 public:
-    ItemDrawable();
+    ItemDrawable(QGraphicsItem *parent = 0);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     QSize size() const;

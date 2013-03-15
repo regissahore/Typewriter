@@ -3,7 +3,7 @@
 /**
  * 构造函数。
  */
-ItemMoveable::ItemMoveable()
+ItemMoveable::ItemMoveable(QGraphicsItem *parent) : ItemDrawable(parent)
 {
 }
 

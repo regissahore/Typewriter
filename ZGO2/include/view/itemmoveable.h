@@ -10,7 +10,7 @@
 class ItemMoveable : public ItemDrawable
 {
 public:
-    ItemMoveable();
+    ItemMoveable(QGraphicsItem *parent = 0);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent *event);

@@ -5,6 +5,7 @@
  */
 IdentifiedItem::IdentifiedItem()
 {
+    this->setId(0);
 }
 
 /**

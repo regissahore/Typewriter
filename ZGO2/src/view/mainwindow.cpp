@@ -7,7 +7,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent)
 {
     this->setWindowTitle(tr("ZHG GO Analysis"));
-    this->setGeometry(0, 0, 800, 600);
+    this->setGeometry(100, 100, 800, 600);
     this->initEditor();
 }
 

@@ -9,7 +9,7 @@
 #include "model/goiomodel.h"
 #include "model/nameditem.h"
 
-class GOOperator : public IdentifiedItem, NamedItem
+class GOOperator : public IdentifiedItem, public NamedItem
 {
 public:
     GOOperator();
