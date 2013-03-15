@@ -5,7 +5,7 @@
  */
 ItemDrawable::ItemDrawable()
 {
-    this->setSize(100, 100);
+    this->setSize(40, 40);
 }
 
 /**

@@ -26,7 +26,14 @@ SOURCES += \
     src/view/viewgo.cpp \
     src/view/graphicsview.cpp \
     src/view/itemdrawable.cpp \
-    src/view/itemmoveable.cpp
+    src/view/itemmoveable.cpp \
+    src/view/itemgosource.cpp \
+    src/model/identifieditem.cpp \
+    src/model/gooperator.cpp \
+    src/model/gosignal.cpp \
+    src/model/goiomodel.cpp \
+    src/model/nameditem.cpp \
+    src/view/itemgooperator.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -40,5 +47,12 @@ HEADERS += \
     include/view/viewgo.h \
     include/view/graphicsview.h \
     include/view/itemdrawable.h \
-    include/view/itemmoveable.h
+    include/view/itemmoveable.h \
+    include/view/itemgosource.h \
+    include/model/identifieditem.h \
+    include/model/gooperator.h \
+    include/model/gosignal.h \
+    include/model/goiomodel.h \
+    include/model/nameditem.h \
+    include/view/itemgooperator.h
 
