@@ -20,11 +20,9 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 protected:
-    QVector<ItemArrow*> *_inputArrows;
-    QVector<ItemArrow*> *_subInputArrows;
-    QVector<ItemArrow*> *_outputArrows;
-
-private:
+    QVector<ItemArrow*> *_inputArrows; /** 主输入箭头。 */
+    QVector<ItemArrow*> *_subInputArrows; /** 次输入箭头。 */
+    QVector<ItemArrow*> *_outputArrows; /** 输出箭头。 */
     GOOperator *_model; /** GO操作符模型。 */
 };
 

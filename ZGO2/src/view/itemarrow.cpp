@@ -19,7 +19,7 @@ const QPoint ItemArrow::end() const
 
 /**
  * 设置终止位置。
- * @param start 终止位置。
+ * @param end 终止位置。
  */
 void ItemArrow::setEnd(const QPoint &end)
 {

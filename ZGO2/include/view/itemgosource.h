@@ -5,17 +5,16 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 
-#include "view/itemmoveable.h"
+#include "model/identifieditem.h"
+#include "view/itemgooperator.h"
 
-class ItemGOSource
+class ItemGOSource : public ItemGOOperator
 {
 public:
     ItemGOSource();
-    int type() const;
-    void setType(int type);
-
-private:
-    int _type;
+    void setModel(GOOperator *model);
+    QRectF boundingRect() const;
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 };
 
 #endif // ITEMGOSOURCE_H

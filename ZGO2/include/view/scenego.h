@@ -3,6 +3,7 @@
 
 #include <QGraphicsScene>
 #include "view/itemgooperator.h"
+#include "view/itemgosource.h"
 
 class SceneGO : public QGraphicsScene
 {

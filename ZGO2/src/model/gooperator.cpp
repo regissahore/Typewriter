@@ -11,24 +11,6 @@ GOOperator::GOOperator()
 }
 
 /**
- * 返回当前操作符的类型。
- * @return 操作符类型。
- */
-qint32 GOOperator::type() const
-{
-    return this->_type;
-}
-
-/**
- * 设置当前操作符的类型。
- * @param type 操作符类型。
- */
-void GOOperator::setType(const int type)
-{
-    this->_type = type;
-}
-
-/**
  * 返回主输入信号流。
  * @return 主输入信号流。
  */

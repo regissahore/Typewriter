@@ -1,0 +1,32 @@
+#ifndef MESSAGECONTROLLER_H
+#define MESSAGECONTROLLER_H
+/**
+ * 消息的控制管理。
+ * @author ZHG <CyberZHG@gmail.com>
+ */
+#include <QMap>
+#include <QVector>
+#include <QString>
+#include "controller/message.h"
+
+class MessageCreator;
+class MessageListener;
+
+class MessageController
+{
+public:
+    MessageController();
+    ~MessageController();
+    void send(Message *message);
+    void listen(QString messageName, MessageListener *listener);
+    void release(QString messageName, MessageListener *listener);
+
+protected:
+    QMap<QString, int> *_messages; /** 储存已经注册的消息，数值为listeners的索引。 */
+    QVector< QVector<MessageListener*> > *_listeners; /** 储存消息监听器。 */
+};
+
+#include "controller/messagecreator.h"
+#include "controller/messagelistener.h"
+
+#endif // MESSAGECONTROLLER_H

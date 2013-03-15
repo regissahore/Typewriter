@@ -20,12 +20,12 @@ public:
     void setName(QString name);
     void setPath(QString path);
     bool modified() const;
-    bool trySave();
-    bool tryClose();
+    virtual bool trySave();
+    virtual bool tryClose();
 
 protected:
     QString _filter; /** 用于文件保存的类型。 */
-    bool save();
+    virtual bool save();
     void setModified(bool value);
 
 private:

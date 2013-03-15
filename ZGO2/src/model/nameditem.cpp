@@ -18,7 +18,7 @@ const QString NamedItem::name() const
 
 /**
  * 设置名称。
- * @param 名称。
+ * @param name 名称。
  */
 void NamedItem::setName(const QString name)
 {

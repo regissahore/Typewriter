@@ -34,7 +34,18 @@ SOURCES += \
     src/model/goiomodel.cpp \
     src/model/nameditem.cpp \
     src/view/itemgooperator.cpp \
-    src/view/itemarrow.cpp
+    src/view/itemarrow.cpp \
+    src/model/typeditem.cpp \
+    src/view/mainmenu.cpp \
+    src/controller/messagecontroller.cpp \
+    src/controller/message.cpp \
+    src/controller/messagecreator.cpp \
+    src/controller/messagelistener.cpp \
+    src/controller/messager.cpp \
+    src/controller/messagefactory.cpp \
+    src/controller/messagefactorymainwindow.cpp \
+    src/view/dockmessage.cpp \
+    src/view/debugconsole.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -56,5 +67,16 @@ HEADERS += \
     include/model/goiomodel.h \
     include/model/nameditem.h \
     include/view/itemgooperator.h \
-    include/view/itemarrow.h
+    include/view/itemarrow.h \
+    include/model/typeditem.h \
+    include/view/mainmenu.h \
+    include/controller/messagecontroller.h \
+    include/controller/message.h \
+    include/controller/messagecreator.h \
+    include/controller/messagelistener.h \
+    include/controller/messager.h \
+    include/controller/messagefactory.h \
+    include/controller/messagefactorymainwindow.h \
+    include/view/dockmessage.h \
+    include/view/debugconsole.h
 
