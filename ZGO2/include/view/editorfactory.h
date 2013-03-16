@@ -4,6 +4,7 @@
  * 用于生成相应的编辑器。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <QObject>
 #include "model/factoryabstract.h"
 #include "view/editorwelcome.h"
 #include "view/editorgo.h"

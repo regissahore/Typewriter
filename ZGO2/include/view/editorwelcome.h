@@ -8,6 +8,7 @@
 
 class EditorWelcome : public EditorAbstract
 {
+    Q_OBJECT
 public:
     explicit EditorWelcome(QWidget *parent = 0);
 };

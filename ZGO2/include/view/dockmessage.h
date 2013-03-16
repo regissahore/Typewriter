@@ -12,6 +12,7 @@
 
 class DockMessage : public QDockWidget, public Messager
 {
+    Q_OBJECT
 public:
     explicit DockMessage(QWidget *parent = 0);
     void bindMessage(MessageController *controller);

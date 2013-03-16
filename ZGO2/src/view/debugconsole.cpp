@@ -40,14 +40,7 @@ void DebugConsole::bindMessage(MessageController *controller)
  */
 void DebugConsole::messageEvent(Message *message)
 {
-    if (message->message() == "")
-    {
-        this->_textEdit->append(QString("[%1] ").arg(message->id()) + message->name());
-    }
-    else
-    {
-        this->_textEdit->append(QString("[%1] ").arg(message->id()) + message->name() + ": " + message->message());
-    }
+    this->_textEdit->append(QString("[%1] ").arg(message->id()) + message->name() + ": " + message->toString());
 }
 
 /**

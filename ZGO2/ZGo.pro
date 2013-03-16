@@ -45,7 +45,15 @@ SOURCES += \
     src/controller/messagefactory.cpp \
     src/controller/messagefactorymainwindow.cpp \
     src/view/dockmessage.cpp \
-    src/view/debugconsole.cpp
+    src/view/debugconsole.cpp \
+    src/controller/messagefactoryeditor.cpp \
+    src/controller/definationeditortype.cpp \
+    src/controller/definationeditorselectiontype.cpp \
+    src/controller/messagemainwindowopen.cpp \
+    src/controller/messagemainwindowtryclose.cpp \
+    src/controller/messagemainwindowclose.cpp \
+    src/controller/messageeditortype.cpp \
+    src/controller/messageeditorselection.cpp
 
 HEADERS += \
     include/view/mainwindow.h \
@@ -78,5 +86,13 @@ HEADERS += \
     include/controller/messagefactory.h \
     include/controller/messagefactorymainwindow.h \
     include/view/dockmessage.h \
-    include/view/debugconsole.h
+    include/view/debugconsole.h \
+    include/controller/messagefactoryeditor.h \
+    include/controller/definationeditortype.h \
+    include/controller/definationeditorselectiontype.h \
+    include/controller/messagemainwindowopen.h \
+    include/controller/messagemainwindowtryclose.h \
+    include/controller/messagemainwindowclose.h \
+    include/controller/messageeditortype.h \
+    include/controller/messageeditorselection.h
 

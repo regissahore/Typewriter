@@ -89,7 +89,7 @@ void Editor::bindMessage(MessageController *controller)
 
 /**
  * 消息事件。
- * @param mesage 消息内容。
+ * @param message 消息内容。
  */
 void Editor::messageEvent(Message *message)
 {

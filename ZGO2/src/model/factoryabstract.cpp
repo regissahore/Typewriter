@@ -12,7 +12,7 @@ FactoryAbstract::FactoryAbstract()
  * 设置自动增长的ID的初始值。
  * @param id ID。
  */
-void FactoryAbstract::setId(qint32 id)
+void FactoryAbstract::setId(int id)
 {
     this->_id = id;
 }
@@ -21,7 +21,7 @@ void FactoryAbstract::setId(qint32 id)
  * 获取自动增长的ID。
  * @return ID。
  */
-qint32 FactoryAbstract::id()
+int FactoryAbstract::id()
 {
     return this->_id++;
 }

@@ -4,6 +4,7 @@
  * 有类型的数据。
  * @author ZHG <CyberZHG@gmail.com>
  */
+
 class TypedItem
 {
 public:

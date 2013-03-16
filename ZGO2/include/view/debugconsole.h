@@ -9,6 +9,7 @@
 #include <QGridLayout>
 #include "controller/messager.h"
 #include "controller/messagefactorymainwindow.h"
+#include "controller/messagefactoryeditor.h"
 
 class DebugConsole : public QWidget, public Messager
 {

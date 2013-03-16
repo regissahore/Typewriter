@@ -4,6 +4,7 @@
  * GO信号流。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <QObject>
 #include "identifieditem.h"
 
 class GOSignal

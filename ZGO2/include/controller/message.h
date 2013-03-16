@@ -12,11 +12,13 @@ class Message : public NamedItem, public IdentifiedItem
 {
 public:
     Message();
-    QString message() const;
-    void setMessage(QString message);
+    ~Message();
+    void* message() const;
+    void setMessage(void* message);
+    virtual QString toString();
 
-private:
-    QString _message; /** 消息内容。 */
+protected:
+    void* _message; /** 消息内容。 */
 };
 
 #endif // MESSAGE_H
