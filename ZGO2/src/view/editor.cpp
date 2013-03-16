@@ -4,8 +4,7 @@
  * 构造函数。
  * @param parent 父窗体。
  */
-Editor::Editor(QWidget *parent) :
-    QWidget(parent)
+Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
 {
     // 初始化TabWidget。
     this->tabWidget = new QTabWidget(this);
@@ -75,4 +74,31 @@ bool Editor::tryCloseTab(int index)
         return true;
     }
     return false;
+}
+
+/**
+ * 绑定消息。
+ * @param controller 控制器。
+ */
+void Editor::bindMessage(MessageController *controller)
+{
+    this->Messager::bindMessage(controller);
+    MessageFactoryMainWindow factory;
+    controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE), this);
+}
+
+/**
+ * 消息事件。
+ * @param mesage 消息内容。
+ */
+void Editor::messageEvent(Message *message)
+{
+    MessageFactoryMainWindow factory;
+    if (message->name() == factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE))
+    {
+        if (this->tryCloseAll())
+        {
+            this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_CLOSE));
+        }
+    }
 }

@@ -8,15 +8,19 @@
 #include <QWidget>
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include "controller/messager.h"
+#include "controller/messagefactorymainwindow.h"
 #include "view/editorfactory.h"
 
-class Editor : public QWidget
+class Editor : public QWidget, public Messager
 {
     Q_OBJECT
 public:
     explicit Editor(QWidget *parent = 0);
     bool trySaveAll();
     bool tryCloseAll();
+    void bindMessage(MessageController *controller);
+    void messageEvent(Message *message);
 
 protected:
     QTabWidget *tabWidget; /** 用于维护多个编辑器。 */

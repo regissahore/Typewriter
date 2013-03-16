@@ -11,7 +11,7 @@ class Messager : public MessageCreator, public MessageListener
 {
 public:
     Messager();
-    void bindMessage(MessageController *controller);
+    virtual void bindMessage(MessageController *controller);
 };
 
 #endif // MESSAGER_H

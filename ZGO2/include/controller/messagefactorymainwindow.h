@@ -6,10 +6,6 @@
  */
 #include "controller/messagefactory.h"
 
-class MessageMainWindowOpen;
-class MessageMainWindowTryClose;
-class MessageMainWindowClose;
-
 class MessageFactoryMainWindow : public MessageFactory
 {
 public:
@@ -26,7 +22,8 @@ protected:
 };
 
 /**
- * 主窗口初始化完成事件。
+ * 主窗口初始化完成事件，没有参数。
+ * 由主窗口发出，任何窗体都可以监听。
  */
 class MessageMainWindowOpen : public Message
 {
@@ -39,6 +36,7 @@ public:
 
 /**
  * 主窗口尝试关闭的消息，没有参数。
+ * 由和关闭主窗口相关的操作产生，编辑器监听。
  */
 class MessageMainWindowTryClose : public Message
 {
@@ -51,6 +49,7 @@ public:
 
 /**
  * 主窗口直接关闭的消息，没有参数。
+ * 由编辑器发出，主窗口监听。
  */
 class MessageMainWindowClose : public Message
 {

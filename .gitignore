@@ -3,6 +3,7 @@ ZGo-build-desktop*
 
 # Local Project Files
 *.user
+*.layout
 
 # Doxygen
 doxygen

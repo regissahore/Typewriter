@@ -6,8 +6,10 @@
  */
 MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), Messager()
 {
+    this->_close = false;
     this->setWindowTitle(tr("ZHG GO Methodology"));
     this->setGeometry(100, 100, 800, 600);
+    this->initMenu();
     this->initEditor();
     this->initDock();
     this->bindMessage();
@@ -20,6 +22,7 @@ MainWindow::~MainWindow()
 {
     this->clearDock();
     this->clearEditor();
+    this->clearMenu();
 }
 
 /**
@@ -29,6 +32,8 @@ void MainWindow::bindMessage()
 {
     this->_messageController = new MessageController();
     this->bindMessage(this->_messageController);
+    this->_mainMenu->bindMessage(this->_messageController);
+    this->_editor->bindMessage(this->_messageController);
     this->_dockMessage->bindMessage(this->_messageController);
     MessageFactoryMainWindow factory;
     this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_OPEN));
@@ -41,6 +46,43 @@ void MainWindow::bindMessage()
 void MainWindow::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
+    MessageFactoryMainWindow factory;
+    controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_CLOSE), this);
+}
+
+/**
+ * 消息事件。
+ * @param message 消息。
+ */
+void MainWindow::messageEvent(Message *message)
+{
+    MessageFactoryMainWindow factory;
+    if (message->name() == factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_CLOSE))
+    {
+        this->_close = true;
+        this->close();
+    }
+}
+
+/**
+ * 关闭事件。
+ * @param event 关闭事件。
+ */
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+    if (this->_close)
+    {
+        this->QMainWindow::closeEvent(event);
+    }
+    else
+    {
+        MessageFactoryMainWindow factory;
+        this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE));
+        if (!this->_close)
+        {
+            event->ignore();
+        }
+    }
 }
 
 /**
@@ -83,5 +125,26 @@ void MainWindow::clearDock()
     {
         delete this->_dockMessage;
         this->_dockMessage = 0L;
+    }
+}
+
+/**
+ * 初始化菜单。
+ */
+void MainWindow::initMenu()
+{
+    this->_mainMenu = new MainMenu();
+    this->setMenuBar(this->_mainMenu);
+}
+
+/**
+ * 清除菜单。
+ */
+void MainWindow::clearMenu()
+{
+    if (this->_mainMenu)
+    {
+        delete this->_mainMenu;
+        this->_mainMenu = 0L;
     }
 }

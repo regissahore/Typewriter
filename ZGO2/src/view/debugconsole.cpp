@@ -36,7 +36,7 @@ void DebugConsole::bindMessage(MessageController *controller)
 
 /**
  * 输出消息内容。
- * @reutrn param message 消息。
+ * @return param message 消息。
  */
 void DebugConsole::messageEvent(Message *message)
 {
