@@ -19,9 +19,7 @@ public:
     };
 
     MessageFactoryEditor();
-
-protected:
-    Message* produceMessage(int type);
+    Message* produce(int type);
 };
 
 #endif // MESSAGEFACTORYEDITOR_H

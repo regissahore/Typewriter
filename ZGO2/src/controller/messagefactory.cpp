@@ -1,7 +1,5 @@
 #include "controller/messagefactory.h"
 
-int MessageFactory::_id = 0;
-
 /**
  * 构造函数。
  */
@@ -10,17 +8,13 @@ MessageFactory::MessageFactory()
 }
 
 /**
- * 产生消息并赋予消息ID，不要重载此函数。
+ * 产生消息。
  * @param type 消息的类型。
  */
 Message* MessageFactory::produce(int type)
 {
-    Message *message = this->produceMessage(type);
-    if (message != 0L)
-    {
-        message->setId(MessageFactory::_id++);
-    }
-    return message;
+    Q_UNUSED(type);
+    return 0L;
 }
 
 /**
@@ -29,7 +23,7 @@ Message* MessageFactory::produce(int type)
  */
 QString MessageFactory::getMessageName(int type)
 {
-    Message *message = produceMessage(type);
+    Message *message = produce(type);
     if (message != 0L)
     {
         return message->name();
@@ -57,13 +51,4 @@ QVector<QString> MessageFactory::getMessageNameVector()
     return names;
 }
 
-/**
- * 产生消息。
- * @param type 消息的类型。
- */
-Message* MessageFactory::produceMessage(int type)
-{
-    Q_UNUSED(type);
-    return 0L;
-}
 

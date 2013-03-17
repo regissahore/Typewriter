@@ -7,25 +7,27 @@
 Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
 {
     // 初始化TabWidget。
-    this->tabWidget = new QTabWidget(this);
-    this->tabWidget->setTabsClosable(true);
-    this->connect(this->tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tryCloseTab(int)));
+    this->_tabWidget = new QTabWidget(this);
+    this->_tabWidget->setTabsClosable(true);
+    this->connect(this->_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tryCloseTab(int)));
+    this->connect(this->_tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentChange(int)));
     // 配置基本的布局。
     QVBoxLayout *layout = new QVBoxLayout();
-    layout->addWidget(this->tabWidget);
+    layout->addWidget(this->_tabWidget);
     layout->setMargin(0);
     layout->setSpacing(0);
     this->setLayout(layout);
     // 初始化工厂类和编辑器的集合。
-    this->editors = new QVector<EditorAbstract*>();
-    this->factory = new EditorFactory();
-    EditorAbstract *editor = (EditorAbstract*)this->factory->produce(EditorFactory::TYPE_WELCOME);
-    this->editors->push_back(editor);
-    this->tabWidget->addTab(editor, editor->name());
+    this->_editors = new QVector<EditorAbstract*>();
+    this->_factory = new EditorFactory();
+    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WELCOME);
+    this->_editors->push_back(editor);
+    this->_tabWidget->addTab(editor, editor->name());
     // 以下为测试用内容。
-    editor = (EditorAbstract*)this->factory->produce(EditorFactory::TYPE_GO);
-    this->editors->push_back(editor);
-    this->tabWidget->addTab(editor, editor->name());
+    editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+    this->_editors->push_back(editor);
+    this->_tabWidget->addTab(editor, editor->name());
+    // 以上为测试用内容。
 }
 
 /**
@@ -34,9 +36,9 @@ Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
  */
 bool Editor::trySaveAll()
 {
-    for (int i = 0; i < this->editors->size(); ++i)
+    for (int i = 0; i < this->_editors->size(); ++i)
     {
-        if (!this->editors->at(i)->trySave())
+        if (!this->_editors->at(i)->trySave())
         {
             return false;
         }
@@ -50,7 +52,7 @@ bool Editor::trySaveAll()
  */
 bool Editor::tryCloseAll()
 {
-    while (this->tabWidget->count() > 0)
+    while (this->_tabWidget->count() > 0)
     {
         if (!this->tryCloseTab(0))
         {
@@ -67,13 +69,28 @@ bool Editor::tryCloseAll()
  */
 bool Editor::tryCloseTab(int index)
 {
-    if (this->editors->at(index)->tryClose())
+    if (this->_editors->at(index)->tryClose())
     {
-        this->editors->remove(index);
-        this->tabWidget->removeTab(index);
+        this->_editors->remove(index);
+        this->_tabWidget->removeTab(index);
         return true;
     }
     return false;
+}
+
+/**
+ * 编辑器变动事件。
+ * @param index 编辑器的索引。
+ */
+void Editor::currentChange(int index)
+{
+    MessageFactoryEditor factory;
+    Message* message = factory.produce(MessageFactoryEditor::EDITOR_TYPE);
+    if (this->_editors->size() > 0)
+    {
+        message->setMessage((void*)(*this->_editors)[index]);
+    }
+    this->sendMessage(message);
 }
 
 /**
@@ -85,6 +102,8 @@ void Editor::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
     MessageFactoryMainWindow factory;
     controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE), this);
+    // 如果已经有打开的tab则发送编辑器类别消息。
+    currentChange(this->_tabWidget->currentIndex());
 }
 
 /**

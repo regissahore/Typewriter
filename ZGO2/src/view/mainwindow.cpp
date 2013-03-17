@@ -9,10 +9,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), Messager()
     this->_close = false;
     this->setWindowTitle(tr("ZHG GO Methodology"));
     this->setGeometry(100, 100, 800, 600);
+    this->_messageController = new MessageController();
+    this->initDock();
     this->initMenu();
     this->initEditor();
-    this->initDock();
-    this->bindMessage();
+    this->bindMessage(this->_messageController);
 }
 
 /**
@@ -20,23 +21,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), Messager()
  */
 MainWindow::~MainWindow()
 {
-    this->clearDock();
     this->clearEditor();
     this->clearMenu();
-}
-
-/**
- * 为各个组成部分绑定消息。
- */
-void MainWindow::bindMessage()
-{
-    this->_messageController = new MessageController();
-    this->bindMessage(this->_messageController);
-    this->_mainMenu->bindMessage(this->_messageController);
-    this->_editor->bindMessage(this->_messageController);
-    this->_dockMessage->bindMessage(this->_messageController);
-    MessageFactoryMainWindow factory;
-    this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_OPEN));
+    this->clearDock();
 }
 
 /**
@@ -48,6 +35,7 @@ void MainWindow::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
     MessageFactoryMainWindow factory;
     controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_CLOSE), this);
+    this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_OPEN));
 }
 
 /**
@@ -92,6 +80,7 @@ void MainWindow::initEditor()
 {
     this->_editor = new Editor(this);
     this->setCentralWidget(this->_editor);
+    this->_editor->bindMessage(this->_messageController);
 }
 
 /**
@@ -114,6 +103,7 @@ void MainWindow::initDock()
 {
     this->_dockMessage = new DockMessage(this);
     this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
+    this->_dockMessage->bindMessage(this->_messageController);
 }
 
 /**
@@ -135,6 +125,7 @@ void MainWindow::initMenu()
 {
     this->_mainMenu = new MainMenu();
     this->setMenuBar(this->_mainMenu);
+    this->_mainMenu->bindMessage(this->_messageController);
 }
 
 /**

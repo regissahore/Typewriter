@@ -27,7 +27,7 @@ void ItemMoveable::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         this->setPos(this->pos() + event->scenePos() - this->_mousePressPosition);
         this->_mousePressPosition = event->scenePos();
-        update();
+        this->update();
         return;
     }
     QGraphicsItem::mouseMoveEvent(event);

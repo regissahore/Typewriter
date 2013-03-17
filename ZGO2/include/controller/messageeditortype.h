@@ -3,29 +3,18 @@
 /**
  * 当前编辑器类型。
  * 由编辑器发出。
- * 返回信息中包括编辑器的编号。
+ * 信息的内容为指向编辑器的指针，空指针代表没选中。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "model/typeditem.h"
 #include "controller/message.h"
 #include "controller/definationeditortype.h"
+#include "view/editorabstract.h"
 
-class MessageEditorType : public Message, public TypedItem
+class MessageEditorType : public Message
 {
 public:
-    class MessageContent
-    {
-    public:
-        int index;
-        MessageContent(int index)
-        {
-            this->index = index;
-        }
-    };
     MessageEditorType();
-    ~MessageEditorType();
     QString toString();
-    void setIndex(int index);
 };
 
 #endif // MESSAGEEDITORTYPE_H

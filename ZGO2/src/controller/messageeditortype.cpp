@@ -3,20 +3,9 @@
 /**
  * 构造函数。
  */
-MessageEditorType::MessageEditorType() : Message(), TypedItem()
+MessageEditorType::MessageEditorType() : Message()
 {
     this->setName("Editor_Type");
-}
-
-/**
- * 析构函数。
- */
-MessageEditorType::~MessageEditorType()
-{
-    if (this->_message)
-    {
-        delete (MessageContent*)this->_message;
-    }
 }
 
 /**
@@ -26,26 +15,28 @@ MessageEditorType::~MessageEditorType()
 QString MessageEditorType::toString()
 {
     QString str = "";
-    if (this->message() != 0L)
+    if (this->message() == 0L)
     {
-        str += QString("Index: %1 ").arg(((MessageContent*)this->message())->index);
+        str = "No editor selected. ";
     }
-    str += "Type: ";
-    switch (this->type())
+    else
     {
-    case DefinationEditorType::EDITOR_TYPE_NULL:
-        str += "No editor. ";
-    case DefinationEditorType::EDITOR_TYPE_WELCOME:
-        str += "Welcom screen. ";
-    case DefinationEditorType::EDITOR_TYPE_GO:
-        str += "The GO Graph editor. ";
-    default:
-        str += "Undefined editor. ";
+        str = "Type: ";
+        EditorAbstract* editor = (EditorAbstract*) this->message();
+        switch (editor->type())
+        {
+        case DefinationEditorType::EDITOR_TYPE_WELCOME:
+            str += "Welcome Screen; ";
+            break;
+        case DefinationEditorType::EDITOR_TYPE_GO:
+            str += "GO Graph Editor; ";
+            break;
+        default:
+            str += "Undefined Editor; ";
+            break;
+        }
+        str += "Name: " + editor->name() + "; ";
+        str += "Path: " + editor->path() + ". ";
     }
     return str;
-}
-
-void MessageEditorType::setIndex(int index)
-{
-    this->setMessage(new MessageContent(index));
 }

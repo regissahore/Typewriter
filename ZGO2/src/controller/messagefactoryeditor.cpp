@@ -11,7 +11,7 @@ MessageFactoryEditor::MessageFactoryEditor() : MessageFactory()
  * 产生消息。
  * @param type 消息类型。
  */
-Message* MessageFactoryEditor::produceMessage(int type)
+Message* MessageFactoryEditor::produce(int type)
 {
     Message* message = 0L;
     switch (type)

@@ -11,7 +11,7 @@ MessageFactoryMainWindow::MessageFactoryMainWindow()
  * 生成主窗口的消息。
  * @param type 消息类型。
  */
-Message* MessageFactoryMainWindow::produceMessage(int type)
+Message* MessageFactoryMainWindow::produce(int type)
 {
     Message* message = 0L;
     switch (type)

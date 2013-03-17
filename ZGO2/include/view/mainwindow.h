@@ -18,7 +18,6 @@ class MainWindow : public QMainWindow, public Messager
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    void bindMessage();
     void bindMessage(MessageController *controller);
     void messageEvent(Message *message);
 

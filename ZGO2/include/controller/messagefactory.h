@@ -12,15 +12,9 @@ class MessageFactory
 {
 public:
     MessageFactory();
-    Message* produce(int type);
+    virtual Message* produce(int type);
     QString getMessageName(int type);
     QVector<QString> getMessageNameVector();
-
-protected:
-    virtual Message* produceMessage(int type);
-
-private:
-    static int _id; /** 利用工厂生成的消息的唯一编号。 */
 };
 
 #endif // MESSAGEFACTORY_H

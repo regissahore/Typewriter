@@ -5,6 +5,7 @@
  */
 MessageController::MessageController()
 {
+    this->_autoID = 0;
     this->_messages = new QMap<QString, int>();
     this->_listeners = new QVector< QVector<MessageListener*> >();
 }
@@ -28,6 +29,7 @@ MessageController::~MessageController()
  */
 void MessageController::send(Message *message)
 {
+    message->setId(this->_autoID++);
     QString messageName = message->name();
     QMap<QString, int>::iterator it = this->_messages->find(messageName);
     if (it != this->_messages->end())

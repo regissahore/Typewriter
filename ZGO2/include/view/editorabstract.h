@@ -7,8 +7,9 @@
 #include <QWidget>
 #include <QFileDialog>
 #include <QMessageBox>
+#include "model/typeditem.h"
 
-class EditorAbstract : public QWidget
+class EditorAbstract : public QWidget, public TypedItem
 {
     Q_OBJECT
 public:

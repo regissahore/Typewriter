@@ -17,9 +17,6 @@ QString MessageEditorSelection::toString()
     QString str = "Type: ";
     switch (this->type())
     {
-    case DefinationEditorSelectionType::EDITOR_SELECTION_NULL:
-        str += "No selection. ";
-        break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
         str += "GO operator. ";
         if (this->message())

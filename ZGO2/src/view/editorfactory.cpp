@@ -9,11 +9,13 @@ void* EditorFactory::produce(qint32 type)
     EditorAbstract *editor = 0L;
     switch(type)
     {
-    case TYPE_WELCOME:
+    case DefinationEditorType::EDITOR_TYPE_WELCOME:
         editor = new EditorWelcome();
+        editor->setType(DefinationEditorType::EDITOR_TYPE_WELCOME);
         break;
-    case TYPE_GO:
+    case DefinationEditorType::EDITOR_TYPE_GO:
         editor = new EditorGO();
+        editor->setType(DefinationEditorType::EDITOR_TYPE_GO);
         break;
     }
     if (0L != editor)

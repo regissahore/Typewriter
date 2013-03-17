@@ -19,9 +19,7 @@ public:
         MAINWINDOW_CLOSE
     };
     MessageFactoryMainWindow();
-
-protected:
-    Message* produceMessage(int type);
+    Message* produce(int type);
 };
 
 #endif // MESSAGEFACTORYMAINWINDOW_H
