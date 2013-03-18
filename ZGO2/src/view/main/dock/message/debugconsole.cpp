@@ -41,6 +41,15 @@ void DebugConsole::bindMessage(MessageController *controller)
     }
     delete factory;
     messageNames.clear();
+    // 对工具事件的监听。
+    factory = new MessageFactoryTool();
+    messageNames = factory->getMessageNameVector();
+    for (int i = 0; i < messageNames.size(); ++i)
+    {
+        controller->listen(messageNames[i], this);
+    }
+    delete factory;
+    messageNames.clear();
 }
 
 /**

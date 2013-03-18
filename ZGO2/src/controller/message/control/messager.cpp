@@ -14,4 +14,5 @@ Messager::Messager() : MessageCreator(), MessageListener()
 void Messager::bindMessage(MessageController *controller)
 {
     this->MessageCreator::setMessageController(controller);
+    this->MessageListener::setMessageController(controller);
 }

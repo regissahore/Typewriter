@@ -10,6 +10,7 @@
 #include "messager.h"
 #include "messagefactorymainwindow.h"
 #include "messagefactoryeditor.h"
+#include "messagefactorytool.h"
 
 class DebugConsole : public QWidget, public Messager
 {

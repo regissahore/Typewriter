@@ -5,7 +5,6 @@
  * 由和关闭主窗口相关的操作产生，编辑器监听。
  * @author ZHG <CyberZHG@gmail.com>
  */
-
 #include "message.h"
 
 class MessageMainWindowTryClose : public Message

@@ -13,7 +13,6 @@ class ToolboxNull : public ToolboxAbstract
     Q_OBJECT
 public:
     explicit ToolboxNull(QWidget *parent = 0);
-    ~ToolboxNull();
 };
 
 #endif // TOOLBOXNULL_H

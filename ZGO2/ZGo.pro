@@ -72,7 +72,9 @@ HEADERS += \
     include/view/main/menu/mainmenu.h \
     include/view/main/dock/toolbox/toolboxfactory.h \
     include/view/main/dock/toolbox/toolboxnull.h \
-    include/view/main/dock/toolbox/toolboxgo.h
+    include/view/main/dock/toolbox/toolboxgo.h \
+    include/controller/message/factory/messagefactorytool.h \
+    include/controller/message/message/messagetoolselection.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -121,4 +123,9 @@ SOURCES += \
     src/main.cpp \
     src/view/main/dock/toolbox/toolboxfactory.cpp \
     src/view/main/dock/toolbox/toolboxnull.cpp \
-    src/view/main/dock/toolbox/toolboxgo.cpp
+    src/view/main/dock/toolbox/toolboxgo.cpp \
+    src/controller/message/factory/messagefactorytool.cpp \
+    src/controller/message/message/messagetoolselection.cpp
+
+FORMS += \
+    test.ui

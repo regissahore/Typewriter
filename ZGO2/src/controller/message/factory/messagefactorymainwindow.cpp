@@ -10,6 +10,7 @@ MessageFactoryMainWindow::MessageFactoryMainWindow()
 /**
  * 生成主窗口的消息。
  * @param type 消息类型。
+ * @return 消息内容。
  */
 Message* MessageFactoryMainWindow::produce(int type)
 {
