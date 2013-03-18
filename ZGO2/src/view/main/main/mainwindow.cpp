@@ -104,6 +104,9 @@ void MainWindow::initDock()
     this->_dockMessage = new DockMessage(this);
     this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
     this->_dockMessage->bindMessage(this->_messageController);
+    this->_dockToolbox = new DockToolbox(this);
+    this->addDockWidget(Qt::LeftDockWidgetArea, this->_dockToolbox);
+    this->_dockToolbox->bindMessage(this->_messageController);
 }
 
 /**
@@ -111,6 +114,11 @@ void MainWindow::initDock()
  */
 void MainWindow::clearDock()
 {
+    if (this->_dockToolbox)
+    {
+        delete this->_dockToolbox;
+        this->_dockToolbox = 0L;
+    }
     if (this->_dockMessage)
     {
         delete this->_dockMessage;

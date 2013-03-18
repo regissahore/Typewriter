@@ -20,7 +20,7 @@ public:
     void addListenedMessage(QString message);
     virtual void messageEvent(Message *message);
 
-private:
+protected:
     QVector<QString> *_messageListened;
     MessageController *_messageController;
 };

@@ -11,6 +11,7 @@
 #include "mainmenu.h"
 #include "editor.h"
 #include "dockmessage.h"
+#include "docktoolbox.h"
 
 class MainWindow : public QMainWindow, public Messager
 {
@@ -30,6 +31,7 @@ private:
     MainMenu *_mainMenu; /** 主菜单。 */
     Editor *_editor; /** GO法的编辑器。 */
     DockMessage *_dockMessage; /** 消息悬停窗口。 */
+    DockToolbox *_dockToolbox; /** 工具箱悬停窗口。 */
     void initEditor();
     void clearEditor();
     void initDock();

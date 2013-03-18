@@ -1,4 +1,4 @@
-#include "view/dockmessage.h"
+#include "dockmessage.h"
 
 /**
  * 初始化窗体。

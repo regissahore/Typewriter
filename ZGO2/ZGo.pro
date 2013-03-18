@@ -69,7 +69,10 @@ HEADERS += \
     include/view/main/editor/editorabstract.h \
     include/view/main/editor/editor.h \
     include/view/main/main/mainwindow.h \
-    include/view/main/menu/mainmenu.h
+    include/view/main/menu/mainmenu.h \
+    include/view/main/dock/toolbox/toolboxfactory.h \
+    include/view/main/dock/toolbox/toolboxnull.h \
+    include/view/main/dock/toolbox/toolboxgo.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -115,4 +118,7 @@ SOURCES += \
     src/view/main/editor/editor.cpp \
     src/view/main/main/mainwindow.cpp \
     src/view/main/menu/mainmenu.cpp \
-    src/main.cpp
+    src/main.cpp \
+    src/view/main/dock/toolbox/toolboxfactory.cpp \
+    src/view/main/dock/toolbox/toolboxnull.cpp \
+    src/view/main/dock/toolbox/toolboxgo.cpp

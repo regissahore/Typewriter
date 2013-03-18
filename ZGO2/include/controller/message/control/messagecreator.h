@@ -14,7 +14,7 @@ public:
     void setMessageController(MessageController *messageController);
     void sendMessage(Message *message);
 
-private:
+protected:
     MessageController *_messageController;
 };
 
