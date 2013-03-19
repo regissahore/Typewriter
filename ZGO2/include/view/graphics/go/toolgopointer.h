@@ -20,11 +20,9 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 protected:
-    void setMoving(bool value);
-
-private:
     ItemMoveable* _item;
     bool _moving;
+    virtual void setMoving(bool value);
 };
 
 #endif // TOOLGOPOINTER_H

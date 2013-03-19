@@ -12,6 +12,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, int type)
     switch (type)
     {
     case DefinationToolType::TOOL_TYPE_COMMON_MOVE:
+        tool = new ToolGOMove(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_COMMON_POINTER:
         tool = new ToolGOPointer(sceneGO);

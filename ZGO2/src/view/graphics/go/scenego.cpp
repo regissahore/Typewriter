@@ -90,6 +90,7 @@ void SceneGO::keyPressEvent(QKeyEvent *event)
     {
         this->_tool->keyPressEvent(event);
     }
+    this->QGraphicsScene::keyPressEvent(event);
 }
 
 /**
@@ -102,6 +103,7 @@ void SceneGO::keyReleaseEvent(QKeyEvent *event)
     {
         this->_tool->keyReleaseEvent(event);
     }
+    this->QGraphicsScene::keyReleaseEvent(event);
 }
 
 /**
@@ -114,6 +116,7 @@ void SceneGO::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_tool->mouseDoubleClickEvent(event);
     }
+    this->QGraphicsScene::mouseDoubleClickEvent(event);
 }
 
 /**
@@ -126,6 +129,7 @@ void SceneGO::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_tool->mouseMoveEvent(event);
     }
+    this->QGraphicsScene::mouseMoveEvent(event);
 }
 
 /**
@@ -138,6 +142,7 @@ void SceneGO::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_tool->mousePressEvent(event);
     }
+    this->QGraphicsScene::mousePressEvent(event);
 }
 
 /**
@@ -150,4 +155,5 @@ void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_tool->mouseReleaseEvent(event);
     }
+    this->QGraphicsScene::mouseReleaseEvent(event);
 }

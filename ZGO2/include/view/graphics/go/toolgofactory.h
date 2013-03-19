@@ -8,6 +8,7 @@
 #include "definationtooltype.h"
 #include "toolgoabstract.h"
 #include "toolgopointer.h"
+#include "toolgomove.h"
 
 class ToolGOFactory
 {
