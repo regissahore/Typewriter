@@ -20,6 +20,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, int type)
     case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
         break;
     case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
+        tool = new ToolGOZoom(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_TEXT:
         break;

@@ -9,6 +9,7 @@
 #include "toolgoabstract.h"
 #include "toolgopointer.h"
 #include "toolgomove.h"
+#include "toolgozoom.h"
 
 class ToolGOFactory
 {

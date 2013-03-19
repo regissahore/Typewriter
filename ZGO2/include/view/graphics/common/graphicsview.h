@@ -18,8 +18,8 @@ public:
     explicit GraphicsView(QWidget *parent);
     qreal zoom() const;
     void setZoom(qreal value);
-    void zoomIn(int level = 1);
-    void zoomOut(int level = 1);
+    void zoomIn(int level = 5);
+    void zoomOut(int level = 5);
 
 protected:
     //View *view() const;

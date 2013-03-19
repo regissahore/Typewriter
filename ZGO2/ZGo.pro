@@ -78,7 +78,8 @@ HEADERS += \
     include/view/graphics/go/toolgoabstract.h \
     include/view/graphics/go/toolgopointer.h \
     include/view/graphics/go/toolgofactory.h \
-    include/view/graphics/go/toolgomove.h
+    include/view/graphics/go/toolgomove.h \
+    include/view/graphics/go/toolgozoom.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -133,7 +134,8 @@ SOURCES += \
     src/view/graphics/go/toolgoabstract.cpp \
     src/view/graphics/go/toolgopointer.cpp \
     src/view/graphics/go/toolgofactory.cpp \
-    src/view/graphics/go/toolgomove.cpp
+    src/view/graphics/go/toolgomove.cpp \
+    src/view/graphics/go/toolgozoom.cpp
 
 FORMS += \
     test.ui
