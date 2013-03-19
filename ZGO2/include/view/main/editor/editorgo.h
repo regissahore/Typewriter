@@ -17,6 +17,7 @@ class EditorGO : public EditorAbstract
     Q_OBJECT
 public:
     explicit EditorGO(QWidget *parent = 0);
+    void bindMessage(MessageController *controller);
     
 protected:
     ViewGO *view;

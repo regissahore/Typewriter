@@ -3,13 +3,15 @@
 /**
  * An abstract tool of GO Graph.
  * The function of the tool is to implement the interaction of the user.
- * The tool will get the the pointer of the ViewGO entity, and tend to use the
- * public functions of the ViewGO entity.
+ * The tool will get the the pointer of the SceneGO entity, and tend to use the
+ * public functions of the SceneGO entity.
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QKeyEvent>
+#include <QGraphicsScene>
 #include <QGraphicsSceneMouseEvent>
 #include <QGraphicsSceneWheelEvent>
+#include "graphicsview.h"
 #include "typeditem.h"
 
 class SceneGO;
@@ -27,8 +29,14 @@ public:
     virtual void wheelEvent(QGraphicsSceneWheelEvent *event);
 protected:
     SceneGO* sceneGO() const;
+    QGraphicsScene* graphicsScene() const;
+    GraphicsView* graphicsView() const;
 private:
     SceneGO *_sceneGO;
+    QGraphicsScene *_graphicsScene;
+    GraphicsView *_graphicsView;
 };
+
+#include "scenego.h"
 
 #endif // TOOLGOABSTRACT_H

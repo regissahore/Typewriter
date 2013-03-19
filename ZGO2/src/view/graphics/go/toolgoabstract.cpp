@@ -1,21 +1,41 @@
 #include "toolgoabstract.h"
 
 /**
- * The constructor. The pointer of ViewGO entity must be set.
- * @param viewGO The pointer to the ViewGO entity.
+ * The constructor. The pointer of SceneGO entity must be set.
+ * @param viewGO The pointer to the SceneGO entity.
  */
 ToolGOAbstract::ToolGOAbstract(SceneGO *sceneGO)
 {
     this->_sceneGO = sceneGO;
+    this->_graphicsScene = (QGraphicsScene*)sceneGO;
+    this->_graphicsView = (GraphicsView*)this->_graphicsScene->parent();
 }
 
 /**
- * Get the pointer of the ViewGO entity.
- * @return The pointer to ViewGO entity.
+ * Get the pointer of the SceneGO entity.
+ * @return The pointer to SceneGO entity.
  */
 SceneGO* ToolGOAbstract::sceneGO() const
 {
     return this->_sceneGO;
+}
+
+/**
+ * Get the pointer of the QGraphicsScene entity.
+ * @return The pointer to QGraphicsScene entity.
+ */
+QGraphicsScene* ToolGOAbstract::graphicsScene() const
+{
+    return this->_graphicsScene;
+}
+
+/**
+ * Get the pointer of the GraphicsView entity.
+ * @return The pointer to GraphicsView entity.
+ */
+GraphicsView* ToolGOAbstract::graphicsView() const
+{
+    return this->_graphicsView;
 }
 
 /**

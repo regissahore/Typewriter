@@ -87,3 +87,12 @@ void ItemDrawable::setSize(qreal width, qreal height)
     this->setWidth(width);
     this->setHeight(height);
 }
+
+/**
+ * Whether the item is movable.
+ * @return Returns true is the item is moveable, otherwise false.
+ */
+bool ItemDrawable::moveable() const
+{
+    return false;
+}

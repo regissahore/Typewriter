@@ -22,6 +22,7 @@ public:
     void setWidth(qreal width);
     void setHeight(qreal height);
     void setSize(qreal width, qreal height);
+    virtual bool moveable() const;
 
 private:
     qreal _width;

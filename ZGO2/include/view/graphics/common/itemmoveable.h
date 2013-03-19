@@ -11,8 +11,7 @@ class ItemMoveable : public ItemDrawable
 {
 public:
     ItemMoveable(QGraphicsItem *parent = 0);
-
-protected:
+    bool moveable() const;
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

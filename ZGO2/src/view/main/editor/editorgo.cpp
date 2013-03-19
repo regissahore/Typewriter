@@ -16,3 +16,13 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     this->setLayout(layout);
     this->_filter = tr("GO Files(*.go)");
 }
+
+/**
+ * Bind message.
+ * @param controller The message controller.
+ */
+void EditorGO::bindMessage(MessageController *controller)
+{
+    this->EditorAbstract::bindMessage(controller);
+    this->view->bindMessage(controller);
+}

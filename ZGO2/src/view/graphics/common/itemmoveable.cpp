@@ -8,6 +8,15 @@ ItemMoveable::ItemMoveable(QGraphicsItem *parent) : ItemDrawable(parent)
 }
 
 /**
+ * Whether the item is moveable.
+ * @return Returns true if the item is moveable, otherwise false.
+ */
+bool ItemMoveable::moveable() const
+{
+    return true;
+}
+
+/**
  * 鼠标按下事件。
  * @param event 鼠标事件。
  */
@@ -23,14 +32,9 @@ void ItemMoveable::mousePressEvent(QGraphicsSceneMouseEvent *event)
  */
 void ItemMoveable::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (event->modifiers() & Qt::ShiftModifier)
-    {
-        this->setPos(this->pos() + event->scenePos() - this->_mousePressPosition);
-        this->_mousePressPosition = event->scenePos();
-        this->update();
-        return;
-    }
-    QGraphicsItem::mouseMoveEvent(event);
+    this->setPos(this->pos() + event->scenePos() - this->_mousePressPosition);
+    this->_mousePressPosition = event->scenePos();
+    this->update();
 }
 
 /**
