@@ -104,6 +104,10 @@ void Editor::bindMessage(MessageController *controller)
     controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE), this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
+    for (int i = 0; i < this->_editors->size(); ++i)
+    {
+        this->_editors->at(i)->bindMessage(controller);
+    }
 }
 
 /**

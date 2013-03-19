@@ -6,37 +6,11 @@
  */
 EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
 {
-    this->_name = tr("Empty");
-    this->_path = "";
+    this->setName(tr("Empty"));
+    this->setPath("");
     this->_modified = true;
     this->_filter = tr("ZHG Files(*.zhg)");
-}
-
-/**
- * 获取当前编辑器的ID。
- * @return ID。
- */
-qint32 EditorAbstract::id() const
-{
-    return this->_id;
-}
-
-/**
- * 设置当前编辑器的ID。
- * @param id ID。
- */
-void EditorAbstract::setId(qint32 id)
-{
-    this->_id = id;
-}
-
-/**
- * 返回当前编辑器的名称。
- * @return 名称。
- */
-QString EditorAbstract::name() const
-{
-    return this->_name;
+    this->setTool(-1);
 }
 
 /**
@@ -46,15 +20,6 @@ QString EditorAbstract::name() const
 QString EditorAbstract::path() const
 {
     return this->_path;
-}
-
-/**
- * 设置当前编辑器的名称。
- * @param name 名称。
- */
-void EditorAbstract::setName(QString name)
-{
-    this->_name = name;
 }
 
 /**
@@ -142,4 +107,33 @@ void EditorAbstract::setModified(bool value)
         emit modifyChanged(this->id());
     }
     this->_modified = value;
+}
+
+/**
+ * 获取当前工具的类别。
+ * @return 工具类别。
+ */
+int EditorAbstract::tool() const
+{
+    return this->_tool;
+}
+
+/**
+ * 设置当前工具的类别。
+ * @param type 工具类别。
+ */
+void EditorAbstract::setTool(const int type)
+{
+    this->_tool = type;
+}
+
+/**
+ * 绑定消息。
+ * @param controller 控制器。
+ */
+void EditorAbstract::bindMessage(MessageController *controller)
+{
+    this->Messager::bindMessage(controller);
+    MessageFactoryTool *factory = new MessageFactoryTool();
+    controller->listen(factory->getMessageName(MessageFactoryTool::TOOL_SELECTION), this);
 }

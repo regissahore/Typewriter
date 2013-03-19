@@ -14,4 +14,5 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     layout->setMargin(0);
     layout->setSpacing(0);
     this->setLayout(layout);
+    this->_filter = tr("GO Files(*.go)");
 }
