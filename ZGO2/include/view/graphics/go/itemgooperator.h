@@ -16,6 +16,7 @@ public:
     ~ItemGOOperator();
     const GOOperator* model() const;
     void setModel(GOOperator *model);
+    void updateGraphic();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 

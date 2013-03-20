@@ -89,6 +89,17 @@ void Editor::currentChange(int index)
     if (this->_editors->size() > 0)
     {
         message->setMessage((void*)(*this->_editors)[index]);
+        for (int i = 0; i < this->_editors->size(); ++i)
+        {
+            if (i == index)
+            {
+                this->_editors->at(index)->activity();
+            }
+            else
+            {
+                this->_editors->at(index)->inactivity();
+            }
+        }
     }
     this->sendMessage(message);
 }

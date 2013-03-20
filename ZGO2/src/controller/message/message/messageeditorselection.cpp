@@ -1,7 +1,7 @@
 #include "messageeditorselection.h"
 
 /**
- * 构造函数。
+ * Constructor.
  */
 MessageEditorSelection::MessageEditorSelection() : Message(), TypedItem()
 {
@@ -9,8 +9,8 @@ MessageEditorSelection::MessageEditorSelection() : Message(), TypedItem()
 }
 
 /**
- * 输出编辑器选择内容。
- * @return 选择内容。
+ * Output the selection to string.
+ * @return The selected string.
  */
 QString MessageEditorSelection::toString()
 {

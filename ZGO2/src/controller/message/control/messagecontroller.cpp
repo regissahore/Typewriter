@@ -1,4 +1,6 @@
 #include "messagecontroller.h"
+#include "messagecreator.h"
+#include "messagelistener.h"
 
 /**
  * 构造函数。

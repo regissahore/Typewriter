@@ -1,4 +1,5 @@
 #include "toolgoabstract.h"
+#include "scenego.h"
 
 /**
  * The constructor. The pointer of SceneGO entity must be set.

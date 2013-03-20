@@ -34,7 +34,7 @@ void ItemGOSource::setModel(GOOperator *model)
  */
 QRectF ItemGOSource::boundingRect() const
 {
-    int num = 3;
+    /*int num = 3;
     if (this->model()->input()->number() > num)
     {
         num = this->model()->input()->number();
@@ -44,7 +44,8 @@ QRectF ItemGOSource::boundingRect() const
         num = this->model()->output()->number();
     }
     int height = (num - 1) * 25 + 50;
-    return QRectF(-22, -height * 0.5, 97, height);
+    return QRectF(-22, -height * 0.5, 97, height);*/
+    return QRectF(-25, -25, 50, 50);
 }
 
 /**

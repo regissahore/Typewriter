@@ -78,12 +78,20 @@ void ItemGOOperator::setModel(GOOperator *model)
 }
 
 /**
+ * Update the graphics view when the model is modified.
+ */
+void ItemGOOperator::updateGraphic()
+{
+    this->setModel(this->_model);
+}
+
+/**
  * 获得边界。
  * @return 边界。
  */
 QRectF ItemGOOperator::boundingRect() const
 {
-    int num = 3;
+    /*int num = 3;
     if (this->model()->input()->number() > num)
     {
         num = this->model()->input()->number();
@@ -93,7 +101,8 @@ QRectF ItemGOOperator::boundingRect() const
         num = this->model()->output()->number();
     }
     int height = (num - 1) * 25 + 50;
-    return QRectF(-75, -height * 0.5, 150, height);
+    return QRectF(-75, -height * 0.5, 150, height);*/
+    return QRectF(-25, -25, 50, 50);
 }
 
 /**
@@ -107,6 +116,7 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     Q_UNUSED(item);
     Q_UNUSED(widget);
     painter->setPen(Qt::black);
+    painter->setBrush(Qt::NoBrush);
     painter->drawText(QRectF(-25, -25, 50, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
     painter->drawText(QRectF(-1000, 35, 2000, 40), Qt::AlignHCenter | Qt::AlignTop, this->model()->name());
     painter->drawEllipse(QPoint(0, 0), 25, 25);

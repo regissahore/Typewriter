@@ -15,6 +15,8 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     layout->setSpacing(0);
     this->setLayout(layout);
     this->_filter = tr("GO Files(*.go)");
+
+    this->_savedID = 1;
 }
 
 /**
@@ -25,4 +27,14 @@ void EditorGO::bindMessage(MessageController *controller)
 {
     this->EditorAbstract::bindMessage(controller);
     this->view->bindMessage(controller);
+}
+
+void EditorGO::activity()
+{
+    GOOperatorFactory::setID(this->_savedID);
+}
+
+void EditorGO::inactivity()
+{
+    this->_savedID = GOOperatorFactory::currentID();
 }

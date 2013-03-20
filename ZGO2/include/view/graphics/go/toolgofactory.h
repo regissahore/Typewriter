@@ -11,6 +11,7 @@
 #include "toolgomove.h"
 #include "toolgozoom.h"
 #include "toolgoselect.h"
+#include "toolgooperatortype1.h"
 
 class ToolGOFactory
 {

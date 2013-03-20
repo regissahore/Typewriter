@@ -24,6 +24,8 @@ public:
     int tool() const;
     void setTool(const int type);
     void bindMessage(MessageController *controller);
+    virtual void activity();
+    virtual void inactivity();
 
 protected:
     QString _filter; /** 用于文件保存的类型。 */

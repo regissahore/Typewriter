@@ -30,7 +30,4 @@ private:
     int _autoID; /** 为消息准备的自动增长的ID。 */
 };
 
-#include "messagecreator.h"
-#include "messagelistener.h"
-
 #endif // MESSAGECONTROLLER_H

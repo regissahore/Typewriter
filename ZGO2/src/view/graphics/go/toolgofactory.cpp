@@ -26,6 +26,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, int type)
     case DefinationToolType::TOOL_TYPE_GO_TEXT:
         break;
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
+        tool = new ToolGOOperatorType1(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
         break;
@@ -90,6 +91,7 @@ void ToolGOFactory::release(ToolGOAbstract *tool)
         case DefinationToolType::TOOL_TYPE_GO_TEXT:
             break;
         case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
+            delete (ToolGOOperatorType1*)tool;
             break;
         case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
             break;

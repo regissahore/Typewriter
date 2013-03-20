@@ -6,6 +6,8 @@
  */
 
 #include "messagecontroller.h"
+#include "messagecreator.h"
+#include "messagelistener.h"
 
 class Messager : public MessageCreator, public MessageListener
 {

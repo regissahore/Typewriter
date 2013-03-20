@@ -81,7 +81,11 @@ HEADERS += \
     include/view/graphics/go/toolgomove.h \
     include/view/graphics/go/toolgozoom.h \
     include/view/graphics/go/toolgoselect.h \
-    include/view/graphics/common/itemselection.h
+    include/view/graphics/common/itemselection.h \
+    include/view/graphics/go/toolgooperator.h \
+    include/view/graphics/go/toolgooperatortype1.h \
+    include/view/graphics/go/itemgooperatortype1.h \
+    include/model/go/gooperatorfactory.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -139,7 +143,11 @@ SOURCES += \
     src/view/graphics/go/toolgomove.cpp \
     src/view/graphics/go/toolgozoom.cpp \
     src/view/graphics/go/toolgoselect.cpp \
-    src/view/graphics/common/itemselection.cpp
+    src/view/graphics/common/itemselection.cpp \
+    src/view/graphics/go/toolgooperator.cpp \
+    src/view/graphics/go/toolgooperatortype1.cpp \
+    src/view/graphics/go/itemgooperatortype1.cpp \
+    src/model/go/gooperatorfactory.cpp
 
 FORMS += \
     test.ui

@@ -37,6 +37,4 @@ private:
     GraphicsView *_graphicsView;
 };
 
-#include "scenego.h"
-
 #endif // TOOLGOABSTRACT_H

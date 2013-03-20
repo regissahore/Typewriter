@@ -137,3 +137,17 @@ void EditorAbstract::bindMessage(MessageController *controller)
     MessageFactoryTool *factory = new MessageFactoryTool();
     controller->listen(factory->getMessageName(MessageFactoryTool::TOOL_SELECTION), this);
 }
+
+/**
+ * The function called when the editor is activity.
+ */
+void EditorAbstract::activity()
+{
+}
+
+/**
+ * The function called when the editor is inactivity.
+ */
+void EditorAbstract::inactivity()
+{
+}

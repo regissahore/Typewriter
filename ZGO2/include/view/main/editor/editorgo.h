@@ -11,6 +11,7 @@
 #include <QGraphicsView>
 #include "editorabstract.h"
 #include "viewgo.h"
+#include "gooperatorfactory.h"
 
 class EditorGO : public EditorAbstract
 {
@@ -18,9 +19,12 @@ class EditorGO : public EditorAbstract
 public:
     explicit EditorGO(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
+    void activity();
+    void inactivity();
     
 protected:
     ViewGO *view;
+    int _savedID;
 };
 
 #endif // EDITORGO_H
