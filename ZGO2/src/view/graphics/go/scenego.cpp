@@ -69,7 +69,7 @@ void SceneGO::selectTool(int type)
             ToolGOAbstract *newTool = ToolGOFactory::produce(this, type);
             if (newTool != 0L)
             {
-                delete this->_tool;
+                ToolGOFactory::release(this->_tool);
                 this->_tool = newTool;
             }
         }

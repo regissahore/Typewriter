@@ -18,6 +18,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, int type)
         tool = new ToolGOPointer(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
+        tool = new ToolGOSelect(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
         tool = new ToolGOZoom(sceneGO);
@@ -66,4 +67,66 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, int type)
         tool->setType(type);
     }
     return tool;
+}
+
+void ToolGOFactory::release(ToolGOAbstract *tool)
+{
+    if (tool != 0L)
+    {
+        switch (tool->type())
+        {
+        case DefinationToolType::TOOL_TYPE_COMMON_MOVE:
+            delete (ToolGOMove*)tool;
+            break;
+        case DefinationToolType::TOOL_TYPE_COMMON_POINTER:
+            delete (ToolGOPointer*)tool;
+            break;
+        case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
+            delete (ToolGOSelect*)tool;
+            break;
+        case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
+            delete (ToolGOZoom*)tool;
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_TEXT:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_3:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_4:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_5:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_6:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_7:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_8:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_9:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_10:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_11:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_12:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_13:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_14:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_15:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_SINGAL:
+            break;
+        default:
+            delete tool;
+        }
+    }
 }

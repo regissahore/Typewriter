@@ -10,11 +10,13 @@
 #include "toolgopointer.h"
 #include "toolgomove.h"
 #include "toolgozoom.h"
+#include "toolgoselect.h"
 
 class ToolGOFactory
 {
 public:
     static ToolGOAbstract* produce(SceneGO *sceneGO, int type);
+    static void release(ToolGOAbstract* tool);
 };
 
 #endif // TOOLGOFACTORY_H
