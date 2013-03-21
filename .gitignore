@@ -10,3 +10,6 @@ doxygen
 
 # UI Files
 *.ui
+
+# Documents
+*.doc
