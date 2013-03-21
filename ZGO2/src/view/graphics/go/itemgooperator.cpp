@@ -36,9 +36,23 @@ const GOOperator* ItemGOOperator::model() const
 void ItemGOOperator::setModel(GOOperator *model)
 {
     this->_model = model;
-    this->childItems().clear();
+    for (int i = 0; i < this->_inputArrows->size(); ++i)
+    {
+        this->_inputArrows->at(i)->setParentItem(0L);
+        delete this->_inputArrows->at(i);
+    }
     this->_inputArrows->clear();
+    for (int i = 0; i < this->_subInputArrows->size(); ++i)
+    {
+        this->_subInputArrows->at(i)->setParentItem(0L);
+        delete this->_subInputArrows->at(i);
+    }
     this->_subInputArrows->clear();
+    for (int i = 0; i < this->_outputArrows->size(); ++i)
+    {
+        this->_outputArrows->at(i)->setParentItem(0L);
+        delete this->_outputArrows->at(i);
+    }
     this->_outputArrows->clear();
     int number = this->model()->input()->number();
     double startY = - (number - 1) * 12.5;
@@ -68,7 +82,7 @@ void ItemGOOperator::setModel(GOOperator *model)
         this->_outputArrows->push_back(arrow);
         startY += 25.0;
     }
-    if (this->model()->subInput())
+    if (this->model()->subInput()->number() > 0)
     {
         ItemArrow *arrow = new ItemArrow(this);
         arrow->setPos(0, -75);

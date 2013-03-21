@@ -3,7 +3,7 @@
 /**
  * 构造函数。
  */
-ItemGOSource::ItemGOSource() : ItemGOOperator()
+ItemGOSource::ItemGOSource(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
 }
 

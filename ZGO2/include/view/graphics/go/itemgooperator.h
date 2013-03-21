@@ -8,6 +8,7 @@
 #include "itemmoveable.h"
 #include "itemarrow.h"
 #include "gooperator.h"
+#include "gooperatorfactory.h"
 
 class ItemGOOperator : public ItemMoveable
 {

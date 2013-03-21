@@ -5,7 +5,6 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "itemgooperator.h"
-#include "gooperatorfactory.h"
 
 class ItemGOOperatorType1 : public ItemGOOperator
 {

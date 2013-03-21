@@ -16,6 +16,7 @@ INCLUDEPATH += ./include/controller//message/factory
 INCLUDEPATH += ./include/controller//message/message
 INCLUDEPATH += ./include/model/common
 INCLUDEPATH += ./include/model/go
+INCLUDEPATH += ./include/view/dialog
 INCLUDEPATH += ./include/view/graphics/common
 INCLUDEPATH += ./include/view/graphics/go
 INCLUDEPATH += ./include/view/main/dock/message
@@ -85,7 +86,42 @@ HEADERS += \
     include/view/graphics/go/toolgooperator.h \
     include/view/graphics/go/toolgooperatortype1.h \
     include/view/graphics/go/itemgooperatortype1.h \
-    include/model/go/gooperatorfactory.h
+    include/model/go/gooperatorfactory.h \
+    include/view/dialog/dialogintegerinput.h \
+    include/view/graphics/go/toolgooperatorunfixedinput.h \
+    include/view/graphics/go/itemgooperatortype2.h \
+    include/view/graphics/go/toolgooperatortype2.h \
+    include/view/graphics/go/toolgooperatorunfixedoutput.h \
+    include/view/graphics/go/itemgooperatortype3.h \
+    include/view/graphics/go/toolgooperatortype3.h \
+    include/view/graphics/go/itemgooperatortype4.h \
+    include/view/graphics/go/toolgooperatortype4.h \
+    include/view/graphics/go/itemgooperatortype5.h \
+    include/view/graphics/go/toolgooperatortype5.h \
+    include/view/graphics/go/itemgooperatortype6.h \
+    include/view/graphics/go/toolgooperatortype6.h \
+    include/view/graphics/go/itemgooperatortype7.h \
+    include/view/graphics/go/toolgooperatortype7.h \
+    include/view/graphics/go/itemgooperatortype8.h \
+    include/view/graphics/go/toolgooperatortype8.h \
+    include/view/graphics/go/itemgooperatortype9.h \
+    include/view/graphics/go/toolgooperatortype9.h \
+    include/view/graphics/go/itemgooperatortype10.h \
+    include/view/graphics/go/toolgooperatortype10.h \
+    include/view/graphics/go/itemgooperatortype11.h \
+    include/view/graphics/go/toolgooperatortype11.h \
+    include/view/graphics/go/itemgooperatortype12.h \
+    include/view/graphics/go/toolgooperatortype12.h \
+    include/view/graphics/go/itemgooperatortype13.h \
+    include/view/graphics/go/toolgooperatortype13.h \
+    include/view/graphics/go/itemgooperatortype14.h \
+    include/view/graphics/go/toolgooperatortype14.h \
+    include/view/graphics/go/itemgooperatortype15.h \
+    include/view/graphics/go/toolgooperatortype15.h \
+    include/view/graphics/go/itemgooperatortype16.h \
+    include/view/graphics/go/toolgooperatortype16.h \
+    include/view/graphics/go/itemgooperatortype17.h \
+    include/view/graphics/go/toolgooperatortype17.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -147,7 +183,42 @@ SOURCES += \
     src/view/graphics/go/toolgooperator.cpp \
     src/view/graphics/go/toolgooperatortype1.cpp \
     src/view/graphics/go/itemgooperatortype1.cpp \
-    src/model/go/gooperatorfactory.cpp
+    src/model/go/gooperatorfactory.cpp \
+    src/view/dialog/dialogintegerinput.cpp \
+    src/view/graphics/go/toolgooperatorunfixedinput.cpp \
+    src/view/graphics/go/itemgooperatortype2.cpp \
+    src/view/graphics/go/toolgooperatortype2.cpp \
+    src/view/graphics/go/toolgooperatorunfixedoutput.cpp \
+    src/view/graphics/go/itemgooperatortype3.cpp \
+    src/view/graphics/go/toolgooperatortype3.cpp \
+    src/view/graphics/go/itemgooperatortype4.cpp \
+    src/view/graphics/go/toolgooperatortype4.cpp \
+    src/view/graphics/go/itemgooperatortype5.cpp \
+    src/view/graphics/go/toolgooperatortype5.cpp \
+    src/view/graphics/go/itemgooperatortype6.cpp \
+    src/view/graphics/go/toolgooperatortype6.cpp \
+    src/view/graphics/go/itemgooperatortype7.cpp \
+    src/view/graphics/go/toolgooperatortype7.cpp \
+    src/view/graphics/go/itemgooperatortype8.cpp \
+    src/view/graphics/go/toolgooperatortype8.cpp \
+    src/view/graphics/go/itemgooperatortype9.cpp \
+    src/view/graphics/go/toolgooperatortype9.cpp \
+    src/view/graphics/go/itemgooperatortype10.cpp \
+    src/view/graphics/go/toolgooperatortype10.cpp \
+    src/view/graphics/go/itemgooperatortype11.cpp \
+    src/view/graphics/go/toolgooperatortype11.cpp \
+    src/view/graphics/go/itemgooperatortype12.cpp \
+    src/view/graphics/go/toolgooperatortype12.cpp \
+    src/view/graphics/go/itemgooperatortype13.cpp \
+    src/view/graphics/go/toolgooperatortype13.cpp \
+    src/view/graphics/go/itemgooperatortype14.cpp \
+    src/view/graphics/go/toolgooperatortype14.cpp \
+    src/view/graphics/go/itemgooperatortype15.cpp \
+    src/view/graphics/go/toolgooperatortype15.cpp \
+    src/view/graphics/go/itemgooperatortype16.cpp \
+    src/view/graphics/go/toolgooperatortype16.cpp \
+    src/view/graphics/go/itemgooperatortype17.cpp \
+    src/view/graphics/go/toolgooperatortype17.cpp
 
 FORMS += \
     test.ui

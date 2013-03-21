@@ -11,7 +11,7 @@
 class ItemGOSource : public ItemGOOperator
 {
 public:
-    ItemGOSource();
+    ItemGOSource(QGraphicsItem *parent = 0);
     void setModel(GOOperator *model);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
