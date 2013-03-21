@@ -1,5 +1,6 @@
 #include "toolgooperatortype13.h"
 #include "scenego.h"
+#include "gooperator.h"
 
 /**
  * Constructor.

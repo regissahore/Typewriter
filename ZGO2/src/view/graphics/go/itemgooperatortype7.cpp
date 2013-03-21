@@ -1,4 +1,6 @@
 #include "itemgooperatortype7.h"
+#include "gooperatorfactory.h"
+#include "gooperator.h"
 
 /**
  * Constructor.

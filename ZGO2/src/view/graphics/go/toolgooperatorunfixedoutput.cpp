@@ -1,5 +1,7 @@
 #include "toolgooperatorunfixedoutput.h"
 #include "scenego.h"
+#include "gooperatorfactory.h"
+#include "gooperator.h"
 
 ToolGOOperatorUnfixedOutput::ToolGOOperatorUnfixedOutput(SceneGO *sceneGO) : ToolGOOperator(sceneGO)
 {

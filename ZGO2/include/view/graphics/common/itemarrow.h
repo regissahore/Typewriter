@@ -13,6 +13,8 @@ public:
     ItemArrow(QGraphicsItem *parent = 0);
     const QPoint end() const;
     void setEnd(const QPoint &end);
+    void setEnd(const int x, const int y);
+    QPoint sceneEnd();
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 private:

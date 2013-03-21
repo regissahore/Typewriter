@@ -28,6 +28,7 @@
 #include "toolgooperatortype15.h"
 #include "toolgooperatortype16.h"
 #include "toolgooperatortype17.h"
+#include "toolgosignal.h"
 
 class ToolGOFactory
 {

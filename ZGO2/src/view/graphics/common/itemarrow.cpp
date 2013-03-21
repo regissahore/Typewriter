@@ -28,6 +28,27 @@ void ItemArrow::setEnd(const QPoint &end)
 }
 
 /**
+ * Set the end position of the arrow.
+ * @param x x position.
+ * @param y y position.
+ */
+void ItemArrow::setEnd(const int x, const int y)
+{
+    this->_end.setX(x);
+    this->_end.setY(y);
+}
+
+/**
+ * Get the end position in scene coordinate.
+ * @return End position.
+ */
+QPoint ItemArrow::sceneEnd()
+{
+    return QPoint(this->pos().x() + this->end().x(),
+                  this->pos().y() + this->end().y());
+}
+
+/**
  * 绘制箭头。
  * @param painter 画笔。
  * @param item 配置信息。

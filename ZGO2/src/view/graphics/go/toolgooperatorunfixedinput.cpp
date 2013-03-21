@@ -1,5 +1,7 @@
 #include "toolgooperatorunfixedinput.h"
 #include "scenego.h"
+#include "gooperatorfactory.h"
+#include "gooperator.h"
 
 /**
  * Constructor.

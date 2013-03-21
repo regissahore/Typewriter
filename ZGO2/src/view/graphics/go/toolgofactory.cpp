@@ -77,6 +77,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
         tool = new ToolGOOperatorType17(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_SINGAL:
+        tool = new ToolGOSignal(sceneGO);
         break;
     }
     if (tool != 0L)
@@ -158,6 +159,7 @@ void ToolGOFactory::release(ToolGOAbstract *tool)
             delete (ToolGOOperatorType17*)tool;
             break;
         case DefinationToolType::TOOL_TYPE_GO_SINGAL:
+            delete (ToolGOSignal*)tool;
             break;
         default:
             delete tool;

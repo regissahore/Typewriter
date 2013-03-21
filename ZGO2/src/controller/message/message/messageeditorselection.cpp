@@ -1,4 +1,5 @@
 #include "messageeditorselection.h"
+#include "gooperator.h"
 
 /**
  * Constructor.
