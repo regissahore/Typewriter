@@ -13,6 +13,7 @@ class ToolGOOperatorType13 : public ToolGOOperatorUnfixedInput
 public:
     ToolGOOperatorType13(SceneGO *sceneGO);
     void getOutputNumber();
+    void activate();
 };
 
 #endif // TOOLGOOPERATORTYPE13_H

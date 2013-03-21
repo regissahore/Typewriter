@@ -14,23 +14,23 @@ MessageEditorSelection::MessageEditorSelection() : Message(), TypedItem()
  */
 QString MessageEditorSelection::toString()
 {
-    QString str = "Type: ";
+    QString str = QObject::tr("Type: ");
     switch (this->type())
     {
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
-        str += "GO operator. ";
+        str += QObject::tr("GO operator. ");
         if (this->message())
         {
-            str += QString("Operator Type: %1 ID: %2").
-                    arg(((GOOperator*)this->message())->type()).
-                    arg(((GOOperator*)this->message())->id());
+            str += QString(QObject::tr("Operator Type: %1 ID: %2")).
+                    arg(((ItemGOOperator*)this->message())->model()->type()).
+                    arg(((ItemGOOperator*)this->message())->model()->id());
         }
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL:
-        str += "GO signal. ";
+        str += QObject::tr("GO signal. ");
         break;
     default:
-        return "Undefined selection. ";
+        return QObject::tr("Undefined selection. ");
     }
     return str;
 }

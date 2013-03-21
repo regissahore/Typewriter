@@ -1,7 +1,8 @@
 #include "itemmoveable.h"
 
 /**
- * 构造函数。
+ * Constructor.
+ * @param parent Parent graphics item.
  */
 ItemMoveable::ItemMoveable(QGraphicsItem *parent) : ItemDrawable(parent)
 {
@@ -17,20 +18,20 @@ bool ItemMoveable::moveable() const
 }
 
 /**
- * 鼠标按下事件。
- * @param event 鼠标事件。
+ * Start moving the item.
+ * @param event Mouse event.
  */
-void ItemMoveable::mousePressEvent(QGraphicsSceneMouseEvent *event)
+void ItemMoveable::startMove(QGraphicsSceneMouseEvent *event)
 {
     this->_mousePressPosition = event->scenePos();
     update();
 }
 
 /**
- * 鼠标移动事件。
- * @param event 鼠标事件。
+ * Moving the item.
+ * @param event Mouse event.
  */
-void ItemMoveable::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+void ItemMoveable::move(QGraphicsSceneMouseEvent *event)
 {
     this->setPos(this->pos() + event->scenePos() - this->_mousePressPosition);
     this->_mousePressPosition = event->scenePos();
@@ -38,10 +39,10 @@ void ItemMoveable::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 }
 
 /**
- * 鼠标抬起事件。
- * @param event 鼠标事件。
+ * Stop moving the item.
+ * @param event Mouse event.
  */
-void ItemMoveable::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
+void ItemMoveable::stopMove(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
     update();

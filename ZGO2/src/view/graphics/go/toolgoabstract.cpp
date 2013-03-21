@@ -13,6 +13,13 @@ ToolGOAbstract::ToolGOAbstract(SceneGO *sceneGO)
 }
 
 /**
+ * Activate the tool.
+ */
+void ToolGOAbstract::activate()
+{
+}
+
+/**
  * Get the pointer of the SceneGO entity.
  * @return The pointer to SceneGO entity.
  */

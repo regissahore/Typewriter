@@ -1,11 +1,13 @@
 #include "itemdrawable.h"
 
 /**
- * 构造函数。
+ * Constructor.
+ * @param parent The parent graphics item.
  */
 ItemDrawable::ItemDrawable(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     this->setSize(40, 40);
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_NULL);
 }
 
 /**

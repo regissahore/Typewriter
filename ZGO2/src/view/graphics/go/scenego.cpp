@@ -51,12 +51,14 @@ void SceneGO::selectTool(int type)
             {
                 ToolGOFactory::release(this->_tool);
                 this->_tool = newTool;
+                this->_tool->activate();
             }
         }
     }
     else
     {
         this->_tool = ToolGOFactory::produce(this, type);
+        this->_tool->activate();
     }
 }
 

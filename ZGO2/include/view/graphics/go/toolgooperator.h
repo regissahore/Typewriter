@@ -19,10 +19,12 @@ class ToolGOOperator : public ToolGOAbstract
 {
 public:
     ToolGOOperator(SceneGO *sceneGO);
+    ~ToolGOOperator();
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 protected:
     ItemGOOperator *_GOOperator;
+    bool _finish; /** Whether the item is placed to the editor.  */
 };
 
 #endif // TOOLGOOPERATOR_H

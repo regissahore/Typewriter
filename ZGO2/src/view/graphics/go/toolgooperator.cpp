@@ -8,6 +8,22 @@
 ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->_GOOperator = 0;
+    this->_finish = false;
+}
+
+/**
+ * Delete the operator if the initial process is canceled.
+ */
+ToolGOOperator::~ToolGOOperator()
+{
+    if (this->_finish)
+    {
+        if (this->_GOOperator != 0L)
+        {
+            this->_GOOperator->setParentItem(0L);
+            delete this->_GOOperator;
+        }
+    }
 }
 
 /**
@@ -42,4 +58,5 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     messageEditorSelection->setMessage(this->_GOOperator);
     this->sceneGO()->sendMessage(messageEditorSelection);
     delete factoryEditor;
+    this->_finish = true;
 }

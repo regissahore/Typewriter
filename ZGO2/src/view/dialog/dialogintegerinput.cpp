@@ -14,8 +14,10 @@ DialogIntegerInput::DialogIntegerInput(QWidget *parent) : QDialog(parent)
     this->_integerInput->setMinimum(0);
     this->_integerInput->setMaximum(65535);
     vBoxLayout->addWidget(this->_integerInput);
-    QHBoxLayout *hBoxLayout = new QHBoxLayout(this);
-    vBoxLayout->addLayout(hBoxLayout);
+    QWidget *widget = new QWidget(this);
+    QHBoxLayout *hBoxLayout = new QHBoxLayout(widget);
+    widget->setLayout(hBoxLayout);
+    vBoxLayout->addWidget(widget);
     QSpacerItem *spacer = new QSpacerItem(20, 0, QSizePolicy::Expanding, QSizePolicy::Minimum);
     hBoxLayout->addItem(spacer);
     QPushButton *confirmButton = new QPushButton(tr("Confirm"), this);

@@ -10,13 +10,14 @@
 #include "toolgoabstract.h"
 #include "itemmoveable.h"
 #include "messagefactorytool.h"
+#include "definationeditorselectiontype.h"
 
 class ToolGOPointer : public ToolGOAbstract
 {
 public:
     ToolGOPointer(SceneGO *sceneGO);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 
 protected:

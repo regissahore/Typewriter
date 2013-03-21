@@ -93,11 +93,11 @@ void Editor::currentChange(int index)
         {
             if (i == index)
             {
-                this->_editors->at(index)->activity();
+                this->_editors->at(index)->activate();
             }
             else
             {
-                this->_editors->at(index)->inactivity();
+                this->_editors->at(index)->inactivate();
             }
         }
     }

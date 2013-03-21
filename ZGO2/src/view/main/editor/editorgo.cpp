@@ -17,6 +17,7 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     this->_filter = tr("GO Files(*.go)");
 
     this->_savedID = 1;
+    this->activate();
 }
 
 /**
@@ -29,12 +30,12 @@ void EditorGO::bindMessage(MessageController *controller)
     this->view->bindMessage(controller);
 }
 
-void EditorGO::activity()
+void EditorGO::activate()
 {
     GOOperatorFactory::setID(this->_savedID);
 }
 
-void EditorGO::inactivity()
+void EditorGO::inactivate()
 {
     this->_savedID = GOOperatorFactory::currentID();
 }

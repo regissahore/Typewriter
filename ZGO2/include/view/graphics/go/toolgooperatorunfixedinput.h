@@ -12,6 +12,7 @@ class ToolGOOperatorUnfixedInput : public ToolGOOperator
 public:
     ToolGOOperatorUnfixedInput(SceneGO *sceneGO);
     void getInputNumber();
+    void activate();
 };
 
 #endif // TOOLGOOPERATORUNFIXEDINPUT_H

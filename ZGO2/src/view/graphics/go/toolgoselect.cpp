@@ -41,9 +41,9 @@ void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
             this->_status = Status_Moving;
             for (int i = 0; i < this->_items.size(); ++i)
             {
-                ((ItemMoveable*)this->_items[i])->mousePressEvent(event);
+                ((ItemMoveable*)this->_items[i])->ItemMoveable::startMove(event);
             }
-            this->_selection->mousePressEvent(event);
+            this->_selection->startMove(event);
         }
         else
         {
@@ -83,9 +83,9 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     case Status_Moving:
         for (int i = 0; i < this->_items.size(); ++i)
         {
-            ((ItemMoveable*)this->_items[i])->mouseMoveEvent(event);
+            ((ItemMoveable*)this->_items[i])->ItemMoveable::move(event);
         }
-        this->_selection->mouseMoveEvent(event);
+        this->_selection->move(event);
         break;
     default:
         break;
@@ -110,9 +110,9 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     case Status_Moving:
         for (int i = 0; i < this->_items.size(); ++i)
         {
-            ((ItemMoveable*)this->_items[i])->mouseReleaseEvent(event);
+            ((ItemMoveable*)this->_items[i])->ItemMoveable::stopMove(event);
         }
-        this->_selection->mouseReleaseEvent(event);
+        this->_selection->stopMove(event);
         this->_status = Status_Selected;
         break;
     default:

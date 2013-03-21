@@ -19,6 +19,9 @@ public:
     void setModel(GOOperator *model);
     void updateGraphic();
     QRectF boundingRect() const;
+    void startMove(QGraphicsSceneMouseEvent *event);
+    void move(QGraphicsSceneMouseEvent *event);
+    void stopMove(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 protected:
@@ -26,6 +29,7 @@ protected:
     QVector<ItemArrow*> *_subInputArrows; /** 次输入箭头。 */
     QVector<ItemArrow*> *_outputArrows; /** 输出箭头。 */
     GOOperator *_model; /** GO操作符模型。 */
+    bool isInside(int x, int y);
 };
 
 #endif // ITEMGOOPERATOR_H

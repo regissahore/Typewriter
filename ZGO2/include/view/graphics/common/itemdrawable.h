@@ -4,13 +4,15 @@
  * 基本的可绘制图形。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "qmath.h"
+#include <qmath.h>
 #include <QPainter>
 #include <QGraphicsItem>
+#include "typeditem.h"
+#include "definationeditorselectiontype.h"
 
 const double PI = acos(-1.0);
 
-class ItemDrawable : public QGraphicsItem
+class ItemDrawable : public QGraphicsItem, public TypedItem
 {
 public:
     ItemDrawable(QGraphicsItem *parent = 0);

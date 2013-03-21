@@ -10,10 +10,20 @@ ToolGOOperatorType13::ToolGOOperatorType13(SceneGO *sceneGO) : ToolGOOperatorUnf
     this->_GOOperator = new ItemGOOperatorType13();
     this->_GOOperator->setVisible(false);
     this->graphicsScene()->addItem(this->_GOOperator);
+}
+
+/**
+ * Activate.
+ */
+void ToolGOOperatorType13::activate()
+{
     this->getInputNumber();
     this->getOutputNumber();
 }
 
+/**
+ * Get the output number of the model.
+ */
 void ToolGOOperatorType13::getOutputNumber()
 {
     DialogIntegerInput *dialog = new DialogIntegerInput();

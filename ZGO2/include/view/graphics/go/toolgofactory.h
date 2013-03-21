@@ -32,7 +32,7 @@
 class ToolGOFactory
 {
 public:
-    static ToolGOAbstract* produce(SceneGO *sceneGO, int type);
+    static ToolGOAbstract* produce(SceneGO *sceneGO, const int type);
     static void release(ToolGOAbstract* tool);
 };
 

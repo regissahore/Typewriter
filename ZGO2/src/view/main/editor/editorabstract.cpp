@@ -139,15 +139,15 @@ void EditorAbstract::bindMessage(MessageController *controller)
 }
 
 /**
- * The function called when the editor is activity.
+ * The function called when the editor is activate.
  */
-void EditorAbstract::activity()
+void EditorAbstract::activate()
 {
 }
 
 /**
- * The function called when the editor is inactivity.
+ * The function called when the editor is inactivate.
  */
-void EditorAbstract::inactivity()
+void EditorAbstract::inactivate()
 {
 }

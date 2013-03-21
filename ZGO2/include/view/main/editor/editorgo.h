@@ -19,8 +19,8 @@ class EditorGO : public EditorAbstract
 public:
     explicit EditorGO(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
-    void activity();
-    void inactivity();
+    void activate();
+    void inactivate();
     
 protected:
     ViewGO *view;

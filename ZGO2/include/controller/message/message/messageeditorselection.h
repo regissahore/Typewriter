@@ -5,7 +5,7 @@
  * The content of the message is the pointer to the selected item, it is null when nothing is selected.
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "gooperator.h"
+#include "itemgooperator.h"
 #include "gosignal.h"
 #include "message.h"
 #include "definationeditorselectiontype.h"

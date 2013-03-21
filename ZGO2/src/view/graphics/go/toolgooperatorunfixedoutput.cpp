@@ -5,6 +5,11 @@ ToolGOOperatorUnfixedOutput::ToolGOOperatorUnfixedOutput(SceneGO *sceneGO) : Too
 {
 }
 
+void ToolGOOperatorUnfixedOutput::activate()
+{
+    this->getOutputNumber();
+}
+
 /**
  * Get the output number of the GO model.
  */

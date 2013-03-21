@@ -1,7 +1,7 @@
 #ifndef ITEMMOVEABLE_H
 #define ITEMMOVEABLE_H
 /**
- * 基本的可以移动的图形。
+ * The basic moveable graphics item.
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QGraphicsSceneMouseEvent>
@@ -12,9 +12,9 @@ class ItemMoveable : public ItemDrawable
 public:
     ItemMoveable(QGraphicsItem *parent = 0);
     bool moveable() const;
-    void mousePressEvent(QGraphicsSceneMouseEvent *event);
-    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    virtual void startMove(QGraphicsSceneMouseEvent *event);
+    virtual void move(QGraphicsSceneMouseEvent *event);
+    virtual void stopMove(QGraphicsSceneMouseEvent *event);
 
 private:
     QPointF _mousePressPosition;

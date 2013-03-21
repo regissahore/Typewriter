@@ -10,6 +10,14 @@ ToolGOOperatorUnfixedInput::ToolGOOperatorUnfixedInput(SceneGO *sceneGO) : ToolG
 }
 
 /**
+ * Activate.
+ */
+void ToolGOOperatorUnfixedInput::activate()
+{
+    this->getInputNumber();
+}
+
+/**
  * Get the input number of the GO model.
  */
 void ToolGOOperatorUnfixedInput::getInputNumber()

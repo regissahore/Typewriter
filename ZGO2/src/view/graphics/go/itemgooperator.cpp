@@ -1,13 +1,15 @@
 #include "itemgooperator.h"
 
 /**
- * 构造函数。
+ * Constructor.
+ * @param parent The parent graphics item.
  */
 ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
 {
     this->_inputArrows = new QVector<ItemArrow*>();
     this->_subInputArrows = new QVector<ItemArrow*>();
     this->_outputArrows = new QVector<ItemArrow*>();
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR);
 }
 
 /**
@@ -89,6 +91,7 @@ void ItemGOOperator::setModel(GOOperator *model)
         arrow->setEnd(QPoint(0, 50));
         this->_subInputArrows->push_back(arrow);
     }
+    this->prepareGeometryChange();
 }
 
 /**
@@ -105,7 +108,7 @@ void ItemGOOperator::updateGraphic()
  */
 QRectF ItemGOOperator::boundingRect() const
 {
-    /*int num = 3;
+    int num = 3;
     if (this->model()->input()->number() > num)
     {
         num = this->model()->input()->number();
@@ -115,8 +118,43 @@ QRectF ItemGOOperator::boundingRect() const
         num = this->model()->output()->number();
     }
     int height = (num - 1) * 25 + 50;
-    return QRectF(-75, -height * 0.5, 150, height);*/
-    return QRectF(-25, -25, 50, 50);
+    return QRectF(-75, -height * 0.5, 150, height);
+}
+
+/**
+ * Start moving the item.
+ * @param event Mouse event.
+ */
+void ItemGOOperator::startMove(QGraphicsSceneMouseEvent *event)
+{
+    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
+    {
+        this->ItemMoveable::startMove(event);
+    }
+}
+
+/**
+ * Start moving the item.
+ * @param event Mouse event.
+ */
+void ItemGOOperator::move(QGraphicsSceneMouseEvent *event)
+{
+    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
+    {
+        this->ItemMoveable::move(event);
+    }
+}
+
+/**
+ * Start moving the item.
+ * @param event Mouse event.
+ */
+void ItemGOOperator::stopMove(QGraphicsSceneMouseEvent *event)
+{
+    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
+    {
+        this->ItemMoveable::stopMove(event);
+    }
 }
 
 /**
@@ -136,3 +174,15 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     painter->drawEllipse(QPoint(0, 0), 25, 25);
 }
 
+/**
+ * Whether the cursor is inside the moving area.
+ * @param x The scene x position.
+ * @param y The scene y position.
+ * @return Returns true if it is inside, otherwise false.
+ */
+bool ItemGOOperator::isInside(int x, int y)
+{
+    int ox = x - this->pos().x();
+    int oy = y - this->pos().y();
+    return ox > -25 && ox < 25 && oy > -25 && oy < 25;
+}

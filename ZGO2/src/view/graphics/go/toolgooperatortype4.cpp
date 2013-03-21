@@ -9,5 +9,4 @@ ToolGOOperatorType4::ToolGOOperatorType4(SceneGO *sceneGO) : ToolGOOperatorUnfix
     this->_GOOperator = new ItemGOOperatorType4();
     this->_GOOperator->setVisible(false);
     this->graphicsScene()->addItem(this->_GOOperator);
-    this->getOutputNumber();
 }

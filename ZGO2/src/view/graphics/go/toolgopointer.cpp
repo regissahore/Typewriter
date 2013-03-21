@@ -1,4 +1,5 @@
 #include "toolgopointer.h"
+#include "scenego.h"
 
 /**
  * Set the graphics drag mode to pointer.
@@ -9,18 +10,6 @@ ToolGOPointer::ToolGOPointer(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
     this->_item = 0L;
     this->setMoving(false);
-}
-
-/**
- * Move the item if one item is selected.
- * @param Mouse event.
- */
-void ToolGOPointer::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
-{
-    if (this->_moving)
-    {
-        this->_item->mouseMoveEvent(event);
-    }
 }
 
 /**
@@ -42,12 +31,44 @@ void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_item = (ItemMoveable*)drawable;
         setMoving(true);
-        MessageFactoryTool *factory = new MessageFactoryTool();
-        Message* message = new Message();
+        MessageFactoryEditor *factory = new MessageFactoryEditor();
+        MessageEditorSelection* message = (MessageEditorSelection*)factory->produce(MessageFactoryEditor::EDITOR_SELECTION);
+        message->setType(this->_item->TypedItem::type());
         message->setMessage(this->_item);
         this->sceneGO()->sendMessage(message);
         delete factory;
-        this->_item->mousePressEvent(event);
+        switch (this->_item->TypedItem::type())
+        {
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
+            ((ItemGOOperator*)this->_item)->startMove(event);
+            break;
+        default:
+            this->_item->startMove(event);
+            break;
+        }
+    }
+}
+
+
+/**
+ * Move the item if one item is selected.
+ * @param Mouse event.
+ */
+void ToolGOPointer::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
+{
+    if (this->_moving)
+    {
+        switch (this->_item->TypedItem::type())
+        {
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
+            ((ItemGOOperator*)this->_item)->move(event);
+            break;
+        default:
+            this->_item->move(event);
+            break;
+        }
+
+        this->_item->move(event);
     }
 }
 
@@ -59,7 +80,15 @@ void ToolGOPointer::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_moving)
     {
-        this->_item->mouseReleaseEvent(event);
+        switch (this->_item->TypedItem::type())
+        {
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
+            ((ItemGOOperator*)this->_item)->stopMove(event);
+            break;
+        default:
+            this->_item->stopMove(event);
+            break;
+        }
         setMoving(false);
     }
 }
