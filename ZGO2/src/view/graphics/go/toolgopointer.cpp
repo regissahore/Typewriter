@@ -1,5 +1,8 @@
 #include "toolgopointer.h"
 #include "scenego.h"
+#include "definationeditorselectiontype.h"
+#include "itemgosignal.h"
+#include "messagefactoryeditor.h"
 
 /**
  * Set the graphics drag mode to pointer.
@@ -18,6 +21,7 @@ ToolGOPointer::ToolGOPointer(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
  */
 void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    this->_item = 0L;
     ItemDrawable* drawable = (ItemDrawable*)this->graphicsScene()->itemAt(event->scenePos().x(), event->scenePos().y());
     if (0L == drawable)
     {
@@ -107,5 +111,40 @@ void ToolGOPointer::setMoving(bool value)
     else
     {
         this->graphicsView()->setCursor(Qt::ArrowCursor);
+    }
+}
+
+/**
+ * Key release event.
+ * @param event Key event.
+ */
+void ToolGOPointer::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Delete)
+    {
+        if (this->_item != 0L)
+        {
+            int type = this->_item->TypedItem::type();
+            if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+            {
+                QVector<ItemGOSignal*> signal = ((ItemGOOperator*)this->_item)->getConnectedSignals();
+                for (int i = 0; i < signal.size(); ++i)
+                {
+                    signal[i]->removeConnection();
+                    delete signal[i];
+                }
+                signal.clear();
+                delete (ItemGOOperator*)this->_item;
+            }
+            else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+            {
+                delete (ItemGOSignal*)this->_item;
+            }
+            else
+            {
+                delete this->_item;
+            }
+            this->_item = 0L;
+        }
     }
 }

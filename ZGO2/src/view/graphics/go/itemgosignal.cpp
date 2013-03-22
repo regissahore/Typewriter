@@ -25,6 +25,22 @@ ItemGOSignal::~ItemGOSignal()
 }
 
 /**
+ * Return the shape of the object.
+ * @return Shape.
+ */
+QPainterPath ItemGOSignal::shape() const
+{
+    QPainterPath path;
+    path.addRect(-2, -2,
+                 (this->_endPos.x() >> 1) + 4, 4);
+    path.addRect((this->_endPos.x() >> 1) - 2, -2,
+                 4, this->_endPos.y() + 4);
+    path.addRect((this->_endPos.x() >> 1) - 2, this->_endPos.y() - 2,
+                 (this->_endPos.x() >> 1) + 4, 4);
+    return path;
+}
+
+/**
  * Get the start structure.
  * @return Start structure.
  */
@@ -112,5 +128,20 @@ void ItemGOSignal::updatePosition()
             break;
         }
         this->update();
+    }
+}
+
+/**
+ * Remove the connection of the signal.
+ */
+void ItemGOSignal::removeConnection()
+{
+    if (this->_start->op != 0L)
+    {
+        this->start()->op->removeSignal(this, this->start()->type, this->start()->index);
+    }
+    if (this->_end->op != 0L)
+    {
+        this->end()->op->removeSignal(this, this->end()->type, this->end()->index);
     }
 }

@@ -11,6 +11,14 @@ ItemDrawable::ItemDrawable(QGraphicsItem *parent) : QGraphicsItem(parent)
 }
 
 /**
+ * Destructor.
+ */
+ItemDrawable::~ItemDrawable()
+{
+    this->setParentItem(0L);
+}
+
+/**
  * 返回矩形边界。
  * @return 边界。
  */

@@ -1,4 +1,8 @@
+#include <QtAlgorithms>
 #include "toolgoselect.h"
+#include "itemgooperator.h"
+#include "itemgosignal.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Constructor.
@@ -117,5 +121,79 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         break;
     default:
         break;
+    }
+}
+
+/**
+ * Key Release event.
+ * @param event Key event.
+ */
+void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Delete)
+    {
+        QVector<ItemGOSignal*> allSignal;
+        QVector<ItemGOSignal*> selectedSignal;
+        for (int i = 0; i < this->_items.size(); ++i)
+        {
+            int type = ((ItemDrawable*)this->_items[i])->TypedItem::type();
+            if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+            {
+                QVector<ItemGOSignal*> signal = ((ItemGOOperator*)this->_items[i])->getConnectedSignals();
+                for (int j = 0; j < signal.size(); ++j)
+                {
+                    allSignal.push_back(signal[j]);
+                }
+            }
+            else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+            {
+                selectedSignal.push_back((ItemGOSignal*)this->_items[i]);
+            }
+        }
+        for (int i = allSignal.size() - 1; i >= 0; --i)
+        {
+            for (int j = 0; j < selectedSignal.size(); ++j)
+            {
+                if (allSignal[i] == selectedSignal[j])
+                {
+                    allSignal.remove(i);
+                    break;
+                }
+            }
+        }
+        qSort(allSignal.begin(), allSignal.end());
+        for (int i = 0; i < allSignal.size(); ++i)
+        {
+            if (i == 0)
+            {
+                allSignal[i]->removeConnection();
+                delete allSignal[i];
+            }
+            else
+            {
+                if (allSignal[i] != allSignal[i - 1])
+                {
+                    allSignal[i]->removeConnection();
+                    delete allSignal[i];
+                }
+            }
+        }
+        for (int i = 0; i < this->_items.size(); ++i)
+        {
+            int type = ((ItemDrawable*)this->_items[i])->TypedItem::type();
+            if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+            {
+                delete (ItemGOOperator*)this->_items[i];
+            }
+            else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+            {
+                delete (ItemGOSignal*)this->_items[i];
+            }
+            else
+            {
+                delete (ItemDrawable*)this->_items[i];
+            }
+        }
+        allSignal.clear();
     }
 }

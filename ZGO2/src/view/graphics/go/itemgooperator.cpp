@@ -21,7 +21,7 @@ ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
 }
 
 /**
- * 析构函数。
+ * Destructor.
  */
 ItemGOOperator::~ItemGOOperator()
 {
@@ -277,6 +277,12 @@ QPoint ItemGOOperator::getOutputPosition(int index)
     return QPoint(75, y);
 }
 
+/**
+ * Set the signal to one input or output.
+ * @param signal The GO signal.
+ * @param type The connection type. @see DefinationGOType
+ * @param index The index of the connection.
+ */
 void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
 {
     switch (type)
@@ -300,4 +306,72 @@ void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
         }
         break;
     }
+}
+
+/**
+ * Remove the signal to one input or output.
+ * @param signal The GO signal.
+ * @param type The connection type. @see DefinationGOType
+ * @param index The index of the connection.
+ */
+void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
+{
+    switch (type)
+    {
+    case DefinationGOType::GO_OPERATOR_INPUT:
+        if (index >= 0 && index < this->model()->input()->number())
+        {
+            (*this->_inputSignal)[index] = 0L;
+        }
+        break;
+    case DefinationGOType::GO_OPERATOR_SUBINPUT:
+        if (index >= 0 && index < this->model()->subInput()->number())
+        {
+            (*this->_subInputSignal)[index] = 0L;
+        }
+        break;
+    case DefinationGOType::GO_OPERATOR_OUTPUT:
+        if (index >= 0 && index < this->model()->output()->number())
+        {
+            for (int i = 0; i < this->_outputSignal->at(index)->size(); ++i)
+            {
+                if (this->_outputSignal->at(index)->at(i) == signal)
+                {
+                    this->_outputSignal->at(index)->remove(i);
+                }
+            }
+        }
+        break;
+    }
+}
+
+/**
+ * Get all signals connected to the operator.
+ * @return The vector of signal.
+ */
+QVector<ItemGOSignal*> ItemGOOperator::getConnectedSignals() const
+{
+    QVector<ItemGOSignal*> signal;
+    for (int i = 0; i < this->_inputSignal->size(); ++i)
+    {
+        if (this->_inputSignal->at(i) != 0L)
+        {
+            signal.push_back(this->_inputSignal->at(i));
+        }
+    }
+    for (int i = 0; i < this->_subInputSignal->size(); ++i)
+    {
+        if (this->_subInputSignal->at(i) != 0L)
+        {
+            signal.push_back(this->_subInputSignal->at(i));
+        }
+    }
+    for (int i = 0; i < this->_outputSignal->size(); ++i)
+    {
+        for (int j = 0; j < this->_outputSignal->at(i)->size(); ++j)
+        {
+            signal.push_back((this->_outputSignal->at(i)->at(j)));
+        }
+    }
+    return signal;
 }

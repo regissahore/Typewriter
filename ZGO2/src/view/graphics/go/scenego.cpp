@@ -1,4 +1,11 @@
 #include "scenego.h"
+#include "messager.h"
+#include "itemgooperator.h"
+#include "itemgosignal.h"
+#include "itemgosource.h"
+#include "toolgofactory.h"
+#include "messagefactorytool.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * The constructor.
@@ -7,6 +14,31 @@
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
+}
+
+/**
+ * Destructor.
+ */
+SceneGO::~SceneGO()
+{
+    QList<QGraphicsItem*> items = this->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        int type = item->TypedItem::type();
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        {
+            delete (ItemGOOperator*)item;
+        }
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            delete (ItemGOSignal*)item;
+        }
+        else
+        {
+            delete item;
+        }
+    }
 }
 
 /**

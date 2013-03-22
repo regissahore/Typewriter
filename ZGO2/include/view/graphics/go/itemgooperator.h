@@ -29,6 +29,8 @@ public:
     QPoint getSubInputPosition(int index = 0);
     QPoint getOutputPosition(int index);
     void setSignal(ItemGOSignal *signal, int type, int index);
+    void removeSignal(ItemGOSignal *signal, int type, int index);
+    QVector<ItemGOSignal*> getConnectedSignals() const;
 
 protected:
     QVector<ItemArrow*> *_inputArrows; /** Main input arrows. */

@@ -3,16 +3,16 @@
 
 #include <QGraphicsScene>
 #include "messager.h"
-#include "itemgooperator.h"
-#include "itemgosource.h"
-#include "toolgofactory.h"
-#include "messagefactorytool.h"
+
+class Message;
+class ToolGOAbstract;
 
 class SceneGO : public QGraphicsScene, public Messager
 {
     Q_OBJECT
 public:
     explicit SceneGO(QObject *parent = 0);
+    ~SceneGO();
     void selectTool(int type);
     void bindMessage(MessageController *controller);
 

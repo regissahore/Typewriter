@@ -16,6 +16,7 @@ class ItemDrawable : public QGraphicsItem, public TypedItem
 {
 public:
     ItemDrawable(QGraphicsItem *parent = 0);
+    ~ItemDrawable();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     QSize size() const;
