@@ -86,14 +86,12 @@ void ItemSelection::setEnd(const QPoint &end)
 {
     this->_end.setX(end.x());
     this->_end.setY(end.y());
+    this->prepareGeometryChange();
 }
 
 QRectF ItemSelection::boundingRect() const
 {
-    return QRectF(this->pos().x(),
-                  this->pos().y(),
-                  this->pos().x() + this->_end.x(),
-                  this->pos().y() + this->_end.y());
+    return QRectF(0, 0, 0, 0);
 }
 
 /**

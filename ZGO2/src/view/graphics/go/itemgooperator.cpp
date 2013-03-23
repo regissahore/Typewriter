@@ -128,7 +128,8 @@ void ItemGOOperator::updateGraphic()
  */
 QRectF ItemGOOperator::boundingRect() const
 {
-    int num = 3;
+
+    int num = 1;
     if (this->model()->input()->number() > num)
     {
         num = this->model()->input()->number();
@@ -137,8 +138,12 @@ QRectF ItemGOOperator::boundingRect() const
     {
         num = this->model()->output()->number();
     }
-    int height = (num - 1) * 25 + 50;
-    if ((height >> 1) < 75)
+    int height = (num - 1) * 25;
+    if (height < 50)
+    {
+        height = 50;
+    }
+    if ((height >> 1) < 75 && this->model()->subInput()->number() > 0)
     {
         height = 75 + (height >> 1);
         return QRectF(-75, -75, 150, height);
@@ -156,10 +161,35 @@ bool ItemGOOperator::isSelected(float x, float y)
 
 bool ItemGOOperator::isSelected(float x, float y, float width, float height)
 {
-    return x < this->pos().x() - 25 &&
-            x + width > this->pos().x() + 25 &&
-            y < this->pos().y() - 25 &&
-            y + height > this->pos().y() + 25;
+    float left, right, top, bottom;
+    if (width >= 0)
+    {
+        left = x;
+        right = x + width;
+    }
+    else
+    {
+        left = x + width;
+        right = x;
+    }
+    if (height >= 0)
+    {
+        top = y;
+        bottom = y + height;
+    }
+    else
+    {
+        top = y + height;
+        bottom = y;
+    }
+    float thisLeft = this->pos().x() - 25;
+    float thisRight = this->pos().x() + 25;
+    float thisTop = this->pos().y() - 25;
+    float thisBottom = this->pos().y() + 25;
+    return left < thisLeft &&
+            right > thisRight &&
+            top < thisTop &&
+            bottom > thisBottom;
 }
 
 /**

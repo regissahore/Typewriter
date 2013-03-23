@@ -49,10 +49,7 @@ QPoint ItemArrow::sceneEnd()
 
 QRectF ItemArrow::boundingRect() const
 {
-    return QRectF(this->pos().x(),
-                  this->pos().y(),
-                  this->pos().x() + this->end().x(),
-                  this->pos().y() + this->end().y());
+    return QRectF(0, 0, 0, 0);
 }
 
 /**

@@ -2,6 +2,7 @@
 #include "toolgoselect.h"
 #include "itemgooperator.h"
 #include "itemgosignal.h"
+#include "itemgofactory.h"
 #include "definationeditorselectiontype.h"
 
 /**
@@ -13,6 +14,7 @@ ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
     this->_selection = new ItemSelection();
     this->graphicsScene()->addItem(this->_selection);
+    this->_selection->setVisible(false);
     this->_status = Status_Null;
 }
 
@@ -36,24 +38,30 @@ void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
     {
     case Status_Null:
         this->_status = Status_Selecting;
-        this->_selection->setPos(QPoint(event->scenePos().x(), event->scenePos().y()));
+        this->_selection->setPos(QPoint(event->scenePos().x(),
+                                        event->scenePos().y()));
         this->_selection->setEnd(QPoint(0, 0));
+        this->_selection->setVisible(true);
         break;
     case Status_Selected:
-        if (this->_selection->isInside(event->scenePos().x(), event->scenePos().y()))
+        if (this->_selection->isInside(event->scenePos().x(),
+                                       event->scenePos().y()))
         {
             this->_status = Status_Moving;
             for (int i = 0; i < this->_items.size(); ++i)
             {
-                ((ItemMoveable*)this->_items[i])->ItemMoveable::startMove(event);
+                if (((ItemDrawable*)this->_items[i])->moveable())
+                {
+                    ((ItemMoveable*)this->_items[i])->startMove(event);
+                }
             }
             this->_selection->startMove(event);
         }
         else
         {
-            this->_status = Status_Selecting;
-            this->_selection->setPos(QPoint(event->scenePos().x(), event->scenePos().y()));
-            this->_selection->setEnd(QPoint(0, 0));
+            this->_status = Status_Null;
+            this->_items.clear();
+            this->mousePressEvent(event);
         }
         break;
     default:
@@ -87,7 +95,10 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     case Status_Moving:
         for (int i = 0; i < this->_items.size(); ++i)
         {
-            ((ItemMoveable*)this->_items[i])->ItemMoveable::move(event);
+            if (((ItemDrawable*)this->_items[i])->moveable())
+            {
+                ((ItemMoveable*)this->_items[i])->move(event);
+            }
         }
         this->_selection->move(event);
         break;
@@ -102,19 +113,52 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    QList<QGraphicsItem *> items;
+    float x, y, width, height;
     switch (this->_status)
     {
     case Status_Selecting:
         this->_status = Status_Selected;
-        this->_items = this->graphicsScene()->items(this->_selection->pos().x(),
-                                                    this->_selection->pos().y(),
-                                                    this->_selection->end().x(),
-                                                    this->_selection->end().y());
+        if (this->_selection->end().x() >= 0)
+        {
+            x = this->_selection->pos().x();
+            width = this->_selection->end().x();
+        }
+        else
+        {
+            x = this->_selection->pos().x() + this->_selection->end().x();
+            width = -this->_selection->end().x();
+        }
+        if (this->_selection->end().y() >= 0)
+        {
+            y = this->_selection->pos().y();
+            height = this->_selection->end().y();
+        }
+        else
+        {
+            y = this->_selection->pos().y() + this->_selection->end().y();
+            height = -this->_selection->end().y();
+        }
+        items = this->graphicsScene()->items(QRectF(x, y, width, height),
+                                             Qt::IntersectsItemBoundingRect);
+        for (int i = 0; i < items.size(); ++i)
+        {
+            if (((ItemDrawable*)items[i])->isSelected(this->_selection->pos().x(),
+                                                      this->_selection->pos().y(),
+                                                      this->_selection->end().x(),
+                                                      this->_selection->end().y()))
+            {
+                this->_items.push_back(items[i]);
+            }
+        }
         break;
     case Status_Moving:
         for (int i = 0; i < this->_items.size(); ++i)
         {
-            ((ItemMoveable*)this->_items[i])->ItemMoveable::stopMove(event);
+            if (((ItemDrawable*)this->_items[i])->moveable())
+            {
+                ((ItemMoveable*)this->_items[i])->stopMove(event);
+            }
         }
         this->_selection->stopMove(event);
         this->_status = Status_Selected;
@@ -122,6 +166,7 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     default:
         break;
     }
+    items.clear();
 }
 
 /**
@@ -132,68 +177,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete)
     {
-        QVector<ItemGOSignal*> allSignal;
-        QVector<ItemGOSignal*> selectedSignal;
-        for (int i = 0; i < this->_items.size(); ++i)
-        {
-            int type = ((ItemDrawable*)this->_items[i])->TypedItem::type();
-            if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
-            {
-                QList<ItemGOSignal*> signal = ((ItemGOOperator*)this->_items[i])->getConnectedSignals();
-                for (int j = 0; j < signal.size(); ++j)
-                {
-                    allSignal.push_back(signal[j]);
-                }
-            }
-            else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
-            {
-                selectedSignal.push_back((ItemGOSignal*)this->_items[i]);
-            }
-        }
-        for (int i = allSignal.size() - 1; i >= 0; --i)
-        {
-            for (int j = 0; j < selectedSignal.size(); ++j)
-            {
-                if (allSignal[i] == selectedSignal[j])
-                {
-                    allSignal.remove(i);
-                    break;
-                }
-            }
-        }
-        qSort(allSignal.begin(), allSignal.end());
-        for (int i = 0; i < allSignal.size(); ++i)
-        {
-            if (i == 0)
-            {
-                allSignal[i]->removeConnection();
-                delete allSignal[i];
-            }
-            else
-            {
-                if (allSignal[i] != allSignal[i - 1])
-                {
-                    allSignal[i]->removeConnection();
-                    delete allSignal[i];
-                }
-            }
-        }
-        for (int i = 0; i < this->_items.size(); ++i)
-        {
-            int type = ((ItemDrawable*)this->_items[i])->TypedItem::type();
-            if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
-            {
-                delete (ItemGOOperator*)this->_items[i];
-            }
-            else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
-            {
-                delete (ItemGOSignal*)this->_items[i];
-            }
-            else
-            {
-                delete (ItemDrawable*)this->_items[i];
-            }
-        }
-        allSignal.clear();
+        ItemGOFactory::deleteItems(this->_items);
+        this->_items.clear();
     }
 }

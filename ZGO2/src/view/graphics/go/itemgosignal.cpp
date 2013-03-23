@@ -83,10 +83,52 @@ bool ItemGOSignal::isSelected(float x, float y)
 
 bool ItemGOSignal::isSelected(float x, float y, float width, float height)
 {
-    return x < this->pos().x() &&
-            x + width > this->pos().x() + this->_endPos.x() &&
-            y < this->pos().y() &&
-            y + height > this->pos().y() + this->_endPos.y();
+    float left, right, top, bottom;
+    if (width >= 0)
+    {
+        left = x;
+        right = x + width;
+    }
+    else
+    {
+        left = x + width;
+        right = x;
+    }
+    if (height >= 0)
+    {
+        top = y;
+        bottom = y + height;
+    }
+    else
+    {
+        top = y + height;
+        bottom = y;
+    }
+    float thisLeft, thisRight, thisTop, thisBottom;
+    if (this->_endPos.x() >= 0)
+    {
+        thisLeft = this->pos().x();
+        thisRight = this->pos().x() + this->_endPos.x();
+    }
+    else
+    {
+        thisLeft = this->pos().x() + this->_endPos.x();
+        thisRight = this->pos().x();
+    }
+    if (this->_endPos.y() >= 0)
+    {
+        thisTop = this->pos().y();
+        thisBottom = this->pos().y() + this->_endPos.y();
+    }
+    else
+    {
+        thisTop = this->pos().y() + this->_endPos.y();
+        thisBottom = this->pos().y();
+    }
+    return left < thisLeft &&
+            right > thisRight &&
+            top < thisTop &&
+            bottom > thisBottom;
 }
 
 /**

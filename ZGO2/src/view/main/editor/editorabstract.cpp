@@ -13,6 +13,10 @@ EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
     this->setTool(-1);
 }
 
+EditorAbstract::~EditorAbstract()
+{
+}
+
 /**
  * 返回当前编辑器对应文件的地址。
  * @return 文件地址。

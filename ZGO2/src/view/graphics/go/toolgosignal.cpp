@@ -205,6 +205,8 @@ void ToolGOSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 }
             }
         }
+        this->_tempSignal->setEndPosition(0, 0);
+        this->graphicsScene()->removeItem(this->_tempSignal);
     }
 }
 

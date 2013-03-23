@@ -7,6 +7,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QList>
+#include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>
 
 class Messager;
@@ -22,6 +23,7 @@ public:
     static ItemGOSignal* produceSignal();
     static void deleteItem(ItemDrawable *item);
     static void deleteItems(QList<ItemDrawable*> items);
+    static void deleteItems(QList<QGraphicsItem*> items);
     static void sendSelectionMessage(Messager *messager, ItemDrawable *item);
 };
 

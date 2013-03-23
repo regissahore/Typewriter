@@ -102,6 +102,18 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
     {
         deleteItem(items[i]);
     }
+    allSignal.clear();
+    selectedSignal.clear();
+}
+
+void ItemGOFactory::deleteItems(QList<QGraphicsItem *> items)
+{
+    QList<ItemDrawable*> drawableItems;
+    for (int i = 0; i < items.size(); ++i)
+    {
+        drawableItems.push_back((ItemDrawable*) items[i]);
+    }
+    ItemGOFactory::deleteItems(drawableItems);
 }
 
 /**

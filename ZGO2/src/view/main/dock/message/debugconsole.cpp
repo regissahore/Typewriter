@@ -1,4 +1,8 @@
 #include "debugconsole.h"
+#include "messagefactorymainwindow.h"
+#include "messagefactoryeditor.h"
+#include "messagefactorytool.h"
+#include "messagedebug.h"
 
 /**
  * 构造函数。
@@ -23,6 +27,7 @@ void DebugConsole::bindMessage(MessageController *controller)
 {
     QVector<QString> messageNames;
     MessageFactory* factory;
+    controller->listen("Debug", this);
     // 添加对主窗口时间的监听。
     factory = new MessageFactoryMainWindow();
     messageNames = factory->getMessageNameVector();
