@@ -6,7 +6,6 @@
  */
 ItemSelection::ItemSelection(QGraphicsItem *parent) : ItemMoveable(parent)
 {
-    this->setSize(0, 0);
 }
 
 /**
@@ -87,6 +86,14 @@ void ItemSelection::setEnd(const QPoint &end)
 {
     this->_end.setX(end.x());
     this->_end.setY(end.y());
+}
+
+QRectF ItemSelection::boundingRect() const
+{
+    return QRectF(this->pos().x(),
+                  this->pos().y(),
+                  this->pos().x() + this->_end.x(),
+                  this->pos().y() + this->_end.y());
 }
 
 /**

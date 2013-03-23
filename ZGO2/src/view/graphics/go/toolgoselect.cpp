@@ -139,7 +139,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
             int type = ((ItemDrawable*)this->_items[i])->TypedItem::type();
             if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
             {
-                QVector<ItemGOSignal*> signal = ((ItemGOOperator*)this->_items[i])->getConnectedSignals();
+                QList<ItemGOSignal*> signal = ((ItemGOOperator*)this->_items[i])->getConnectedSignals();
                 for (int j = 0; j < signal.size(); ++j)
                 {
                     allSignal.push_back(signal[j]);

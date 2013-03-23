@@ -21,6 +21,7 @@ class ToolGOAbstract : public TypedItem
 {
 public:
     ToolGOAbstract(SceneGO *sceneGO);
+    virtual ~ToolGOAbstract();
     virtual void activate();
     virtual void keyPressEvent(QKeyEvent *event);
     virtual void keyReleaseEvent(QKeyEvent *event);

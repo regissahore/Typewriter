@@ -4,7 +4,6 @@
  * 任意角度的箭头。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "qmath.h"
 #include "itemdrawable.h"
 
 class ItemArrow : public ItemDrawable
@@ -15,6 +14,7 @@ public:
     void setEnd(const QPoint &end);
     void setEnd(const int x, const int y);
     QPoint sceneEnd();
+    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 private:

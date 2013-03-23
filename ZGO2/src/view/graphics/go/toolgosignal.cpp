@@ -3,6 +3,7 @@
 #include "itemgooperator.h"
 #include "gooperator.h"
 #include "definationgotype.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Constructor.

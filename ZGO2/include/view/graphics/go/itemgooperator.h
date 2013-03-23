@@ -16,21 +16,21 @@ class ItemGOOperator : public ItemMoveable
 {
 public:
     ItemGOOperator(QGraphicsItem *parent = 0);
-    ~ItemGOOperator();
+    virtual ~ItemGOOperator();
     GOOperator *model() const;
     void setModel(GOOperator *model);
     void updateGraphic();
     QRectF boundingRect() const;
-    void startMove(QGraphicsSceneMouseEvent *event);
+    bool isSelected(float x, float y);
+    bool isSelected(float x, float y, float width, float height);
     void move(QGraphicsSceneMouseEvent *event);
-    void stopMove(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     QPoint getInputPosition(int index);
     QPoint getSubInputPosition(int index = 0);
     QPoint getOutputPosition(int index);
     void setSignal(ItemGOSignal *signal, int type, int index);
     void removeSignal(ItemGOSignal *signal, int type, int index);
-    QVector<ItemGOSignal*> getConnectedSignals() const;
+    QList<ItemGOSignal*> getConnectedSignals() const;
 
 protected:
     QVector<ItemArrow*> *_inputArrows; /** Main input arrows. */
@@ -41,7 +41,6 @@ protected:
     QVector<QVector<ItemGOSignal*>*> *_outputSignal;
 
     GOOperator *_model; /** The model of GO operator. */
-    bool isInside(int x, int y);
 };
 
 #endif // ITEMGOOPERATOR_H

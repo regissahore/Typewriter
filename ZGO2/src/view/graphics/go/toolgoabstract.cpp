@@ -12,6 +12,10 @@ ToolGOAbstract::ToolGOAbstract(SceneGO *sceneGO)
     this->_graphicsView = (GraphicsView*)this->_graphicsScene->parent();
 }
 
+ToolGOAbstract::~ToolGOAbstract()
+{
+}
+
 /**
  * Activate the tool.
  */

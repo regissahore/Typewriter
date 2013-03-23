@@ -1,11 +1,9 @@
 #ifndef GRAPHICSVIEW_H
 #define GRAPHICSVIEW_H
 /**
- * 基本的GraphicsView。
+ * The basic graphics view。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include <qmath.h>
-#include <QKeyEvent>
 #include <QWheelEvent>
 #include <QGraphicsView>
 
@@ -22,7 +20,6 @@ public:
     void zoomOut(int level = 5);
 
 protected:
-    //View *view() const;
     void setupMatrix();
     void wheelEvent(QWheelEvent *event);
 

@@ -5,7 +5,6 @@
  */
 ItemArrow::ItemArrow(QGraphicsItem *parent) : ItemDrawable(parent)
 {
-    this->setSize(0, 0);
 }
 
 /**
@@ -45,6 +44,14 @@ void ItemArrow::setEnd(const int x, const int y)
 QPoint ItemArrow::sceneEnd()
 {
     return QPoint(this->pos().x() + this->end().x(),
+                  this->pos().y() + this->end().y());
+}
+
+QRectF ItemArrow::boundingRect() const
+{
+    return QRectF(this->pos().x(),
+                  this->pos().y(),
+                  this->pos().x() + this->end().x(),
                   this->pos().y() + this->end().y());
 }
 

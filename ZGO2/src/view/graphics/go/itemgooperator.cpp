@@ -4,6 +4,7 @@
 #include "gooperatorfactory.h"
 #include "itemgosignal.h"
 #include "definationgotype.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Constructor.
@@ -145,16 +146,20 @@ QRectF ItemGOOperator::boundingRect() const
     return QRectF(-75, -height * 0.5, 150, height);
 }
 
-/**
- * Start moving the item.
- * @param event Mouse event.
- */
-void ItemGOOperator::startMove(QGraphicsSceneMouseEvent *event)
+bool ItemGOOperator::isSelected(float x, float y)
 {
-    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
-    {
-        this->ItemMoveable::startMove(event);
-    }
+    return x > this->pos().x() - 25 &&
+            x < this->pos().x() + 25 &&
+            y > this->pos().y() - 25 &&
+            y < this->pos().y() + 25;
+}
+
+bool ItemGOOperator::isSelected(float x, float y, float width, float height)
+{
+    return x < this->pos().x() - 25 &&
+            x + width > this->pos().x() + 25 &&
+            y < this->pos().y() - 25 &&
+            y + height > this->pos().y() + 25;
 }
 
 /**
@@ -163,45 +168,11 @@ void ItemGOOperator::startMove(QGraphicsSceneMouseEvent *event)
  */
 void ItemGOOperator::move(QGraphicsSceneMouseEvent *event)
 {
-    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
+    this->ItemMoveable::move(event);
+    QList<ItemGOSignal *> signal = this->getConnectedSignals();
+    for (int i = 0; i < signal.size(); ++i)
     {
-        this->ItemMoveable::move(event);
-        for (int i = 0; i < this->_inputSignal->size(); ++i)
-        {
-            if (this->_inputSignal->at(i) != 0L)
-            {
-                this->_inputSignal->at(i)->updatePosition();
-            }
-        }
-        for (int i = 0; i < this->_subInputSignal->size(); ++i)
-        {
-            if (this->_subInputSignal->at(i) != 0L)
-            {
-                this->_subInputSignal->at(i)->updatePosition();
-            }
-        }
-        for (int i = 0; i < this->_outputSignal->size(); ++i)
-        {
-            if (this->_outputSignal->size() > 0)
-            {
-                for (int j = 0; j < this->_outputSignal->at(i)->size(); ++j)
-                {
-                    this->_outputSignal->at(i)->at(j)->updatePosition();
-                }
-            }
-        }
-    }
-}
-
-/**
- * Start moving the item.
- * @param event Mouse event.
- */
-void ItemGOOperator::stopMove(QGraphicsSceneMouseEvent *event)
-{
-    if (this->isInside(event->scenePos().x(), event->scenePos().y()))
-    {
-        this->ItemMoveable::stopMove(event);
+        signal[i]->updatePosition();
     }
 }
 
@@ -217,22 +188,13 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     Q_UNUSED(widget);
     painter->setPen(Qt::black);
     painter->setBrush(Qt::NoBrush);
-    painter->drawText(QRectF(-25, -25, 50, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
-    painter->drawText(QRectF(-1000, 35, 2000, 40), Qt::AlignHCenter | Qt::AlignTop, this->model()->name());
+    painter->drawText(QRectF(-25, -25, 50, 50),
+                      Qt::AlignHCenter | Qt::AlignVCenter,
+                      QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
+    painter->drawText(QRectF(-1000, 35, 2000, 40),
+                      Qt::AlignHCenter | Qt::AlignTop,
+                      this->model()->name());
     painter->drawEllipse(QPoint(0, 0), 25, 25);
-}
-
-/**
- * Whether the cursor is inside the moving area.
- * @param x The scene x position.
- * @param y The scene y position.
- * @return Returns true if it is inside, otherwise false.
- */
-bool ItemGOOperator::isInside(int x, int y)
-{
-    int ox = x - this->pos().x();
-    int oy = y - this->pos().y();
-    return ox > -25 && ox < 25 && oy > -25 && oy < 25;
 }
 
 /**
@@ -349,9 +311,9 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
  * Get all signals connected to the operator.
  * @return The vector of signal.
  */
-QVector<ItemGOSignal*> ItemGOOperator::getConnectedSignals() const
+QList<ItemGOSignal *> ItemGOOperator::getConnectedSignals() const
 {
-    QVector<ItemGOSignal*> signal;
+    QList<ItemGOSignal*> signal;
     for (int i = 0; i < this->_inputSignal->size(); ++i)
     {
         if (this->_inputSignal->at(i) != 0L)

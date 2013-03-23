@@ -18,6 +18,7 @@ public:
     int bottom() const;
     bool isInside(int x, int y) const;
     void setEnd(const QPoint &end);
+    QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 private:

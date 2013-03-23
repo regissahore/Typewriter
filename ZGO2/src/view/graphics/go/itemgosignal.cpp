@@ -1,6 +1,8 @@
+#include <QtAlgorithms>
 #include "itemgosignal.h"
 #include "itemgooperator.h"
 #include "definationgotype.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Constructor.
@@ -24,20 +26,67 @@ ItemGOSignal::~ItemGOSignal()
     delete this->_end;
 }
 
-/**
- * Return the shape of the object.
- * @return Shape.
- */
-QPainterPath ItemGOSignal::shape() const
+QRectF ItemGOSignal::boundingRect() const
 {
-    QPainterPath path;
-    path.addRect(-2, -2,
-                 (this->_endPos.x() >> 1) + 4, 4);
-    path.addRect((this->_endPos.x() >> 1) - 2, -2,
-                 4, this->_endPos.y() + 4);
-    path.addRect((this->_endPos.x() >> 1) - 2, this->_endPos.y() - 2,
-                 (this->_endPos.x() >> 1) + 4, 4);
-    return path;
+    return QRectF(0, -2, this->_endPos.x(), this->_endPos.y() + 4);
+}
+
+bool ItemGOSignal::isSelected(float x, float y)
+{
+    float left = this->pos().x();
+    float right = this->pos().x() + (this->_endPos.x() >> 1);
+    if (left > right)
+    {
+        qSwap(left, right);
+    }
+    if (x >= left && x <= right)
+    {
+        float top = this->pos().y() - 2;
+        float bottom = this->pos().y() + 2;
+        if (y >= top && y <= bottom)
+        {
+            return true;
+        }
+    }
+    left = this->pos().x() + (this->_endPos.x() >> 1);
+    right = this->pos().x() + this->_endPos.x();
+    if (left > right)
+    {
+        qSwap(left, right);
+    }
+    if (x >= left && x <= right)
+    {
+        float top = this->pos().y() + this->_endPos.y() - 2;
+        float bottom = this->pos().y() + this->_endPos.y() + 2;
+        if (y >= top && y <= bottom)
+        {
+            return true;
+        }
+    }
+    float top = this->pos().y();
+    float bottom = this->pos().y() + this->_endPos.y();
+    if (top > bottom)
+    {
+        qSwap(top, bottom);
+    }
+    if (y >= top && y <= bottom)
+    {
+        left = this->pos().x() + (this->_endPos.x() >> 1) - 2;
+        right = this->pos().y() + (this->_endPos.y() >> 1) + 2;
+        if (x >= left && x <= right)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool ItemGOSignal::isSelected(float x, float y, float width, float height)
+{
+    return x < this->pos().x() &&
+            x + width > this->pos().x() + this->_endPos.x() &&
+            y < this->pos().y() &&
+            y + height > this->pos().y() + this->_endPos.y();
 }
 
 /**
@@ -68,6 +117,8 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->_endPos.setX(x);
     this->_endPos.setY(y);
     this->update();
+    this->prepareGeometryChange();
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
 }
 
 /**
@@ -76,9 +127,7 @@ void ItemGOSignal::setEndPosition(int x, int y)
  */
 void ItemGOSignal::setEndPosition(QPointF pos)
 {
-    this->_endPos.setX(pos.x());
-    this->_endPos.setY(pos.y());
-    this->update();
+    this->setEndPosition((int)pos.x(), (int)pos.y());
 }
 
 /**
@@ -128,6 +177,7 @@ void ItemGOSignal::updatePosition()
             break;
         }
         this->update();
+        this->prepareGeometryChange();
     }
 }
 

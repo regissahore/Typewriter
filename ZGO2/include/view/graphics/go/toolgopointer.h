@@ -22,7 +22,7 @@ public:
     void keyReleaseEvent(QKeyEvent *event);
 
 protected:
-    ItemMoveable* _item;
+    ItemDrawable* _item;
     bool _moving;
     virtual void setMoving(bool value);
 };

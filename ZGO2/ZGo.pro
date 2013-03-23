@@ -124,7 +124,8 @@ HEADERS += \
     include/view/graphics/go/toolgooperatortype17.h \
     include/controller/defination/definationgotype.h \
     include/view/graphics/go/itemgosignal.h \
-    include/view/graphics/go/toolgosignal.h
+    include/view/graphics/go/toolgosignal.h \
+    include/view/graphics/go/itemgofactory.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -224,7 +225,8 @@ SOURCES += \
     src/view/graphics/go/toolgooperatortype17.cpp \
     src/controller/defination/definationgotype.cpp \
     src/view/graphics/go/itemgosignal.cpp \
-    src/view/graphics/go/toolgosignal.cpp
+    src/view/graphics/go/toolgosignal.cpp \
+    src/view/graphics/go/itemgofactory.cpp
 
 FORMS += \
     test.ui

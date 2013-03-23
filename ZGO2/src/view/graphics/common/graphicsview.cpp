@@ -1,8 +1,9 @@
 #include "graphicsview.h"
+#include "qmath.h"
 
 /**
- * 构造函数。
- * @param parent 父窗体。
+ * Constructor.
+ * @param parent The parent widget.
  */
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {

@@ -21,7 +21,9 @@ public:
 
     ItemGOSignal(QGraphicsItem *parent = 0);
     ~ItemGOSignal();
-    QPainterPath shape() const;
+    QRectF boundingRect() const;
+    bool isSelected(float x, float y);
+    bool isSelected(float x, float y, float width, float height);
     SignalConnection* start();
     SignalConnection* end();
     void setEndPosition(QPointF pos);
