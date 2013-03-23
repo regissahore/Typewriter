@@ -14,6 +14,14 @@ MessageListener::MessageListener()
  */
 MessageListener::~MessageListener()
 {
+    this->releaseListener();
+}
+
+/**
+ * Release the listener.
+ */
+void MessageListener::releaseListener()
+{
     if (this->_messageController)
     {
         for (int i = 0; i < this->_messageListened->size(); ++i)

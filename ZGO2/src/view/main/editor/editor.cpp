@@ -24,11 +24,6 @@ Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
     EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WELCOME);
     this->_editors->push_back(editor);
     this->_tabWidget->addTab(editor, editor->name());
-    // 以下为测试用内容。
-    editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
-    this->_editors->push_back(editor);
-    this->_tabWidget->addTab(editor, editor->name());
-    // 以上为测试用内容。
 }
 
 /**
@@ -85,23 +80,23 @@ bool Editor::tryCloseTab(int index)
  */
 void Editor::currentChange(int index)
 {
-    Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
     if (this->_editors->size() > 0)
     {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = (*this->_editors)[index]->type();
         for (int i = 0; i < this->_editors->size(); ++i)
         {
             if (i == index)
             {
-                this->_editors->at(index)->activate();
+                this->_editors->at(i)->activate();
             }
             else
             {
-                this->_editors->at(index)->inactivate();
+                this->_editors->at(i)->inactivate();
             }
         }
+        this->sendMessage(message);
     }
-    this->sendMessage(message);
 }
 
 /**
@@ -112,12 +107,15 @@ void Editor::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
     controller->listen(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_NEW, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_CLOSE, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_CLOSEALL, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_SAVE, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_SAVEAS, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_SAVEALL, this);
+    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
-    for (int i = 0; i < this->_editors->size(); ++i)
-    {
-        this->_editors->at(i)->bindMessage(controller);
-    }
 }
 
 /**
@@ -133,5 +131,49 @@ void Editor::messageEvent(Message *message)
         {
             this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_CLOSE));
         }
+    case MessageFactory::TYPE_EDITOR_NEW:
+        this->createNewTab();
+        break;
+    case MessageFactory::TYPE_EDITOR_CLOSE:
+        this->tryCloseTab(this->_tabWidget->currentIndex());
+        break;
+    case MessageFactory::TYPE_EDITOR_CLOSEALL:
+        this->tryCloseAll();
+        break;
+    case MessageFactory::TYPE_EDITOR_SAVE:
+        if (this->_editors->size() > 0)
+        {
+            this->_editors->at(this->_tabWidget->currentIndex())->trySave();
+        }
+        break;
+    case MessageFactory::TYPE_EDITOR_SAVEALL:
+        for (int i = 0; i < this->_editors->size(); ++i)
+        {
+            this->_editors->at(i)->trySave();
+        }
+        break;
+    case MessageFactory::TYPE_EDITOR_SAVEAS:
+        if (this->_editors->size() > 0)
+        {
+            this->_editors->at(this->_tabWidget->currentIndex())->trySaveAs();
+        }
+        break;
+    case MessageFactory::TYPE_TOOL_SELECTION:
+        if (this->_editors->size() > 0)
+        {
+            this->_editors->at(this->_tabWidget->currentIndex())->messageEvent(message);
+        }
     }
+}
+
+/**
+ * Create a new GO tab.
+ */
+void Editor::createNewTab()
+{
+    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+    editor->bindMessage(this->MessageCreator::_messageController);
+    this->_editors->push_back(editor);
+    this->_tabWidget->addTab(editor, editor->name());
+    this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
 }

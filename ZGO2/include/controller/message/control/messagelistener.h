@@ -15,7 +15,8 @@ class MessageListener
 {
 public:
     MessageListener();
-    ~MessageListener();
+    virtual ~MessageListener();
+    void releaseListener();
     void setMessageController(MessageController *messageController);
     void addListenedMessage(int messageType);
     virtual void messageEvent(Message *message);

@@ -14,6 +14,7 @@
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
+    this->selectTool(DefinationToolType::TOOL_TYPE_COMMON_POINTER);
 }
 
 /**
@@ -48,7 +49,6 @@ SceneGO::~SceneGO()
 void SceneGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
 }
 
 /**

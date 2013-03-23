@@ -30,6 +30,11 @@ void EditorGO::bindMessage(MessageController *controller)
     this->view->bindMessage(controller);
 }
 
+void EditorGO::messageEvent(Message *message)
+{
+    this->view->messageEvent(message);
+}
+
 void EditorGO::activate()
 {
     GOOperatorFactory::setID(this->_savedID);

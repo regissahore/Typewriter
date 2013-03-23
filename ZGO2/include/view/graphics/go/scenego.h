@@ -15,10 +15,10 @@ public:
     ~SceneGO();
     void selectTool(int type);
     void bindMessage(MessageController *controller);
+    void messageEvent(Message *message);
 
 protected:
     ToolGOAbstract *_tool;
-    void messageEvent(Message *message);
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

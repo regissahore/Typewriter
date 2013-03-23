@@ -12,7 +12,6 @@ class MainMenuFile : public MainMenuAbstract
     Q_OBJECT
 public:
     MainMenuFile();
-    void initMenu(QMenuBar *menuBar);
 
 private:
     QAction *_actionNew;
@@ -24,6 +23,12 @@ private:
     QAction *_actionQuit;
 
 private slots:
+    void slotActionNew();
+    void slotActionClose();
+    void slotActionCloseAll();
+    void slotActionSave();
+    void slotActionSaveAs();
+    void slotActionSaveAll();
     void slotActionQuit();
 };
 

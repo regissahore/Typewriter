@@ -71,6 +71,27 @@ bool EditorAbstract::trySave()
 }
 
 /**
+ * Try save file to another path.
+ * @return Returns true is succeed, otherwise false.
+ */
+bool EditorAbstract::trySaveAs()
+{
+    this->setPath(QFileDialog::getSaveFileName(this, tr("Save File As"), ".", this->_filter));
+    if (this->path() == "")
+    {
+        return false; // 选取文件操作被取消。
+    }
+    QFile file(this->path());
+    this->setName(file.fileName());
+    if (this->save())
+    {
+        this->setModified(false);
+        return true;
+    }
+    return false;
+}
+
+/**
  * 尝试关闭编辑器。
  * @return 如果编辑器允许则返回true，否则返回false。
  */
@@ -139,7 +160,6 @@ void EditorAbstract::setTool(const int type)
 void EditorAbstract::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
 }
 
 /**

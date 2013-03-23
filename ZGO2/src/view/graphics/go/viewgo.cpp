@@ -19,3 +19,8 @@ void ViewGO::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
     this->_scene->bindMessage(controller);
 }
+
+void ViewGO::messageEvent(Message *message)
+{
+    this->_scene->messageEvent(message);
+}

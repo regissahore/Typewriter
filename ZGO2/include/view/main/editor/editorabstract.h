@@ -21,6 +21,7 @@ public:
     void setPath(QString path);
     bool modified() const;
     virtual bool trySave();
+    virtual bool trySaveAs();
     virtual bool tryClose();
     int tool() const;
     void setTool(const int type);

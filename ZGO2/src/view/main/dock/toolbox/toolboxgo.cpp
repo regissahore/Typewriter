@@ -99,7 +99,6 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
 void ToolboxGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    setToolPointer();
 }
 
 void ToolboxGO::setToolPointer()
