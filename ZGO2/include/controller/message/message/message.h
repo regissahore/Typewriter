@@ -1,24 +1,25 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 /**
- * 基本的消息结构。
+ * The basic structrue of message.
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QString>
 #include "identifieditem.h"
-#include "nameditem.h"
+#include "typeditem.h"
 
-class Message : public NamedItem, public IdentifiedItem
+class Message : public IdentifiedItem, public TypedItem
 {
 public:
+    int paramInt;
+    QString paramString;
     Message();
     ~Message();
     void* message() const;
     void setMessage(void* message);
-    virtual QString toString();
 
 protected:
-    void* _message; /** 消息内容。 */
+    void* _message; /** The content of the message. */
 };
 
 #endif // MESSAGE_H

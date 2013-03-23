@@ -7,7 +7,6 @@
 #include <QSettings>
 #include <QMainWindow>
 #include "messager.h"
-#include "messagefactorymainwindow.h"
 #include "mainmenu.h"
 #include "editor.h"
 #include "dockmessage.h"

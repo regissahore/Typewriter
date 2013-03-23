@@ -10,10 +10,6 @@
 #include <QTabWidget>
 #include <QVBoxLayout>
 #include "messager.h"
-#include "messagefactorymainwindow.h"
-#include "messagefactoryeditor.h"
-#include "messageeditortype.h"
-#include "messageeditorselection.h"
 #include "editorfactory.h"
 
 class Editor : public QWidget, public Messager

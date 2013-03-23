@@ -1,9 +1,11 @@
 #include <QtAlgorithms>
+#include "messager.h"
 #include "itemgosignal.h"
 #include "itemgofactory.h"
 #include "itemgooperator.h"
 #include "gooperatorfactory.h"
-#include "messagefactoryeditor.h"
+#include "messagefactory.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Produce a GO operator.
@@ -122,11 +124,8 @@ void ItemGOFactory::deleteItems(QList<QGraphicsItem *> items)
  */
 void ItemGOFactory::sendSelectionMessage(Messager *messager, ItemDrawable *item)
 {
-    MessageFactoryEditor *factory = new MessageFactoryEditor();
-    MessageEditorSelection* message = (MessageEditorSelection*)factory->produce(MessageFactoryEditor::EDITOR_SELECTION);
-    message->setType(item->TypedItem::type());
+    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(item);
     messager->sendMessage(message);
-    delete factory;
 }
 

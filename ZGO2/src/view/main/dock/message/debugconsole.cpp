@@ -1,8 +1,5 @@
 #include "debugconsole.h"
-#include "messagefactorymainwindow.h"
-#include "messagefactoryeditor.h"
-#include "messagefactorytool.h"
-#include "messagedebug.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -25,36 +22,12 @@ DebugConsole::DebugConsole(QWidget *parent) : QWidget(parent), Messager()
  */
 void DebugConsole::bindMessage(MessageController *controller)
 {
-    QVector<QString> messageNames;
-    MessageFactory* factory;
-    controller->listen("Debug", this);
-    // 添加对主窗口时间的监听。
-    factory = new MessageFactoryMainWindow();
-    messageNames = factory->getMessageNameVector();
-    for (int i = 0; i < messageNames.size(); ++i)
+    QList<int> messageTypes = MessageFactory::getMessageTypeList();
+    for (int i = 0; i < messageTypes.size(); ++i)
     {
-        controller->listen(messageNames[i], this);
+        controller->listen(messageTypes[i], this);
     }
-    delete factory;
-    messageNames.clear();
-    // 对编辑器事件的监听。
-    factory = new MessageFactoryEditor();
-    messageNames = factory->getMessageNameVector();
-    for (int i = 0; i < messageNames.size(); ++i)
-    {
-        controller->listen(messageNames[i], this);
-    }
-    delete factory;
-    messageNames.clear();
-    // 对工具事件的监听。
-    factory = new MessageFactoryTool();
-    messageNames = factory->getMessageNameVector();
-    for (int i = 0; i < messageNames.size(); ++i)
-    {
-        controller->listen(messageNames[i], this);
-    }
-    delete factory;
-    messageNames.clear();
+    messageTypes.clear();
 }
 
 /**
@@ -63,7 +36,7 @@ void DebugConsole::bindMessage(MessageController *controller)
  */
 void DebugConsole::messageEvent(Message *message)
 {
-    this->_textEdit->append(QString("[%1] ").arg(message->id()) + message->name() + ": " + message->toString());
+    this->_textEdit->append(QObject::tr("[%1] ").arg(message->id()) + MessageFactory::getMessageTypeName(message->type()) + QObject::tr(" : %1 ").arg(message->paramInt) + message->paramString);
 }
 
 /**

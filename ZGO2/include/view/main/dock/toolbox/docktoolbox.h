@@ -8,7 +8,7 @@
 #include "messager.h"
 #include "definationeditortype.h"
 #include "definationtoolboxtype.h"
-#include "messagefactoryeditor.h"
+#include "messagefactory.h"
 #include "toolboxfactory.h"
 
 class DockToolbox : public QDockWidget, public Messager
@@ -23,6 +23,7 @@ public:
 protected:
     ToolboxAbstract *_toolbox;
     void clear();
+    void setToolbox(int editorType);
 };
 
 #endif // DOCKTOOLBOX_H

@@ -5,7 +5,7 @@
  */
 MessageListener::MessageListener()
 {
-    this->_messageListened = new QVector<QString>();
+    this->_messageListened = new QVector<int>();
     this->_messageController = 0L;
 }
 
@@ -37,9 +37,9 @@ void MessageListener::setMessageController(MessageController *messageController)
  * 设置已监听消息，不需要主动调用，在设置监听时由控制器调用。
  * @param message 消息名称。
  */
-void MessageListener::addListenedMessage(QString message)
+void MessageListener::addListenedMessage(int messageType)
 {
-    this->_messageListened->push_back(message);
+    this->_messageListened->push_back(messageType);
 }
 
 /**

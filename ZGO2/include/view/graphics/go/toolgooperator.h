@@ -9,9 +9,6 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "definationtooltype.h"
-#include "messagefactorytool.h"
-#include "messagefactoryeditor.h"
-#include "messageeditorselection.h"
 #include "toolgoabstract.h"
 #include "itemgooperator.h"
 

@@ -1,3 +1,4 @@
+#include <QObject>
 #include "message.h"
 
 /**
@@ -6,6 +7,8 @@
 Message::Message()
 {
     this->_message = 0L;
+    this->paramInt = 0;
+    this->paramString = "";
 }
 
 /**
@@ -33,11 +36,3 @@ void Message::setMessage(void* message)
     this->_message = message;
 }
 
-/**
- * 返回消息的输出内容。
- * @return 消息输出内容。
- */
-QString Message::toString()
-{
-    return "No detail. ";
-}

@@ -17,11 +17,11 @@ public:
     MessageListener();
     ~MessageListener();
     void setMessageController(MessageController *messageController);
-    void addListenedMessage(QString message);
+    void addListenedMessage(int messageType);
     virtual void messageEvent(Message *message);
 
 protected:
-    QVector<QString> *_messageListened;
+    QVector<int> *_messageListened;
     MessageController *_messageController;
 };
 

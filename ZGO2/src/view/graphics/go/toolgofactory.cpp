@@ -76,7 +76,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
         tool = new ToolGOOperatorType17(sceneGO);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_SINGAL:
+    case DefinationToolType::TOOL_TYPE_GO_SIGNAL:
         tool = new ToolGOSignal(sceneGO);
         break;
     }

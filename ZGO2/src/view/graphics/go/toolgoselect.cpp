@@ -143,6 +143,10 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                              Qt::IntersectsItemBoundingRect);
         for (int i = 0; i < items.size(); ++i)
         {
+            if (items[i] == this->_selection)
+            {
+                continue;
+            }
             if (((ItemDrawable*)items[i])->isSelected(this->_selection->pos().x(),
                                                       this->_selection->pos().y(),
                                                       this->_selection->end().x(),

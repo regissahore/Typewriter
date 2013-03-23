@@ -4,7 +4,7 @@
 #include "itemgosignal.h"
 #include "itemgosource.h"
 #include "toolgofactory.h"
-#include "messagefactorytool.h"
+#include "messagefactory.h"
 #include "definationeditorselectiontype.h"
 
 /**
@@ -48,9 +48,7 @@ SceneGO::~SceneGO()
 void SceneGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    controller->listen(factory->getMessageName(MessageFactoryTool::TOOL_SELECTION), this);
-    delete factory;
+    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
 }
 
 /**
@@ -59,13 +57,12 @@ void SceneGO::bindMessage(MessageController *controller)
  */
 void SceneGO::messageEvent(Message *message)
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    if (message->name() == factory->getMessageName((MessageFactoryTool::TOOL_SELECTION)))
+    switch (message->type())
     {
-        int toolType = ((MessageToolSelection*)message)->type();
-        this->selectTool(toolType);
+    case MessageFactory::TYPE_TOOL_SELECTION:
+        this->selectTool(message->paramInt);
+        break;
     }
-    delete factory;
 }
 
 /**

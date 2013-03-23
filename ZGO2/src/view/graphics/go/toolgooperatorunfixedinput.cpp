@@ -2,6 +2,7 @@
 #include "scenego.h"
 #include "gooperatorfactory.h"
 #include "gooperator.h"
+#include "messagefactory.h"
 
 /**
  * Constructor.
@@ -35,10 +36,8 @@ void ToolGOOperatorUnfixedInput::getInputNumber()
     }
     else
     {
-        MessageFactoryTool *factory = new MessageFactoryTool();
-        MessageToolSelection *message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-        message->setType(DefinationToolType::TOOL_TYPE_COMMON_POINTER);
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
         this->sceneGO()->sendMessage(message);
-        delete factory;
     }
 }

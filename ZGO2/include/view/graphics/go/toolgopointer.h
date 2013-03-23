@@ -9,7 +9,6 @@
 #include <QGraphicsView>
 #include "toolgoabstract.h"
 #include "itemmoveable.h"
-#include "messagefactorytool.h"
 #include "definationeditorselectiontype.h"
 
 class ToolGOPointer : public ToolGOAbstract

@@ -1,4 +1,5 @@
 #include "editor.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -84,11 +85,10 @@ bool Editor::tryCloseTab(int index)
  */
 void Editor::currentChange(int index)
 {
-    MessageFactoryEditor factory;
-    Message* message = factory.produce(MessageFactoryEditor::EDITOR_TYPE);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
     if (this->_editors->size() > 0)
     {
-        message->setMessage((void*)(*this->_editors)[index]);
+        message->paramInt = (*this->_editors)[index]->type();
         for (int i = 0; i < this->_editors->size(); ++i)
         {
             if (i == index)
@@ -111,8 +111,7 @@ void Editor::currentChange(int index)
 void Editor::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    MessageFactoryMainWindow factory;
-    controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE), this);
+    controller->listen(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE, this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
     for (int i = 0; i < this->_editors->size(); ++i)
@@ -127,12 +126,12 @@ void Editor::bindMessage(MessageController *controller)
  */
 void Editor::messageEvent(Message *message)
 {
-    MessageFactoryMainWindow factory;
-    if (message->name() == factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE))
+    switch (message->type())
     {
+    case MessageFactory::TYPE_MAINWINDOW_TRYCLOSE:
         if (this->tryCloseAll())
         {
-            this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_CLOSE));
+            this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_CLOSE));
         }
     }
 }

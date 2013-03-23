@@ -33,9 +33,8 @@ MainWindow::~MainWindow()
 void MainWindow::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    MessageFactoryMainWindow factory;
-    controller->listen(factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_CLOSE), this);
-    this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_OPEN));
+    controller->listen(MessageFactory::TYPE_MAINWINDOW_CLOSE, this);
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_OPEN));
 }
 
 /**
@@ -44,11 +43,12 @@ void MainWindow::bindMessage(MessageController *controller)
  */
 void MainWindow::messageEvent(Message *message)
 {
-    MessageFactoryMainWindow factory;
-    if (message->name() == factory.getMessageName(MessageFactoryMainWindow::MAINWINDOW_CLOSE))
+    switch (message->type())
     {
-        this->_close = true;
+    case MessageFactory::TYPE_MAINWINDOW_CLOSE:
+        this->_close =true;
         this->close();
+        break;
     }
 }
 
@@ -64,8 +64,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-        MessageFactoryMainWindow factory;
-        this->sendMessage(factory.produce(MessageFactoryMainWindow::MAINWINDOW_TRYCLOSE));
+        this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE));
         if (!this->_close)
         {
             event->ignore();

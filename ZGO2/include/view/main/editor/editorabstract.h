@@ -9,7 +9,7 @@
 #include <QMessageBox>
 #include "typeditem.h"
 #include "messager.h"
-#include "messagefactorytool.h"
+#include "nameditem.h"
 
 class EditorAbstract : public QWidget, public IdentifiedItem, public NamedItem, public TypedItem, public Messager
 {

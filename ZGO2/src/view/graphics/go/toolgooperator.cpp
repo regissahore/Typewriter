@@ -1,5 +1,6 @@
 #include "toolgooperator.h"
 #include "scenego.h"
+#include "messagefactory.h"
 
 /**
  * Constructor. The protected variable _GOOperator should be initialized and added to the scene.
@@ -47,16 +48,12 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
     // Set the tool.
-    MessageFactoryTool *factoryTool = new MessageFactoryTool();
-    MessageToolSelection *messageToolSelection = (MessageToolSelection*)factoryTool->produce(MessageFactoryTool::TOOL_SELECTION);
-    messageToolSelection->setType(DefinationToolType::TOOL_TYPE_COMMON_POINTER);
-    this->sceneGO()->sendMessage(messageToolSelection);
-    delete factoryTool;
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
+    this->sceneGO()->sendMessage(message);
     // Set the selection.
-    MessageFactoryEditor *factoryEditor = new MessageFactoryEditor();
-    MessageEditorSelection *messageEditorSelection = (MessageEditorSelection*)factoryEditor->produce(MessageFactoryEditor::EDITOR_SELECTION);
-    messageEditorSelection->setMessage(this->_GOOperator);
-    this->sceneGO()->sendMessage(messageEditorSelection);
-    delete factoryEditor;
+    message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    message->setMessage(this->_GOOperator);
+    this->sceneGO()->sendMessage(message);
     this->_finish = true;
 }

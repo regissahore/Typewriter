@@ -8,7 +8,7 @@
 #include <QAction>
 #include <QMenuBar>
 #include "messager.h"
-#include "messagefactorymainwindow.h"
+#include "mainmenufile.h"
 
 class MainMenu : public QMenuBar, public Messager
 {
@@ -18,12 +18,7 @@ public:
     void bindMessage(MessageController *controller);
 
 private:
-    QMenu *_menuFile;
-    QAction *_actionClose;
-    QMenu *_menuHelp;
-
-private slots:
-    void slotActionClose();
+    MainMenuFile *_menuFile;
 };
 
 #endif // MAINMENU_H

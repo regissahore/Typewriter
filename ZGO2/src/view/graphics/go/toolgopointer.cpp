@@ -2,7 +2,7 @@
 #include "scenego.h"
 #include "definationeditorselectiontype.h"
 #include "itemgosignal.h"
-#include "messagefactoryeditor.h"
+#include "messagefactory.h"
 #include "itemgofactory.h"
 
 /**

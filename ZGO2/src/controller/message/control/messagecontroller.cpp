@@ -7,8 +7,7 @@
  */
 MessageController::MessageController()
 {
-    this->_autoID = 0;
-    this->_messages = new QMap<QString, int>();
+    this->_messages = new QMap<int, int>();
     this->_listeners = new QVector< QVector<MessageListener*> >();
 }
 
@@ -31,9 +30,7 @@ MessageController::~MessageController()
  */
 void MessageController::send(Message *message)
 {
-    message->setId(this->_autoID++);
-    QString messageName = message->name();
-    QMap<QString, int>::iterator it = this->_messages->find(messageName);
+    QMap<int, int>::iterator it = this->_messages->find(message->type());
     if (it != this->_messages->end())
     {
         int index = it.value();
@@ -50,14 +47,14 @@ void MessageController::send(Message *message)
  * @param messageName 消息名称。
  * @param listener 监听器。
  */
-void MessageController::listen(QString messageName, MessageListener *listener)
+void MessageController::listen(int messageType, MessageListener *listener)
 {
-    if (this->_messages->find(messageName) == this->_messages->end())
+    if (this->_messages->find(messageType) == this->_messages->end())
     {
-        (*this->_messages)[messageName] = this->_listeners->size();
+        (*this->_messages)[messageType] = this->_listeners->size();
         this->_listeners->push_back(QVector<MessageListener*>());
     }
-    int index = (*this->_messages)[messageName];
+    int index = (*this->_messages)[messageType];
     (*this->_listeners)[index].push_back(listener);
     listener->setMessageController(this);
 }
@@ -67,9 +64,9 @@ void MessageController::listen(QString messageName, MessageListener *listener)
  * @param messageName 消息名称。
  * @param listener 监听器。
  */
-void MessageController::release(QString messageName, MessageListener *listener)
+void MessageController::release(int messageType, MessageListener *listener)
 {
-    QMap<QString, int>::iterator it = this->_messages->find(messageName);
+    QMap<int, int>::iterator it = this->_messages->find(messageType);
     if (it != this->_messages->end())
     {
         int index = it.value();

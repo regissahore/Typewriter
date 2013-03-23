@@ -33,7 +33,7 @@ public:
         TOOL_TYPE_GO_OPERATOR_15,       /** 第15类GO操作符。 */
         TOOL_TYPE_GO_OPERATOR_16,       /** 第16类GO操作符。 */
         TOOL_TYPE_GO_OPERATOR_17,       /** 第17类GO操作符。 */
-        TOOL_TYPE_GO_SINGAL             /** GO信号流。 */
+        TOOL_TYPE_GO_SIGNAL             /** GO信号流。 */
     };
 };
 

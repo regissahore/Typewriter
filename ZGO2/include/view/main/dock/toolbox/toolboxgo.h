@@ -11,7 +11,6 @@
 #include <QScrollArea>
 #include "toolboxabstract.h"
 #include "definationtooltype.h"
-#include "messagefactorytool.h"
 
 class ToolboxGO : public ToolboxAbstract
 {

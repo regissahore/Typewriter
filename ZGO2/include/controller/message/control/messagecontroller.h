@@ -19,15 +19,12 @@ public:
     MessageController();
     ~MessageController();
     void send(Message *message);
-    void listen(QString messageName, MessageListener *listener);
-    void release(QString messageName, MessageListener *listener);
+    void listen(int messageType, MessageListener *listener);
+    void release(int messageType, MessageListener *listener);
 
 protected:
-    QMap<QString, int> *_messages; /** 储存已经注册的消息，数值为listeners的索引。 */
+    QMap<int, int> *_messages; /** 储存已经注册的消息，数值为listeners的索引。 */
     QVector< QVector<MessageListener*> > *_listeners; /** 储存消息监听器。 */
-
-private:
-    int _autoID; /** 为消息准备的自动增长的ID。 */
 };
 
 #endif // MESSAGECONTROLLER_H

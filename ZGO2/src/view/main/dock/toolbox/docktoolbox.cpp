@@ -1,4 +1,5 @@
 #include "docktoolbox.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -25,8 +26,7 @@ DockToolbox::~DockToolbox()
  */
 void DockToolbox::bindMessage(MessageController *controller)
 {
-    MessageFactoryEditor factory;
-    controller->listen(factory.getMessageName(MessageFactoryEditor::EDITOR_TYPE), this);
+    controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
 /**
@@ -35,20 +35,22 @@ void DockToolbox::bindMessage(MessageController *controller)
  */
 void DockToolbox::messageEvent(Message *message)
 {
-    MessageFactoryEditor editorFactory;
-    int type = DefinationToolboxType::TOOLBOX_TYPE_NULL;
-    if (message->name() == editorFactory.getMessageName(MessageFactoryEditor::EDITOR_TYPE))
+    switch (message->type())
     {
-        if(message->message() != 0L)
-        {
-            EditorAbstract* editor = (EditorAbstract*)message->message();
-            switch (editor->type())
-            {
-            case DefinationEditorType::EDITOR_TYPE_GO:
-                type = DefinationToolboxType::TOOLBOX_TYPE_GO;
-                break;
-            }
-        }
+    case MessageFactory::TYPE_EDITOR_TYPE:
+        this->setToolbox(message->paramInt);
+        break;
+    }
+}
+
+void DockToolbox::setToolbox(int editorType)
+{
+    int type = DefinationToolboxType::TOOLBOX_TYPE_NULL;
+    switch (editorType)
+    {
+    case DefinationEditorType::EDITOR_TYPE_GO:
+        type = DefinationToolboxType::TOOLBOX_TYPE_GO;
+        break;
     }
     bool flag = false;
     if (this->_toolbox)

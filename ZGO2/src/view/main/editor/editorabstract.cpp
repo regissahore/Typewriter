@@ -1,4 +1,5 @@
 #include "editorabstract.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -138,8 +139,7 @@ void EditorAbstract::setTool(const int type)
 void EditorAbstract::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    controller->listen(factory->getMessageName(MessageFactoryTool::TOOL_SELECTION), this);
+    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
 }
 
 /**

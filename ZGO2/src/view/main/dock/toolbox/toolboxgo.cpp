@@ -1,4 +1,5 @@
 #include "toolboxgo.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -103,208 +104,162 @@ void ToolboxGO::bindMessage(MessageController *controller)
 
 void ToolboxGO::setToolPointer()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_COMMON_POINTER);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
     this->sendMessage(message);
-    delete factory;
 
 }
 
 void ToolboxGO::setToolMove()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_COMMON_MOVE);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_MOVE;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolSelect()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_COMMON_SELECT);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_SELECT;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolZoom()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_COMMON_ZOOM);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_ZOOM;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOText()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_TEXT);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_TEXT;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator1()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_1);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_1;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator2()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_2);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_2;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator3()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_3);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_3;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator4()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_4);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_4;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator5()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_5);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_5;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator6()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_6);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_6;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator7()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_7);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_7;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator8()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_8);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_8;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator9()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_9);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_9;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator10()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_10);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_10;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator11()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_11);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_11;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator12()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_12);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_12;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator13()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_13);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_13;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator14()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_14);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_14;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator15()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_15);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_15;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator16()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_16);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_16;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOOperator17()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_OPERATOR_17);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_17;
     this->sendMessage(message);
-    delete factory;
 }
 
 void ToolboxGO::setToolGOSignal()
 {
-    MessageFactoryTool *factory = new MessageFactoryTool();
-    MessageToolSelection* message = (MessageToolSelection*)factory->produce(MessageFactoryTool::TOOL_SELECTION);
-    message->setType(DefinationToolType::TOOL_TYPE_GO_SINGAL);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_SIGNAL;
     this->sendMessage(message);
-    delete factory;
 }
