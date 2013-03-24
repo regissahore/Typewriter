@@ -2,12 +2,13 @@
 #define SCENEGO_H
 
 #include <QGraphicsScene>
+#include "domitem.h"
 #include "messager.h"
 
 class Message;
 class ToolGOAbstract;
 
-class SceneGO : public QGraphicsScene, public Messager
+class SceneGO : public QGraphicsScene, public Messager, public DomItem
 {
     Q_OBJECT
 public:
@@ -16,6 +17,8 @@ public:
     void selectTool(int type);
     void bindMessage(MessageController *controller);
     void messageEvent(Message *message);
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     ToolGOAbstract *_tool;

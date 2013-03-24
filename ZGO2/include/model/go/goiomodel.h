@@ -6,8 +6,9 @@
  */
 #include <QVector>
 #include "gosignal.h"
+#include "domitem.h"
 
-class GOIOModel
+class GOIOModel : public DomItem
 {
 public:
     GOIOModel();
@@ -17,6 +18,8 @@ public:
     void set(int index, GOSignal* signal);
     void remove(int index);
     QVector<GOSignal*>* signal() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 private:
     QVector<GOSignal*> *_signal; /** 信号流的集合。 */

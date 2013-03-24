@@ -6,6 +6,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "itemdrawable.h"
+#include "domitem.h"
 
 class ItemGOOperator;
 
@@ -15,6 +16,7 @@ public:
     struct SignalConnection
     {
         ItemGOOperator *op;
+        int id; /** Just use for initialization. */
         int type;
         int index;
     };
@@ -31,6 +33,8 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void updatePosition();
     void removeConnection();
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     SignalConnection *_start;

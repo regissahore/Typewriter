@@ -11,7 +11,6 @@ EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
     this->setPath("");
     this->_modified = true;
     this->_filter = tr("ZHG Files(*.zhg)");
-    this->setTool(-1);
 }
 
 EditorAbstract::~EditorAbstract()
@@ -28,13 +27,12 @@ QString EditorAbstract::path() const
 }
 
 /**
- * 设置当前编辑器对应文件的地址，设置之后会触发保存操作。
+ * 设置当前编辑器对应文件的地址。
  * @param path 文件地址。
  */
 void EditorAbstract::setPath(QString path)
 {
     this->_path = path;
-    this->save();
 }
 
 /**
@@ -114,6 +112,16 @@ bool EditorAbstract::tryClose()
 }
 
 /**
+ * Try open a file.
+ * @param path The file path.
+ */
+bool EditorAbstract::tryOpen(const QString path)
+{
+    Q_UNUSED(path);
+    return false;
+}
+
+/**
  * 保存编辑器的内容。
  * @return 如果保存成功返回true，否则返回false。
  */
@@ -133,24 +141,6 @@ void EditorAbstract::setModified(bool value)
         emit modifyChanged(this->id());
     }
     this->_modified = value;
-}
-
-/**
- * 获取当前工具的类别。
- * @return 工具类别。
- */
-int EditorAbstract::tool() const
-{
-    return this->_tool;
-}
-
-/**
- * 设置当前工具的类别。
- * @param type 工具类别。
- */
-void EditorAbstract::setTool(const int type)
-{
-    this->_tool = type;
 }
 
 /**

@@ -1,3 +1,4 @@
+#include <QDomDocument>
 #include "editorgo.h"
 
 /**
@@ -43,4 +44,58 @@ void EditorGO::activate()
 void EditorGO::inactivate()
 {
     this->_savedID = GOOperatorFactory::currentID();
+}
+
+bool EditorGO::save()
+{
+    QDomDocument document;
+    QDomElement root = document.createElement("GO_Project");
+    root.setAttribute("support", "ZHG");
+    document.appendChild(root);
+    this->view->save(document, root);
+    QFile file(this->path());
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        return false;
+    }
+    file.write(document.toByteArray(4));
+    file.flush();
+    file.close();
+    return true;
+}
+
+bool EditorGO::tryOpen(const QString path)
+{
+    QDomDocument document;
+    QFile file(path);
+    if (!file.open(QIODevice::ReadOnly))
+    {
+        return false;
+    }
+    if (!document.setContent(&file))
+    {
+        file.close();
+        return false;
+    }
+    file.close();
+    QDomElement root = document.firstChildElement();
+    if (root.isNull())
+    {
+        return false;
+    }
+    if (root.attribute("support") != "ZHG")
+    {
+        return false;
+    }
+    QDomElement element = root.firstChildElement();
+    if (document.isNull())
+    {
+        return false;
+    }
+    if (!this->view->tryOpen(element))
+    {
+        return false;
+    }
+    this->setModified(false);
+    return true;
 }

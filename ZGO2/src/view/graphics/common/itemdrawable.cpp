@@ -55,3 +55,15 @@ bool ItemDrawable::moveable() const
 {
     return false;
 }
+
+void ItemDrawable::save(QDomDocument &document, QDomElement &root)
+{
+    Q_UNUSED(document);
+    Q_UNUSED(root);
+}
+
+bool ItemDrawable::tryOpen(QDomElement &root)
+{
+    Q_UNUSED(root);
+    return true;
+}

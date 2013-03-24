@@ -82,3 +82,30 @@ QVector<GOSignal*>* GOIOModel::signal() const
     return this->_signal;
 }
 
+void GOIOModel::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement ioRoot = document.createElement("io");
+    ioRoot.setAttribute("number", this->number());
+    root.appendChild(ioRoot);
+    for (int i = 0; i < this->number(); ++i)
+    {
+        QDomElement element = document.createElement("io");
+        // TODO
+        ioRoot.appendChild(element);
+    }
+}
+
+bool GOIOModel::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "io")
+    {
+        return false;
+    }
+    int number = root.attribute("number", "0").toInt();
+    this->setNumber(number);
+    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    {
+        // TOOD
+    }
+    return true;
+}

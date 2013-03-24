@@ -1,3 +1,4 @@
+#include <QFileDialog>
 #include "editor.h"
 #include "messagefactory.h"
 
@@ -108,6 +109,7 @@ void Editor::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
     controller->listen(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE, this);
     controller->listen(MessageFactory::TYPE_EDITOR_NEW, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_OPEN, this);
     controller->listen(MessageFactory::TYPE_EDITOR_CLOSE, this);
     controller->listen(MessageFactory::TYPE_EDITOR_CLOSEALL, this);
     controller->listen(MessageFactory::TYPE_EDITOR_SAVE, this);
@@ -133,6 +135,9 @@ void Editor::messageEvent(Message *message)
         }
     case MessageFactory::TYPE_EDITOR_NEW:
         this->createNewTab();
+        break;
+    case MessageFactory::TYPE_EDITOR_OPEN:
+        this->tryOpen();
         break;
     case MessageFactory::TYPE_EDITOR_CLOSE:
         this->tryCloseTab(this->_tabWidget->currentIndex());
@@ -176,4 +181,36 @@ void Editor::createNewTab()
     this->_editors->push_back(editor);
     this->_tabWidget->addTab(editor, editor->name());
     this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+}
+
+/**
+ * Try open a file the editor is able to edit.
+ */
+void Editor::tryOpen()
+{
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", "GO Files(*.go)");
+    if (filePath != "")
+    {
+        QString extension = "";
+        for (int i = filePath.length() - 1; i >= 0; --i)
+        {
+            extension = filePath[i] + extension;
+            if (filePath[i] == '.')
+            {
+                break;
+            }
+        }
+        if (extension.compare(extension, ".go", Qt::CaseInsensitive) == 0)
+        {
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+            if (editor->tryOpen(filePath))
+            {
+                editor->bindMessage(this->MessageCreator::_messageController);
+                editor->setPath(filePath);
+                this->_editors->push_back(editor);
+                this->_tabWidget->addTab(editor, editor->name());
+                this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+            }
+        }
+    }
 }

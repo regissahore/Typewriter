@@ -31,6 +31,8 @@ public:
     void setSignal(ItemGOSignal *signal, int type, int index);
     void removeSignal(ItemGOSignal *signal, int type, int index);
     QList<ItemGOSignal*> getConnectedSignals() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     QVector<ItemArrow*> *_inputArrows; /** Main input arrows. */

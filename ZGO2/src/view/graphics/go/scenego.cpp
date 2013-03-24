@@ -2,6 +2,7 @@
 #include "messager.h"
 #include "itemgooperator.h"
 #include "itemgosignal.h"
+#include "gooperator.h"
 #include "itemgosource.h"
 #include "toolgofactory.h"
 #include "messagefactory.h"
@@ -63,6 +64,88 @@ void SceneGO::messageEvent(Message *message)
         this->selectTool(message->paramInt);
         break;
     }
+}
+
+void SceneGO::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("scene");
+    QList<QGraphicsItem*> items = this->items();
+    root.appendChild(element);
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        item->save(document, element);
+    }
+}
+
+bool SceneGO::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "scene")
+    {
+        return false;
+    }
+    bool flag = true;
+    QList<ItemGOOperator*> operatorList;
+    QList<ItemGOSignal*> signalList;
+    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    {
+        if (element.tagName() == "operator")
+        {
+            ItemGOOperator *item = new ItemGOOperator();
+            this->addItem(item);
+            if (item->tryOpen(element))
+            {
+                operatorList.push_back(item);
+            }
+            else
+            {
+                flag = false;
+                this->removeItem(item);
+            }
+        }
+        else if (element.tagName() == "signal")
+        {
+            ItemGOSignal *item = new ItemGOSignal();
+            this->addItem(item);
+            if (item->tryOpen(element))
+            {
+                signalList.push_back(item);
+            }
+            else
+            {
+                flag = false;
+                this->removeItem(item);
+            }
+        }
+        else if (element.tagName() == "text")
+        {
+            // TODO
+        }
+    }
+    for (int i = 0; i < signalList.size(); ++i)
+    {
+        for (int j = 0; j < operatorList.size(); ++j)
+        {
+            if (signalList[i]->start()->id == operatorList[j]->model()->id())
+            {
+                signalList[i]->start()->op = operatorList[j];
+                operatorList[j]->setSignal(signalList[i], signalList[i]->start()->type, signalList[i]->start()->index);
+            }
+            if (signalList[i]->end()->id == operatorList[j]->model()->id())
+            {
+                signalList[i]->end()->op = operatorList[j];
+                operatorList[j]->setSignal(signalList[i], signalList[i]->end()->type, signalList[i]->end()->index);
+            }
+            if (signalList[i]->start()->op != 0L && signalList[i]->end()->op != 0L)
+            {
+                break;
+            }
+        }
+        signalList[i]->updatePosition();
+    }
+    operatorList.clear();
+    signalList.clear();
+    return flag;
 }
 
 /**

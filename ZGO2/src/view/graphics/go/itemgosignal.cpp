@@ -1,6 +1,7 @@
 #include <QtAlgorithms>
 #include "itemgosignal.h"
 #include "itemgooperator.h"
+#include "gooperator.h"
 #include "definationgotype.h"
 #include "definationeditorselectiontype.h"
 
@@ -14,6 +15,7 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->_end = new SignalConnection();
     this->_start->op = 0L;
     this->_end->op = 0L;
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
 }
 
 /**
@@ -160,7 +162,6 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->_endPos.setY(y);
     this->update();
     this->prepareGeometryChange();
-    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
 }
 
 /**
@@ -236,4 +237,40 @@ void ItemGOSignal::removeConnection()
     {
         this->end()->op->removeSignal(this, this->end()->type, this->end()->index);
     }
+}
+
+void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
+{
+    if (this->_start->op != 0L && this->_end->op != 0L)
+    {
+        QDomElement signalRoot = document.createElement("signal");
+        root.appendChild(signalRoot);
+        QDomElement element = document.createElement("io");
+        element.setAttribute("id", this->start()->op->model()->id());
+        element.setAttribute("type", this->start()->type);
+        element.setAttribute("index", this->start()->index);
+        signalRoot.appendChild(element);
+        element = document.createElement("io");
+        element.setAttribute("id", this->end()->op->model()->id());
+        element.setAttribute("type", this->end()->type);
+        element.setAttribute("index", this->end()->index);
+        signalRoot.appendChild(element);
+    }
+}
+
+bool ItemGOSignal::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "signal")
+    {
+        return false;
+    }
+    QDomElement element = root.firstChildElement();
+    this->_start->id = element.attribute("id").toInt();
+    this->_start->type = element.attribute("type").toInt();
+    this->_start->index = element.attribute("index").toInt();
+    element = element.nextSiblingElement();
+    this->_end->id = element.attribute("id").toInt();
+    this->_end->type = element.attribute("type").toInt();
+    this->_end->index = element.attribute("index").toInt();
+    return true;
 }

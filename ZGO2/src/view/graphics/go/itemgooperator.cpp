@@ -221,9 +221,6 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     painter->drawText(QRectF(-25, -25, 50, 50),
                       Qt::AlignHCenter | Qt::AlignVCenter,
                       QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
-    painter->drawText(QRectF(-1000, 35, 2000, 40),
-                      Qt::AlignHCenter | Qt::AlignTop,
-                      this->model()->name());
     painter->drawEllipse(QPoint(0, 0), 25, 25);
 }
 
@@ -366,4 +363,33 @@ QList<ItemGOSignal *> ItemGOOperator::getConnectedSignals() const
         }
     }
     return signal;
+}
+
+void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("operator");
+    element.setAttribute("x", this->pos().x());
+    element.setAttribute("y", this->pos().y());
+    root.appendChild(element);
+    this->model()->save(document, element);
+    this->updateGraphic();
+}
+
+bool ItemGOOperator::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "operator")
+    {
+        return false;
+    }
+    float x = root.attribute("x", "0").toFloat();
+    float y = root.attribute("y", "0").toFloat();
+    this->setPos(x, y);
+    QDomElement element = root.firstChildElement();
+    GOOperator *model = new GOOperator();
+    if (!model->tryOpen(element))
+    {
+        return false;
+    }
+    this->setModel(model);
+    return true;
 }

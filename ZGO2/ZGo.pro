@@ -5,6 +5,7 @@
 #-------------------------------------------------
 
 QT       += core gui
+QT       += xml
 
 TARGET = ZGO2
 TEMPLATE = app
@@ -117,7 +118,8 @@ HEADERS += \
     include/view/graphics/go/itemgofactory.h \
     include/view/main/menu/mainmenuabstract.h \
     include/view/main/menu/mainmenufile.h \
-    include/controller/message/message/messagefactory.h
+    include/controller/message/message/messagefactory.h \
+    include/model/common/domitem.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -211,7 +213,8 @@ SOURCES += \
     src/view/graphics/go/itemgofactory.cpp \
     src/view/main/menu/mainmenuabstract.cpp \
     src/view/main/menu/mainmenufile.cpp \
-    src/controller/message/message/messagefactory.cpp
+    src/controller/message/message/messagefactory.cpp \
+    src/model/common/domitem.cpp
 
 FORMS += \
     test.ui

@@ -27,6 +27,7 @@ protected:
     EditorFactory *_factory; /** 用于实例化编辑器的工厂类。 */
     QVector<EditorAbstract*> *_editors; /** 编辑器的集合。 */
     void createNewTab();
+    void tryOpen();
 
 protected slots:
     bool tryCloseTab(int index);

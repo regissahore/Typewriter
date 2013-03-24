@@ -24,3 +24,13 @@ void ViewGO::messageEvent(Message *message)
 {
     this->_scene->messageEvent(message);
 }
+
+void ViewGO::save(QDomDocument &document, QDomElement &root)
+{
+    this->_scene->save(document, root);
+}
+
+bool ViewGO::tryOpen(QDomElement &root)
+{
+    return this->_scene->tryOpen(root);
+}

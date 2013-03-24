@@ -23,8 +23,7 @@ public:
     virtual bool trySave();
     virtual bool trySaveAs();
     virtual bool tryClose();
-    int tool() const;
-    void setTool(const int type);
+    virtual bool tryOpen(const QString path);
     void bindMessage(MessageController *controller);
     virtual void activate();
     virtual void inactivate();

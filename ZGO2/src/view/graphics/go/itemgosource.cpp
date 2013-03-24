@@ -63,7 +63,6 @@ void ItemGOSource::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     painter->setPen(Qt::black);
     painter->setBrush(Qt::NoBrush);
     painter->drawText(QRectF(-25, -25, 47, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
-    painter->drawText(QRectF(-1000, 35, 2000, 40), Qt::AlignHCenter | Qt::AlignTop, this->model()->name());
     QPoint points[3];
     points[0].setX(25);
     points[0].setY(0);

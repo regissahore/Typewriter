@@ -22,6 +22,8 @@ public:
     void messageEvent(Message *message);
     void activate();
     void inactivate();
+    bool save();
+    bool tryOpen(const QString path);
     
 protected:
     ViewGO *view;

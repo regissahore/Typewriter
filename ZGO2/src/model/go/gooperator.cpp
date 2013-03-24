@@ -36,3 +36,40 @@ GOIOModel *GOOperator::output() const
 {
     return this->_output;
 }
+
+void GOOperator::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("model");
+    element.setAttribute("type", this->type());
+    element.setAttribute("id", this->id());
+    root.appendChild(element);
+    this->input()->save(document, element);
+    this->subInput()->save(document, element);
+    this->output()->save(document, element);
+}
+
+bool GOOperator::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "model")
+    {
+        return false;
+    }
+    this->setType(root.attribute("type").toInt());
+    this->setId(root.attribute("id").toInt());
+    QDomElement element = root.firstChildElement();
+    if (!this->input()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->subInput()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->output()->tryOpen(element))
+    {
+        return false;
+    }
+    return true;
+}

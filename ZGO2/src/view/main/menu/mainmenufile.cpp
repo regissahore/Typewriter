@@ -5,6 +5,7 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
 {
     this->setTitle(tr("File(&F)"));
     this->_actionNew = this->addAction(tr("New(&N)"));
+    this->_actionOpen = this->addAction(tr("Open...(&O)"));
     this->_actionClose = this->addAction(tr("Close(&C)"));
     this->_actionCloseAll = this->addAction(tr("Close All"));
     this->addSeparator();
@@ -14,12 +15,14 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
     this->addSeparator();
     this->_actionQuit = this->addAction(tr("Quit(&Q)"));
     this->_actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
+    this->_actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
     this->_actionClose->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
     this->_actionCloseAll->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_W));
     this->_actionSave->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_S));
     this->_actionSaveAll->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     this->_actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     this->connect(this->_actionNew, SIGNAL(triggered()), this, SLOT(slotActionNew()));
+    this->connect(this->_actionOpen, SIGNAL(triggered()), this, SLOT(slotActionOpen()));
     this->connect(this->_actionClose, SIGNAL(triggered()), this, SLOT(slotActionClose()));
     this->connect(this->_actionCloseAll, SIGNAL(triggered()), this, SLOT(slotActionCloseAll()));
     this->connect(this->_actionSave, SIGNAL(triggered()), this, SLOT(slotActionSave()));
@@ -31,6 +34,11 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
 void MainMenuFile::slotActionNew()
 {
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW));
+}
+
+void MainMenuFile::slotActionOpen()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN));
 }
 
 void MainMenuFile::slotActionClose()

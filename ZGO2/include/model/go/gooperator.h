@@ -9,14 +9,17 @@
 #include "goiomodel.h"
 #include "nameditem.h"
 #include "typeditem.h"
+#include "domitem.h"
 
-class GOOperator : public IdentifiedItem, public NamedItem, public TypedItem
+class GOOperator : public IdentifiedItem, public TypedItem, public DomItem
 {
 public:
     GOOperator();
     GOIOModel* input() const;
     GOIOModel* subInput() const;
     GOIOModel* output() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 private:
     GOIOModel *_input; /** 主输入的信号流。 */
