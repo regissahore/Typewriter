@@ -11,6 +11,7 @@
 #include "editor.h"
 #include "dockmessage.h"
 #include "docktoolbox.h"
+#include "dockparameter.h"
 
 class MainWindow : public QMainWindow, public Messager
 {
@@ -31,12 +32,10 @@ private:
     Editor *_editor; /** GO法的编辑器。 */
     DockMessage *_dockMessage; /** 消息悬停窗口。 */
     DockToolbox *_dockToolbox; /** 工具箱悬停窗口。 */
+    DockParameter *_dockParameter; /** The parameter dock widget. */
     void initEditor();
-    void clearEditor();
     void initDock();
-    void clearDock();
     void initMenu();
-    void clearMenu();
     
 signals:
 

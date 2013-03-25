@@ -17,13 +17,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), Messager()
 }
 
 /**
- * 析构函数，清除界面资源。
+ * 析构函数。
  */
 MainWindow::~MainWindow()
 {
-    this->clearEditor();
-    this->clearMenu();
-    this->clearDock();
 }
 
 /**
@@ -83,46 +80,19 @@ void MainWindow::initEditor()
 }
 
 /**
- * 清除编辑器。
- * @return
- */
-void MainWindow::clearEditor()
-{
-    if (this->_editor)
-    {
-        delete this->_editor;
-        this->_editor = 0L;
-    }
-}
-
-/**
  * 初始化悬停窗口。
  */
 void MainWindow::initDock()
 {
     this->_dockMessage = new DockMessage(this);
-    this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
     this->_dockMessage->bindMessage(this->_messageController);
+    this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
     this->_dockToolbox = new DockToolbox(this);
-    this->addDockWidget(Qt::LeftDockWidgetArea, this->_dockToolbox);
     this->_dockToolbox->bindMessage(this->_messageController);
-}
-
-/**
- * 清除悬停窗口。
- */
-void MainWindow::clearDock()
-{
-    if (this->_dockToolbox)
-    {
-        delete this->_dockToolbox;
-        this->_dockToolbox = 0L;
-    }
-    if (this->_dockMessage)
-    {
-        delete this->_dockMessage;
-        this->_dockMessage = 0L;
-    }
+    this->addDockWidget(Qt::LeftDockWidgetArea, this->_dockToolbox);
+    this->_dockParameter = new DockParameter(this);
+    this->_dockParameter->bindMessage(this->_messageController);
+    this->addDockWidget(Qt::RightDockWidgetArea, this->_dockParameter);
 }
 
 /**
@@ -133,16 +103,4 @@ void MainWindow::initMenu()
     this->_mainMenu = new MainMenu();
     this->setMenuBar(this->_mainMenu);
     this->_mainMenu->bindMessage(this->_messageController);
-}
-
-/**
- * 清除菜单。
- */
-void MainWindow::clearMenu()
-{
-    if (this->_mainMenu)
-    {
-        delete this->_mainMenu;
-        this->_mainMenu = 0L;
-    }
 }

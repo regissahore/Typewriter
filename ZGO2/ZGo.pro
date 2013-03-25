@@ -20,6 +20,7 @@ INCLUDEPATH += ./include/view/dialog
 INCLUDEPATH += ./include/view/graphics/common
 INCLUDEPATH += ./include/view/graphics/go
 INCLUDEPATH += ./include/view/main/dock/message
+INCLUDEPATH += ./include/view/main/dock/parameter
 INCLUDEPATH += ./include/view/main/dock/toolbox
 INCLUDEPATH += ./include/view/main/editor
 INCLUDEPATH += ./include/view/main/main
@@ -122,7 +123,11 @@ HEADERS += \
     include/model/common/domitem.h \
     include/view/dialog/dialogstringinput.h \
     include/view/graphics/go/toolgotext.h \
-    include/view/graphics/go/itemgotext.h
+    include/view/graphics/go/itemgotext.h \
+    include/view/main/dock/parameter/dockparameter.h \
+    include/view/main/dock/parameter/parameterabstract.h \
+    include/view/main/dock/parameter/parameterfactory.h \
+    include/view/main/dock/parameter/delegatelineedit.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -220,7 +225,11 @@ SOURCES += \
     src/model/common/domitem.cpp \
     src/view/dialog/dialogstringinput.cpp \
     src/view/graphics/go/toolgotext.cpp \
-    src/view/graphics/go/itemgotext.cpp
+    src/view/graphics/go/itemgotext.cpp \
+    src/view/main/dock/parameter/dockparameter.cpp \
+    src/view/main/dock/parameter/parameterabstract.cpp \
+    src/view/main/dock/parameter/parameterfactory.cpp \
+    src/view/main/dock/parameter/delegatelineedit.cpp
 
 FORMS += \
     test.ui
