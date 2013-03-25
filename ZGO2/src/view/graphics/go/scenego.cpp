@@ -2,6 +2,7 @@
 #include "messager.h"
 #include "itemgooperator.h"
 #include "itemgosignal.h"
+#include "itemgotext.h"
 #include "gooperator.h"
 #include "itemgosource.h"
 #include "toolgofactory.h"
@@ -119,7 +120,11 @@ bool SceneGO::tryOpen(QDomElement &root)
         }
         else if (element.tagName() == "text")
         {
-            // TODO
+            ItemGOText *item = new ItemGOText();
+            if (item->tryOpen(element))
+            {
+                this->addItem(item);
+            }
         }
     }
     for (int i = 0; i < signalList.size(); ++i)

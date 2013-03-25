@@ -1,4 +1,27 @@
 #include "toolgofactory.h"
+#include "toolgopointer.h"
+#include "toolgomove.h"
+#include "toolgozoom.h"
+#include "toolgoselect.h"
+#include "toolgotext.h"
+#include "toolgooperatortype1.h"
+#include "toolgooperatortype2.h"
+#include "toolgooperatortype3.h"
+#include "toolgooperatortype4.h"
+#include "toolgooperatortype5.h"
+#include "toolgooperatortype6.h"
+#include "toolgooperatortype7.h"
+#include "toolgooperatortype8.h"
+#include "toolgooperatortype9.h"
+#include "toolgooperatortype10.h"
+#include "toolgooperatortype11.h"
+#include "toolgooperatortype12.h"
+#include "toolgooperatortype13.h"
+#include "toolgooperatortype14.h"
+#include "toolgooperatortype15.h"
+#include "toolgooperatortype16.h"
+#include "toolgooperatortype17.h"
+#include "toolgosignal.h"
 
 /**
  * Produce a instantiated GO tool.
@@ -24,6 +47,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
         tool = new ToolGOZoom(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_TEXT:
+        tool = new ToolGOText(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
         tool = new ToolGOOperatorType1(sceneGO);

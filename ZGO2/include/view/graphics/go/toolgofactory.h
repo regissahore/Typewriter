@@ -7,28 +7,6 @@
  */
 #include "definationtooltype.h"
 #include "toolgoabstract.h"
-#include "toolgopointer.h"
-#include "toolgomove.h"
-#include "toolgozoom.h"
-#include "toolgoselect.h"
-#include "toolgooperatortype1.h"
-#include "toolgooperatortype2.h"
-#include "toolgooperatortype3.h"
-#include "toolgooperatortype4.h"
-#include "toolgooperatortype5.h"
-#include "toolgooperatortype6.h"
-#include "toolgooperatortype7.h"
-#include "toolgooperatortype8.h"
-#include "toolgooperatortype9.h"
-#include "toolgooperatortype10.h"
-#include "toolgooperatortype11.h"
-#include "toolgooperatortype12.h"
-#include "toolgooperatortype13.h"
-#include "toolgooperatortype14.h"
-#include "toolgooperatortype15.h"
-#include "toolgooperatortype16.h"
-#include "toolgooperatortype17.h"
-#include "toolgosignal.h"
 
 class ToolGOFactory
 {

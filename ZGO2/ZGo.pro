@@ -119,7 +119,10 @@ HEADERS += \
     include/view/main/menu/mainmenuabstract.h \
     include/view/main/menu/mainmenufile.h \
     include/controller/message/message/messagefactory.h \
-    include/model/common/domitem.h
+    include/model/common/domitem.h \
+    include/view/dialog/dialogstringinput.h \
+    include/view/graphics/go/toolgotext.h \
+    include/view/graphics/go/itemgotext.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -214,7 +217,10 @@ SOURCES += \
     src/view/main/menu/mainmenuabstract.cpp \
     src/view/main/menu/mainmenufile.cpp \
     src/controller/message/message/messagefactory.cpp \
-    src/model/common/domitem.cpp
+    src/model/common/domitem.cpp \
+    src/view/dialog/dialogstringinput.cpp \
+    src/view/graphics/go/toolgotext.cpp \
+    src/view/graphics/go/itemgotext.cpp
 
 FORMS += \
     test.ui
