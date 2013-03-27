@@ -80,6 +80,8 @@ void ItemGOText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
 void ItemGOText::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("text");
+    element.setAttribute("x", this->pos().x());
+    element.setAttribute("y", this->pos().y());
     element.setAttribute("value", this->text());
     root.appendChild(element);
 }
@@ -90,6 +92,8 @@ bool ItemGOText::tryOpen(QDomElement &root)
     {
         return false;
     }
+    this->setX(root.attribute("x").toFloat());
+    this->setY(root.attribute("y").toFloat());
     this->setText(root.attribute("value", QObject::tr("Text")));
     return true;
 }

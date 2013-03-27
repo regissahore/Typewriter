@@ -54,6 +54,7 @@ void GOOperator::save(QDomDocument &document, QDomElement &root)
     this->input()->save(document, element);
     this->subInput()->save(document, element);
     this->output()->save(document, element);
+    this->status()->save(document, element);
 }
 
 bool GOOperator::tryOpen(QDomElement &root)
@@ -76,6 +77,11 @@ bool GOOperator::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->output()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->status()->tryOpen(element))
     {
         return false;
     }

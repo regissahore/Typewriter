@@ -8,6 +8,7 @@
 
 class ParameterGOOperator : public ParameterAbstract
 {
+    Q_OBJECT
 public:
     ParameterGOOperator(QWidget *parent = 0);
     void bindItem(void *item);

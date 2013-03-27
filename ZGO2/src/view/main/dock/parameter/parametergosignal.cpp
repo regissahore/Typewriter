@@ -11,7 +11,6 @@ ParameterGOSignal::ParameterGOSignal(QWidget *parent) : ParameterAbstract(parent
 void ParameterGOSignal::bindItem(void *item)
 {
     this->_item = item;
-    this->addPositionParameter();
     this->addSignalParameter();
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
 }

@@ -70,3 +70,32 @@ void GOStatus::setDescription(int index, const QString value)
         this->_description[index] = value;
     }
 }
+
+void GOStatus::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement statusRoot = document.createElement("status");
+    for (int i = 0; i <= this->number(); ++i)
+    {
+        QDomElement element = document.createElement(QString("status_%1").arg(i));
+        element.setAttribute("probability", this->probability(i));
+        element.setAttribute("description", this->description(i));
+        statusRoot.appendChild(element);
+    }
+    root.appendChild(statusRoot);
+}
+
+bool GOStatus::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "status")
+    {
+        return false;
+    }
+    this->_probability.clear();
+    this->_description.clear();
+    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    {
+        this->_probability.push_back(element.attribute("probability").toFloat());
+        this->_description.push_back(element.attribute("description"));
+    }
+    return true;
+}

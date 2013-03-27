@@ -91,6 +91,12 @@ void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
         intValue = goTableItem->text().toInt();
         item->model()->setId(intValue);
         break;
+    case TableWidgetGOItem::PARAMETER_POSITION_X:
+        floatValue = goTableItem->text().toFloat();
+        item->setX(floatValue);
+    case TableWidgetGOItem::PARAMETER_POSITION_Y:
+        floatValue = goTableItem->text().toFloat();
+        item->setY(floatValue);
     case TableWidgetGOItem::PARAMETER_STATUS_1:
         floatValue = goTableItem->text().toFloat();
         item->model()->status()->setProbability(1, floatValue);

@@ -249,6 +249,7 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
     if (this->_start->op != 0L && this->_end->op != 0L)
     {
         QDomElement signalRoot = document.createElement("signal");
+        signalRoot.setAttribute("id", this->model()->id());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
         element.setAttribute("id", this->start()->op->model()->id());
@@ -269,6 +270,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
     {
         return false;
     }
+    this->model()->setId(root.attribute("id").toInt());
     QDomElement element = root.firstChildElement();
     this->_start->id = element.attribute("id").toInt();
     this->_start->type = element.attribute("type").toInt();
