@@ -17,6 +17,7 @@ class ItemGOOperator : public ItemMoveable
 public:
     ItemGOOperator(QGraphicsItem *parent = 0);
     virtual ~ItemGOOperator();
+    void setOperatorType(int type);
     GOOperator *model() const;
     void setModel(GOOperator *model);
     void updateGraphic();
@@ -43,6 +44,7 @@ protected:
     QVector<QVector<ItemGOSignal*>*> *_outputSignal;
 
     GOOperator *_model; /** The model of GO operator. */
+    bool isSource() const;
 };
 
 #endif // ITEMGOOPERATOR_H

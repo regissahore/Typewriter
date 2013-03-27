@@ -17,6 +17,8 @@ class ToolGOOperator : public ToolGOAbstract
 public:
     ToolGOOperator(SceneGO *sceneGO);
     ~ToolGOOperator();
+    void setType(const int type);
+    void activate();
     virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
 protected:

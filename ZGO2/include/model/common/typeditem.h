@@ -10,7 +10,7 @@ class TypedItem
 public:
     TypedItem();
     int type() const;
-    void setType(const int type);
+    virtual void setType(const int type);
 
 private:
     int _type; /** 操作符的类型。 */

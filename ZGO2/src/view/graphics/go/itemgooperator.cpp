@@ -41,6 +41,16 @@ ItemGOOperator::~ItemGOOperator()
 }
 
 /**
+ * Set the type of the operator model. A new model will be produced.
+ * @param type @see GOOperatorFactory
+ */
+void ItemGOOperator::setOperatorType(int type)
+{
+    this->_model = GOOperatorFactory::produce(type);
+    this->updateGraphic();
+}
+
+/**
  * 获得GO操作符数据模型。
  * @return 数据模型。
  */
@@ -55,64 +65,83 @@ GOOperator* ItemGOOperator::model() const
  */
 void ItemGOOperator::setModel(GOOperator *model)
 {
-    this->_model = model;
-    for (int i = 0; i < this->_inputArrows->size(); ++i)
+    if (this->isSource())
     {
-        this->_inputArrows->at(i)->setParentItem(0L);
-        delete this->_inputArrows->at(i);
+        this->_model = model;
+        this->childItems().clear();
+        this->_outputArrows->clear();
+        int number = this->model()->output()->number();
+        double startY = - (number - 1) * 12.5;
+        for (int i = 0; i < number; ++i)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            arrow->setPos(25.0, 0.0);
+            arrow->setEnd(QPoint(50, startY));
+            this->_outputArrows->push_back(arrow);
+            startY += 25.0;
+        }
     }
-    this->_inputArrows->clear();
-    for (int i = 0; i < this->_subInputArrows->size(); ++i)
+    else
     {
-        this->_subInputArrows->at(i)->setParentItem(0L);
-        delete this->_subInputArrows->at(i);
+        this->_model = model;
+        for (int i = 0; i < this->_inputArrows->size(); ++i)
+        {
+            this->_inputArrows->at(i)->setParentItem(0L);
+            delete this->_inputArrows->at(i);
+        }
+        this->_inputArrows->clear();
+        for (int i = 0; i < this->_subInputArrows->size(); ++i)
+        {
+            this->_subInputArrows->at(i)->setParentItem(0L);
+            delete this->_subInputArrows->at(i);
+        }
+        this->_subInputArrows->clear();
+        for (int i = 0; i < this->_outputArrows->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setParentItem(0L);
+            delete this->_outputArrows->at(i);
+        }
+        this->_outputArrows->clear();
+        int number = this->model()->input()->number();
+        double startY = - (number - 1) * 12.5;
+        for (int i = 0; i < number; ++i)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            arrow->setPos(- 75, startY);
+            double angle = atan2(-startY, 75);
+            double dist = sqrt(startY * startY + 75 * 75);
+            double x = (dist - 25.0) * cos(angle);
+            double y = (dist - 25.0) * sin(angle);
+            arrow->setEnd(QPoint(x, y));
+            this->_inputArrows->push_back(arrow);
+            startY += 25.0;
+            this->_inputSignal->push_back(0L);
+        }
+        number = this->model()->output()->number();
+        startY = - (number - 1) * 12.5;
+        for (int i = 0; i < number; ++i)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            double angle = atan2(startY, 75);
+            arrow->setPos(25.0 * cos(angle), 25.0 * sin(angle));
+            double dist = sqrt(startY * startY + 75 * 75);
+            double x = (dist - 25.0) * cos(angle);
+            double y = (dist - 25.0) * sin(angle);
+            arrow->setEnd(QPoint(x, y));
+            this->_outputArrows->push_back(arrow);
+            startY += 25.0;
+            this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
+        }
+        if (this->model()->subInput()->number() > 0)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            arrow->setPos(0, -75);
+            arrow->setEnd(QPoint(0, 50));
+            this->_subInputArrows->push_back(arrow);
+            this->_subInputSignal->push_back(0L);
+        }
+        this->prepareGeometryChange();
     }
-    this->_subInputArrows->clear();
-    for (int i = 0; i < this->_outputArrows->size(); ++i)
-    {
-        this->_outputArrows->at(i)->setParentItem(0L);
-        delete this->_outputArrows->at(i);
-    }
-    this->_outputArrows->clear();
-    int number = this->model()->input()->number();
-    double startY = - (number - 1) * 12.5;
-    for (int i = 0; i < number; ++i)
-    {
-        ItemArrow *arrow = new ItemArrow(this);
-        arrow->setPos(- 75, startY);
-        double angle = atan2(-startY, 75);
-        double dist = sqrt(startY * startY + 75 * 75);
-        double x = (dist - 25.0) * cos(angle);
-        double y = (dist - 25.0) * sin(angle);
-        arrow->setEnd(QPoint(x, y));
-        this->_inputArrows->push_back(arrow);
-        startY += 25.0;
-        this->_inputSignal->push_back(0L);
-    }
-    number = this->model()->output()->number();
-    startY = - (number - 1) * 12.5;
-    for (int i = 0; i < number; ++i)
-    {
-        ItemArrow *arrow = new ItemArrow(this);
-        double angle = atan2(startY, 75);
-        arrow->setPos(25.0 * cos(angle), 25.0 * sin(angle));
-        double dist = sqrt(startY * startY + 75 * 75);
-        double x = (dist - 25.0) * cos(angle);
-        double y = (dist - 25.0) * sin(angle);
-        arrow->setEnd(QPoint(x, y));
-        this->_outputArrows->push_back(arrow);
-        startY += 25.0;
-        this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
-    }
-    if (this->model()->subInput()->number() > 0)
-    {
-        ItemArrow *arrow = new ItemArrow(this);
-        arrow->setPos(0, -75);
-        arrow->setEnd(QPoint(0, 50));
-        this->_subInputArrows->push_back(arrow);
-        this->_subInputSignal->push_back(0L);
-    }
-    this->prepareGeometryChange();
 }
 
 /**
@@ -129,27 +158,46 @@ void ItemGOOperator::updateGraphic()
  */
 QRectF ItemGOOperator::boundingRect() const
 {
-
-    int num = 1;
-    if (this->model()->input()->number() > num)
+    if (this->isSource())
     {
-        num = this->model()->input()->number();
+        // The operator is a source.
+        int num = 3;
+        if (this->model()->input()->number() > num)
+        {
+            num = this->model()->input()->number();
+        }
+        if (this->model()->output()->number() > num)
+        {
+            num = this->model()->output()->number();
+        }
+        int height = (num - 1) * 25 + 50;
+        return QRectF(-22, -height * 0.5, 97, height);
+        return QRectF(-25, -25, 50, 50);
     }
-    if (this->model()->output()->number() > num)
+    else
     {
-        num = this->model()->output()->number();
+        // The operator is not a source.
+        int num = 1;
+        if (this->model()->input()->number() > num)
+        {
+            num = this->model()->input()->number();
+        }
+        if (this->model()->output()->number() > num)
+        {
+            num = this->model()->output()->number();
+        }
+        int height = (num - 1) * 25;
+        if (height < 50)
+        {
+            height = 50;
+        }
+        if ((height >> 1) < 75 && this->model()->subInput()->number() > 0)
+        {
+            height = 75 + (height >> 1);
+            return QRectF(-75, -75, 150, height);
+        }
+        return QRectF(-75, -height * 0.5, 150, height);
     }
-    int height = (num - 1) * 25;
-    if (height < 50)
-    {
-        height = 50;
-    }
-    if ((height >> 1) < 75 && this->model()->subInput()->number() > 0)
-    {
-        height = 75 + (height >> 1);
-        return QRectF(-75, -75, 150, height);
-    }
-    return QRectF(-75, -height * 0.5, 150, height);
 }
 
 bool ItemGOOperator::isSelected(float x, float y)
@@ -217,12 +265,29 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
-    painter->setPen(Qt::black);
-    painter->setBrush(Qt::NoBrush);
-    painter->drawText(QRectF(-25, -25, 50, 50),
-                      Qt::AlignHCenter | Qt::AlignVCenter,
-                      QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
-    painter->drawEllipse(QPoint(0, 0), 25, 25);
+    if (this->isSource())
+    {
+        painter->setPen(Qt::black);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawText(QRectF(-25, -25, 47, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
+        QPoint points[3];
+        points[0].setX(25);
+        points[0].setY(0);
+        points[1].setX(-22);
+        points[1].setY(-25);
+        points[2].setX(-22);
+        points[2].setY(25);
+        painter->drawPolygon(points, 3);
+    }
+    else
+    {
+        painter->setPen(Qt::black);
+        painter->setBrush(Qt::NoBrush);
+        painter->drawText(QRectF(-25, -25, 50, 50),
+                          Qt::AlignHCenter | Qt::AlignVCenter,
+                          QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
+        painter->drawEllipse(QPoint(0, 0), 25, 25);
+    }
 }
 
 /**
@@ -371,6 +436,7 @@ void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
     QDomElement element = document.createElement("operator");
     element.setAttribute("x", this->pos().x());
     element.setAttribute("y", this->pos().y());
+    element.setAttribute("type", this->model()->type());
     root.appendChild(element);
     this->model()->save(document, element);
     this->updateGraphic();
@@ -382,9 +448,9 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
     {
         return false;
     }
-    float x = root.attribute("x", "0").toFloat();
-    float y = root.attribute("y", "0").toFloat();
-    this->setPos(x, y);
+    this->setX(root.attribute("x", "0").toFloat());
+    this->setY(root.attribute("y", "0").toFloat());
+    this->setType(root.attribute("type").toInt());
     QDomElement element = root.firstChildElement();
     GOOperator *model = new GOOperator();
     if (!model->tryOpen(element))
@@ -393,4 +459,10 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
     }
     this->setModel(model);
     return true;
+}
+
+bool ItemGOOperator::isSource() const
+{
+    return this->model()->type() == GOOperatorFactory::Operator_Type_4 ||
+            this->model()->type() == GOOperatorFactory::Operator_Type_5;
 }

@@ -51,7 +51,6 @@ HEADERS += \
     include/view/graphics/common/graphicsview.h \
     include/view/graphics/go/viewgo.h \
     include/view/graphics/go/scenego.h \
-    include/view/graphics/go/itemgosource.h \
     include/view/graphics/go/itemgooperator.h \
     include/view/main/dock/message/debugconsole.h \
     include/view/main/dock/message/dockmessage.h \
@@ -75,44 +74,8 @@ HEADERS += \
     include/view/graphics/go/toolgoselect.h \
     include/view/graphics/common/itemselection.h \
     include/view/graphics/go/toolgooperator.h \
-    include/view/graphics/go/toolgooperatortype1.h \
-    include/view/graphics/go/itemgooperatortype1.h \
     include/model/go/gooperatorfactory.h \
     include/view/dialog/dialogintegerinput.h \
-    include/view/graphics/go/toolgooperatorunfixedinput.h \
-    include/view/graphics/go/itemgooperatortype2.h \
-    include/view/graphics/go/toolgooperatortype2.h \
-    include/view/graphics/go/toolgooperatorunfixedoutput.h \
-    include/view/graphics/go/itemgooperatortype3.h \
-    include/view/graphics/go/toolgooperatortype3.h \
-    include/view/graphics/go/itemgooperatortype4.h \
-    include/view/graphics/go/toolgooperatortype4.h \
-    include/view/graphics/go/itemgooperatortype5.h \
-    include/view/graphics/go/toolgooperatortype5.h \
-    include/view/graphics/go/itemgooperatortype6.h \
-    include/view/graphics/go/toolgooperatortype6.h \
-    include/view/graphics/go/itemgooperatortype7.h \
-    include/view/graphics/go/toolgooperatortype7.h \
-    include/view/graphics/go/itemgooperatortype8.h \
-    include/view/graphics/go/toolgooperatortype8.h \
-    include/view/graphics/go/itemgooperatortype9.h \
-    include/view/graphics/go/toolgooperatortype9.h \
-    include/view/graphics/go/itemgooperatortype10.h \
-    include/view/graphics/go/toolgooperatortype10.h \
-    include/view/graphics/go/itemgooperatortype11.h \
-    include/view/graphics/go/toolgooperatortype11.h \
-    include/view/graphics/go/itemgooperatortype12.h \
-    include/view/graphics/go/toolgooperatortype12.h \
-    include/view/graphics/go/itemgooperatortype13.h \
-    include/view/graphics/go/toolgooperatortype13.h \
-    include/view/graphics/go/itemgooperatortype14.h \
-    include/view/graphics/go/toolgooperatortype14.h \
-    include/view/graphics/go/itemgooperatortype15.h \
-    include/view/graphics/go/toolgooperatortype15.h \
-    include/view/graphics/go/itemgooperatortype16.h \
-    include/view/graphics/go/toolgooperatortype16.h \
-    include/view/graphics/go/itemgooperatortype17.h \
-    include/view/graphics/go/toolgooperatortype17.h \
     include/controller/defination/definationgotype.h \
     include/view/graphics/go/itemgosignal.h \
     include/view/graphics/go/toolgosignal.h \
@@ -158,7 +121,6 @@ SOURCES += \
     src/view/graphics/common/graphicsview.cpp \
     src/view/graphics/go/viewgo.cpp \
     src/view/graphics/go/scenego.cpp \
-    src/view/graphics/go/itemgosource.cpp \
     src/view/graphics/go/itemgooperator.cpp \
     src/view/main/dock/message/debugconsole.cpp \
     src/view/main/dock/message/dockmessage.cpp \
@@ -183,44 +145,8 @@ SOURCES += \
     src/view/graphics/go/toolgoselect.cpp \
     src/view/graphics/common/itemselection.cpp \
     src/view/graphics/go/toolgooperator.cpp \
-    src/view/graphics/go/toolgooperatortype1.cpp \
-    src/view/graphics/go/itemgooperatortype1.cpp \
     src/model/go/gooperatorfactory.cpp \
     src/view/dialog/dialogintegerinput.cpp \
-    src/view/graphics/go/toolgooperatorunfixedinput.cpp \
-    src/view/graphics/go/itemgooperatortype2.cpp \
-    src/view/graphics/go/toolgooperatortype2.cpp \
-    src/view/graphics/go/toolgooperatorunfixedoutput.cpp \
-    src/view/graphics/go/itemgooperatortype3.cpp \
-    src/view/graphics/go/toolgooperatortype3.cpp \
-    src/view/graphics/go/itemgooperatortype4.cpp \
-    src/view/graphics/go/toolgooperatortype4.cpp \
-    src/view/graphics/go/itemgooperatortype5.cpp \
-    src/view/graphics/go/toolgooperatortype5.cpp \
-    src/view/graphics/go/itemgooperatortype6.cpp \
-    src/view/graphics/go/toolgooperatortype6.cpp \
-    src/view/graphics/go/itemgooperatortype7.cpp \
-    src/view/graphics/go/toolgooperatortype7.cpp \
-    src/view/graphics/go/itemgooperatortype8.cpp \
-    src/view/graphics/go/toolgooperatortype8.cpp \
-    src/view/graphics/go/itemgooperatortype9.cpp \
-    src/view/graphics/go/toolgooperatortype9.cpp \
-    src/view/graphics/go/itemgooperatortype10.cpp \
-    src/view/graphics/go/toolgooperatortype10.cpp \
-    src/view/graphics/go/itemgooperatortype11.cpp \
-    src/view/graphics/go/toolgooperatortype11.cpp \
-    src/view/graphics/go/itemgooperatortype12.cpp \
-    src/view/graphics/go/toolgooperatortype12.cpp \
-    src/view/graphics/go/itemgooperatortype13.cpp \
-    src/view/graphics/go/toolgooperatortype13.cpp \
-    src/view/graphics/go/itemgooperatortype14.cpp \
-    src/view/graphics/go/toolgooperatortype14.cpp \
-    src/view/graphics/go/itemgooperatortype15.cpp \
-    src/view/graphics/go/toolgooperatortype15.cpp \
-    src/view/graphics/go/itemgooperatortype16.cpp \
-    src/view/graphics/go/toolgooperatortype16.cpp \
-    src/view/graphics/go/itemgooperatortype17.cpp \
-    src/view/graphics/go/toolgooperatortype17.cpp \
     src/controller/defination/definationgotype.cpp \
     src/view/graphics/go/itemgosignal.cpp \
     src/view/graphics/go/toolgosignal.cpp \

@@ -4,7 +4,6 @@
 #include "itemgosignal.h"
 #include "itemgotext.h"
 #include "gooperator.h"
-#include "itemgosource.h"
 #include "toolgofactory.h"
 #include "messagefactory.h"
 #include "definationeditorselectiontype.h"
