@@ -11,7 +11,6 @@ class ToolGOOperatorUnfixedOutput : public ToolGOOperator
 {
 public:
     ToolGOOperatorUnfixedOutput(SceneGO *sceneGO);
-    void getOutputNumber();
     void activate();
 };
 

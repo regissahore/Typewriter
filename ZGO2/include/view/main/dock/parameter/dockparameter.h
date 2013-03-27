@@ -9,6 +9,7 @@
 
 class QVBoxLayout;
 class ParameterAbstract;
+class ItemDrawable;
 
 class DockParameter : public QDockWidget, public Messager
 {
@@ -21,6 +22,7 @@ public:
 private:
     ParameterAbstract *_parameter;
     QVBoxLayout *_layout;
+    void changeParameter(ItemDrawable *item);
 };
 
 #endif // DOCKPARAMETER_H

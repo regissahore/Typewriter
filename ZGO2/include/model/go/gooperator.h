@@ -1,15 +1,16 @@
 #ifndef GOOPERATOR_H
 #define GOOPERATOR_H
 /**
- * GO操作符。
+ * The GO operator model.
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QVector>
 #include "identifieditem.h"
-#include "goiomodel.h"
-#include "nameditem.h"
 #include "typeditem.h"
 #include "domitem.h"
+
+class GOIOModel;
+class GOStatus;
 
 class GOOperator : public IdentifiedItem, public TypedItem, public DomItem
 {
@@ -18,13 +19,16 @@ public:
     GOIOModel* input() const;
     GOIOModel* subInput() const;
     GOIOModel* output() const;
+    GOStatus* status() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
 private:
-    GOIOModel *_input; /** 主输入的信号流。 */
-    GOIOModel *_subInput; /** 次输入信号流。 */
-    GOIOModel *_output; /** 输出的信号流。 */
+    GOIOModel *_input; /** Main input. */
+    GOIOModel *_subInput; /** Sub input. */
+    GOIOModel *_output; /** Output. */
+    GOStatus *_status;
+
 };
 
 #endif // GOOPERATOR_H

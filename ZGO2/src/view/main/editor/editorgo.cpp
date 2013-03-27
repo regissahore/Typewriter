@@ -1,5 +1,6 @@
 #include <QDomDocument>
 #include "editorgo.h"
+#include "gosignalfactory.h"
 
 /**
  * 构造函数。
@@ -17,7 +18,8 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     this->setLayout(layout);
     this->_filter = tr("GO Files(*.go)");
 
-    this->_savedID = 1;
+    this->_savedOperatorID = 1;
+    this->_savedSignalID = 1;
     this->activate();
 }
 
@@ -38,12 +40,14 @@ void EditorGO::messageEvent(Message *message)
 
 void EditorGO::activate()
 {
-    GOOperatorFactory::setID(this->_savedID);
+    GOOperatorFactory::setID(this->_savedOperatorID);
+    GOSignalFactory::setID(this->_savedSignalID);
 }
 
 void EditorGO::inactivate()
 {
-    this->_savedID = GOOperatorFactory::currentID();
+    this->_savedOperatorID = GOOperatorFactory::currentID();
+    this->_savedSignalID = GOSignalFactory::currentID();
 }
 
 bool EditorGO::save()

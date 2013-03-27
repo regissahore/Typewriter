@@ -27,7 +27,8 @@ public:
     
 protected:
     ViewGO *view;
-    int _savedID;
+    int _savedOperatorID;
+    int _savedSignalID;
 };
 
 #endif // EDITORGO_H

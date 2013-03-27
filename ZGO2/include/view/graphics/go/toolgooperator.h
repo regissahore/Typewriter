@@ -22,6 +22,8 @@ public:
 protected:
     ItemGOOperator *_GOOperator;
     bool _finish; /** Whether the item is placed to the editor.  */
+    void getInputNumber();
+    void getOutputNumber();
 };
 
 #endif // TOOLGOOPERATOR_H

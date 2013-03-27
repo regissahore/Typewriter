@@ -34,7 +34,6 @@ void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
             {
                 this->_item = (ItemDrawable*)item;
                 setMoving(true);
-                ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
                 ((ItemMoveable*)this->_item)->startMove(event);
                 return;
             }
@@ -74,6 +73,7 @@ void ToolGOPointer::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     {
         ((ItemMoveable*)this->_item)->stopMove(event);
         setMoving(false);
+        ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
     }
 }
 

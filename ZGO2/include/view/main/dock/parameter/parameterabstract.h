@@ -4,21 +4,25 @@
  * The abstract parameter widget.
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include <QTableView>
+#include <QWidget>
+#include <QTableWidget>
 
-class QStandardItemModel;
-
-class ParameterAbstract : public QTableView
+class ParameterAbstract : public QWidget
 {
     Q_OBJECT
 public:
     ParameterAbstract(QWidget *parent = 0);
-    void* dataItem() const;
-    void setDataItem(void *dataItem);
+    virtual void bindItem(void* item);
 
 protected:
-    QStandardItemModel *_model;
-    void *_dataItem;
+    QTableWidget *_tableWidget;
+    void* _item;
+    void addPositionParameter();
+    void addIDParameter();
+    void addTypeParameter();
+
+protected slots:
+    virtual void itemChanged(QTableWidgetItem *tableItem);
 };
 
 #endif // PARAMETERABSTRACT_H

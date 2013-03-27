@@ -4,6 +4,7 @@
 #include "gooperator.h"
 #include "definationgotype.h"
 #include "definationeditorselectiontype.h"
+#include "gosignalfactory.h"
 
 /**
  * Constructor.
@@ -16,6 +17,7 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->_start->op = 0L;
     this->_end->op = 0L;
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
+    this->_model = GOSignalFactory::produce();
 }
 
 /**
@@ -24,6 +26,8 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
 ItemGOSignal::~ItemGOSignal()
 {
     this->setParentItem(0L);
+    delete this->_model;
+    GOSignalFactory::setID(GOSignalFactory::currentID() - 1);
     delete this->_start;
     delete this->_end;
 }
@@ -186,6 +190,7 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     painter->drawLine(QPointF(0, 0), QPointF(this->_endPos.x() >> 1, 0));
     painter->drawLine(QPointF(this->_endPos.x() >> 1, 0), QPointF(this->_endPos.x() >> 1, this->_endPos.y()));
     painter->drawLine(QPointF(this->_endPos.x() >> 1, this->_endPos.y()), this->_endPos);
+    painter->drawText((this->_endPos.x() >> 1) + 5, (this->_endPos.y() >> 1), QString("%1").arg(this->model()->id()));
 }
 
 /**
@@ -273,4 +278,9 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
     this->_end->type = element.attribute("type").toInt();
     this->_end->index = element.attribute("index").toInt();
     return true;
+}
+
+GOSignal *ItemGOSignal::model()
+{
+    return this->_model;
 }

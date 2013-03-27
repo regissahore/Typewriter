@@ -7,10 +7,12 @@
  */
 #include "itemdrawable.h"
 #include "domitem.h"
+#include "identifieditem.h"
+#include "gosignal.h"
 
 class ItemGOOperator;
 
-class ItemGOSignal : public ItemDrawable
+class ItemGOSignal : public ItemDrawable, public IdentifiedItem
 {
 public:
     struct SignalConnection
@@ -35,11 +37,13 @@ public:
     void removeConnection();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    GOSignal *model();
 
 protected:
     SignalConnection *_start;
     SignalConnection *_end;
     QPoint _endPos;
+    GOSignal *_model;
 };
 
 #endif // ITEMGOSIGNAL_H

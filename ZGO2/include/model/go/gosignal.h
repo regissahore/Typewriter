@@ -7,7 +7,7 @@
 #include <QObject>
 #include "identifieditem.h"
 
-class GOSignal
+class GOSignal : public IdentifiedItem
 {
 public:
     GOSignal();

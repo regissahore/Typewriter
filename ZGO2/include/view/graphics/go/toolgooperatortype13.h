@@ -4,15 +4,13 @@
  * The type 13 operator of GO graph.
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "toolgooperatorunfixedinput.h"
-#include "toolgooperatorunfixedoutput.h"
+#include "toolgooperator.h"
 #include "itemgooperatortype13.h"
 
-class ToolGOOperatorType13 : public ToolGOOperatorUnfixedInput
+class ToolGOOperatorType13 : public ToolGOOperator
 {
 public:
     ToolGOOperatorType13(SceneGO *sceneGO);
-    void getOutputNumber();
     void activate();
 };
 

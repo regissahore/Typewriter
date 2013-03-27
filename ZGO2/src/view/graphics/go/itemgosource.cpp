@@ -1,6 +1,7 @@
 #include "itemgosource.h"
 #include "gooperator.h"
 #include "itemarrow.h"
+#include "goiomodel.h"
 
 /**
  * 构造函数。

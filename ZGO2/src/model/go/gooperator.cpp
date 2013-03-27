@@ -1,4 +1,6 @@
 #include "gooperator.h"
+#include "goiomodel.h"
+#include "gostatus.h"
 
 /**
  * 构造函数。
@@ -8,6 +10,7 @@ GOOperator::GOOperator()
     this->_input = new GOIOModel();
     this->_subInput = new GOIOModel();
     this->_output = new GOIOModel();
+    this->_status = new GOStatus();
 }
 
 /**
@@ -35,6 +38,11 @@ GOIOModel *GOOperator::subInput() const
 GOIOModel *GOOperator::output() const
 {
     return this->_output;
+}
+
+GOStatus* GOOperator::status() const
+{
+    return this->_status;
 }
 
 void GOOperator::save(QDomDocument &document, QDomElement &root)

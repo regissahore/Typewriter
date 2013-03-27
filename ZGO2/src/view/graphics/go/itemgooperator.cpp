@@ -5,6 +5,7 @@
 #include "itemgosignal.h"
 #include "definationgotype.h"
 #include "definationeditorselectiontype.h"
+#include "goiomodel.h"
 
 /**
  * Constructor.
