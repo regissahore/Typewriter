@@ -68,7 +68,11 @@ void ItemGOOperator::setModel(GOOperator *model)
     if (this->isSource())
     {
         this->_model = model;
-        this->childItems().clear();
+        for (int i = 0; i < this->_outputArrows->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setParentItem(0L);
+            delete this->_outputArrows->at(i);
+        }
         this->_outputArrows->clear();
         int number = this->model()->output()->number();
         double startY = - (number - 1) * 12.5;
@@ -79,6 +83,7 @@ void ItemGOOperator::setModel(GOOperator *model)
             arrow->setEnd(QPoint(50, startY));
             this->_outputArrows->push_back(arrow);
             startY += 25.0;
+            this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
         }
     }
     else
@@ -450,7 +455,6 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
     }
     this->setX(root.attribute("x", "0").toFloat());
     this->setY(root.attribute("y", "0").toFloat());
-    this->setType(root.attribute("type").toInt());
     QDomElement element = root.firstChildElement();
     GOOperator *model = new GOOperator();
     if (!model->tryOpen(element))

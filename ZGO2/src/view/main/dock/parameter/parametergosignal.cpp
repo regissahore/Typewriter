@@ -19,9 +19,10 @@ void ParameterGOSignal::addSignalParameter()
 {
     if (0L != this->_item)
     {
+        TableWidgetGOItem *tableItem;
         ItemGOSignal *item = (ItemGOSignal*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        TableWidgetGOItem *tableItem = new TableWidgetGOItem(tr("Operator 1"));
+        tableItem = new TableWidgetGOItem(tr("Operator 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
         tableItem = new TableWidgetGOItem(QString("%1").arg(item->start()->op->model()->id()));
