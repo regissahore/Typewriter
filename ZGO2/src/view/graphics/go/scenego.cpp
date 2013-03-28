@@ -7,6 +7,9 @@
 #include "toolgofactory.h"
 #include "messagefactory.h"
 #include "definationeditorselectiontype.h"
+#include "gograph.h"
+#include "definationgotype.h"
+#include "goiomodel.h"
 
 /**
  * The constructor.
@@ -255,4 +258,56 @@ void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         this->_tool->mouseReleaseEvent(event);
     }
     this->QGraphicsScene::mouseReleaseEvent(event);
+}
+
+/**
+ * Generate a GO graph based on the current scene.
+ * @return The GO graph.
+ */
+GOGraph* SceneGO::generatorGOGraph()
+{
+    GOGraph *graph = new GOGraph();
+    QList<QGraphicsItem*> items = this->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        switch (item->TypedItem::type())
+        {
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
+            graph->addOperator(((ItemGOOperator*)item)->model());
+            break;
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL:
+            ((ItemGOSignal*)item)->model()->setU(((ItemGOSignal*)item)->start()->op->model());
+            switch (((ItemGOSignal*)item)->start()->type)
+            {
+            case DefinationGOType::GO_OPERATOR_INPUT:
+                ((ItemGOSignal*)item)->start()->op->model()->input()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
+                break;
+            case DefinationGOType::GO_OPERATOR_SUBINPUT:
+                ((ItemGOSignal*)item)->start()->op->model()->subInput()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
+                break;
+            case DefinationGOType::GO_OPERATOR_OUTPUT:
+                ((ItemGOSignal*)item)->start()->op->model()->output()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
+                break;
+            }
+            ((ItemGOSignal*)item)->model()->setV(((ItemGOSignal*)item)->end()->op->model());
+            switch (((ItemGOSignal*)item)->end()->type)
+            {
+            case DefinationGOType::GO_OPERATOR_INPUT:
+                ((ItemGOSignal*)item)->end()->op->model()->input()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
+                break;
+            case DefinationGOType::GO_OPERATOR_SUBINPUT:
+                ((ItemGOSignal*)item)->end()->op->model()->subInput()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
+                break;
+            case DefinationGOType::GO_OPERATOR_OUTPUT:
+                ((ItemGOSignal*)item)->end()->op->model()->output()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
+                break;
+            }
+            graph->addSignal(((ItemGOSignal*)item)->model());
+            break;
+        default:
+            break;
+        }
+    }
+    return graph;
 }

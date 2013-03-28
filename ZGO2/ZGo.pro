@@ -96,7 +96,9 @@ HEADERS += \
     include/view/main/dock/parameter/parametergosignal.h \
     include/view/main/dock/parameter/parametergooperator.h \
     include/model/go/gostatus.h \
-    include/model/go/gosignalfactory.h
+    include/model/go/gosignalfactory.h \
+    include/model/go/gograph.h \
+    include/model/go/goanalysis.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -167,7 +169,9 @@ SOURCES += \
     src/view/main/dock/parameter/parametergosignal.cpp \
     src/view/main/dock/parameter/parametergooperator.cpp \
     src/model/go/gostatus.cpp \
-    src/model/go/gosignalfactory.cpp
+    src/model/go/gosignalfactory.cpp \
+    src/model/go/gograph.cpp \
+    src/model/go/goanalysis.cpp
 
 FORMS += \
     test.ui

@@ -12,10 +12,14 @@ class GOStatus : public DomItem
 {
 public:
     GOStatus();
-    int number() const;
-    void setNumber(int number);
+    int probablityNumber() const;
+    void setProbabilityNumber(int number);
     float probability(int index) const;
     void setProbability(int index, const float value);
+    int accumulativeNumber() const;
+    void setAccumulativeNumber(int number);
+    float accumulative(int index) const;
+    void setAccumulative(int index, const float value);
     QString description(int index) const;
     void setDescription(int index, const QString value);
     void save(QDomDocument &document, QDomElement &root);
@@ -23,6 +27,7 @@ public:
 
 protected:
     QVector<float> _probability;
+    QVector<float> _accumulative; /** The accumulative probability. */
     QVector<QString> _description;
 };
 

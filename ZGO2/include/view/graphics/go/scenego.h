@@ -7,6 +7,7 @@
 
 class Message;
 class ToolGOAbstract;
+class GOGraph;
 
 class SceneGO : public QGraphicsScene, public Messager, public DomItem
 {
@@ -19,6 +20,7 @@ public:
     void messageEvent(Message *message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    GOGraph* generatorGOGraph();
 
 protected:
     ToolGOAbstract *_tool;
