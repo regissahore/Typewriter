@@ -3,6 +3,8 @@
 #include "itemgooperator.h"
 #include "gooperator.h"
 #include "gostatus.h"
+#include "gooperatorfactory.h"
+#include "dialoggoprobability.h"
 
 ParameterGOOperator::ParameterGOOperator(QWidget *parent) : ParameterAbstract(parent)
 {
@@ -13,8 +15,36 @@ void ParameterGOOperator::bindItem(void *item)
     this->_item = item;
     this->addPositionParameter();
     this->addOperatorParameter();
-    this->addStatusParameter();
+    ItemGOOperator *op = (ItemGOOperator*)item;
+    switch (op->model()->type())
+    {
+    case GOOperatorFactory::Operator_Type_1:
+        this->addProbability12Parameter();
+        break;
+    case GOOperatorFactory::Operator_Type_2:
+        break;
+    case GOOperatorFactory::Operator_Type_3:
+        this->addProbability0Parameter();
+        this->addProbability12Parameter();
+        break;
+    case GOOperatorFactory::Operator_Type_5:
+        this->addProbabilityMultipleParameter();
+        break;
+    case GOOperatorFactory::Operator_Type_6:
+        this->addProbability0Parameter();
+        this->addProbability12Parameter();
+        break;
+    case GOOperatorFactory::Operator_Type_7:
+        this->addProbability0Parameter();
+        this->addProbability12Parameter();
+        break;
+    case GOOperatorFactory::Operator_Type_10:
+        break;
+    default:
+        break;
+    }
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
+    this->connect(this->_tableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(itemClicked(QTableWidgetItem*)));
 }
 
 void ParameterGOOperator::addOperatorParameter()
@@ -40,41 +70,74 @@ void ParameterGOOperator::addOperatorParameter()
     }
 }
 
-void ParameterGOOperator::addStatusParameter()
+void ParameterGOOperator::addProbability0Parameter()
 {
     if (0L != this->_item)
     {
+        TableWidgetGOItem *tableItem;
         ItemGOOperator *item = (ItemGOOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        TableWidgetGOItem *tableItem = new TableWidgetGOItem(tr("Status 1"));
+        tableItem = new TableWidgetGOItem(tr("Probability 0"));
+        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
+        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(0)));
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_0);
+        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+    }
+}
+
+void ParameterGOOperator::addProbability12Parameter()
+{
+    if (0L != this->_item)
+    {
+        TableWidgetGOItem *tableItem;
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        tableItem = new TableWidgetGOItem(tr("Probability 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
         tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(1)));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_STATUS_1);
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_1);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Description 1"));
+        tableItem = new TableWidgetGOItem(tr("Probability 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->description(1)));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_DESCRIPTION_1);
+        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(1)));
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+    }
+}
 
+void ParameterGOOperator::addProbabilityMultipleParameter()
+{
+    if (0L != this->_item)
+    {
+        TableWidgetGOItem *tableItem;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Status 2"));
+        tableItem = new TableWidgetGOItem(tr("Probabilities"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(2)));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_STATUS_2);
+        tableItem = new TableWidgetGOItem(tr("Click to edit"));
+        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_MULTIPLE);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+    }
+}
 
+void ParameterGOOperator::addOutputParameter()
+{
+    if (0L != this->_item)
+    {
+        TableWidgetGOItem *tableItem;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Description 2"));
+        tableItem = new TableWidgetGOItem(tr("Output"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->description(2)));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_DESCRIPTION_2);
+        tableItem = new TableWidgetGOItem(tr("Click to edit"));
+        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_OUTPUT);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
 }
@@ -97,22 +160,37 @@ void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
     case TableWidgetGOItem::PARAMETER_POSITION_Y:
         floatValue = goTableItem->text().toFloat();
         item->setY(floatValue);
-    case TableWidgetGOItem::PARAMETER_STATUS_1:
+    case TableWidgetGOItem::PARAMETER_PROBABILITY_0:
+        floatValue = goTableItem->text().toFloat();
+        item->model()->status()->setProbability(0, floatValue);
+    case TableWidgetGOItem::PARAMETER_PROBABILITY_1:
         floatValue = goTableItem->text().toFloat();
         item->model()->status()->setProbability(1, floatValue);
-        break;
-    case TableWidgetGOItem::PARAMETER_STATUS_2:
+    case TableWidgetGOItem::PARAMETER_PROBABILITY_2:
         floatValue = goTableItem->text().toFloat();
         item->model()->status()->setProbability(2, floatValue);
-        break;
-    case TableWidgetGOItem::PARAMETER_DESCRIPTION_1:
-        item->model()->status()->setDescription(1, goTableItem->text());
-        break;
-    case TableWidgetGOItem::PARAMETER_DESCRIPTION_2:
-        item->model()->status()->setDescription(2, goTableItem->text());
-        break;
     default:
         break;
     }
     item->update();
+}
+
+void ParameterGOOperator::itemClicked(QTableWidgetItem *tableItem)
+{
+    TableWidgetGOItem *goTableItem = (TableWidgetGOItem*)tableItem;
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    DialogGOProbability *probabilitydialog;
+    switch (goTableItem->parameterType())
+    {
+    case TableWidgetGOItem::PARAMETER_PROBABILITY_MULTIPLE:
+        probabilitydialog = new DialogGOProbability(this);
+        probabilitydialog->setModel(item->model());
+        probabilitydialog->exec();
+        delete probabilitydialog;
+        break;
+    case TableWidgetGOItem::PARAMETER_OUTPUT:
+        break;
+    default:
+        break;
+    }
 }

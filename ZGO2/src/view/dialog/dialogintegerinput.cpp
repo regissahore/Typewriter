@@ -22,10 +22,10 @@ DialogIntegerInput::DialogIntegerInput(QWidget *parent) : QDialog(parent)
     hBoxLayout->addItem(spacer);
     QPushButton *confirmButton = new QPushButton(tr("Confirm"), this);
     confirmButton->setDefault(true);
-    this->connect(confirmButton, SIGNAL(clicked()), this, SLOT(confirm()));
+    this->connect(confirmButton, SIGNAL(clicked()), this, SLOT(accept()));
     hBoxLayout->addWidget(confirmButton);
     QPushButton *cancelButton = new QPushButton(tr("Cancel"), this);
-    this->connect(cancelButton, SIGNAL(clicked()), this, SLOT(cancel()));
+    this->connect(cancelButton, SIGNAL(clicked()), this, SLOT(reject()));
     hBoxLayout->addWidget(cancelButton);
 }
 
@@ -45,20 +45,4 @@ void DialogIntegerInput::setText(const QString text)
 QSpinBox* DialogIntegerInput::integerInput() const
 {
     return this->_integerInput;
-}
-
-/**
- * The integer is confirmed.
- */
-void DialogIntegerInput::confirm()
-{
-    this->accept();
-}
-
-/**
- * The input is canceled.
- */
-void DialogIntegerInput::cancel()
-{
-    this->reject();
 }

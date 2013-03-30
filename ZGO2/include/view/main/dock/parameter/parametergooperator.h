@@ -15,10 +15,14 @@ public:
 
 protected:
     void addOperatorParameter();
-    void addStatusParameter();
+    void addProbability0Parameter();
+    void addProbability12Parameter();
+    void addProbabilityMultipleParameter();
+    void addOutputParameter();
 
 protected slots:
     void itemChanged(QTableWidgetItem *tableItem);
+    void itemClicked(QTableWidgetItem *tableItem);
 };
 
 #endif // PARAMETERGOOPERATOR_H

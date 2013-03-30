@@ -16,10 +16,11 @@ public:
         PARAMETER_TEXT,
         PARAMETER_ID,
         PARAMETER_TYPE,
-        PARAMETER_STATUS_1,
-        PARAMETER_STATUS_2,
-        PARAMETER_DESCRIPTION_1,
-        PARAMETER_DESCRIPTION_2
+        PARAMETER_PROBABILITY_0,
+        PARAMETER_PROBABILITY_1,
+        PARAMETER_PROBABILITY_2,
+        PARAMETER_PROBABILITY_MULTIPLE,
+        PARAMETER_OUTPUT
     };
     TableWidgetGOItem(const QString &text);
     GOParameterType parameterType() const;

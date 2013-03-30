@@ -23,10 +23,6 @@ public:
 private:
     QLabel *_textLabel;
     QSpinBox *_integerInput;
-
-private slots:
-    void confirm();
-    void cancel();
 };
 
 #endif // DIALOGINTEGERINPUT_H

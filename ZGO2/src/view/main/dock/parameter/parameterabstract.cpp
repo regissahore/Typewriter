@@ -87,3 +87,7 @@ void ParameterAbstract::itemChanged(QTableWidgetItem *tableItem)
     Q_UNUSED(tableItem);
 }
 
+void ParameterAbstract::itemClicked(QTableWidgetItem *tableItem)
+{
+    Q_UNUSED(tableItem);
+}

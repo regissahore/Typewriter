@@ -23,6 +23,7 @@ protected:
 
 protected slots:
     virtual void itemChanged(QTableWidgetItem *tableItem);
+    virtual void itemClicked(QTableWidgetItem *tableItem);
 };
 
 #endif // PARAMETERABSTRACT_H
