@@ -29,14 +29,14 @@ DialogGOProbability::DialogGOProbability(QWidget *parent) : QDialog(parent)
     _probabilityView->setModel(this->_probabilityModel);
     this->connect(_probabilityView, SIGNAL(clicked(QModelIndex)), this, SLOT(changeIndex(QModelIndex)));
     leftLayout->addWidget(_probabilityView);
-    QPushButton *appendButton = new QPushButton(this);
-    appendButton->setText(tr("Append"));
-    this->connect(appendButton, SIGNAL(clicked()), this, SLOT(append()));
-    leftLayout->addWidget(appendButton);
-    QPushButton *removeButton = new QPushButton(this);
-    removeButton->setText(tr("Remove End"));
-    this->connect(removeButton, SIGNAL(clicked()), this, SLOT(removeEnd()));
-    leftLayout->addWidget(removeButton);
+    this->_appendButton = new QPushButton(this);
+    _appendButton->setText(tr("Append"));
+    this->connect(_appendButton, SIGNAL(clicked()), this, SLOT(append()));
+    leftLayout->addWidget(_appendButton);
+    this->_removeButton = new QPushButton(this);
+    _removeButton->setText(tr("Remove End"));
+    this->connect(_removeButton, SIGNAL(clicked()), this, SLOT(removeEnd()));
+    leftLayout->addWidget(_removeButton);
 
     QGridLayout *rightLayout = new QGridLayout();
     mainLayout->addLayout(rightLayout);
@@ -48,12 +48,14 @@ DialogGOProbability::DialogGOProbability(QWidget *parent) : QDialog(parent)
     _probabilitySpin->setMinimum(0.0);
     _probabilitySpin->setMaximum(1.0);
     _probabilitySpin->setDecimals(6);
+    this->connect(_probabilitySpin, SIGNAL(valueChanged(QString)), this, SLOT(updateView(QString)));
     rightLayout->addWidget(_probabilitySpin, 0, 1);
     QLabel *descLabel = new QLabel(this);
     descLabel->setText(tr("Description"));
     descLabel->setAlignment(Qt::AlignRight);
     rightLayout->addWidget(descLabel, 1, 0);
     this->_probabilityEdit = new QLineEdit(this);
+    this->connect(this->_probabilityEdit, SIGNAL(textChanged(QString)), this, SLOT(updateView(QString)));
     rightLayout->addWidget(_probabilityEdit, 1, 1);
     rightLayout->setRowStretch(2, 100);
     QHBoxLayout *buttonLayout = new QHBoxLayout();
@@ -73,9 +75,14 @@ QString DialogGOProbability::getProbabilityString(int index)
 {
     if (index >= 0 && index < this->_probability.size())
     {
-        return QString("[%1]%2:" + this->_description[index]).arg(index + 1).arg(this->_probability[index]);
+        return QString("[%1] %2 " + this->_description[index]).arg(index).arg(this->_probability[index]);
     }
     return tr("Error: Out of index");
+}
+
+QString DialogGOProbability::getCurrentProbabilityString(int index)
+{
+    return QString("[%1] %2 " + this->_probabilityEdit->text()).arg(index).arg(this->_probabilitySpin->value());
 }
 
 /**
@@ -88,11 +95,28 @@ void DialogGOProbability::setModel(GOOperator *model)
     this->_probability.clear();
     this->_description.clear();
     this->_probabilityModel->clear();
-    for (int i = 0; i < model->status()->probablityNumber(); ++i)
+    for (int i = 0; i <= model->status()->probablityNumber(); ++i)
     {
         this->_probability.append(model->status()->probability(i));
         this->_description.append(model->status()->description(i));
         this->_probabilityModel->appendRow(new QStandardItem(this->getProbabilityString(i)));
+    }
+    if (model->status()->probablityNumber() > 0)
+    {
+        this->changeIndex(this->_probabilityModel->index(0, 0));
+    }
+}
+
+/**
+ * Set if the number of status is editable.
+ * @param The value is true when the number of status is unfixed.
+ */
+void DialogGOProbability::setIsFixedNumber(bool value)
+{
+    if (value)
+    {
+        this->_appendButton->setEnabled(false);
+        this->_removeButton->setEnabled(false);
     }
 }
 
@@ -101,6 +125,13 @@ void DialogGOProbability::append()
     this->_probability.append(0.0);
     this->_description.append("");
     this->_probabilityModel->appendRow(new QStandardItem(this->getProbabilityString(this->_probabilityModel->rowCount())));
+    if (this->_probabilityModel->rowCount() == 1)
+    {
+        this->changeIndex(this->_probabilityModel->index(0, 0));
+        this->_probabilitySpin->setEnabled(true);
+        this->_probabilityEdit->setEnabled(true);
+    }
+    this->changeIndex(this->_probabilityModel->index(this->_probabilityModel->rowCount() - 1, 0));
 }
 
 void DialogGOProbability::removeEnd()
@@ -108,11 +139,31 @@ void DialogGOProbability::removeEnd()
     this->_probability.removeLast();
     this->_description.removeLast();
     this->_probabilityModel->removeRow(this->_probabilityModel->rowCount() - 1);
+    if (this->_currentIndex >= this->_probabilityModel->rowCount())
+    {
+        if (this->_probabilityModel->rowCount() != 0)
+        {
+            this->changeIndex(this->_probabilityModel->index(this->_probabilityModel->rowCount() - 1, 0));
+        }
+    }
+    if (this->_probabilityModel->rowCount() == 0)
+    {
+        this->_probabilitySpin->setValue(0.0);
+        this->_probabilityEdit->setText("");
+        this->_probabilitySpin->setEnabled(false);
+        this->_probabilityEdit->setEnabled(false);
+    }
 }
 
 void DialogGOProbability::save()
 {
-    this->_model->status()->setProbabilityNumber(this->_probability.size());
+    if (this->_currentIndex >= 0 && this->_currentIndex < this->_probability.size())
+    {
+        this->_probability[this->_currentIndex] = this->_probabilitySpin->value();
+        this->_description[this->_currentIndex] = this->_probabilityEdit->text();
+        this->_probabilityModel->setItem(this->_currentIndex, new QStandardItem(this->getProbabilityString(this->_currentIndex)));
+    }
+    this->_model->status()->setProbabilityNumber(this->_probability.size() - 1);
     for (int i = 0; i < this->_probability.size(); ++i)
     {
         this->_model->status()->setProbability(i, this->_probability[i]);
@@ -126,7 +177,7 @@ void DialogGOProbability::changeIndex(QModelIndex modelIndex)
     int index = modelIndex.row();
     if (index != this->_currentIndex && index != -1)
     {
-        if (this->_currentIndex != -1 && this->_currentIndex < this->_probability.size())
+        if (this->_currentIndex >= 0 && this->_currentIndex < this->_probability.size())
         {
             this->_probability[this->_currentIndex] = this->_probabilitySpin->value();
             this->_description[this->_currentIndex] = this->_probabilityEdit->text();
@@ -135,5 +186,14 @@ void DialogGOProbability::changeIndex(QModelIndex modelIndex)
         this->_currentIndex = index;
         this->_probabilitySpin->setValue(this->_probability[index]);
         this->_probabilityEdit->setText(this->_description[index]);
+        this->_probabilityView->setCurrentIndex(modelIndex);
+    }
+}
+
+void DialogGOProbability::updateView(QString)
+{
+    if (this->_currentIndex >= 0 && this->_currentIndex < this->_probabilityModel->rowCount())
+    {
+        this->_probabilityModel->setItem(this->_currentIndex, new QStandardItem(this->getCurrentProbabilityString(this->_currentIndex)));
     }
 }

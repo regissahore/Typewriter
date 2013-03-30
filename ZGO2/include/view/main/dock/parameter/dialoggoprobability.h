@@ -11,6 +11,7 @@
 class QString;
 class QListView;
 class QLineEdit;
+class QPushButton;
 class QDoubleSpinBox;
 class QStandardItemModel;
 
@@ -22,12 +23,15 @@ class DialogGOProbability : public QDialog
 public:
     DialogGOProbability(QWidget *parent = 0);
     void setModel(GOOperator *model);
+    void setIsFixedNumber(bool value);
 
 protected:
     QDoubleSpinBox *_probabilitySpin;
     QLineEdit *_probabilityEdit;
     QListView *_probabilityView;
     QStandardItemModel *_probabilityModel;
+    QPushButton *_appendButton;
+    QPushButton *_removeButton;
 
     GOOperator *_model;
     QList<double> _probability;
@@ -35,6 +39,7 @@ protected:
     int _currentIndex;
 
 protected slots:
+    void updateView(QString);
     void append();
     void removeEnd();
     void save();
@@ -42,6 +47,7 @@ protected slots:
 
 private:
     QString getProbabilityString(int index);
+    QString getCurrentProbabilityString(int index);
 };
 
 #endif // DIALOGGOPROBABILITY_H

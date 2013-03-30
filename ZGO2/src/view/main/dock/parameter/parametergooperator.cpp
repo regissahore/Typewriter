@@ -20,12 +20,14 @@ void ParameterGOOperator::bindItem(void *item)
     {
     case GOOperatorFactory::Operator_Type_1:
         this->addProbability12Parameter();
+        this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_2:
         break;
     case GOOperatorFactory::Operator_Type_3:
         this->addProbability0Parameter();
         this->addProbability12Parameter();
+        this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_5:
         this->addProbabilityMultipleParameter();
@@ -33,10 +35,12 @@ void ParameterGOOperator::bindItem(void *item)
     case GOOperatorFactory::Operator_Type_6:
         this->addProbability0Parameter();
         this->addProbability12Parameter();
+        this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_7:
         this->addProbability0Parameter();
         this->addProbability12Parameter();
+        this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_10:
         break;
@@ -104,7 +108,7 @@ void ParameterGOOperator::addProbability12Parameter()
         tableItem = new TableWidgetGOItem(tr("Probability 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(1)));
+        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->status()->probability(2)));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -185,6 +189,29 @@ void ParameterGOOperator::itemClicked(QTableWidgetItem *tableItem)
     case TableWidgetGOItem::PARAMETER_PROBABILITY_MULTIPLE:
         probabilitydialog = new DialogGOProbability(this);
         probabilitydialog->setModel(item->model());
+        switch (item->model()->type())
+        {
+        case GOOperatorFactory::Operator_Type_1:
+            probabilitydialog->setIsFixedNumber(true);
+            break;
+        case GOOperatorFactory::Operator_Type_2:
+            break;
+        case GOOperatorFactory::Operator_Type_3:
+            probabilitydialog->setIsFixedNumber(true);
+            break;
+        case GOOperatorFactory::Operator_Type_5:
+            break;
+        case GOOperatorFactory::Operator_Type_6:
+            probabilitydialog->setIsFixedNumber(true);
+            break;
+        case GOOperatorFactory::Operator_Type_7:
+            probabilitydialog->setIsFixedNumber(true);
+            break;
+        case GOOperatorFactory::Operator_Type_10:
+            break;
+        default:
+            break;
+        }
         probabilitydialog->exec();
         delete probabilitydialog;
         break;
