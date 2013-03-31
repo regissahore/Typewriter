@@ -1,10 +1,13 @@
 #include <QObject>
+#include <QFile>
+#include <QTextStream>
 #include "gograph.h"
 #include "gooperator.h"
 #include "gosignal.h"
 #include "goiomodel.h"
 #include "goanalysis.h"
 #include "gooperatorfactory.h"
+#include "gostatus.h"
 
 GOGraph::GOGraph()
 {
@@ -207,4 +210,100 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
         }
     }
     return topList;
+}
+
+/**
+ * Save the result to a HTML file.
+ * @param path The file path.
+ * @return Returns true if succeed, otherwise false.
+ */
+bool GOGraph::saveAsHTML(const QString path)
+{
+    this->_error = "";
+    QFile file(path);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        this->_error = QObject::tr("Can't open file ") + path;
+        return false;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "<!DOCTYPE html>" << endl;
+    out << "<html>" << endl;
+    out << "<head>" << endl;
+    out << "<title>" + file.fileName() + "</title>" << endl;
+    out << "<meta charset = UTF-8>" << endl;
+    out << "</head>" << endl;
+    out << "<body>" << endl;
+    QVector<GOOperator*> list;
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        list.push_back(this->_operator[i]);
+    }
+    for (int i = 0; i < list.size(); ++i)
+    {
+        for (int j = i + 1; j < list.size(); ++j)
+        {
+            if (list[i]->id() > list[j]->id())
+            {
+                GOOperator *temp = list[i];
+                list[i] = list[j];
+                list[j] = temp;
+            }
+        }
+    }
+    out << "<h1>" + file.fileName() + "</h1>" << endl;
+    for (int i = 0; i < list.size(); ++i)
+    {
+        out << QString("<h2>%1-%2</h2>").arg(list[i]->type()).arg(list[i]->id()) << endl;
+        out << "<table border = 1>" << endl;
+        out << "<tr>" << endl;
+        out << "<th>" + QObject::tr("Operator") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Output") + "</th>" << endl;
+        out << "</tr>" << endl;
+        out << "<tr>" << endl;
+        out << "<td>" << endl;
+        out << "<table>" << endl;
+        out << "<tr>" << endl;
+        out << "<th>" + QObject::tr("Status") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+        out << "</tr>" << endl;
+        for (int j = 0; j <= list[i]->status()->probablityNumber(); ++j)
+        {
+            out << "<tr>" << endl;
+            out << QString("<td style='text-align:center;'>%1</td>").arg(j);
+            out << QString("<td>%1</td>").arg(list[i]->status()->probability(j));
+            out << "</tr>" << endl;
+        }
+        out << "</table>" << endl;
+        out << "</td>" << endl;
+        out << "<td>" << endl;
+        out << "<table>" << endl;
+        out << "<tr>" << endl;
+        out << "<th>" + QObject::tr("Status") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+        out << "</tr>" << endl;
+        for (int j = 0; j <= list[i]->status()->accumulativeNumber(); ++j)
+        {
+            out << "<tr>" << endl;
+            out << QString("<td style='text-align:center;'>%1</td>").arg(j);
+            if (j == 0)
+            {
+                out << QString("<td>%1</td>").arg(list[i]->status()->accumulative(j));
+            }
+            else
+            {
+                out << QString("<td>%1</td>").arg(list[i]->status()->accumulative(j) - list[i]->status()->accumulative(j - 1));
+            }
+            out << "</tr>" << endl;
+        }
+        out << "</table>" << endl;
+        out << "</td>" << endl;
+        out << "</tr>" << endl;
+        out << "</table>" << endl;
+    }
+    out << "</body>" << endl;
+    out << "</html>" << endl;
+    file.close();
+    return true;
 }

@@ -1,3 +1,4 @@
+#include <QFile>
 #include "editorabstract.h"
 #include "messagefactory.h"
 
@@ -33,6 +34,8 @@ QString EditorAbstract::path() const
 void EditorAbstract::setPath(QString path)
 {
     this->_path = path;
+    QFile file(path);
+    this->setName(file.fileName());
 }
 
 /**

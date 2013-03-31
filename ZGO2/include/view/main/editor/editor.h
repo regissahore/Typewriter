@@ -12,6 +12,8 @@
 #include "messager.h"
 #include "editorfactory.h"
 
+class EditorAbstract;
+
 class Editor : public QWidget, public Messager
 {
     Q_OBJECT
@@ -28,6 +30,7 @@ protected:
     QVector<EditorAbstract*> *_editors; /** 编辑器的集合。 */
     void createNewTab();
     void tryOpen();
+    void openExist(QString filePath);
 
 protected slots:
     bool tryCloseTab(int index);

@@ -22,6 +22,7 @@ public:
     void addSignal(GOSignal *signal);
     void calcAccumulativeProbability();
     QString getErrorMessage() const;
+    bool saveAsHTML(const QString path);
 
 protected:
     QVector<int> _source;

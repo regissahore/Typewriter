@@ -29,6 +29,8 @@ QString MessageFactory::getMessageTypeName(int messageType)
         return QObject::tr("TYPE_DEBUG");
     case TYPE_MAINWINDOW_OPEN:
         return QObject::tr("TYPE_MAINWINDOW_OPEN");
+    case TYPE_EDITOR_OPEN_EXIST:
+        return QObject::tr("TYPE_EDITOR_OPEN_EXIST");
     case TYPE_MAINWINDOW_TRYCLOSE:
         return QObject::tr("TYPE_MAINWINDOW_TRYCLOSE");
     case TYPE_MAINWINDOW_CLOSE:

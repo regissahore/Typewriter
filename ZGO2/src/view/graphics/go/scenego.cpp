@@ -1,3 +1,6 @@
+#include <QUrl>
+#include <QDateTime>
+#include <QDesktopServices>
 #include "scenego.h"
 #include "messager.h"
 #include "itemgooperator.h"
@@ -324,4 +327,13 @@ void SceneGO::startAnalysis()
 {
     GOGraph *graph = this->generatorGOGraph();
     graph->calcAccumulativeProbability();
+    if (graph->getErrorMessage() == "")
+    {
+        QString fileName = QString("%1.html").arg(QDateTime::currentDateTime().currentMSecsSinceEpoch());
+        graph->saveAsHTML(fileName);
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+        message->paramString = fileName;
+        this->sendMessage(message);
+        //QDesktopServices::openUrl(QUrl(QString("test.html"), QUrl::TolerantMode));
+    }
 }

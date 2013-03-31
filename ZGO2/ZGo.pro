@@ -6,6 +6,7 @@
 
 QT       += core gui
 QT       += xml
+QT       += webkit
 
 TARGET = ZGO2
 TEMPLATE = app
@@ -100,7 +101,8 @@ HEADERS += \
     include/model/go/gograph.h \
     include/model/go/goanalysis.h \
     include/view/main/dock/parameter/dialoggoprobability.h \
-    include/view/main/menu/mainmenuanalysis.h
+    include/view/main/menu/mainmenuanalysis.h \
+    include/view/main/editor/editorwebview.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -175,7 +177,8 @@ SOURCES += \
     src/model/go/gograph.cpp \
     src/model/go/goanalysis.cpp \
     src/view/main/dock/parameter/dialoggoprobability.cpp \
-    src/view/main/menu/mainmenuanalysis.cpp
+    src/view/main/menu/mainmenuanalysis.cpp \
+    src/view/main/editor/editorwebview.cpp
 
 FORMS += \
     test.ui

@@ -18,7 +18,7 @@ public:
     explicit EditorAbstract(QWidget *parent = 0);
     virtual ~EditorAbstract();
     QString path() const;
-    void setPath(QString path);
+    virtual void setPath(QString path);
     bool modified() const;
     virtual bool trySave();
     virtual bool trySaveAs();

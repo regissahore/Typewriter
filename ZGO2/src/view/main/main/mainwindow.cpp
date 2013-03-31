@@ -1,3 +1,4 @@
+#include <QCloseEvent>
 #include "mainwindow.h"
 
 /**
