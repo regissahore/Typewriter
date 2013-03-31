@@ -13,3 +13,6 @@ doxygen
 
 # Documents
 *.doc
+
+# Language Files
+*.qm
