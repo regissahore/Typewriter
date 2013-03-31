@@ -21,6 +21,7 @@ public:
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     GOGraph* generatorGOGraph();
+    void startAnalysis();
 
 protected:
     ToolGOAbstract *_tool;

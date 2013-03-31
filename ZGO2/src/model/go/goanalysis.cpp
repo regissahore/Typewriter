@@ -73,6 +73,7 @@ void GOAnalysis::calcAccumulativeProbabilityType1(GOOperator *op)
 {
     GOStatus *As = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         Ag->setAccumulative(i, As->accumulative(i) * Ag->probability(1));
@@ -82,7 +83,9 @@ void GOAnalysis::calcAccumulativeProbabilityType1(GOOperator *op)
 
 void GOAnalysis::calcAccumulativeProbabilityType2(GOOperator *op)
 {
+    GOStatus *As = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         double val = 1.0;
@@ -100,6 +103,7 @@ void GOAnalysis::calcAccumulativeProbabilityType3(GOOperator *op)
 {
     GOStatus *As = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         Ag->setAccumulative(i, Ag->probability(0) + As->accumulative(i) * Ag->probability(1));
@@ -115,10 +119,11 @@ void GOAnalysis::calcAccumulativeProbabilityType4(GOOperator *op)
 void GOAnalysis::calcAccumulativeProbabilityType5(GOOperator *op)
 {
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(Ag->probablityNumber());
     Ag->setAccumulative(0, Ag->probability(0));
     for (int i = 1; i <= Ag->accumulativeNumber(); ++i)
     {
-        Ag->setAccumulative(i, Ag->accumulative(i) + Ag->probability(i));
+        Ag->setAccumulative(i, Ag->accumulative(i - 1) + Ag->probability(i));
     }
 }
 
@@ -127,6 +132,7 @@ void GOAnalysis::calcAccumulativeProbabilityType6(GOOperator *op)
     GOStatus *As1 = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *As2 = op->subInput()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As1->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         Ag->setAccumulative(i, As1->accumulative(i) * (Ag->probability(0) + As2->accumulative(i) * Ag->probability(1)));
@@ -139,6 +145,7 @@ void GOAnalysis::calcAccumulativeProbabilityType7(GOOperator *op)
     GOStatus *As1 = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *As2 = op->subInput()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As1->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         Ag->setAccumulative(i, As1->accumulative(i) * (Ag->probability(2) + (1 - As2->accumulative(i)) * Ag->probability(1)));
@@ -158,7 +165,9 @@ void GOAnalysis::calcAccumulativeProbabilityType9(GOOperator *op)
 
 void GOAnalysis::calcAccumulativeProbabilityType10(GOOperator *op)
 {
+    GOStatus *As = op->input()->signal()->at(0)->next(op)->status();
     GOStatus *Ag = op->status();
+    Ag->setAccumulativeNumber(As->accumulativeNumber());
     for (int i = 0; i < Ag->accumulativeNumber(); ++i)
     {
         double val = 1.0;

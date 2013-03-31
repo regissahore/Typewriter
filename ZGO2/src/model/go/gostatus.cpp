@@ -57,7 +57,7 @@ void GOStatus::setProbability(int index, const float value)
 
 int GOStatus::accumulativeNumber() const
 {
-    return this->_accumulative.size();
+    return this->_accumulative.size() - 1;
 }
 
 void GOStatus::setAccumulativeNumber(int number)

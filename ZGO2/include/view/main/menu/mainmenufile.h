@@ -4,7 +4,6 @@
  * The main menu of file.
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include <QMenu>
 #include "mainmenuabstract.h"
 
 class MainMenuFile : public MainMenuAbstract

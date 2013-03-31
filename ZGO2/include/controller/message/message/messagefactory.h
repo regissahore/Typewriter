@@ -25,6 +25,7 @@ public:
         TYPE_EDITOR_SAVE,
         TYPE_EDITOR_SAVEALL,
         TYPE_EDITOR_SAVEAS,
+        TYPE_EDITOR_ANALYSIS,
         TYPE_TOOL_SELECTION,
         TYPE_END
     };

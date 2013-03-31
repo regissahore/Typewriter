@@ -4,11 +4,11 @@
  * 主菜单。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include <QMenu>
-#include <QAction>
 #include <QMenuBar>
 #include "messager.h"
-#include "mainmenufile.h"
+
+class MainMenuFile;
+class MainMenuAnalysis;
 
 class MainMenu : public QMenuBar, public Messager
 {
@@ -19,6 +19,7 @@ public:
 
 private:
     MainMenuFile *_menuFile;
+    MainMenuAnalysis *_menuAnalysis;
 };
 
 #endif // MAINMENU_H

@@ -99,7 +99,8 @@ HEADERS += \
     include/model/go/gosignalfactory.h \
     include/model/go/gograph.h \
     include/model/go/goanalysis.h \
-    include/view/main/dock/parameter/dialoggoprobability.h
+    include/view/main/dock/parameter/dialoggoprobability.h \
+    include/view/main/menu/mainmenuanalysis.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -173,7 +174,8 @@ SOURCES += \
     src/model/go/gosignalfactory.cpp \
     src/model/go/gograph.cpp \
     src/model/go/goanalysis.cpp \
-    src/view/main/dock/parameter/dialoggoprobability.cpp
+    src/view/main/dock/parameter/dialoggoprobability.cpp \
+    src/view/main/menu/mainmenuanalysis.cpp
 
 FORMS += \
     test.ui

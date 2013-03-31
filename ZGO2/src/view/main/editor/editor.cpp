@@ -116,6 +116,7 @@ void Editor::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_SAVEAS, this);
     controller->listen(MessageFactory::TYPE_EDITOR_SAVEALL, this);
     controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS, this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
 }
@@ -163,7 +164,7 @@ void Editor::messageEvent(Message *message)
             this->_editors->at(this->_tabWidget->currentIndex())->trySaveAs();
         }
         break;
-    case MessageFactory::TYPE_TOOL_SELECTION:
+    default:
         if (this->_editors->size() > 0)
         {
             this->_editors->at(this->_tabWidget->currentIndex())->messageEvent(message);

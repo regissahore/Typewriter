@@ -66,6 +66,11 @@ void SceneGO::messageEvent(Message *message)
     case MessageFactory::TYPE_TOOL_SELECTION:
         this->selectTool(message->paramInt);
         break;
+    case MessageFactory::TYPE_EDITOR_ANALYSIS:
+        this->startAnalysis();
+        break;
+    default:
+        break;
     }
 }
 
@@ -310,4 +315,13 @@ GOGraph* SceneGO::generatorGOGraph()
         }
     }
     return graph;
+}
+
+/**
+ * Analysis and generate results.
+ */
+void SceneGO::startAnalysis()
+{
+    GOGraph *graph = this->generatorGOGraph();
+    graph->calcAccumulativeProbability();
 }
