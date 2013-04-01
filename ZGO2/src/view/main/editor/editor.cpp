@@ -156,18 +156,21 @@ void Editor::messageEvent(Message *message)
         if (this->_editors->size() > 0)
         {
             this->_editors->at(this->_tabWidget->currentIndex())->trySave();
+            this->_tabWidget->setTabText(this->_tabWidget->currentIndex(), this->_editors->at(this->_tabWidget->currentIndex())->name());
         }
         break;
     case MessageFactory::TYPE_EDITOR_SAVEALL:
         for (int i = 0; i < this->_editors->size(); ++i)
         {
             this->_editors->at(i)->trySave();
+            this->_tabWidget->setTabText(i, this->_editors->at(i)->name());
         }
         break;
     case MessageFactory::TYPE_EDITOR_SAVEAS:
         if (this->_editors->size() > 0)
         {
             this->_editors->at(this->_tabWidget->currentIndex())->trySaveAs();
+            this->_tabWidget->setTabText(this->_tabWidget->currentIndex(), this->_editors->at(this->_tabWidget->currentIndex())->name());
         }
         break;
     default:

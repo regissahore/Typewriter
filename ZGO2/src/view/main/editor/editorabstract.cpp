@@ -34,8 +34,19 @@ QString EditorAbstract::path() const
 void EditorAbstract::setPath(QString path)
 {
     this->_path = path;
-    QFile file(path);
-    this->setName(file.fileName());
+    if (path != "")
+    {
+        QString name = "";
+        for (int i = path.length() - 1; i >= 0; --i)
+        {
+            if (path.at(i) == '/' || path.at(i) == '\\')
+            {
+                break;
+            }
+            name = path.at(i) + name;
+        }
+        this->setName(name);
+    }
 }
 
 /**
@@ -58,10 +69,8 @@ bool EditorAbstract::trySave()
         this->setPath(QFileDialog::getSaveFileName(this, tr("Save File"), ".", this->_filter));
         if (this->path() == "")
         {
-            return false; // 选取文件操作被取消。
+            return false;
         }
-        QFile file(this->path());
-        this->setName(file.fileName());
     }
     if (this->save())
     {
@@ -82,8 +91,6 @@ bool EditorAbstract::trySaveAs()
     {
         return false; // 选取文件操作被取消。
     }
-    QFile file(this->path());
-    this->setName(file.fileName());
     if (this->save())
     {
         this->setModified(false);
