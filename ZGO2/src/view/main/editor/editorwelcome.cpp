@@ -6,8 +6,8 @@
  */
 EditorWelcome::EditorWelcome(QWidget *parent) : EditorAbstract(parent)
 {
-    this->setName(tr("Welcome"));
     this->setPath("Path");
+    this->setName(tr("Welcome"));
     this->setModified(false);
 }
 

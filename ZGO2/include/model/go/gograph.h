@@ -34,6 +34,8 @@ protected:
     bool checkCycleAndConnection();
     bool isContainCycleDfs(QVector<int> &colors, int index, int color);
     QVector<GOOperator*> getTopologicalOrder();
+    QVector<QVector<GOOperator*> > getAncestorList(GOOperator *op);
+    QVector<GOOperator*> getCommonSignalList(GOOperator *op);
 };
 
 #endif // GOGRAPH_H

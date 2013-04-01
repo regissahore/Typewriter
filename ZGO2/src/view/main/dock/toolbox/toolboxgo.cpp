@@ -89,6 +89,7 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
     layout->addWidget(buttonGOSignal);
     widget->setLayout(layout);
     scrollArea->setWidget(widget);
+    widget->resize(130, widget->size().height());
     scrollArea->show();
 }
 

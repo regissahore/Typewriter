@@ -17,6 +17,7 @@ class DockToolbox : public QDockWidget, public Messager
 public:
     explicit DockToolbox(QWidget *parent = 0);
     ~DockToolbox();
+    QSize sizeHint() const;
     void bindMessage(MessageController *controller);
     void messageEvent(Message *message);
 

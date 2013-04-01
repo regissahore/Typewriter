@@ -72,6 +72,7 @@ void GOGraph::calcAccumulativeProbability()
     GOAnalysis *analysis = new GOAnalysis();
     for (int i = 0; i < list.size(); ++i)
     {
+        QVector<GOOperator*> commonList = this->getCommonSignalList(list[i]);
         analysis->calcAccumulativeProbability(list[i]);
     }
     delete analysis;
@@ -213,6 +214,77 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
 }
 
 /**
+ * Get the ancestor list, the search operator is in the frontest position.
+ * @param The operator.
+ * @return The vector of the path, which is a vector of operator.
+ */
+QVector<QVector<GOOperator*> > GOGraph::getAncestorList(GOOperator *op)
+{
+    if (op->input()->number() == 0)
+    {
+        QVector<QVector<GOOperator*> > vector;
+        QVector<GOOperator*> list;
+        list.push_back(op);
+        vector.push_back(list);
+        return vector;
+    }
+    QVector<QVector<GOOperator*> > vector;
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        QVector<QVector<GOOperator*> > pathList = this->getAncestorList(op->input()->signal()->at(i)->next(op));
+        for (int j = 0; j < pathList.size(); ++j)
+        {
+            pathList[j].push_front(op);
+            vector.push_back(pathList[j]);
+        }
+    }
+    return vector;
+}
+
+/**
+ * Get all common signal list, which is actually a list of operators.
+ * @param op
+ * @return The vector of common signal.
+ */
+QVector<GOOperator*> GOGraph::getCommonSignalList(GOOperator *op)
+{
+    QVector<QVector<GOOperator*> > ancestorPath = this->getAncestorList(op);
+    QVector<GOOperator*> commonList;
+    for (int i = 0; i < ancestorPath.size(); ++i)
+    {
+        for (int j = i + 1; j < ancestorPath.size(); ++j)
+        {
+            bool findCommon = false;
+            for (int ii = 1; ii < ancestorPath[i].size() && !findCommon; ++ii)
+            {
+                for (int jj = 1; jj < ancestorPath[j].size() && !findCommon; ++jj)
+                {
+                    if (ancestorPath[i][ii] == ancestorPath[j][jj])
+                    {
+                        findCommon = true;
+                        bool appeared = false;
+                        for (int k = 0; k < commonList.size(); ++k)
+                        {
+                            if (ancestorPath[i][ii] == commonList[k])
+                            {
+                                appeared = true;
+                                break;
+                            }
+                        }
+                        if (!appeared)
+                        {
+                            commonList.push_back(ancestorPath[i][ii]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ancestorPath.clear();
+    return commonList;
+}
+
+/**
  * Save the result to a HTML file.
  * @param path The file path.
  * @return Returns true if succeed, otherwise false.
@@ -233,6 +305,7 @@ bool GOGraph::saveAsHTML(const QString path)
     out << "<head>" << endl;
     out << "<title>" + file.fileName() + "</title>" << endl;
     out << "<meta charset = UTF-8>" << endl;
+    out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
     out << "</head>" << endl;
     out << "<body>" << endl;
     QVector<GOOperator*> list;
@@ -252,11 +325,18 @@ bool GOGraph::saveAsHTML(const QString path)
             }
         }
     }
-    out << "<h1>" + file.fileName() + "</h1>" << endl;
+    out << "<h1>" + QObject::tr("Analysis Result") + "</h1>" << endl;
     for (int i = 0; i < list.size(); ++i)
     {
-        out << QString("<h2>%1-%2</h2>").arg(list[i]->type()).arg(list[i]->id()) << endl;
-        out << "<table border = 1>" << endl;
+        out << "<table>" << endl;
+        out << "<tr style='text-align: center;'>" << endl;
+        out << "<th>";
+        out << QString("%1-%2").arg(list[i]->type()).arg(list[i]->id()) << endl;
+        out << "</th>";
+        out << "</tr>" << endl;
+        out << "<tr>" << endl;
+        out << "<td>";
+        out << "<table>" << endl;
         out << "<tr>" << endl;
         out << "<th>" + QObject::tr("Operator") + "</th>" << endl;
         out << "<th>" + QObject::tr("Output") + "</th>" << endl;
@@ -301,6 +381,10 @@ bool GOGraph::saveAsHTML(const QString path)
         out << "</td>" << endl;
         out << "</tr>" << endl;
         out << "</table>" << endl;
+        out << "</td>";
+        out << "</tr>" << endl;
+        out << "</table>" << endl;
+        out << "<br/>" << endl;
     }
     out << "</body>" << endl;
     out << "</html>" << endl;

@@ -35,6 +35,7 @@ void ItemArrow::setEnd(const int x, const int y)
 {
     this->_end.setX(x);
     this->_end.setY(y);
+    this->prepareGeometryChange();
 }
 
 /**
@@ -49,7 +50,7 @@ QPoint ItemArrow::sceneEnd()
 
 QRectF ItemArrow::boundingRect() const
 {
-    return QRectF(0, 0, 0, 0);
+    return QRectF(0, 0, this->end().x(), this->end().y());
 }
 
 /**
