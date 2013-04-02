@@ -3,8 +3,9 @@
 #include "messagefactory.h"
 #include "dialogintegerinput.h"
 #include "gooperator.h"
-#include "goiomodel.h"
 #include "gooperatorfactory.h"
+#include "goinput.h"
+#include "gooutput.h"
 
 /**
  * Constructor. The protected variable _GOOperator should be initialized and added to the scene.

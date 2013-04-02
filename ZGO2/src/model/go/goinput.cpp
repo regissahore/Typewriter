@@ -1,18 +1,25 @@
-#include "goiomodel.h"
+#include "goinput.h"
+#include "gosignal.h"
 
 /**
  * 构造函数。
  */
-GOIOModel::GOIOModel()
+GOInput::GOInput()
 {
     this->_signal = new QVector<GOSignal*>();
+}
+
+GOInput::~GOInput()
+{
+    this->_signal->clear();
+    delete this->_signal;
 }
 
 /**
  * 获得信号流的数量。
  * @return 信号流的数量。
  */
-int GOIOModel::number() const
+int GOInput::number() const
 {
     return this->_signal->size();
 }
@@ -22,7 +29,7 @@ int GOIOModel::number() const
  * 如果数量比原有值少，则会删除最末端的信号流。
  * @param num 信号流的数量
  */
-void GOIOModel::setNumber(int num)
+void GOInput::setNumber(int num)
 {
     if (this->number() < num)
     {
@@ -46,7 +53,7 @@ void GOIOModel::setNumber(int num)
  * 添加新的信号流。
  * @param signal 信号流。
  */
-void GOIOModel::add(GOSignal *signal)
+void GOInput::add(GOSignal *signal)
 {
     this->_signal->push_back(signal);
 }
@@ -56,7 +63,7 @@ void GOIOModel::add(GOSignal *signal)
  * @param index 信号流位置，下标从0开始。
  * @param signal 信号流。
  */
-void GOIOModel::set(int index, GOSignal *signal)
+void GOInput::set(int index, GOSignal *signal)
 {
     if (index < this->number())
     {
@@ -68,7 +75,7 @@ void GOIOModel::set(int index, GOSignal *signal)
  * 删除指定编号的信号流。
  * @param index 信号流位置，下标从0开始。
  */
-void GOIOModel::remove(int index)
+void GOInput::remove(int index)
 {
     this->_signal->remove(index);
 }
@@ -77,35 +84,19 @@ void GOIOModel::remove(int index)
  * 返回信号流的集合。
  * @return 信号流集合。
  */
-QVector<GOSignal*>* GOIOModel::signal() const
+QVector<GOSignal*>* GOInput::signal() const
 {
     return this->_signal;
 }
 
-void GOIOModel::save(QDomDocument &document, QDomElement &root)
+int GOInput::getSignalIndex(GOSignal* signal) const
 {
-    QDomElement ioRoot = document.createElement("io");
-    ioRoot.setAttribute("number", this->number());
-    root.appendChild(ioRoot);
-    for (int i = 0; i < this->number(); ++i)
+    for (int i = 0; i < this->_signal->size(); ++i)
     {
-        QDomElement element = document.createElement("io");
-        // TODO
-        ioRoot.appendChild(element);
+        if (this->_signal->at(i) == signal)
+        {
+            return i;
+        }
     }
-}
-
-bool GOIOModel::tryOpen(QDomElement &root)
-{
-    if (root.tagName() != "io")
-    {
-        return false;
-    }
-    int number = root.attribute("number", "0").toInt();
-    this->setNumber(number);
-    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
-    {
-        // TOOD
-    }
-    return true;
+    return -1;
 }

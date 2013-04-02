@@ -12,7 +12,8 @@
 #include "definationeditorselectiontype.h"
 #include "gograph.h"
 #include "definationgotype.h"
-#include "goiomodel.h"
+#include "goinput.h"
+#include "gooutput.h"
 
 /**
  * The constructor.
@@ -295,7 +296,7 @@ GOGraph* SceneGO::generatorGOGraph()
                 ((ItemGOSignal*)item)->start()->op->model()->subInput()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
                 break;
             case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->start()->op->model()->output()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
+                ((ItemGOSignal*)item)->start()->op->model()->output()->signal()->at(((ItemGOSignal*)item)->start()->index)->push_back(((ItemGOSignal*)item)->model());
                 break;
             }
             ((ItemGOSignal*)item)->model()->setV(((ItemGOSignal*)item)->end()->op->model());
@@ -308,7 +309,7 @@ GOGraph* SceneGO::generatorGOGraph()
                 ((ItemGOSignal*)item)->end()->op->model()->subInput()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
                 break;
             case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->end()->op->model()->output()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
+                ((ItemGOSignal*)item)->end()->op->model()->output()->signal()->at(((ItemGOSignal*)item)->end()->index)->push_back(((ItemGOSignal*)item)->model());
                 break;
             }
             graph->addSignal(((ItemGOSignal*)item)->model());

@@ -1,5 +1,6 @@
 #include "gooperatorfactory.h"
-#include "goiomodel.h"
+#include "goinput.h"
+#include "gooutput.h"
 
 int GOOperatorFactory::_autoID = 0;
 

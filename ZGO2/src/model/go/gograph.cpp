@@ -4,10 +4,12 @@
 #include "gograph.h"
 #include "gooperator.h"
 #include "gosignal.h"
-#include "goiomodel.h"
+#include "goinput.h"
+#include "gooutput.h"
 #include "goanalysis.h"
 #include "gooperatorfactory.h"
 #include "gostatus.h"
+#include "goaccumulative.h"
 
 GOGraph::GOGraph()
 {
@@ -123,9 +125,9 @@ bool GOGraph::isContainCycleDfs(QVector<int> &colors, int index, int color)
     GOOperator *op = this->_operator[index];
     for (int i = 0; i < op->output()->number(); ++i)
     {
-        if (op->output()->signal()->at(i) != 0L)
+        for (int j = 0; j < op->output()->signal()->at(i)->size(); ++j)
         {
-            GOOperator *nextOpeartor = op->output()->signal()->at(i)->next(op);
+            GOOperator *nextOpeartor = op->output()->signal()->at(i)->at(j)->next(op);
             int next = this->_operatorPos[nextOpeartor];
             if (colors[next] == color)
             {
@@ -194,9 +196,9 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
                 isOutside[index] = true;
                 for (int j = 0; j < inside[i]->output()->number(); ++j)
                 {
-                    if (inside[i]->output()->signal()->at(j) != 0L)
+                    for (int k = 0; k < inside[i]->output()->signal()->at(j)->size(); ++k)
                     {
-                        GOOperator *nextOp = inside[i]->output()->signal()->at(j)->next(inside[i]);
+                        GOOperator *nextOp = inside[i]->output()->signal()->at(j)->at(k)->next(inside[i]);
                         int next = this->_operatorPos[nextOp];
                         if (!isInside[next])
                         {
@@ -348,7 +350,7 @@ bool GOGraph::saveAsHTML(const QString path)
         out << "<th>" + QObject::tr("Status") + "</th>" << endl;
         out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
         out << "</tr>" << endl;
-        for (int j = 0; j <= list[i]->status()->probablityNumber(); ++j)
+        for (int j = 0; j < list[i]->status()->number(); ++j)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
@@ -361,19 +363,21 @@ bool GOGraph::saveAsHTML(const QString path)
         out << "<table>" << endl;
         out << "<tr>" << endl;
         out << "<th>" + QObject::tr("Status") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Accumulative") + "</th>" << endl;
         out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
         out << "</tr>" << endl;
-        for (int j = 0; j <= list[i]->status()->accumulativeNumber(); ++j)
+        for (int j = 0; j < list[i]->accmulatives()->at(0)->number(); ++j)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
+            out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j));
             if (j == 0)
             {
-                out << QString("<td>%1</td>").arg(list[i]->status()->accumulative(j));
+                out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j));
             }
             else
             {
-                out << QString("<td>%1</td>").arg(list[i]->status()->accumulative(j) - list[i]->status()->accumulative(j - 1));
+                out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1));
             }
             out << "</tr>" << endl;
         }

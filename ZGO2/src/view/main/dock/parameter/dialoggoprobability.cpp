@@ -95,13 +95,13 @@ void DialogGOProbability::setModel(GOOperator *model)
     this->_probability.clear();
     this->_description.clear();
     this->_probabilityModel->clear();
-    for (int i = 0; i <= model->status()->probablityNumber(); ++i)
+    for (int i = 0; i < model->status()->number(); ++i)
     {
         this->_probability.append(model->status()->probability(i));
         this->_description.append(model->status()->description(i));
         this->_probabilityModel->appendRow(new QStandardItem(this->getProbabilityString(i)));
     }
-    if (model->status()->probablityNumber() > 0)
+    if (model->status()->number() >= 0)
     {
         this->changeIndex(this->_probabilityModel->index(0, 0));
     }
@@ -163,7 +163,7 @@ void DialogGOProbability::save()
         this->_description[this->_currentIndex] = this->_probabilityEdit->text();
         this->_probabilityModel->setItem(this->_currentIndex, new QStandardItem(this->getProbabilityString(this->_currentIndex)));
     }
-    this->_model->status()->setProbabilityNumber(this->_probability.size() - 1);
+    this->_model->status()->setNumber(this->_probability.size());
     for (int i = 0; i < this->_probability.size(); ++i)
     {
         this->_model->status()->setProbability(i, this->_probability[i]);

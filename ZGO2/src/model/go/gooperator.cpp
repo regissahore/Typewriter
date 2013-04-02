@@ -1,23 +1,40 @@
 #include "gooperator.h"
-#include "goiomodel.h"
+#include "goinput.h"
+#include "gooutput.h"
 #include "gostatus.h"
+#include "goaccumulative.h"
 
 /**
  * 构造函数。
  */
 GOOperator::GOOperator()
 {
-    this->_input = new GOIOModel();
-    this->_subInput = new GOIOModel();
-    this->_output = new GOIOModel();
+    this->_input = new GOInput();
+    this->_subInput = new GOInput();
+    this->_output = new GOOutput();
     this->_status = new GOStatus();
+    this->_accumulatives = new QVector<GOAccumulative*>();
+}
+
+GOOperator::~GOOperator()
+{
+    delete this->_input;
+    delete this->_subInput;
+    delete this->_output;
+    delete this->_status;
+    for (int i = 0; i < this->_accumulatives->size(); ++i)
+    {
+        delete this->_accumulatives->at(i);
+    }
+    this->_accumulatives->clear();
+    delete this->_accumulatives;
 }
 
 /**
  * 返回主输入信号流。
  * @return 主输入信号流。
  */
-GOIOModel *GOOperator::input() const
+GOInput *GOOperator::input() const
 {
     return this->_input;
 }
@@ -26,7 +43,7 @@ GOIOModel *GOOperator::input() const
  * 返回次输入信号流。
  * @return 次输入信号流。
  */
-GOIOModel *GOOperator::subInput() const
+GOInput *GOOperator::subInput() const
 {
     return this->_subInput;
 }
@@ -35,7 +52,7 @@ GOIOModel *GOOperator::subInput() const
  * 返回输出信号流。
  * @return 输出信号流。
  */
-GOIOModel *GOOperator::output() const
+GOOutput* GOOperator::output() const
 {
     return this->_output;
 }
@@ -45,15 +62,20 @@ GOStatus* GOOperator::status() const
     return this->_status;
 }
 
+QVector<GOAccumulative *> *GOOperator::accmulatives() const
+{
+    return this->_accumulatives;
+}
+
 void GOOperator::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("model");
     element.setAttribute("type", this->type());
     element.setAttribute("id", this->id());
+    element.setAttribute("input", this->input()->number());
+    element.setAttribute("subInput", this->subInput()->number());
+    element.setAttribute("output", this->output()->number());
     root.appendChild(element);
-    this->input()->save(document, element);
-    this->subInput()->save(document, element);
-    this->output()->save(document, element);
     this->status()->save(document, element);
 }
 
@@ -65,22 +87,10 @@ bool GOOperator::tryOpen(QDomElement &root)
     }
     this->setType(root.attribute("type").toInt());
     this->setId(root.attribute("id").toInt());
+    this->input()->setNumber(root.attribute("input").toInt());
+    this->subInput()->setNumber(root.attribute("subInput").toInt());
+    this->output()->setNumber(root.attribute("output").toInt());
     QDomElement element = root.firstChildElement();
-    if (!this->input()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->subInput()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->output()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
     if (!this->status()->tryOpen(element))
     {
         return false;

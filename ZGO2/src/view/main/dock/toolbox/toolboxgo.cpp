@@ -33,6 +33,9 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
     this->buttonGOText = new QPushButton(tr("Text"), this);
     this->connect(buttonGOText, SIGNAL(pressed()), this, SLOT(setToolGOText()));
     layout->addWidget(buttonGOText);
+    this->buttonGOSignal = new QPushButton(tr("Signal"), this);
+    this->connect(buttonGOSignal, SIGNAL(pressed()), this, SLOT(setToolGOSignal()));
+    layout->addWidget(buttonGOSignal);
     this->buttonGOOperator1 = new QPushButton(tr("Operator 1"), this);
     this->connect(buttonGOOperator1, SIGNAL(pressed()), this, SLOT(setToolGOOperator1()));
     layout->addWidget(buttonGOOperator1);
@@ -84,9 +87,6 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
     this->buttonGOOperator17 = new QPushButton(tr("Operator 17"), this);
     this->connect(buttonGOOperator17, SIGNAL(pressed()), this, SLOT(setToolGOOperator17()));
     layout->addWidget(buttonGOOperator17);
-    this->buttonGOSignal = new QPushButton(tr("Signal"), this);
-    this->connect(buttonGOSignal, SIGNAL(pressed()), this, SLOT(setToolGOSignal()));
-    layout->addWidget(buttonGOSignal);
     widget->setLayout(layout);
     scrollArea->setWidget(widget);
     widget->resize(130, widget->size().height());

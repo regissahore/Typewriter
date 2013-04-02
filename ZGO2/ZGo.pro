@@ -45,7 +45,6 @@ HEADERS += \
     include/model/common/factoryabstract.h \
     include/model/go/gosignal.h \
     include/model/go/gooperator.h \
-    include/model/go/goiomodel.h \
     include/view/graphics/common/itemmoveable.h \
     include/view/graphics/common/itemdrawable.h \
     include/view/graphics/common/itemarrow.h \
@@ -102,7 +101,10 @@ HEADERS += \
     include/model/go/goanalysis.h \
     include/view/main/dock/parameter/dialoggoprobability.h \
     include/view/main/menu/mainmenuanalysis.h \
-    include/view/main/editor/editorwebview.h
+    include/view/main/editor/editorwebview.h \
+    include/model/go/goaccumulative.h \
+    include/model/go/goinput.h \
+    include/model/go/gooutput.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -120,7 +122,6 @@ SOURCES += \
     src/model/common/factoryabstract.cpp \
     src/model/go/gosignal.cpp \
     src/model/go/gooperator.cpp \
-    src/model/go/goiomodel.cpp \
     src/view/graphics/common/itemmoveable.cpp \
     src/view/graphics/common/itemdrawable.cpp \
     src/view/graphics/common/itemarrow.cpp \
@@ -178,7 +179,10 @@ SOURCES += \
     src/model/go/goanalysis.cpp \
     src/view/main/dock/parameter/dialoggoprobability.cpp \
     src/view/main/menu/mainmenuanalysis.cpp \
-    src/view/main/editor/editorwebview.cpp
+    src/view/main/editor/editorwebview.cpp \
+    src/model/go/goaccumulative.cpp \
+    src/model/go/goinput.cpp \
+    src/model/go/gooutput.cpp
 
 FORMS += \
     test.ui
