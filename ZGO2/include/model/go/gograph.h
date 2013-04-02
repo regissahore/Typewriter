@@ -31,11 +31,21 @@ protected:
     QMap<GOOperator*, int> _operatorPos;
     QString _error;
 
+    struct Output
+    {
+        GOOperator *op;
+        int index; /** The output index of the operator. */
+    };
     bool checkCycleAndConnection();
-    bool isContainCycleDfs(QVector<int> &colors, int index, int color);
+    bool isContainCycleDfs(QVector<bool> &visit,
+                           QVector<int> &dfn,
+                           QVector<int> &low,
+                           QVector<int> &stack,
+                           int &timeStamp,
+                           int u);
     QVector<GOOperator*> getTopologicalOrder();
-    QVector<QVector<GOOperator*> > getAncestorList(GOOperator *op);
-    QVector<GOOperator*> getCommonSignalList(GOOperator *op);
+    QVector<QVector<Output> > getAncestorList(GOOperator *op, int index);
+    QVector<Output> getCommonSignalList(GOOperator *op);
 };
 
 #endif // GOGRAPH_H

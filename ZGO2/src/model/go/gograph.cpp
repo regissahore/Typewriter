@@ -74,7 +74,7 @@ void GOGraph::calcAccumulativeProbability()
     GOAnalysis *analysis = new GOAnalysis();
     for (int i = 0; i < list.size(); ++i)
     {
-        QVector<GOOperator*> commonList = this->getCommonSignalList(list[i]);
+        QVector<GOGraph::Output> commonList = this->getCommonSignalList(list[i]);
         analysis->calcAccumulativeProbability(list[i]);
     }
     delete analysis;
@@ -88,22 +88,32 @@ void GOGraph::calcAccumulativeProbability()
  */
 bool GOGraph::checkCycleAndConnection()
 {
-    QVector<int> colors;
+    QVector<bool> visit;
+    QVector<int> dfn;
+    QVector<int> low;
     for (int i = 0; i < this->_operator.size(); ++i)
     {
-        colors.push_back(-1);
+        visit.push_back(false);
+        dfn.push_back(-1);
+        low.push_back(-1);
     }
+    int timeStamp = 0;
+    QVector<int> stack;
     for (int i = 0; i < this->_source.size(); ++i)
     {
-        if (this->isContainCycleDfs(colors, this->_source[i], i))
+        int u = this->_source[i];
+        if (dfn[u] == -1)
         {
-            this->_error = QObject::tr("The GO graph contains cycle. ");
-            return false;
+            if (this->isContainCycleDfs(visit, dfn, low, stack, timeStamp, u))
+            {
+                this->_error = QObject::tr("The GO graph contains cycle. ");
+                return false;
+            }
         }
     }
-    for (int i = 0; i < colors.size(); ++i)
+    for (int i = 0; i < this->_operator.size(); ++i)
     {
-        if (colors[i] == -1)
+        if (dfn[i] == -1)
         {
             this->_error = QObject::tr("The GO graph is not connected. ");
             return false;
@@ -112,34 +122,58 @@ bool GOGraph::checkCycleAndConnection()
     return true;
 }
 
-/**
- * The depth-first search for checking loop.
- * @param colors The record of the visiting.
- * @param index The index of the operator.
- * @param color The color of the source.
- * @return Returns true if the graph contains loop, otherwise false.
- */
-bool GOGraph::isContainCycleDfs(QVector<int> &colors, int index, int color)
+bool GOGraph::isContainCycleDfs(QVector<bool> &visit,
+                                QVector<int> &dfn,
+                                QVector<int> &low,
+                                QVector<int> &stack,
+                                int &timeStamp,
+                                int u)
 {
-    colors[index] = color;
-    GOOperator *op = this->_operator[index];
+    dfn[u] = low[u] = timeStamp++;
+    visit[u] = true;
+    stack.push_back(u);
+    GOOperator *op = this->_operator[u];
     for (int i = 0; i < op->output()->number(); ++i)
     {
         for (int j = 0; j < op->output()->signal()->at(i)->size(); ++j)
         {
-            GOOperator *nextOpeartor = op->output()->signal()->at(i)->at(j)->next(op);
-            int next = this->_operatorPos[nextOpeartor];
-            if (colors[next] == color)
+            GOOperator *next = op->output()->signal()->at(i)->at(j)->next(op);
+            int v = this->_operatorPos[next];
+            if (dfn[v] == -1)
             {
-                return true;
-            }
-            if (colors[next] == -1)
-            {
-                if (this->isContainCycleDfs(colors, next, color))
+                if (this->isContainCycleDfs(visit, dfn, low, stack, timeStamp, v))
                 {
                     return true;
                 }
+                if (low[v] < low[u])
+                {
+                    low[u] = low[v];
+                }
             }
+            else if (visit[v])
+            {
+                if (dfn[v] < low[u])
+                {
+                    low[u] = dfn[v];
+                }
+            }
+        }
+    }
+    if (dfn[u] == low[u])
+    {
+        int count = 0;
+        int temp;
+        do
+        {
+            temp = stack[stack.size() - 1];
+            stack.pop_back();
+            visit[temp] = false;
+            ++ count;
+        }
+        while (temp != u);
+        if (count > 1)
+        {
+            return true;
         }
     }
     return false;
@@ -152,63 +186,30 @@ bool GOGraph::isContainCycleDfs(QVector<int> &colors, int index, int color)
 QVector<GOOperator*> GOGraph::getTopologicalOrder()
 {
     QVector<GOOperator*> topList;
-    QVector<GOOperator*> inside;
-    QVector<bool> isInside;
-    QVector<bool> isOutside;
+    QVector<bool> outside;
+    QVector<int> inputNumber;
     for (int i = 0; i < this->_operator.size(); ++i)
     {
-        isInside.push_back(false);
-        isOutside.push_back(false);
+        outside.push_back(false);
+        inputNumber.push_back(this->_operator[i]->input()->number() + this->_operator[i]->subInput()->number());
     }
-    for (int i = 0; i < this->_source.size(); ++i)
+    while (topList.size() != this->_operator.size())
     {
-        GOOperator *op = this->_operator[this->_source[i]];
-        int index = this->_operatorPos[op];
-        isInside[index] = true;
-        inside.push_back(op);
-    }
-    while (inside.size() > 0)
-    {
-        for (int i = inside.size() - 1; i >= 0; --i)
+        for (int i = 0; i < this->_operator.size(); ++i)
         {
-            bool flag = true;
-            for (int j = 0; j < inside[i]->input()->number() && flag; ++j)
+            if (inputNumber[i] == 0 && !outside[i])
             {
-                GOOperator *prevOp = inside[i]->input()->signal()->at(j)->next(inside[i]);
-                int prev = this->_operatorPos[prevOp];
-                if (!isOutside[prev])
+                topList.push_back(this->_operator[i]);
+                outside[i] = true;
+                for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
                 {
-                    flag = false;
-                }
-            }
-            for (int j = 0; j < inside[i]->subInput()->number() && flag; ++j)
-            {
-                GOOperator *prevOp = inside[i]->subInput()->signal()->at(j)->next(inside[i]);
-                int prev = this->_operatorPos[prevOp];
-                if (!isOutside[prev])
-                {
-                    flag = false;
-                }
-            }
-            if (flag)
-            {
-                int index = this->_operatorPos[inside[i]];
-                isOutside[index] = true;
-                for (int j = 0; j < inside[i]->output()->number(); ++j)
-                {
-                    for (int k = 0; k < inside[i]->output()->signal()->at(j)->size(); ++k)
+                    for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
                     {
-                        GOOperator *nextOp = inside[i]->output()->signal()->at(j)->at(k)->next(inside[i]);
-                        int next = this->_operatorPos[nextOp];
-                        if (!isInside[next])
-                        {
-                            isInside[next] = true;
-                            inside.push_back(nextOp);
-                        }
+                        GOOperator *next = this->_operator[i]->output()->signal()->at(j)->at(k)->next(this->_operator[i]);
+                        int index = this->_operatorPos[next];
+                        --inputNumber[index];
                     }
                 }
-                topList.push_back(inside[i]);
-                inside.remove(i);
             }
         }
     }
@@ -216,27 +217,33 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
 }
 
 /**
- * Get the ancestor list, the search operator is in the frontest position.
- * @param The operator.
- * @return The vector of the path, which is a vector of operator.
+ * Get the ancestor list, the parameter operator is in the frontest position.
+ * @param op The operator.
+ * @param index The index is the output index of the operator.
+ * @return The vector of the path, which is a vector of struct CommonSignal.
  */
-QVector<QVector<GOOperator*> > GOGraph::getAncestorList(GOOperator *op)
+QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int index)
 {
+    Output commonSignal;
+    commonSignal.op = op;
+    commonSignal.index = index;
     if (op->input()->number() == 0)
     {
-        QVector<QVector<GOOperator*> > vector;
-        QVector<GOOperator*> list;
-        list.push_back(op);
+        QVector< QVector<Output> > vector;
+        QVector<Output> list;
+        list.push_back(commonSignal);
         vector.push_back(list);
         return vector;
     }
-    QVector<QVector<GOOperator*> > vector;
+    QVector< QVector<Output> > vector;
     for (int i = 0; i < op->input()->number(); ++i)
     {
-        QVector<QVector<GOOperator*> > pathList = this->getAncestorList(op->input()->signal()->at(i)->next(op));
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        QVector< QVector<Output> > pathList = this->getAncestorList(prev, prev->output()->getSignalIndex(signal));
         for (int j = 0; j < pathList.size(); ++j)
         {
-            pathList[j].push_front(op);
+            pathList[j].push_front(commonSignal);
             vector.push_back(pathList[j]);
         }
     }
@@ -248,10 +255,10 @@ QVector<QVector<GOOperator*> > GOGraph::getAncestorList(GOOperator *op)
  * @param op
  * @return The vector of common signal.
  */
-QVector<GOOperator*> GOGraph::getCommonSignalList(GOOperator *op)
+QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
 {
-    QVector<QVector<GOOperator*> > ancestorPath = this->getAncestorList(op);
-    QVector<GOOperator*> commonList;
+    QVector< QVector<Output> > ancestorPath = this->getAncestorList(op, 0);
+    QVector<Output> commonList;
     for (int i = 0; i < ancestorPath.size(); ++i)
     {
         for (int j = i + 1; j < ancestorPath.size(); ++j)
@@ -261,13 +268,15 @@ QVector<GOOperator*> GOGraph::getCommonSignalList(GOOperator *op)
             {
                 for (int jj = 1; jj < ancestorPath[j].size() && !findCommon; ++jj)
                 {
-                    if (ancestorPath[i][ii] == ancestorPath[j][jj])
+                    if (ancestorPath[i][ii].op == ancestorPath[j][jj].op &&
+                            ancestorPath[i][ii].index == ancestorPath[j][jj].index)
                     {
                         findCommon = true;
                         bool appeared = false;
                         for (int k = 0; k < commonList.size(); ++k)
                         {
-                            if (ancestorPath[i][ii] == commonList[k])
+                            if (ancestorPath[i][ii].op == commonList[k].op &&
+                                    ancestorPath[i][ii].index == commonList[k].index)
                             {
                                 appeared = true;
                                 break;
