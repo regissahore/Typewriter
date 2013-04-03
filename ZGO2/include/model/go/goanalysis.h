@@ -4,13 +4,16 @@
  * Used for analysis the GO graph.
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <QVector>
 class GOOperator;
+class GOAccumulative;
 
 class GOAnalysis
 {
 public:
     GOAnalysis();
     void calcAccumulativeProbability(GOOperator *op);
+    void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
 
 protected:
     virtual void calcAccumulativeProbabilityType1(GOOperator *op);

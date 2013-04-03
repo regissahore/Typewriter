@@ -6,6 +6,7 @@
 #include "gostatus.h"
 #include "gooperatorfactory.h"
 #include "goaccumulative.h"
+#include "gograph.h"
 
 GOAnalysis::GOAnalysis()
 {
@@ -74,6 +75,11 @@ void GOAnalysis::calcAccumulativeProbability(GOOperator *op)
     default:
         break;
     }
+}
+
+void GOAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex)
+{
+    //TODO
 }
 
 void GOAnalysis::calcAccumulativeProbabilityType1(GOOperator *op)

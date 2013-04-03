@@ -74,8 +74,26 @@ void GOGraph::calcAccumulativeProbability()
     GOAnalysis *analysis = new GOAnalysis();
     for (int i = 0; i < list.size(); ++i)
     {
-        QVector<GOGraph::Output> commonList = this->getCommonSignalList(list[i]);
-        analysis->calcAccumulativeProbability(list[i]);
+        QVector<GOGraph::Output> commonList;
+        if (list[i]->input()->number() + list[i]->subInput()->number() > 1)
+        {
+            commonList = this->getCommonSignalList(list[i]);
+        }
+        if (commonList.size() == 0)
+        {
+            analysis->calcAccumulativeProbability(list[i]);
+        }
+        else
+        {
+            QVector<GOOperator*> commonOperator;
+            QVector<int> commonIndex;
+            for (int j = 0; j < commonList.size(); ++j)
+            {
+                commonOperator.push_back(commonList[j].op);
+                commonIndex.push_back(commonList[j].outputIndex);
+            }
+            analysis->calcAccumulativeProbability(list[i], commonOperator, commonIndex);
+        }
     }
     delete analysis;
     list.clear();
@@ -222,11 +240,12 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
  * @param index The index is the output index of the operator.
  * @return The vector of the path, which is a vector of struct CommonSignal.
  */
-QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int index)
+QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int outputIndex, int signalIndex)
 {
     Output commonSignal;
     commonSignal.op = op;
-    commonSignal.index = index;
+    commonSignal.outputIndex = outputIndex;
+    commonSignal.signalIndex = signalIndex;
     if (op->input()->number() == 0)
     {
         QVector< QVector<Output> > vector;
@@ -240,7 +259,36 @@ QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int
     {
         GOSignal *signal = op->input()->signal()->at(i);
         GOOperator *prev = signal->next(op);
-        QVector< QVector<Output> > pathList = this->getAncestorList(prev, prev->output()->getSignalIndex(signal));
+        outputIndex = prev->output()->getSignalIndex(signal);
+        for (int j = 0; j < prev->output()->signal()->at(outputIndex)->size(); ++j)
+        {
+            if (prev->output()->signal()->at(outputIndex)->at(j)->next(prev) == op)
+            {
+                signalIndex = j;
+                break;
+            }
+        }
+        QVector< QVector<Output> > pathList = this->getAncestorList(prev, outputIndex, signalIndex);
+        for (int j = 0; j < pathList.size(); ++j)
+        {
+            pathList[j].push_front(commonSignal);
+            vector.push_back(pathList[j]);
+        }
+    }
+    for (int i = 0; i < op->subInput()->number(); ++i)
+    {
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        outputIndex = prev->output()->getSignalIndex(signal);
+        for (int j = 0; j < prev->output()->signal()->at(outputIndex)->size(); ++j)
+        {
+            if (prev->output()->signal()->at(outputIndex)->at(j)->next(prev) == op)
+            {
+                signalIndex = j;
+                break;
+            }
+        }
+        QVector< QVector<Output> > pathList = this->getAncestorList(prev, outputIndex, signalIndex);
         for (int j = 0; j < pathList.size(); ++j)
         {
             pathList[j].push_front(commonSignal);
@@ -257,7 +305,7 @@ QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int
  */
 QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
 {
-    QVector< QVector<Output> > ancestorPath = this->getAncestorList(op, 0);
+    QVector< QVector<Output> > ancestorPath = this->getAncestorList(op, 0, 0);
     QVector<Output> commonList;
     for (int i = 0; i < ancestorPath.size(); ++i)
     {
@@ -269,14 +317,15 @@ QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
                 for (int jj = 1; jj < ancestorPath[j].size() && !findCommon; ++jj)
                 {
                     if (ancestorPath[i][ii].op == ancestorPath[j][jj].op &&
-                            ancestorPath[i][ii].index == ancestorPath[j][jj].index)
+                            ancestorPath[i][ii].outputIndex == ancestorPath[j][jj].outputIndex &&
+                            ancestorPath[i][ii].signalIndex != ancestorPath[j][jj].signalIndex)
                     {
                         findCommon = true;
                         bool appeared = false;
                         for (int k = 0; k < commonList.size(); ++k)
                         {
                             if (ancestorPath[i][ii].op == commonList[k].op &&
-                                    ancestorPath[i][ii].index == commonList[k].index)
+                                    ancestorPath[i][ii].outputIndex == commonList[k].outputIndex)
                             {
                                 appeared = true;
                                 break;

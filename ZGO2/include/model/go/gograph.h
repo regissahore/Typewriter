@@ -25,26 +25,21 @@ public:
     bool saveAsHTML(const QString path);
 
 protected:
+    struct Output
+    {
+        GOOperator *op;
+        int outputIndex; /** The output index of the operator. */
+        int signalIndex;
+    };
     QVector<int> _source;
     QVector<GOOperator*> _operator;
     QVector<GOSignal*> _signal;
     QMap<GOOperator*, int> _operatorPos;
     QString _error;
-
-    struct Output
-    {
-        GOOperator *op;
-        int index; /** The output index of the operator. */
-    };
     bool checkCycleAndConnection();
-    bool isContainCycleDfs(QVector<bool> &visit,
-                           QVector<int> &dfn,
-                           QVector<int> &low,
-                           QVector<int> &stack,
-                           int &timeStamp,
-                           int u);
+    bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
     QVector<GOOperator*> getTopologicalOrder();
-    QVector<QVector<Output> > getAncestorList(GOOperator *op, int index);
+    QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     QVector<Output> getCommonSignalList(GOOperator *op);
 };
 
