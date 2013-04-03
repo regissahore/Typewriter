@@ -79,7 +79,201 @@ void GOAnalysis::calcAccumulativeProbability(GOOperator *op)
 
 void GOAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex)
 {
-    //TODO
+    GOSignal *signal = op->input()->signal()->at(0);
+    GOOperator *prev = signal->next(op);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    int accNum = prev->accmulatives()->at(prevIndex)->number();
+    int commonNum = commonOperator.size();
+    for (int i = 0; i < op->output()->number(); ++i)
+    {
+        op->accmulatives()->push_back(new GOAccumulative());
+        op->accmulatives()->at(i)->setNumber(accNum);
+    }
+    for (int i = 0; i < accNum - 1; ++i)
+    {
+        double value = 0.0;
+        for (int j = 0; j < (1 << commonNum); ++j)
+        {
+            QVector<double> accValues;
+            for (int k = 0; k < commonNum; ++k)
+            {
+                if (j & (1 << k))
+                {
+                    accValues.push_back(1.0);
+                }
+                else
+                {
+                    accValues.push_back(0.0);
+                }
+            }
+            double factor = calcTempAccumulative(op, -1, commonOperator, commonIndex, accValues, i);
+            for (int k = 0; k < commonNum; ++k)
+            {
+                int temp = commonIndex[k];
+                commonIndex[k] = -1;
+                double acc = calcTempAccumulative(commonOperator[k], temp, commonOperator, commonIndex, accValues, i);
+                commonIndex[k] = temp;
+                if (acc < 0.0)
+                {
+                    acc = -acc;
+                }
+                if (accValues[k] > 0.5)
+                {
+                    factor *= acc;
+                }
+                else
+                {
+                    factor *= 1.0 - acc;
+                }
+            }
+            value += factor;
+        }
+        for (int j = 0; j < op->output()->number(); ++j)
+        {
+            op->accmulatives()->at(j)->setAccumulative(i, value);
+        }
+    }
+    for (int i = 0; i < op->output()->number(); ++i)
+    {
+        op->accmulatives()->at(i)->setAccumulative(accNum - 1, 1.0);
+    }
+}
+
+/**
+ * Whether there is a common signal in the operator's prev path.
+ * @param op The operator.
+ * @param index The output index of the operator.
+ * @param commonOperator The operators of the common signals.
+ * @param commonIndex The indexes of the common signals.
+ * @return Returns true if the common signal is appeared, otherwise false.
+ */
+bool GOAnalysis::isCommonSignalAppeared(GOOperator *op, int index, QVector<GOOperator *> commonOperator, QVector<int> commonIndex)
+{
+    for (int i = 0; i < commonOperator.size(); ++i)
+    {
+        if (commonOperator[i] == op && commonIndex[i] == index)
+        {
+            return true;
+        }
+    }
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        if (isCommonSignalAppeared(prev, prevIndex, commonOperator, commonIndex))
+        {
+            return true;
+        }
+    }
+    for (int i = 0; i < op->subInput()->number(); ++i)
+    {
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        if (isCommonSignalAppeared(prev, prevIndex, commonOperator, commonIndex))
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+/**
+ * Calculate the temp accumulative probability.
+ * @param op The operator.
+ * @param index The output index of the operator.
+ * @param commonOperator The operators of the common signals.
+ * @param commonIndex The indexes of the common signals.
+ * @param accValues The set accumulative probability value of the common signal.
+ * @param accIndex The current calculating accumulative probability index.
+ * @return The function returns the negetive calculated value when the common signal is not appeared in the operator's parent path, otherwise returns the calculated temp accumulative probability.
+ */
+double GOAnalysis::calcTempAccumulative(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &accValues, int accIndex)
+{
+    for (int i = 0; i < commonOperator.size(); ++i)
+    {
+        if (op == commonOperator[i] && index == commonIndex[i])
+        {
+            return accValues[i];
+        }
+    }
+    bool appeared = false;
+    QVector<double> inputValues;
+    QVector<double> subInputValues;
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        double value = calcTempAccumulative(prev, prevIndex, commonOperator, commonIndex, accValues, accIndex);
+        if (value < 0.0)
+        {
+            inputValues.push_back(-value);
+        }
+        else
+        {
+            appeared = true;
+            inputValues.push_back(value);
+        }
+    }
+    for (int i = 0; i < op->subInput()->number(); ++i)
+    {
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        double value = calcTempAccumulative(prev, prevIndex, commonOperator, commonIndex, accValues, accIndex);
+        if (value < 0.0)
+        {
+            subInputValues.push_back(-value);
+        }
+        else
+        {
+            appeared = true;
+            subInputValues.push_back(value);
+        }
+    }
+    if (appeared)
+    {
+        switch (op->type())
+        {
+        case GOOperatorFactory::Operator_Type_1:
+            return calcTempAccumulativeType1(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_2:
+            return calcTempAccumulativeType2(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_3:
+            return calcTempAccumulativeType3(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_4:
+            return calcTempAccumulativeType4(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_5:
+            return calcTempAccumulativeType5(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_6:
+            return calcTempAccumulativeType6(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_7:
+            return calcTempAccumulativeType7(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_8:
+            return calcTempAccumulativeType8(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_9:
+            return calcTempAccumulativeType9(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_10:
+            return calcTempAccumulativeType10(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_11:
+            return calcTempAccumulativeType11(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_12:
+            return calcTempAccumulativeType12(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_13:
+            return calcTempAccumulativeType13(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_14:
+            return calcTempAccumulativeType14(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_15:
+            return calcTempAccumulativeType15(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_16:
+            return calcTempAccumulativeType16(op, inputValues, subInputValues, accIndex);
+        case GOOperatorFactory::Operator_Type_17:
+            return calcTempAccumulativeType17(op, inputValues, subInputValues, accIndex);
+        }
+    }
+    return -op->accmulatives()->at(index)->accumulative(accIndex);
 }
 
 void GOAnalysis::calcAccumulativeProbabilityType1(GOOperator *op)
@@ -258,4 +452,166 @@ void GOAnalysis::calcAccumulativeProbabilityType16(GOOperator *op)
 void GOAnalysis::calcAccumulativeProbabilityType17(GOOperator *op)
 {
     Q_UNUSED(op);
+}
+
+double GOAnalysis::calcTempAccumulativeType1(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return inputValues[0] * op->status()->probability(1);
+}
+
+double GOAnalysis::calcTempAccumulativeType2(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    double value = 1.0;
+    for (int i = 0; i < inputValues.size(); ++i)
+    {
+        value *= 1.0 - inputValues[i];
+    }
+    return 1.0 - value;
+}
+
+double GOAnalysis::calcTempAccumulativeType3(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return op->status()->probability(0) + inputValues[0] * op->status()->probability(1);
+}
+
+double GOAnalysis::calcTempAccumulativeType4(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+/**
+ * The function should never be used theoretically.
+ * @param op
+ * @param inputValues
+ * @param outputValues
+ * @param accIndex
+ * @return The temp accumulative probability.
+ */
+double GOAnalysis::calcTempAccumulativeType5(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    double value = 0.0;
+    for (int i = 0; i <= accIndex; ++i)
+    {
+        value += op->status()->probability(i);
+    }
+    return value;
+}
+
+double GOAnalysis::calcTempAccumulativeType6(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(accIndex);
+    return inputValues[0] * (op->status()->probability(0) + subInputValues[0] * op->status()->probability(1));
+}
+
+double GOAnalysis::calcTempAccumulativeType7(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(accIndex);
+    return inputValues[0] * (op->status()->probability(2) + (1 - subInputValues[0]) * op->status()->probability(1));
+}
+
+double GOAnalysis::calcTempAccumulativeType8(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType9(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType10(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    double value = 1.0;
+    for (int i = 0; i < inputValues.size(); ++i)
+    {
+        value *= inputValues[i];
+    }
+    return value;
+}
+
+double GOAnalysis::calcTempAccumulativeType11(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType12(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType13(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType14(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType15(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType16(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
+}
+
+double GOAnalysis::calcTempAccumulativeType17(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
+{
+    Q_UNUSED(op);
+    Q_UNUSED(inputValues);
+    Q_UNUSED(subInputValues);
+    Q_UNUSED(accIndex);
+    return -1.0;
 }
