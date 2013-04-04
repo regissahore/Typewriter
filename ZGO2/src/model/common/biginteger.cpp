@@ -193,6 +193,12 @@ bool operator ==(const BigInteger &a, const BigInteger &b)
     return true;
 }
 
+
+bool operator !=(const BigInteger &a, const BigInteger &b)
+{
+    return !(a == b);
+}
+
 /**
  * Let n be the digit number of the big integer a,
  * let m be the digit number of the big integer b,

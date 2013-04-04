@@ -27,6 +27,15 @@ BigDecimal BigDecimal::valueOf(int numerator, int denominator)
     return decimal;
 }
 
+BigDecimal BigDecimal::valueOf(QString numerator, QString denominator)
+{
+    BigDecimal decimal;
+    decimal._numerator = BigInteger::valueOf(numerator);
+    decimal._denominator = BigInteger::valueOf(denominator);
+    decimal.reduce();
+    return decimal;
+}
+
 BigDecimal BigDecimal::valueOf(double value)
 {
     return BigDecimal::valueOf(QString("%1").arg(value));
@@ -36,6 +45,11 @@ BigDecimal BigDecimal::valueOf(QString value)
 {
     QString numerator = "0";
     QString denominator = "1";
+    if (value.at(0).toAscii() == '-')
+    {
+        numerator = "-0";
+        value.right(value.length() - 1);
+    }
     bool dot = false;
     for (int i = 0; i < value.length(); ++i)
     {
@@ -81,7 +95,7 @@ BigInteger BigDecimal::denominator() const
 
 bool BigDecimal::positive() const
 {
-    return this->_denominator.positive() ^ this->_numerator.positive();
+    return this->_denominator.positive() == this->_numerator.positive();
 }
 
 BigDecimal BigDecimal::copy() const
@@ -249,7 +263,10 @@ void BigDecimal::printAll() const
 
 void BigDecimal::reduce()
 {
-    BigInteger g = BigInteger::gcd(this->numerator(), this->denominator());
-    this->_numerator = this->_numerator / g;
-    this->_denominator = this->_denominator / g;
+    BigInteger g = BigInteger::gcd(this->numerator().absolute(), this->denominator().absolute());
+    if (g != BigInteger::one())
+    {
+        this->_numerator = this->_numerator / g;
+        this->_denominator = this->_denominator / g;
+    }
 }

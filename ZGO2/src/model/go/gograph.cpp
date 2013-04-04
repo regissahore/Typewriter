@@ -412,7 +412,7 @@ bool GOGraph::saveAsHTML(const QString path)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << QString("<td>%1</td>").arg(list[i]->status()->probability(j));
+            out << "<td>" << list[i]->status()->probability(j).toString() << "</td>";
             out << "</tr>" << endl;
         }
         out << "</table>" << endl;
@@ -428,14 +428,14 @@ bool GOGraph::saveAsHTML(const QString path)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j));
+            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
             if (j == 0)
             {
-                out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j));
+                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
             }
             else
             {
-                out << QString("<td>%1</td>").arg(list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1));
+                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)).toString() << "</td>";
             }
             out << "</tr>" << endl;
         }

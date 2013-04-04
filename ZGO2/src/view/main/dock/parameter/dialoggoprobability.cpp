@@ -11,6 +11,7 @@
 #include "dialoggoprobability.h"
 #include "gooperator.h"
 #include "gostatus.h"
+#include "bigdecimal.h"
 
 DialogGOProbability::DialogGOProbability(QWidget *parent) : QDialog(parent)
 {
@@ -97,7 +98,7 @@ void DialogGOProbability::setModel(GOOperator *model)
     this->_probabilityModel->clear();
     for (int i = 0; i < model->status()->number(); ++i)
     {
-        this->_probability.append(model->status()->probability(i));
+        this->_probability.append(model->status()->probability(i).toString().toFloat());
         this->_description.append(model->status()->description(i));
         this->_probabilityModel->appendRow(new QStandardItem(this->getProbabilityString(i)));
     }
@@ -166,7 +167,7 @@ void DialogGOProbability::save()
     this->_model->status()->setNumber(this->_probability.size());
     for (int i = 0; i < this->_probability.size(); ++i)
     {
-        this->_model->status()->setProbability(i, this->_probability[i]);
+        this->_model->status()->setProbability(i, BigDecimal::valueOf(this->_probability[i]));
         this->_model->status()->setDescription(i, this->_description[i]);
     }
     this->accept();

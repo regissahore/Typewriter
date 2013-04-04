@@ -16,7 +16,7 @@ void GOAccumulative::setNumber(int number)
         number -= this->_accumulative.size();
         while (number--)
         {
-            this->_accumulative.push_back(0.0);
+            this->_accumulative.push_back(BigDecimal::zero());
         }
     }
     else if (number < this->_accumulative.size())
@@ -29,16 +29,16 @@ void GOAccumulative::setNumber(int number)
     }
 }
 
-double GOAccumulative::accumulative(int index) const
+BigDecimal GOAccumulative::accumulative(int index) const
 {
     if (index >= 0 && index < this->_accumulative.size())
     {
         return this->_accumulative[index];
     }
-    return -1.0;
+    return BigDecimal::valueOf(-1.0);
 }
 
-void GOAccumulative::setAccumulative(int index, double value)
+void GOAccumulative::setAccumulative(int index, BigDecimal value)
 {
     if (index >= 0 && index < this->_accumulative.size())
     {

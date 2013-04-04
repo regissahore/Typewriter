@@ -15,6 +15,7 @@ public:
     BigDecimal();
     virtual ~BigDecimal();
     static BigDecimal valueOf(int numerator, int denominator);
+    static BigDecimal valueOf(QString numerator, QString denominator);
     static BigDecimal valueOf(double value);
     static BigDecimal valueOf(QString value);
     static BigDecimal zero();

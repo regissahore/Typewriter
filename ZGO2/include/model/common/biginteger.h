@@ -24,6 +24,7 @@ public:
     BigInteger absolute() const;
     BigInteger half() const;
     friend bool operator ==(const BigInteger &a, const BigInteger &b);
+    friend bool operator !=(const BigInteger &a, const BigInteger &b);
     friend bool operator <(const BigInteger &a, const BigInteger &b);
     friend bool operator >(const BigInteger &a, const BigInteger &b);
     friend bool operator <=(const BigInteger &a, const BigInteger &b);
