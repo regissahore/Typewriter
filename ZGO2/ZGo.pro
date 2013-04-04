@@ -104,7 +104,9 @@ HEADERS += \
     include/view/main/editor/editorwebview.h \
     include/model/go/goaccumulative.h \
     include/model/go/goinput.h \
-    include/model/go/gooutput.h
+    include/model/go/gooutput.h \
+    include/model/common/biginteger.h \
+    include/model/common/bigdecimal.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -182,7 +184,9 @@ SOURCES += \
     src/view/main/editor/editorwebview.cpp \
     src/model/go/goaccumulative.cpp \
     src/model/go/goinput.cpp \
-    src/model/go/gooutput.cpp
+    src/model/go/gooutput.cpp \
+    src/model/common/biginteger.cpp \
+    src/model/common/bigdecimal.cpp
 
 FORMS += \
     test.ui

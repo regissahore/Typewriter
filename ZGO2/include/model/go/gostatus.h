@@ -22,7 +22,7 @@ public:
     bool tryOpen(QDomElement &root);
 
 protected:
-    QVector<float> _probability;
+    QVector<long double> _probability;
     QVector<QString> _description;
 };
 

@@ -19,7 +19,7 @@ public:
     GOAccumulative* copy() const;
 
 protected:
-    QVector<double> _accumulative;
+    QVector<long double> _accumulative;
 };
 
 #endif // GOACCUMULATIVE_H
