@@ -1,10 +1,12 @@
 #include "mainmenufile.h"
 #include "messagefactory.h"
+#include "definationeditortype.h"
 
 MainMenuFile::MainMenuFile() : MainMenuAbstract()
 {
     this->setTitle(tr("File(&F)"));
     this->_actionNew = this->addAction(tr("New(&N)"));
+    this->_actionNewMarkov = this->addAction(tr("New Markov"));
     this->_actionOpen = this->addAction(tr("Open...(&O)"));
     this->_actionClose = this->addAction(tr("Close(&C)"));
     this->_actionCloseAll = this->addAction(tr("Close All"));
@@ -22,6 +24,7 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
     this->_actionSaveAll->setShortcut(QKeySequence(Qt::SHIFT + Qt::CTRL + Qt::Key_S));
     this->_actionQuit->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     this->connect(this->_actionNew, SIGNAL(triggered()), this, SLOT(slotActionNew()));
+    this->connect(this->_actionNewMarkov, SIGNAL(triggered()), this, SLOT(slotActionNewMarkov()));
     this->connect(this->_actionOpen, SIGNAL(triggered()), this, SLOT(slotActionOpen()));
     this->connect(this->_actionClose, SIGNAL(triggered()), this, SLOT(slotActionClose()));
     this->connect(this->_actionCloseAll, SIGNAL(triggered()), this, SLOT(slotActionCloseAll()));
@@ -33,6 +36,15 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
 
 void MainMenuFile::slotActionNew()
 {
+    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    message->paramInt = DefinationEditorType::EDITOR_TYPE_GO;
+    this->sendMessage(message);
+}
+
+void MainMenuFile::slotActionNewMarkov()
+{
+    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    message->paramInt = DefinationEditorType::EDITOR_TYPE_GO_MARKOV;
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW));
 }
 

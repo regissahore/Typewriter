@@ -1,6 +1,7 @@
 #include "gooperatorfactory.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "gostatus.h"
 
 int GOOperatorFactory::_autoID = 0;
 
@@ -24,6 +25,7 @@ GOOperator* GOOperatorFactory::produce(const int type)
         op->input()->setNumber(2);
         op->subInput()->setNumber(0);
         op->output()->setNumber(1);
+        op->status()->setNumber(0);
         break;
     case Operator_Type_3:
         op->input()->setNumber(1);
@@ -64,11 +66,13 @@ GOOperator* GOOperatorFactory::produce(const int type)
         op->input()->setNumber(2);
         op->subInput()->setNumber(0);
         op->output()->setNumber(1);
+        op->status()->setNumber(0);
         break;
     case Operator_Type_11:
         op->input()->setNumber(3);
         op->subInput()->setNumber(0);
         op->output()->setNumber(1);
+        op->status()->setNumber(0);
         break;
     case Operator_Type_12:
         op->input()->setNumber(1);
@@ -102,6 +106,20 @@ GOOperator* GOOperatorFactory::produce(const int type)
         break;
     }
     return op;
+}
+
+bool GOOperatorFactory::isLogical(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_2:
+        return true;
+    case Operator_Type_10:
+        return true;
+    case Operator_Type_11:
+        return true;
+    }
+    return false;
 }
 
 /**

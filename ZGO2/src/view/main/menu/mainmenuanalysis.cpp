@@ -4,12 +4,26 @@
 MainMenuAnalysis::MainMenuAnalysis()
 {
     this->setTitle(tr("Analysis(&A)"));
-    this->_actionStart = this->addAction(tr("Start"));
-    this->_actionStart->setShortcut(QKeySequence(Qt::Key_F9));
-    this->connect(this->_actionStart, SIGNAL(triggered()), this, SLOT(slotActionStart()));
+    this->_actionProbability = this->addAction(tr("Analysis Probability"));
+    this->_actionPath = this->addAction(tr("Find Path Set"));
+    this->_actionCut = this->addAction(tr("Find Cut Set"));
+    this->_actionProbability->setShortcut(QKeySequence(Qt::Key_F9));
+    this->connect(this->_actionProbability, SIGNAL(triggered()), this, SLOT(slotActionProbability()));
+    this->connect(this->_actionPath, SIGNAL(triggered()), this, SLOT(slotActionPath()));
+    this->connect(this->_actionCut, SIGNAL(triggered()), this, SLOT(slotActionCut()));
 }
 
-void MainMenuAnalysis::slotActionStart()
+void MainMenuAnalysis::slotActionProbability()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS));
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY));
+}
+
+void MainMenuAnalysis::slotActionPath()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH));
+}
+
+void MainMenuAnalysis::slotActionCut()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT));
 }

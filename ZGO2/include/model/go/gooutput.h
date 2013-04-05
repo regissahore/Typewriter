@@ -17,6 +17,7 @@ public:
     void setNumber(int num);
     QVector<QVector<GOSignal*>*>* signal() const;
     int getSignalIndex(GOSignal* signal) const;
+    void addSignal(int index, GOSignal *signal);
 
 private:
     QVector<QVector<GOSignal*>*> *_signal;

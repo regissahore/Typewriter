@@ -251,4 +251,5 @@ void ParameterGOOperator::itemClicked(QTableWidgetItem *tableItem)
     default:
         break;
     }
+    item->update();
 }

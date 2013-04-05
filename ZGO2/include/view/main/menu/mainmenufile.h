@@ -14,6 +14,7 @@ public:
 
 private:
     QAction *_actionNew;
+    QAction *_actionNewMarkov;
     QAction *_actionOpen;
     QAction *_actionClose;
     QAction *_actionCloseAll;
@@ -24,6 +25,7 @@ private:
 
 private slots:
     void slotActionNew();
+    void slotActionNewMarkov();
     void slotActionOpen();
     void slotActionClose();
     void slotActionCloseAll();

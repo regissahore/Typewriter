@@ -14,6 +14,9 @@
 #include "definationgotype.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "gopathsetsetset.h"
+#include "gocutset.h"
+#include "dialogintegerinput.h"
 
 /**
  * The constructor.
@@ -70,8 +73,14 @@ void SceneGO::messageEvent(Message *message)
     case MessageFactory::TYPE_TOOL_SELECTION:
         this->selectTool(message->paramInt);
         break;
-    case MessageFactory::TYPE_EDITOR_ANALYSIS:
-        this->startAnalysis();
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY:
+        this->analysisProbability(message->paramString);
+        break;
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_PATH:
+        this->analysisPath(message->paramString);
+        break;
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_CUT:
+        this->analysisCut(message->paramString);
         break;
     default:
         break;
@@ -296,7 +305,7 @@ GOGraph* SceneGO::generatorGOGraph()
                 ((ItemGOSignal*)item)->start()->op->model()->subInput()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
                 break;
             case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->start()->op->model()->output()->signal()->at(((ItemGOSignal*)item)->start()->index)->push_back(((ItemGOSignal*)item)->model());
+                ((ItemGOSignal*)item)->start()->op->model()->output()->addSignal(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
                 break;
             }
             ((ItemGOSignal*)item)->model()->setV(((ItemGOSignal*)item)->end()->op->model());
@@ -309,7 +318,7 @@ GOGraph* SceneGO::generatorGOGraph()
                 ((ItemGOSignal*)item)->end()->op->model()->subInput()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
                 break;
             case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->end()->op->model()->output()->signal()->at(((ItemGOSignal*)item)->end()->index)->push_back(((ItemGOSignal*)item)->model());
+                ((ItemGOSignal*)item)->end()->op->model()->output()->addSignal(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
                 break;
             }
             graph->addSignal(((ItemGOSignal*)item)->model());
@@ -324,17 +333,62 @@ GOGraph* SceneGO::generatorGOGraph()
 /**
  * Analysis and generate results.
  */
-void SceneGO::startAnalysis()
+void SceneGO::analysisProbability(const QString filePath)
 {
     GOGraph *graph = this->generatorGOGraph();
     graph->calcAccumulativeProbability();
     if (graph->getErrorMessage() == "")
     {
-        QString fileName = QString("%1.html").arg(QDateTime::currentDateTime().currentMSecsSinceEpoch());
-        graph->saveAsHTML(fileName);
+        graph->saveAsHTML(filePath + ".html");
         Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
-        message->paramString = fileName;
+        message->paramString = filePath + ".html";
         this->sendMessage(message);
         //QDesktopServices::openUrl(QUrl(QString("test.html"), QUrl::TolerantMode));
     }
+    delete graph;
+}
+
+void SceneGO::analysisPath(const QString filePath)
+{
+    DialogIntegerInput *dialog = new DialogIntegerInput();
+    dialog->setWindowTitle(QObject::tr("Set order"));
+    dialog->setText(QObject::tr("Input path order: "));
+    dialog->integerInput()->setMinimum(1);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        GOGraph *graph = this->generatorGOGraph();
+        GOPathSetSetSet path = graph->findPath(dialog->integerInput()->value());
+        if (graph->getErrorMessage() == "")
+        {
+            graph->saveAsHTML(filePath + ".path.html", path);
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            message->paramString = filePath + ".path.html";
+            this->sendMessage(message);
+
+        }
+        delete graph;
+    }
+    delete dialog;
+}
+
+void SceneGO::analysisCut(const QString filePath)
+{
+    DialogIntegerInput *dialog = new DialogIntegerInput();
+    dialog->setWindowTitle(QObject::tr("Set order"));
+    dialog->setText(QObject::tr("Input cut order: "));
+    dialog->integerInput()->setMinimum(1);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        GOGraph *graph = this->generatorGOGraph();
+        GOPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
+        if (graph->getErrorMessage() == "")
+        {
+            graph->saveAsHTML(filePath + ".cut.html", cut);
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            message->paramString = filePath + ".cut.html";
+            this->sendMessage(message);
+        }
+        delete graph;
+    }
+    delete dialog;
 }

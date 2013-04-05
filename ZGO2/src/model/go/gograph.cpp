@@ -10,6 +10,10 @@
 #include "gooperatorfactory.h"
 #include "gostatus.h"
 #include "goaccumulative.h"
+#include "gocutset.h"
+#include "gopathset.h"
+#include "gopathsetset.h"
+#include "gopathsetsetset.h"
 
 GOGraph::GOGraph()
 {
@@ -344,18 +348,171 @@ QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
     return commonList;
 }
 
+GOPathSetSetSet GOGraph::findPath(const int order)
+{
+    GOPathSetSetSet path;
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return path;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    GOPathSet tempPath;
+    this->findPathDfs(path, list, tempPath, 0, 0, order);
+    return path;
+}
+
+void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GOPathSet &tempPath, int index, int number, int order)
+{
+    if (number > order)
+    {
+        return;
+    }
+    if (index == list.size())
+    {
+        this->calcAccumulativeProbability();
+        for (int i = 0; i < list.size(); ++i)
+        {
+            bool flag = false;
+            for (int j = 0; j < list[i]->output()->number(); ++j)
+            {
+                if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                flag = false;
+                for (int j = 0; j < list[i]->output()->number(); ++j)
+                {
+                    if (list[i]->accmulatives()->at(j)->accumulative(1) == BigDecimal::one())
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    path.add(list[i], tempPath.copy());
+                }
+            }
+        }
+        return;
+    }
+    if (!GOOperatorFactory::isLogical(list[index]->type()))
+    {
+        GOStatus *copy = new GOStatus();
+        copy->setNumber(list[index]->status()->number());
+        for (int i = 0; i < list[index]->status()->number(); ++i)
+        {
+            copy->setProbability(i, list[index]->status()->probability(i));
+            list[index]->status()->setProbability(i, BigDecimal::zero());
+        }
+        list[index]->status()->setProbability(1, BigDecimal::one());
+        tempPath.add(list[index]);
+        this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
+        tempPath.removeEnd();
+        for (int i = 0; i < list[index]->status()->number(); ++i)
+        {
+            list[index]->status()->setProbability(i, copy->probability(i));
+        }
+        delete copy;
+    }
+    this->findPathDfs(path, list, tempPath, index + 1, number, order);
+}
+
+GOPathSetSetSet GOGraph::findCut(const int order)
+{
+    GOPathSetSetSet path;
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return path;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    GOCutSet tempPath;
+    this->findCutDfs(path, list, tempPath, 0, 0, order);
+    return path;
+}
+
+void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCutSet &tempPath, int index, int number, int order)
+{
+    if (number > order)
+    {
+        return;
+    }
+    if (index == list.size())
+    {
+        this->calcAccumulativeProbability();
+        for (int i = 0; i < list.size(); ++i)
+        {
+            bool flag = false;
+            for (int j = 0; j < list[i]->output()->number(); ++j)
+            {
+                if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                flag = false;
+                for (int j = 0; j < list[i]->output()->number(); ++j)
+                {
+                    int number = list[i]->accmulatives()->at(j)->number();
+                    BigDecimal a = list[i]->accmulatives()->at(j)->accumulative(number - 1);
+                    BigDecimal b = list[i]->accmulatives()->at(j)->accumulative(number - 2);
+                    if (a - b == BigDecimal::one())
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    cut.add(list[i], tempPath.copy());
+                }
+            }
+        }
+        return;
+    }
+    if (!GOOperatorFactory::isLogical(list[index]->type()))
+    {
+        GOStatus *copy = new GOStatus();
+        copy->setNumber(list[index]->status()->number());
+        for (int i = 0; i < list[index]->status()->number(); ++i)
+        {
+            copy->setProbability(i, list[index]->status()->probability(i));
+            list[index]->status()->setProbability(i, BigDecimal::zero());
+        }
+        list[index]->status()->setProbability(list[index]->status()->number() - 1, BigDecimal::one());
+        tempPath.add(list[index]);
+        this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
+        tempPath.removeEnd();
+        for (int i = 0; i < list[index]->status()->number(); ++i)
+        {
+            list[index]->status()->setProbability(i, copy->probability(i));
+        }
+        delete copy;
+    }
+    this->findCutDfs(cut, list, tempPath, index + 1, number, order);
+}
+
 /**
  * Save the result to a HTML file.
  * @param path The file path.
  * @return Returns true if succeed, otherwise false.
  */
-bool GOGraph::saveAsHTML(const QString path)
+bool GOGraph::saveAsHTML(const QString filePath)
 {
     this->_error = "";
-    QFile file(path);
+    QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly))
     {
-        this->_error = QObject::tr("Can't open file ") + path;
+        this->_error = QObject::tr("Can't open file ") + filePath;
         return false;
     }
     QTextStream out(&file);
@@ -368,6 +525,7 @@ bool GOGraph::saveAsHTML(const QString path)
     out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
     out << "</head>" << endl;
     out << "<body>" << endl;
+    out << "<input type = hidden value = ZHG/>";
     QVector<GOOperator*> list;
     for (int i = 0; i < this->_operator.size(); ++i)
     {
@@ -447,6 +605,54 @@ bool GOGraph::saveAsHTML(const QString path)
         out << "</tr>" << endl;
         out << "</table>" << endl;
         out << "<br/>" << endl;
+    }
+    out << "</body>" << endl;
+    out << "</html>" << endl;
+    file.close();
+    return true;
+}
+
+bool GOGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
+{
+    this->_error = "";
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        this->_error = QObject::tr("Can't open file ") + filePath;
+        return false;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "<!DOCTYPE html>" << endl;
+    out << "<html>" << endl;
+    out << "<head>" << endl;
+    out << "<title>" + file.fileName() + "</title>" << endl;
+    out << "<meta charset = UTF-8>" << endl;
+    out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
+    out << "</head>" << endl;
+    out << "<body>" << endl;
+    out << "<input type = hidden value = ZHG/>";
+    path.sort();
+    for (int i = 0; i < path.list().size(); ++i)
+    {
+        out << QString("<h2>%1</h2>").arg(path.endList().at(i)->id()) <<endl;
+        out << "<table>" << endl;
+        out << "<tr>" << endl;
+        out << "<th>" + QObject::tr("No.") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Order") + "</th>" << endl;
+        out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
+        out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+        out << "</tr>" << endl;
+        for (int j = 0; j < path.list().at(i)->list().size(); ++j)
+        {
+            out << "<tr>" << endl;
+            out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
+            out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
+            out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
+            out << "<td>" + path.list().at(i)->list().at(j)->toProbabilityString() + "</td>" << endl;
+            out << "</tr>" << endl;
+        }
+        out << "</table>" << endl;
     }
     out << "</body>" << endl;
     out << "</html>" << endl;

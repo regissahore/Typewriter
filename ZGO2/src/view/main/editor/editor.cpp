@@ -119,7 +119,9 @@ void Editor::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_SAVEAS, this);
     controller->listen(MessageFactory::TYPE_EDITOR_SAVEALL, this);
     controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT, this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
 }
@@ -137,8 +139,9 @@ void Editor::messageEvent(Message *message)
         {
             this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_CLOSE));
         }
+        break;
     case MessageFactory::TYPE_EDITOR_NEW:
-        this->createNewTab();
+        this->createNewTab(message->paramInt);
         break;
     case MessageFactory::TYPE_EDITOR_OPEN:
         this->tryOpen();
@@ -178,15 +181,16 @@ void Editor::messageEvent(Message *message)
         {
             this->_editors->at(this->_tabWidget->currentIndex())->messageEvent(message);
         }
+        break;
     }
 }
 
 /**
  * Create a new GO tab.
  */
-void Editor::createNewTab()
+void Editor::createNewTab(int type)
 {
-    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(type);
     editor->bindMessage(this->MessageCreator::_messageController);
     this->_editors->push_back(editor);
     this->_tabWidget->addTab(editor, editor->name());

@@ -28,7 +28,7 @@ protected:
     QTabWidget *_tabWidget; /** 用于维护多个编辑器。 */
     EditorFactory *_factory; /** 用于实例化编辑器的工厂类。 */
     QVector<EditorAbstract*> *_editors; /** 编辑器的集合。 */
-    void createNewTab();
+    void createNewTab(int type);
     void tryOpen();
     void openExist(QString filePath);
 

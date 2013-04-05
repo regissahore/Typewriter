@@ -8,9 +8,7 @@
  */
 EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
 {
-    // 初始化GO视图。
     this->view = new ViewGO(this);
-    // 配置基本的布局。
     QGridLayout *layout = new QGridLayout();
     layout->addWidget(this->view, 0, 0);
     layout->setMargin(0);
@@ -35,6 +33,10 @@ void EditorGO::bindMessage(MessageController *controller)
 
 void EditorGO::messageEvent(Message *message)
 {
+    if (message->paramString == "")
+    {
+        message->paramString = this->path();
+    }
     this->view->messageEvent(message);
 }
 

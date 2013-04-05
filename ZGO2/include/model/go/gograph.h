@@ -9,6 +9,9 @@
 
 class GOOperator;
 class GOSignal;
+class GOPathSet;
+class GOCutSet;
+class GOPathSetSetSet;
 
 class GOGraph
 {
@@ -21,8 +24,11 @@ public:
     void addOperator(GOOperator *op);
     void addSignal(GOSignal *signal);
     void calcAccumulativeProbability();
+    GOPathSetSetSet findPath(const int order);
+    GOPathSetSetSet findCut(const int order);
     QString getErrorMessage() const;
-    bool saveAsHTML(const QString path);
+    bool saveAsHTML(const QString filePath);
+    bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 
 protected:
     struct Output
@@ -41,6 +47,9 @@ protected:
     QVector<GOOperator*> getTopologicalOrder();
     QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     QVector<Output> getCommonSignalList(GOOperator *op);
+    QVector<GOOperator*> getEndList();
+    void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
+    void findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOGRAPH_H

@@ -51,7 +51,7 @@ QString MessageFactory::getMessageTypeName(int messageType)
         return QObject::tr("TYPE_EDITOR_SAVEALL");
     case TYPE_EDITOR_SAVEAS:
         return QObject::tr("TYPE_EDITOR_SAVEAS");
-    case TYPE_EDITOR_ANALYSIS:
+    case TYPE_EDITOR_ANALYSIS_PROBABILITY:
         return QObject::tr("TYPE_EDITOR_ANALYSIS");
     case TYPE_TOOL_SELECTION:
         return QObject::tr("TYPE_TOOL_SELECTION");

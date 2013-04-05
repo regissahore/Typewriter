@@ -46,6 +46,18 @@ int GOOutput::getSignalIndex(GOSignal* signal) const
     return -1;
 }
 
+void GOOutput::addSignal(int index, GOSignal *signal)
+{
+    for (int i = 0; i < this->_signal->at(index)->size(); ++i)
+    {
+        if (this->_signal->at(index)->at(i) == signal)
+        {
+            return;
+        }
+    }
+    this->_signal->at(index)->push_back(signal);
+}
+
 void GOOutput::clear()
 {
     for (int i = 0; i < this->_signal->size(); ++i)

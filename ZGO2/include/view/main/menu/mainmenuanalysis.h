@@ -13,10 +13,14 @@ public:
     MainMenuAnalysis();
 
 private:
-    QAction *_actionStart;
+    QAction *_actionProbability;
+    QAction *_actionPath;
+    QAction *_actionCut;
 
 private slots:
-    void slotActionStart();
+    void slotActionProbability();
+    void slotActionPath();
+    void slotActionCut();
 };
 
 #endif // MAINMENUANALYSIS_H

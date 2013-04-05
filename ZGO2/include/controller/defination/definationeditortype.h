@@ -13,6 +13,7 @@ public:
         EDITOR_TYPE_NULL,       /** 没有选择编辑器。 */
         EDITOR_TYPE_WELCOME,    /** 欢迎屏幕。 */
         EDITOR_TYPE_GO,         /** GO图编辑器。 */
+        EDITOR_TYPE_GO_MARKOV,  /** Markov Repairable system. */
         EDITOR_TYPE_WEBVIEW
     };
 };

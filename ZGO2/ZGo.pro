@@ -17,6 +17,7 @@ INCLUDEPATH += ./include/controller//message/control
 INCLUDEPATH += ./include/controller//message/message
 INCLUDEPATH += ./include/model/common
 INCLUDEPATH += ./include/model/go
+INCLUDEPATH += ./include/model/markov
 INCLUDEPATH += ./include/view/dialog
 INCLUDEPATH += ./include/view/graphics/common
 INCLUDEPATH += ./include/view/graphics/go
@@ -107,7 +108,15 @@ HEADERS += \
     include/model/go/gooutput.h \
     include/model/common/biginteger.h \
     include/model/common/bigdecimal.h \
-    include/model/go/goparameter.h
+    include/model/go/goparameter.h \
+    include/view/main/editor/editorgomarkov.h \
+    include/model/markov/gomarkovoperator.h \
+    include/model/markov/gomarkovstatus.h \
+    include/model/markov/gomarkovequivalent.h \
+    include/model/go/gopathset.h \
+    include/model/go/gocutset.h \
+    include/model/go/gopathsetset.h \
+    include/model/go/gopathsetsetset.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -188,7 +197,15 @@ SOURCES += \
     src/model/go/gooutput.cpp \
     src/model/common/biginteger.cpp \
     src/model/common/bigdecimal.cpp \
-    src/model/go/goparameter.cpp
+    src/model/go/goparameter.cpp \
+    src/view/main/editor/editorgomarkov.cpp \
+    src/model/markov/gomarkovoperator.cpp \
+    src/model/markov/gomarkovstatus.cpp \
+    src/model/markov/gomarkovequivalent.cpp \
+    src/model/go/gopathset.cpp \
+    src/model/go/gocutset.cpp \
+    src/model/go/gopathsetset.cpp \
+    src/model/go/gopathsetsetset.cpp
 
 FORMS += \
     test.ui

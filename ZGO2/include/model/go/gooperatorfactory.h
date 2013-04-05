@@ -32,6 +32,7 @@ public:
         Operator_Type_17 = 17
     };
     static GOOperator* produce(const int type);
+    static bool isLogical(const int type);
     static void setID(const int id);
     static int currentID();
 

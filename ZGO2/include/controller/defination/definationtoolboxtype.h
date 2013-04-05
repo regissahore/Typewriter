@@ -10,7 +10,8 @@ public:
     enum ToolboxType
     {
         TOOLBOX_TYPE_NULL,      /** 没有工具箱。 */
-        TOOLBOX_TYPE_GO         /** GO编辑器的工具箱。 */
+        TOOLBOX_TYPE_GO,        /** GO编辑器的工具箱。 */
+        TOOLBOX_TYPE_GO_MARKOV
     };
 };
 
