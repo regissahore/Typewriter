@@ -106,7 +106,8 @@ HEADERS += \
     include/model/go/goinput.h \
     include/model/go/gooutput.h \
     include/model/common/biginteger.h \
-    include/model/common/bigdecimal.h
+    include/model/common/bigdecimal.h \
+    include/model/go/goparameter.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -186,7 +187,8 @@ SOURCES += \
     src/model/go/goinput.cpp \
     src/model/go/gooutput.cpp \
     src/model/common/biginteger.cpp \
-    src/model/common/bigdecimal.cpp
+    src/model/common/bigdecimal.cpp \
+    src/model/go/goparameter.cpp
 
 FORMS += \
     test.ui

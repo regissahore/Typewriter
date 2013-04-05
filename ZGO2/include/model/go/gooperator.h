@@ -13,6 +13,7 @@ class GOInput;
 class GOOutput;
 class GOStatus;
 class GOAccumulative;
+class GOParameter;
 
 class GOOperator : public IdentifiedItem, public TypedItem, public DomItem
 {
@@ -24,6 +25,7 @@ public:
     GOOutput* output() const;
     GOStatus *status() const;
     QVector<GOAccumulative*>* accmulatives() const;
+    GOParameter *parameter() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -33,6 +35,7 @@ private:
     GOOutput *_output;
     GOStatus  *_status;
     QVector<GOAccumulative*> *_accumulatives;
+    GOParameter *_parameter;
 };
 
 #endif // GOOPERATOR_H

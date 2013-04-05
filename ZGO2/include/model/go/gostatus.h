@@ -13,6 +13,7 @@ class GOStatus : public DomItem
 {
 public:
     GOStatus();
+    virtual ~GOStatus();
     int number() const;
     void setNumber(int number);
     BigDecimal probability(int index) const;

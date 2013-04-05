@@ -5,6 +5,12 @@ GOStatus::GOStatus()
     this->setNumber(3);
 }
 
+GOStatus::~GOStatus()
+{
+    this->_probability.clear();
+    this->_description.clear();
+}
+
 /**
  * The number indicates the error status.
  * @return The error status.

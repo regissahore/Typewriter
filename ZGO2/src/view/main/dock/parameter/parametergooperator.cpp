@@ -6,6 +6,7 @@
 #include "gooperatorfactory.h"
 #include "dialoggoprobability.h"
 #include "bigdecimal.h"
+#include "goparameter.h"
 
 ParameterGOOperator::ParameterGOOperator(QWidget *parent) : ParameterAbstract(parent)
 {
@@ -44,6 +45,9 @@ void ParameterGOOperator::bindItem(void *item)
         this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_10:
+        break;
+    case GOOperatorFactory::Operator_Type_11:
+        this->addOperator11KParameter();
         break;
     default:
         break;
@@ -147,6 +151,32 @@ void ParameterGOOperator::addOutputParameter()
     }
 }
 
+void ParameterGOOperator::addOperator9XYParameter()
+{
+    //TODO
+}
+
+void ParameterGOOperator::addOperator11KParameter()
+{
+    if (0L != this->_item)
+    {
+        TableWidgetGOItem *tableItem;
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        if (item->model()->parameter()->number() == 0)
+        {
+            item->model()->parameter()->setNumber(1);
+            item->model()->parameter()->setParameter(0, 1.0);
+        }
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        tableItem = new TableWidgetGOItem(tr("K"));
+        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
+        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
+        tableItem = new TableWidgetGOItem(QString("%1").arg((int)item->model()->parameter()->parameter(0)));
+        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_11_K);
+        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+    }
+}
+
 void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
 {
     TableWidgetGOItem *goTableItem = (TableWidgetGOItem*)tableItem;
@@ -171,6 +201,9 @@ void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
         item->model()->status()->setProbability(1, BigDecimal::valueOf(goTableItem->text()));
     case TableWidgetGOItem::PARAMETER_PROBABILITY_2:
         item->model()->status()->setProbability(2, BigDecimal::valueOf(goTableItem->text()));
+    case TableWidgetGOItem::PARAMETER_GO_11_K:
+        intValue = goTableItem->text().toInt();
+        item->model()->parameter()->setParameter(0, intValue);
     default:
         break;
     }

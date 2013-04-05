@@ -4,6 +4,11 @@ GOAccumulative::GOAccumulative()
 {
 }
 
+GOAccumulative::~GOAccumulative()
+{
+    this->_accumulative.clear();
+}
+
 int GOAccumulative::number() const
 {
     return this->_accumulative.size();

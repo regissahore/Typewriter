@@ -13,6 +13,7 @@ class GOAccumulative
 {
 public:
     GOAccumulative();
+    virtual ~GOAccumulative();
     int number() const;
     void setNumber(int number);
     BigDecimal accumulative(int index) const;

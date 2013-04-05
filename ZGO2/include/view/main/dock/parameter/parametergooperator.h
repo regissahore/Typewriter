@@ -19,6 +19,8 @@ protected:
     void addProbability12Parameter();
     void addProbabilityMultipleParameter();
     void addOutputParameter();
+    void addOperator9XYParameter();
+    void addOperator11KParameter();
 
 protected slots:
     void itemChanged(QTableWidgetItem *tableItem);

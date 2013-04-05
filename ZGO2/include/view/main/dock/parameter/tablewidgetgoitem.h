@@ -20,7 +20,9 @@ public:
         PARAMETER_PROBABILITY_1,
         PARAMETER_PROBABILITY_2,
         PARAMETER_PROBABILITY_MULTIPLE,
-        PARAMETER_OUTPUT
+        PARAMETER_OUTPUT,
+        PARAMETER_GO_9_XY,
+        PARAMETER_GO_11_K
     };
     TableWidgetGOItem(const QString &text);
     GOParameterType parameterType() const;

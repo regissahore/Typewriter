@@ -3,6 +3,7 @@
 #include "gooutput.h"
 #include "gostatus.h"
 #include "goaccumulative.h"
+#include "goparameter.h"
 
 /**
  * 构造函数。
@@ -14,6 +15,7 @@ GOOperator::GOOperator()
     this->_output = new GOOutput();
     this->_status = new GOStatus();
     this->_accumulatives = new QVector<GOAccumulative*>();
+    this->_parameter = new GOParameter();
 }
 
 GOOperator::~GOOperator()
@@ -28,6 +30,7 @@ GOOperator::~GOOperator()
     }
     this->_accumulatives->clear();
     delete this->_accumulatives;
+    delete this->_parameter;
 }
 
 /**
@@ -62,9 +65,14 @@ GOStatus* GOOperator::status() const
     return this->_status;
 }
 
-QVector<GOAccumulative *> *GOOperator::accmulatives() const
+QVector<GOAccumulative *>* GOOperator::accmulatives() const
 {
     return this->_accumulatives;
+}
+
+GOParameter* GOOperator::parameter() const
+{
+    return this->_parameter;
 }
 
 void GOOperator::save(QDomDocument &document, QDomElement &root)
@@ -77,6 +85,7 @@ void GOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("output", this->output()->number());
     root.appendChild(element);
     this->status()->save(document, element);
+    this->parameter()->save(document, element);
 }
 
 bool GOOperator::tryOpen(QDomElement &root)
@@ -92,6 +101,11 @@ bool GOOperator::tryOpen(QDomElement &root)
     this->output()->setNumber(root.attribute("output").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->parameter()->tryOpen(element))
     {
         return false;
     }
