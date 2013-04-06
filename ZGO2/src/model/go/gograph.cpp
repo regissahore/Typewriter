@@ -416,7 +416,12 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         }
         if (flag)
         {
-            this->calcAccumulativeProbability();
+            GOAnalysis *analysis = new GOAnalysis();
+            for (int i = 0; i < list.size(); ++i)
+            {
+                analysis->calcAccumulativeProbability(list[i]);
+            }
+            delete analysis;
             for (int i = 0; i < endList.size(); ++i)
             {
                 bool flag = false;
@@ -455,7 +460,20 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         }
         delete copy;
     }
+    GOStatus *copy = new GOStatus();
+    copy->setNumber(list[index]->status()->number());
+    for (int i = 0; i < list[index]->status()->number(); ++i)
+    {
+        copy->setProbability(i, list[index]->status()->probability(i));
+        list[index]->status()->setProbability(i, BigDecimal::zero());
+    }
+    list[index]->status()->setProbability(list[index]->status()->number() - 1, BigDecimal::one());
     this->findPathDfs(path, list, tempPath, index + 1, number, order);
+    for (int i = 0; i < list[index]->status()->number(); ++i)
+    {
+        list[index]->status()->setProbability(i, copy->probability(i));
+    }
+    delete copy;
 }
 
 GOPathSetSetSet GOGraph::findCut(int order)
@@ -526,7 +544,12 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         }
         if (flag)
         {
-            this->calcAccumulativeProbability();
+            GOAnalysis *analysis = new GOAnalysis();
+            for (int i = 0; i < list.size(); ++i)
+            {
+                analysis->calcAccumulativeProbability(list[i]);
+            }
+            delete analysis;
             for (int i = 0; i < endList.size(); ++i)
             {
                 bool flag = false;
@@ -568,7 +591,20 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         }
         delete copy;
     }
+    GOStatus *copy = new GOStatus();
+    copy->setNumber(list[index]->status()->number());
+    for (int i = 0; i < list[index]->status()->number(); ++i)
+    {
+        copy->setProbability(i, list[index]->status()->probability(i));
+        list[index]->status()->setProbability(i, BigDecimal::zero());
+    }
+    list[index]->status()->setProbability(1, BigDecimal::one());
     this->findCutDfs(cut, list, tempPath, index + 1, number, order);
+    for (int i = 0; i < list[index]->status()->number(); ++i)
+    {
+        list[index]->status()->setProbability(i, copy->probability(i));
+    }
+    delete copy;
 }
 
 /**
