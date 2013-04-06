@@ -27,21 +27,6 @@ QVector<GOPathSet*> GOPathSetSet::list() const
 
 void GOPathSetSet::sort()
 {
-    for (int i = this->_list.size() - 1; i >= 0; --i)
-    {
-        for (int j = 0; j < this->_list.size(); ++j)
-        {
-            if (i != j)
-            {
-                if (this->_list[i]->isContain(this->_list[j]))
-                {
-                    delete this->_list[i];
-                    this->_list.remove(i);
-                    break;
-                }
-            }
-        }
-    }
     for (int i = 0; i < this->_list.size(); ++i)
     {
         this->_list[i]->sort();

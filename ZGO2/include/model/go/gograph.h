@@ -24,8 +24,8 @@ public:
     void addOperator(GOOperator *op);
     void addSignal(GOSignal *signal);
     void calcAccumulativeProbability();
-    GOPathSetSetSet findPath(const int order);
-    GOPathSetSetSet findCut(const int order);
+    GOPathSetSetSet findPath(int order);
+    GOPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
     bool saveAsHTML(const QString filePath);
     bool saveAsHTML(const QString filePath, GOPathSetSetSet path);

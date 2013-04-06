@@ -348,7 +348,7 @@ QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
     return commonList;
 }
 
-GOPathSetSetSet GOGraph::findPath(const int order)
+GOPathSetSetSet GOGraph::findPath(int order)
 {
     GOPathSetSetSet path;
     this->_error = "";
@@ -358,36 +358,71 @@ GOPathSetSetSet GOGraph::findPath(const int order)
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
     GOPathSet tempPath;
-    this->findPathDfs(path, list, tempPath, 0, 0, order);
+    if (order > list.size())
+    {
+        order = list.size();
+    }
+    for (int i = 1; i <= order; ++i)
+    {
+        this->findPathDfs(path, list, tempPath, 0, 0, i);
+    }
     return path;
 }
 
 void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GOPathSet &tempPath, int index, int number, int order)
 {
-    if (number > order)
+    if (number > order || index >= list.size())
     {
         return;
     }
-    if (index == list.size())
+    if (number == order)
     {
-        this->calcAccumulativeProbability();
+        QVector<GOOperator*> endList;
         for (int i = 0; i < list.size(); ++i)
         {
-            bool flag = false;
             for (int j = 0; j < list[i]->output()->number(); ++j)
             {
                 if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    endList.push_back(list[i]);
+                    break;
+                }
+            }
+        }
+        bool flag = false;
+        if (endList.size() > path.endList().size())
+        {
+            flag = true;
+        }
+        else
+        {
+            for (int i = 0; i < path.list().size(); ++i)
+            {
+                bool contain = false;
+                for (int j = 0; j < path.list().at(i)->list().size(); ++j)
+                {
+                    if (tempPath.isContain(path.list().at(i)->list().at(j)))
+                    {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain)
                 {
                     flag = true;
                     break;
                 }
             }
-            if (flag)
+        }
+        if (flag)
+        {
+            this->calcAccumulativeProbability();
+            for (int i = 0; i < endList.size(); ++i)
             {
-                flag = false;
+                bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (list[i]->accmulatives()->at(j)->accumulative(1) == BigDecimal::one())
+                    if (endList[i]->accmulatives()->at(j)->accumulative(1) == BigDecimal::one())
                     {
                         flag = true;
                         break;
@@ -395,7 +430,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
                 }
                 if (flag)
                 {
-                    path.add(list[i], tempPath.copy());
+                    path.add(endList[i], tempPath.copy());
                 }
             }
         }
@@ -423,7 +458,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
     this->findPathDfs(path, list, tempPath, index + 1, number, order);
 }
 
-GOPathSetSetSet GOGraph::findCut(const int order)
+GOPathSetSetSet GOGraph::findCut(int order)
 {
     GOPathSetSetSet path;
     this->_error = "";
@@ -433,38 +468,73 @@ GOPathSetSetSet GOGraph::findCut(const int order)
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
     GOCutSet tempPath;
-    this->findCutDfs(path, list, tempPath, 0, 0, order);
+    if (order > list.size())
+    {
+        order = list.size();
+    }
+    for (int i = 1; i <= order; ++i)
+    {
+        this->findCutDfs(path, list, tempPath, 0, 0, i);
+    }
     return path;
 }
 
 void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCutSet &tempPath, int index, int number, int order)
 {
-    if (number > order)
+    if (number > order || index >= list.size())
     {
         return;
     }
-    if (index == list.size())
+    if (number == order)
     {
-        this->calcAccumulativeProbability();
+        QVector<GOOperator*> endList;
         for (int i = 0; i < list.size(); ++i)
         {
-            bool flag = false;
             for (int j = 0; j < list[i]->output()->number(); ++j)
             {
                 if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    endList.push_back(list[i]);
+                    break;
+                }
+            }
+        }
+        bool flag = false;
+        if (endList.size() > cut.endList().size())
+        {
+            flag = true;
+        }
+        else
+        {
+            for (int i = 0; i < cut.list().size(); ++i)
+            {
+                bool contain = false;
+                for (int j = 0; j < cut.list().at(i)->list().size(); ++j)
+                {
+                    if (tempPath.isContain(cut.list().at(i)->list().at(j)))
+                    {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain)
                 {
                     flag = true;
                     break;
                 }
             }
-            if (flag)
+        }
+        if (flag)
+        {
+            this->calcAccumulativeProbability();
+            for (int i = 0; i < endList.size(); ++i)
             {
-                flag = false;
+                bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    int number = list[i]->accmulatives()->at(j)->number();
-                    BigDecimal a = list[i]->accmulatives()->at(j)->accumulative(number - 1);
-                    BigDecimal b = list[i]->accmulatives()->at(j)->accumulative(number - 2);
+                    int number = endList[i]->accmulatives()->at(j)->number();
+                    BigDecimal a = endList[i]->accmulatives()->at(j)->accumulative(number - 1);
+                    BigDecimal b = endList[i]->accmulatives()->at(j)->accumulative(number - 2);
                     if (a - b == BigDecimal::one())
                     {
                         flag = true;
@@ -473,7 +543,7 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
                 }
                 if (flag)
                 {
-                    cut.add(list[i], tempPath.copy());
+                    cut.add(endList[i], tempPath.copy());
                 }
             }
         }
