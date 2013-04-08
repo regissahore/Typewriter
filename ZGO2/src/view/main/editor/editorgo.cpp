@@ -15,10 +15,6 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     layout->setSpacing(0);
     this->setLayout(layout);
     this->_filter = tr("GO Files(*.go)");
-
-    this->_savedOperatorID = 1;
-    this->_savedSignalID = 1;
-    this->activate();
 }
 
 /**
@@ -38,18 +34,6 @@ void EditorGO::messageEvent(Message *message)
         message->paramString = this->path();
     }
     this->view->messageEvent(message);
-}
-
-void EditorGO::activate()
-{
-    GOOperatorFactory::setID(this->_savedOperatorID);
-    GOSignalFactory::setID(this->_savedSignalID);
-}
-
-void EditorGO::inactivate()
-{
-    this->_savedOperatorID = GOOperatorFactory::currentID();
-    this->_savedSignalID = GOSignalFactory::currentID();
 }
 
 bool EditorGO::save()

@@ -116,7 +116,8 @@ HEADERS += \
     include/model/go/gopathset.h \
     include/model/go/gocutset.h \
     include/model/go/gopathsetset.h \
-    include/model/go/gopathsetsetset.h
+    include/model/go/gopathsetsetset.h \
+    include/view/graphics/go/toolgopointerextend.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -205,7 +206,8 @@ SOURCES += \
     src/model/go/gopathset.cpp \
     src/model/go/gocutset.cpp \
     src/model/go/gopathsetset.cpp \
-    src/model/go/gopathsetsetset.cpp
+    src/model/go/gopathsetsetset.cpp \
+    src/view/graphics/go/toolgopointerextend.cpp
 
 FORMS += \
     test.ui

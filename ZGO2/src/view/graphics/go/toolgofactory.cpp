@@ -6,6 +6,7 @@
 #include "toolgotext.h"
 #include "toolgooperator.h"
 #include "toolgosignal.h"
+#include "toolgopointerextend.h"
 
 /**
  * Produce a instantiated GO tool.
@@ -29,6 +30,9 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
         break;
     case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
         tool = new ToolGOZoom(sceneGO);
+        break;
+    case DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND:
+        tool = new ToolGOPointerExtend(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_TEXT:
         tool = new ToolGOText(sceneGO);

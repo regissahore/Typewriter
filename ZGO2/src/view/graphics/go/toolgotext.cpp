@@ -12,6 +12,7 @@ ToolGOText::ToolGOText(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->_item = new ItemGOText();
     this->sceneGO()->addItem(this->_item);
     this->_finish = false;
+    this->graphicsView()->setCursor(Qt::SizeAllCursor);
 }
 
 ToolGOText::~ToolGOText()
@@ -35,7 +36,7 @@ void ToolGOText::activate()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -51,7 +52,7 @@ void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->_finish = true;
     // Set the tool.
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
+    message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
     this->sceneGO()->sendMessage(message);
     // Set the selection.
     message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);

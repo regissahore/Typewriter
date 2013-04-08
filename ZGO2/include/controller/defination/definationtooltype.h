@@ -15,6 +15,8 @@ public:
         TOOL_TYPE_COMMON_MOVE,          /** 移动工具。 */
         TOOL_TYPE_COMMON_ZOOM,          /** 缩放工具。 */
 
+        TOOLTYPE_GO_POINTER_EXTEND,
+
         TOOL_TYPE_GO_TEXT,              /** 文本工具。 */
         TOOL_TYPE_GO_OPERATOR_1,        /** 第1类GO操作幅。 */
         TOOL_TYPE_GO_OPERATOR_2,        /** 第2类GO操作幅。 */

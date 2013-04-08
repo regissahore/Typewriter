@@ -25,7 +25,7 @@
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
-    this->selectTool(DefinationToolType::TOOL_TYPE_COMMON_POINTER);
+    this->selectTool(DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND);
 }
 
 /**

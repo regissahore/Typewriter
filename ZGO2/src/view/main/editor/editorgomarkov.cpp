@@ -9,8 +9,4 @@ EditorGOMarkov::EditorGOMarkov(QWidget *parent) : EditorGO(parent)
     layout->setSpacing(0);
     this->setLayout(layout);
     this->_filter = tr("GO Markov Files(*.gom)");
-
-    this->_savedOperatorID = 1;
-    this->_savedSignalID = 1;
-    this->activate();
 }

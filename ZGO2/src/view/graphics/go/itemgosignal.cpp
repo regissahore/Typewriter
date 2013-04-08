@@ -34,7 +34,28 @@ ItemGOSignal::~ItemGOSignal()
 
 QRectF ItemGOSignal::boundingRect() const
 {
-    return QRectF(0, -2, this->_endPos.x(), this->_endPos.y() + 4);
+    float left, right, top, bottom;
+    if (this->_endPos.x() < 0)
+    {
+        left = this->_endPos.x() - 2;
+        right = 2;
+    }
+    else
+    {
+        left = -2;
+        right = this->_endPos.x() + 2;
+    }
+    if (this->_endPos.y() < 0)
+    {
+        top = this->_endPos.y() - 2;
+        bottom = 2;
+    }
+    else
+    {
+        top = -2;
+        bottom = this->_endPos.y() + 2;
+    }
+    return QRectF(left, top, right - left, bottom - top);
 }
 
 bool ItemGOSignal::isSelected(float x, float y)

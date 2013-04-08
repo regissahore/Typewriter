@@ -6,6 +6,7 @@
 #include "gooperatorfactory.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "definationeditorselectiontype.h"
 
 /**
  * Constructor. The protected variable _GOOperator should be initialized and added to the scene.
@@ -15,6 +16,7 @@ ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->_GOOperator = 0;
     this->_finish = false;
+    this->graphicsView()->setCursor(Qt::SizeAllCursor);
 }
 
 /**
@@ -22,7 +24,7 @@ ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
  */
 ToolGOOperator::~ToolGOOperator()
 {
-    if (this->_finish)
+    if (!this->_finish)
     {
         if (this->_GOOperator != 0L)
         {
@@ -92,6 +94,29 @@ void ToolGOOperator::setType(const int type)
     }
     this->_GOOperator->setVisible(false);
     this->graphicsScene()->addItem(this->_GOOperator);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items();
+    QVector<bool> visit;
+    for (int i = 0; i <= items.size(); ++i)
+    {
+        visit.push_back(false);
+    }
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable* item = (ItemDrawable*)items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        {
+            ItemGOOperator *op = (ItemGOOperator*)item;
+            visit[op->model()->id()] = true;
+        }
+    }
+    for (int i = 1; i <= items.size(); ++i)
+    {
+        if (!visit[i])
+        {
+            this->_GOOperator->model()->setId(i);
+            break;
+        }
+    }
 }
 
 void ToolGOOperator::activate()
@@ -142,15 +167,15 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    // Set the tool.
-    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
-    this->sceneGO()->sendMessage(message);
     // Set the selection.
-    message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(this->_GOOperator);
     this->sceneGO()->sendMessage(message);
     this->_finish = true;
+    // Set the tool.
+    message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+    this->sceneGO()->sendMessage(message);
 }
 
 
@@ -171,7 +196,7 @@ void ToolGOOperator::getInputNumber()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -194,7 +219,7 @@ void ToolGOOperator::getOutputNumber()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_POINTER;
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }

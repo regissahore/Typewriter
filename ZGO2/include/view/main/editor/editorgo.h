@@ -20,15 +20,11 @@ public:
     explicit EditorGO(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
     void messageEvent(Message *message);
-    void activate();
-    void inactivate();
     bool save();
     bool tryOpen(const QString path);
     
 protected:
     ViewGO *view;
-    int _savedOperatorID;
-    int _savedSignalID;
 };
 
 #endif // EDITORGO_H

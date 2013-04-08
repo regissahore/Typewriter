@@ -20,10 +20,8 @@ public:
     void bindMessage(MessageController *controller);
 
 private:
-    QPushButton *buttonPointer;
-    QPushButton *buttonMove;
+    QPushButton *buttonGOPointer;
     QPushButton *buttonSelect;
-    QPushButton *buttonZoom;
     QPushButton *buttonGOText;
     QPushButton *buttonGOOperator1;
     QPushButton *buttonGOOperator2;
@@ -42,13 +40,10 @@ private:
     QPushButton *buttonGOOperator15;
     QPushButton *buttonGOOperator16;
     QPushButton *buttonGOOperator17;
-    QPushButton *buttonGOSignal;
 
 private slots:
-    void setToolPointer();
-    void setToolMove();
+    void setToolGOPointer();
     void setToolSelect();
-    void setToolZoom();
     void setToolGOText();
     void setToolGOOperator1();
     void setToolGOOperator2();
@@ -67,7 +62,6 @@ private slots:
     void setToolGOOperator15();
     void setToolGOOperator16();
     void setToolGOOperator17();
-    void setToolGOSignal();
 };
 
 #endif // TOOLBOXGO_H

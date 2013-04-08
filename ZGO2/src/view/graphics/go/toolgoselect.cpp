@@ -16,6 +16,7 @@ ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->graphicsScene()->addItem(this->_selection);
     this->_selection->setVisible(false);
     this->_status = Status_Null;
+    this->graphicsView()->setCursor(Qt::ArrowCursor);
 }
 
 /**
