@@ -34,7 +34,15 @@ void DockParameter::messageEvent(Message *message)
 void DockParameter::changeParameter(ItemDrawable* item)
 {
     delete this->_parameter;
-    int type = item->TypedItem::type();
+    int type;
+    if (item == 0L)
+    {
+        type = -1;
+    }
+    else
+    {
+        type = item->TypedItem::type();
+    }
     this->_parameter = ParameterFactory::produce(type);
     this->_parameter->bindItem(item);
     this->setWidget(this->_parameter);

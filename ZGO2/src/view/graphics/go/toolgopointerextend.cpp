@@ -240,6 +240,13 @@ bool ToolGOPointerExtend::mouseMoveStatusNullItem(QGraphicsSceneMouseEvent *even
             }
         }
     }
+    for (int i = 0; i < items.size(); ++i)
+    {
+        if (((ItemDrawable*)items[i])->isSelected(event->scenePos().x(), event->scenePos().y()))
+        {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -258,11 +265,11 @@ void ToolGOPointerExtend::mouseReleaseStatusNull(QGraphicsSceneMouseEvent *event
     {
         if (((ItemDrawable*)items[i])->isSelected(event->scenePos().x(), event->scenePos().y()))
         {
-            ItemGOFactory::sendSelectionMessage(this->sceneGO(), (ItemDrawable*)items[i]);
             this->_item = (ItemDrawable*)items[i];
             break;
         }
     }
+    ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
 }
 
 void ToolGOPointerExtend::mouseMoveStatusItemMoving(QGraphicsSceneMouseEvent *event)
@@ -287,9 +294,10 @@ void ToolGOPointerExtend::mouseReleaseStatusItemMoving(QGraphicsSceneMouseEvent 
 void ToolGOPointerExtend::mouseReleaseStatusSceneMoving(QGraphicsSceneMouseEvent *event)
 {
     Q_UNUSED(event);
-    this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
-    this->graphicsView()->setCursor(Qt::ArrowCursor);
     this->_status = Status_Null;
+    this->_item = 0L;
+    ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
+    this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
 }
 
 void ToolGOPointerExtend::mouseMoveStatusSignalConnecting(QGraphicsSceneMouseEvent *event)
@@ -361,6 +369,10 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
     {
         this->graphicsScene()->removeItem(this->_signal);
         delete this->_signal;
+    }
+    else
+    {
+        ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_signal);
     }
     this->_signal = 0L;
     this->graphicsView()->setCursor(Qt::ArrowCursor);
