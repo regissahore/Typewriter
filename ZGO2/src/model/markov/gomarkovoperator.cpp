@@ -6,56 +6,28 @@
 
 GOMarkovOperator::GOMarkovOperator()
 {
-    this->_input = new GOInput();
-    this->_subInput = new GOInput();
-    this->_output = new GOOutput();
-    this->_status = new GOMarkovStatus();
+    this->_markovStatus = new GOMarkovStatus();
     this->_outputStatus = new QVector<GOMarkovStatus*>();
-    this->_parameter = new GOParameter();
 }
 
 GOMarkovOperator::~GOMarkovOperator()
 {
-    delete this->_input;
-    delete this->_subInput;
-    delete this->_output;
-    delete this->_status;
+    delete this->_markovStatus;
     for (int i = 0; i < this->_outputStatus->size(); ++i)
     {
         delete this->_outputStatus->at(i);
     }
     delete this->_outputStatus;
-    delete this->_parameter;
 }
 
-GOInput* GOMarkovOperator::input() const
+GOMarkovStatus* GOMarkovOperator::markovStatus() const
 {
-    return this->_input;
+    return this->_markovStatus;
 }
 
-GOInput* GOMarkovOperator::subInput() const
-{
-    return this->_subInput;
-}
-
-GOOutput* GOMarkovOperator::output() const
-{
-    return this->_output;
-}
-
-GOMarkovStatus* GOMarkovOperator::status() const
-{
-    return this->_status;
-}
-
-QVector<GOMarkovStatus*>* GOMarkovOperator::outputStatus() const
+QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
 {
     return this->_outputStatus;
-}
-
-GOParameter *GOMarkovOperator::parameter() const
-{
-    return this->_parameter;
 }
 
 void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
@@ -67,6 +39,7 @@ void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
     root.appendChild(element);
+    this->markovStatus()->save(document, element);
     this->parameter()->save(document, element);
 }
 
@@ -82,6 +55,11 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
     QDomElement element = root.firstChildElement();
+    if (!this->markovStatus()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
     if (!this->parameter()->tryOpen(element))
     {
         return false;

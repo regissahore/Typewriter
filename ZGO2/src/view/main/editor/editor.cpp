@@ -202,7 +202,7 @@ void Editor::createNewTab(int type)
  */
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", "GO Files(*.go)");
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go);;GO Markov Files(*.gom)"));
     if (filePath != "")
     {
         QString extension = "";
@@ -217,6 +217,18 @@ void Editor::tryOpen()
         if (extension.compare(extension, ".go", Qt::CaseInsensitive) == 0)
         {
             EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+            if (editor->tryOpen(filePath))
+            {
+                editor->bindMessage(this->MessageCreator::_messageController);
+                editor->setPath(filePath);
+                this->_editors->push_back(editor);
+                this->_tabWidget->addTab(editor, editor->name());
+                this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+            }
+        }
+        else if (extension.compare(extension, ".gom", Qt::CaseInsensitive) == 0)
+        {
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO_MARKOV);
             if (editor->tryOpen(filePath))
             {
                 editor->bindMessage(this->MessageCreator::_messageController);

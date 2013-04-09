@@ -117,7 +117,10 @@ HEADERS += \
     include/model/go/gocutset.h \
     include/model/go/gopathsetset.h \
     include/model/go/gopathsetsetset.h \
-    include/view/graphics/go/toolgopointerextend.h
+    include/view/graphics/go/toolgopointerextend.h \
+    include/model/markov/gomarkovequivalentseries.h \
+    include/model/markov/gomarkovequivalentparallel.h \
+    include/view/main/dock/toolbox/toolboxgomarkov.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -207,7 +210,7 @@ SOURCES += \
     src/model/go/gocutset.cpp \
     src/model/go/gopathsetset.cpp \
     src/model/go/gopathsetsetset.cpp \
-    src/view/graphics/go/toolgopointerextend.cpp
-
-FORMS += \
-    test.ui
+    src/view/graphics/go/toolgopointerextend.cpp \
+    src/model/markov/gomarkovequivalentseries.cpp \
+    src/model/markov/gomarkovequivalentparallel.cpp \
+    src/view/main/dock/toolbox/toolboxgomarkov.cpp

@@ -85,12 +85,12 @@ void MainWindow::initEditor()
  */
 void MainWindow::initDock()
 {
-    this->_dockMessage = new DockMessage(this);
-    this->_dockMessage->bindMessage(this->_messageController);
-    this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
+    //this->_dockMessage = new DockMessage(this);
+    //this->_dockMessage->bindMessage(this->_messageController);
+    //this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
     this->_dockToolbox = new DockToolbox(this);
     this->_dockToolbox->bindMessage(this->_messageController);
-    this->addDockWidget(Qt::LeftDockWidgetArea, this->_dockToolbox);
+    this->addDockWidget(Qt::RightDockWidgetArea, this->_dockToolbox);
     this->_dockParameter = new DockParameter(this);
     this->_dockParameter->bindMessage(this->_messageController);
     this->addDockWidget(Qt::RightDockWidgetArea, this->_dockParameter);

@@ -45,7 +45,7 @@ void MainMenuFile::slotActionNewMarkov()
 {
     Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = DefinationEditorType::EDITOR_TYPE_GO_MARKOV;
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW));
+    this->sendMessage(message);
 }
 
 void MainMenuFile::slotActionOpen()

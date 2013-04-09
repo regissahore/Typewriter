@@ -1,6 +1,7 @@
 #include "editorfactory.h"
 #include "editorwelcome.h"
 #include "editorgo.h"
+#include "editorgomarkov.h"
 #include "editorwebview.h"
 #include "definationeditortype.h"
 
@@ -20,6 +21,10 @@ void* EditorFactory::produce(int type)
     case DefinationEditorType::EDITOR_TYPE_GO:
         editor = new EditorGO();
         editor->setType(DefinationEditorType::EDITOR_TYPE_GO);
+        break;
+    case DefinationEditorType::EDITOR_TYPE_GO_MARKOV:
+        editor = new EditorGOMarkov();
+        editor->setType(DefinationEditorType::EDITOR_TYPE_GO_MARKOV);
         break;
     case DefinationEditorType::EDITOR_TYPE_WEBVIEW:
         editor = new EditorWebView();
