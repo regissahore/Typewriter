@@ -3,6 +3,7 @@
 #include "parametergotext.h"
 #include "parametergosignal.h"
 #include "parametergooperator.h"
+#include "parametergomarkovoperator.h"
 
 /**
  * Produce a abstract parameter widget.
@@ -22,6 +23,11 @@ ParameterAbstract* ParameterFactory::produce(int type)
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT:
         parameter = new ParameterGOText();
+        break;
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
+        parameter = new ParameterGOMarkovOperator();
+        break;
+    default:
         break;
     }
     if (parameter == 0L)

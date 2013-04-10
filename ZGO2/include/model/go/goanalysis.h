@@ -14,8 +14,8 @@ class GOAnalysis
 {
 public:
     GOAnalysis();
-    void calcAccumulativeProbability(GOOperator *op);
-    void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
+    virtual void calcAccumulativeProbability(GOOperator *op);
+    virtual void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
 
 protected:
     bool isCommonSignalAppeared(GOOperator *op, int index, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);

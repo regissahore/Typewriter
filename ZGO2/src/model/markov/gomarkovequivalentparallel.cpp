@@ -1,7 +1,7 @@
 #include "gomarkovequivalentparallel.h"
 #include "gomarkovstatus.h"
 
-GOMarkovEquivalentParallel::GOMarkovEquivalentParallel()
+GOMarkovEquivalentParallel::GOMarkovEquivalentParallel() : GOMarkovEquivalent()
 {
 }
 

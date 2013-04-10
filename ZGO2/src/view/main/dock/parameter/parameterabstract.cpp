@@ -22,6 +22,7 @@ ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent)
     header.append(tr("Value"));
     this->_tableWidget->setHorizontalHeaderLabels(header);
     this->_tableWidget->verticalHeader()->hide();
+    this->resize(130, 400);
     layout->addWidget(this->_tableWidget);
 }
 

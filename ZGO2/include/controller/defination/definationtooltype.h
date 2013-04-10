@@ -17,25 +17,44 @@ public:
 
         TOOLTYPE_GO_POINTER_EXTEND,
 
-        TOOL_TYPE_GO_TEXT,              /** 文本工具。 */
-        TOOL_TYPE_GO_OPERATOR_1,        /** 第1类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_2,        /** 第2类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_3,        /** 第3类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_4,        /** 第4类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_5,        /** 第5类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_6,        /** 第6类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_7,        /** 第7类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_8,        /** 第8类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_9,        /** 第9类GO操作幅。 */
-        TOOL_TYPE_GO_OPERATOR_10,       /** 第10类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_11,       /** 第11类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_12,       /** 第12类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_13,       /** 第13类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_14,       /** 第14类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_15,       /** 第15类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_16,       /** 第16类GO操作符。 */
-        TOOL_TYPE_GO_OPERATOR_17,       /** 第17类GO操作符。 */
-        TOOL_TYPE_GO_SIGNAL             /** GO信号流。 */
+        TOOL_TYPE_GO_TEXT,
+        TOOL_TYPE_GO_OPERATOR_1,
+        TOOL_TYPE_GO_OPERATOR_2,
+        TOOL_TYPE_GO_OPERATOR_3,
+        TOOL_TYPE_GO_OPERATOR_4,
+        TOOL_TYPE_GO_OPERATOR_5,
+        TOOL_TYPE_GO_OPERATOR_6,
+        TOOL_TYPE_GO_OPERATOR_7,
+        TOOL_TYPE_GO_OPERATOR_8,
+        TOOL_TYPE_GO_OPERATOR_9,
+        TOOL_TYPE_GO_OPERATOR_10,
+        TOOL_TYPE_GO_OPERATOR_11,
+        TOOL_TYPE_GO_OPERATOR_12,
+        TOOL_TYPE_GO_OPERATOR_13,
+        TOOL_TYPE_GO_OPERATOR_14,
+        TOOL_TYPE_GO_OPERATOR_15,
+        TOOL_TYPE_GO_OPERATOR_16,
+        TOOL_TYPE_GO_OPERATOR_17,
+        TOOL_TYPE_GO_SIGNAL,
+
+        TOOL_TYPE_GO_MARKOV_OPERATOR_1,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_2,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_3,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_4,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_5,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_6,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_7,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_8,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_9,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_10,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_11,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_12,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_13,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_14,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_15,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_16,
+        TOOL_TYPE_GO_MARKOV_OPERATOR_17,
+        TOOL_TYPE_GO_MARKOV_EQUIVALENT
     };
 };
 

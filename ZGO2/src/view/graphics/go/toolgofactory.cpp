@@ -5,6 +5,7 @@
 #include "toolgoselect.h"
 #include "toolgotext.h"
 #include "toolgooperator.h"
+#include "toolgomarkovoperator.h"
 #include "toolgosignal.h"
 #include "toolgopointerextend.h"
 
@@ -55,6 +56,25 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
         tool = new ToolGOOperator(sceneGO);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_2:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_3:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_4:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_5:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_6:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_7:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_8:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_14:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_16:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_17:
+        tool = new ToolGOMarkovOperator(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_SIGNAL:
         tool = new ToolGOSignal(sceneGO);

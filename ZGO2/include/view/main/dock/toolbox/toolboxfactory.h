@@ -4,17 +4,18 @@
  * 工具栏工厂类。
  * @author ZHG <CyberZHG@gmaill.com>
  */
-#include "definationtoolboxtype.h"
-#include "factoryabstract.h"
-#include "toolboxabstract.h"
-#include "toolboxnull.h"
-#include "toolboxgo.h"
+class ToolboxAbstract;
 
-class ToolboxFactory : FactoryAbstract
+class ToolboxFactory
 {
 public:
-    ToolboxFactory();
-    void* produce(int type);
+    enum ToolboxType
+    {
+        TOOLBOX_TYPE_NULL,
+        TOOLBOX_TYPE_GO,
+        TOOLBOX_TYPE_GO_MARKOV
+    };
+    static ToolboxAbstract* produce(const int type);
 };
 
 #endif // TOOLBOXFACTORY_H

@@ -1,7 +1,7 @@
 #include "gomarkovequivalentseries.h"
 #include "gomarkovstatus.h"
 
-GOMarkovEquivalentSeries::GOMarkovEquivalentSeries()
+GOMarkovEquivalentSeries::GOMarkovEquivalentSeries() : GOMarkovEquivalent()
 {
 }
 

@@ -3,8 +3,9 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "goparameter.h"
+#include "gostatus.h"
 
-GOMarkovOperator::GOMarkovOperator()
+GOMarkovOperator::GOMarkovOperator() : GOOperator()
 {
     this->_markovStatus = new GOMarkovStatus();
     this->_outputStatus = new QVector<GOMarkovStatus*>();
@@ -12,6 +13,7 @@ GOMarkovOperator::GOMarkovOperator()
 
 GOMarkovOperator::~GOMarkovOperator()
 {
+    this->GOOperator::~GOOperator();
     delete this->_markovStatus;
     for (int i = 0; i < this->_outputStatus->size(); ++i)
     {
@@ -39,6 +41,7 @@ void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
     root.appendChild(element);
+    this->status()->save(document, element);
     this->markovStatus()->save(document, element);
     this->parameter()->save(document, element);
 }
@@ -55,6 +58,11 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
     QDomElement element = root.firstChildElement();
+    if (!this->status()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
     if (!this->markovStatus()->tryOpen(element))
     {
         return false;

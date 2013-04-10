@@ -1,12 +1,10 @@
 #include "editorgomarkov.h"
+#include "viewgomarkov.h"
 
 EditorGOMarkov::EditorGOMarkov(QWidget *parent) : EditorGO(parent)
 {
-    this->view = new ViewGO(this);
-    QGridLayout *layout = new QGridLayout();
-    layout->addWidget(this->view, 0, 0);
-    layout->setMargin(0);
-    layout->setSpacing(0);
-    this->setLayout(layout);
+    delete this->view;
+    this->view = new ViewGOMarkov(this);
+    this->layout()->addWidget(this->view);
     this->_filter = tr("GO Markov Files(*.gom)");
 }

@@ -21,6 +21,7 @@ INCLUDEPATH += ./include/model/markov
 INCLUDEPATH += ./include/view/dialog
 INCLUDEPATH += ./include/view/graphics/common
 INCLUDEPATH += ./include/view/graphics/go
+INCLUDEPATH += ./include/view/graphics/markov
 INCLUDEPATH += ./include/view/main/dock/message
 INCLUDEPATH += ./include/view/main/dock/parameter
 INCLUDEPATH += ./include/view/main/dock/toolbox
@@ -32,7 +33,6 @@ TRANSLATIONS += lang/Lang_CH.ts
 
 HEADERS += \
     include/controller/defination/definationtooltype.h \
-    include/controller/defination/definationtoolboxtype.h \
     include/controller/defination/definationeditortype.h \
     include/controller/defination/definationeditorselectiontype.h \
     include/controller/message/control/messager.h \
@@ -120,11 +120,18 @@ HEADERS += \
     include/view/graphics/go/toolgopointerextend.h \
     include/model/markov/gomarkovequivalentseries.h \
     include/model/markov/gomarkovequivalentparallel.h \
-    include/view/main/dock/toolbox/toolboxgomarkov.h
+    include/view/main/dock/toolbox/toolboxgomarkov.h \
+    include/view/main/dock/parameter/parametergomarkovoperator.h \
+    include/view/graphics/markov/itemgomarkovoperator.h \
+    include/view/graphics/markov/toolgomarkovoperator.h \
+    include/model/markov/gomarkovoperatorfactory.h \
+    include/view/graphics/markov/viewgomarkov.h \
+    include/view/graphics/markov/scenegomarkov.h \
+    include/model/markov/gomarkovanalysis.h \
+    include/model/markov/gomarkovgraph.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
-    src/controller/defination/definationtoolboxtype.cpp \
     src/controller/defination/definationeditortype.cpp \
     src/controller/defination/definationeditorselectiontype.cpp \
     src/controller/message/control/messager.cpp \
@@ -213,4 +220,12 @@ SOURCES += \
     src/view/graphics/go/toolgopointerextend.cpp \
     src/model/markov/gomarkovequivalentseries.cpp \
     src/model/markov/gomarkovequivalentparallel.cpp \
-    src/view/main/dock/toolbox/toolboxgomarkov.cpp
+    src/view/main/dock/toolbox/toolboxgomarkov.cpp \
+    src/view/main/dock/parameter/parametergomarkovoperator.cpp \
+    src/view/graphics/markov/itemgomarkovoperator.cpp \
+    src/view/graphics/markov/toolgomarkovoperator.cpp \
+    src/model/markov/gomarkovoperatorfactory.cpp \
+    src/view/graphics/markov/viewgomarkov.cpp \
+    src/view/graphics/markov/scenegomarkov.cpp \
+    src/model/markov/gomarkovanalysis.cpp \
+    src/model/markov/gomarkovgraph.cpp

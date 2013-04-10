@@ -12,6 +12,7 @@ class GOSignal;
 class GOPathSet;
 class GOCutSet;
 class GOPathSetSetSet;
+class GOAnalysis;
 
 class GOGraph
 {
@@ -27,8 +28,8 @@ public:
     GOPathSetSetSet findPath(int order);
     GOPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
-    bool saveAsHTML(const QString filePath);
-    bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
+    virtual bool saveAsHTML(const QString filePath);
+    virtual bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 
 protected:
     struct Output
@@ -42,6 +43,7 @@ protected:
     QVector<GOSignal*> _signal;
     QMap<GOOperator*, int> _operatorPos;
     QString _error;
+    GOAnalysis *_analysis;
     bool checkCycleAndConnection();
     bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
     QVector<GOOperator*> getTopologicalOrder();

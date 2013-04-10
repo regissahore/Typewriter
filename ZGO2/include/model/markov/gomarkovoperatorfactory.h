@@ -1,12 +1,12 @@
-#ifndef GOOPERATORFACTORY_H
-#define GOOPERATORFACTORY_H
+#ifndef GOMARKOVOPERATORFACTORY_H
+#define GOMARKOVOPERATORFACTORY_H
 /**
- * A GO Operator model factory.
+ * A operator model factory of Markov repairable system.
  * @author ZHG <CyberZHG@gmail.com>
  */
-class GOOperator;
+class GOMarkovOperator;
 
-class GOOperatorFactory
+class GOMarkovOperatorFactory
 {
 public:
     enum OperatorType
@@ -29,8 +29,7 @@ public:
         Operator_Type_16 = 16,
         Operator_Type_17 = 17
     };
-    static GOOperator* produce(const int type);
+    static GOMarkovOperator* produce(const int type);
     static bool isLogical(const int type);
 };
-
-#endif // GOOPERATORFACTORY_H
+#endif // GOMARKOVOPERATORFACTORY_H

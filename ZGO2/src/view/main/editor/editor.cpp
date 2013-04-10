@@ -202,7 +202,7 @@ void Editor::createNewTab(int type)
  */
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go);;GO Markov Files(*.gom)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom)"));
     if (filePath != "")
     {
         QString extension = "";

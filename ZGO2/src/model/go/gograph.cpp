@@ -18,6 +18,7 @@
 GOGraph::GOGraph()
 {
     this->_error = "";
+    this->_analysis = new GOAnalysis();
 }
 
 GOGraph::~GOGraph()
@@ -75,7 +76,6 @@ void GOGraph::calcAccumulativeProbability()
         return;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
-    GOAnalysis *analysis = new GOAnalysis();
     for (int i = 0; i < list.size(); ++i)
     {
         QVector<GOGraph::Output> commonList;
@@ -85,7 +85,7 @@ void GOGraph::calcAccumulativeProbability()
         }
         if (commonList.size() == 0)
         {
-            analysis->calcAccumulativeProbability(list[i]);
+            this->_analysis->calcAccumulativeProbability(list[i]);
         }
         else
         {
@@ -96,10 +96,9 @@ void GOGraph::calcAccumulativeProbability()
                 commonOperator.push_back(commonList[j].op);
                 commonIndex.push_back(commonList[j].outputIndex);
             }
-            analysis->calcAccumulativeProbability(list[i], commonOperator, commonIndex);
+            this->_analysis->calcAccumulativeProbability(list[i], commonOperator, commonIndex);
         }
     }
-    delete analysis;
     list.clear();
 }
 
@@ -416,12 +415,10 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         }
         if (flag)
         {
-            GOAnalysis *analysis = new GOAnalysis();
             for (int i = 0; i < list.size(); ++i)
             {
-                analysis->calcAccumulativeProbability(list[i]);
+                this->_analysis->calcAccumulativeProbability(list[i]);
             }
-            delete analysis;
             for (int i = 0; i < endList.size(); ++i)
             {
                 bool flag = false;
@@ -544,12 +541,10 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         }
         if (flag)
         {
-            GOAnalysis *analysis = new GOAnalysis();
             for (int i = 0; i < list.size(); ++i)
             {
-                analysis->calcAccumulativeProbability(list[i]);
+                this->_analysis->calcAccumulativeProbability(list[i]);
             }
-            delete analysis;
             for (int i = 0; i < endList.size(); ++i)
             {
                 bool flag = false;

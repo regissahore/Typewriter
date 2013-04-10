@@ -45,7 +45,7 @@ ItemGOOperator::~ItemGOOperator()
  * Set the type of the operator model. A new model will be produced.
  * @param type @see GOOperatorFactory
  */
-void ItemGOOperator::setOperatorType(int type)
+void ItemGOOperator::setType(int type)
 {
     this->_model = GOOperatorFactory::produce(type);
     this->updateGraphic();

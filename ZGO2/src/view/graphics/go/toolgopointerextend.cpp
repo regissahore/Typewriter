@@ -115,7 +115,7 @@ bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGOOperator *op = (ItemGOOperator*)items.at(i);
             GOOperator *model = op->model();
@@ -208,7 +208,7 @@ bool ToolGOPointerExtend::mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *ev
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGOOperator *op = (ItemGOOperator*)items.at(i);
             GOOperator *model = op->model();
@@ -313,7 +313,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
     for (int i = 0; i < items.size() && !found; ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGOOperator *op = (ItemGOOperator*)item;
             GOOperator *model = op->model();

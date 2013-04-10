@@ -22,7 +22,9 @@ public:
         PARAMETER_PROBABILITY_MULTIPLE,
         PARAMETER_OUTPUT,
         PARAMETER_GO_9_XY,
-        PARAMETER_GO_11_K
+        PARAMETER_GO_11_K,
+        PARAMETER_GO_MARKOV_FAILURE,
+        PARAMETER_GO_MARKOV_REPAIR
     };
     TableWidgetGOItem(const QString &text);
     GOParameterType parameterType() const;

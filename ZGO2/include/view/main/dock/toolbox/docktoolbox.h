@@ -7,7 +7,6 @@
 #include <QDockWidget>
 #include "messager.h"
 #include "definationeditortype.h"
-#include "definationtoolboxtype.h"
 #include "messagefactory.h"
 #include "toolboxfactory.h"
 

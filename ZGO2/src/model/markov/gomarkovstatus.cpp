@@ -66,13 +66,13 @@ void GOMarkovStatus::setProbabilityBreakdown(BigDecimal value)
 void GOMarkovStatus::setFrequencyBreakdown(BigDecimal value)
 {
     this->_frequencyBreakdown = value;
-    this->_frequencyRepair = this->_probabilityNormal * this->_frequencyBreakdown / (BigDecimal::one() - this->_probabilityNormal);
+    this->_frequencyRepair = this->_probabilityNormal * this->_frequencyBreakdown / this->_probabilityBreakdown;
 }
 
 void GOMarkovStatus::setFrequencyRepair(BigDecimal value)
 {
     this->_frequencyRepair = value;
-    this->_frequencyBreakdown = (BigDecimal::one() - this->_probabilityNormal) * this->_frequencyRepair / this->_probabilityNormal;
+    this->_frequencyBreakdown = this->_probabilityBreakdown * this->_frequencyRepair / this->_probabilityNormal;
 }
 
 void GOMarkovStatus::save(QDomDocument &document, QDomElement &root)

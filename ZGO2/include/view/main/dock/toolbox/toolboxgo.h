@@ -19,6 +19,9 @@ public:
     explicit ToolboxGO(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
 
+protected:
+    QVBoxLayout *_layout;
+
 private:
     QPushButton *buttonGOPointer;
     QPushButton *buttonSelect;
@@ -41,27 +44,27 @@ private:
     QPushButton *buttonGOOperator16;
     QPushButton *buttonGOOperator17;
 
-private slots:
+protected slots:
     void setToolGOPointer();
     void setToolSelect();
     void setToolGOText();
-    void setToolGOOperator1();
-    void setToolGOOperator2();
-    void setToolGOOperator3();
-    void setToolGOOperator4();
-    void setToolGOOperator5();
-    void setToolGOOperator6();
-    void setToolGOOperator7();
-    void setToolGOOperator8();
-    void setToolGOOperator9();
-    void setToolGOOperator10();
-    void setToolGOOperator11();
-    void setToolGOOperator12();
-    void setToolGOOperator13();
-    void setToolGOOperator14();
-    void setToolGOOperator15();
-    void setToolGOOperator16();
-    void setToolGOOperator17();
+    virtual void setToolGOOperator1();
+    virtual void setToolGOOperator2();
+    virtual void setToolGOOperator3();
+    virtual void setToolGOOperator4();
+    virtual void setToolGOOperator5();
+    virtual void setToolGOOperator6();
+    virtual void setToolGOOperator7();
+    virtual void setToolGOOperator8();
+    virtual void setToolGOOperator9();
+    virtual void setToolGOOperator10();
+    virtual void setToolGOOperator11();
+    virtual void setToolGOOperator12();
+    virtual void setToolGOOperator13();
+    virtual void setToolGOOperator14();
+    virtual void setToolGOOperator15();
+    virtual void setToolGOOperator16();
+    virtual void setToolGOOperator17();
 };
 
 #endif // TOOLBOXGO_H

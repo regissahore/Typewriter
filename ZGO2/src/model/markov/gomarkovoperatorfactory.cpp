@@ -1,5 +1,5 @@
-#include "gooperatorfactory.h"
-#include "gooperator.h"
+#include "gomarkovoperatorfactory.h"
+#include "gomarkovoperator.h"
 #include "goinput.h"
 #include "gooutput.h"
 #include "gostatus.h"
@@ -8,9 +8,9 @@
  * Produce a GOOperator with auto increment ID.
  * @return Pointer to GOOperator.
  */
-GOOperator* GOOperatorFactory::produce(const int type)
+GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
 {
-    GOOperator *op = new GOOperator();
+    GOMarkovOperator *op = new GOMarkovOperator();
     op->setType(type);
     switch (type)
     {
@@ -106,7 +106,7 @@ GOOperator* GOOperatorFactory::produce(const int type)
     return op;
 }
 
-bool GOOperatorFactory::isLogical(const int type)
+bool GOMarkovOperatorFactory::isLogical(const int type)
 {
     switch (type)
     {
@@ -119,3 +119,4 @@ bool GOOperatorFactory::isLogical(const int type)
     }
     return false;
 }
+

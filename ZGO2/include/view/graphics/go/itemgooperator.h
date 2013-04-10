@@ -17,7 +17,7 @@ class ItemGOOperator : public ItemMoveable
 public:
     ItemGOOperator(QGraphicsItem *parent = 0);
     virtual ~ItemGOOperator();
-    void setOperatorType(int type);
+    void setType(int type);
     GOOperator *model() const;
     void setModel(GOOperator *model);
     void updateGraphic();
