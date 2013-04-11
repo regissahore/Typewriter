@@ -8,7 +8,7 @@ ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperat
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR);
 }
 
-void ItemGOMarkovOperator::setType(int type)
+void ItemGOMarkovOperator::setModelType(const int type)
 {
     this->_model = GOMarkovOperatorFactory::produce(type);
     this->updateGraphic();

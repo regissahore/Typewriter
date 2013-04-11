@@ -3,8 +3,8 @@
 
 GOMarkovStatus::GOMarkovStatus()
 {
-    this->setProbabilityNormal(BigDecimal::one());
-    this->setFrequencyBreakdown(BigDecimal::one());
+    this->setFrequencyBreakdown(BigDecimal::zero());
+    this->setFrequencyRepair(BigDecimal::one());
 }
 
 GOMarkovStatus::~GOMarkovStatus()
@@ -51,6 +51,11 @@ void GOMarkovStatus::setFrequencyRepair(QString value)
     this->setFrequencyRepair(BigDecimal::valueOf(value));
 }
 
+void GOMarkovStatus::setRepairTime(QString value)
+{
+    this->setRepairTime(BigDecimal::valueOf(value));
+}
+
 void GOMarkovStatus::setProbabilityNormal(BigDecimal value)
 {
     this->_probabilityNormal = value;
@@ -66,20 +71,25 @@ void GOMarkovStatus::setProbabilityBreakdown(BigDecimal value)
 void GOMarkovStatus::setFrequencyBreakdown(BigDecimal value)
 {
     this->_frequencyBreakdown = value;
-    this->_frequencyRepair = this->_probabilityNormal * this->_frequencyBreakdown / this->_probabilityBreakdown;
+    this->setProbabilityNormal(this->_frequencyRepair / (this->_frequencyRepair + this->_frequencyBreakdown));
 }
 
 void GOMarkovStatus::setFrequencyRepair(BigDecimal value)
 {
     this->_frequencyRepair = value;
-    this->_frequencyBreakdown = this->_probabilityBreakdown * this->_frequencyRepair / this->_probabilityNormal;
+    this->setProbabilityNormal(this->_frequencyRepair / (this->_frequencyRepair + this->_frequencyBreakdown));
+}
+
+void GOMarkovStatus::setRepairTime(BigDecimal value)
+{
+    this->setFrequencyRepair(BigDecimal::one() / value);
 }
 
 void GOMarkovStatus::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("status");
-    element.setAttribute("probability_normal", this->_probabilityNormal.toString());
-    element.setAttribute("frequency_breakdown", this->_frequencyBreakdown.toString());
+    element.setAttribute("breakdown", this->_frequencyBreakdown.toString());
+    element.setAttribute("repair", this->_frequencyRepair.toString());
     root.appendChild(element);
 }
 
@@ -89,7 +99,7 @@ bool GOMarkovStatus::tryOpen(QDomElement &root)
     {
         return false;
     }
-    this->setProbabilityNormal(root.attribute("probability_normal"));
-    this->setFrequencyBreakdown(root.attribute("frequency_breakdown"));
+    this->setFrequencyBreakdown(root.attribute("breakdown"));
+    this->setFrequencyRepair(root.attribute("repair"));
     return true;
 }

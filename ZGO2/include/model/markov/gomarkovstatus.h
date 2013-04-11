@@ -22,10 +22,12 @@ public:
     void setProbabilityBreakdown(QString value);
     void setFrequencyBreakdown(QString value);
     void setFrequencyRepair(QString value);
+    void setRepairTime(QString value);
     void setProbabilityNormal(BigDecimal value);
     void setProbabilityBreakdown(BigDecimal value);
     void setFrequencyBreakdown(BigDecimal value);
     void setFrequencyRepair(BigDecimal value);
+    void setRepairTime(BigDecimal value);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

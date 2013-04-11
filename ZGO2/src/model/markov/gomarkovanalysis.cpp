@@ -44,8 +44,10 @@ void GOMarkovAnalysis::updateOuputMarkov(GOMarkovOperator *op)
     for (int i = 0; i < op->output()->number(); ++i)
     {
         GOMarkovStatus *status = new GOMarkovStatus();
-        status->setProbabilityNormal(op->accmulatives()->at(i)->accumulative(1) - op->accmulatives()->at(i)->accumulative(0));
+        BigDecimal probability1 = op->accmulatives()->at(i)->accumulative(1) - op->accmulatives()->at(i)->accumulative(0);
+        BigDecimal probability2 = op->accmulatives()->at(i)->accumulative(2) - op->accmulatives()->at(i)->accumulative(1);
         status->setFrequencyBreakdown(breakdown);
+        status->setFrequencyRepair(breakdown * probability1 / probability2);
         op->markovOutputStatus()->push_back(status);
     }
 }

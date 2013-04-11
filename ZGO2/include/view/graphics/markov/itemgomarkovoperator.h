@@ -10,7 +10,7 @@ class ItemGOMarkovOperator : public ItemGOOperator
 {
 public:
     ItemGOMarkovOperator(QGraphicsItem *parent = 0);
-    void setType(int type);
+    void setModelType(const int type);
     bool tryOpen(QDomElement &root);
 };
 

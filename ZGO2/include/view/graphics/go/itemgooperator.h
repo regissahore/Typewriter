@@ -17,7 +17,7 @@ class ItemGOOperator : public ItemMoveable
 public:
     ItemGOOperator(QGraphicsItem *parent = 0);
     virtual ~ItemGOOperator();
-    void setType(int type);
+    virtual void setModelType(const int type);
     GOOperator *model() const;
     void setModel(GOOperator *model);
     void updateGraphic();
@@ -29,6 +29,9 @@ public:
     QPoint getInputPosition(int index);
     QPoint getSubInputPosition(int index = 0);
     QPoint getOutputPosition(int index);
+    QVector<ItemGOSignal*>* input() const;
+    QVector<ItemGOSignal*>* subInput() const;
+    QVector<QVector<ItemGOSignal*>*>* output() const;
     void setSignal(ItemGOSignal *signal, int type, int index);
     void removeSignal(ItemGOSignal *signal, int type, int index);
     QList<ItemGOSignal*> getConnectedSignals() const;

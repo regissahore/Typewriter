@@ -3,6 +3,7 @@
 GOStatus::GOStatus()
 {
     this->setNumber(3);
+    this->_probability[1] == BigDecimal::one();
 }
 
 GOStatus::~GOStatus()

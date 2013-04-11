@@ -201,6 +201,10 @@ BigDecimal operator /(const BigDecimal &a, const BigDecimal &b)
 
 QString BigDecimal::toString() const
 {
+    if (this->_denominator == BigInteger::zero())
+    {
+        return "INF";
+    }
     QString str = (this->numerator() / this->denominator()).toString() + ".";
     BigInteger num = (this->numerator() % this->denominator()).absolute();
     BigInteger den = this->denominator().absolute();
@@ -263,6 +267,11 @@ void BigDecimal::printAll() const
 
 void BigDecimal::reduce()
 {
+    while (this->_numerator.digitNum() > 50 && this->_denominator.digitNum() > 50)
+    {
+        this->_numerator = this->_numerator / BigInteger::valueOf(10000);
+        this->_denominator = this->_denominator / BigInteger::valueOf(10000);
+    }
     BigInteger g = BigInteger::gcd(this->numerator().absolute(), this->denominator().absolute());
     if (g != BigInteger::one())
     {

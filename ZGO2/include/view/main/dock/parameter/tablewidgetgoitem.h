@@ -24,7 +24,8 @@ public:
         PARAMETER_GO_9_XY,
         PARAMETER_GO_11_K,
         PARAMETER_GO_MARKOV_FAILURE,
-        PARAMETER_GO_MARKOV_REPAIR
+        PARAMETER_GO_MARKOV_REPAIR,
+        PARAMETER_GO_MARKOV_REPAIR_TIME
     };
     TableWidgetGOItem(const QString &text);
     GOParameterType parameterType() const;

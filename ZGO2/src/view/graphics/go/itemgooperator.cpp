@@ -41,11 +41,7 @@ ItemGOOperator::~ItemGOOperator()
     this->_outputSignal->clear();
 }
 
-/**
- * Set the type of the operator model. A new model will be produced.
- * @param type @see GOOperatorFactory
- */
-void ItemGOOperator::setType(int type)
+void ItemGOOperator::setModelType(const int type)
 {
     this->_model = GOOperatorFactory::produce(type);
     this->updateGraphic();
@@ -336,6 +332,21 @@ QPoint ItemGOOperator::getOutputPosition(int index)
     int height = (number - 1) * 25;
     int y = - (height >> 1) + index * 25;
     return QPoint(75, y);
+}
+
+QVector<ItemGOSignal*>* ItemGOOperator::input() const
+{
+    return this->_inputSignal;
+}
+
+QVector<ItemGOSignal*>* ItemGOOperator::subInput() const
+{
+    return this->_subInputSignal;
+}
+
+QVector<QVector<ItemGOSignal*>*>* ItemGOOperator::output() const
+{
+    return this->_outputSignal;
 }
 
 /**
