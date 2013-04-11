@@ -14,7 +14,7 @@
 #include "gooutput.h"
 #include "gomarkovoperatorfactory.h"
 
-ItemGOMarkovEquivalent::ItemGOMarkovEquivalent(QGraphicsItem *parent) : ItemMoveable(parent)
+ItemGOMarkovEquivalent::ItemGOMarkovEquivalent(QGraphicsItem *parent) : ItemMoveable(parent), IdentifiedItem()
 {
     this->_items = new QVector<ItemGOMarkovOperator*>();
     this->_model = 0L;
@@ -120,7 +120,7 @@ QList<GOMarkovOperator*> ItemGOMarkovEquivalent::getParallelList(QList<QGraphics
     return list;
 }
 
-bool ItemGOMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> &items)
+bool ItemGOMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> items)
 {
     this->removeUnnecessaryItems(items);
     if (items.size() <= 1)
@@ -166,7 +166,7 @@ bool ItemGOMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> &items
     return true;
 }
 
-bool ItemGOMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> &items)
+bool ItemGOMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> items)
 {
     this->removeUnnecessaryItems(items);
     if (items.size() <= 2)
@@ -238,6 +238,7 @@ void ItemGOMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
 {
     this->removeUnnecessaryItems(items);
     this->_model = new GOMarkovEquivalentSeries();
+    this->_model->setId(this->id());
     QList<GOMarkovOperator*> list = this->getSeriesList(items);
     for (int i = 0; i < list.size(); ++i)
     {
@@ -249,6 +250,7 @@ void ItemGOMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem*> &items)
 {
     this->removeUnnecessaryItems(items);
     this->_model = new GOMarkovEquivalentParallel();
+    this->_model->setId(this->id());
     QList<GOMarkovOperator*> list = this->getParallelList(items);
     for (int i = 0; i < list.size(); ++i)
     {
@@ -281,6 +283,7 @@ ItemGOMarkovOperator *ItemGOMarkovEquivalent::getEquivalentOperatorItem()
     GOMarkovStatus status = this->model()->getEquivalentStatus();
     ItemGOMarkovOperator *item = new ItemGOMarkovOperator();
     item->setType(GOMarkovOperatorFactory::Operator_Type_1);
+    item->model()->setId(this->id());
     item->model()->status()->setProbability(1, status.probabilityNormal());
     item->model()->status()->setProbability(2, status.probabilityBreakdown());
     ((GOMarkovOperator*)item->model())->markovStatus()->setProbabilityNormal(status.probabilityNormal());
@@ -320,4 +323,92 @@ void ItemGOMarkovEquivalent::removeUnnecessaryItems(QList<QGraphicsItem*> &items
             items[i] = equivalent->getEquivalentOperatorItem();
         }
     }
+}
+
+QRectF ItemGOMarkovEquivalent::boundingRect() const
+{
+    return QRectF(0, 0, this->_end.x(), this->_end.y());
+}
+
+void ItemGOMarkovEquivalent::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
+{
+    painter->setPen(Qt::black);
+    painter->setBrush(Qt::NoBrush);
+    painter->drawRect(0, 0, this->_end.x(), this->_end.y());
+    painter->drawText(QRectF(10, 10, 100, 100), Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(this->id()));
+}
+
+void ItemGOMarkovEquivalent::updateBoundary()
+{
+    qreal left = this->items()->at(0)->x();
+    qreal right = this->items()->at(0)->x();
+    qreal top = this->items()->at(0)->y();
+    qreal bottom = this->items()->at(0)->y();
+    for (int i = 1; i < this->items()->size(); ++i)
+    {
+        if (this->items()->at(i)->x() < left)
+        {
+            left = this->items()->at(i)->x();
+        }
+        if (this->items()->at(i)->x() > right)
+        {
+            right = this->items()->at(i)->x();
+        }
+        if (this->items()->at(i)->y() < top)
+        {
+            top = this->items()->at(i)->y();
+        }
+        if (this->items()->at(i)->y() > bottom)
+        {
+            bottom = this->items()->at(i)->y();
+        }
+    }
+    qreal width = right - left;
+    qreal height = bottom - top;
+    this->setPos(left, top);
+    this->_end.setX(width);
+    this->_end.setY(height);
+    this->prepareGeometryChange();
+}
+
+void ItemGOMarkovEquivalent::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("equivalent");
+    element.setAttribute("x", this->x());
+    element.setAttribute("y", this->y());
+    element.setAttribute("width", this->_end.x());
+    element.setAttribute("height", this->_end.y());
+    element.setAttribute("id", this->id());
+    this->model()->save(document, element);
+    root.appendChild(element);
+}
+
+bool ItemGOMarkovEquivalent::tryOpen(QDomElement &root)
+{
+    if (root.tagName() != "equivalent")
+    {
+        return false;
+    }
+    this->setPos(root.attribute("x").toFloat(), root.attribute("y").toFloat());
+    this->_end.setX(root.attribute("width").toFloat());
+    this->_end.setY(root.attribute("height").toFloat());
+    this->setId(root.attribute("id").toInt());
+    QDomElement element = root.firstChildElement();
+    if (element.tagName() == "series")
+    {
+        this->_model = new GOMarkovEquivalentSeries();
+    }
+    else
+    {
+        this->_model = new GOMarkovEquivalentParallel();
+    }
+    if (this->_model == 0L)
+    {
+        return false;
+    }
+    if (!this->_model->tryOpen(element))
+    {
+        return false;
+    }
+    return true;
 }

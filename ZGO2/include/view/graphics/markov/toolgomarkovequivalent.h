@@ -12,6 +12,9 @@ public:
     ToolGOMarkovEquivalent(SceneGO *sceneGO);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
+
+protected:
+    void addEquivalent();
 };
 
 #endif // TOOLGOMARKOVEQUIVALENT_H

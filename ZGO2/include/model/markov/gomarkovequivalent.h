@@ -5,11 +5,13 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QVector>
+#include "identifieditem.h"
+#include "domitem.h"
 
 class GOMarkovStatus;
 class GOMarkovOperator;
 
-class GOMarkovEquivalent
+class GOMarkovEquivalent : public IdentifiedItem, public DomItem
 {
 public:
     GOMarkovEquivalent();
@@ -23,10 +25,14 @@ public:
     void setL(const int value);
     void setJ(const int value);
     virtual GOMarkovStatus getEquivalentStatus() = 0;
+    QVector<int>* idList() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     QVector<GOMarkovOperator*> *_operators;
     QVector<GOMarkovEquivalent*> *_equivalents;
+    QVector<int> *_idList;
     int _I; /** Shutdown. */
     int _L; /** Repair. */
     int _J; /** Backup. */
