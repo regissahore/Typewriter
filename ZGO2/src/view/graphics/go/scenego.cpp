@@ -113,7 +113,7 @@ bool SceneGO::tryOpen(QDomElement &root)
         if (element.tagName() == "operator")
         {
             ItemGOOperator *item = new ItemGOOperator();
-            item->setType(element.attribute("type").toInt());
+            item->setModelType(element.attribute("type").toInt());
             this->addItem(item);
             if (item->tryOpen(element))
             {

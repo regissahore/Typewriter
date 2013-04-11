@@ -62,9 +62,12 @@ GOOperator* ItemGOOperator::model() const
  */
 void ItemGOOperator::setModel(GOOperator *model)
 {
+    this->_model = model;
+    this->_inputSignal->clear();
+    this->_subInputSignal->clear();
+    this->_outputSignal->clear();
     if (this->isSource())
     {
-        this->_model = model;
         for (int i = 0; i < this->_outputArrows->size(); ++i)
         {
             this->_outputArrows->at(i)->setParentItem(0L);
@@ -85,7 +88,6 @@ void ItemGOOperator::setModel(GOOperator *model)
     }
     else
     {
-        this->_model = model;
         for (int i = 0; i < this->_inputArrows->size(); ++i)
         {
             this->_inputArrows->at(i)->setParentItem(0L);

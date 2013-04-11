@@ -13,10 +13,7 @@ GOMarkovEquivalent::GOMarkovEquivalent() : IdentifiedItem()
 
 GOMarkovEquivalent::~GOMarkovEquivalent()
 {
-    for (int i = 0; i < this->_operators->size(); ++i)
-    {
-        delete this->_operators->at(i);
-    }
+    this->_operators->clear();
     delete this->_operators;
     for (int i = 0; i < this->_equivalents->size(); ++i)
     {

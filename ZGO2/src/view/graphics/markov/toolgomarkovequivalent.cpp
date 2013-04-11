@@ -54,6 +54,7 @@ void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         this->addEquivalent();
+        this->_selection->setEnd(QPoint(0, 0));
         this->_status = Status_Null;
         break;
     case Status_Moving:
@@ -96,7 +97,7 @@ void ToolGOMarkovEquivalent::addEquivalent()
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            visit[((ItemGOMarkovEquivalent*)item)->model()->id()] = true;
+            //visit[((ItemGOMarkovEquivalent*)item)->model()->id()] = true;
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)
@@ -110,15 +111,18 @@ void ToolGOMarkovEquivalent::addEquivalent()
     if (equivalent->isSeriesEquivalentable(this->_items))
     {
         equivalent->setSeriesEquivalent(this->_items);
-        this->sceneGO()->addItem(equivalent);
     }
     else if (equivalent->isParallelEquivalentable(this->_items))
     {
         equivalent->setParallelEquivalent(this->_items);
-        this->sceneGO()->addItem(equivalent);
     }
     if (equivalent->model() == 0L)
     {
         delete equivalent;
+    }
+    else
+    {
+        this->sceneGO()->addItem(equivalent);
+        equivalent->update();
     }
 }

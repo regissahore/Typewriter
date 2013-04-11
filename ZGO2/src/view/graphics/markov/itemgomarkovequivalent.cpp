@@ -24,7 +24,10 @@ ItemGOMarkovEquivalent::~ItemGOMarkovEquivalent()
 {
     this->_items->clear();
     delete this->_items;
-    delete this->_model;
+    if (this->model() != 0L)
+    {
+        delete this->_model;
+    }
 }
 
 /**
@@ -237,6 +240,12 @@ bool ItemGOMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
 void ItemGOMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
 {
     this->removeUnnecessaryItems(items);
+    this->_items->clear();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        this->_items->push_back((ItemGOMarkovOperator*)items.at(i));
+    }
+    this->updateBoundary();
     this->_model = new GOMarkovEquivalentSeries();
     this->_model->setId(this->id());
     QList<GOMarkovOperator*> list = this->getSeriesList(items);
@@ -249,6 +258,12 @@ void ItemGOMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
 void ItemGOMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem*> &items)
 {
     this->removeUnnecessaryItems(items);
+    this->_items->clear();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        this->_items->push_back((ItemGOMarkovOperator*)items.at(i));
+    }
+    this->updateBoundary();
     this->_model = new GOMarkovEquivalentParallel();
     this->_model->setId(this->id());
     QList<GOMarkovOperator*> list = this->getParallelList(items);
@@ -296,7 +311,7 @@ void ItemGOMarkovEquivalent::removeUnnecessaryItems(QList<QGraphicsItem*> &items
     for (int i = items.size() - 1; i >= 0; --i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR ||
+        if (item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR &&
                 item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             items.removeAt(i);
@@ -335,32 +350,32 @@ void ItemGOMarkovEquivalent::paint(QPainter *painter, const QStyleOptionGraphics
     painter->setPen(Qt::black);
     painter->setBrush(Qt::NoBrush);
     painter->drawRect(0, 0, this->_end.x(), this->_end.y());
-    painter->drawText(QRectF(10, 10, 100, 100), Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(this->id()));
+    painter->drawText(QRectF(5, 5, 100, 100), Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(this->id()));
 }
 
 void ItemGOMarkovEquivalent::updateBoundary()
 {
-    qreal left = this->items()->at(0)->x();
-    qreal right = this->items()->at(0)->x();
-    qreal top = this->items()->at(0)->y();
-    qreal bottom = this->items()->at(0)->y();
+    qreal left = this->items()->at(0)->x() - 30;
+    qreal right = this->items()->at(0)->x() + 30;
+    qreal top = this->items()->at(0)->y() - 30;
+    qreal bottom = this->items()->at(0)->y() + 30;
     for (int i = 1; i < this->items()->size(); ++i)
     {
-        if (this->items()->at(i)->x() < left)
+        if (this->items()->at(i)->x() - 30 < left)
         {
-            left = this->items()->at(i)->x();
+            left = this->items()->at(i)->x() - 30;
         }
-        if (this->items()->at(i)->x() > right)
+        if (this->items()->at(i)->x() + 30 > right)
         {
-            right = this->items()->at(i)->x();
+            right = this->items()->at(i)->x() + 30;
         }
-        if (this->items()->at(i)->y() < top)
+        if (this->items()->at(i)->y() - 30 < top)
         {
-            top = this->items()->at(i)->y();
+            top = this->items()->at(i)->y() - 30;
         }
-        if (this->items()->at(i)->y() > bottom)
+        if (this->items()->at(i)->y() + 30 > bottom)
         {
-            bottom = this->items()->at(i)->y();
+            bottom = this->items()->at(i)->y() + 30;
         }
     }
     qreal width = right - left;
