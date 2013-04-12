@@ -4,9 +4,13 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
-QT       += xml
-QT       += webkit
+QT      += core gui
+QT      += xml
+QT      += webkit
+
+QT      += widgets
+QT      += network
+QT      += webkitwidgets
 
 TARGET = ZGO2
 TEMPLATE = app

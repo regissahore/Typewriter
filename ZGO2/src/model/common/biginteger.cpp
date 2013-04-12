@@ -68,7 +68,7 @@ BigInteger BigInteger::valueOf(QString value)
         int temp = 0;
         for (int i = start; i < end; ++i)
         {
-            temp = temp * 10 + (value.at(i).toAscii() - '0');
+            temp = temp * 10 + (value.at(i).unicode() - '0');
         }
         bigInteger._data.push_back(temp);
     }

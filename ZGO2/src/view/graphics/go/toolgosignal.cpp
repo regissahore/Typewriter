@@ -32,7 +32,7 @@ ToolGOSignal::~ToolGOSignal()
  */
 void ToolGOSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
@@ -95,7 +95,7 @@ void ToolGOSignal::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
                                           event->scenePos().y() - this->_tempSignal->pos().y());
     }
     this->graphicsView()->setCursor(Qt::ArrowCursor);
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
@@ -140,7 +140,7 @@ void ToolGOSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if (this->_status == Status_Adding)
     {
         this->_status = Status_Null;
-        QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4);
+        QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
         for (int i = 0; i < items.size(); ++i)
         {
             ItemDrawable *item = (ItemDrawable*)items.at(i);

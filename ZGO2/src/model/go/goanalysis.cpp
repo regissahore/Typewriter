@@ -14,6 +14,10 @@ GOAnalysis::GOAnalysis()
 {
 }
 
+GOAnalysis::~GOAnalysis()
+{
+}
+
 void GOAnalysis::calcAccumulativeProbability(GOOperator *op)
 {
     op->accmulatives()->clear();

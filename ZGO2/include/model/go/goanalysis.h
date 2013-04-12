@@ -14,6 +14,7 @@ class GOAnalysis
 {
 public:
     GOAnalysis();
+    virtual ~GOAnalysis();
     virtual void calcAccumulativeProbability(GOOperator *op);
     virtual void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
 

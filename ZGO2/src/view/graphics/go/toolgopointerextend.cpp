@@ -111,7 +111,7 @@ void ToolGOPointerExtend::mousePressStatusNull(QGraphicsSceneMouseEvent *event)
 
 bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *event)
 {
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 5, event->scenePos().y() - 5, 10, 10);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 5, event->scenePos().y() - 5, 10, 10));
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
@@ -204,7 +204,7 @@ void ToolGOPointerExtend::mouseMoveStatusNull(QGraphicsSceneMouseEvent *event)
 
 bool ToolGOPointerExtend::mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *event)
 {
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
@@ -308,7 +308,7 @@ void ToolGOPointerExtend::mouseMoveStatusSignalConnecting(QGraphicsSceneMouseEve
 
 void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouseEvent *event)
 {
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos().x() - 5, event->scenePos().y() - 5, 10, 10);
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 5, event->scenePos().y() - 5, 10, 10));
     bool found = false;
     for (int i = 0; i < items.size() && !found; ++i)
     {

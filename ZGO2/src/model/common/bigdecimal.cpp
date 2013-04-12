@@ -45,7 +45,7 @@ BigDecimal BigDecimal::valueOf(QString value)
 {
     QString numerator = "0";
     QString denominator = "1";
-    if (value.at(0).toAscii() == '-')
+    if (value.at(0).unicode() == '-')
     {
         numerator = "-0";
         value.right(value.length() - 1);
@@ -53,7 +53,7 @@ BigDecimal BigDecimal::valueOf(QString value)
     bool dot = false;
     for (int i = 0; i < value.length(); ++i)
     {
-        if (value.at(i).toAscii() >= '0' && value.at(i).toAscii() <= '9')
+        if (value.at(i).unicode() >= '0' && value.at(i).unicode() <= '9')
         {
             numerator += value.at(i);
             if (dot)
@@ -61,7 +61,7 @@ BigDecimal BigDecimal::valueOf(QString value)
                 denominator += "0";
             }
         }
-        else if (value.at(i).toAscii() == '.')
+        else if (value.at(i).unicode() == '.')
         {
             dot = true;
         }
@@ -220,13 +220,13 @@ QString BigDecimal::toString() const
     }
     for (int i = str.length() - 1; i >= 0; --i)
     {
-        if (str[i].toAscii() != '0')
+        if (str[i].unicode() != '0')
         {
             str = str.left(i + 1);
             break;
         }
     }
-    if (str[str.length() - 1].toAscii() == '.')
+    if (str[str.length() - 1].unicode() == '.')
     {
         str = str.left(str.length() - 1);
     }
