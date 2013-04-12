@@ -39,6 +39,7 @@ void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
         items = this->graphicsScene()->items(QRectF(x, y, width, height),
                                              Qt::IntersectsItemBoundingRect);
+        this->_items.clear();
         for (int i = 0; i < items.size(); ++i)
         {
             if (items[i] == this->_selection)
@@ -97,7 +98,7 @@ void ToolGOMarkovEquivalent::addEquivalent()
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            //visit[((ItemGOMarkovEquivalent*)item)->model()->id()] = true;
+            visit[((ItemGOMarkovEquivalent*)item)->model()->id()] = true;
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)
@@ -122,7 +123,7 @@ void ToolGOMarkovEquivalent::addEquivalent()
     }
     else
     {
-        this->sceneGO()->addItem(equivalent);
+        this->graphicsScene()->addItem(equivalent);
         equivalent->update();
     }
 }

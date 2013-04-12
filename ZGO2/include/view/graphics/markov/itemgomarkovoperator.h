@@ -6,12 +6,20 @@
  */
 #include "itemgooperator.h"
 
+class ItemGOMarkovEquivalent;
+
 class ItemGOMarkovOperator : public ItemGOOperator
 {
 public:
     ItemGOMarkovOperator(QGraphicsItem *parent = 0);
+    ItemGOMarkovEquivalent* fatherEquivalent() const;
+    void setFatherEquivalent(ItemGOMarkovEquivalent* equivalent);
+    void move(QGraphicsSceneMouseEvent *event);
     void setModelType(const int type);
     bool tryOpen(QDomElement &root);
+
+protected:
+    ItemGOMarkovEquivalent *_fatherEquivalent;
 };
 
 #endif // ITEMGOMARKOVOPERATOR_H

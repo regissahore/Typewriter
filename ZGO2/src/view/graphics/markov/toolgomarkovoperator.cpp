@@ -3,6 +3,7 @@
 #include "definationeditorselectiontype.h"
 #include "gomarkovoperatorfactory.h"
 #include "gooperator.h"
+#include "itemgomarkovequivalent.h"
 
 ToolGOMarkovOperator::ToolGOMarkovOperator(SceneGO *sceneGO) : ToolGOOperator(sceneGO)
 {
@@ -77,8 +78,13 @@ void ToolGOMarkovOperator::setType(const int type)
         ItemDrawable* item = (ItemDrawable*)items.at(i);
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            ItemGOOperator *op = (ItemGOOperator*)item;
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
             visit[op->model()->id()] = true;
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
+            visit[eq->id()] = true;
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)

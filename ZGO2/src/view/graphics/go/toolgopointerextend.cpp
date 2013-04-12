@@ -204,7 +204,8 @@ void ToolGOPointerExtend::mouseMoveStatusNull(QGraphicsSceneMouseEvent *event)
 
 bool ToolGOPointerExtend::mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *event)
 {
-    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
+    QList<QGraphicsItem*> items;
+    items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);

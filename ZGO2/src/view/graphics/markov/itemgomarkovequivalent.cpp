@@ -16,12 +16,28 @@
 
 ItemGOMarkovEquivalent::ItemGOMarkovEquivalent(QGraphicsItem *parent) : ItemMoveable(parent), IdentifiedItem()
 {
-    this->_items = new QVector<ItemGOMarkovOperator*>();
+    this->_operatorItems = new QVector<ItemGOMarkovOperator*>();
+    this->_equivalentItems = new QVector<ItemGOMarkovEquivalent*>();
+    this->_items = new QVector<ItemDrawable*>();
     this->_model = 0L;
+    this->_fatherEquivalent = 0L;
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT);
 }
 
 ItemGOMarkovEquivalent::~ItemGOMarkovEquivalent()
 {
+    for (int i = 0; i < this->_operatorItems->size(); ++i)
+    {
+        this->_operatorItems->at(i)->setFatherEquivalent(0L);
+    }
+    this->_operatorItems->clear();
+    delete this->_operatorItems;
+    for (int i = 0; i < this->_equivalentItems->size(); ++i)
+    {
+        this->_equivalentItems->at(i)->setFatherEquivalent(0L);
+    }
+    this->_equivalentItems->clear();
+    delete this->_equivalentItems;
     this->_items->clear();
     delete this->_items;
     if (this->model() != 0L)
@@ -30,20 +46,67 @@ ItemGOMarkovEquivalent::~ItemGOMarkovEquivalent()
     }
 }
 
+ItemGOMarkovEquivalent* ItemGOMarkovEquivalent::fatherEquivalent() const
+{
+    return this->_fatherEquivalent;
+}
+
+void ItemGOMarkovEquivalent::setFatherEquivalent(ItemGOMarkovEquivalent *equivalent)
+{
+    this->_fatherEquivalent = equivalent;
+}
+
 /**
  * Get the series list, the input is considered to be correct.
  * @param items The list of ItemGOMarkovOperator.
  * @return The series list.
  */
-QList<GOMarkovOperator*> ItemGOMarkovEquivalent::getSeriesList(QList<QGraphicsItem*> &items)
+QList<ItemDrawable *> ItemGOMarkovEquivalent::getSeriesList(QList<QGraphicsItem*> &items)
 {
-    QList<GOMarkovOperator*> list;
-    ItemGOMarkovOperator *source = (ItemGOMarkovOperator*)items.at(0);
-    list.push_back((GOMarkovOperator*)source->model());
-    ItemGOMarkovOperator *iterator = source;
+    QList<ItemDrawable*> list;
+    ItemDrawable *source = (ItemDrawable*)items.at(0);
+    list.push_back(source);
+    ItemDrawable *iterator = source;
     while (true)
     {
-        iterator = (ItemGOMarkovOperator*)iterator->input()->at(0)->start()->op;
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator* item = (ItemGOMarkovOperator*)iterator;
+            ItemGOSignal *signal = item->input()->at(0);
+            if (signal == 0L)
+            {
+                break;
+            }
+            iterator = signal->start()->op;
+        }
+        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            ItemGOMarkovEquivalent* item = (ItemGOMarkovEquivalent*)iterator;
+            ItemGOSignal *signal = item->input()->at(0);
+            if (signal == 0L)
+            {
+                break;
+            }
+            iterator = signal->start()->op;
+        }
+        else
+        {
+            break;
+        }
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            if (((ItemGOMarkovOperator*)iterator)->fatherEquivalent() != 0L)
+            {
+                iterator = ((ItemGOMarkovOperator*)iterator)->fatherEquivalent();
+            }
+        }
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            while (((ItemGOMarkovEquivalent*)iterator)->fatherEquivalent() != 0L)
+            {
+                iterator = ((ItemGOMarkovEquivalent*)iterator)->fatherEquivalent();
+            }
+        }
         bool appear = false;
         for (int i = 0; i < items.size(); ++i)
         {
@@ -57,16 +120,33 @@ QList<GOMarkovOperator*> ItemGOMarkovEquivalent::getSeriesList(QList<QGraphicsIt
         {
             break;
         }
-        list.push_front((GOMarkovOperator*)iterator->model());
+        list.push_front(iterator);
     }
     iterator = source;
     while (true)
     {
-        if (iterator->output()->at(0)->size() == 0)
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)iterator;
+            if (item->output()->at(0)->size() == 0)
+            {
+                break;
+            }
+            iterator = item->output()->at(0)->at(0)->end()->op;
+        }
+        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            ItemGOMarkovEquivalent *item = (ItemGOMarkovEquivalent*)iterator;
+            if (item->output()->at(0)->size() == 0)
+            {
+                break;
+            }
+            iterator = item->output()->at(0)->at(0)->end()->op;
+        }
+        else
         {
             break;
         }
-        iterator = (ItemGOMarkovOperator*)iterator->output()->at(0)->at(0)->end()->op;
         bool appear = false;
         for (int i = 0; i < items.size(); ++i)
         {
@@ -80,44 +160,87 @@ QList<GOMarkovOperator*> ItemGOMarkovEquivalent::getSeriesList(QList<QGraphicsIt
         {
             break;
         }
-        list.push_back((GOMarkovOperator*)iterator->model());
+        list.push_back(iterator);
     }
     return list;
 }
 
-QList<GOMarkovOperator*> ItemGOMarkovEquivalent::getParallelList(QList<QGraphicsItem*> &items)
+QList<ItemDrawable *> ItemGOMarkovEquivalent::getParallelList(QList<QGraphicsItem*> &items)
 {
-    QList<GOMarkovOperator*> list;
-    ItemGOMarkovOperator *source;
+    QList<ItemDrawable*> list;
+    ItemGOMarkovOperator *source = 0L;
     for (int i = 0; i < items.size(); ++i)
     {
-        ItemGOMarkovOperator* item = (ItemGOMarkovOperator*)items.at(i);
-        if (item->input()->size() > 1)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            source = item;
-            break;
+            ItemGOMarkovOperator* item = (ItemGOMarkovOperator*)items.at(i);
+            if (item->input()->size() > 1)
+            {
+                source = item;
+                break;
+            }
         }
     }
-    list.push_back((GOMarkovOperator*)source->model());
+    if (source == 0L)
+    {
+        return list;
+    }
     for (int i = 0; i < source->input()->size(); ++i)
     {
         list.push_back(0L);
     }
+    list.push_back(source);
     for (int i = 0; i < source->input()->size(); ++i)
     {
-        ItemGOMarkovOperator *temp = (ItemGOMarkovOperator*)source->input()->at(i)->start()->op;
-        bool appear = false;
+        ItemDrawable *temp = source->input()->at(i)->start()->op;
+        int index = -1;
         for (int j = 0; j < items.size(); ++j)
         {
             if (items[j] == temp)
             {
-                appear = true;
+                index = j;
                 break;
             }
+            if (temp->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+            {
+                ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)temp;
+                ItemGOMarkovEquivalent *father = op->fatherEquivalent();
+                ItemGOMarkovEquivalent *child = 0L;
+                while (father != 0L)
+                {
+                    child = father;
+                    father = father->fatherEquivalent();
+                }
+                if (items[j] == child)
+                {
+                    index = j;
+                    break;
+                }
+            }
+            else
+            {
+                ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)temp;
+                ItemGOMarkovEquivalent *father = eq->fatherEquivalent();
+                ItemGOMarkovEquivalent *child = 0L;
+                while (father != 0L)
+                {
+                    child = father;
+                    father = father->fatherEquivalent();
+                }
+                if (items[j] == child)
+                {
+                    index = j;
+                    break;
+                }
+            }
         }
-        if (appear)
+        if (index != -1)
         {
-            list[i + 1] = (GOMarkovOperator*)temp->model();
+            list[i] = (ItemDrawable*)items[index];
+        }
+        else
+        {
+            break;
         }
     }
     return list;
@@ -133,32 +256,35 @@ bool ItemGOMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> items)
     int noOutputNumber = 0;
     for (int i = 0; i < items.size(); ++i)
     {
-        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)items.at(i);
-        if (item->model()->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_1)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            return false;
-        }
-        if (item->input()->size() != 1)
-        {
-            return false;
-        }
-        if (item->subInput()->size() != 0)
-        {
-            return false;
-        }
-        if (item->output()->size() != 1)
-        {
-            return false;
-        }
-        if (item->input()->at(0) == 0L)
-        {
-            return false;
-        }
-        if (item->output()->at(0)->size() == 0)
-        {
-            if (++noOutputNumber > 1)
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)items.at(i);
+            if (item->model()->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_1)
             {
                 return false;
+            }
+            if (item->input()->size() != 1)
+            {
+                return false;
+            }
+            if (item->subInput()->size() != 0)
+            {
+                return false;
+            }
+            if (item->output()->size() != 1)
+            {
+                return false;
+            }
+            if (item->input()->at(0) == 0L)
+            {
+                return false;
+            }
+            if (item->output()->at(0)->size() == 0)
+            {
+                if (++noOutputNumber > 1)
+                {
+                    return false;
+                }
             }
         }
     }
@@ -179,50 +305,53 @@ bool ItemGOMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
     int multiInputNum = 0;
     for (int i = 0; i < items.size(); ++i)
     {
-        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)items.at(i);
-        if (item->input()->size() == 0)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            return false;
-        }
-        if (item->subInput()->size() != 0)
-        {
-            return false;
-        }
-        if (item->output()->size() != 1)
-        {
-            return false;
-        }
-        if (item->input()->size() > 1)
-        {
-            if (++multiInputNum > 1)
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)items.at(i);
+            if (item->input()->size() == 0)
             {
                 return false;
             }
-            for (int j = 0; j < item->input()->size(); ++j)
+            if (item->subInput()->size() != 0)
             {
-                if (item->input()->at(j) == 0L)
+                return false;
+            }
+            if (item->output()->size() != 1)
+            {
+                return false;
+            }
+            if (item->input()->size() > 1)
+            {
+                if (++multiInputNum > 1)
+                {
+                    return false;
+                }
+                for (int j = 0; j < item->input()->size(); ++j)
+                {
+                    if (item->input()->at(j) == 0L)
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (item->model()->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_1)
+                {
+                    return false;
+                }
+                if (item->output()->at(0)->size() == 0)
                 {
                     return false;
                 }
             }
-        }
-        else
-        {
-            if (item->model()->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_1)
+            if (item->input()->at(0) == 0L)
             {
                 return false;
             }
-            if (item->output()->at(0)->size() == 0)
-            {
-                return false;
-            }
-        }
-        if (item->input()->at(0) == 0L)
-        {
-            return false;
         }
     }
-    QList<GOMarkovOperator*> list = this->getParallelList(items);
+    QList<ItemDrawable*> list = this->getParallelList(items);
     if (list.size() != items.size())
     {
         return false;
@@ -240,52 +369,140 @@ bool ItemGOMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
 void ItemGOMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
 {
     this->removeUnnecessaryItems(items);
-    this->_items->clear();
-    for (int i = 0; i < items.size(); ++i)
+    QList<ItemDrawable*> list = this->getSeriesList(items);
+    this->_operatorItems->clear();
+    this->_equivalentItems->clear();
+    for (int i = 0; i < list.size(); ++i)
     {
-        this->_items->push_back((ItemGOMarkovOperator*)items.at(i));
+        ItemDrawable *item = list.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            this->_operatorItems->push_back((ItemGOMarkovOperator*)list.at(i));
+            ((ItemGOMarkovOperator*)list.at(i))->setFatherEquivalent(this);
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            this->_equivalentItems->push_back((ItemGOMarkovEquivalent*)list.at(i));
+            ((ItemGOMarkovEquivalent*)list.at(i))->setFatherEquivalent(this);
+        }
+        this->items()->push_back(list.at(i));
     }
     this->updateBoundary();
     this->_model = new GOMarkovEquivalentSeries();
     this->_model->setId(this->id());
-    QList<GOMarkovOperator*> list = this->getSeriesList(items);
     for (int i = 0; i < list.size(); ++i)
     {
-        this->model()->operators()->push_back(list.at(i));
+        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)list.at(i);
+            this->model()->operators()->push_back((GOMarkovOperator*)item->model());
+        }
+        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            ItemGOMarkovEquivalent *item = (ItemGOMarkovEquivalent*)list.at(i);
+            this->model()->operators()->push_back(item->getEquivalentOperator());
+        }
     }
 }
 
-void ItemGOMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem*> &items)
+void ItemGOMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem *> &items)
 {
     this->removeUnnecessaryItems(items);
-    this->_items->clear();
-    for (int i = 0; i < items.size(); ++i)
+    QList<ItemDrawable*> list = this->getParallelList(items);
+    this->_operatorItems->clear();
+    this->_equivalentItems->clear();
+    for (int i = 0; i < list.size(); ++i)
     {
-        this->_items->push_back((ItemGOMarkovOperator*)items.at(i));
+        ItemDrawable *item = list.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            this->_operatorItems->push_back((ItemGOMarkovOperator*)list.at(i));
+            ((ItemGOMarkovOperator*)list.at(i))->setFatherEquivalent(this);
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            this->_equivalentItems->push_back((ItemGOMarkovEquivalent*)list.at(i));
+            ((ItemGOMarkovEquivalent*)list.at(i))->setFatherEquivalent(this);
+        }
+        this->items()->push_back(list.at(i));
     }
     this->updateBoundary();
     this->_model = new GOMarkovEquivalentParallel();
     this->_model->setId(this->id());
-    QList<GOMarkovOperator*> list = this->getParallelList(items);
     for (int i = 0; i < list.size(); ++i)
     {
-        this->model()->operators()->push_back(list.at(i));
+        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)list.at(i);
+            this->model()->operators()->push_back((GOMarkovOperator*)item->model());
+        }
+        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            ItemGOMarkovEquivalent *item = (ItemGOMarkovEquivalent*)list.at(i);
+            this->model()->operators()->push_back(item->getEquivalentOperator());
+        }
     }
 }
 
-QVector<ItemGOMarkovOperator*>* ItemGOMarkovEquivalent::items() const
+QVector<ItemGOMarkovOperator*>* ItemGOMarkovEquivalent::operatorItems() const
+{
+    return this->_operatorItems;
+}
+
+QVector<ItemGOMarkovEquivalent*>* ItemGOMarkovEquivalent::equivalentItems() const
+{
+    return this->_equivalentItems;
+}
+
+QVector<ItemDrawable*>* ItemGOMarkovEquivalent::items() const
 {
     return this->_items;
+}
+
+QVector<ItemGOSignal*>* ItemGOMarkovEquivalent::input() const
+{
+    if (this->_items->size() > 0)
+    {
+        ItemDrawable *item = this->items()->at(0);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            return ((ItemGOMarkovOperator*)item)->input();
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            return ((ItemGOMarkovEquivalent*)item)->input();
+        }
+    }
+    return 0L;
+}
+
+QVector<QVector<ItemGOSignal*>*>* ItemGOMarkovEquivalent::output() const
+{
+    if (this->_items->size() > 0)
+    {
+        ItemDrawable *item = this->items()->at(this->items()->size() - 1);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            return ((ItemGOMarkovOperator*)item)->output();
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            return ((ItemGOMarkovEquivalent*)item)->output();
+        }
+    }
+    return 0L;
 }
 
 GOMarkovEquivalent* ItemGOMarkovEquivalent::model() const
 {
     return this->_model;
 }
+
 GOMarkovOperator* ItemGOMarkovEquivalent::getEquivalentOperator()
 {
     GOMarkovStatus status = this->model()->getEquivalentStatus();
-    GOMarkovOperator *op = new GOMarkovOperator();
+    GOMarkovOperator *op = GOMarkovOperatorFactory::produce(GOMarkovOperatorFactory::Operator_Type_1);
+    op->setId(this->id());
     op->status()->setProbability(1, status.probabilityNormal());
     op->status()->setProbability(2, status.probabilityBreakdown());
     op->markovStatus()->setProbabilityNormal(status.probabilityNormal());
@@ -293,49 +510,40 @@ GOMarkovOperator* ItemGOMarkovEquivalent::getEquivalentOperator()
     return op;
 }
 
-ItemGOMarkovOperator *ItemGOMarkovEquivalent::getEquivalentOperatorItem()
+void ItemGOMarkovEquivalent::move(QGraphicsSceneMouseEvent *event)
 {
-    GOMarkovStatus status = this->model()->getEquivalentStatus();
-    ItemGOMarkovOperator *item = new ItemGOMarkovOperator();
-    item->setType(GOMarkovOperatorFactory::Operator_Type_1);
-    item->model()->setId(this->id());
-    item->model()->status()->setProbability(1, status.probabilityNormal());
-    item->model()->status()->setProbability(2, status.probabilityBreakdown());
-    ((GOMarkovOperator*)item->model())->markovStatus()->setProbabilityNormal(status.probabilityNormal());
-    ((GOMarkovOperator*)item->model())->markovStatus()->setFrequencyBreakdown(status.frequencyBreakdown());
-    return item;
+    this->ItemMoveable::move(event);
+    if (this->fatherEquivalent() != 0L)
+    {
+        this->fatherEquivalent()->updateBoundary();
+    }
 }
+
+
 
 void ItemGOMarkovEquivalent::removeUnnecessaryItems(QList<QGraphicsItem*> &items)
 {
     for (int i = items.size() - 1; i >= 0; --i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR &&
-                item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        switch (item->TypedItem::type())
         {
-            items.removeAt(i);
-            continue;
-        }
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
-        {
-            ItemGOMarkovEquivalent *equivalent = (ItemGOMarkovEquivalent*)item;
-            for (int j = items.size() - 1; j >= 0; --j)
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
+            if (((ItemGOMarkovOperator*)item)->fatherEquivalent() != 0L)
             {
-                for (int k = 0; k < equivalent->items()->size(); ++k)
-                {
-                    if (items[j] == equivalent->items()->at(k))
-                    {
-                        items.removeAt(j);
-                        if (j < i)
-                        {
-                            -- i;
-                        }
-                        break;
-                    }
-                }
+                items.removeAt(i);
+                break;
             }
-            items[i] = equivalent->getEquivalentOperatorItem();
+            break;
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
+            if (((ItemGOMarkovEquivalent*)item)->fatherEquivalent() != 0L)
+            {
+                items.removeAt(i);
+            }
+            break;
+        default:
+            items.removeAt(i);
+            break;
         }
     }
 }
@@ -347,35 +555,59 @@ QRectF ItemGOMarkovEquivalent::boundingRect() const
 
 void ItemGOMarkovEquivalent::paint(QPainter *painter, const QStyleOptionGraphicsItem*, QWidget*)
 {
-    painter->setPen(Qt::black);
+    painter->setPen(Qt::darkGray);
     painter->setBrush(Qt::NoBrush);
-    painter->drawRect(0, 0, this->_end.x(), this->_end.y());
+    painter->drawRoundedRect(0, 0, this->_end.x(), this->_end.y(), 10, 10);
     painter->drawText(QRectF(5, 5, 100, 100), Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(this->id()));
+}
+
+QPointF ItemGOMarkovEquivalent::end()
+{
+    return this->_end;
 }
 
 void ItemGOMarkovEquivalent::updateBoundary()
 {
-    qreal left = this->items()->at(0)->x() - 30;
-    qreal right = this->items()->at(0)->x() + 30;
-    qreal top = this->items()->at(0)->y() - 30;
-    qreal bottom = this->items()->at(0)->y() + 30;
-    for (int i = 1; i < this->items()->size(); ++i)
+    qreal left = 2000000000;
+    qreal right = -2000000000;
+    qreal top = 2000000000;
+    qreal bottom = -2000000000;
+    for (int i = 0; i < this->operatorItems()->size(); ++i)
     {
-        if (this->items()->at(i)->x() - 30 < left)
+        if (this->operatorItems()->at(i)->x() - 30 < left)
         {
-            left = this->items()->at(i)->x() - 30;
+            left = this->operatorItems()->at(i)->x() - 30;
         }
-        if (this->items()->at(i)->x() + 30 > right)
+        if (this->operatorItems()->at(i)->x() + 30 > right)
         {
-            right = this->items()->at(i)->x() + 30;
+            right = this->operatorItems()->at(i)->x() + 30;
         }
-        if (this->items()->at(i)->y() - 30 < top)
+        if (this->operatorItems()->at(i)->y() - 30 < top)
         {
-            top = this->items()->at(i)->y() - 30;
+            top = this->operatorItems()->at(i)->y() - 30;
         }
-        if (this->items()->at(i)->y() + 30 > bottom)
+        if (this->operatorItems()->at(i)->y() + 30 > bottom)
         {
-            bottom = this->items()->at(i)->y() + 30;
+            bottom = this->operatorItems()->at(i)->y() + 30;
+        }
+    }
+    for (int i = 0; i < this->equivalentItems()->size(); ++i)
+    {
+        if (this->equivalentItems()->at(i)->x() - 10 < left)
+        {
+            left = this->equivalentItems()->at(i)->x() - 10;
+        }
+        if (this->equivalentItems()->at(i)->x() + this->equivalentItems()->at(i)->end().x() + 10 > right)
+        {
+            right = this->equivalentItems()->at(i)->x() + this->equivalentItems()->at(i)->end().x() + 10;
+        }
+        if (this->equivalentItems()->at(i)->y() - 10 < top)
+        {
+            top = this->equivalentItems()->at(i)->y() - 10;
+        }
+        if (this->equivalentItems()->at(i)->y() + this->equivalentItems()->at(i)->end().y() + 10 > bottom)
+        {
+            bottom = this->equivalentItems()->at(i)->y() + this->equivalentItems()->at(i)->end().y() + 10;
         }
     }
     qreal width = right - left;
@@ -384,16 +616,27 @@ void ItemGOMarkovEquivalent::updateBoundary()
     this->_end.setX(width);
     this->_end.setY(height);
     this->prepareGeometryChange();
+    if (this->fatherEquivalent() != 0L)
+    {
+        this->fatherEquivalent()->updateBoundary();
+    }
 }
 
 void ItemGOMarkovEquivalent::save(QDomDocument &document, QDomElement &root)
 {
+    if (this->model() == 0L)
+    {
+        return;
+    }
     QDomElement element = document.createElement("equivalent");
     element.setAttribute("x", this->x());
     element.setAttribute("y", this->y());
     element.setAttribute("width", this->_end.x());
     element.setAttribute("height", this->_end.y());
     element.setAttribute("id", this->id());
+    element.setAttribute("I", this->model()->I());
+    element.setAttribute("L", this->model()->L());
+    element.setAttribute("J", this->model()->J());
     this->model()->save(document, element);
     root.appendChild(element);
 }
@@ -425,5 +668,46 @@ bool ItemGOMarkovEquivalent::tryOpen(QDomElement &root)
     {
         return false;
     }
+    this->_model->setId(this->id());
+    this->_model->setI(root.attribute("I").toInt());
+    this->_model->setL(root.attribute("L").toInt());
+    this->_model->setJ(root.attribute("J").toInt());
     return true;
+}
+
+void ItemGOMarkovEquivalent::bindOperators(QList<ItemGOMarkovOperator*> &operatorList, QList<ItemGOMarkovEquivalent*> &equivalentList)
+{
+    if (this->model() != 0L)
+    {
+        this->operatorItems()->clear();
+        this->equivalentItems()->clear();
+        this->items()->clear();
+        this->model()->operators()->clear();
+        for (int i = 0; i < this->model()->idList()->size(); ++i)
+        {
+            int id = this->model()->idList()->at(i);
+            for (int j = 0; j < operatorList.size(); ++j)
+            {
+                if (operatorList[j]->model()->id() == id)
+                {
+                    this->model()->operators()->push_back((GOMarkovOperator*)operatorList[j]->model());
+                    operatorList[j]->setFatherEquivalent(this);
+                    this->operatorItems()->push_back(operatorList[j]);
+                    this->items()->push_back(operatorList[j]);
+                    break;
+                }
+            }
+            for (int j = 0; j < equivalentList.size(); ++j)
+            {
+                if (equivalentList[j]->model()->id() == id)
+                {
+                    this->model()->operators()->push_back(equivalentList[j]->getEquivalentOperator());
+                    equivalentList[j]->setFatherEquivalent(this);
+                    this->equivalentItems()->push_back(equivalentList[j]);
+                    this->items()->push_back(equivalentList[j]);
+                    break;
+                }
+            }
+        }
+    }
 }

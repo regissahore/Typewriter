@@ -8,6 +8,7 @@
 #include "definationgotype.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "itemgomarkovequivalent.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
@@ -20,8 +21,9 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
         return false;
     }
     bool flag = true;
-    QList<ItemGOOperator*> operatorList;
+    QList<ItemGOMarkovOperator*> operatorList;
     QList<ItemGOSignal*> signalList;
+    QList<ItemGOMarkovEquivalent*> equivalentList;
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
@@ -46,6 +48,20 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
             if (item->tryOpen(element))
             {
                 signalList.push_back(item);
+            }
+            else
+            {
+                flag = false;
+                this->removeItem(item);
+            }
+        }
+        else if (element.tagName() == "equivalent")
+        {
+            ItemGOMarkovEquivalent *item = new ItemGOMarkovEquivalent();
+            this->addItem(item);
+            if (item->tryOpen(element))
+            {
+                equivalentList.push_back(item);
             }
             else
             {
@@ -83,8 +99,13 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
         }
         signalList[i]->updatePosition();
     }
+    for (int i = 0; i < equivalentList.size(); ++i)
+    {
+        equivalentList[i]->bindOperators(operatorList, equivalentList);
+    }
     operatorList.clear();
     signalList.clear();
+    equivalentList.clear();
     return flag;
 }
 
