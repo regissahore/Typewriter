@@ -24,6 +24,15 @@ ItemGOMarkovEquivalent::ItemGOMarkovEquivalent(QGraphicsItem *parent) : ItemMove
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT);
 }
 
+void ItemGOMarkovEquivalent::setId(const int id)
+{
+    this->IdentifiedItem::setId(id);
+    if (this->_model != 0L)
+    {
+        this->_model->setId(id);
+    }
+}
+
 ItemGOMarkovEquivalent::~ItemGOMarkovEquivalent()
 {
     for (int i = 0; i < this->_operatorItems->size(); ++i)
@@ -49,6 +58,20 @@ ItemGOMarkovEquivalent::~ItemGOMarkovEquivalent()
 ItemGOMarkovEquivalent* ItemGOMarkovEquivalent::fatherEquivalent() const
 {
     return this->_fatherEquivalent;
+}
+
+ItemGOMarkovEquivalent* ItemGOMarkovEquivalent::rootEquivalent() const
+{
+    if (this->fatherEquivalent() != 0L)
+    {
+        ItemGOMarkovEquivalent *eq = this->fatherEquivalent();
+        while (eq->fatherEquivalent() != 0L)
+        {
+            eq = eq->fatherEquivalent();
+        }
+        return eq;
+    }
+    return 0L;
 }
 
 void ItemGOMarkovEquivalent::setFatherEquivalent(ItemGOMarkovEquivalent *equivalent)
@@ -505,9 +528,16 @@ GOMarkovOperator* ItemGOMarkovEquivalent::getEquivalentOperator()
     op->setId(this->id());
     op->status()->setProbability(1, status.probabilityNormal());
     op->status()->setProbability(2, status.probabilityBreakdown());
-    op->markovStatus()->setProbabilityNormal(status.probabilityNormal());
     op->markovStatus()->setFrequencyBreakdown(status.frequencyBreakdown());
+    op->markovStatus()->setFrequencyRepair(status.frequencyRepair());
     return op;
+}
+
+ItemGOMarkovOperator *ItemGOMarkovEquivalent::getEquivalentOperatorItem()
+{
+    ItemGOMarkovOperator *item = new ItemGOMarkovOperator();
+    item->setModel(this->getEquivalentOperator());
+    return item;
 }
 
 void ItemGOMarkovEquivalent::move(QGraphicsSceneMouseEvent *event)

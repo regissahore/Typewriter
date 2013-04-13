@@ -9,9 +9,11 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "itemgomarkovequivalent.h"
+#include "definationtooltype.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
+    this->selectTool(DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND);
 }
 
 bool SceneGOMarkov::tryOpen(QDomElement &root)
@@ -113,45 +115,125 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
 {
     GOGraph *graph = new GOMarkovGraph();
     QList<QGraphicsItem*> items = this->items();
+    QVector<ItemGOMarkovOperator*> operators;
+    QVector<ItemGOMarkovOperator*> equivalentOperators;
+    QVector<GOSignal*> generateSignals;
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        switch (item->TypedItem::type())
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
-            graph->addOperator(((ItemGOMarkovOperator*)item)->model());
-            break;
-        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL:
-            ((ItemGOSignal*)item)->model()->setU(((ItemGOSignal*)item)->start()->op->model());
-            switch (((ItemGOSignal*)item)->start()->type)
+            ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
+            if (eq->fatherEquivalent() == 0L)
             {
-            case DefinationGOType::GO_OPERATOR_INPUT:
-                ((ItemGOSignal*)item)->start()->op->model()->input()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
-                break;
-            case DefinationGOType::GO_OPERATOR_SUBINPUT:
-                ((ItemGOSignal*)item)->start()->op->model()->subInput()->set(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
-                break;
-            case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->start()->op->model()->output()->addSignal(((ItemGOSignal*)item)->start()->index, ((ItemGOSignal*)item)->model());
-                break;
+                equivalentOperators.push_back(eq->getEquivalentOperatorItem());
+                operators.push_back(equivalentOperators.at(equivalentOperators.size() - 1));
+                graph->addOperator(equivalentOperators.at(equivalentOperators.size() - 1)->model());
             }
-            ((ItemGOSignal*)item)->model()->setV(((ItemGOSignal*)item)->end()->op->model());
-            switch (((ItemGOSignal*)item)->end()->type)
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+            if (op->fatherEquivalent() == 0L)
             {
-            case DefinationGOType::GO_OPERATOR_INPUT:
-                ((ItemGOSignal*)item)->end()->op->model()->input()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
-                break;
-            case DefinationGOType::GO_OPERATOR_SUBINPUT:
-                ((ItemGOSignal*)item)->end()->op->model()->subInput()->set(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
-                break;
-            case DefinationGOType::GO_OPERATOR_OUTPUT:
-                ((ItemGOSignal*)item)->end()->op->model()->output()->addSignal(((ItemGOSignal*)item)->end()->index, ((ItemGOSignal*)item)->model());
-                break;
+                graph->addOperator(((ItemGOMarkovOperator*)item)->model());
             }
-            graph->addSignal(((ItemGOSignal*)item)->model());
-            break;
-        default:
-            break;
+            operators.push_back((ItemGOMarkovOperator*)item);
+        }
+    }
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *itemSignal = (ItemGOSignal*)item;
+            int u = itemSignal->start()->op->model()->id();
+            int v = itemSignal->end()->op->model()->id();
+            bool insideU = false;
+            bool insideV = false;
+            GOMarkovOperator *operatorU = 0L;
+            GOMarkovOperator *operatorV = 0L;
+            for (int j = 0; j < operators.size(); ++j)
+            {
+                if (operators[j]->model()->id() == u)
+                {
+                    if (operators[j]->fatherEquivalent() != 0L)
+                    {
+                        insideU = true;
+                        u = operators[j]->rootEquivalent()->id();
+                        for (int k = 0; k < operators.size(); ++k)
+                        {
+                            if (operators[k]->model()->id() == u)
+                            {
+                                operatorU = (GOMarkovOperator*)operators[k]->model();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        operatorU = (GOMarkovOperator*)operators[j]->model();
+                    }
+                }
+                if (operators[j]->model()->id() == v)
+                {
+                    if (operators[j]->fatherEquivalent() != 0L)
+                    {
+                        insideV = true;
+                        v = operators[j]->rootEquivalent()->id();
+                        for (int k = 0; k < operators.size(); ++k)
+                        {
+                            if (operators[k]->model()->id() == v)
+                            {
+                                operatorV = (GOMarkovOperator*)operators[k]->model();
+                                break;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        operatorV = (GOMarkovOperator*)operators[j]->model();
+                    }
+                }
+            }
+            if (insideU && insideV)
+            {
+                continue;
+            }
+            if (operatorU == 0L || operatorV == 0L)
+            {
+                continue;
+            }
+            if (!insideU && !insideV)
+            {
+                itemSignal->model()->setU(operatorU);
+                itemSignal->model()->setV(operatorV);
+                operatorU->output()->addSignal(itemSignal->start()->index, itemSignal->model());
+                if (itemSignal->end()->type == DefinationGOType::GO_OPERATOR_INPUT)
+                {
+                    operatorV->input()->set(itemSignal->end()->index, itemSignal->model());
+                }
+                else
+                {
+                    operatorV->subInput()->set(itemSignal->end()->index, itemSignal->model());
+                }
+            }
+            else
+            {
+                GOSignal *signal = new GOSignal;
+                generateSignals.push_back(signal);
+                signal->setU(operatorU);
+                signal->setV(operatorV);
+                operatorU->output()->addSignal(itemSignal->start()->index, signal);
+                if (itemSignal->end()->type == DefinationGOType::GO_OPERATOR_INPUT)
+                {
+                    operatorV->input()->set(itemSignal->end()->index, signal);
+                }
+                else
+                {
+                    operatorV->subInput()->set(itemSignal->end()->index, signal);
+                }
+            }
         }
     }
     return graph;

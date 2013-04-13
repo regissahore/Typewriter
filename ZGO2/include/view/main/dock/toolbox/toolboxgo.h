@@ -45,7 +45,7 @@ private:
     QPushButton *buttonGOOperator17;
 
 protected slots:
-    void setToolGOPointer();
+    virtual void setToolGOPointer();
     void setToolSelect();
     void setToolGOText();
     virtual void setToolGOOperator1();

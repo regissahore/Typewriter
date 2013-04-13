@@ -9,6 +9,16 @@ GOMarkovEquivalentSeries::GOMarkovEquivalentSeries() : GOMarkovEquivalent()
 GOMarkovStatus GOMarkovEquivalentSeries::getEquivalentStatus()
 {
     GOMarkovStatus status;
+    BigDecimal lamda = BigDecimal::zero();
+    BigDecimal lamdaFracSum = BigDecimal::zero();
+    for (int i = 0; i < this->_operators->size(); ++i)
+    {
+        lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
+        lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus()->frequencyBreakdown() / this->_operators->at(i)->markovStatus()->frequencyRepair();
+    }
+    BigDecimal miu = lamda / lamdaFracSum;
+    status.setFrequencyBreakdown(lamda);
+    status.setFrequencyRepair(miu);
     return status;
 }
 

@@ -20,7 +20,9 @@ class ItemGOMarkovEquivalent : public ItemMoveable, public IdentifiedItem
 public:
     ItemGOMarkovEquivalent(QGraphicsItem *parent = 0);
     ~ItemGOMarkovEquivalent();
+    void setId(const int id);
     ItemGOMarkovEquivalent* fatherEquivalent() const;
+    ItemGOMarkovEquivalent* rootEquivalent() const;
     void setFatherEquivalent(ItemGOMarkovEquivalent *equivalent);
     bool isSeriesEquivalentable(QList<QGraphicsItem*> items);
     bool isParallelEquivalentable(QList<QGraphicsItem *> items);
@@ -33,6 +35,7 @@ public:
     QVector<QVector<ItemGOSignal*>*>* output() const;
     GOMarkovEquivalent* model() const;
     GOMarkovOperator *getEquivalentOperator();
+    ItemGOMarkovOperator *getEquivalentOperatorItem();
     QPointF end();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

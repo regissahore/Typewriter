@@ -13,6 +13,7 @@ class ItemGOMarkovOperator : public ItemGOOperator
 public:
     ItemGOMarkovOperator(QGraphicsItem *parent = 0);
     ItemGOMarkovEquivalent* fatherEquivalent() const;
+    ItemGOMarkovEquivalent* rootEquivalent() const;
     void setFatherEquivalent(ItemGOMarkovEquivalent* equivalent);
     void move(QGraphicsSceneMouseEvent *event);
     void setModelType(const int type);

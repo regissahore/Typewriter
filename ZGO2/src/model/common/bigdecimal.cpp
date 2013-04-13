@@ -267,15 +267,15 @@ void BigDecimal::printAll() const
 
 void BigDecimal::reduce()
 {
-    while (this->_numerator.digitNum() > 50 && this->_denominator.digitNum() > 50)
+    while (this->_numerator.digitNum() > 100 && this->_denominator.digitNum() > 100)
     {
-        this->_numerator = this->_numerator / BigInteger::valueOf(10000);
-        this->_denominator = this->_denominator / BigInteger::valueOf(10000);
+        this->_numerator.removeEnd();
+        this->_denominator.removeEnd();
     }
-    BigInteger g = BigInteger::gcd(this->numerator().absolute(), this->denominator().absolute());
+    /*BigInteger g = BigInteger::gcd(this->numerator().absolute(), this->denominator().absolute());
     if (g != BigInteger::one())
     {
         this->_numerator = this->_numerator / g;
         this->_denominator = this->_denominator / g;
-    }
+    }*/
 }

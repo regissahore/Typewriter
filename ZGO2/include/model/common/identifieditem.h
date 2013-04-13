@@ -10,7 +10,7 @@ class IdentifiedItem
 public:
     IdentifiedItem();
     int id() const;
-    void setId(const int id);
+    virtual void setId(const int id);
 
 private:
     int _id; /** 标识数值。 */

@@ -4,6 +4,7 @@
 #include "parametergosignal.h"
 #include "parametergooperator.h"
 #include "parametergomarkovoperator.h"
+#include "parametergomarkovequivalent.h"
 
 /**
  * Produce a abstract parameter widget.
@@ -26,6 +27,9 @@ ParameterAbstract* ParameterFactory::produce(int type)
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
         parameter = new ParameterGOMarkovOperator();
+        break;
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
+        parameter = new ParameterGOMarkovEquivalent();
         break;
     default:
         break;

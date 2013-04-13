@@ -134,7 +134,9 @@ HEADERS += \
     include/model/markov/gomarkovanalysis.h \
     include/model/markov/gomarkovgraph.h \
     include/view/graphics/markov/itemgomarkovequivalent.h \
-    include/view/graphics/markov/toolgomarkovequivalent.h
+    include/view/graphics/markov/toolgomarkovequivalent.h \
+    include/view/graphics/markov/toolgomarkovpointerextend.h \
+    include/view/main/dock/parameter/parametergomarkovequivalent.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -236,4 +238,6 @@ SOURCES += \
     src/model/markov/gomarkovanalysis.cpp \
     src/model/markov/gomarkovgraph.cpp \
     src/view/graphics/markov/itemgomarkovequivalent.cpp \
-    src/view/graphics/markov/toolgomarkovequivalent.cpp
+    src/view/graphics/markov/toolgomarkovequivalent.cpp \
+    src/view/graphics/markov/toolgomarkovpointerextend.cpp \
+    src/view/main/dock/parameter/parametergomarkovequivalent.cpp

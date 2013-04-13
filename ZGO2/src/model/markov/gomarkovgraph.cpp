@@ -15,6 +15,22 @@ GOMarkovGraph::GOMarkovGraph() : GOGraph()
     this->_analysis = new GOMarkovAnalysis();
 }
 
+GOMarkovGraph::~GOMarkovGraph()
+{
+    this->GOGraph::~GOGraph();
+    this->_equivalent.clear();
+}
+
+QVector<GOMarkovEquivalent*> GOMarkovGraph::getEquivalent() const
+{
+    return this->_equivalent;
+}
+
+void GOMarkovGraph::addEquivalent(GOMarkovEquivalent *equivalent)
+{
+    this->_equivalent.push_back(equivalent);
+}
+
 bool GOMarkovGraph::saveAsHTML(const QString filePath)
 {
     this->_error = "";

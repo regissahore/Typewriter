@@ -227,6 +227,20 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
                     for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
                     {
                         GOOperator *next = this->_operator[i]->output()->signal()->at(j)->at(k)->next(this->_operator[i]);
+                        bool appear = false;
+                        for (int l = 0; l < k; ++l)
+                        {
+                            GOOperator *history = this->_operator[i]->output()->signal()->at(j)->at(l)->next(this->_operator[i]);
+                            if (next == history)
+                            {
+                                appear = true;
+                                break;
+                            }
+                        }
+                        if (appear)
+                        {
+                            continue;
+                        }
                         int index = this->_operatorPos[next];
                         --inputNumber[index];
                     }

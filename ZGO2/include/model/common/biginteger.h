@@ -36,6 +36,7 @@ public:
     friend BigInteger operator %(const BigInteger &a, const BigInteger &b);
     static BigInteger gcd(const BigInteger a, const BigInteger b);
     void clearLeadingZero();
+    void removeEnd();
     QString toString() const;
     void print() const;
     void printLine() const;

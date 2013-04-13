@@ -15,6 +15,20 @@ ItemGOMarkovEquivalent* ItemGOMarkovOperator::fatherEquivalent() const
     return this->_fatherEquivalent;
 }
 
+ItemGOMarkovEquivalent* ItemGOMarkovOperator::rootEquivalent() const
+{
+    if (this->fatherEquivalent() != 0L)
+    {
+        ItemGOMarkovEquivalent *eq = this->fatherEquivalent();
+        while (eq->fatherEquivalent() != 0L)
+        {
+            eq = eq->fatherEquivalent();
+        }
+        return eq;
+    }
+    return 0L;
+}
+
 void ItemGOMarkovOperator::setFatherEquivalent(ItemGOMarkovEquivalent* equivalent)
 {
     this->_fatherEquivalent = equivalent;

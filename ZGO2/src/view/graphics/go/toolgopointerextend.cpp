@@ -12,6 +12,7 @@
 #include "gosignal.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "messagefactory.h"
 
 ToolGOPointerExtend::ToolGOPointerExtend(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -177,6 +178,18 @@ bool ToolGOPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *eve
                 ((ItemMoveable*)this->_item)->startMove(event);
                 return true;
             }
+        }
+    }
+    for (int i = 0 ; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+        {
+            this->_item = (ItemDrawable*)item;
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            message->setMessage(this->_item);
+            this->sceneGO()->sendMessage(message);
+            return true;
         }
     }
     return false;

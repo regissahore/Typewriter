@@ -1,6 +1,9 @@
 #include "gomarkovequivalentparallel.h"
 #include "gomarkovstatus.h"
 #include "gomarkovoperator.h"
+#include "gomarkovoperatorfactory.h"
+#include "goinput.h"
+#include "goparameter.h"
 
 GOMarkovEquivalentParallel::GOMarkovEquivalentParallel() : GOMarkovEquivalent()
 {
@@ -8,7 +11,72 @@ GOMarkovEquivalentParallel::GOMarkovEquivalentParallel() : GOMarkovEquivalent()
 
 GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
 {
+    int M, K;
+    int I = this->I();
+    int L = this->L();
+    int J = this->J();
+    M = this->_operators->at(this->_operators->size() - 1)->input()->number();
+    switch (this->_operators->at(this->_operators->size() - 1)->TypedItem::type())
+    {
+    case GOMarkovOperatorFactory::Operator_Type_2:
+        K = 1;
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_10:
+        K = M;
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_11:
+        K = this->_operators->at(this->_operators->size() - 1)->parameter()->parameter(0);
+        break;
+    }
+    BigDecimal lamda = this->_operators->at(0)->markovStatus()->frequencyBreakdown();
+    BigDecimal miu = this->_operators->at(0)->markovStatus()->frequencyRepair();
+    QVector<BigDecimal> a;
+    QVector<BigDecimal> b;
+    a.push_back(BigDecimal::zero());
+    b.push_back(BigDecimal::one());
+    for (int i = 0; i < this->_operators->size() - 1;)
+    {
+        ++i;
+        if (J == 0 || M - i + 1 < K)
+        {
+            a.push_back(BigDecimal::valueOf(M - i + 1) * lamda);
+        }
+        else
+        {
+            a.push_back(BigDecimal::valueOf(K) * lamda);
+        }
+        if (i <= L)
+        {
+            b.push_back(BigDecimal::valueOf(i) * miu);
+        }
+        else
+        {
+            b.push_back(BigDecimal::valueOf(L) * miu);
+        }
+    }
+    QVector<BigDecimal> p;
+    p.push_back(BigDecimal::one());
+    for (int i = 1; i <= this->operators()->size() - 1; ++i)
+    {
+        p.push_back(p[i - 1] * a[i] / b[i]);
+    }
+    BigDecimal sum1 = BigDecimal::zero();
+    BigDecimal sum2 = BigDecimal::zero();
+    for (int i = 0; i <= M - K; ++i)
+    {
+        sum1 = sum1 + p[i];
+    }
+    for (int i = M - K + 1; i <= I; ++i)
+    {
+        sum2 = sum2 + p[i];
+    }
+    lamda = p[M - K] * a[M - K + 1] / sum1;
+    miu = p[M - K + 1] * b[M - K + 1] / sum2;
     GOMarkovStatus status;
+    status.setProbabilityBreakdown(lamda);
+    status.setFrequencyRepair(miu);
+    status.setProbabilityBreakdown("0.03468");
+    status.setProbabilityNormal("0.125");
     return status;
 }
 

@@ -8,6 +8,13 @@ ToolboxGOMarkov::ToolboxGOMarkov(QWidget *parent) : ToolboxGO(parent)
     this->_layout->addWidget(buttonGOEquivalent);
 }
 
+void ToolboxGOMarkov::setToolGOPointer()
+{
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
+    this->sendMessage(message);
+}
+
 void ToolboxGOMarkov::setToolGOEquivalent()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);

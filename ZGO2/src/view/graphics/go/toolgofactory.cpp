@@ -9,6 +9,7 @@
 #include "toolgopointerextend.h"
 #include "toolgomarkovoperator.h"
 #include "toolgomarkovequivalent.h"
+#include "toolgomarkovpointerextend.h"
 
 /**
  * Produce a instantiated GO tool.
@@ -57,6 +58,9 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
     case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
         tool = new ToolGOOperator(sceneGO);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND:
+        tool = new ToolGOMarkovPointerExtend(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_2:

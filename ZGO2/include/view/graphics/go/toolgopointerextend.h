@@ -19,7 +19,7 @@ public:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
-private:
+protected:
     enum Status
     {
         Status_Null,                // Nothing is selected, the mouse and key is released.
@@ -34,7 +34,7 @@ private:
     bool isAround(QPointF pos1, QPointF pos2);
     void mousePressStatusNull(QGraphicsSceneMouseEvent *event);
     bool mousePressStatusNullSignal(QGraphicsSceneMouseEvent *event);
-    bool mousePressStatusNullItem(QGraphicsSceneMouseEvent *event);
+    virtual bool mousePressStatusNullItem(QGraphicsSceneMouseEvent *event);
     bool mousePressStatusNullScene(QGraphicsSceneMouseEvent *event);
     void mouseMoveStatusNull(QGraphicsSceneMouseEvent *event);
     bool mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *event);
