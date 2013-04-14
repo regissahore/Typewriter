@@ -70,13 +70,14 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
     {
         sum2 = sum2 + p[i];
     }
+    lamda = p[M - K];
+    lamda = a[M - K + 1];
+    lamda = sum1;
     lamda = p[M - K] * a[M - K + 1] / sum1;
     miu = p[M - K + 1] * b[M - K + 1] / sum2;
     GOMarkovStatus status;
-    status.setProbabilityBreakdown(lamda);
+    status.setFrequencyBreakdown(lamda);
     status.setFrequencyRepair(miu);
-    status.setProbabilityBreakdown("0.03468");
-    status.setProbabilityNormal("0.125");
     return status;
 }
 

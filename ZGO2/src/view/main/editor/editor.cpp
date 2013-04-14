@@ -202,7 +202,7 @@ void Editor::createNewTab(int type)
  */
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom);;HTML Files(*.html)"));
     if (filePath != "")
     {
         QString extension = "";
@@ -237,6 +237,14 @@ void Editor::tryOpen()
                 this->_tabWidget->addTab(editor, editor->name());
                 this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
             }
+        }
+        else if (extension.compare(extension, ".html", Qt::CaseInsensitive) == 0)
+        {
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WEBVIEW);
+            editor->setPath(filePath);
+            this->_editors->push_back(editor);
+            this->_tabWidget->addTab(editor, editor->name());
+            this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
         }
     }
 }

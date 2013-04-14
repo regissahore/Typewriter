@@ -35,11 +35,11 @@ public:
     friend BigDecimal operator -(const BigDecimal &a, const BigDecimal &b);
     friend BigDecimal operator *(const BigDecimal &a, const BigDecimal &b);
     friend BigDecimal operator /(const BigDecimal &a, const BigDecimal &b);
-    QString toString() const;
-    void print() const;
-    void printLine() const;
-    void printDebug() const;
-    void printAll() const;
+    QString toString();
+    void print();
+    void printLine();
+    void printDebug();
+    void printAll();
 
 protected:
     BigInteger _numerator;

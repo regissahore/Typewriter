@@ -21,7 +21,7 @@ EditorWebView::EditorWebView(QWidget *parent) : EditorAbstract(parent)
 void EditorWebView::setPath(QString path)
 {
     this->EditorAbstract::setPath(path);
-    this->_webView->load(QUrl(path));
+    this->_webView->load(QUrl::fromLocalFile(path));
     this->_webView->show();
 }
 

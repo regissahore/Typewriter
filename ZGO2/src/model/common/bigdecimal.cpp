@@ -199,8 +199,10 @@ BigDecimal operator /(const BigDecimal &a, const BigDecimal &b)
     return c;
 }
 
-QString BigDecimal::toString() const
+QString BigDecimal::toString()
 {
+    this->_denominator.clearLeadingZero();
+    this->_numerator.clearLeadingZero();
     if (this->_denominator == BigInteger::zero())
     {
         return "INF";
@@ -233,21 +235,21 @@ QString BigDecimal::toString() const
     return str;
 }
 
-void BigDecimal::print() const
+void BigDecimal::print()
 {
     QTextStream out(stdout, QIODevice::WriteOnly);
     out << this->toString();
     out.flush();
 }
 
-void BigDecimal::printLine() const
+void BigDecimal::printLine()
 {
     QTextStream out(stdout, QIODevice::WriteOnly);
     out << this->toString() << endl;
     out.flush();
 }
 
-void BigDecimal::printDebug() const
+void BigDecimal::printDebug()
 {
     this->numerator().print();
     QTextStream out(stdout, QIODevice::WriteOnly);
@@ -256,7 +258,7 @@ void BigDecimal::printDebug() const
     this->denominator().printLine();
 }
 
-void BigDecimal::printAll() const
+void BigDecimal::printAll()
 {
     this->print();
     QTextStream out(stdout, QIODevice::WriteOnly);

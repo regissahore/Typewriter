@@ -42,6 +42,7 @@ public:
     void printLine() const;
     void printDebug() const;
     void printAll() const;
+
 protected:
     QVector<int> _data;
     bool _positive;

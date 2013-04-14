@@ -25,7 +25,6 @@ void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOpe
 
 void GOMarkovAnalysis::updateOuputMarkov(GOMarkovOperator *op)
 {
-    op->markovOutputStatus()->clear();
     BigDecimal breakdown = op->markovStatus()->frequencyBreakdown();
     for (int i = 0; i < op->input()->number(); ++i)
     {
@@ -41,6 +40,7 @@ void GOMarkovAnalysis::updateOuputMarkov(GOMarkovOperator *op)
         int prevIndex = prev->output()->getSignalIndex(signal);
         breakdown = breakdown + prev->markovOutputStatus()->at(prevIndex)->frequencyBreakdown();
     }
+    op->markovOutputStatus()->clear();
     for (int i = 0; i < op->output()->number(); ++i)
     {
         GOMarkovStatus *status = new GOMarkovStatus();
