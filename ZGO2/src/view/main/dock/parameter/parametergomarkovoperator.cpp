@@ -35,6 +35,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOOperatorFactory::Operator_Type_7:
         this->addMarkovParameter();
         break;
+    case GOOperatorFactory::Operator_Type_9:
+        this->addOperator9XYParameter();
+        break;
     case GOOperatorFactory::Operator_Type_10:
         break;
     case GOOperatorFactory::Operator_Type_11:

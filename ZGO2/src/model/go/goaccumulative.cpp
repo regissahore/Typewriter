@@ -43,6 +43,15 @@ BigDecimal GOAccumulative::accumulative(int index) const
     return BigDecimal::valueOf(-1.0);
 }
 
+BigDecimal GOAccumulative::probability(int index) const
+{
+    if (index > 0 && index < this->_accumulative.size())
+    {
+        return this->_accumulative[index] - this->_accumulative[index - 1];
+    }
+    return BigDecimal::zero();
+}
+
 void GOAccumulative::setAccumulative(int index, BigDecimal value)
 {
     if (index >= 0 && index < this->_accumulative.size())

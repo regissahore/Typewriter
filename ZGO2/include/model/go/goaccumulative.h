@@ -17,6 +17,7 @@ public:
     int number() const;
     void setNumber(int number);
     BigDecimal accumulative(int index) const;
+    BigDecimal probability(int index) const;
     void setAccumulative(int index, BigDecimal value);
     GOAccumulative* copy() const;
 

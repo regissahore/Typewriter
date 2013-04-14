@@ -546,7 +546,7 @@ void BigInteger::clearLeadingZero()
 
 void BigInteger::removeEnd()
 {
-    this->_data.pop_back();
+    this->_data.pop_front();
 }
 
 QString BigInteger::toString() const

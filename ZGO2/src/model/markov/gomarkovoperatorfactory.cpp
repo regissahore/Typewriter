@@ -56,8 +56,8 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         op->output()->setNumber(1);
         break;
     case Operator_Type_9:
-        op->input()->setNumber(2);
-        op->subInput()->setNumber(0);
+        op->input()->setNumber(1);
+        op->subInput()->setNumber(1);
         op->output()->setNumber(1);
         break;
     case Operator_Type_10:
