@@ -137,7 +137,9 @@ HEADERS += \
     include/view/graphics/markov/toolgomarkovequivalent.h \
     include/view/graphics/markov/toolgomarkovpointerextend.h \
     include/view/main/dock/parameter/parametergomarkovequivalent.h \
-    include/view/dialog/srcdialoggo9xy.h
+    include/view/dialog/srcdialoggo9xy.h \
+    include/view/dialog/dialoggomarkovperiod.h \
+    include/model/markov/gomarkovchartdata.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -242,7 +244,12 @@ SOURCES += \
     src/view/graphics/markov/toolgomarkovequivalent.cpp \
     src/view/graphics/markov/toolgomarkovpointerextend.cpp \
     src/view/main/dock/parameter/parametergomarkovequivalent.cpp \
-    src/view/dialog/dialoggo9xy.cpp
+    src/view/dialog/dialoggo9xy.cpp \
+    src/view/dialog/dialoggomarkovperiod.cpp \
+    src/model/markov/gomarkovchartdata.cpp
 
 RESOURCES += \
     resource.qrc
+
+FORMS += \
+    form/dialoggomarkovperiod.ui

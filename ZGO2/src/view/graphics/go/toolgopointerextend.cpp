@@ -127,27 +127,7 @@ bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
                     this->_status = Status_Signal_Connecting;
                     this->_signal = new ItemGOSignal();
                     items = this->graphicsScene()->items();
-                    QVector<bool> visit;
-                    for (int k = 0; k <= items.size(); ++k)
-                    {
-                        visit.push_back(false);
-                    }
-                    for (int k = 0; k < items.size(); ++k)
-                    {
-                        if (((ItemDrawable*)items.at(k))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
-                        {
-                            ItemGOSignal *signal = (ItemGOSignal*)items.at(k);
-                            visit[signal->model()->id()] = true;
-                        }
-                    }
-                    for (int k = 1; k <= items.size(); ++k)
-                    {
-                        if (!visit[k])
-                        {
-                            this->_signal->model()->setId(k);
-                            break;
-                        }
-                    }
+                    this->_signal->model()->setId(model->id());
                     this->_signal->start()->op = op;
                     this->_signal->start()->index = j;
                     this->_signal->start()->type = DefinationGOType::GO_OPERATOR_OUTPUT;

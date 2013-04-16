@@ -21,7 +21,7 @@ public:
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     virtual GOGraph* generatorGOGraph();
-    void analysisProbability(const QString filePath);
+    virtual void analysisProbability(const QString filePath);
     void analysisPath(const QString filePath);
     void analysisCut(const QString filePath);
 

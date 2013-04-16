@@ -214,9 +214,7 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
-    painter->drawLine(QPointF(0, 0), QPointF(this->_endPos.x() >> 1, 0));
-    painter->drawLine(QPointF(this->_endPos.x() >> 1, 0), QPointF(this->_endPos.x() >> 1, this->_endPos.y()));
-    painter->drawLine(QPointF(this->_endPos.x() >> 1, this->_endPos.y()), this->_endPos);
+    painter->drawLine(QPointF(0, 0), this->_endPos);
     painter->drawText((this->_endPos.x() >> 1) + 5, (this->_endPos.y() >> 1), QString("%1").arg(this->model()->id()));
 }
 

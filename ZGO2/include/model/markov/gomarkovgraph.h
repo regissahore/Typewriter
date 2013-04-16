@@ -7,6 +7,7 @@
 #include "gograph.h"
 
 class GOMarkovEquivalent;
+class GOMarkovChartData;
 
 class GOMarkovGraph : public GOGraph
 {
@@ -15,6 +16,7 @@ public:
     ~GOMarkovGraph();
     QVector<GOMarkovEquivalent*> getEquivalent() const;
     void addEquivalent(GOMarkovEquivalent *equivalent);
+    GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
     bool saveAsHTML(const QString filePath);
 
 protected:

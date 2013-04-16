@@ -2,12 +2,14 @@
 #include <QObject>
 #include <QFile>
 #include <QTextStream>
+#include <qmath.h>
 #include "gostatus.h"
 #include "goaccumulative.h"
 #include "gomarkovgraph.h"
 #include "gomarkovanalysis.h"
 #include "gomarkovoperator.h"
 #include "gomarkovstatus.h"
+#include "gomarkovchartdata.h"
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -29,6 +31,53 @@ QVector<GOMarkovEquivalent*> GOMarkovGraph::getEquivalent() const
 void GOMarkovGraph::addEquivalent(GOMarkovEquivalent *equivalent)
 {
     this->_equivalent.push_back(equivalent);
+}
+
+/**
+ * Calculate the accumulative probability with the probability changed with the time.
+ * @param totalTime The total time of the calculation.
+ * @param count The time the calculation does.
+ */
+GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
+{
+    GOMarkovChartData *data = new GOMarkovChartData();
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        data->ids.push_back(this->_operator[i]->id());
+        data->types.push_back(this->_operator[i]->type());
+        data->probabilities.push_back(QVector<double>());
+        data->lamdaResults.push_back(QVector<double>());
+        data->miuResults.push_back(QVector<double>());
+    }
+    for (int i = 0; i < count; ++i)
+    {
+        double time = i * totalTime / (count - 1);
+        data->times.push_back(time);
+        for (int j = 0; j < this->_operator.size(); ++j)
+        {
+            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
+            double lamda = op->markovStatus()->frequencyBreakdown().toString().toDouble();
+            double miu = op->markovStatus()->frequencyRepair().toString().toDouble();
+            double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time));
+            double p2 = 1 - p1;
+            op->status()->setProbability(1, BigDecimal::valueOf(QString("%1").arg(p1)));
+            op->status()->setProbability(2, BigDecimal::valueOf(QString("%1").arg(p2)));
+        }
+        this->GOGraph::calcAccumulativeProbability();
+        if (this->getErrorMessage() != "")
+        {
+            delete data;
+            return 0L;
+        }
+        for (int j = 0; j < this->_operator.size(); ++j)
+        {
+            GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
+            data->probabilities[j].push_back(op->markovOutputStatus()->at(0)->probabilityNormal().toString().toDouble());
+            data->lamdaResults[j].push_back(op->markovOutputStatus()->at(0)->frequencyBreakdown().toString().toDouble());
+            data->miuResults[j].push_back(op->markovOutputStatus()->at(0)->frequencyRepair().toString().toDouble());
+        }
+    }
+    return data;
 }
 
 bool GOMarkovGraph::saveAsHTML(const QString filePath)

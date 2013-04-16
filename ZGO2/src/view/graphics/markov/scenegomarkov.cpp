@@ -10,6 +10,9 @@
 #include "gooutput.h"
 #include "itemgomarkovequivalent.h"
 #include "definationtooltype.h"
+#include "dialoggomarkovperiod.h"
+#include "messagefactory.h"
+#include "gomarkovchartdata.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
@@ -237,4 +240,27 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
         }
     }
     return graph;
+}
+
+void SceneGOMarkov::analysisProbability(const QString filePath)
+{
+    DialogGOMarkovPeriod *dialog = new DialogGOMarkovPeriod();
+    if (QDialog::Accepted == dialog->exec())
+    {
+        GOMarkovGraph *graph = (GOMarkovGraph*)this->generatorGOGraph();
+        double totalTime = dialog->totalTime();
+        int count = dialog->count();
+        GOMarkovChartData *data = graph->calcAccumulativeProbability(totalTime, count);
+        if (data != 0L)
+        {
+            if (data->save(filePath + ".goc"))
+            {
+                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                message->paramString = filePath + ".goc";
+                this->sendMessage(message);
+            }
+            delete data;
+        }
+        delete graph;
+    }
 }

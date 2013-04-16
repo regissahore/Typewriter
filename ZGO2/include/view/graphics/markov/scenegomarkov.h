@@ -13,6 +13,7 @@ public:
     SceneGOMarkov(QObject *parent = 0);
     bool tryOpen(QDomElement &root);
     GOGraph* generatorGOGraph();
+    void analysisProbability(const QString filePath);
 };
 
 #endif // SCENEGOMARKOV_H

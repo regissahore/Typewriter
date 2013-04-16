@@ -343,7 +343,6 @@ void SceneGO::analysisProbability(const QString filePath)
         Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
         message->paramString = filePath + ".html";
         this->sendMessage(message);
-        //QDesktopServices::openUrl(QUrl(QString("test.html"), QUrl::TolerantMode));
     }
     delete graph;
 }

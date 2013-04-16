@@ -37,7 +37,7 @@ ItemGOSignal* ItemGOFactory::produceSignal()
 void ItemGOFactory::deleteItem(ItemDrawable *item)
 {
     int type = item->TypedItem::type();
-    if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+    if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
     {
         QList<ItemGOSignal*> signal = ((ItemGOOperator*)item)->getConnectedSignals();
         for (int i = 0; i < signal.size(); ++i)
@@ -63,7 +63,7 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
     for (int i = 0; i < items.size(); ++i)
     {
         int type = items[i]->TypedItem::type();
-        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             QList<ItemGOSignal*> signal = ((ItemGOOperator*)items[i])->getConnectedSignals();
             for (int j = 0; j < signal.size(); ++j)
