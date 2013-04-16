@@ -9,9 +9,6 @@ build-*
 # Doxygen
 doxygen
 
-# UI Files
-*.ui
-
 # Documents
 *.doc
 

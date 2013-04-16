@@ -5,17 +5,17 @@
 MainMenuFile::MainMenuFile() : MainMenuAbstract()
 {
     this->setTitle(tr("File(&F)"));
-    this->_actionNew = this->addAction(tr("New(&N)"));
+    this->_actionNew = this->addAction(QIcon(":icon/resouce/image/new.png"), tr("New(&N)"));
     this->_actionNewMarkov = this->addAction(tr("New Markov"));
-    this->_actionOpen = this->addAction(tr("Open...(&O)"));
-    this->_actionClose = this->addAction(tr("Close(&C)"));
+    this->_actionOpen = this->addAction(QIcon(":icon/resouce/image/open.png"), tr("Open...(&O)"));
+    this->_actionClose = this->addAction(QIcon(":icon/resouce/image/close.png"), tr("Close(&C)"));
     this->_actionCloseAll = this->addAction(tr("Close All"));
     this->addSeparator();
-    this->_actionSave = this->addAction(tr("Save(&S)"));
-    this->_actionSaveAs = this->addAction(tr("Save As..."));
-    this->_actionSaveAll = this->addAction(tr("Save All"));
+    this->_actionSave = this->addAction(QIcon(":icon/resouce/image/save.png"), tr("Save(&S)"));
+    this->_actionSaveAs = this->addAction(QIcon(":icon/resouce/image/saveas.png"), tr("Save As..."));
+    this->_actionSaveAll = this->addAction(QIcon(":icon/resouce/image/saveall.png"), tr("Save All"));
     this->addSeparator();
-    this->_actionQuit = this->addAction(tr("Quit(&Q)"));
+    this->_actionQuit = this->addAction(QIcon(":icon/resouce/image/quit.png"), tr("Quit(&Q)"));
     this->_actionNew->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_N));
     this->_actionOpen->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
     this->_actionClose->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));

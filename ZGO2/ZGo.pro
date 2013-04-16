@@ -243,3 +243,6 @@ SOURCES += \
     src/view/graphics/markov/toolgomarkovpointerextend.cpp \
     src/view/main/dock/parameter/parametergomarkovequivalent.cpp \
     src/view/dialog/dialoggo9xy.cpp
+
+RESOURCES += \
+    resource.qrc

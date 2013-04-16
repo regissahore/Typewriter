@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/icon">
+        <file>resouce/image/open.png</file>
+        <file>resouce/image/about.png</file>
+        <file>resouce/image/analysis.png</file>
+        <file>resouce/image/close.png</file>
+        <file>resouce/image/help.png</file>
+        <file>resouce/image/new.png</file>
+        <file>resouce/image/quit.png</file>
+        <file>resouce/image/save.png</file>
+        <file>resouce/image/saveall.png</file>
+        <file>resouce/image/saveas.png</file>
+        <file>resouce/image/start.png</file>
+        <file>resouce/image/cut.png</file>
+        <file>resouce/image/path.png</file>
+    </qresource>
+</RCC>
