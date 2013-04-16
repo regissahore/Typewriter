@@ -208,6 +208,12 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    painter->setPen(Qt::black);
+    painter->setPen(Qt::SolidLine);
+    painter->setBrush(Qt::NoBrush);
+    QFont font;
+    font.setPixelSize(16);
+    painter->setFont(font);
     painter->drawLine(QPointF(0, 0), QPointF(this->_endPos.x() >> 1, 0));
     painter->drawLine(QPointF(this->_endPos.x() >> 1, 0), QPointF(this->_endPos.x() >> 1, this->_endPos.y()));
     painter->drawLine(QPointF(this->_endPos.x() >> 1, this->_endPos.y()), this->_endPos);

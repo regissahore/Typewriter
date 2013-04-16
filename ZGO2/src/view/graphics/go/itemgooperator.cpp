@@ -269,6 +269,12 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    painter->setPen(Qt::black);
+    painter->setPen(Qt::SolidLine);
+    painter->setBrush(Qt::NoBrush);
+    QFont font;
+    font.setPixelSize(16);
+    painter->setFont(font);
     if (this->isSource())
     {
         painter->setPen(Qt::black);

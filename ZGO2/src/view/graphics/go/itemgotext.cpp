@@ -66,6 +66,7 @@ bool ItemGOText::isSelected(float x, float y, float w, float h)
 QRectF ItemGOText::boundingRect() const
 {
     QFont font;
+    font.setPixelSize(26);
     QFontMetricsF metrics(font);
     qreal width = metrics.width(this->text());
     qreal height = metrics.height();
@@ -74,6 +75,12 @@ QRectF ItemGOText::boundingRect() const
 
 void ItemGOText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
 {
+    painter->setPen(Qt::black);
+    painter->setPen(Qt::SolidLine);
+    painter->setBrush(Qt::black);
+    QFont font;
+    font.setPixelSize(26);
+    painter->setFont(font);
     painter->drawText(0, 0, 1000, 1000, Qt::AlignLeft | Qt::AlignTop, this->text());
 }
 

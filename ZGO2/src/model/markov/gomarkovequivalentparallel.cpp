@@ -34,7 +34,12 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
     QVector<BigDecimal> b;
     a.push_back(BigDecimal::zero());
     b.push_back(BigDecimal::one());
-    for (int i = 0; i < this->_operators->size() - 1;)
+    int maxIndex = M - K;
+    if (I > maxIndex)
+    {
+        maxIndex = I;
+    }
+    for (int i = 0; i <= I;)
     {
         ++i;
         if (J == 0 || M - i + 1 < K)
@@ -55,8 +60,8 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
         }
     }
     QVector<BigDecimal> p;
-    p.push_back(this->_operators->at(0)->markovStatus()->probabilityNormal());
-    for (int i = 1; i <= this->operators()->size() - 1; ++i)
+    p.push_back(BigDecimal::one());
+    for (int i = 1; i <= I; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }

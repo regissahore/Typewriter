@@ -1,117 +1,138 @@
 <GO_Project support="ZHG">
     <scene>
+        <equivalent id="29" x="612.7230224609375" y="-207.0422515869141" I="0" J="0" width="390.0375366210938" L="0" height="60.23944091796875">
+            <series>
+                <operator id="7"/>
+                <operator id="12"/>
+                <operator id="17"/>
+            </series>
+        </equivalent>
+        <equivalent id="28" x="613.8027954101562" y="-277.6009216308594" I="0" J="0" width="394.1972045898438" L="0" height="60.68075561523438">
+            <series>
+                <operator id="6"/>
+                <operator id="11"/>
+                <operator id="16"/>
+            </series>
+        </equivalent>
+        <equivalent id="30" x="602.7230224609375" y="-287.6009216308594" I="2" J="0" width="583.1988525390625" L="2" height="150.7981262207031">
+            <parallel>
+                <operator id="28"/>
+                <operator id="29"/>
+                <operator id="19"/>
+            </parallel>
+        </equivalent>
         <signal id="26">
-            <io index="0" type="2" id="19"/>
-            <io index="0" type="0" id="22"/>
+            <io id="19" index="0" type="2"/>
+            <io id="22" index="0" type="0"/>
         </signal>
         <signal id="25">
-            <io index="0" type="2" id="19"/>
-            <io index="0" type="0" id="21"/>
+            <io id="19" index="0" type="2"/>
+            <io id="21" index="0" type="0"/>
         </signal>
         <signal id="24">
-            <io index="0" type="2" id="21"/>
-            <io index="1" type="0" id="23"/>
+            <io id="21" index="0" type="2"/>
+            <io id="23" index="1" type="0"/>
         </signal>
         <signal id="23">
-            <io index="0" type="2" id="20"/>
-            <io index="0" type="0" id="23"/>
+            <io id="20" index="0" type="2"/>
+            <io id="23" index="0" type="0"/>
         </signal>
         <signal id="22">
-            <io index="0" type="2" id="18"/>
-            <io index="0" type="0" id="20"/>
+            <io id="18" index="0" type="2"/>
+            <io id="20" index="0" type="0"/>
         </signal>
         <signal id="21">
-            <io index="0" type="2" id="17"/>
-            <io index="1" type="0" id="19"/>
+            <io id="17" index="0" type="2"/>
+            <io id="19" index="1" type="0"/>
         </signal>
         <signal id="20">
-            <io index="0" type="2" id="16"/>
-            <io index="0" type="0" id="19"/>
+            <io id="16" index="0" type="2"/>
+            <io id="19" index="0" type="0"/>
         </signal>
         <signal id="19">
-            <io index="0" type="2" id="15"/>
-            <io index="2" type="0" id="18"/>
+            <io id="15" index="0" type="2"/>
+            <io id="18" index="2" type="0"/>
         </signal>
         <signal id="18">
-            <io index="0" type="2" id="14"/>
-            <io index="1" type="0" id="18"/>
+            <io id="14" index="0" type="2"/>
+            <io id="18" index="1" type="0"/>
         </signal>
         <signal id="17">
-            <io index="0" type="2" id="13"/>
-            <io index="0" type="0" id="18"/>
+            <io id="13" index="0" type="2"/>
+            <io id="18" index="0" type="0"/>
         </signal>
         <signal id="16">
-            <io index="0" type="2" id="12"/>
-            <io index="0" type="0" id="17"/>
+            <io id="12" index="0" type="2"/>
+            <io id="17" index="0" type="0"/>
         </signal>
         <signal id="15">
-            <io index="0" type="2" id="11"/>
-            <io index="0" type="0" id="16"/>
+            <io id="11" index="0" type="2"/>
+            <io id="16" index="0" type="0"/>
         </signal>
         <signal id="14">
-            <io index="0" type="2" id="10"/>
-            <io index="0" type="0" id="15"/>
+            <io id="10" index="0" type="2"/>
+            <io id="15" index="0" type="0"/>
         </signal>
         <signal id="13">
-            <io index="0" type="2" id="9"/>
-            <io index="0" type="0" id="14"/>
+            <io id="9" index="0" type="2"/>
+            <io id="14" index="0" type="0"/>
         </signal>
         <signal id="12">
-            <io index="0" type="2" id="8"/>
-            <io index="0" type="0" id="13"/>
+            <io id="8" index="0" type="2"/>
+            <io id="13" index="0" type="0"/>
         </signal>
         <signal id="11">
-            <io index="0" type="2" id="7"/>
-            <io index="0" type="0" id="12"/>
+            <io id="7" index="0" type="2"/>
+            <io id="12" index="0" type="0"/>
         </signal>
         <signal id="10">
-            <io index="0" type="2" id="6"/>
-            <io index="0" type="0" id="11"/>
+            <io id="6" index="0" type="2"/>
+            <io id="11" index="0" type="0"/>
         </signal>
         <signal id="9">
-            <io index="0" type="2" id="5"/>
-            <io index="0" type="0" id="10"/>
+            <io id="5" index="0" type="2"/>
+            <io id="10" index="0" type="0"/>
         </signal>
         <signal id="8">
-            <io index="0" type="2" id="4"/>
-            <io index="0" type="0" id="9"/>
+            <io id="4" index="0" type="2"/>
+            <io id="9" index="0" type="0"/>
         </signal>
         <signal id="7">
-            <io index="0" type="2" id="3"/>
-            <io index="0" type="0" id="8"/>
+            <io id="3" index="0" type="2"/>
+            <io id="8" index="0" type="0"/>
         </signal>
         <signal id="6">
-            <io index="0" type="2" id="2"/>
-            <io index="0" type="0" id="7"/>
+            <io id="2" index="0" type="2"/>
+            <io id="7" index="0" type="0"/>
         </signal>
         <signal id="5">
-            <io index="0" type="2" id="2"/>
-            <io index="0" type="0" id="6"/>
+            <io id="2" index="0" type="2"/>
+            <io id="6" index="0" type="0"/>
         </signal>
         <signal id="4">
-            <io index="0" type="2" id="2"/>
-            <io index="0" type="0" id="5"/>
+            <io id="2" index="0" type="2"/>
+            <io id="5" index="0" type="0"/>
         </signal>
         <signal id="3">
-            <io index="0" type="2" id="2"/>
-            <io index="0" type="0" id="4"/>
+            <io id="2" index="0" type="2"/>
+            <io id="4" index="0" type="0"/>
         </signal>
         <signal id="2">
-            <io index="0" type="2" id="2"/>
-            <io index="0" type="0" id="3"/>
+            <io id="2" index="0" type="2"/>
+            <io id="3" index="0" type="0"/>
         </signal>
         <signal id="1">
-            <io index="0" type="2" id="1"/>
-            <io index="0" type="0" id="2"/>
+            <io id="1" index="0" type="2"/>
+            <io id="2" index="0" type="0"/>
         </signal>
-        <operator type="2" x="1548.445434570312" y="-353.7991027832031">
-            <model type="2" id="23" input="2" subInput="0" output="1">
+        <operator x="1548.445434570312" y="-353.7991027832031" type="2">
+            <model id="23" subInput="0" input="2" type="2" output="1">
                 <status/>
                 <status repair="1" breakdown="0"/>
             </model>
         </operator>
-        <operator type="1" x="1546.14794921875" y="-213.6578979492188">
-            <model type="1" id="22" input="1" subInput="0" output="1">
+        <operator x="1546.14794921875" y="-213.6578979492188" type="1">
+            <model id="22" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -120,8 +141,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="1346.2744140625" y="-282.5798034667969">
-            <model type="1" id="21" input="1" subInput="0" output="1">
+        <operator x="1346.2744140625" y="-282.5798034667969" type="1">
+            <model id="21" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -130,8 +151,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="1348.571899414062" y="-427.7912292480469">
-            <model type="1" id="20" input="1" subInput="0" output="1">
+        <operator x="1348.571899414062" y="-427.7912292480469" type="1">
+            <model id="20" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -140,14 +161,14 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="2" x="1155.921875" y="-213.5790863037109">
-            <model type="2" id="19" input="2" subInput="0" output="1">
+        <operator x="1155.921875" y="-213.5790863037109" type="2">
+            <model id="19" subInput="0" input="2" type="2" output="1">
                 <status/>
                 <status repair="1" breakdown="0"/>
             </model>
         </operator>
-        <operator type="11" x="1155.935668945312" y="-427.583251953125">
-            <model type="11" id="18" input="3" subInput="0" output="1">
+        <operator x="1155.935668945312" y="-427.583251953125" type="11">
+            <model id="18" subInput="0" input="3" type="11" output="1">
                 <status/>
                 <status repair="1" breakdown="0"/>
                 <parameter>
@@ -155,8 +176,8 @@
                 </parameter>
             </model>
         </operator>
-        <operator type="1" x="974.2762756485413" y="-177.0422515869139">
-            <model type="1" id="17" input="1" subInput="0" output="1">
+        <operator x="972.7605590820312" y="-177.0422515869141" type="1">
+            <model id="17" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99992694597654965847"/>
@@ -165,8 +186,8 @@
                 <status repair="1095" breakdown="0.08"/>
             </model>
         </operator>
-        <operator type="1" x="978" y="-247">
-            <model type="1" id="16" input="1" subInput="0" output="1">
+        <operator x="978" y="-247" type="1">
+            <model id="16" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99992694597654965847"/>
@@ -175,8 +196,8 @@
                 <status repair="1095" breakdown="0.08"/>
             </model>
         </operator>
-        <operator type="1" x="981.7230224609375" y="-357.5586853027344">
-            <model type="1" id="15" input="1" subInput="0" output="1">
+        <operator x="981.7230224609375" y="-357.5586853027344" type="1">
+            <model id="15" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99992694597654965847"/>
@@ -185,8 +206,8 @@
                 <status repair="1095" breakdown="0.08"/>
             </model>
         </operator>
-        <operator type="1" x="979" y="-427.9201965332031">
-            <model type="1" id="14" input="1" subInput="0" output="1">
+        <operator x="979" y="-427.9201965332031" type="1">
+            <model id="14" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99992694597654965847"/>
@@ -195,8 +216,8 @@
                 <status repair="1095" breakdown="0.08"/>
             </model>
         </operator>
-        <operator type="1" x="980.920166015625" y="-497.1596374511719">
-            <model type="1" id="13" input="1" subInput="0" output="1">
+        <operator x="980.920166015625" y="-497.1596374511719" type="1">
+            <model id="13" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99992694597654965847"/>
@@ -205,8 +226,8 @@
                 <status repair="1095" breakdown="0.08"/>
             </model>
         </operator>
-        <operator type="1" x="807.042236328125" y="-176.9624328613281">
-            <model type="1" id="12" input="1" subInput="0" output="1">
+        <operator x="807.042236328125" y="-176.9624328613281" type="1">
+            <model id="12" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99824964445903074061"/>
@@ -215,8 +236,8 @@
                 <status repair="1095" breakdown="1.92"/>
             </model>
         </operator>
-        <operator type="1" x="809.079833984375" y="-246.9201812744141">
-            <model type="1" id="11" input="1" subInput="0" output="1">
+        <operator x="809.079833984375" y="-246.9201812744141" type="1">
+            <model id="11" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99824964445903074061"/>
@@ -225,8 +246,8 @@
                 <status repair="1095" breakdown="1.92"/>
             </model>
         </operator>
-        <operator type="1" x="806.920166015625" y="-357.3990478515625">
-            <model type="1" id="10" input="1" subInput="0" output="1">
+        <operator x="806.920166015625" y="-357.3990478515625" type="1">
+            <model id="10" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99744944434323191838"/>
@@ -235,8 +256,8 @@
                 <status repair="1095" breakdown="2.8"/>
             </model>
         </operator>
-        <operator type="1" x="807.3615112304688" y="-427.7605590820312">
-            <model type="1" id="9" input="1" subInput="0" output="1">
+        <operator x="807.3615112304688" y="-427.7605590820312" type="1">
+            <model id="9" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99744944434323191838"/>
@@ -245,8 +266,8 @@
                 <status repair="1095" breakdown="2.8"/>
             </model>
         </operator>
-        <operator type="1" x="809" y="-497.6009521484375">
-            <model type="1" id="8" input="1" subInput="0" output="1">
+        <operator x="809" y="-497.6009521484375" type="1">
+            <model id="8" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99744944434323191838"/>
@@ -255,8 +276,8 @@
                 <status repair="1095" breakdown="2.8"/>
             </model>
         </operator>
-        <operator type="1" x="642.7230224609375" y="-176.8028106689453">
-            <model type="1" id="7" input="1" subInput="0" output="1">
+        <operator x="642.7230224609375" y="-176.8028106689453" type="1">
+            <model id="7" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -265,8 +286,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="643.8027954101562" y="-247.6009368896484">
-            <model type="1" id="6" input="1" subInput="0" output="1">
+        <operator x="643.8027954101562" y="-247.6009368896484" type="1">
+            <model id="6" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -275,8 +296,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="644.047607421875" y="-357.3990478515625">
-            <model type="1" id="5" input="1" subInput="0" output="1">
+        <operator x="644.047607421875" y="-357.3990478515625" type="1">
+            <model id="5" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -285,8 +306,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="643.244140625" y="-427.3192443847656">
-            <model type="1" id="4" input="1" subInput="0" output="1">
+        <operator x="643.244140625" y="-427.3192443847656" type="1">
+            <model id="4" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -295,8 +316,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="643.8027954101562" y="-497.6807556152344">
-            <model type="1" id="3" input="1" subInput="0" output="1">
+        <operator x="643.8027954101562" y="-497.6807556152344" type="1">
+            <model id="3" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99980825595091352343"/>
@@ -305,8 +326,8 @@
                 <status repair="1095" breakdown="0.21"/>
             </model>
         </operator>
-        <operator type="1" x="454.1596374511719" y="-320.2065734863281">
-            <model type="1" id="2" input="1" subInput="0" output="1">
+        <operator x="454.1596374511719" y="-320.2065734863281" type="1">
+            <model id="2" subInput="0" input="1" type="1" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="0.99965308842593437893"/>
@@ -315,8 +336,8 @@
                 <status repair="1095" breakdown="0.38"/>
             </model>
         </operator>
-        <operator type="5" x="277.7605590820312" y="-320.286376953125">
-            <model type="5" id="1" input="0" subInput="0" output="1">
+        <operator x="277.7605590820312" y="-320.286376953125" type="5">
+            <model id="1" subInput="0" input="0" type="5" output="1">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="1"/>
@@ -325,47 +346,47 @@
                 <status repair="1" breakdown="0"/>
             </model>
         </operator>
-        <text value="高压注水系统" x="901.8513793945312" y="-682.0724487304688"/>
-        <text value="水箱" x="248.5775145244532" y="-384.9920045047394"/>
-        <text value="主阀门" x="416.8220518366406" y="-388.0234376102081"/>
-        <text value="隔离阀" x="607.80236799875" y="-569.9094545798962"/>
-        <text value="上冲离心泵" x="757.8583067332294" y="-569.9094240485409"/>
-        <text value="逆止阀" x="944.2914122295311" y="-574.4566042794268"/>
-        <text value="隔离阀" x="1309.579131900987" y="-494.1235963704945"/>
-        <text value="冷端注水" x="1492.980834685415" y="-418.3377686648957"/>
-        <text value="热端注水" x="1496.01229832224" y="-278.8918458408851"/>
-        <text value="隔离阀" x="1312.6105039713" y="-347.0990907414842"/>
-        <text value="隔离阀" x="607.8023679987501" y="-145.50878913138"/>
-        <text value="安注泵" x="769.9840391000001" y="-147.0245056841143"/>
-        <text value="逆止阀" x="945.8071592998443" y="-150.055938789583"/>
-        <equivalent L="1" width="582.6915283203125" id="27" x="603.244140625" y="-537.6807861328125" height="220.2817077636719" I="2" J="1">
-            <parallel>
-                <operator id="24"/>
-                <operator id="25"/>
-                <operator id="26"/>
-                <operator id="18"/>
-            </parallel>
-        </equivalent>
-        <equivalent L="0" width="397.1173706054688" id="24" x="613.8027954101562" y="-527.6807861328125" height="60.5211181640625" I="1" J="0">
+        <text x="901.8513793945312" y="-682.0724487304688" value="高压注水系统"/>
+        <text x="262.2189636230469" y="-372.8662719726562" value="水箱"/>
+        <text x="435.0106506347656" y="-375.897705078125" value="主阀门"/>
+        <text x="625.990966796875" y="-544.1422729492188" value="隔离阀"/>
+        <text x="774.5311889648438" y="-545.657958984375" value="上冲离心泵"/>
+        <text x="957.932861328125" y="-544.1422729492188" value="逆止阀"/>
+        <text x="1329.283447265625" y="-474.4192810058594" value="隔离阀"/>
+        <text x="1523.295166015625" y="-406.2120361328125" value="冷端注水"/>
+        <text x="1524.810913085938" y="-263.7346801757812" value="热端注水"/>
+        <text x="1332.314819335938" y="-328.9104919433594" value="隔离阀"/>
+        <text x="625.990966796875" y="-137.9302062988281" value="隔离阀"/>
+        <text x="792.7197875976562" y="-139.4459228515625" value="安注泵"/>
+        <text x="959.4486083984375" y="-142.4773559570312" value="逆止阀"/>
+        <equivalent id="24" x="613.8027954101562" y="-527.6807861328125" I="1" J="0" width="397.1173706054688" L="0" height="60.5211181640625">
             <series>
                 <operator id="3"/>
                 <operator id="8"/>
                 <operator id="13"/>
             </series>
         </equivalent>
-        <equivalent L="0" width="395.755859375" id="25" x="613.244140625" y="-457.9201965332031" height="60.6009521484375" I="1" J="0">
+        <equivalent id="25" x="613.244140625" y="-457.9201965332031" I="1" J="0" width="395.755859375" L="0" height="60.6009521484375">
             <series>
                 <operator id="4"/>
                 <operator id="9"/>
                 <operator id="14"/>
             </series>
         </equivalent>
-        <equivalent L="0" width="397.6754150390625" id="26" x="614.047607421875" y="-387.5586853027344" height="60.15963745117188" I="1" J="0">
+        <equivalent id="26" x="614.047607421875" y="-387.5586853027344" I="1" J="0" width="397.6754150390625" L="0" height="60.15963745117188">
             <series>
                 <operator id="5"/>
                 <operator id="10"/>
                 <operator id="15"/>
             </series>
+        </equivalent>
+        <equivalent id="27" x="603.244140625" y="-537.6807861328125" I="2" J="1" width="582.6915283203125" L="1" height="220.2817077636719">
+            <parallel>
+                <operator id="24"/>
+                <operator id="25"/>
+                <operator id="26"/>
+                <operator id="18"/>
+            </parallel>
         </equivalent>
     </scene>
 </GO_Project>

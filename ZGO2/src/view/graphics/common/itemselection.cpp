@@ -104,6 +104,7 @@ void ItemSelection::paint(QPainter *painter, const QStyleOptionGraphicsItem *ite
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    painter->setPen(Qt::darkGray);
     painter->setPen(Qt::DashLine);
     painter->setBrush(Qt::NoBrush);
     painter->drawRect(0, 0, this->end().x(), this->end().y());

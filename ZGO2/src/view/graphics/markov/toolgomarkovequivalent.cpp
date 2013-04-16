@@ -12,6 +12,7 @@ ToolGOMarkovEquivalent::ToolGOMarkovEquivalent(SceneGO *sceneGO) : ToolGOSelect(
 
 void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    Q_UNUSED(event);
     QList<QGraphicsItem *> items;
     float x, y, width, height;
     switch (this->_status)
@@ -55,19 +56,9 @@ void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         this->addEquivalent();
-        this->_selection->setEnd(QPoint(0, 0));
+        this->_selection->setVisible(false);
+        this->_selection->update();
         this->_status = Status_Null;
-        break;
-    case Status_Moving:
-        for (int i = 0; i < this->_items.size(); ++i)
-        {
-            if (((ItemDrawable*)this->_items[i])->moveable())
-            {
-                ((ItemMoveable*)this->_items[i])->stopMove(event);
-            }
-        }
-        this->_selection->stopMove(event);
-        this->_status = Status_Selected;
         break;
     default:
         break;
@@ -124,6 +115,5 @@ void ToolGOMarkovEquivalent::addEquivalent()
     else
     {
         this->graphicsScene()->addItem(equivalent);
-        equivalent->update();
     }
 }

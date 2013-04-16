@@ -9,16 +9,32 @@ GOMarkovEquivalentSeries::GOMarkovEquivalentSeries() : GOMarkovEquivalent()
 GOMarkovStatus GOMarkovEquivalentSeries::getEquivalentStatus()
 {
     GOMarkovStatus status;
-    BigDecimal lamda = BigDecimal::zero();
-    BigDecimal lamdaFracSum = BigDecimal::zero();
-    for (int i = 0; i < this->_operators->size(); ++i)
+    if (this->I() == 1)
     {
-        lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
-        lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus()->frequencyBreakdown() / this->_operators->at(i)->markovStatus()->frequencyRepair();
+        BigDecimal lamda = BigDecimal::zero();
+        BigDecimal lamdaFracSum = BigDecimal::zero();
+        for (int i = 0; i < this->_operators->size(); ++i)
+        {
+            lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
+            lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus()->frequencyBreakdown() / this->_operators->at(i)->markovStatus()->frequencyRepair();
+        }
+        BigDecimal miu = lamda / lamdaFracSum;
+        status.setFrequencyBreakdown(lamda);
+        status.setFrequencyRepair(miu);
     }
-    BigDecimal miu = lamda / lamdaFracSum;
-    status.setFrequencyBreakdown(lamda);
-    status.setFrequencyRepair(miu);
+    else
+    {
+        BigDecimal lamda = BigDecimal::zero();
+        BigDecimal p1 = BigDecimal::one();
+        for (int i = 0; i < this->_operators->size(); ++i)
+        {
+            lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
+            p1 = p1 * this->_operators->at(i)->markovStatus()->probabilityNormal();
+        }
+        BigDecimal miu = lamda * p1 / (BigDecimal::one() - p1);
+        status.setFrequencyBreakdown(lamda);
+        status.setFrequencyRepair(miu);
+    }
     return status;
 }
 

@@ -269,7 +269,7 @@ void BigDecimal::printAll()
 
 void BigDecimal::reduce()
 {
-    while (this->_numerator.digitNum() > 100 && this->_denominator.digitNum() > 100)
+    while (this->_numerator.digitNum() > 24 && this->_denominator.digitNum() > 24)
     {
         this->_numerator.removeEnd();
         this->_denominator.removeEnd();
