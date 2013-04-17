@@ -35,6 +35,7 @@ void ItemArrow::setEnd(const int x, const int y)
 {
     this->_end.setX(x);
     this->_end.setY(y);
+    this->update();
     this->prepareGeometryChange();
 }
 

@@ -2,7 +2,6 @@
 #include "editor.h"
 #include "messagefactory.h"
 #include "editorabstract.h"
-#include "definationeditortype.h"
 
 /**
  * 构造函数。
@@ -24,7 +23,7 @@ Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
     // 初始化工厂类和编辑器的集合。
     this->_editors = new QVector<EditorAbstract*>();
     this->_factory = new EditorFactory();
-    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WELCOME);
+    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WELCOME);
     this->_editors->push_back(editor);
     this->_tabWidget->addTab(editor, editor->name());
 }
@@ -202,7 +201,7 @@ void Editor::createNewTab(int type)
  */
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom);;HTML Files(*.html)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)"));
     if (filePath != "")
     {
         QString extension = "";
@@ -216,7 +215,7 @@ void Editor::tryOpen()
         }
         if (extension.compare(extension, ".go", Qt::CaseInsensitive) == 0)
         {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO);
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO);
             if (editor->tryOpen(filePath))
             {
                 editor->bindMessage(this->MessageCreator::_messageController);
@@ -228,7 +227,7 @@ void Editor::tryOpen()
         }
         else if (extension.compare(extension, ".gom", Qt::CaseInsensitive) == 0)
         {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_GO_MARKOV);
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV);
             if (editor->tryOpen(filePath))
             {
                 editor->bindMessage(this->MessageCreator::_messageController);
@@ -240,8 +239,17 @@ void Editor::tryOpen()
         }
         else if (extension.compare(extension, ".html", Qt::CaseInsensitive) == 0)
         {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WEBVIEW);
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WEBVIEW);
             editor->setPath(filePath);
+            this->_editors->push_back(editor);
+            this->_tabWidget->addTab(editor, editor->name());
+            this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+        }
+        else if (extension.compare(extension, ".goc", Qt::CaseInsensitive) == 0)
+        {
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV_CHART);
+            editor->setPath(filePath);
+            editor->tryOpen(filePath);
             this->_editors->push_back(editor);
             this->_tabWidget->addTab(editor, editor->name());
             this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
@@ -262,12 +270,27 @@ void Editor::openExist(QString filePath)
     }
     if (extension.compare(extension, ".html", Qt::CaseInsensitive) == 0)
     {
-        EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(DefinationEditorType::EDITOR_TYPE_WEBVIEW);
+        EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WEBVIEW);
         editor->setPath(filePath);
         editor->bindMessage(this->MessageCreator::_messageController);
-        editor->setPath(filePath);
         this->_editors->push_back(editor);
         this->_tabWidget->addTab(editor, editor->name());
         this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+    }
+    else if (extension.compare(extension, ".goc", Qt::CaseInsensitive) == 0)
+    {
+        EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV_CHART);
+        editor->setPath(filePath);
+        if (editor->tryOpen(filePath))
+        {
+            editor->bindMessage(this->MessageCreator::_messageController);
+            this->_editors->push_back(editor);
+            this->_tabWidget->addTab(editor, editor->name());
+            this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
+        }
+        else
+        {
+            delete editor;
+        }
     }
 }

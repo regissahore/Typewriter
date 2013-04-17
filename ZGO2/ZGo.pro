@@ -37,7 +37,6 @@ TRANSLATIONS += lang/Lang_CH.ts
 
 HEADERS += \
     include/controller/defination/definationtooltype.h \
-    include/controller/defination/definationeditortype.h \
     include/controller/defination/definationeditorselectiontype.h \
     include/controller/message/control/messager.h \
     include/controller/message/control/messagelistener.h \
@@ -139,11 +138,14 @@ HEADERS += \
     include/view/main/dock/parameter/parametergomarkovequivalent.h \
     include/view/dialog/srcdialoggo9xy.h \
     include/view/dialog/dialoggomarkovperiod.h \
-    include/model/markov/gomarkovchartdata.h
+    include/model/markov/gomarkovchartdata.h \
+    include/view/graphics/markov/itemgomarkovchart.h \
+    include/view/graphics/markov/viewgomarkovchart.h \
+    include/view/graphics/markov/scenegomarkovchart.h \
+    include/view/main/editor/editorgomarkovchart.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
-    src/controller/defination/definationeditortype.cpp \
     src/controller/defination/definationeditorselectiontype.cpp \
     src/controller/message/control/messager.cpp \
     src/controller/message/control/messagelistener.cpp \
@@ -246,7 +248,11 @@ SOURCES += \
     src/view/main/dock/parameter/parametergomarkovequivalent.cpp \
     src/view/dialog/dialoggo9xy.cpp \
     src/view/dialog/dialoggomarkovperiod.cpp \
-    src/model/markov/gomarkovchartdata.cpp
+    src/model/markov/gomarkovchartdata.cpp \
+    src/view/graphics/markov/itemgomarkovchart.cpp \
+    src/view/graphics/markov/viewgomarkovchart.cpp \
+    src/view/graphics/markov/scenegomarkovchart.cpp \
+    src/view/main/editor/editorgomarkovchart.cpp
 
 RESOURCES += \
     resource.qrc

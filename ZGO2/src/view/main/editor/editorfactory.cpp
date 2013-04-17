@@ -4,6 +4,7 @@
 #include "editorgo.h"
 #include "editorgomarkov.h"
 #include "editorwebview.h"
+#include "editorgomarkovchart.h"
 #include "definationeditortype.h"
 
 /**
@@ -17,20 +18,23 @@ EditorAbstract *EditorFactory::produce(int type)
     {
     case EDITOR_TYPE_WELCOME:
         editor = new EditorWelcome();
-        editor->setType(DefinationEditorType::EDITOR_TYPE_WELCOME);
         break;
     case EDITOR_TYPE_GO:
         editor = new EditorGO();
-        editor->setType(DefinationEditorType::EDITOR_TYPE_GO);
         break;
     case EDITOR_TYPE_GO_MARKOV:
         editor = new EditorGOMarkov();
-        editor->setType(DefinationEditorType::EDITOR_TYPE_GO_MARKOV);
         break;
     case EDITOR_TYPE_WEBVIEW:
         editor = new EditorWebView();
-        editor->setType(DefinationEditorType::EDITOR_TYPE_WEBVIEW);
         break;
+    case EDITOR_TYPE_GO_MARKOV_CHART:
+        editor = new EditorGOMarkovChart();
+        break;
+    }
+    if (editor != 0L)
+    {
+        editor->setType(type);
     }
     return editor;
 }

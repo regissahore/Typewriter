@@ -3,8 +3,8 @@
 
 EditorGOMarkov::EditorGOMarkov(QWidget *parent) : EditorGO(parent)
 {
-    delete this->view;
-    this->view = new ViewGOMarkov(this);
-    this->layout()->addWidget(this->view);
+    delete this->_view;
+    this->_view = new ViewGOMarkov(this);
+    this->layout()->addWidget(this->_view);
     this->_filter = tr("GO Markov Files(*.gom)");
 }

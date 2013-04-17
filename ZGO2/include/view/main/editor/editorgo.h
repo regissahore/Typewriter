@@ -24,7 +24,7 @@ public:
     bool tryOpen(const QString path);
     
 protected:
-    ViewGO *view;
+    ViewGO *_view;
 };
 
 #endif // EDITORGO_H

@@ -8,9 +8,9 @@
  */
 EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
 {
-    this->view = new ViewGO(this);
+    this->_view = new ViewGO(this);
     QGridLayout *layout = new QGridLayout();
-    layout->addWidget(this->view, 0, 0);
+    layout->addWidget(this->_view, 0, 0);
     layout->setMargin(0);
     layout->setSpacing(0);
     this->setLayout(layout);
@@ -24,7 +24,7 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
 void EditorGO::bindMessage(MessageController *controller)
 {
     this->EditorAbstract::bindMessage(controller);
-    this->view->bindMessage(controller);
+    this->_view->bindMessage(controller);
 }
 
 void EditorGO::messageEvent(Message *message)
@@ -33,7 +33,7 @@ void EditorGO::messageEvent(Message *message)
     {
         message->paramString = this->path();
     }
-    this->view->messageEvent(message);
+    this->_view->messageEvent(message);
 }
 
 bool EditorGO::save()
@@ -42,7 +42,7 @@ bool EditorGO::save()
     QDomElement root = document.createElement("GO_Project");
     root.setAttribute("support", "ZHG");
     document.appendChild(root);
-    this->view->save(document, root);
+    this->_view->save(document, root);
     QFile file(this->path());
     if (!file.open(QIODevice::WriteOnly))
     {
@@ -82,7 +82,7 @@ bool EditorGO::tryOpen(const QString path)
     {
         return false;
     }
-    if (!this->view->tryOpen(element))
+    if (!this->_view->tryOpen(element))
     {
         return false;
     }

@@ -46,8 +46,6 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         data->ids.push_back(this->_operator[i]->id());
         data->types.push_back(this->_operator[i]->type());
         data->probabilities.push_back(QVector<double>());
-        data->lamdaResults.push_back(QVector<double>());
-        data->miuResults.push_back(QVector<double>());
     }
     for (int i = 0; i < count; ++i)
     {
@@ -73,8 +71,6 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
             data->probabilities[j].push_back(op->markovOutputStatus()->at(0)->probabilityNormal().toString().toDouble());
-            data->lamdaResults[j].push_back(op->markovOutputStatus()->at(0)->frequencyBreakdown().toString().toDouble());
-            data->miuResults[j].push_back(op->markovOutputStatus()->at(0)->frequencyRepair().toString().toDouble());
         }
     }
     return data;
