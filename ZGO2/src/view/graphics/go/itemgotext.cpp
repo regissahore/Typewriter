@@ -18,7 +18,7 @@ void ItemGOText::setText(const QString text)
     this->prepareGeometryChange();
 }
 
-bool ItemGOText::isSelected(float x, float y)
+bool ItemGOText::isSelectable(float x, float y)
 {
     QFont font;
     QFontMetricsF metrics(font);
@@ -30,7 +30,7 @@ bool ItemGOText::isSelected(float x, float y)
             y <= this->pos().y() + height;
 }
 
-bool ItemGOText::isSelected(float x, float y, float w, float h)
+bool ItemGOText::isSelectable(float x, float y, float w, float h)
 {
     float left, right, top, bottom;
     if (w >= 0)

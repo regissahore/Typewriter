@@ -111,6 +111,7 @@ void ItemGOOperator::setModel(GOOperator *model)
         for (int i = 0; i < number; ++i)
         {
             ItemArrow *arrow = new ItemArrow(this);
+            arrow->setColor(QColor(Qt::darkRed));
             arrow->setPos(- 75, startY);
             double angle = atan2(-startY, 75);
             double dist = sqrt(startY * startY + 75 * 75);
@@ -139,6 +140,7 @@ void ItemGOOperator::setModel(GOOperator *model)
         if (this->model()->subInput()->number() > 0)
         {
             ItemArrow *arrow = new ItemArrow(this);
+            arrow->setColor(QColor(Qt::darkRed));
             arrow->setPos(0, -75);
             arrow->setEnd(QPoint(0, 50));
             this->_subInputArrows->push_back(arrow);
@@ -164,7 +166,6 @@ QRectF ItemGOOperator::boundingRect() const
 {
     if (this->isSource())
     {
-        // The operator is a source.
         int num = 3;
         if (this->model()->input()->number() > num)
         {
@@ -180,7 +181,6 @@ QRectF ItemGOOperator::boundingRect() const
     }
     else
     {
-        // The operator is not a source.
         int num = 1;
         if (this->model()->input()->number() > num)
         {
@@ -204,7 +204,7 @@ QRectF ItemGOOperator::boundingRect() const
     }
 }
 
-bool ItemGOOperator::isSelected(float x, float y)
+bool ItemGOOperator::isSelectable(float x, float y)
 {
     return x > this->pos().x() - 25 &&
             x < this->pos().x() + 25 &&
@@ -212,7 +212,7 @@ bool ItemGOOperator::isSelected(float x, float y)
             y < this->pos().y() + 25;
 }
 
-bool ItemGOOperator::isSelected(float x, float y, float width, float height)
+bool ItemGOOperator::isSelectable(float x, float y, float width, float height)
 {
     float left, right, top, bottom;
     if (width >= 0)
@@ -269,16 +269,14 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
-    painter->setPen(Qt::black);
     painter->setPen(Qt::SolidLine);
+    painter->setPen(this->_color);
     painter->setBrush(Qt::NoBrush);
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
     if (this->isSource())
     {
-        painter->setPen(Qt::black);
-        painter->setBrush(Qt::NoBrush);
         painter->drawText(QRectF(-25, -25, 47, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
         QPoint points[3];
         points[0].setX(25);
@@ -291,8 +289,6 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     }
     else
     {
-        painter->setPen(Qt::black);
-        painter->setBrush(Qt::NoBrush);
         painter->drawText(QRectF(-25, -25, 50, 50),
                           Qt::AlignHCenter | Qt::AlignVCenter,
                           QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
@@ -371,12 +367,16 @@ void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
         if (index >= 0 && index < this->model()->input()->number())
         {
             (*this->_inputSignal)[index] = signal;
+            this->_inputArrows->at(index)->setColor(QColor(Qt::black));
+            this->_inputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
             (*this->_subInputSignal)[index] = signal;
+            this->_subInputArrows->at(index)->setColor(QColor(Qt::black));
+            this->_subInputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_OUTPUT:
@@ -402,12 +402,16 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
         if (index >= 0 && index < this->model()->input()->number())
         {
             (*this->_inputSignal)[index] = 0L;
+            this->_inputArrows->at(index)->setColor(QColor(Qt::red));
+            this->_inputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
             (*this->_subInputSignal)[index] = 0L;
+            this->_subInputArrows->at(index)->setColor(QColor(Qt::red));
+            this->_subInputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_OUTPUT:

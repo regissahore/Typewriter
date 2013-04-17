@@ -11,6 +11,10 @@ ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOP
 
 bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *event)
 {
+    if (this->_item != 0L)
+    {
+        this->_item->setColor(Qt::black);
+    }
     QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos());
     for (int i = 0; i < items.size(); ++i)
     {
@@ -21,7 +25,7 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
         }
         if (item->moveable())
         {
-            if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+            if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
                 this->_item = (ItemDrawable*)item;
                 this->_status = Status_Item_Moving;
@@ -38,9 +42,10 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
         {
             continue;
         }
-        if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+        if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
         {
             this->_item = (ItemDrawable*)item;
+            this->_item->setColor(QColor(Qt::darkBlue));
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGO()->sendMessage(message);
@@ -52,9 +57,10 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
         ItemDrawable* item = (ItemDrawable*)items[i];
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+            if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
                 this->_item = (ItemDrawable*)item;
+                this->_item->setColor(QColor(Qt::darkBlue));
                 Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                 message->setMessage(this->_item);
                 this->sceneGO()->sendMessage(message);

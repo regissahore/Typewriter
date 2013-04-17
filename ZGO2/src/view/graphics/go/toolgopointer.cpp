@@ -30,7 +30,7 @@ void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
         ItemDrawable* item = (ItemDrawable*)items[i];
         if (item->moveable())
         {
-            if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+            if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
                 this->_item = (ItemDrawable*)item;
                 setMoving(true);
@@ -41,7 +41,7 @@ void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items[i])->isSelected(event->scenePos().x(), event->scenePos().y()))
+        if (((ItemDrawable*)items[i])->isSelectable(event->scenePos().x(), event->scenePos().y()))
         {
             ItemGOFactory::sendSelectionMessage(this->sceneGO(), (ItemDrawable*)items[i]);
             this->_item = (ItemDrawable*)items[i];

@@ -58,7 +58,7 @@ QRectF ItemGOSignal::boundingRect() const
     return QRectF(left, top, right - left, bottom - top);
 }
 
-bool ItemGOSignal::isSelected(float x, float y)
+bool ItemGOSignal::isSelectable(float x, float y)
 {
     float left = this->pos().x();
     float right = this->pos().x() + (this->_endPos.x() >> 1);
@@ -108,7 +108,7 @@ bool ItemGOSignal::isSelected(float x, float y)
     return false;
 }
 
-bool ItemGOSignal::isSelected(float x, float y, float width, float height)
+bool ItemGOSignal::isSelectable(float x, float y, float width, float height)
 {
     float left, right, top, bottom;
     if (width >= 0)
@@ -208,9 +208,9 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
-    painter->setPen(Qt::black);
     painter->setPen(Qt::SolidLine);
-    painter->setBrush(Qt::NoBrush);
+    painter->setPen(this->_color);
+    painter->setBrush(this->_color);
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);

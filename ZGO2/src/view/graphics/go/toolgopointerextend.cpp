@@ -23,6 +23,15 @@ ToolGOPointerExtend::ToolGOPointerExtend(SceneGO *sceneGO) : ToolGOAbstract(scen
     this->graphicsView()->setCursor(Qt::ArrowCursor);
 }
 
+ToolGOPointerExtend::~ToolGOPointerExtend()
+{
+    this->ToolGOAbstract::~ToolGOAbstract();
+    if (this->_item != 0L)
+    {
+        this->_item->setColor(QColor(Qt::black));
+    }
+}
+
 void ToolGOPointerExtend::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     switch (this->_status)
@@ -144,13 +153,17 @@ bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
 
 bool ToolGOPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *event)
 {
+    if (this->_item != 0L)
+    {
+        this->_item->setColor(Qt::black);
+    }
     QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos());
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items[i];
         if (item->moveable())
         {
-            if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+            if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
                 this->_item = (ItemDrawable*)item;
                 this->_status = Status_Item_Moving;
@@ -163,9 +176,10 @@ bool ToolGOPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *eve
     for (int i = 0 ; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+        if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
         {
             this->_item = (ItemDrawable*)item;
+            this->_item->setColor(QColor(Qt::darkBlue));
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGO()->sendMessage(message);
@@ -227,7 +241,7 @@ bool ToolGOPointerExtend::mouseMoveStatusNullItem(QGraphicsSceneMouseEvent *even
         ItemDrawable* item = (ItemDrawable*)items[i];
         if (item->moveable())
         {
-            if (item->isSelected(event->scenePos().x(), event->scenePos().y()))
+            if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
                 this->graphicsView()->setCursor(Qt::SizeAllCursor);
                 return true;
@@ -236,7 +250,7 @@ bool ToolGOPointerExtend::mouseMoveStatusNullItem(QGraphicsSceneMouseEvent *even
     }
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items[i])->isSelected(event->scenePos().x(), event->scenePos().y()))
+        if (((ItemDrawable*)items[i])->isSelectable(event->scenePos().x(), event->scenePos().y()))
         {
             return true;
         }
@@ -253,13 +267,18 @@ bool ToolGOPointerExtend::mouseMoveStatusNullScene(QGraphicsSceneMouseEvent *eve
 
 void ToolGOPointerExtend::mouseReleaseStatusNull(QGraphicsSceneMouseEvent *event)
 {
+    if (this->_item != 0L)
+    {
+        this->_item->setColor(QColor(Qt::black));
+    }
     this->_item = 0L;
     QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos());
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items[i])->isSelected(event->scenePos().x(), event->scenePos().y()))
+        if (((ItemDrawable*)items[i])->isSelectable(event->scenePos().x(), event->scenePos().y()))
         {
             this->_item = (ItemDrawable*)items[i];
+            this->_item->setColor(QColor(Qt::darkBlue));
             break;
         }
     }
@@ -279,6 +298,7 @@ void ToolGOPointerExtend::mouseReleaseStatusItemMoving(QGraphicsSceneMouseEvent 
     if (this->_item)
     {
         ((ItemMoveable*)this->_item)->stopMove(event);
+        this->_item->setColor(QColor(Qt::darkBlue));
         ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
     }
     this->graphicsView()->setCursor(Qt::ArrowCursor);
@@ -289,6 +309,10 @@ void ToolGOPointerExtend::mouseReleaseStatusSceneMoving(QGraphicsSceneMouseEvent
 {
     Q_UNUSED(event);
     this->_status = Status_Null;
+    if (this->_item != 0L)
+    {
+        this->_item->setColor(QColor(Qt::black));
+    }
     this->_item = 0L;
     ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_item);
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);

@@ -8,6 +8,7 @@
 ItemDrawable::ItemDrawable(QGraphicsItem *parent) : QGraphicsItem(parent)
 {
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_NULL);
+    this->_color = QColor(Qt::black);
 }
 
 /**
@@ -23,7 +24,7 @@ ItemDrawable::~ItemDrawable()
  * @param y Y position.
  * @return Returns true if the item is selected, otherwise false.
  */
-bool ItemDrawable::isSelected(float x, float y)
+bool ItemDrawable::isSelectable(float x, float y)
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
@@ -38,7 +39,7 @@ bool ItemDrawable::isSelected(float x, float y)
  * @param height Height.
  * @return Returns true if the item is selected, otherwise false.
  */
-bool ItemDrawable::isSelected(float x, float y, float width, float height)
+bool ItemDrawable::isSelectable(float x, float y, float width, float height)
 {
     Q_UNUSED(x);
     Q_UNUSED(y);
@@ -54,6 +55,12 @@ bool ItemDrawable::isSelected(float x, float y, float width, float height)
 bool ItemDrawable::moveable() const
 {
     return false;
+}
+
+void ItemDrawable::setColor(QColor color)
+{
+    this->_color = color;
+    this->update();
 }
 
 void ItemDrawable::save(QDomDocument &document, QDomElement &root)

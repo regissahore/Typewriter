@@ -63,9 +63,9 @@ void ItemArrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, Q
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
-    painter->setPen(Qt::black);
     painter->setPen(Qt::SolidLine);
-    painter->setBrush(Qt::black);
+    painter->setPen(this->_color);
+    painter->setBrush(this->_color);
     painter->drawLine(QPoint(0, 0), this->end());
     double angle = atan2(this->end().y(), this->end().x());
     angle = angle + PI;

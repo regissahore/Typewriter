@@ -148,7 +148,7 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
             {
                 continue;
             }
-            if (((ItemDrawable*)items[i])->isSelected(this->_selection->pos().x(),
+            if (((ItemDrawable*)items[i])->isSelectable(this->_selection->pos().x(),
                                                       this->_selection->pos().y(),
                                                       this->_selection->end().x(),
                                                       this->_selection->end().y()))

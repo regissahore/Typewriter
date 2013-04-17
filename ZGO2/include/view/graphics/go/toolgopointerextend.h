@@ -14,6 +14,7 @@ class ToolGOPointerExtend : public ToolGOAbstract
 {
 public:
     ToolGOPointerExtend(SceneGO *sceneGO);
+    ~ToolGOPointerExtend();
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);

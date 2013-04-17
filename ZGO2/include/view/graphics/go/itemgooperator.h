@@ -22,8 +22,8 @@ public:
     void setModel(GOOperator *model);
     void updateGraphic();
     QRectF boundingRect() const;
-    bool isSelected(float x, float y);
-    bool isSelected(float x, float y, float width, float height);
+    bool isSelectable(float x, float y);
+    bool isSelectable(float x, float y, float width, float height);
     void move(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     QPoint getInputPosition(int index);

@@ -12,8 +12,8 @@ public:
     ItemGOText(QGraphicsItem *parent = 0);
     QString text() const;
     void setText(const QString text);
-    bool isSelected(float x, float y);
-    bool isSelected(float x, float y, float w, float h);
+    bool isSelectable(float x, float y);
+    bool isSelectable(float x, float y, float w, float h);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void save(QDomDocument &document, QDomElement &root);
