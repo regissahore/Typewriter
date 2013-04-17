@@ -14,3 +14,7 @@ doxygen
 
 # Language Files
 *.qm
+
+# GO Results
+*.html
+*.goc
