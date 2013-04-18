@@ -191,7 +191,7 @@ void ToolGOOperator::getInputNumber()
     if (dialog->exec() == QDialog::Accepted)
     {
         this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
-        this->_GOOperator->updateGraphic();
+        this->_GOOperator->setModel(this->_GOOperator->model());
     }
     else
     {
@@ -214,7 +214,7 @@ void ToolGOOperator::getOutputNumber()
     if (dialog->exec() == QDialog::Accepted)
     {
         this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
-        this->_GOOperator->updateGraphic();
+        this->_GOOperator->setModel(this->_GOOperator->model());
     }
     else
     {

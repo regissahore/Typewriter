@@ -46,7 +46,7 @@ void ItemGOMarkovOperator::move(QGraphicsSceneMouseEvent *event)
 void ItemGOMarkovOperator::setModelType(const int type)
 {
     this->_model = GOMarkovOperatorFactory::produce(type);
-    this->updateGraphic();
+    this->setModel(this->_model);
 }
 
 bool ItemGOMarkovOperator::tryOpen(QDomElement &root)

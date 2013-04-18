@@ -20,7 +20,6 @@ public:
     virtual void setModelType(const int type);
     GOOperator *model() const;
     void setModel(GOOperator *model);
-    void updateGraphic();
     QRectF boundingRect() const;
     bool isSelectable(float x, float y);
     bool isSelectable(float x, float y, float width, float height);

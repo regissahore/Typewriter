@@ -257,7 +257,7 @@ BigDecimal GOAnalysis::calcTempAccumulative(GOOperator *op, int index, QVector<G
         case GOOperatorFactory::Operator_Type_8:
             return calcTempAccumulativeType8(op, inputValues, subInputValues, accIndex);
         case GOOperatorFactory::Operator_Type_9:
-            return calcTempAccumulativeType9(op, inputValues, subInputValues, accIndex);
+            return calcTempAccumulativeType9(op, index, commonOperator, commonIndex, accValues, accIndex);
         case GOOperatorFactory::Operator_Type_10:
             return calcTempAccumulativeType10(op, inputValues, subInputValues, accIndex);
         case GOOperatorFactory::Operator_Type_11:
@@ -426,10 +426,11 @@ void GOAnalysis::calcAccumulativeProbabilityType9(GOOperator *op)
             }
         }
     }
-    for (int i = 1; i < Ag->number(); ++i)
+    for (int i = 1; i < Ag->number() - 1; ++i)
     {
         Ag->setAccumulative(i, Ag->accumulative(i) + Ag->accumulative(i - 1));
     }
+    Ag->setAccumulative(Ag->number() - 1, BigDecimal::one());
 }
 
 void GOAnalysis::calcAccumulativeProbabilityType10(GOOperator *op)
@@ -614,12 +615,60 @@ BigDecimal GOAnalysis::calcTempAccumulativeType8(GOOperator *op, QVector<BigDeci
     return BigDecimal::valueOf(-1.0);
 }
 
-BigDecimal GOAnalysis::calcTempAccumulativeType9(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex)
+BigDecimal GOAnalysis::calcTempAccumulativeType9(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<BigDecimal> &accValues, int accIndex)
 {
-    BigDecimal value = BigDecimal::zero();
-    for (int i = 1; i < inputValues.size(); ++i)
+    Q_UNUSED(index);
+    GOSignal *inputSignal = op->input()->signal()->at(0);
+    GOSignal *subInputSignal = op->subInput()->signal()->at(0);
+    GOOperator *inputOperator = inputSignal->next(op);
+    GOOperator *subInputOperator = subInputSignal->next(op);
+    int inputIndex = inputOperator->output()->getSignalIndex(inputSignal);
+    int subInputIndex = subInputOperator->output()->getSignalIndex(subInputSignal);
+    int inputStatusNumber = inputOperator->status()->number();
+    int subInputStatusNumber = subInputOperator->status()->number();
+    int statusNumber = inputStatusNumber > subInputStatusNumber ? inputStatusNumber : subInputStatusNumber;
+    QVector<BigDecimal> inputValues;
+    QVector<BigDecimal> subInputValues;
+    for (int i = 0; i < inputStatusNumber; ++i)
     {
-        for (int j = 1; j < subInputValues.size(); ++j)
+        BigDecimal value = calcTempAccumulative(inputOperator, inputIndex, commonOperator, commonIndex, accValues, i);
+        if (value < BigDecimal::zero())
+        {
+            inputValues.push_back(value.opposite());
+        }
+        else
+        {
+            inputValues.push_back(value);
+        }
+    }
+    for (int i = 0; i < subInputStatusNumber; ++i)
+    {
+        BigDecimal value = calcTempAccumulative(subInputOperator, subInputIndex, commonOperator, commonIndex, accValues, i);
+        if (value < BigDecimal::zero())
+        {
+            subInputValues.push_back(value.opposite());
+        }
+        else
+        {
+            subInputValues.push_back(value);
+        }
+    }
+    for (int i = inputStatusNumber - 1; i > 0; --i)
+    {
+        inputValues[i] = inputValues[i] - inputValues[i - 1];
+    }
+    for (int i = subInputStatusNumber - 1; i > 0; --i)
+    {
+        subInputValues[i] = subInputValues[i] = subInputValues[i - 1];
+    }
+    QVector<BigDecimal> probability;
+    for (int i = 0; i < statusNumber; ++i)
+    {
+        probability.push_back(BigDecimal::zero());
+    }
+    for (int i = 0; i < inputStatusNumber; ++i)
+    {
+        for (int j = 0; j < subInputStatusNumber; ++j)
         {
             for (int k = 0; k < op->parameter()->number(); k += 2)
             {
@@ -630,36 +679,20 @@ BigDecimal GOAnalysis::calcTempAccumulativeType9(GOOperator *op, QVector<BigDeci
                     {
                         index = 0;
                     }
-                    if (index >= inputValues.size())
+                    if (index >= statusNumber)
                     {
-                        index = inputValues.size() - 1;
+                        index = statusNumber - 1;
                     }
-                    if (index <= accIndex)
-                    {
-                        BigDecimal p1, p2;
-                        if (i == 0)
-                        {
-                            p1 = inputValues[0];
-                        }
-                        else
-                        {
-                            p1 = inputValues[i] - inputValues[i - 1];
-                        }
-                        if (j == 0)
-                        {
-                            p2 = subInputValues[0];
-                        }
-                        else
-                        {
-                            p2 = subInputValues[i] - subInputValues[i - 1];
-                        }
-                        value = value + p1 * p2;
-                    }
+                    probability[index] = probability[index] + inputValues[i] * subInputValues[j];
                 }
             }
         }
     }
-    return value;
+    for (int i = 1; i < statusNumber; ++i)
+    {
+        probability[i] = probability[i] + probability[i - 1];
+    }
+    return probability[accIndex];
 }
 
 BigDecimal GOAnalysis::calcTempAccumulativeType10(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex)

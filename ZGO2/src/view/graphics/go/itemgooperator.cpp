@@ -44,7 +44,7 @@ ItemGOOperator::~ItemGOOperator()
 void ItemGOOperator::setModelType(const int type)
 {
     this->_model = GOOperatorFactory::produce(type);
-    this->updateGraphic();
+    this->setModel(this->_model);
 }
 
 /**
@@ -148,14 +148,6 @@ void ItemGOOperator::setModel(GOOperator *model)
         }
         this->prepareGeometryChange();
     }
-}
-
-/**
- * Update the graphics view when the model is modified.
- */
-void ItemGOOperator::updateGraphic()
-{
-    this->setModel(this->_model);
 }
 
 /**
@@ -468,7 +460,6 @@ void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("type", this->model()->type());
     root.appendChild(element);
     this->model()->save(document, element);
-    this->updateGraphic();
 }
 
 bool ItemGOOperator::tryOpen(QDomElement &root)
