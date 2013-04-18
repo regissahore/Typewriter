@@ -289,6 +289,18 @@ GOGraph* SceneGO::generatorGOGraph()
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
+        {
+            ItemGOOperator *op = (ItemGOOperator*)item;
+            for (int j = 0; j < op->model()->output()->number(); ++j)
+            {
+                op->model()->output()->signal()->at(j)->clear();
+            }
+        }
+    }
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
         switch (item->TypedItem::type())
         {
         case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:

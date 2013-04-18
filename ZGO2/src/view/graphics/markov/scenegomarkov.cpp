@@ -146,6 +146,14 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
             operators.push_back((ItemGOMarkovOperator*)item);
         }
     }
+    for (int i = 0; i < operators.size(); ++i)
+    {
+        ItemGOMarkovOperator *op = operators[i];
+        for (int j = 0; j < op->model()->output()->number(); ++j)
+        {
+            op->model()->output()->signal()->at(j)->clear();
+        }
+    }
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
