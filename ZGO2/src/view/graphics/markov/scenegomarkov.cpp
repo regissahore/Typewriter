@@ -13,6 +13,7 @@
 #include "dialoggomarkovperiod.h"
 #include "messagefactory.h"
 #include "gomarkovchartdata.h"
+#include "gomarkovequivalent.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
@@ -104,6 +105,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
         }
         signalList[i]->updatePosition();
     }
+    equivalentList = this->getTopologyOrder(equivalentList);
     for (int i = 0; i < equivalentList.size(); ++i)
     {
         equivalentList[i]->bindOperators(operatorList, equivalentList);
@@ -240,6 +242,69 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
         }
     }
     return graph;
+}
+
+QList<ItemGOMarkovEquivalent*> SceneGOMarkov::getTopologyOrder(QList<ItemGOMarkovEquivalent*> equivalents)
+{
+    for (int i = 0; i < equivalents.size(); ++i)
+    {
+        for (int j = 0; j < equivalents[i]->model()->idList()->size(); ++j)
+        {
+            for (int k = 0; k < equivalents.size(); ++k)
+            {
+                if (equivalents[i]->model()->idList()->at(j) == equivalents[k]->id())
+                {
+                    equivalents[k]->setFatherEquivalent(equivalents[i]);
+                    break;
+                }
+            }
+        }
+    }
+    QVector<int> inputNumber;
+    for (int i = 0; i < equivalents.size(); ++i)
+    {
+        inputNumber.push_back(0);
+    }
+    for (int i = 0; i < equivalents.size(); ++i)
+    {
+        ItemGOMarkovEquivalent *equivalent = equivalents[i]->fatherEquivalent();
+        if (equivalent != 0L)
+        {
+            for (int j = 0; j < equivalents.size(); ++j)
+            {
+                if (equivalents[j] == equivalent)
+                {
+                    ++inputNumber[j];
+                }
+            }
+        }
+    }
+    QList<ItemGOMarkovEquivalent*> order;
+    for (int i = 0; i < equivalents.size(); ++i)
+    {
+        if (inputNumber[i] == 0)
+        {
+            order.push_back(equivalents[i]);
+        }
+    }
+    for (int i = 0; i < order.size(); ++i)
+    {
+        ItemGOMarkovEquivalent *equivalent = order[i]->fatherEquivalent();
+        if (equivalent != 0L)
+        {
+            for (int j = 0; j < equivalents.size(); ++j)
+            {
+                if (equivalents[j] == equivalent)
+                {
+                    if (--inputNumber[j] == 0)
+                    {
+                        order.push_back(equivalents[j]);
+                    }
+                }
+            }
+        }
+    }
+    return order;
 }
 
 void SceneGOMarkov::analysisProbability(const QString filePath)

@@ -6,6 +6,8 @@
  */
 #include "scenego.h"
 
+class ItemGOMarkovEquivalent;
+
 class SceneGOMarkov : public SceneGO
 {
     Q_OBJECT
@@ -13,6 +15,7 @@ public:
     SceneGOMarkov(QObject *parent = 0);
     bool tryOpen(QDomElement &root);
     GOGraph* generatorGOGraph();
+    QList<ItemGOMarkovEquivalent *> getTopologyOrder(QList<ItemGOMarkovEquivalent *> equivalents);
     void analysisProbability(const QString filePath);
 };
 
