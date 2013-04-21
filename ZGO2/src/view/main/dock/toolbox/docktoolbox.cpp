@@ -1,6 +1,7 @@
 #include "docktoolbox.h"
 #include "messagefactory.h"
 #include "toolboxabstract.h"
+#include "editorfactory.h"
 
 /**
  * 构造函数。
@@ -55,10 +56,10 @@ void DockToolbox::setToolbox(int editorType)
     int type = ToolboxFactory::TOOLBOX_TYPE_NULL;
     switch (editorType)
     {
-    case DefinationEditorType::EDITOR_TYPE_GO:
+    case EditorFactory::EDITOR_TYPE_GO:
         type = ToolboxFactory::TOOLBOX_TYPE_GO;
         break;
-    case DefinationEditorType::EDITOR_TYPE_GO_MARKOV:
+    case EditorFactory::EDITOR_TYPE_GO_MARKOV:
         type = ToolboxFactory::TOOLBOX_TYPE_GO_MARKOV;
         break;
     }

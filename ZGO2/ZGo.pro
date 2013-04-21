@@ -142,7 +142,8 @@ HEADERS += \
     include/view/graphics/markov/itemgomarkovchart.h \
     include/view/graphics/markov/viewgomarkovchart.h \
     include/view/graphics/markov/scenegomarkovchart.h \
-    include/view/main/editor/editorgomarkovchart.h
+    include/view/main/editor/editorgomarkovchart.h \
+    include/view/main/main/gomainwindow.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -252,10 +253,12 @@ SOURCES += \
     src/view/graphics/markov/itemgomarkovchart.cpp \
     src/view/graphics/markov/viewgomarkovchart.cpp \
     src/view/graphics/markov/scenegomarkovchart.cpp \
-    src/view/main/editor/editorgomarkovchart.cpp
+    src/view/main/editor/editorgomarkovchart.cpp \
+    src/view/main/main/gomainwindow.cpp
 
 RESOURCES += \
     resource.qrc
 
 FORMS += \
-    form/dialoggomarkovperiod.ui
+    form/dialoggomarkovperiod.ui \
+    form/gomainwindow.ui
