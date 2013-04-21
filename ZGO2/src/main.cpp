@@ -1,3 +1,5 @@
+#include <QDir>
+#include <QString>
 #include <QTranslator>
 #include <QApplication>
 #include "gomainwindow.h"

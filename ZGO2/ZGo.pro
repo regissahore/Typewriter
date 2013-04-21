@@ -15,6 +15,8 @@ QT      += webkitwidgets
 TARGET = ZGO2
 TEMPLATE = app
 
+RC_FILE = resource.rc
+
 INCLUDEPATH += ./include
 INCLUDEPATH += ./include/controller/defination
 INCLUDEPATH += ./include/controller//message/control
@@ -65,7 +67,6 @@ HEADERS += \
     include/view/main/editor/editorfactory.h \
     include/view/main/editor/editorabstract.h \
     include/view/main/editor/editor.h \
-    include/view/main/main/mainwindow.h \
     include/view/main/menu/mainmenu.h \
     include/view/main/dock/toolbox/toolboxfactory.h \
     include/view/main/dock/toolbox/toolboxnull.h \
@@ -175,7 +176,6 @@ SOURCES += \
     src/view/main/editor/editorfactory.cpp \
     src/view/main/editor/editorabstract.cpp \
     src/view/main/editor/editor.cpp \
-    src/view/main/main/mainwindow.cpp \
     src/view/main/menu/mainmenu.cpp \
     src/main.cpp \
     src/view/main/dock/toolbox/toolboxfactory.cpp \

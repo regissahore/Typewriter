@@ -99,7 +99,7 @@ void GOMainWindow::initDock()
  */
 void GOMainWindow::initMenu()
 {
-    this->_mainMenu = new MainMenu();
+    this->_mainMenu = new MainMenu(this);
     this->setMenuBar(this->_mainMenu);
     this->_mainMenu->bindMessage(this->_messageController);
 }

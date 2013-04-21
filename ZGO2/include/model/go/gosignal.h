@@ -12,6 +12,7 @@ class GOSignal : public IdentifiedItem
 {
 public:
     GOSignal();
+    virtual ~GOSignal();
     GOOperator* u() const;
     GOOperator* v() const;
     GOOperator* next(GOOperator *op) const;

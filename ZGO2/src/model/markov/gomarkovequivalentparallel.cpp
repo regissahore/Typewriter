@@ -11,7 +11,7 @@ GOMarkovEquivalentParallel::GOMarkovEquivalentParallel() : GOMarkovEquivalent()
 
 GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
 {
-    int M, K;
+    int M, K = 0;
     int I = this->I();
     int L = this->L();
     int J = this->J();

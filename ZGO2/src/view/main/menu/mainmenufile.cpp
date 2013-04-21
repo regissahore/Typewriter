@@ -1,6 +1,6 @@
 #include "mainmenufile.h"
 #include "messagefactory.h"
-#include "definationeditortype.h"
+#include "editorfactory.h"
 
 MainMenuFile::MainMenuFile() : MainMenuAbstract()
 {
@@ -37,14 +37,14 @@ MainMenuFile::MainMenuFile() : MainMenuAbstract()
 void MainMenuFile::slotActionNew()
 {
     Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
-    message->paramInt = DefinationEditorType::EDITOR_TYPE_GO;
+    message->paramInt = EditorFactory::EDITOR_TYPE_GO;
     this->sendMessage(message);
 }
 
 void MainMenuFile::slotActionNewMarkov()
 {
     Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
-    message->paramInt = DefinationEditorType::EDITOR_TYPE_GO_MARKOV;
+    message->paramInt = EditorFactory::EDITOR_TYPE_GO_MARKOV;
     this->sendMessage(message);
 }
 

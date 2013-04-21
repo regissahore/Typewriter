@@ -7,6 +7,10 @@ GOSignal::GOSignal()
     this->_v = 0L;
 }
 
+GOSignal::~GOSignal()
+{
+}
+
 GOOperator *GOSignal::u() const
 {
     return this->_u;

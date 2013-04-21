@@ -5,7 +5,6 @@
 #include "editorgomarkov.h"
 #include "editorwebview.h"
 #include "editorgomarkovchart.h"
-#include "definationeditortype.h"
 
 /**
  * 生成编辑器的实例。
