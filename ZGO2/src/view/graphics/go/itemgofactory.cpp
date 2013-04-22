@@ -3,6 +3,8 @@
 #include "itemgosignal.h"
 #include "itemgofactory.h"
 #include "itemgooperator.h"
+#include "itemgomarkovoperator.h"
+#include "itemgomarkovequivalent.h"
 #include "gooperatorfactory.h"
 #include "messagefactory.h"
 #include "definationeditorselectiontype.h"
@@ -36,6 +38,10 @@ ItemGOSignal* ItemGOFactory::produceSignal()
  */
 void ItemGOFactory::deleteItem(ItemDrawable *item)
 {
+    if (item == 0L)
+    {
+        return;
+    }
     int type = item->TypedItem::type();
     if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
     {
@@ -44,10 +50,26 @@ void ItemGOFactory::deleteItem(ItemDrawable *item)
         {
             deleteItem(signal[i]);
         }
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+            if (op->fatherEquivalent() != 0L)
+            {
+                deleteItem(op->fatherEquivalent());
+            }
+        }
     }
     else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
     {
         ((ItemGOSignal*)item)->removeConnection();
+    }
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+    {
+        ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
+        if (eq->fatherEquivalent() != 0L)
+        {
+            deleteItem(eq->fatherEquivalent());
+        }
     }
     delete item;
 }
@@ -74,6 +96,10 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             selectedSignal.push_back((ItemGOSignal*)items[i]);
+        }
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            items[i] = 0L;
         }
     }
     qSort(allSignal.begin(), allSignal.end());
