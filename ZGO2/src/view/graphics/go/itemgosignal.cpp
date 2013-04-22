@@ -60,52 +60,14 @@ QRectF ItemGOSignal::boundingRect() const
 
 bool ItemGOSignal::isSelectable(float x, float y)
 {
-    float left = this->pos().x();
-    float right = this->pos().x() + (this->_endPos.x() >> 1);
-    if (left > right)
+    if (this->_endPos.x() == 0 && this->_endPos.y() == 0)
     {
-        qSwap(left, right);
+        return false;
     }
-    if (x >= left && x <= right)
-    {
-        float top = this->pos().y() - 2;
-        float bottom = this->pos().y() + 2;
-        if (y >= top && y <= bottom)
-        {
-            return true;
-        }
-    }
-    left = this->pos().x() + (this->_endPos.x() >> 1);
-    right = this->pos().x() + this->_endPos.x();
-    if (left > right)
-    {
-        qSwap(left, right);
-    }
-    if (x >= left && x <= right)
-    {
-        float top = this->pos().y() + this->_endPos.y() - 2;
-        float bottom = this->pos().y() + this->_endPos.y() + 2;
-        if (y >= top && y <= bottom)
-        {
-            return true;
-        }
-    }
-    float top = this->pos().y();
-    float bottom = this->pos().y() + this->_endPos.y();
-    if (top > bottom)
-    {
-        qSwap(top, bottom);
-    }
-    if (y >= top && y <= bottom)
-    {
-        left = this->pos().x() + (this->_endPos.x() >> 1) - 2;
-        right = this->pos().y() + (this->_endPos.y() >> 1) + 2;
-        if (x >= left && x <= right)
-        {
-            return true;
-        }
-    }
-    return false;
+    x -= this->pos().x();
+    y -= this->pos().y();
+    qreal length = qFabs((1.0 * this->_endPos.y() * x - this->_endPos.x() * y) / qSqrt(this->_endPos.x() * this->_endPos.x() + this->_endPos.y() * this->_endPos.y()));
+    return length < 5;
 }
 
 bool ItemGOSignal::isSelectable(float x, float y, float width, float height)
