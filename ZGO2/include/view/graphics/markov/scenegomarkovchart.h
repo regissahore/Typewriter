@@ -6,6 +6,7 @@
  */
 #include <QGraphicsScene>
 
+class ItemArrow;
 class GOMarkovChartData;
 class ItemGOMarkovChart;
 
@@ -19,11 +20,16 @@ public:
     bool tryOpen(QString path);
     void selectOperator(int index);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
 
 protected:
     GOMarkovChartData *_chartData;
     ItemGOMarkovChart *_chartItem;
+    ItemArrow *_leftArrow;
+    ItemArrow *_rightArrow;
+    QGraphicsTextItem *_leftText;
+    QGraphicsTextItem *_rightText;
     int _currentIndex;
 };
 
