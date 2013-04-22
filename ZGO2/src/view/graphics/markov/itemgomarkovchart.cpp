@@ -52,6 +52,7 @@ void ItemGOMarkovChart::setProbability(QVector<double> probability)
     this->_probability.clear();
     this->_maxProbability = 0.0;
     this->_minProbability = 1.0;
+    probability[0] = 1.0;
     for (int i = 0; i < probability.size(); ++i)
     {
         if (isinf(probability[i]) || isnan(probability[i]))
@@ -137,12 +138,11 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                       QObject::tr("Time"));
     if (this->_time.size() == this->_probability.size() && this->_time.size() > 0)
     {
-        float xStep = 1.0f * CHART_WIDTH / this->_time.size();
         if (this->_detailIndex >= 0 && this->_detailIndex < this->_time.size())
         {
             painter->setPen(Qt::darkGray);
-            float x = CHART_X + xStep * (this->_detailIndex + 1);
-            float y = CHART_Y + (CHART_HEIGHT - TEXT_MARGIN) * (this->_maxProbability - this->_probability[this->_detailIndex]) / (this->_maxProbability - this->_minProbability);
+            float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
+            float y = CHART_Y + CHART_HEIGHT * (this->_maxProbability - this->_probability[this->_detailIndex]) / (this->_maxProbability - this->_minProbability);
             painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
             painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT), QPointF(x, y));
             painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
@@ -159,8 +159,8 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         float lastY = 0.0f;
         for (int i = 0; i < this->_time.size(); ++i)
         {
-            float x = CHART_X + xStep * (i + 1);
-            float y = CHART_Y + (CHART_HEIGHT - TEXT_MARGIN) * (this->_maxProbability - this->_probability[i]) / (this->_maxProbability - this->_minProbability);
+            float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
+            float y = CHART_Y + CHART_HEIGHT * (this->_maxProbability - this->_probability[i]) / (this->_maxProbability - this->_minProbability);
             if (i > 0)
             {
                 painter->drawLine(QPointF(lastX, lastY), QPointF(x, y));
