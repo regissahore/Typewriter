@@ -96,8 +96,16 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             selectedSignal.push_back((ItemGOSignal*)items[i]);
+            items[i] = 0L;
         }
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            items[i] = 0L;
+        }
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
+        {
+        }
+        else
         {
             items[i] = 0L;
         }
@@ -115,7 +123,7 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
         }
         if (j < selectedSignal.size())
         {
-            while (j < selectedSignal.size() && selectedSignal[j] < allSignal[i])
+            while (j < selectedSignal.size() - 1 && selectedSignal[j] < allSignal[i])
             {
                 ++j;
             }

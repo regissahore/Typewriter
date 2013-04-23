@@ -360,7 +360,6 @@ void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
         {
             (*this->_inputSignal)[index] = signal;
             this->_inputArrows->at(index)->setColor(QColor(Qt::black));
-            this->_inputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_SUBINPUT:
@@ -368,7 +367,6 @@ void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
         {
             (*this->_subInputSignal)[index] = signal;
             this->_subInputArrows->at(index)->setColor(QColor(Qt::black));
-            this->_subInputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_OUTPUT:
@@ -395,7 +393,6 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
         {
             (*this->_inputSignal)[index] = 0L;
             this->_inputArrows->at(index)->setColor(QColor(Qt::red));
-            this->_inputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_SUBINPUT:
@@ -403,7 +400,6 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
         {
             (*this->_subInputSignal)[index] = 0L;
             this->_subInputArrows->at(index)->setColor(QColor(Qt::red));
-            this->_subInputArrows->at(index)->update();
         }
         break;
     case DefinationGOType::GO_OPERATOR_OUTPUT:
