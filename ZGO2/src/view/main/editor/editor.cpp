@@ -23,9 +23,9 @@ Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
     // 初始化工厂类和编辑器的集合。
     this->_editors = new QVector<EditorAbstract*>();
     this->_factory = new EditorFactory();
-    EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WELCOME);
+    /*EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WELCOME);
     this->_editors->push_back(editor);
-    this->_tabWidget->addTab(editor, editor->name());
+    this->_tabWidget->addTab(editor, editor->name());*/
 }
 
 /**

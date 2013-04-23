@@ -67,7 +67,6 @@ HEADERS += \
     include/view/main/editor/editorfactory.h \
     include/view/main/editor/editorabstract.h \
     include/view/main/editor/editor.h \
-    include/view/main/menu/mainmenu.h \
     include/view/main/dock/toolbox/toolboxfactory.h \
     include/view/main/dock/toolbox/toolboxnull.h \
     include/view/main/dock/toolbox/toolboxgo.h \
@@ -85,8 +84,6 @@ HEADERS += \
     include/view/graphics/go/itemgosignal.h \
     include/view/graphics/go/toolgosignal.h \
     include/view/graphics/go/itemgofactory.h \
-    include/view/main/menu/mainmenuabstract.h \
-    include/view/main/menu/mainmenufile.h \
     include/controller/message/message/messagefactory.h \
     include/model/common/domitem.h \
     include/view/dialog/dialogstringinput.h \
@@ -105,7 +102,6 @@ HEADERS += \
     include/model/go/gograph.h \
     include/model/go/goanalysis.h \
     include/view/main/dock/parameter/dialoggoprobability.h \
-    include/view/main/menu/mainmenuanalysis.h \
     include/view/main/editor/editorwebview.h \
     include/model/go/goaccumulative.h \
     include/model/go/goinput.h \
@@ -176,7 +172,6 @@ SOURCES += \
     src/view/main/editor/editorfactory.cpp \
     src/view/main/editor/editorabstract.cpp \
     src/view/main/editor/editor.cpp \
-    src/view/main/menu/mainmenu.cpp \
     src/main.cpp \
     src/view/main/dock/toolbox/toolboxfactory.cpp \
     src/view/main/dock/toolbox/toolboxnull.cpp \
@@ -195,8 +190,6 @@ SOURCES += \
     src/view/graphics/go/itemgosignal.cpp \
     src/view/graphics/go/toolgosignal.cpp \
     src/view/graphics/go/itemgofactory.cpp \
-    src/view/main/menu/mainmenuabstract.cpp \
-    src/view/main/menu/mainmenufile.cpp \
     src/controller/message/message/messagefactory.cpp \
     src/model/common/domitem.cpp \
     src/view/dialog/dialogstringinput.cpp \
@@ -215,7 +208,6 @@ SOURCES += \
     src/model/go/gograph.cpp \
     src/model/go/goanalysis.cpp \
     src/view/main/dock/parameter/dialoggoprobability.cpp \
-    src/view/main/menu/mainmenuanalysis.cpp \
     src/view/main/editor/editorwebview.cpp \
     src/model/go/goaccumulative.cpp \
     src/model/go/goinput.cpp \

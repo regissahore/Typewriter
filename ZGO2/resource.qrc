@@ -1,17 +1,17 @@
 <RCC>
     <qresource prefix="/icon">
-        <file>resouce/image/open.png</file>
-        <file>resouce/image/about.png</file>
-        <file>resouce/image/analysis.png</file>
-        <file>resouce/image/close.png</file>
-        <file>resouce/image/help.png</file>
-        <file>resouce/image/new.png</file>
-        <file>resouce/image/quit.png</file>
-        <file>resouce/image/save.png</file>
-        <file>resouce/image/saveall.png</file>
-        <file>resouce/image/saveas.png</file>
-        <file>resouce/image/start.png</file>
-        <file>resouce/image/cut.png</file>
-        <file>resouce/image/path.png</file>
+        <file>resource/image/about.png</file>
+        <file>resource/image/analysis.png</file>
+        <file>resource/image/close.png</file>
+        <file>resource/image/cut.png</file>
+        <file>resource/image/help.png</file>
+        <file>resource/image/new.png</file>
+        <file>resource/image/open.png</file>
+        <file>resource/image/path.png</file>
+        <file>resource/image/quit.png</file>
+        <file>resource/image/save.png</file>
+        <file>resource/image/saveall.png</file>
+        <file>resource/image/saveas.png</file>
+        <file>resource/image/start.png</file>
     </qresource>
 </RCC>
