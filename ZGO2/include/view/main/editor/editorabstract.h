@@ -30,6 +30,7 @@ public:
 
 protected:
     QString _filter; /** 用于文件保存的类型。 */
+    QString _suffix;
     virtual bool save();
     void setModified(bool value);
 

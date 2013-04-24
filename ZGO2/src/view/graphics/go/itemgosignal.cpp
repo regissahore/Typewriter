@@ -25,9 +25,7 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
  */
 ItemGOSignal::~ItemGOSignal()
 {
-    this->setParentItem(0L);
     delete this->_model;
-    GOSignalFactory::setID(GOSignalFactory::currentID() - 1);
     delete this->_start;
     delete this->_end;
 }

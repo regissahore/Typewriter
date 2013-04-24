@@ -19,7 +19,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>GO Methodology</string>
   </property>
   <widget class="QWidget" name="centralwidget"/>
   <widget class="QMenuBar" name="menubar">
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFIle_F">
@@ -98,7 +98,7 @@
   </widget>
   <widget class="QToolBar" name="toolBarAnalysis">
    <property name="windowTitle">
-    <string>Analysi</string>
+    <string>Analysis</string>
    </property>
    <property name="iconSize">
     <size>

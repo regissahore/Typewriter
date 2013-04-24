@@ -12,6 +12,7 @@ EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
     this->setPath("");
     this->_modified = true;
     this->_filter = tr("ZHG Files(*.zhg)");
+    this->_suffix = "zhg";
 }
 
 EditorAbstract::~EditorAbstract()
@@ -66,11 +67,16 @@ bool EditorAbstract::trySave()
 {
     if (this->path() == "")
     {
-        this->setPath(QFileDialog::getSaveFileName(this, tr("Save File"), ".", this->_filter));
-        if (this->path() == "")
+        QString filePath = QFileDialog::getSaveFileName(this, tr("Save File"), ".", this->_filter);
+        if (filePath == "")
         {
             return false;
         }
+        if (QFileInfo(filePath).suffix() != this->_suffix)
+        {
+            filePath.append("." + this->_suffix);
+        }
+        this->setPath(filePath);
     }
     if (this->save())
     {
@@ -86,11 +92,16 @@ bool EditorAbstract::trySave()
  */
 bool EditorAbstract::trySaveAs()
 {
-    this->setPath(QFileDialog::getSaveFileName(this, tr("Save File As"), ".", this->_filter));
-    if (this->path() == "")
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save File As"), ".", this->_filter);
+    if (filePath == "")
     {
-        return false; // 选取文件操作被取消。
+        return false;
     }
+    if (QFileInfo(filePath).suffix() != this->_suffix)
+    {
+        filePath.append("." + this->_suffix);
+    }
+    this->setPath(filePath);
     if (this->save())
     {
         this->setModified(false);

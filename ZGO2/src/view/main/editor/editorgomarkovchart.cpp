@@ -11,6 +11,7 @@ EditorGOMarkovChart::EditorGOMarkovChart(QWidget *parent) : EditorAbstract(paren
     layout->setSpacing(0);
     this->setLayout(layout);
     this->_filter = tr("GO Chart Files(*.goc)");
+    this->_suffix = "goc";
     this->setModified(false);
 }
 

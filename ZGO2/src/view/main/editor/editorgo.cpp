@@ -1,6 +1,7 @@
 #include <QDomDocument>
 #include "editorgo.h"
 #include "gosignalfactory.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -15,6 +16,7 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     layout->setSpacing(0);
     this->setLayout(layout);
     this->_filter = tr("GO Files(*.go)");
+    this->_suffix = "go";
 }
 
 /**
@@ -29,6 +31,19 @@ void EditorGO::bindMessage(MessageController *controller)
 
 void EditorGO::messageEvent(Message *message)
 {
+    switch (message->type())
+    {
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY:
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_PATH:
+    case MessageFactory::TYPE_EDITOR_ANALYSIS_CUT:
+        if (this->modified())
+        {
+            if (!this->trySave())
+            {
+                return;
+            }
+        }
+    }
     if (message->paramString == "")
     {
         message->paramString = this->path();

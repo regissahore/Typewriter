@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "toolgomarkovequivalent.h"
 #include "itemgomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
@@ -5,6 +6,7 @@
 #include "gomarkovequivalent.h"
 #include "scenego.h"
 #include "definationeditorselectiontype.h"
+#include "messagefactory.h"
 
 ToolGOMarkovEquivalent::ToolGOMarkovEquivalent(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -110,10 +112,14 @@ void ToolGOMarkovEquivalent::addEquivalent()
     }
     if (equivalent->model() == 0L)
     {
+        QMessageBox::information(0, QObject::tr("Error"), QObject::tr("No equivalent is valid."));
         delete equivalent;
     }
     else
     {
         this->graphicsScene()->addItem(equivalent);
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(equivalent);
+        this->sceneGO()->sendMessage(message);
     }
 }

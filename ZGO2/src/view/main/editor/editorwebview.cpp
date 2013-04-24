@@ -16,6 +16,7 @@ EditorWebView::EditorWebView(QWidget *parent) : EditorAbstract(parent)
     layout->addWidget(this->_webView);
     this->setModified(false);
     this->_filter = tr("HTML Files(*.html)");
+    this->_suffix = "html";
 }
 
 void EditorWebView::setPath(QString path)

@@ -748,26 +748,33 @@ bool GOGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
     out << "<body>" << endl;
     out << "<input type = hidden value = ZHG/>";
     path.sort();
-    for (int i = 0; i < path.list().size(); ++i)
+    if (path.list().size() == 0)
     {
-        out << QString("<h2>%1</h2>").arg(path.endList().at(i)->id()) <<endl;
-        out << "<table>" << endl;
-        out << "<tr>" << endl;
-        out << "<th>" + QObject::tr("No.") + "</th>" << endl;
-        out << "<th>" + QObject::tr("Order") + "</th>" << endl;
-        out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
-        out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
-        out << "</tr>" << endl;
-        for (int j = 0; j < path.list().at(i)->list().size(); ++j)
+        out << QObject::tr("Path or cut is not exist. ") << endl;
+    }
+    else
+    {
+        for (int i = 0; i < path.list().size(); ++i)
         {
+            out << QString("<h2>%1</h2>").arg(path.endList().at(i)->id()) <<endl;
+            out << "<table>" << endl;
             out << "<tr>" << endl;
-            out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
-            out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
-            out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
-            out << "<td>" + path.list().at(i)->list().at(j)->toProbabilityString() + "</td>" << endl;
+            out << "<th>" + QObject::tr("No.") + "</th>" << endl;
+            out << "<th>" + QObject::tr("Order") + "</th>" << endl;
+            out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
+            out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
             out << "</tr>" << endl;
+            for (int j = 0; j < path.list().at(i)->list().size(); ++j)
+            {
+                out << "<tr>" << endl;
+                out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
+                out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
+                out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
+                out << "<td>" + path.list().at(i)->list().at(j)->toProbabilityString() + "</td>" << endl;
+                out << "</tr>" << endl;
+            }
+            out << "</table>" << endl;
         }
-        out << "</table>" << endl;
     }
     out << "</body>" << endl;
     out << "</html>" << endl;
