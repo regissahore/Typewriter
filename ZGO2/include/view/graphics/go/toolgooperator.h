@@ -19,11 +19,11 @@ public:
     ~ToolGOOperator();
     void setType(const int type);
     void activate();
-    virtual void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    virtual void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 protected:
     ItemGOOperator *_GOOperator;
-    bool _finish; /** Whether the item is placed to the editor.  */
     void getInputNumber();
     void getOutputNumber();
 };

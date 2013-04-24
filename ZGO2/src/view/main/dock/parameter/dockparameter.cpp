@@ -13,6 +13,11 @@ DockParameter::DockParameter(QWidget *parent) : QDockWidget(parent), Messager()
     this->setWidget(this->_parameter);
 }
 
+DockParameter::~DockParameter()
+{
+    this->MessageListener::~MessageListener();
+}
+
 void DockParameter::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);

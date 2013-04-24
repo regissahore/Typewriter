@@ -13,7 +13,8 @@ public:
     explicit ToolboxGOMarkov(QWidget *parent = 0);
 
 private:
-    QPushButton *buttonGOEquivalent;
+    QPushButton *_buttonGOEquivalent;
+    void messageEvent(Message *message);
 
 protected slots:
     void setToolGOPointer();

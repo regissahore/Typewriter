@@ -107,8 +107,14 @@
        <property name="text">
         <string>Confirm</string>
        </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
        <property name="default">
         <bool>true</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
      </item>

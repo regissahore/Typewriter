@@ -9,22 +9,18 @@
 
 ToolGOText::ToolGOText(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
-    this->_item = new ItemGOText();
-    this->sceneGO()->addItem(this->_item);
-    this->_finish = false;
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
 }
 
 ToolGOText::~ToolGOText()
 {
-    if (!this->_finish)
-    {
-        delete this->_item;
-    }
+    delete this->_item;
 }
 
 void ToolGOText::activate()
 {
+    this->_item = new ItemGOText();
+    this->sceneGO()->addItem(this->_item);
     DialogStringInput *dialog = new DialogStringInput();
     dialog->setWindowTitle(QObject::tr("Text Tool"));
     dialog->setText(QObject::tr("Input text: "));
@@ -47,15 +43,27 @@ void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);
-    this->_finish = true;
-    // Set the tool.
-    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
-    this->sceneGO()->sendMessage(message);
-    // Set the selection.
-    message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
-    message->setMessage(this->_item);
-    this->sceneGO()->sendMessage(message);
-    this->_finish = true;
+    if (event->button() == Qt::LeftButton)
+    {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(this->_item);
+        this->sceneGO()->sendMessage(message);
+        this->activate();
+    }
+    else if (event->button() == Qt::RightButton)
+    {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
+}
+
+void ToolGOText::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape)
+    {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
 }

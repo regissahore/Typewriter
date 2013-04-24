@@ -16,9 +16,9 @@ public:
     void activate();
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 private:
     ItemGOText *_item;
-    bool _finish;
 };
 
 #endif // TOOLGOTEXT_H

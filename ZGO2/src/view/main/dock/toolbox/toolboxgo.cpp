@@ -18,48 +18,49 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
     this->_layout = new QVBoxLayout();
     this->_layout->setMargin(0);
     this->_layout->setSpacing(0);
-    this->buttonGOPointer = new QPushButton(tr("Pointer"), this);
-    this->connect(buttonGOPointer, SIGNAL(pressed()), this, SLOT(setToolGOPointer()));
-    this->_layout->addWidget(buttonGOPointer);
-    this->buttonSelect = new QPushButton(tr("Select"), this);
-    this->connect(buttonSelect, SIGNAL(pressed()), this, SLOT(setToolSelect()));
-    this->_layout->addWidget(buttonSelect);
-    this->buttonGOText = new QPushButton(tr("Text"), this);
-    this->connect(buttonGOText, SIGNAL(pressed()), this, SLOT(setToolGOText()));
-    this->_layout->addWidget(buttonGOText);
-    this->buttonGOOperator1 = new QPushButton(tr("Operator 1"), this);
-    this->connect(buttonGOOperator1, SIGNAL(pressed()), this, SLOT(setToolGOOperator1()));
-    this->_layout->addWidget(buttonGOOperator1);
-    this->buttonGOOperator2 = new QPushButton(tr("Operator 2"), this);
-    this->connect(buttonGOOperator2, SIGNAL(pressed()), this, SLOT(setToolGOOperator2()));
-    this->_layout->addWidget(buttonGOOperator2);
-    this->buttonGOOperator3 = new QPushButton(tr("Operator 3"), this);
-    this->connect(buttonGOOperator3, SIGNAL(pressed()), this, SLOT(setToolGOOperator3()));
-    this->_layout->addWidget(buttonGOOperator3);
+    this->_buttonGOPointer = new QPushButton(tr("Pointer"), this);
+    this->setSelectedTool(this->_buttonGOPointer);
+    this->connect(_buttonGOPointer, SIGNAL(pressed()), this, SLOT(setToolGOPointer()));
+    this->_layout->addWidget(_buttonGOPointer);
+    this->_buttonSelect = new QPushButton(tr("Select"), this);
+    this->connect(_buttonSelect, SIGNAL(pressed()), this, SLOT(setToolSelect()));
+    this->_layout->addWidget(_buttonSelect);
+    this->_buttonGOText = new QPushButton(tr("Text"), this);
+    this->connect(_buttonGOText, SIGNAL(pressed()), this, SLOT(setToolGOText()));
+    this->_layout->addWidget(_buttonGOText);
+    this->_buttonGOOperator1 = new QPushButton(tr("Operator 1"), this);
+    this->connect(_buttonGOOperator1, SIGNAL(pressed()), this, SLOT(setToolGOOperator1()));
+    this->_layout->addWidget(_buttonGOOperator1);
+    this->_buttonGOOperator2 = new QPushButton(tr("Operator 2"), this);
+    this->connect(_buttonGOOperator2, SIGNAL(pressed()), this, SLOT(setToolGOOperator2()));
+    this->_layout->addWidget(_buttonGOOperator2);
+    this->_buttonGOOperator3 = new QPushButton(tr("Operator 3"), this);
+    this->connect(_buttonGOOperator3, SIGNAL(pressed()), this, SLOT(setToolGOOperator3()));
+    this->_layout->addWidget(_buttonGOOperator3);
     //this->buttonGOOperator4 = new QPushButton(tr("Operator 4"), this);
     //this->connect(buttonGOOperator4, SIGNAL(pressed()), this, SLOT(setToolGOOperator4()));
     //this->_layout->addWidget(buttonGOOperator4);
-    this->buttonGOOperator5 = new QPushButton(tr("Operator 5"), this);
-    this->connect(buttonGOOperator5, SIGNAL(pressed()), this, SLOT(setToolGOOperator5()));
-    this->_layout->addWidget(buttonGOOperator5);
-    this->buttonGOOperator6 = new QPushButton(tr("Operator 6"), this);
-    this->connect(buttonGOOperator6, SIGNAL(pressed()), this, SLOT(setToolGOOperator6()));
-    this->_layout->addWidget(buttonGOOperator6);
-    this->buttonGOOperator7 = new QPushButton(tr("Operator 7"), this);
-    this->connect(buttonGOOperator7, SIGNAL(pressed()), this, SLOT(setToolGOOperator7()));
-    this->_layout->addWidget(buttonGOOperator7);
+    this->_buttonGOOperator5 = new QPushButton(tr("Operator 5"), this);
+    this->connect(_buttonGOOperator5, SIGNAL(pressed()), this, SLOT(setToolGOOperator5()));
+    this->_layout->addWidget(_buttonGOOperator5);
+    this->_buttonGOOperator6 = new QPushButton(tr("Operator 6"), this);
+    this->connect(_buttonGOOperator6, SIGNAL(pressed()), this, SLOT(setToolGOOperator6()));
+    this->_layout->addWidget(_buttonGOOperator6);
+    this->_buttonGOOperator7 = new QPushButton(tr("Operator 7"), this);
+    this->connect(_buttonGOOperator7, SIGNAL(pressed()), this, SLOT(setToolGOOperator7()));
+    this->_layout->addWidget(_buttonGOOperator7);
     //this->buttonGOOperator8 = new QPushButton(tr("Operator 8"), this);
     //this->connect(buttonGOOperator8, SIGNAL(pressed()), this, SLOT(setToolGOOperator8()));
     //this->_layout->addWidget(buttonGOOperator8);
-    this->buttonGOOperator9 = new QPushButton(tr("Operator 9"), this);
-    this->connect(buttonGOOperator9, SIGNAL(pressed()), this, SLOT(setToolGOOperator9()));
-    this->_layout->addWidget(buttonGOOperator9);
-    this->buttonGOOperator10 = new QPushButton(tr("Operator 10"), this);
-    this->connect(buttonGOOperator10, SIGNAL(pressed()), this, SLOT(setToolGOOperator10()));
-    this->_layout->addWidget(buttonGOOperator10);
-    this->buttonGOOperator11 = new QPushButton(tr("Operator 11"), this);
-    this->connect(buttonGOOperator11, SIGNAL(pressed()), this, SLOT(setToolGOOperator11()));
-    this->_layout->addWidget(buttonGOOperator11);
+    this->_buttonGOOperator9 = new QPushButton(tr("Operator 9"), this);
+    this->connect(_buttonGOOperator9, SIGNAL(pressed()), this, SLOT(setToolGOOperator9()));
+    this->_layout->addWidget(_buttonGOOperator9);
+    this->_buttonGOOperator10 = new QPushButton(tr("Operator 10"), this);
+    this->connect(_buttonGOOperator10, SIGNAL(pressed()), this, SLOT(setToolGOOperator10()));
+    this->_layout->addWidget(_buttonGOOperator10);
+    this->_buttonGOOperator11 = new QPushButton(tr("Operator 11"), this);
+    this->connect(_buttonGOOperator11, SIGNAL(pressed()), this, SLOT(setToolGOOperator11()));
+    this->_layout->addWidget(_buttonGOOperator11);
     //this->buttonGOOperator12 = new QPushButton(tr("Operator 12"), this);
     //this->connect(buttonGOOperator12, SIGNAL(pressed()), this, SLOT(setToolGOOperator12()));
     //this->_layout->addWidget(buttonGOOperator12);
@@ -91,6 +92,77 @@ ToolboxGO::ToolboxGO(QWidget *parent) :  ToolboxAbstract(parent)
 void ToolboxGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
+    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
+}
+
+void ToolboxGO::messageEvent(Message *message)
+{
+    if (message->type() == MessageFactory::TYPE_TOOL_SELECTION)
+    {
+        switch(message->paramInt)
+        {
+        case DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND:
+            this->setSelectedTool(this->_buttonGOPointer);
+            break;
+        case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
+            this->setSelectedTool(this->_buttonSelect);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_TEXT:
+            this->setSelectedTool(this->_buttonGOText);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
+            this->setSelectedTool(this->_buttonGOOperator1);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
+            this->setSelectedTool(this->_buttonGOOperator2);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_3:
+            this->setSelectedTool(this->_buttonGOOperator3);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_4:
+            this->setSelectedTool(this->_buttonGOOperator4);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_5:
+            this->setSelectedTool(this->_buttonGOOperator5);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_6:
+            this->setSelectedTool(this->_buttonGOOperator6);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_7:
+            this->setSelectedTool(this->_buttonGOOperator7);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_8:
+            this->setSelectedTool(this->_buttonGOOperator8);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_9:
+            this->setSelectedTool(this->_buttonGOOperator9);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_10:
+            this->setSelectedTool(this->_buttonGOOperator10);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_11:
+            this->setSelectedTool(this->_buttonGOOperator11);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_12:
+            this->setSelectedTool(this->_buttonGOOperator12);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_13:
+            this->setSelectedTool(this->_buttonGOOperator13);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_14:
+            this->setSelectedTool(this->_buttonGOOperator14);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_15:
+            this->setSelectedTool(this->_buttonGOOperator15);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
+            this->setSelectedTool(this->_buttonGOOperator16);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
+            this->setSelectedTool(this->_buttonGOOperator17);
+            break;
+        }
+    }
 }
 
 void ToolboxGO::setToolGOPointer()
@@ -98,7 +170,6 @@ void ToolboxGO::setToolGOPointer()
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
-
 }
 
 void ToolboxGO::setToolSelect()

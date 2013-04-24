@@ -7,6 +7,7 @@
 #include "scenego.h"
 #include "definationeditorselectiontype.h"
 #include "messagefactory.h"
+#include "definationtooltype.h"
 
 ToolGOMarkovEquivalent::ToolGOMarkovEquivalent(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -14,63 +15,76 @@ ToolGOMarkovEquivalent::ToolGOMarkovEquivalent(SceneGO *sceneGO) : ToolGOSelect(
 
 void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);
-    QList<QGraphicsItem *> items;
-    float x, y, width, height;
-    switch (this->_status)
+    if (event->button() == Qt::LeftButton)
     {
-    case Status_Selecting:
-        if (this->_selection->end().x() >= 0)
+        QList<QGraphicsItem *> items;
+        float x, y, width, height;
+        switch (this->_status)
         {
-            x = this->_selection->pos().x();
-            width = this->_selection->end().x();
-        }
-        else
-        {
-            x = this->_selection->pos().x() + this->_selection->end().x();
-            width = -this->_selection->end().x();
-        }
-        if (this->_selection->end().y() >= 0)
-        {
-            y = this->_selection->pos().y();
-            height = this->_selection->end().y();
-        }
-        else
-        {
-            y = this->_selection->pos().y() + this->_selection->end().y();
-            height = -this->_selection->end().y();
-        }
-        items = this->graphicsScene()->items(QRectF(x, y, width, height),
-                                             Qt::IntersectsItemBoundingRect);
-        this->_items.clear();
-        for (int i = 0; i < items.size(); ++i)
-        {
-            if (items[i] == this->_selection)
+        case Status_Selecting:
+            if (this->_selection->end().x() >= 0)
             {
-                continue;
+                x = this->_selection->pos().x();
+                width = this->_selection->end().x();
             }
-            if (((ItemDrawable*)items[i])->isSelectable(this->_selection->pos().x(),
-                                                      this->_selection->pos().y(),
-                                                      this->_selection->end().x(),
-                                                      this->_selection->end().y()))
+            else
             {
-                this->_items.push_back(items[i]);
+                x = this->_selection->pos().x() + this->_selection->end().x();
+                width = -this->_selection->end().x();
             }
+            if (this->_selection->end().y() >= 0)
+            {
+                y = this->_selection->pos().y();
+                height = this->_selection->end().y();
+            }
+            else
+            {
+                y = this->_selection->pos().y() + this->_selection->end().y();
+                height = -this->_selection->end().y();
+            }
+            items = this->graphicsScene()->items(QRectF(x, y, width, height),
+                                                 Qt::IntersectsItemBoundingRect);
+            this->_items.clear();
+            for (int i = 0; i < items.size(); ++i)
+            {
+                if (items[i] == this->_selection)
+                {
+                    continue;
+                }
+                if (((ItemDrawable*)items[i])->isSelectable(this->_selection->pos().x(),
+                                                          this->_selection->pos().y(),
+                                                          this->_selection->end().x(),
+                                                          this->_selection->end().y()))
+                {
+                    this->_items.push_back(items[i]);
+                }
+            }
+            this->addEquivalent();
+            this->_selection->setVisible(false);
+            this->_selection->update();
+            this->_status = Status_Null;
+            break;
+        default:
+            break;
         }
-        this->addEquivalent();
-        this->_selection->setVisible(false);
-        this->_selection->update();
-        this->_status = Status_Null;
-        break;
-    default:
-        break;
+        items.clear();
     }
-    items.clear();
+    else
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
 }
 
 void ToolGOMarkovEquivalent::keyReleaseEvent(QKeyEvent *event)
 {
-    Q_UNUSED(event);
+    if (event->key() == Qt::Key_Escape)
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
 }
 
 void ToolGOMarkovEquivalent::addEquivalent()

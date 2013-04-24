@@ -17,6 +17,7 @@ EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
 
 EditorAbstract::~EditorAbstract()
 {
+    this->MessageListener::~MessageListener();
 }
 
 /**

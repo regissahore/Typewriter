@@ -18,31 +18,32 @@ class ToolboxGO : public ToolboxAbstract
 public:
     explicit ToolboxGO(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
+    void messageEvent(Message *message);
 
 protected:
     QVBoxLayout *_layout;
 
-private:
-    QPushButton *buttonGOPointer;
-    QPushButton *buttonSelect;
-    QPushButton *buttonGOText;
-    QPushButton *buttonGOOperator1;
-    QPushButton *buttonGOOperator2;
-    QPushButton *buttonGOOperator3;
-    QPushButton *buttonGOOperator4;
-    QPushButton *buttonGOOperator5;
-    QPushButton *buttonGOOperator6;
-    QPushButton *buttonGOOperator7;
-    QPushButton *buttonGOOperator8;
-    QPushButton *buttonGOOperator9;
-    QPushButton *buttonGOOperator10;
-    QPushButton *buttonGOOperator11;
-    QPushButton *buttonGOOperator12;
-    QPushButton *buttonGOOperator13;
-    QPushButton *buttonGOOperator14;
-    QPushButton *buttonGOOperator15;
-    QPushButton *buttonGOOperator16;
-    QPushButton *buttonGOOperator17;
+protected:
+    QPushButton *_buttonGOPointer;
+    QPushButton *_buttonSelect;
+    QPushButton *_buttonGOText;
+    QPushButton *_buttonGOOperator1;
+    QPushButton *_buttonGOOperator2;
+    QPushButton *_buttonGOOperator3;
+    QPushButton *_buttonGOOperator4;
+    QPushButton *_buttonGOOperator5;
+    QPushButton *_buttonGOOperator6;
+    QPushButton *_buttonGOOperator7;
+    QPushButton *_buttonGOOperator8;
+    QPushButton *_buttonGOOperator9;
+    QPushButton *_buttonGOOperator10;
+    QPushButton *_buttonGOOperator11;
+    QPushButton *_buttonGOOperator12;
+    QPushButton *_buttonGOOperator13;
+    QPushButton *_buttonGOOperator14;
+    QPushButton *_buttonGOOperator15;
+    QPushButton *_buttonGOOperator16;
+    QPushButton *_buttonGOOperator17;
 
 protected slots:
     virtual void setToolGOPointer();

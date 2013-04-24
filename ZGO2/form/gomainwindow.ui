@@ -12,10 +12,10 @@
   </property>
   <property name="font">
    <font>
-    <family>宋体</family>
-    <pointsize>10</pointsize>
+    <family>微软雅黑</family>
     <weight>50</weight>
     <bold>false</bold>
+    <stylestrategy>PreferAntialias</stylestrategy>
    </font>
   </property>
   <property name="windowTitle">
@@ -28,7 +28,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFIle_F">

@@ -14,8 +14,6 @@
  */
 ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
-    this->_GOOperator = 0;
-    this->_finish = false;
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
 }
 
@@ -24,13 +22,7 @@ ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
  */
 ToolGOOperator::~ToolGOOperator()
 {
-    if (!this->_finish)
-    {
-        if (this->_GOOperator != 0L)
-        {
-            delete this->_GOOperator;
-        }
-    }
+    delete this->_GOOperator;
 }
 
 void ToolGOOperator::setType(const int type)
@@ -152,11 +144,8 @@ void ToolGOOperator::activate()
  */
 void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_GOOperator)
-    {
-        this->_GOOperator->setVisible(true);
-        this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
-    }
+    this->_GOOperator->setVisible(true);
+    this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
 }
 
 /**
@@ -165,16 +154,30 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    Q_UNUSED(event);
-    // Set the selection.
-    Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
-    message->setMessage(this->_GOOperator);
-    this->sceneGO()->sendMessage(message);
-    this->_finish = true;
-    // Set the tool.
-    message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
-    this->sceneGO()->sendMessage(message);
+    if (event->button() == Qt::LeftButton)
+    {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(this->_GOOperator);
+        this->sceneGO()->sendMessage(message);
+        this->setType(this->TypedItem::type());
+        this->activate();
+    }
+    else if (event->button() == Qt::RightButton)
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
+}
+
+void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Escape)
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        this->sceneGO()->sendMessage(message);
+    }
 }
 
 
