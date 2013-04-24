@@ -101,7 +101,7 @@ void ToolboxGO::messageEvent(Message *message)
     {
         switch(message->paramInt)
         {
-        case DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND:
+        case DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND:
             this->setSelectedTool(this->_buttonGOPointer);
             break;
         case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
@@ -168,7 +168,7 @@ void ToolboxGO::messageEvent(Message *message)
 void ToolboxGO::setToolGOPointer()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
 }
 

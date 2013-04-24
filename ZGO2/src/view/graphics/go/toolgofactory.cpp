@@ -34,7 +34,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
         tool = new ToolGOZoom(sceneGO);
         break;
-    case DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND:
+    case DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND:
         tool = new ToolGOPointerExtend(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_TEXT:

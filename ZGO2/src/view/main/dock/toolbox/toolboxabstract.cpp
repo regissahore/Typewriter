@@ -8,7 +8,7 @@ ToolboxAbstract::ToolboxAbstract(QWidget *parent) : QWidget(parent)
 
 ToolboxAbstract::~ToolboxAbstract()
 {
-    this->MessageListener::~MessageListener();
+    this->Messager::~Messager();
 }
 
 void ToolboxAbstract::setSelectedTool(QPushButton *tool)

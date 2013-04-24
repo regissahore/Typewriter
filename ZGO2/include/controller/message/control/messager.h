@@ -13,6 +13,7 @@ class Messager : public MessageCreator, public MessageListener
 {
 public:
     Messager();
+    virtual ~Messager();
     virtual void bindMessage(MessageController *controller);
 };
 

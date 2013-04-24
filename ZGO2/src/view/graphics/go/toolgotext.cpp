@@ -10,11 +10,16 @@
 ToolGOText::ToolGOText(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
+    this->_isActivated = false;
+    this->_item = 0L;
 }
 
 ToolGOText::~ToolGOText()
 {
-    delete this->_item;
+    if (this->_item != 0L)
+    {
+        delete this->_item;
+    }
 }
 
 void ToolGOText::activate()
@@ -31,14 +36,22 @@ void ToolGOText::activate()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
+    this->_isActivated = true;
 }
 
 void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->_item->setPos(event->scenePos().x(), event->scenePos().y());
+    if (this->_isActivated)
+    {
+        this->_item->setPos(event->scenePos().x(), event->scenePos().y());
+    }
+    else
+    {
+        this->activate();
+    }
 }
 
 void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
@@ -53,7 +66,7 @@ void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     else if (event->button() == Qt::RightButton)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -63,7 +76,7 @@ void ToolGOText::keyReleaseEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }

@@ -72,7 +72,7 @@ void ToolGOMarkovEquivalent::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -82,7 +82,7 @@ void ToolGOMarkovEquivalent::keyReleaseEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }

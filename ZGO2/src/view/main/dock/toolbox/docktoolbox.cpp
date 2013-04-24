@@ -34,6 +34,7 @@ QSize DockToolbox::sizeHint() const
  */
 void DockToolbox::bindMessage(MessageController *controller)
 {
+    this->Messager::bindMessage(controller);
     controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
@@ -81,7 +82,7 @@ void DockToolbox::setToolbox(int editorType)
         this->_toolbox = ToolboxFactory::produce(type);
         if (this->_toolbox)
         {
-            this->_toolbox->bindMessage(this->MessageListener::_messageController);
+            this->_toolbox->bindMessage(this->MessageCreator::_messageController);
             this->setWidget(this->_toolbox);
         }
     }

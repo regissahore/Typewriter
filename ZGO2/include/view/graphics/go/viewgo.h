@@ -15,6 +15,7 @@ class ViewGO : public GraphicsView, public Messager, public DomItem
     Q_OBJECT
 public:
     explicit ViewGO(QWidget *parent = 0);
+    ~ViewGO();
     void bindMessage(MessageController *controller);
     void messageEvent(Message *message);
     void save(QDomDocument &document, QDomElement &root);

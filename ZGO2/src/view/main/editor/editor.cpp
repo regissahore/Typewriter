@@ -67,11 +67,14 @@ bool Editor::tryCloseAll()
  */
 bool Editor::tryCloseTab(int index)
 {
-    if (this->_editors->at(index)->tryClose())
+    if (this->_editors->size() > 0)
     {
-        this->_editors->remove(index);
-        this->_tabWidget->removeTab(index);
-        return true;
+        if (this->_editors->at(index)->tryClose())
+        {
+            this->_editors->remove(index);
+            this->_tabWidget->removeTab(index);
+            return true;
+        }
     }
     return false;
 }

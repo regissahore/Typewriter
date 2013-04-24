@@ -7,6 +7,11 @@ Messager::Messager() : MessageCreator(), MessageListener()
 {
 }
 
+Messager::~Messager()
+{
+    this->MessageListener::~MessageListener();
+}
+
 /**
  * 绑定监听。
  * @param controller 消息管理器。

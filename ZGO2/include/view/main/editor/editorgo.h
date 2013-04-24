@@ -22,6 +22,7 @@ public:
     void messageEvent(Message *message);
     bool save();
     bool tryOpen(const QString path);
+    void activate();
     
 protected:
     ViewGO *_view;

@@ -2,6 +2,7 @@
 #include "editorgo.h"
 #include "gosignalfactory.h"
 #include "messagefactory.h"
+#include "definationtooltype.h"
 
 /**
  * 构造函数。
@@ -103,4 +104,11 @@ bool EditorGO::tryOpen(const QString path)
     }
     this->setModified(false);
     return true;
+}
+
+void EditorGO::activate()
+{
+    Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
+    this->sendMessage(message);
 }

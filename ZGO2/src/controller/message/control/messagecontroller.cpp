@@ -60,6 +60,7 @@ void MessageController::listen(int messageType, MessageListener *listener)
         (*this->_messages)[messageType] = this->_listeners->size();
         this->_listeners->push_back(QVector<MessageListener*>());
     }
+    listener->addListenedMessage(messageType);
     int index = (*this->_messages)[messageType];
     (*this->_listeners)[index].push_back(listener);
     listener->setMessageController(this);

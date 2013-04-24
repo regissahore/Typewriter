@@ -25,7 +25,6 @@
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
-    this->selectTool(DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND);
 }
 
 /**
@@ -33,6 +32,7 @@ SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
  */
 SceneGO::~SceneGO()
 {
+    this->Messager::~Messager();
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
     {
@@ -189,14 +189,12 @@ void SceneGO::selectTool(int type)
             {
                 delete this->_tool;
                 this->_tool = newTool;
-                this->_tool->activate();
             }
         }
     }
     else
     {
         this->_tool = ToolGOFactory::produce(this, type);
-        this->_tool->activate();
     }
 }
 

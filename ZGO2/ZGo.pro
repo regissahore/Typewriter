@@ -92,7 +92,6 @@ HEADERS += \
     include/view/main/dock/parameter/dockparameter.h \
     include/view/main/dock/parameter/parameterabstract.h \
     include/view/main/dock/parameter/parameterfactory.h \
-    include/view/main/dock/parameter/delegatelineedit.h \
     include/view/main/dock/parameter/parametergotext.h \
     include/view/main/dock/parameter/tablewidgetgoitem.h \
     include/view/main/dock/parameter/parametergosignal.h \
@@ -198,7 +197,6 @@ SOURCES += \
     src/view/main/dock/parameter/dockparameter.cpp \
     src/view/main/dock/parameter/parameterabstract.cpp \
     src/view/main/dock/parameter/parameterfactory.cpp \
-    src/view/main/dock/parameter/delegatelineedit.cpp \
     src/view/main/dock/parameter/parametergotext.cpp \
     src/view/main/dock/parameter/tablewidgetgoitem.cpp \
     src/view/main/dock/parameter/parametergosignal.cpp \

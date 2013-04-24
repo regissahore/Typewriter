@@ -24,6 +24,7 @@ public:
     void keyReleaseEvent(QKeyEvent *event);
 protected:
     ItemGOOperator *_GOOperator;
+    bool _isActivated;
     void getInputNumber();
     void getOutputNumber();
 };

@@ -19,6 +19,7 @@ public:
     void keyReleaseEvent(QKeyEvent *event);
 private:
     ItemGOText *_item;
+    bool _isActivated;
 };
 
 #endif // TOOLGOTEXT_H

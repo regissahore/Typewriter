@@ -11,10 +11,10 @@ class ToolboxGOMarkov : public ToolboxGO
     Q_OBJECT
 public:
     explicit ToolboxGOMarkov(QWidget *parent = 0);
+    void messageEvent(Message *message);
 
 private:
     QPushButton *_buttonGOEquivalent;
-    void messageEvent(Message *message);
 
 protected slots:
     void setToolGOPointer();

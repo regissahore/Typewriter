@@ -10,6 +10,11 @@ ViewGO::ViewGO(QWidget *parent) : GraphicsView(parent)
     this->setScene(this->_scene);
 }
 
+ViewGO::~ViewGO()
+{
+    this->Messager::~Messager();
+}
+
 /**
  * Bind message listener to controller.
  * @param controller The message controller.

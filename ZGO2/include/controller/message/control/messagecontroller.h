@@ -17,7 +17,7 @@ class MessageController
 {
 public:
     MessageController();
-    ~MessageController();
+    virtual ~MessageController();
     void send(Message *message);
     void listen(int messageType, MessageListener *listener);
     void release(int messageType, MessageListener *listener);

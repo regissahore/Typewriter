@@ -32,6 +32,8 @@ void ParameterGOOperator::bindItem(void *item)
         this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_5:
+        this->addProbability0Parameter();
+        this->addProbability12Parameter();
         this->addProbabilityMultipleParameter();
         break;
     case GOOperatorFactory::Operator_Type_6:

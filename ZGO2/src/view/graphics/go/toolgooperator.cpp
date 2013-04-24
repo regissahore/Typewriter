@@ -15,6 +15,8 @@
 ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
+    this->_isActivated = false;
+    this->_GOOperator = 0L;
 }
 
 /**
@@ -22,7 +24,10 @@ ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
  */
 ToolGOOperator::~ToolGOOperator()
 {
-    delete this->_GOOperator;
+    if (this->_GOOperator != 0L)
+    {
+        delete this->_GOOperator;
+    }
 }
 
 void ToolGOOperator::setType(const int type)
@@ -136,6 +141,7 @@ void ToolGOOperator::activate()
     default:
         break;
     }
+    this->_isActivated = true;
 }
 
 /**
@@ -144,8 +150,15 @@ void ToolGOOperator::activate()
  */
 void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->_GOOperator->setVisible(true);
-    this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
+    if (this->_isActivated)
+    {
+        this->_GOOperator->setVisible(true);
+        this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
+    }
+    else
+    {
+        this->activate();
+    }
 }
 
 /**
@@ -165,7 +178,7 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     else if (event->button() == Qt::RightButton)
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -175,7 +188,7 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -198,7 +211,7 @@ void ToolGOOperator::getInputNumber()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -221,7 +234,7 @@ void ToolGOOperator::getOutputNumber()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOLTYPE_GO_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
         this->sceneGO()->sendMessage(message);
     }
 }
