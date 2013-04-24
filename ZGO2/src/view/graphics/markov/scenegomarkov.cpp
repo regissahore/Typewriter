@@ -44,7 +44,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
             else
             {
                 flag = false;
-                this->removeItem(item);
+                delete item;
             }
         }
         else if (element.tagName() == "signal")
@@ -58,7 +58,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
             else
             {
                 flag = false;
-                this->removeItem(item);
+                delete item;
             }
         }
         else if (element.tagName() == "equivalent")

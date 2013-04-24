@@ -25,7 +25,6 @@ ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 ToolGOSelect::~ToolGOSelect()
 {
     this->_items.clear();
-    this->graphicsScene()->removeItem(this->_selection);
     delete this->_selection;
 }
 

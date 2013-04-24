@@ -385,7 +385,6 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
     }
     if (!found)
     {
-        this->graphicsScene()->removeItem(this->_signal);
         delete this->_signal;
     }
     else

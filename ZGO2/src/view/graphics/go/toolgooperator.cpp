@@ -28,7 +28,6 @@ ToolGOOperator::~ToolGOOperator()
     {
         if (this->_GOOperator != 0L)
         {
-            this->_GOOperator->setParentItem(0L);
             delete this->_GOOperator;
         }
     }

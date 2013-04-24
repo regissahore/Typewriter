@@ -19,7 +19,6 @@ ToolGOText::~ToolGOText()
 {
     if (!this->_finish)
     {
-        this->sceneGO()->removeItem(this->_item);
         delete this->_item;
     }
 }

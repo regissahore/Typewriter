@@ -29,11 +29,6 @@ SceneGOMarkovChart::SceneGOMarkovChart(QObject *parent) : QGraphicsScene(parent)
 
 SceneGOMarkovChart::~SceneGOMarkovChart()
 {
-    this->removeItem(this->_chartItem);
-    this->removeItem(this->_leftArrow);
-    this->removeItem(this->_rightArrow);
-    this->removeItem(this->_leftText);
-    this->removeItem(this->_rightText);
     delete this->_chartItem;
     delete this->_chartData;
     delete this->_leftArrow;

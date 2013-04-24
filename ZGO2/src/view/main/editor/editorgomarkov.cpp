@@ -7,5 +7,5 @@ EditorGOMarkov::EditorGOMarkov(QWidget *parent) : EditorGO(parent)
     this->_view = new ViewGOMarkov(this);
     this->layout()->addWidget(this->_view);
     this->_filter = tr("GO Markov Files(*.gom)");
-    this->_suffix = ".gom";
+    this->_suffix = "gom";
 }

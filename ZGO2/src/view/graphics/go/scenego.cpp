@@ -122,7 +122,7 @@ bool SceneGO::tryOpen(QDomElement &root)
             else
             {
                 flag = false;
-                this->removeItem(item);
+                delete item;
             }
         }
         else if (element.tagName() == "signal")
@@ -136,7 +136,7 @@ bool SceneGO::tryOpen(QDomElement &root)
             else
             {
                 flag = false;
-                this->removeItem(item);
+                delete item;
             }
         }
         else if (element.tagName() == "text")
