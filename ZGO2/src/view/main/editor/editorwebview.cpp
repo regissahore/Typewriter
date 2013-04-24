@@ -31,6 +31,10 @@ bool EditorWebView::trySaveAs()
     QString path = QFileDialog::getSaveFileName(this, tr("Save File As"), ".", this->_filter);
     if (path != "")
     {
+        if (QFileInfo(path).suffix() != this->_suffix)
+        {
+            path.append("." + this->_suffix);
+        }
         QFile file(path);
         if (!file.open(QIODevice::WriteOnly))
         {

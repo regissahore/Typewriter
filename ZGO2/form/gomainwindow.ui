@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>25</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFIle_F">
@@ -74,7 +74,15 @@
     <addaction name="actionAbout"/>
     <addaction name="actionHelp"/>
    </widget>
+   <widget class="QMenu" name="menuView_V">
+    <property name="title">
+     <string>View(&amp;V)</string>
+    </property>
+    <addaction name="actionTool_DockWidget"/>
+    <addaction name="actionParameter_DockWidget"/>
+   </widget>
    <addaction name="menuFIle_F"/>
+   <addaction name="menuView_V"/>
    <addaction name="menuAnalysis_A"/>
    <addaction name="menuLanguage_L"/>
    <addaction name="menuHelp_H"/>
@@ -267,6 +275,50 @@
    </property>
    <property name="text">
     <string>Find Cut</string>
+   </property>
+  </action>
+  <action name="actionTool_DockWidget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Tool DockWidget</string>
+   </property>
+  </action>
+  <action name="actionParameter_DockWidget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Parameter DockWidget</string>
+   </property>
+  </action>
+  <action name="actionFile_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>File Toolbar</string>
+   </property>
+  </action>
+  <action name="actionAnalysis_Toolbar">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Analysis Toolbar</string>
    </property>
   </action>
  </widget>

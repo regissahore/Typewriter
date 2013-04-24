@@ -102,6 +102,12 @@ void Editor::currentChange(int index)
         }
         this->sendMessage(message);
     }
+    else
+    {
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
+        message->paramInt = EditorFactory::EDITOR_TYPE_NULL;
+        this->sendMessage(message);
+    }
 }
 
 /**

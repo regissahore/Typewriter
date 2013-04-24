@@ -10,6 +10,7 @@
 #include "toolgomarkovoperator.h"
 #include "toolgomarkovequivalent.h"
 #include "toolgomarkovpointerextend.h"
+#include "toolgomarkovtext.h"
 
 /**
  * Produce a instantiated GO tool.
@@ -86,6 +87,9 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
         tool = new ToolGOMarkovEquivalent(sceneGO);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_TEXT:
+        tool = new ToolGOMarkovText(sceneGO);
         break;
     }
     if (tool != 0L)

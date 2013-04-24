@@ -20,7 +20,7 @@ void ToolboxGOMarkov::messageEvent(Message *message)
         case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
             this->setSelectedTool(this->_buttonSelect);
             break;
-        case DefinationToolType::TOOL_TYPE_GO_TEXT:
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_TEXT:
             this->setSelectedTool(this->_buttonGOText);
             break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
@@ -92,6 +92,13 @@ void ToolboxGOMarkov::setToolGOEquivalent()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT;
+    this->sendMessage(message);
+}
+
+void ToolboxGOMarkov::setToolGOText()
+{
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_TEXT;
     this->sendMessage(message);
 }
 

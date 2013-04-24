@@ -1,6 +1,7 @@
 #include <QUrl>
 #include <QDateTime>
 #include <QDesktopServices>
+#include <QMessageBox>
 #include "scenego.h"
 #include "messager.h"
 #include "itemgooperator.h"
@@ -354,6 +355,10 @@ void SceneGO::analysisProbability(const QString filePath)
         message->paramString = filePath + ".html";
         this->sendMessage(message);
     }
+    else
+    {
+        QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
+    }
     delete graph;
 }
 
@@ -373,7 +378,10 @@ void SceneGO::analysisPath(const QString filePath)
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->sendMessage(message);
-
+        }
+        else
+        {
+            QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
         delete graph;
     }
@@ -396,6 +404,10 @@ void SceneGO::analysisCut(const QString filePath)
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
+        }
+        else
+        {
+            QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
         delete graph;
     }

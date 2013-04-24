@@ -19,6 +19,7 @@ private:
 protected slots:
     void setToolGOPointer();
     void setToolGOEquivalent();
+    void setToolGOText();
     virtual void setToolGOOperator1();
     virtual void setToolGOOperator2();
     virtual void setToolGOOperator3();

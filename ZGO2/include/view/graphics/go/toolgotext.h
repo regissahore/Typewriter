@@ -17,9 +17,10 @@ public:
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
-private:
+protected:
     ItemGOText *_item;
     bool _isActivated;
+    int _defaultToolType;
 };
 
 #endif // TOOLGOTEXT_H

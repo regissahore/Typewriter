@@ -7,6 +7,7 @@
 
 ToolGOMarkovOperator::ToolGOMarkovOperator(SceneGO *sceneGO) : ToolGOOperator(sceneGO)
 {
+    this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
 }
 
 void ToolGOMarkovOperator::setType(const int type)
@@ -95,6 +96,5 @@ void ToolGOMarkovOperator::setType(const int type)
             break;
         }
     }
-    this->_GOOperator->setVisible(false);
     this->graphicsScene()->addItem(this->_GOOperator);
 }

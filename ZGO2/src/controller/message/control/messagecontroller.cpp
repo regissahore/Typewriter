@@ -30,21 +30,15 @@ MessageController::~MessageController()
  */
 void MessageController::send(Message *message)
 {
-    try
+    QMap<int, int>::iterator it = this->_messages->find(message->type());
+    if (it != this->_messages->end())
     {
-        QMap<int, int>::iterator it = this->_messages->find(message->type());
-        if (it != this->_messages->end())
+        int index = it.value();
+        QVector<MessageListener*> listeners = (*this->_listeners)[index];
+        for (int i = 0; i < listeners.size(); ++i)
         {
-            int index = it.value();
-            QVector<MessageListener*> listeners = (*this->_listeners)[index];
-            for (int i = 0; i < listeners.size(); ++i)
-            {
-                listeners[i]->messageEvent(message);
-            }
+            listeners[i]->messageEvent(message);
         }
-    }
-    catch (...)
-    {
     }
 }
 

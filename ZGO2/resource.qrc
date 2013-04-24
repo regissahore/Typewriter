@@ -14,4 +14,7 @@
         <file>resource/image/saveas.png</file>
         <file>resource/image/start.png</file>
     </qresource>
+    <qresource prefix="/image">
+        <file>resource/image/logo.png</file>
+    </qresource>
 </RCC>

@@ -12,6 +12,7 @@ ToolGOText::ToolGOText(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
     this->_isActivated = false;
     this->_item = 0L;
+    this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
 ToolGOText::~ToolGOText()
@@ -24,6 +25,7 @@ ToolGOText::~ToolGOText()
 
 void ToolGOText::activate()
 {
+    this->_isActivated = true;
     this->_item = new ItemGOText();
     this->sceneGO()->addItem(this->_item);
     DialogStringInput *dialog = new DialogStringInput();
@@ -36,21 +38,21 @@ void ToolGOText::activate()
     else
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
+        message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
     }
-    this->_isActivated = true;
 }
 
 void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_isActivated)
     {
-        this->_item->setPos(event->scenePos().x(), event->scenePos().y());
+        this->_item->setPos(event->scenePos());
     }
     else
     {
         this->activate();
+        this->_item->setPos(event->scenePos());
     }
 }
 
@@ -62,11 +64,12 @@ void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         message->setMessage(this->_item);
         this->sceneGO()->sendMessage(message);
         this->activate();
+        this->_item->setPos(event->scenePos());
     }
     else if (event->button() == Qt::RightButton)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
+        message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
     }
 }
@@ -76,7 +79,7 @@ void ToolGOText::keyReleaseEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
+        message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
     }
 }

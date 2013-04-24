@@ -1,6 +1,10 @@
 #include <QCloseEvent>
+#include <QFileInfo>
+#include <QDesktopServices>
+#include <QUrl>
 #include "gomainwindow.h"
 #include "ui_gomainwindow.h"
+#include "dialogabout.h"
 
 GOMainWindow::GOMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -8,7 +12,6 @@ GOMainWindow::GOMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->_close = false;
-    this->setWindowTitle(tr("ZHG GO Methodology"));
     this->setGeometry(100, 100, 800, 600);
     this->_messageController = new MessageController();
     this->initDock();
@@ -89,9 +92,11 @@ void GOMainWindow::initDock()
     this->_dockToolbox = new DockToolbox(this);
     this->_dockToolbox->bindMessage(this->_messageController);
     this->addDockWidget(Qt::LeftDockWidgetArea, this->_dockToolbox);
+    this->connect(this->_dockToolbox, SIGNAL(visibilityChanged(bool)), this, SLOT(on_actionTool_DockWidget_toggled(bool)));
     this->_dockParameter = new DockParameter(this);
     this->_dockParameter->bindMessage(this->_messageController);
     this->addDockWidget(Qt::RightDockWidgetArea, this->_dockParameter);
+    this->connect(this->_dockParameter, SIGNAL(visibilityChanged(bool)), this, SLOT(on_actionParameter_DockWidget_toggled(bool)));
 }
 
 void GOMainWindow::initToolBar()
@@ -185,10 +190,34 @@ void GOMainWindow::on_actionEnglish_triggered()
 
 void GOMainWindow::on_actionAbout_triggered()
 {
-
+    DialogAbout dialog(this);
+    dialog.exec();
 }
 
 void GOMainWindow::on_actionHelp_triggered()
 {
+    QFileInfo file("doc/help.pdf");
+    QDesktopServices::openUrl(QUrl::fromLocalFile(file.absoluteFilePath()));
+}
 
+void GOMainWindow::on_actionTool_DockWidget_toggled(bool value)
+{
+    this->ui->actionTool_DockWidget->setChecked(value);
+    this->_dockToolbox->setVisible(value);
+}
+
+void GOMainWindow::on_actionParameter_DockWidget_toggled(bool value)
+{
+    this->ui->actionParameter_DockWidget->setChecked(value);
+    this->_dockParameter->setVisible(value);
+}
+
+void GOMainWindow::on_actionFile_Toolbar_toggled(bool value)
+{
+    this->ui->toolBarFile->setVisible(value);
+}
+
+void GOMainWindow::on_actionAnalysis_Toolbar_toggled(bool value)
+{
+    this->ui->toolBarAnalysis->setVisible(value);
 }

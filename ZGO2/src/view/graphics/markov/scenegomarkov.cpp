@@ -1,3 +1,4 @@
+#include <QMessageBox>
 #include "scenegomarkov.h"
 #include "itemgomarkovoperator.h"
 #include "itemgosignal.h"
@@ -334,6 +335,9 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             }
             delete data;
         }
-        delete graph;
+        else
+        {
+            QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
+        }
     }
 }

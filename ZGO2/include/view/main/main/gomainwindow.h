@@ -57,6 +57,10 @@ private slots:
     void on_actionEnglish_triggered();
     void on_actionAbout_triggered();
     void on_actionHelp_triggered();
+    void on_actionTool_DockWidget_toggled(bool value);
+    void on_actionParameter_DockWidget_toggled(bool value);
+    void on_actionFile_Toolbar_toggled(bool value);
+    void on_actionAnalysis_Toolbar_toggled(bool value);
 };
 
 #endif // GOMAINWINDOW_H

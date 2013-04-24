@@ -25,6 +25,7 @@ public:
 protected:
     ItemGOOperator *_GOOperator;
     bool _isActivated;
+    int _defaultToolType;
     void getInputNumber();
     void getOutputNumber();
 };

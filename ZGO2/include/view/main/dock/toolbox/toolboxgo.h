@@ -47,8 +47,8 @@ protected:
 
 protected slots:
     virtual void setToolGOPointer();
-    void setToolSelect();
-    void setToolGOText();
+    virtual void setToolSelect();
+    virtual void setToolGOText();
     virtual void setToolGOOperator1();
     virtual void setToolGOOperator2();
     virtual void setToolGOOperator3();

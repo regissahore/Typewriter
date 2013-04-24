@@ -22,6 +22,7 @@ void DockParameter::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
     controller->listen(MessageFactory::TYPE_EDITOR_SELECTION, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
 void DockParameter::messageEvent(Message *message)
@@ -30,6 +31,9 @@ void DockParameter::messageEvent(Message *message)
     {
     case MessageFactory::TYPE_EDITOR_SELECTION:
         this->changeParameter((ItemDrawable*)message->message());
+        break;
+    case MessageFactory::TYPE_EDITOR_TYPE:
+        this->changeParameter(0L);
         break;
     default:
         break;

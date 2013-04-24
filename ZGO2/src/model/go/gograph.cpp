@@ -109,6 +109,25 @@ void GOGraph::calcAccumulativeProbability()
  */
 bool GOGraph::checkCycleAndConnection()
 {
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        for (int j = 0; j < this->_operator.at(i)->input()->number(); ++j)
+        {
+            if (this->_operator.at(i)->input()->signal()->at(j) == 0L)
+            {
+                this->_error = QObject::tr("The input of the operator is null. ");
+                return false;
+            }
+        }
+        for (int j = 0; j < this->_operator.at(i)->subInput()->number(); ++j)
+        {
+            if (this->_operator.at(i)->subInput()->signal()->at(j) == 0L)
+            {
+                this->_error = QObject::tr("The sub input of the operator is null. ");
+                return false;
+            }
+        }
+    }
     QVector<bool> visit;
     QVector<int> dfn;
     QVector<int> low;
