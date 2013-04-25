@@ -1,5 +1,6 @@
 #include "gomarkovequivalent.h"
 #include "gomarkovoperator.h"
+#include "goinput.h"
 
 GOMarkovEquivalent::GOMarkovEquivalent() : IdentifiedItem()
 {
@@ -49,18 +50,90 @@ int GOMarkovEquivalent::J() const
     return this->_J;
 }
 
-void GOMarkovEquivalent::setI(const int value)
+void GOMarkovEquivalent::setI(int value)
 {
+    if (value < 0)
+    {
+        value = 0;
+    }
+    else
+    {
+        if (this->_operators->size() > 0)
+        {
+            if (this->_operators->at(this->_operators->size() - 1)->input()->number() > 1)
+            {
+                if (value > this->_operators->size() - 1)
+                {
+                    value = this->_operators->size() - 1;
+                }
+            }
+            else
+            {
+                if (value > this->_operators->size())
+                {
+                    value = this->_operators->size();
+                }
+            }
+        }
+    }
     this->_I = value;
 }
 
-void GOMarkovEquivalent::setL(const int value)
+void GOMarkovEquivalent::setL(int value)
 {
+    if (value < 0)
+    {
+        value = 0;
+    }
+    else
+    {
+        if (this->_operators->size() > 0)
+        {
+            if (this->_operators->at(this->_operators->size() - 1)->input()->number() > 1)
+            {
+                if (value > this->_operators->size() - 1)
+                {
+                    value = this->_operators->size() - 1;
+                }
+            }
+            else
+            {
+                if (value > this->_operators->size())
+                {
+                    value = this->_operators->size();
+                }
+            }
+        }
+    }
     this->_L = value;
 }
 
-void GOMarkovEquivalent::setJ(const int value)
+void GOMarkovEquivalent::setJ(int value)
 {
+    if (value < 0)
+    {
+        value = 0;
+    }
+    else
+    {
+        if (this->_operators->size() > 0)
+        {
+            if (this->_operators->at(this->_operators->size() - 1)->input()->number() > 1)
+            {
+                if (value > this->_operators->size() - 1)
+                {
+                    value = this->_operators->size() - 1;
+                }
+            }
+            else
+            {
+                if (value > this->_operators->size())
+                {
+                    value = this->_operators->size();
+                }
+            }
+        }
+    }
     this->_J = value;
 }
 

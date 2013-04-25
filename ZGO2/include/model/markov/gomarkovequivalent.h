@@ -21,9 +21,9 @@ public:
     int I() const;
     int L() const;
     int J() const;
-    void setI(const int value);
-    void setL(const int value);
-    void setJ(const int value);
+    void setI(int value);
+    void setL(int value);
+    void setJ(int value);
     virtual GOMarkovStatus getEquivalentStatus() = 0;
     QVector<int>* idList() const;
     void save(QDomDocument &document, QDomElement &root);

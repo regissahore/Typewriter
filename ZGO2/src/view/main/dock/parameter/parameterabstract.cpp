@@ -5,7 +5,7 @@
 #include "tablewidgetgoitem.h"
 #include "identifieditem.h"
 
-ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent)
+ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent), Messager()
 {
     this->_item = 0L;
 
@@ -26,9 +26,19 @@ ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent)
     layout->addWidget(this->_tableWidget);
 }
 
+ParameterAbstract::~ParameterAbstract()
+{
+    this->Messager::~Messager();
+}
+
 void ParameterAbstract::bindItem(void *item)
 {
     this->_item = item;
+}
+
+void ParameterAbstract::bindMessage(MessageController *controller)
+{
+    this->Messager::bindMessage(controller);
 }
 
 void ParameterAbstract::addPositionParameter()

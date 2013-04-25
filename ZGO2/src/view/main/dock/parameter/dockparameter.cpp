@@ -54,5 +54,6 @@ void DockParameter::changeParameter(ItemDrawable* item)
     }
     this->_parameter = ParameterFactory::produce(type);
     this->_parameter->bindItem(item);
+    this->_parameter->bindMessage(this->MessageCreator::_messageController);
     this->setWidget(this->_parameter);
 }

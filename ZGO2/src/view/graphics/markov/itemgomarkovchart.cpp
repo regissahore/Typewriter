@@ -69,6 +69,11 @@ void ItemGOMarkovChart::setProbability(QVector<double> probability)
             this->_minProbability = probability[i];
         }
     }
+    if (this->_maxProbability == this->_minProbability)
+    {
+        this->_maxProbability = 1.0;
+        this->_minProbability = 0.0;
+    }
     this->update();
 }
 

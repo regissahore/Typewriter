@@ -61,7 +61,7 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
     }
     QVector<BigDecimal> p;
     p.push_back(BigDecimal::one());
-    for (int i = 1; i <= I; ++i)
+    for (int i = 1; i <= I + 1; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }

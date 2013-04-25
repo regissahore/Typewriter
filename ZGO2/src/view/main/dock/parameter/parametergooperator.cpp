@@ -7,6 +7,7 @@
 #include "dialoggoprobability.h"
 #include "bigdecimal.h"
 #include "goparameter.h"
+#include "messagefactory.h"
 
 ParameterGOOperator::ParameterGOOperator(QWidget *parent) : ParameterAbstract(parent)
 {
