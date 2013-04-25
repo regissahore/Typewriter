@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <QString>
 #include <QObject>
 #include <QFile>
@@ -32,7 +33,7 @@ void GOMarkovGraph::addEquivalent(GOMarkovEquivalent *equivalent)
 {
     this->_equivalent.push_back(equivalent);
 }
-
+#include <QMessageBox>
 /**
  * Calculate the accumulative probability with the probability changed with the time.
  * @param totalTime The total time of the calculation.
@@ -41,6 +42,7 @@ void GOMarkovGraph::addEquivalent(GOMarkovEquivalent *equivalent)
 GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
     GOMarkovChartData *data = new GOMarkovChartData();
+    char s[100];
     for (int i = 0; i < this->_operator.size(); ++i)
     {
         data->ids.push_back(this->_operator[i]->id());
@@ -57,9 +59,15 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             double lamda = op->markovStatus()->frequencyBreakdown().toString().toDouble();
             double miu = op->markovStatus()->frequencyRepair().toString().toDouble();
             double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time));
+            if (p1 > 1.0)
+            {
+                p1 = 1.0;
+            }
             double p2 = 1 - p1;
-            op->status()->setProbability(1, BigDecimal::valueOf(QString("%1").arg(p1)));
-            op->status()->setProbability(2, BigDecimal::valueOf(QString("%1").arg(p2)));
+            sprintf(s, "%.6lf", p1);
+            op->status()->setProbability(1, BigDecimal::valueOf(QString(s)));
+            sprintf(s, "%.6lf", p2);
+            op->status()->setProbability(2, BigDecimal::valueOf(QString(s)));
         }
         this->GOGraph::calcAccumulativeProbability();
         if (this->getErrorMessage() != "")
@@ -70,7 +78,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         for (int j = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
-            data->probabilities[j].push_back(op->markovOutputStatus()->at(0)->probabilityNormal().toString().toDouble());
+            data->probabilities[j].push_back(op->accmulatives()->at(0)->probability(1).toString().toDouble());
         }
     }
     return data;

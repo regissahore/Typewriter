@@ -52,7 +52,6 @@ void ItemGOMarkovChart::setProbability(QVector<double> probability)
     this->_probability.clear();
     this->_maxProbability = 0.0;
     this->_minProbability = 1.0;
-    probability[0] = 1.0;
     for (int i = 0; i < probability.size(); ++i)
     {
         if (isinf(probability[i]) || isnan(probability[i]))
