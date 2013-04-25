@@ -23,7 +23,7 @@ ToolGOText::~ToolGOText()
     }
 }
 
-void ToolGOText::activate()
+void ToolGOText::activate(QGraphicsSceneMouseEvent *event)
 {
     this->_isActivated = true;
     this->_item = new ItemGOText();
@@ -34,9 +34,12 @@ void ToolGOText::activate()
     if (dialog->exec() == QDialog::Accepted && dialog->stringInput()->text().length() > 0)
     {
         this->_item->setText(dialog->stringInput()->text());
+        this->_item->setPos(event->scenePos());
     }
     else
     {
+        delete this->_item;
+        this->_item = 0L;
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
@@ -51,8 +54,7 @@ void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
     else
     {
-        this->activate();
-        this->_item->setPos(event->scenePos());
+        this->activate(event);
     }
 }
 
@@ -63,8 +65,7 @@ void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_item);
         this->sceneGO()->sendMessage(message);
-        this->activate();
-        this->_item->setPos(event->scenePos());
+        this->activate(event);
     }
     else if (event->button() == Qt::RightButton)
     {

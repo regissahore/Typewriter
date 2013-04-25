@@ -13,7 +13,7 @@ class ToolGOText : public ToolGOAbstract
 public:
     ToolGOText(SceneGO *sceneGO);
     ~ToolGOText();
-    void activate();
+    void activate(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);

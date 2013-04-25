@@ -115,9 +115,10 @@ void ToolGOOperator::setType(const int type)
     this->graphicsScene()->addItem(this->_GOOperator);
 }
 
-void ToolGOOperator::activate()
+void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
 {
     this->_isActivated = true;
+    this->_GOOperator->setPos(event->scenePos());
     switch (this->_GOOperator->model()->type())
     {
     case GOOperatorFactory::Operator_Type_2:
@@ -157,8 +158,7 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
     else
     {
-        this->activate();
-        this->_GOOperator->setPos(event->scenePos());
+        this->activate(event);
     }
 }
 
@@ -174,9 +174,7 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         message->setMessage(this->_GOOperator);
         this->sceneGO()->sendMessage(message);
         this->setType(this->TypedItem::type());
-        this->activate();
-        this->_GOOperator->setPos(event->scenePos());
-        this->_GOOperator->update();
+        this->activate(event);
     }
     else if (event->button() == Qt::RightButton)
     {
