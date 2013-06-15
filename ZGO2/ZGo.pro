@@ -141,7 +141,10 @@ HEADERS += \
     include/view/main/editor/editorgomarkovchart.h \
     include/view/main/main/gomainwindow.h \
     include/view/main/main/dialogabout.h \
-    include/view/graphics/markov/toolgomarkovtext.h
+    include/view/graphics/markov/toolgomarkovtext.h \
+    include/view/graphics/markov/toolgomarkovcommoncause.h \
+    include/view/graphics/markov/itemgomarkovcommoncause.h \
+    include/model/markov/gomarkovcommoncause.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -248,7 +251,10 @@ SOURCES += \
     src/view/main/editor/editorgomarkovchart.cpp \
     src/view/main/main/gomainwindow.cpp \
     src/view/main/main/dialogabout.cpp \
-    src/view/graphics/markov/toolgomarkovtext.cpp
+    src/view/graphics/markov/toolgomarkovtext.cpp \
+    src/view/graphics/markov/toolgomarkovcommoncause.cpp \
+    src/view/graphics/markov/itemgomarkovcommoncause.cpp \
+    src/model/markov/gomarkovcommoncause.cpp
 
 RESOURCES += \
     resource.qrc

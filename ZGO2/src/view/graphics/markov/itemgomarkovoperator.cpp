@@ -8,6 +8,7 @@ ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperat
 {
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR);
     this->_fatherEquivalent = 0L;
+    this->_fatherCommonCause = 0L;
 }
 
 ItemGOMarkovEquivalent* ItemGOMarkovOperator::fatherEquivalent() const
@@ -32,6 +33,16 @@ ItemGOMarkovEquivalent* ItemGOMarkovOperator::rootEquivalent() const
 void ItemGOMarkovOperator::setFatherEquivalent(ItemGOMarkovEquivalent* equivalent)
 {
     this->_fatherEquivalent = equivalent;
+}
+
+ItemGOMarkovCommonCause* ItemGOMarkovOperator::fatherCommonCause() const
+{
+    return this->_fatherCommonCause;
+}
+
+void ItemGOMarkovOperator::setFatherCommonCause(ItemGOMarkovCommonCause* commonCause)
+{
+    this->_fatherCommonCause = commonCause;
 }
 
 void ItemGOMarkovOperator::move(QGraphicsSceneMouseEvent *event)

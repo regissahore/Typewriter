@@ -403,10 +403,6 @@ GOPathSetSetSet GOGraph::findPath(int order)
 
 void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GOPathSet &tempPath, int index, int number, int order)
 {
-    if (number > order || index >= list.size())
-    {
-        return;
-    }
     if (number == order)
     {
         QVector<GOOperator*> endList;
@@ -471,6 +467,10 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         }
         return;
     }
+    if (number > order || index >= list.size())
+    {
+        return;
+    }
     if (!GOOperatorFactory::isLogical(list[index]->type()))
     {
         GOStatus *copy = new GOStatus();
@@ -529,10 +529,6 @@ GOPathSetSetSet GOGraph::findCut(int order)
 
 void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCutSet &tempPath, int index, int number, int order)
 {
-    if (number > order || index >= list.size())
-    {
-        return;
-    }
     if (number == order)
     {
         QVector<GOOperator*> endList;
@@ -598,6 +594,10 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
                 }
             }
         }
+        return;
+    }
+    if (number > order || index >= list.size())
+    {
         return;
     }
     if (!GOOperatorFactory::isLogical(list[index]->type()))

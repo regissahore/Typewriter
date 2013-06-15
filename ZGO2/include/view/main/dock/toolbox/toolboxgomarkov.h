@@ -15,10 +15,12 @@ public:
 
 private:
     QPushButton *_buttonGOEquivalent;
+    QPushButton *_buttonGOCommonCause;
 
 protected slots:
     void setToolGOPointer();
     void setToolGOEquivalent();
+    void setToolGOCommonCause();
     void setToolGOText();
     virtual void setToolGOOperator1();
     virtual void setToolGOOperator2();
