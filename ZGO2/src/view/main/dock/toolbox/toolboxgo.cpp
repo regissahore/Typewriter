@@ -13,7 +13,6 @@ ToolboxGO::ToolboxGO(QWidget *parent) :
 
 ToolboxGO::~ToolboxGO()
 {
-    this->ToolboxAbstract::~ToolboxAbstract();
     delete ui;
 }
 

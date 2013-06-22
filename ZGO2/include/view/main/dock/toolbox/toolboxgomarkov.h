@@ -25,7 +25,7 @@ private slots:
     void on_buttonSelect_clicked();
     void on_buttonText_clicked();
     void on_buttonEquivalent_clicked();
-    void on_pushButton_clicked();
+    void on_buttonCommonCause_clicked();
     void on_buttonOperator1_clicked();
     void on_buttonOperator2_clicked();
     void on_buttonOperator3_clicked();

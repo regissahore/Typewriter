@@ -231,7 +231,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="buttonCommonCause">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
