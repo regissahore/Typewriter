@@ -5,6 +5,7 @@
 #include "gomarkovstatus.h"
 #include "tablewidgetgoitem.h"
 #include "gostatus.h"
+#include "messagefactory.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -107,5 +108,4 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
     default:
         break;
     }
-    this->ParameterGOOperator::itemChanged(tableItem);
 }

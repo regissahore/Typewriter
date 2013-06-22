@@ -13,6 +13,28 @@
         <file>resource/image/saveall.png</file>
         <file>resource/image/saveas.png</file>
         <file>resource/image/start.png</file>
+        <file>resource/image/tool_pointer.png</file>
+        <file>resource/image/tool_select.png</file>
+        <file>resource/image/tool_text.png</file>
+        <file>resource/image/tool_common.png</file>
+        <file>resource/image/tool_equivalent.png</file>
+        <file>resource/image/tool_op0.png</file>
+        <file>resource/image/tool_op1.png</file>
+        <file>resource/image/tool_op2.png</file>
+        <file>resource/image/tool_op3.png</file>
+        <file>resource/image/tool_op4.png</file>
+        <file>resource/image/tool_op5.png</file>
+        <file>resource/image/tool_op6.png</file>
+        <file>resource/image/tool_op7.png</file>
+        <file>resource/image/tool_op8.png</file>
+        <file>resource/image/tool_op9.png</file>
+        <file>resource/image/tool_op10.png</file>
+        <file>resource/image/tool_op11.png</file>
+        <file>resource/image/tool_op12.png</file>
+        <file>resource/image/tool_op13.png</file>
+        <file>resource/image/tool_op14.png</file>
+        <file>resource/image/tool_op15.png</file>
+        <file>resource/image/tool_op16.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>

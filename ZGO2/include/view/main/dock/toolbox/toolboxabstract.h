@@ -15,7 +15,7 @@ class ToolboxAbstract : public QWidget, public TypedItem, public Messager
     Q_OBJECT
 public:
     explicit ToolboxAbstract(QWidget *parent = 0);
-    ~ToolboxAbstract();
+    virtual ~ToolboxAbstract();
 
 protected:
     QPushButton *_selectedTool;

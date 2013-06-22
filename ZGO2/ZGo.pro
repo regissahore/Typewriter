@@ -69,7 +69,6 @@ HEADERS += \
     include/view/main/editor/editor.h \
     include/view/main/dock/toolbox/toolboxfactory.h \
     include/view/main/dock/toolbox/toolboxnull.h \
-    include/view/main/dock/toolbox/toolboxgo.h \
     include/view/graphics/go/toolgoabstract.h \
     include/view/graphics/go/toolgopointer.h \
     include/view/graphics/go/toolgofactory.h \
@@ -119,7 +118,6 @@ HEADERS += \
     include/view/graphics/go/toolgopointerextend.h \
     include/model/markov/gomarkovequivalentseries.h \
     include/model/markov/gomarkovequivalentparallel.h \
-    include/view/main/dock/toolbox/toolboxgomarkov.h \
     include/view/main/dock/parameter/parametergomarkovoperator.h \
     include/view/graphics/markov/itemgomarkovoperator.h \
     include/view/graphics/markov/toolgomarkovoperator.h \
@@ -144,7 +142,9 @@ HEADERS += \
     include/view/graphics/markov/toolgomarkovtext.h \
     include/view/graphics/markov/toolgomarkovcommoncause.h \
     include/view/graphics/markov/itemgomarkovcommoncause.h \
-    include/model/markov/gomarkovcommoncause.h
+    include/model/markov/gomarkovcommoncause.h \
+    include/view/main/dock/toolbox/toolboxgo.h \
+    include/view/main/dock/toolbox/toolboxgomarkov.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -179,7 +179,6 @@ SOURCES += \
     src/main.cpp \
     src/view/main/dock/toolbox/toolboxfactory.cpp \
     src/view/main/dock/toolbox/toolboxnull.cpp \
-    src/view/main/dock/toolbox/toolboxgo.cpp \
     src/view/graphics/go/toolgoabstract.cpp \
     src/view/graphics/go/toolgopointer.cpp \
     src/view/graphics/go/toolgofactory.cpp \
@@ -229,7 +228,6 @@ SOURCES += \
     src/view/graphics/go/toolgopointerextend.cpp \
     src/model/markov/gomarkovequivalentseries.cpp \
     src/model/markov/gomarkovequivalentparallel.cpp \
-    src/view/main/dock/toolbox/toolboxgomarkov.cpp \
     src/view/main/dock/parameter/parametergomarkovoperator.cpp \
     src/view/graphics/markov/itemgomarkovoperator.cpp \
     src/view/graphics/markov/toolgomarkovoperator.cpp \
@@ -254,7 +252,9 @@ SOURCES += \
     src/view/graphics/markov/toolgomarkovtext.cpp \
     src/view/graphics/markov/toolgomarkovcommoncause.cpp \
     src/view/graphics/markov/itemgomarkovcommoncause.cpp \
-    src/model/markov/gomarkovcommoncause.cpp
+    src/model/markov/gomarkovcommoncause.cpp \
+    src/view/main/dock/toolbox/toolboxgo.cpp \
+    src/view/main/dock/toolbox/toolboxgomarkov.cpp
 
 RESOURCES += \
     resource.qrc
@@ -262,4 +262,6 @@ RESOURCES += \
 FORMS += \
     form/dialoggomarkovperiod.ui \
     form/gomainwindow.ui \
-    form/dialogabout.ui
+    form/dialogabout.ui \
+    form/toolboxgo.ui \
+    form/toolboxgomarkov.ui
