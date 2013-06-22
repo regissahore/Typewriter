@@ -9,6 +9,11 @@ ParameterGOText::ParameterGOText(QWidget *parent) : ParameterAbstract(parent)
 void ParameterGOText::bindItem(void *item)
 {
     this->_item = item;
+    this->_tableWidget->disconnect();
+    while (this->_tableWidget->rowCount())
+    {
+        this->_tableWidget->removeRow(0);
+    }
     this->addPositionParameter();
     this->addTextParameter();
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
@@ -51,4 +56,5 @@ void ParameterGOText::itemChanged(QTableWidgetItem *tableItem)
         break;
     }
     item->update();
+    this->bindItem(item);
 }

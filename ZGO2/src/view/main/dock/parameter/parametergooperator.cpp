@@ -16,6 +16,11 @@ ParameterGOOperator::ParameterGOOperator(QWidget *parent) : ParameterAbstract(pa
 void ParameterGOOperator::bindItem(void *item)
 {
     this->_item = item;
+    this->_tableWidget->disconnect(SIGNAL(itemChanged(QTableWidgetItem*)));
+    while (this->_tableWidget->rowCount())
+    {
+        this->_tableWidget->removeRow(0);
+    }
     this->addPositionParameter();
     this->addOperatorParameter();
     ItemGOOperator *op = (ItemGOOperator*)item;
@@ -254,6 +259,7 @@ void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
         break;
     }
     item->update();
+    this->bindItem(item);
 }
 
 void ParameterGOOperator::itemClicked(QTableWidgetItem *tableItem)
@@ -298,4 +304,5 @@ void ParameterGOOperator::itemClicked(QTableWidgetItem *tableItem)
         break;
     }
     item->update();
+    this->bindItem(item);
 }

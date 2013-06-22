@@ -10,6 +10,11 @@ ParameterGOMarkovEquivalent::ParameterGOMarkovEquivalent(QWidget *parent) : Para
 void ParameterGOMarkovEquivalent::bindItem(void *item)
 {
     this->_item = item;
+    this->_tableWidget->disconnect();
+    while (this->_tableWidget->rowCount())
+    {
+        this->_tableWidget->removeRow(0);
+    }
     if (0L != this->_item)
     {
         TableWidgetGOItem *tableItem;
@@ -72,4 +77,5 @@ void ParameterGOMarkovEquivalent::itemChanged(QTableWidgetItem *tableItem)
         break;
     }
     item->update();
+    this->bindItem(item);
 }

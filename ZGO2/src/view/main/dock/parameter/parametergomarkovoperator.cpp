@@ -14,6 +14,11 @@ ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : Paramete
 void ParameterGOMarkovOperator::bindItem(void *item)
 {
     this->_item = item;
+    this->_tableWidget->disconnect();
+    while (this->_tableWidget->rowCount())
+    {
+        this->_tableWidget->removeRow(0);
+    }
     this->addPositionParameter();
     this->addOperatorParameter();
     ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
@@ -48,7 +53,6 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     }
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
-    this->connect(this->_tableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(itemClicked(QTableWidgetItem*)));
 }
 
 void ParameterGOMarkovOperator::addMarkovParameter()
@@ -108,4 +112,6 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
     default:
         break;
     }
+    item->update();
+    this->bindItem(item);
 }
