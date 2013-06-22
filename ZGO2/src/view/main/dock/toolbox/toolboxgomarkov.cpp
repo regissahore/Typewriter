@@ -4,8 +4,12 @@
 ToolboxGOMarkov::ToolboxGOMarkov(QWidget *parent) : ToolboxGO(parent)
 {
     this->_buttonGOEquivalent = new QPushButton(tr("Equivalent"), this);
-    this->connect(_buttonGOEquivalent, SIGNAL(pressed()), this, SLOT(setToolGOEquivalent()));
-    this->_layout->addWidget(_buttonGOEquivalent);
+    this->connect(this->_buttonGOEquivalent, SIGNAL(pressed()), this, SLOT(setToolGOEquivalent()));
+    this->_layout->addWidget(this->_buttonGOEquivalent);
+
+    this->_buttonGOCommonCause = new QPushButton(tr("Common Cause"), this);
+    this->connect(this->_buttonGOCommonCause, SIGNAL(pressed()), this, SLOT(setToolGOCommonCause()));
+    this->_layout->addWidget(this->_buttonGOCommonCause);
 }
 
 void ToolboxGOMarkov::messageEvent(Message *message)
@@ -25,6 +29,9 @@ void ToolboxGOMarkov::messageEvent(Message *message)
             break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
             this->setSelectedTool(this->_buttonGOEquivalent);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE:
+            this->setSelectedTool(this->_buttonGOCommonCause);
             break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1:
             this->setSelectedTool(this->_buttonGOOperator1);
@@ -92,6 +99,13 @@ void ToolboxGOMarkov::setToolGOEquivalent()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT;
+    this->sendMessage(message);
+}
+
+void ToolboxGOMarkov::setToolGOCommonCause()
+{
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE;
     this->sendMessage(message);
 }
 

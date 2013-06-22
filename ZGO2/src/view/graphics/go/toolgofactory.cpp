@@ -11,6 +11,7 @@
 #include "toolgomarkovequivalent.h"
 #include "toolgomarkovpointerextend.h"
 #include "toolgomarkovtext.h"
+#include "toolgomarkovcommoncause.h"
 
 /**
  * Produce a instantiated GO tool.
@@ -87,6 +88,9 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
         tool = new ToolGOMarkovEquivalent(sceneGO);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE:
+        tool = new ToolGOMarkovCommonCause(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_TEXT:
         tool = new ToolGOMarkovText(sceneGO);
