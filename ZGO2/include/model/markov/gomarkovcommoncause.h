@@ -14,12 +14,16 @@ class GOMarkovCommonCause : DomItem
 public:
     GOMarkovCommonCause();
     virtual ~GOMarkovCommonCause();
-    QVector<GOMarkovOperator *> *operators() const;
+    QVector<GOMarkovOperator *>* operators() const;
     double commonCause() const;
     void setCommonCause(double value);
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
+    QVector<int>* idList() const;
 
 protected:
     QVector<GOMarkovOperator*> *_operators;
+    QVector<int> *_idList;
     double _commonCause;
 };
 

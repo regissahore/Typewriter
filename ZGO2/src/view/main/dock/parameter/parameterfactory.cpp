@@ -5,6 +5,7 @@
 #include "parametergooperator.h"
 #include "parametergomarkovoperator.h"
 #include "parametergomarkovequivalent.h"
+#include "parametergomarkovcommoncause.h"
 
 /**
  * Produce a abstract parameter widget.
@@ -30,6 +31,9 @@ ParameterAbstract* ParameterFactory::produce(int type)
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
         parameter = new ParameterGOMarkovEquivalent();
+        break;
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE:
+        parameter = new ParameterGOMarkovCommonCause();
         break;
     default:
         break;

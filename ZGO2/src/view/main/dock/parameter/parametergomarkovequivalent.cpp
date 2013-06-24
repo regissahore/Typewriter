@@ -56,7 +56,6 @@ void ParameterGOMarkovEquivalent::bindItem(void *item)
 
 void ParameterGOMarkovEquivalent::itemChanged(QTableWidgetItem *tableItem)
 {
-
     TableWidgetGOItem *goTableItem = (TableWidgetGOItem*)tableItem;
     ItemGOMarkovEquivalent *item = (ItemGOMarkovEquivalent*)this->_item;
     switch (goTableItem->parameterType())

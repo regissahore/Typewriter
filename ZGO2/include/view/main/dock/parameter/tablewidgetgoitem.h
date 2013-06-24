@@ -29,7 +29,8 @@ public:
         PARAMETER_GO_MARKOV_REPAIR_TIME,
         PARAMETER_GO_MARKOV_EQUIVALENT_I,
         PARAMETER_GO_MARKOV_EQUIVALENT_L,
-        PARAMETER_GO_MARKOV_EQUIVALENT_J
+        PARAMETER_GO_MARKOV_EQUIVALENT_J,
+        PARAMETER_GO_MARKOV_COMMON_CAUSE
     };
     TableWidgetGOItem(const QString &text);
     GOParameterType parameterType() const;
