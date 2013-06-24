@@ -6,6 +6,7 @@
 #include "tablewidgetgoitem.h"
 #include "gostatus.h"
 #include "messagefactory.h"
+#include "goparameter.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -108,6 +109,15 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
         ((GOMarkovOperator*)item->model())->markovStatus()->setRepairTime(tableItem->text());
         item->model()->status()->setProbability(1, ((GOMarkovOperator*)item->model())->markovStatus()->probabilityNormal());
         item->model()->status()->setProbability(2, ((GOMarkovOperator*)item->model())->markovStatus()->probabilityBreakdown());
+        break;
+    case TableWidgetGOItem::PARAMETER_GO_9_X:
+        item->model()->parameter()->setParameter(0, goTableItem->text().toInt());
+        break;
+    case TableWidgetGOItem::PARAMETER_GO_9_Y:
+        item->model()->parameter()->setParameter(1, goTableItem->text().toInt());
+        break;
+    case TableWidgetGOItem::PARAMETER_GO_11_K:
+        item->model()->parameter()->setParameter(0, goTableItem->text().toInt());
         break;
     default:
         break;

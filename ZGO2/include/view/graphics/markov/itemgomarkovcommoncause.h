@@ -5,13 +5,12 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "itemmoveable.h"
-#include "identifieditem.h"
 
 class ItemGOMarkovOperator;
 class GOMarkovOperator;
 class GOMarkovCommonCause;
 
-class ItemGOMarkovCommonCause : public ItemMoveable, public IdentifiedItem
+class ItemGOMarkovCommonCause : public ItemMoveable
 {
 public:
     ItemGOMarkovCommonCause(QGraphicsItem *parent = 0);
@@ -20,6 +19,10 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     GOMarkovCommonCause *model();
     void bindOperators(QList<ItemGOMarkovOperator*> &operatorList);
+    void updateBoundary();
+    QVector<ItemGOMarkovOperator*>* operatorItems() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 private:
     QVector<ItemGOMarkovOperator*> *_operatorItems;

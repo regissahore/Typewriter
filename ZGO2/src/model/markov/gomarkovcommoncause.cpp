@@ -5,12 +5,15 @@ GOMarkovCommonCause::GOMarkovCommonCause() : DomItem()
 {
     this->_commonCause = 0.0;
     this->_idList = new QVector<int>();
+    this->_operators = new QVector<GOMarkovOperator*>();
 }
 
 GOMarkovCommonCause::~GOMarkovCommonCause()
 {
     this->_idList->clear();
     delete this->_idList;
+    this->_operators->clear();
+    delete this->_operators;
 }
 
 double GOMarkovCommonCause::commonCause() const

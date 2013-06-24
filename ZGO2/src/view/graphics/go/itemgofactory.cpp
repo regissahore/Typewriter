@@ -8,6 +8,7 @@
 #include "gooperatorfactory.h"
 #include "messagefactory.h"
 #include "definationeditorselectiontype.h"
+#include "itemgomarkovcommoncause.h"
 
 /**
  * Produce a GO operator.
@@ -57,6 +58,10 @@ void ItemGOFactory::deleteItem(ItemDrawable *item)
             {
                 deleteItem(op->fatherEquivalent());
             }
+            if (op->fatherCommonCause() != 0L)
+            {
+                deleteItem(op->fatherCommonCause());
+            }
         }
     }
     else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
@@ -69,6 +74,14 @@ void ItemGOFactory::deleteItem(ItemDrawable *item)
         if (eq->fatherEquivalent() != 0L)
         {
             deleteItem(eq->fatherEquivalent());
+        }
+    }
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
+    {
+        ItemGOMarkovCommonCause *common = (ItemGOMarkovCommonCause*)item;
+        for (int i = 0; i < common->operatorItems()->size(); ++i)
+        {
+            common->operatorItems()->at(i)->setFatherCommonCause(0L);
         }
     }
     delete item;
@@ -99,6 +112,10 @@ void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
             items[i] = 0L;
         }
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        {
+            items[i] = 0L;
+        }
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             items[i] = 0L;
         }

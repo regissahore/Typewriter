@@ -15,6 +15,8 @@
 #include "messagefactory.h"
 #include "gomarkovchartdata.h"
 #include "gomarkovequivalent.h"
+#include "itemgomarkovcommoncause.h"
+#include "gomarkovcommoncause.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
@@ -31,6 +33,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     QList<ItemGOMarkovOperator*> operatorList;
     QList<ItemGOSignal*> signalList;
     QList<ItemGOMarkovEquivalent*> equivalentList;
+    QList<ItemGOMarkovCommonCause*> commoncauseList;
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
@@ -84,6 +87,20 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
                 this->addItem(item);
             }
         }
+        else if (element.tagName() == "commoncause")
+        {
+            ItemGOMarkovCommonCause *item = new ItemGOMarkovCommonCause();
+            this->addItem(item);
+            if (item->tryOpen(element))
+            {
+                commoncauseList.push_back(item);
+            }
+            else
+            {
+                flag = false;
+                this->removeItem(item);
+            }
+        }
     }
     for (int i = 0; i < signalList.size(); ++i)
     {
@@ -111,9 +128,14 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     {
         equivalentList[i]->bindOperators(operatorList, equivalentList);
     }
+    for (int i = 0; i < commoncauseList.size(); ++i)
+    {
+        commoncauseList[i]->bindOperators(operatorList);
+    }
     operatorList.clear();
     signalList.clear();
     equivalentList.clear();
+    commoncauseList.clear();
     return flag;
 }
 

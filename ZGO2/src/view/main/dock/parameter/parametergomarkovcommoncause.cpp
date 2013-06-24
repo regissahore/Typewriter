@@ -28,8 +28,6 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->commonCause()));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_COMMON_CAUSE);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
-
-        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
     }
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
 }

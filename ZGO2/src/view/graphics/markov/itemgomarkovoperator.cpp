@@ -3,6 +3,7 @@
 #include "gomarkovoperatorfactory.h"
 #include "gomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
+#include "itemgomarkovcommoncause.h"
 
 ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
@@ -51,6 +52,10 @@ void ItemGOMarkovOperator::move(QGraphicsSceneMouseEvent *event)
     if (this->fatherEquivalent() != 0L)
     {
         this->fatherEquivalent()->updateBoundary();
+    }
+    if (this->fatherCommonCause() != 0L)
+    {
+        this->fatherCommonCause()->updateBoundary();
     }
 }
 

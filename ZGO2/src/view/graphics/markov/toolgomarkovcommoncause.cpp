@@ -5,6 +5,8 @@
 #include "definationeditorselectiontype.h"
 #include "itemdrawable.h"
 #include "itemgomarkovoperator.h"
+#include "itemgomarkovcommoncause.h"
+#include "gomarkovcommoncause.h"
 
 ToolGOMarkovCommonCause::ToolGOMarkovCommonCause(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -86,13 +88,39 @@ void ToolGOMarkovCommonCause::keyReleaseEvent(QKeyEvent *event)
 
 void ToolGOMarkovCommonCause::addCommonCause()
 {
+    bool flag = true;
     QVector<ItemGOMarkovOperator*> operators;
     for (qint32 i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            operators.push_back((ItemGOMarkovOperator*)item);
+            ItemGOMarkovOperator* markov = (ItemGOMarkovOperator*)item;
+            if (markov->fatherCommonCause() || markov->fatherEquivalent())
+            {
+                flag = false;
+                break;
+            }
+            operators.push_back(markov);
         }
+    }
+    if (operators.size() < 2)
+    {
+        flag = false;
+    }
+    if (flag)
+    {
+        ItemGOMarkovCommonCause *common = new ItemGOMarkovCommonCause();
+        for (int i = 0; i < operators.size(); ++i)
+        {
+            common->operatorItems()->push_back(operators[i]);
+            common->model()->operators()->push_back((GOMarkovOperator*)(operators[i]->model()));
+            operators[i]->setFatherCommonCause(common);
+        }
+        common->updateBoundary();
+        this->graphicsScene()->addItem(common);
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(common);
+        this->sceneGO()->sendMessage(message);
     }
 }

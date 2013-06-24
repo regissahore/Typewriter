@@ -2,15 +2,20 @@
 #include "gomarkovcommoncause.h"
 #include "itemgomarkovoperator.h"
 #include "gomarkovoperator.h"
+#include "definationeditorselectiontype.h"
 
-ItemGOMarkovCommonCause::ItemGOMarkovCommonCause(QGraphicsItem *parent) : ItemMoveable(parent), IdentifiedItem()
+ItemGOMarkovCommonCause::ItemGOMarkovCommonCause(QGraphicsItem *parent) : ItemMoveable(parent)
 {
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE);
     this->_model = new GOMarkovCommonCause();
+    this->_operatorItems = new QVector<ItemGOMarkovOperator*>();
 }
 
 ItemGOMarkovCommonCause::~ItemGOMarkovCommonCause()
 {
     delete this->_model;
+    this->_operatorItems->clear();
+    delete this->_operatorItems;
 }
 
 QRectF ItemGOMarkovCommonCause::boundingRect() const
@@ -26,7 +31,7 @@ void ItemGOMarkovCommonCause::paint(QPainter *painter, const QStyleOptionGraphic
     font.setPixelSize(16);
     painter->setFont(font);
     painter->drawRoundedRect(0, 0, this->_end.x(), this->_end.y(), 10, 10);
-    painter->drawText(QRectF(5, 5, 100, 100), Qt::AlignTop | Qt::AlignLeft, QString("%1").arg(this->id()));
+    painter->drawText(QRectF(5, 5, 100, 100), Qt::AlignTop | Qt::AlignLeft, "C");
 }
 
 GOMarkovCommonCause *ItemGOMarkovCommonCause::model()
@@ -43,9 +48,59 @@ void ItemGOMarkovCommonCause::bindOperators(QList<ItemGOMarkovOperator*> &operat
             if (operatorList[i]->model()->id() == this->model()->idList()->at(j))
             {
                 this->_operatorItems->push_back(operatorList[i]);
-                this->model()->operators()->push_back(operatorList[i]->model());
+                this->model()->operators()->push_back((GOMarkovOperator*)operatorList[i]->model());
+                operatorList[i]->setFatherCommonCause(this);
                 break;
             }
         }
     }
+    this->updateBoundary();
+}
+
+void ItemGOMarkovCommonCause::updateBoundary()
+{
+    qreal left = 2000000000;
+    qreal right = -2000000000;
+    qreal top = 2000000000;
+    qreal bottom = -2000000000;
+    for (int i = 0; i < this->_operatorItems->size(); ++i)
+    {
+        if (this->_operatorItems->at(i)->x() - 30 < left)
+        {
+            left = this->_operatorItems->at(i)->x() - 30;
+        }
+        if (this->_operatorItems->at(i)->x() + 30 > right)
+        {
+            right = this->_operatorItems->at(i)->x() + 30;
+        }
+        if (this->_operatorItems->at(i)->y() - 30 < top)
+        {
+            top = this->_operatorItems->at(i)->y() - 30;
+        }
+        if (this->_operatorItems->at(i)->y() + 30 > bottom)
+        {
+            bottom = this->_operatorItems->at(i)->y() + 30;
+        }
+    }
+    qreal width = right - left;
+    qreal height = bottom - top;
+    this->setPos(left, top);
+    this->_end.setX(width);
+    this->_end.setY(height);
+    this->prepareGeometryChange();
+}
+
+QVector<ItemGOMarkovOperator*>* ItemGOMarkovCommonCause::operatorItems() const
+{
+    return this->_operatorItems;
+}
+
+void ItemGOMarkovCommonCause::save(QDomDocument &document, QDomElement &root)
+{
+    this->model()->save(document, root);
+}
+
+bool ItemGOMarkovCommonCause::tryOpen(QDomElement &root)
+{
+    return this->model()->tryOpen(root);
 }
