@@ -11,6 +11,10 @@
 #include "gomarkovoperator.h"
 #include "gomarkovstatus.h"
 #include "gomarkovchartdata.h"
+#include "gomarkovoperatorfactory.h"
+#include "goinput.h"
+#include "gosignal.h"
+#include "gomarkovcommoncause.h"
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -33,7 +37,103 @@ void GOMarkovGraph::addEquivalent(GOMarkovEquivalent *equivalent)
 {
     this->_equivalent.push_back(equivalent);
 }
-#include <QMessageBox>
+
+QVector<GOMarkovCommonCause*> GOMarkovGraph::getCommonCause() const
+{
+    return this->_commonCause;
+}
+
+void GOMarkovGraph::addCommonCause(GOMarkovCommonCause *commonCause)
+{
+    this->_commonCause.push_back(commonCause);
+}
+
+void GOMarkovGraph::calcAccumulativeProbability()
+{
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
+    {
+        QVector<GOGraph::Output> commonList;
+        // Calcaulte common cause.
+        /*if (list[i]->type() == GOMarkovOperatorFactory::Operator_Type_2 ||
+                list[i]->type() == GOMarkovOperatorFactory::Operator_Type_10 ||
+                list[i]->type() == GOMarkovOperatorFactory::Operator_Type_11)
+        {
+            QVector<GOMarkovCommonCause*> commons;
+            for (int j = 0; j < list[i]->input()->number(); ++i)
+            {
+                GOSignal *signal = list[i]->input()->signal()->at(i);
+                GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(list[i]);
+                for (int k = 0; k < this->_commonCause.size(); ++k)
+                {
+                    for (int l = 0; l < this->_commonCause.at(k)->idList()->size(); ++l)
+                    {
+                        if (this->_commonCause.at(k)->idList()->at(l) == prev->id())
+                        {
+                            commons.push_back(this->_commonCause.at(k));
+                            break;
+                        }
+                    }
+                }
+            }
+            if (commons.size() > 0)
+            {
+                this->calcCommonCause((GOMarkovOperator*)list[i], commons);
+                continue;
+            }
+        }*/
+        // Calcaulte common cause end.
+        if (list[i]->input()->number() + list[i]->subInput()->number() > 1)
+        {
+            commonList = this->getCommonSignalList(list[i]);
+        }
+        if (commonList.size() == 0)
+        {
+            this->_analysis->calcAccumulativeProbability(list[i]);
+        }
+        else
+        {
+            QVector<GOOperator*> commonOperator;
+            QVector<int> commonIndex;
+            for (int j = 0; j < commonList.size(); ++j)
+            {
+                commonOperator.push_back(commonList[j].op);
+                commonIndex.push_back(commonList[j].outputIndex);
+            }
+            this->_analysis->calcAccumulativeProbability(list[i], commonOperator, commonIndex);
+        }
+    }
+    list.clear();
+}
+
+void GOMarkovGraph::calcCommonCause(GOMarkovOperator *sink, QVector<GOMarkovCommonCause*> &commons)
+{
+    for (int i = 0; i < commons.size(); ++i)
+    {
+        QVector<BigDecimal> lamdas;
+        QVector<BigDecimal> mius;
+        QVector<BigDecimal> clamdas;
+        BigDecimal miuSum = BigDecimal::zero();
+        for (int j = 0; j < commons[i]->operators()->size(); ++j)
+        {
+            lamdas.push_back(commons[i]->operators()->at(j)->markovOutputStatus()->at(0)->frequencyBreakdown());
+            mius.push_back(commons[i]->operators()->at(j)->markovOutputStatus()->at(0)->frequencyRepair());
+            clamdas.push_back(BigDecimal::valueOf(commons[i]->commonCause()) + lamdas.at(j));
+            miuSum = miuSum + mius.at(j);
+        }
+        QVector<BigDecimal> failures;
+        for (int j = 0; j < commons[i]->operators()->size(); ++j)
+        {
+            failures.push_back(BigDecimal::one() - mius[j] / (clamdas[j] + mius[j]) * (BigDecimal::one() + clamdas[j] / mius[j] * BigDecimal::valueOf(exp(QString("-0.0").toDouble()))));
+        }
+    }
+}
+
 /**
  * Calculate the accumulative probability with the probability changed with the time.
  * @param totalTime The total time of the calculation.

@@ -7,7 +7,9 @@
 #include "gograph.h"
 
 class GOMarkovEquivalent;
+class GOMarkovCommonCause;
 class GOMarkovChartData;
+class GOMarkovOperator;
 
 class GOMarkovGraph : public GOGraph
 {
@@ -16,11 +18,16 @@ public:
     ~GOMarkovGraph();
     QVector<GOMarkovEquivalent*> getEquivalent() const;
     void addEquivalent(GOMarkovEquivalent *equivalent);
+    QVector<GOMarkovCommonCause*> getCommonCause() const;
+    void addCommonCause(GOMarkovCommonCause *commonCause);
+    void calcAccumulativeProbability();
     GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
     bool saveAsHTML(const QString filePath);
 
 protected:
     QVector<GOMarkovEquivalent*> _equivalent;
+    QVector<GOMarkovCommonCause*> _commonCause;
+    void calcCommonCause(GOMarkovOperator *sink, QVector<GOMarkovCommonCause*> &commons);
 };
 
 #endif // GOMARKOVGRAPH_H

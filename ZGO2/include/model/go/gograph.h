@@ -24,7 +24,7 @@ public:
     QVector<GOSignal*> getSignal() const;
     void addOperator(GOOperator *op);
     void addSignal(GOSignal *signal);
-    void calcAccumulativeProbability();
+    virtual void calcAccumulativeProbability();
     GOPathSetSetSet findPath(int order);
     GOPathSetSetSet findCut(int order);
     QString getErrorMessage() const;

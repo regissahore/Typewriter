@@ -1,6 +1,8 @@
 #include <QFile>
 #include <QDomDocument>
+#include <QTextStream>
 #include "gomarkovchartdata.h"
+#include "gooperator.h"
 
 GOMarkovChartData::~GOMarkovChartData()
 {
@@ -120,5 +122,49 @@ bool GOMarkovChartData::tryOpen(QString fileName)
             this->probabilities[this->probabilities.size() - 1].push_back(element2.attribute("value").toDouble());
         }
     }
+    return true;
+}
+
+bool GOMarkovChartData::saveAsHTML(QString fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+    {
+        return false;
+    }
+    QTextStream out(&file);
+    out.setCodec("UTF-8");
+    out << "<!DOCTYPE html>" << endl;
+    out << "<html>" << endl;
+    out << "<head>" << endl;
+    out << "<title>" + file.fileName() + "</title>" << endl;
+    out << "<meta charset = UTF-8>" << endl;
+    out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
+    out << "</head>" << endl;
+    out << "<body>" << endl;
+    out << "<input type = hidden value = ZHG/>";
+    out << "<h1>" + QObject::tr("Analysis Result") + "</h1>" << endl;
+    out << "<table>" << endl;
+    out << "<tr style='text-align: center;'>" << endl;
+    out << "<th>" + QObject::tr("Time") + "</th>" << endl;
+    for (int i = 0; i < ids.size(); ++i)
+    {
+        out << "<th>" << ids[i] << "</th>" << endl;
+    }
+    out << "</tr>" << endl;
+    for (int i = 0; i < times.size(); ++i)
+    {
+        out << "<tr>" << endl;
+        out << "<td>" << times[i] << "</td>" << endl;
+        for (int j = 0; j < ids.size(); ++j)
+        {
+            out << "<td>" << probabilities[j][i] << "</td>" << endl;
+        }
+        out << "</tr>" << endl;
+    }
+    out << "</table>" << endl;
+    out << "</body>" << endl;
+    out << "</html>" << endl;
+    file.close();
     return true;
 }

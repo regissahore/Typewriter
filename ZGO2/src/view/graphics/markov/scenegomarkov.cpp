@@ -141,7 +141,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
 
 GOGraph* SceneGOMarkov::generatorGOGraph()
 {
-    GOGraph *graph = new GOMarkovGraph();
+    GOMarkovGraph *graph = new GOMarkovGraph();
     QList<QGraphicsItem*> items = this->items();
     QVector<ItemGOMarkovOperator*> operators;
     QVector<ItemGOMarkovOperator*> equivalentOperators;
@@ -158,6 +158,11 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
                 operators.push_back(equivalentOperators.at(equivalentOperators.size() - 1));
                 graph->addOperator(equivalentOperators.at(equivalentOperators.size() - 1)->model());
             }
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
+        {
+            ItemGOMarkovCommonCause *common = (ItemGOMarkovCommonCause*)item;
+            graph->addCommonCause(common->model());
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
@@ -353,6 +358,12 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             {
                 Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                 message->paramString = filePath + ".goc";
+                this->sendMessage(message);
+            }
+            if (data->saveAsHTML(filePath + ".goc.html"))
+            {
+                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                message->paramString = filePath + ".goc.html";
                 this->sendMessage(message);
             }
             delete data;

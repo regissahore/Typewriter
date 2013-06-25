@@ -16,6 +16,7 @@ public:
     virtual ~GOMarkovChartData();
     bool save(QString fileName);
     bool tryOpen(QString fileName);
+    bool saveAsHTML(QString fileName);
 };
 
 #endif // GOMARKOVCHARTDATA_H
