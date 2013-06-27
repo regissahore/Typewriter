@@ -67,6 +67,9 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_17:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_17);
         break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1_E1:
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_1_E1);
+        break;
     }
     QList<QGraphicsItem*> items = this->graphicsScene()->items();
     QVector<bool> visit;

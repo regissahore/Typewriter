@@ -3,6 +3,7 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "gostatus.h"
+#include "gomarkovoperator1e1.h"
 
 /**
  * Produce a GOOperator with auto increment ID.
@@ -10,7 +11,32 @@
  */
 GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
 {
-    GOMarkovOperator *op = new GOMarkovOperator();
+    GOMarkovOperator *op;
+    switch (type)
+    {
+    case Operator_Type_1:
+    case Operator_Type_2:
+    case Operator_Type_3:
+    case Operator_Type_4:
+    case Operator_Type_5:
+    case Operator_Type_6:
+    case Operator_Type_7:
+    case Operator_Type_8:
+    case Operator_Type_9:
+    case Operator_Type_10:
+    case Operator_Type_11:
+    case Operator_Type_12:
+    case Operator_Type_13:
+    case Operator_Type_14:
+    case Operator_Type_15:
+    case Operator_Type_16:
+    case Operator_Type_17:
+        op = new GOMarkovOperator();
+        break;
+    case Operator_Type_1_E1:
+        op = new GOMarkovOperator1E1();
+        break;
+    }
     op->setType(type);
     switch (type)
     {
@@ -100,6 +126,11 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     case Operator_Type_17:
         op->input()->setNumber(1);
         op->subInput()->setNumber(1);
+        op->output()->setNumber(1);
+        break;
+    case Operator_Type_1_E1:
+        op->input()->setNumber(1);
+        op->subInput()->setNumber(0);
         op->output()->setNumber(1);
         break;
     }

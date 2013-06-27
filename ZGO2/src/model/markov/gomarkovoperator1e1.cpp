@@ -1,46 +1,40 @@
 #include <cstdio>
 #include <qmath.h>
-#include "gomarkovoperator.h"
+#include "gomarkovoperator1e1.h"
 #include "gomarkovstatus.h"
 #include "goinput.h"
 #include "gooutput.h"
-#include "goparameter.h"
 #include "gostatus.h"
-#include "bigdecimal.h"
+#include "goparameter.h"
 
-GOMarkovOperator::GOMarkovOperator() : GOOperator()
+GOMarkovOperator1E1::GOMarkovOperator1E1() : GOMarkovOperator()
 {
-    this->_markovStatus = new GOMarkovStatus();
-    this->_outputStatus = new QVector<GOMarkovStatus*>();
+    this->_markovStatus2 = new GOMarkovStatus();
 }
 
-GOMarkovOperator::~GOMarkovOperator()
+GOMarkovOperator1E1::~GOMarkovOperator1E1()
 {
-    this->GOOperator::~GOOperator();
-    delete this->_markovStatus;
-    for (int i = 0; i < this->_outputStatus->size(); ++i)
-    {
-        delete this->_outputStatus->at(i);
-    }
-    delete this->_outputStatus;
+    this->GOMarkovOperator::~GOMarkovOperator();
+    delete this->_markovStatus2;
 }
 
-GOMarkovStatus* GOMarkovOperator::markovStatus() const
+GOMarkovStatus* GOMarkovOperator1E1::markovStatus2() const
 {
-    return this->_markovStatus;
+    return this->_markovStatus2;
 }
 
-QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
-{
-    return this->_outputStatus;
-}
-
-void GOMarkovOperator::initMarkovStatus(double time)
+void GOMarkovOperator1E1::initMarkovStatus(double time)
 {
     char s[100];
-    double lamda = this->markovStatus()->frequencyBreakdown().toString().toDouble();
-    double miu = this->markovStatus()->frequencyRepair().toString().toDouble();
-    double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time));
+    double lamda1 = this->markovStatus()->frequencyBreakdown().toString().toDouble();
+    double miu1 = this->markovStatus()->frequencyRepair().toString().toDouble();
+    double lamda2 = this->markovStatus2()->frequencyBreakdown().toString().toDouble();
+    double miu2 = this->markovStatus2()->frequencyRepair().toString().toDouble();
+    double s1 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
+    double s2 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
+    double p1 = miu1 / s1 * miu2 / s2 +
+            (s1 * s1 + (miu1 + miu2) * s1 + miu1 * miu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
+            (s2 * s2 + (miu1 + miu2) * s2 + miu1 * miu2) / (s2 * (s2 - s1)) * exp(s2 * time);
     if (p1 > 1.0)
     {
         p1 = 1.0;
@@ -52,7 +46,7 @@ void GOMarkovOperator::initMarkovStatus(double time)
     this->status()->setProbability(2, BigDecimal::valueOf(QString(s)));
 }
 
-void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
+void GOMarkovOperator1E1::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("model");
     element.setAttribute("type", this->type());
@@ -63,10 +57,11 @@ void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
+    this->markovStatus2()->save(document, element);
     this->parameter()->save(document, element);
 }
 
-bool GOMarkovOperator::tryOpen(QDomElement &root)
+bool GOMarkovOperator1E1::tryOpen(QDomElement &root)
 {
     if (root.tagName() != "model")
     {
@@ -84,6 +79,11 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus2()->tryOpen(element))
     {
         return false;
     }

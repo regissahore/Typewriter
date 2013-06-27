@@ -15,6 +15,8 @@ public:
 
 protected:
     void addMarkovParameter();
+    void addMarkovMulti1Parameter();
+    void addMarkovMulti2Parameter();
 
 protected slots:
     void itemChanged(QTableWidgetItem *tableItem);

@@ -145,7 +145,8 @@ HEADERS += \
     include/model/markov/gomarkovcommoncause.h \
     include/view/main/dock/toolbox/toolboxgo.h \
     include/view/main/dock/toolbox/toolboxgomarkov.h \
-    include/view/main/dock/parameter/parametergomarkovcommoncause.h
+    include/view/main/dock/parameter/parametergomarkovcommoncause.h \
+    include/model/markov/gomarkovoperator1e1.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -256,7 +257,8 @@ SOURCES += \
     src/model/markov/gomarkovcommoncause.cpp \
     src/view/main/dock/toolbox/toolboxgo.cpp \
     src/view/main/dock/toolbox/toolboxgomarkov.cpp \
-    src/view/main/dock/parameter/parametergomarkovcommoncause.cpp
+    src/view/main/dock/parameter/parametergomarkovcommoncause.cpp \
+    src/model/markov/gomarkovoperator1e1.cpp
 
 RESOURCES += \
     resource.qrc

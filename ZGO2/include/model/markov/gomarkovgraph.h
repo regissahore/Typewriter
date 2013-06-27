@@ -27,7 +27,6 @@ public:
 protected:
     QVector<GOMarkovEquivalent*> _equivalent;
     QVector<GOMarkovCommonCause*> _commonCause;
-    void calcCommonCause(GOMarkovOperator *sink, QVector<GOMarkovCommonCause*> &commons);
 };
 
 #endif // GOMARKOVGRAPH_H
