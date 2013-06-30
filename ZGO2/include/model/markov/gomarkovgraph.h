@@ -20,7 +20,6 @@ public:
     void addEquivalent(GOMarkovEquivalent *equivalent);
     QVector<GOMarkovCommonCause*> getCommonCause() const;
     void addCommonCause(GOMarkovCommonCause *commonCause);
-    void calcAccumulativeProbability();
     GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
     bool saveAsHTML(const QString filePath);
 
