@@ -4,6 +4,7 @@
 #include "gomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
 #include "itemgomarkovcommoncause.h"
+#include "gomarkovoperator1e1.h"
 
 ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
@@ -73,8 +74,17 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     }
     this->setX(root.attribute("x", "0").toFloat());
     this->setY(root.attribute("y", "0").toFloat());
+    int type = root.attribute("type").toInt();
     QDomElement element = root.firstChildElement();
-    GOMarkovOperator *model = new GOMarkovOperator();
+    GOMarkovOperator *model;
+    if (type == GOMarkovOperatorFactory::Operator_Type_1_E1)
+    {
+        model = new GOMarkovOperator1E1();
+    }
+    else
+    {
+        model = new GOMarkovOperator();
+    }
     if (!model->tryOpen(element))
     {
         return false;

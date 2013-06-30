@@ -9,6 +9,7 @@
 #include "gograph.h"
 #include "bigdecimal.h"
 #include "goparameter.h"
+#include "gomarkovoperatorfactory.h"
 
 GOAnalysis::GOAnalysis()
 {
@@ -28,6 +29,7 @@ void GOAnalysis::calcAccumulativeProbability(GOOperator *op)
     switch (op->TypedItem::type())
     {
     case GOOperatorFactory::Operator_Type_1:
+    case GOMarkovOperatorFactory::Operator_Type_1_E1:
         this->calcAccumulativeProbabilityType1(op);
         break;
     case GOOperatorFactory::Operator_Type_2:
@@ -241,6 +243,7 @@ BigDecimal GOAnalysis::calcTempAccumulative(GOOperator *op, int index, QVector<G
         switch (op->type())
         {
         case GOOperatorFactory::Operator_Type_1:
+        case GOMarkovOperatorFactory::Operator_Type_1_E1:
             return calcTempAccumulativeType1(op, inputValues, subInputValues, accIndex);
         case GOOperatorFactory::Operator_Type_2:
             return calcTempAccumulativeType2(op, inputValues, subInputValues, accIndex);
