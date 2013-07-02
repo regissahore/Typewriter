@@ -1,5 +1,7 @@
 #include "gomarkovcommoncause.h"
 #include "gomarkovoperator.h"
+#include "gomarkovstatus.h"
+#include "qmath.h"
 
 GOMarkovCommonCause::GOMarkovCommonCause() : DomItem()
 {
@@ -62,4 +64,29 @@ QVector<GOMarkovOperator*>* GOMarkovCommonCause::operators() const
 QVector<int>* GOMarkovCommonCause::idList() const
 {
     return this->_idList;
+}
+
+double GOMarkovCommonCause::calcCommonCause(double time) const
+{
+    double miuSum = 0.0;
+    for (int j = 0; j < this->operators()->size(); ++j)
+    {
+        GOMarkovOperator *op = (GOMarkovOperator*)this->operators()->at(j);
+        miuSum += op->markovStatus()->frequencyRepair().toString().toDouble();
+    }
+    double c = this->commonCause();
+    double c12 = miuSum / (c + miuSum) + (1 - miuSum / (c + miuSum)) * exp(-(c + miuSum) * time);
+    return 1 - c12;
+}
+
+bool GOMarkovCommonCause::containOperator(GOMarkovOperator* op) const
+{
+    for (int i = 0; i < this->_operators->size(); ++i)
+    {
+        if (this->_operators->at(i) == op)
+        {
+            return true;
+        }
+    }
+    return false;
 }

@@ -35,12 +35,12 @@ QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
     return this->_outputStatus;
 }
 
-void GOMarkovOperator::initMarkovStatus(double time)
+void GOMarkovOperator::initMarkovStatus(double time, double c12)
 {
     char s[100];
     double lamda = this->markovStatus()->frequencyBreakdown().toString().toDouble();
     double miu = this->markovStatus()->frequencyRepair().toString().toDouble();
-    double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time));
+    double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time)) + c12;
     if (p1 > 1.0)
     {
         p1 = 1.0;

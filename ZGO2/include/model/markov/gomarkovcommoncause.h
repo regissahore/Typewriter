@@ -20,6 +20,8 @@ public:
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     QVector<int>* idList() const;
+    double calcCommonCause(double time) const;
+    bool containOperator(GOMarkovOperator* op) const;
 
 protected:
     QVector<GOMarkovOperator*> *_operators;
