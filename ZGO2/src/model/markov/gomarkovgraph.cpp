@@ -48,6 +48,40 @@ void GOMarkovGraph::addCommonCause(GOMarkovCommonCause *commonCause)
     this->_commonCause.push_back(commonCause);
 }
 
+void GOMarkovGraph::calcAccumulativeProbability(double time)
+{
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
+    {
+        QVector<GOGraph::Output> commonList;
+        if (list[i]->input()->number() + list[i]->subInput()->number() > 1)
+        {
+            commonList = this->getCommonSignalList(list[i]);
+        }
+        if (commonList.size() == 0)
+        {
+            ((GOMarkovAnalysis*)this->_analysis)->calcAccumulativeProbability(list[i], time);
+        }
+        else
+        {
+            QVector<GOOperator*> commonOperator;
+            QVector<int> commonIndex;
+            for (int j = 0; j < commonList.size(); ++j)
+            {
+                commonOperator.push_back(commonList[j].op);
+                commonIndex.push_back(commonList[j].outputIndex);
+            }
+            ((GOMarkovAnalysis*)this->_analysis)->calcAccumulativeProbability(list[i], commonOperator, commonIndex, time);
+        }
+    }
+    list.clear();
+}
+
 /**
  * Calculate the accumulative probability with the probability changed with the time.
  * @param totalTime The total time of the calculation.
@@ -96,7 +130,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             }
             op->initMarkovStatus(time, c12);
         }
-        this->GOGraph::calcAccumulativeProbability();
+        this->calcAccumulativeProbability(time);
         if (this->getErrorMessage() != "")
         {
             delete data;
@@ -121,7 +155,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[k];
                 op->initMarkovStatus(time);
             }
-            this->GOGraph::calcAccumulativeProbability();
+            this->calcAccumulativeProbability(time);
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
@@ -139,7 +173,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[k];
                 op->initMarkovStatus(time);
             }
-            this->GOGraph::calcAccumulativeProbability();
+            this->calcAccumulativeProbability(time);
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];

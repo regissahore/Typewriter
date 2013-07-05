@@ -4,8 +4,7 @@
 #include "gooutput.h"
 #include "gostatus.h"
 #include "gomarkovoperator1e1.h"
-#include "gomarkovoperator9a1.h"
-#include "gomarkovoperator9a2.h"
+#include "gomarkovoperator9a.h"
 #include "gomarkovoperator13a.h"
 #include "gomarkovoperator13b.h"
 #include "gomarkovoperator15a.h"
@@ -42,10 +41,8 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         op = new GOMarkovOperator1E1();
         break;
     case Operator_Type_9_A1:
-        op = new GOMarkovOperator9A1();
-        break;
     case Operator_Type_9_A2:
-        op = new GOMarkovOperator9A2();
+        op = new GOMarkovOperator9A();
         break;
     case Operator_Type_13_A:
         op = new GOMarkovOperator13A();
@@ -152,6 +149,31 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         op->input()->setNumber(1);
         op->subInput()->setNumber(0);
         op->output()->setNumber(1);
+        break;
+    case Operator_Type_9_A1:
+        op->input()->setNumber(1);
+        op->subInput()->setNumber(0);
+        op->output()->setNumber(1);
+        break;
+    case Operator_Type_9_A2:
+        op->input()->setNumber(1);
+        op->subInput()->setNumber(0);
+        op->output()->setNumber(1);
+        break;
+    case Operator_Type_13_A:
+        op->input()->setNumber(3);
+        op->subInput()->setNumber(0);
+        op->output()->setNumber(3);
+        break;
+    case Operator_Type_13_B:
+        op->input()->setNumber(3);
+        op->subInput()->setNumber(0);
+        op->output()->setNumber(3);
+        break;
+    case Operator_Type_15_A:
+        op->input()->setNumber(3);
+        op->subInput()->setNumber(0);
+        op->output()->setNumber(3);
         break;
     }
     return op;

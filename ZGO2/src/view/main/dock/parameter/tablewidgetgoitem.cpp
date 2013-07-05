@@ -4,9 +4,9 @@ TableWidgetGOItem::TableWidgetGOItem(const QString &text) : QTableWidgetItem(tex
 {
 }
 
-TableWidgetGOItem::TableWidgetGOItem(const double value)
+TableWidgetGOItem::TableWidgetGOItem(const double value) : QTableWidgetItem()
 {
-    QTableWidgetItem(QString("%1").arg(value));
+    this->setText(QString("%1").arg(value));
 }
 
 TableWidgetGOItem::GOParameterType TableWidgetGOItem::parameterType() const

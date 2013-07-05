@@ -2,4 +2,6 @@
 
 GOMarkovOperator13A::GOMarkovOperator13A() : GOMarkovOperator()
 {
+
 }
+

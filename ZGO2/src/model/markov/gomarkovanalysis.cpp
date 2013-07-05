@@ -1,3 +1,4 @@
+#include <qmath.h>
 #include "gomarkovanalysis.h"
 #include "gooperator.h"
 #include "gosignal.h"
@@ -8,25 +9,102 @@
 #include "goaccumulative.h"
 #include "gomarkovoperatorfactory.h"
 #include "gomarkovoperator1e1.h"
+#include "gomarkovoperator9a.h"
 
 GOMarkovAnalysis::GOMarkovAnalysis() : GOAnalysis()
 {
 }
 
-void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op)
+void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, double time)
 {
-    this->GOAnalysis::calcAccumulativeProbability(op);
-    this->updateOutputMarkov((GOMarkovOperator*)op);
+    switch (op->TypedItem::type())
+    {
+    case GOMarkovOperatorFactory::Operator_Type_9_A1:
+        GOMarkovAnalysis::calcAccumulativeProbability_9A1((GOMarkovOperator9A*)op, time);
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_9_A2:
+        GOMarkovAnalysis::calcAccumulativeProbability_9A2((GOMarkovOperator9A*)op, time);
+        break;
+    default:
+        this->GOAnalysis::calcAccumulativeProbability(op);
+        this->updateOutputMarkov((GOMarkovOperator*)op);
+    }
 }
 
-void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex)
+void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time)
 {
+    Q_UNUSED(time);
     this->GOAnalysis::calcAccumulativeProbability(op, commonOperator, commonIndex);
     this->updateOutputMarkov((GOMarkovOperator*)op);
 }
 
+void GOMarkovAnalysis::calcAccumulativeProbability_9A1(GOMarkovOperator9A *op, double time)
+{
+    GOSignal* signal = op->input()->signal()->at(0);
+    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(prevIndex);
+    double lamda1 = prevStatus->frequencyBreakdown();
+    double miu1 = prevStatus->frequencyRepair();
+    double lamdaC = op->markovStatus()->frequencyBreakdown();
+    double miuC = op->markovStatus()->frequencyRepair();
+    double lamdaF = op->markovFeedbackStatus()->frequencyBreakdown();
+    double miuF = op->markovFeedbackStatus()->frequencyRepair();
+    double lamda2 = lamdaC + lamdaF;
+    double miu2 = (lamda2 * miuC * miuF) / (lamdaC * miuF + lamdaF * miuC);
+    double s1 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
+    double s2 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) - sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
+    double pr1 = miu1 * miu2 / s1 / s2 + (s1 * s1 + (miu1 + miu2) * s1 + miu1 * miu2) / (s1 * (s1 - s2)) * exp(s1 * time) + (s2 * s2 + (miu1 + miu2) * s2 + miu1 * miu2) / (s2 * (s2 - s1)) * exp(s2 * time);
+    double pr2 = 1 - pr1;
+    op->accmulatives()->clear();
+    op->accmulatives()->push_back(new GOAccumulative());
+    op->accmulatives()->at(0)->setNumber(3);
+    op->accmulatives()->at(0)->setAccumulative(0, 0.0);
+    op->accmulatives()->at(0)->setAccumulative(1, pr1);
+    op->accmulatives()->at(0)->setAccumulative(2, 1.0);
+    op->markovOutputStatus()->clear();
+    op->markovOutputStatus()->push_back(new GOMarkovStatus());
+    op->markovOutputStatus()->at(0)->setProbabilityNormal(pr1);
+    double lamdaR = lamda1 + lamda2 + lamdaC;
+    double miuR = lamdaR * pr1 / pr2;
+    op->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
+    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+}
+
+void GOMarkovAnalysis::calcAccumulativeProbability_9A2(GOMarkovOperator9A *op, double time)
+{
+    GOSignal* signal = op->input()->signal()->at(0);
+    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(prevIndex);
+    double lamda1 = prevStatus->frequencyBreakdown();
+    double miu1 = prevStatus->frequencyRepair();
+    double lamdaC = op->markovStatus()->frequencyBreakdown();
+    double miuC = op->markovStatus()->frequencyRepair();
+    double lamdaF = op->markovFeedbackStatus()->frequencyBreakdown();
+    double miuF = op->markovFeedbackStatus()->frequencyRepair();
+    double lamdaE = lamdaC + lamdaF;
+    double miuE = (lamdaE * miuC * miuF) / (lamdaC * miuF + lamdaF * miuC + lamdaC * lamdaF);
+    double pr1 = (miu1 * miuE + lamdaE * miu1 * exp(-(miuE + lamdaE) * time) + lamda1 * miuE * exp(-(miu1 + lamda1) * time) + lamda1 * lamdaE * exp(-(miu1 + lamda1 + miuE + lamdaE) * time)) / ((miu1 + lamda1) * (miuE + lamdaE));
+    double pr2 = 1 - pr1;
+    op->accmulatives()->clear();
+    op->accmulatives()->push_back(new GOAccumulative());
+    op->accmulatives()->at(0)->setNumber(3);
+    op->accmulatives()->at(0)->setAccumulative(0, 0.0);
+    op->accmulatives()->at(0)->setAccumulative(1, pr1);
+    op->accmulatives()->at(0)->setAccumulative(2, 1.0);
+    op->markovOutputStatus()->clear();
+    op->markovOutputStatus()->push_back(new GOMarkovStatus());
+    op->markovOutputStatus()->at(0)->setProbabilityNormal(pr1);
+    double lamdaR = lamda1 + lamdaF + lamdaC;
+    double miuR = lamdaR * pr1 / pr2;
+    op->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
+    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+}
+
 void GOMarkovAnalysis::updateOutputMarkov(GOMarkovOperator *op)
 {
+    op->markovOutputStatus()->clear();
     for (int i = 0; i < op->output()->number(); ++i)
     {
         op->markovOutputStatus()->push_back(new GOMarkovStatus());
@@ -54,12 +132,6 @@ void GOMarkovAnalysis::updateOutputMarkov(GOMarkovOperator *op)
         break;
     case GOMarkovOperatorFactory::Operator_Type_1_E1:
         this->updateOutputMarkov_1_E1(op);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_9_A1:
-        this->updateOutputMarkov_9_A1(op);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_9_A2:
-        this->updateOutputMarkov_9_A2(op);
         break;
     case GOMarkovOperatorFactory::Operator_Type_13_A:
         this->updateOutputMarkov_13_A(op);
@@ -178,16 +250,6 @@ void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
     double miuR = lamdaR * pr1 / pr2;
     op->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
     op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
-}
-
-void GOMarkovAnalysis::updateOutputMarkov_9_A1(GOMarkovOperator *op)
-{
-    Q_UNUSED(op);
-}
-
-void GOMarkovAnalysis::updateOutputMarkov_9_A2(GOMarkovOperator *op)
-{
-    Q_UNUSED(op);
 }
 
 void GOMarkovAnalysis::updateOutputMarkov_13_A(GOMarkovOperator *op)

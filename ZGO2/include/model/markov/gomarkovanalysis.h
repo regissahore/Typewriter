@@ -7,15 +7,18 @@
 #include "goanalysis.h"
 
 class GOMarkovOperator;
+class GOMarkovOperator9A;
 
 class GOMarkovAnalysis : public GOAnalysis
 {
 public:
     GOMarkovAnalysis();
-    virtual void calcAccumulativeProbability(GOOperator *op);
-    virtual void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
+    void calcAccumulativeProbability(GOOperator *op, double time);
+    void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time);
 
 protected:
+    void calcAccumulativeProbability_9A1(GOMarkovOperator9A *op, double time);
+    void calcAccumulativeProbability_9A2(GOMarkovOperator9A *op, double time);
     void updateOutputMarkov(GOMarkovOperator *op);
     void updateOutputMarkov_1(GOMarkovOperator *op);
     void updateOutputMarkov_2(GOMarkovOperator *op);
