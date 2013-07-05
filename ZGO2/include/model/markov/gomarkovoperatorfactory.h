@@ -30,7 +30,10 @@ public:
         Operator_Type_17 = 17,
         Operator_Type_1_E1, // Two breakdown status operator.
         Operator_Type_9_A1,
-        Opeartor_Type_9_A2
+        Operator_Type_9_A2,
+        Operator_Type_13_A,
+        Operator_Type_13_B,
+        Operator_Type_15_A
     };
     static GOMarkovOperator* produce(const int type);
     static bool isLogical(const int type);

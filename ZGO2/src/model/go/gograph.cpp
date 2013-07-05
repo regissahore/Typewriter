@@ -453,7 +453,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
                 bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (endList[i]->accmulatives()->at(j)->accumulative(1) == BigDecimal::one())
+                    if (endList[i]->accmulatives()->at(j)->accumulative(1) > 1.0 - 1e-8)
                     {
                         flag = true;
                         break;
@@ -478,9 +478,9 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         for (int i = 0; i < list[index]->status()->number(); ++i)
         {
             copy->setProbability(i, list[index]->status()->probability(i));
-            list[index]->status()->setProbability(i, BigDecimal::zero());
+            list[index]->status()->setProbability(i, 0.0);
         }
-        list[index]->status()->setProbability(1, BigDecimal::one());
+        list[index]->status()->setProbability(1, 1.0);
         tempPath.add(list[index]);
         this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
         tempPath.removeEnd();
@@ -495,9 +495,9 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
         copy->setProbability(i, list[index]->status()->probability(i));
-        list[index]->status()->setProbability(i, BigDecimal::zero());
+        list[index]->status()->setProbability(i, 0.0);
     }
-    list[index]->status()->setProbability(list[index]->status()->number() - 1, BigDecimal::one());
+    list[index]->status()->setProbability(list[index]->status()->number() - 1, 1.0);
     this->findPathDfs(path, list, tempPath, index + 1, number, order);
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
@@ -580,9 +580,9 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
                     int number = endList[i]->accmulatives()->at(j)->number();
-                    BigDecimal a = endList[i]->accmulatives()->at(j)->accumulative(number - 1);
-                    BigDecimal b = endList[i]->accmulatives()->at(j)->accumulative(number - 2);
-                    if (a - b == BigDecimal::one())
+                    double a = endList[i]->accmulatives()->at(j)->accumulative(number - 1);
+                    double b = endList[i]->accmulatives()->at(j)->accumulative(number - 2);
+                    if (a - b >= 1.0 - 1e-8)
                     {
                         flag = true;
                         break;
@@ -607,9 +607,9 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         for (int i = 0; i < list[index]->status()->number(); ++i)
         {
             copy->setProbability(i, list[index]->status()->probability(i));
-            list[index]->status()->setProbability(i, BigDecimal::zero());
+            list[index]->status()->setProbability(i, 0.0);
         }
-        list[index]->status()->setProbability(list[index]->status()->number() - 1, BigDecimal::one());
+        list[index]->status()->setProbability(list[index]->status()->number() - 1, 1.0);
         tempPath.add(list[index]);
         this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
         tempPath.removeEnd();
@@ -624,9 +624,9 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
         copy->setProbability(i, list[index]->status()->probability(i));
-        list[index]->status()->setProbability(i, BigDecimal::zero());
+        list[index]->status()->setProbability(i, 0.0);
     }
-    list[index]->status()->setProbability(1, BigDecimal::one());
+    list[index]->status()->setProbability(1, 1.0);
     this->findCutDfs(cut, list, tempPath, index + 1, number, order);
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
@@ -704,7 +704,7 @@ bool GOGraph::saveAsHTML(const QString filePath)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << "<td>" << list[i]->status()->probability(j).toString() << "</td>";
+            out << "<td>" << list[i]->status()->probability(j) << "</td>";
             out << "</tr>" << endl;
         }
         out << "</table>" << endl;
@@ -720,14 +720,14 @@ bool GOGraph::saveAsHTML(const QString filePath)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
+            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
             if (j == 0)
             {
-                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
+                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
             }
             else
             {
-                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)).toString() << "</td>";
+                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)) << "</td>";
             }
             out << "</tr>" << endl;
         }

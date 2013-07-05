@@ -65,7 +65,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     for (int i = 0; i < count; ++i)
     {
         // Record initial value of lamda.
-        QVector<BigDecimal> lamdas;
+        QVector<double> lamdas;
         for (int j = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
@@ -77,7 +77,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(op->markovStatus()->frequencyBreakdown() + BigDecimal::valueOf(this->_commonCause[j]->commonCause()));
+                op->markovStatus()->setFrequencyBreakdown(op->markovStatus()->frequencyBreakdown() + this->_commonCause[j]->commonCause());
             }
         }
         double time = i * totalTime / (count - 1);
@@ -105,7 +105,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         for (int j = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
-            data->probabilities[j].push_back(op->accmulatives()->at(0)->probability(1).toString().toDouble());
+            data->probabilities[j].push_back(op->accmulatives()->at(0)->probability(1));
         }
         // Fixed the error caused by common cause.
         for (int j = 0; j < this->_commonCause.size(); ++j)
@@ -114,7 +114,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(BigDecimal::valueOf("999999999"));
+                op->markovStatus()->setFrequencyBreakdown(1e100);
             }
             for (int k = 0; k < this->_operator.size(); ++k)
             {
@@ -125,14 +125,14 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                r00.push_back(op->accmulatives()->at(0)->probability(1).toString().toDouble());
+                r00.push_back(op->accmulatives()->at(0)->probability(1));
             }
 
             QVector<double> r11;
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(BigDecimal::zero());
+                op->markovStatus()->setFrequencyBreakdown(0.0);
             }
             for (int k = 0; k < this->_operator.size(); ++k)
             {
@@ -143,7 +143,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                r11.push_back(op->accmulatives()->at(0)->probability(1).toString().toDouble());
+                r11.push_back(op->accmulatives()->at(0)->probability(1));
             }
 
             double c12 = this->_commonCause[j]->calcCommonCause(time);
@@ -234,16 +234,16 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << "<td>" << list[i]->status()->probability(j).toString() << "</td>";
+            out << "<td>" << list[i]->status()->probability(j) << "</td>";
             out << "</tr>" << endl;
         }
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Failure Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyBreakdown().toString() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyBreakdown() << "</td>";
         out << "</tr>" << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Repair Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyRepair().toString() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyRepair() << "</td>";
         out << "</tr>" << endl;
         out << "</table>" << endl;
         out << "</td>" << endl;
@@ -258,26 +258,26 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath)
         {
             out << "<tr>" << endl;
             out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
+            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
             if (j == 0)
             {
-                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j).toString() << "</td>";
+                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
             }
             else
             {
-                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)).toString() << "</td>";
+                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)) << "</td>";
             }
             out << "</tr>" << endl;
         }
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Failure Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown().toString() << "</td>";
-        out << "<td>" << (BigDecimal::one() / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown()).toString() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown() << "</td>";
+        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown()) << "</td>";
         out << "</tr>" << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Repair Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair().toString() << "</td>";
-        out << "<td>" << (BigDecimal::one() / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair()).toString() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair() << "</td>";
+        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair()) << "</td>";
         out << "</tr>" << endl;
         out << "</table>" << endl;
         out << "</td>" << endl;

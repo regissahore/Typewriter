@@ -28,12 +28,12 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
         K = this->_operators->at(this->_operators->size() - 1)->parameter()->parameter(0);
         break;
     }
-    BigDecimal lamda = this->_operators->at(0)->markovStatus()->frequencyBreakdown();
-    BigDecimal miu = this->_operators->at(0)->markovStatus()->frequencyRepair();
-    QVector<BigDecimal> a;
-    QVector<BigDecimal> b;
-    a.push_back(BigDecimal::zero());
-    b.push_back(BigDecimal::one());
+    double lamda = this->_operators->at(0)->markovStatus()->frequencyBreakdown();
+    double miu = this->_operators->at(0)->markovStatus()->frequencyRepair();
+    QVector<double> a;
+    QVector<double> b;
+    a.push_back(0.0);
+    b.push_back(1.0);
     int maxIndex = M - K;
     if (I > maxIndex)
     {
@@ -44,29 +44,29 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
         ++i;
         if (J == 0 || M - i + 1 < K)
         {
-            a.push_back(BigDecimal::valueOf(M - i + 1) * lamda);
+            a.push_back((M - i + 1) * lamda);
         }
         else
         {
-            a.push_back(BigDecimal::valueOf(K) * lamda);
+            a.push_back(K * lamda);
         }
         if (i <= L)
         {
-            b.push_back(BigDecimal::valueOf(i) * miu);
+            b.push_back(i * miu);
         }
         else
         {
-            b.push_back(BigDecimal::valueOf(L) * miu);
+            b.push_back(L * miu);
         }
     }
-    QVector<BigDecimal> p;
-    p.push_back(BigDecimal::one());
+    QVector<double> p;
+    p.push_back(1.0);
     for (int i = 1; i <= I + 1; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }
-    BigDecimal sum1 = BigDecimal::zero();
-    BigDecimal sum2 = BigDecimal::zero();
+    double sum1 = 0.0;
+    double sum2 = 0.0;
     for (int i = 0; i <= M - K; ++i)
     {
         sum1 = sum1 + p[i];
@@ -75,9 +75,6 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
     {
         sum2 = sum2 + p[i];
     }
-    lamda = p[M - K];
-    lamda = a[M - K + 1];
-    lamda = sum1;
     lamda = p[M - K] * a[M - K + 1] / sum1;
     miu = p[M - K + 1] * b[M - K + 1] / sum2;
     GOMarkovStatus status;

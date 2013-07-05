@@ -25,11 +25,10 @@ GOMarkovStatus* GOMarkovOperator1E1::markovStatus2() const
 
 void GOMarkovOperator1E1::initMarkovStatus(double time)
 {
-    char s[100];
-    double lamda1 = this->markovStatus()->frequencyBreakdown().toString().toDouble();
-    double miu1 = this->markovStatus()->frequencyRepair().toString().toDouble();
-    double lamda2 = this->markovStatus2()->frequencyBreakdown().toString().toDouble();
-    double miu2 = this->markovStatus2()->frequencyRepair().toString().toDouble();
+    double lamda1 = this->markovStatus()->frequencyBreakdown();
+    double miu1 = this->markovStatus()->frequencyRepair();
+    double lamda2 = this->markovStatus2()->frequencyBreakdown();
+    double miu2 = this->markovStatus2()->frequencyRepair();
     double s1 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
     double s2 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) - sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
     double p1 = miu1 / s1 * miu2 / s2 +
@@ -40,10 +39,8 @@ void GOMarkovOperator1E1::initMarkovStatus(double time)
         p1 = 1.0;
     }
     double p2 = 1 - p1;
-    sprintf(s, "%.6lf", p1);
-    this->status()->setProbability(1, BigDecimal::valueOf(QString(s)));
-    sprintf(s, "%.6lf", p2);
-    this->status()->setProbability(2, BigDecimal::valueOf(QString(s)));
+    this->status()->setProbability(1, p1);
+    this->status()->setProbability(2, p2);
 }
 
 void GOMarkovOperator1E1::save(QDomDocument &document, QDomElement &root)

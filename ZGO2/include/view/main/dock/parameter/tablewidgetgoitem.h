@@ -39,6 +39,7 @@ public:
         PARAMETER_GO_MARKOV_REPAIR_TIME_2
     };
     TableWidgetGOItem(const QString &text);
+    TableWidgetGOItem(const double value);
     GOParameterType parameterType() const;
     void setParameterType(GOParameterType type);
 

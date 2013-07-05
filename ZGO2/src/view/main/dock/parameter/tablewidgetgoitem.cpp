@@ -4,6 +4,11 @@ TableWidgetGOItem::TableWidgetGOItem(const QString &text) : QTableWidgetItem(tex
 {
 }
 
+TableWidgetGOItem::TableWidgetGOItem(const double value)
+{
+    QTableWidgetItem(QString("%1").arg(value));
+}
+
 TableWidgetGOItem::GOParameterType TableWidgetGOItem::parameterType() const
 {
     return this->_parameterType;

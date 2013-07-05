@@ -3,7 +3,7 @@
 GOStatus::GOStatus()
 {
     this->setNumber(3);
-    this->_probability[1] == BigDecimal::one();
+    this->_probability[1] = 1.0;
 }
 
 GOStatus::~GOStatus()
@@ -28,7 +28,7 @@ void GOStatus::setNumber(int number)
         number = number - this->_probability.size();
         while (number--)
         {
-            this->_probability.push_back(BigDecimal::zero());
+            this->_probability.push_back(0.0);
             this->_description.push_back("");
         }
     }
@@ -43,16 +43,16 @@ void GOStatus::setNumber(int number)
     }
 }
 
-BigDecimal GOStatus::probability(int index) const
+double GOStatus::probability(int index) const
 {
     if (index >= 0 && index < this->_probability.size())
     {
         return this->_probability[index];
     }
-    return BigDecimal::zero();
+    return 0.0;
 }
 
-void GOStatus::setProbability(int index, BigDecimal value)
+void GOStatus::setProbability(int index, double value)
 {
     if (index >= 0 && index < this->_probability.size())
     {
@@ -83,7 +83,7 @@ void GOStatus::save(QDomDocument &document, QDomElement &root)
     for (int i = 0; i < this->number(); ++i)
     {
         QDomElement element = document.createElement(QString("status_%1").arg(i));
-        element.setAttribute("probability", this->probability(i).toString());
+        element.setAttribute("probability", this->probability(i));
         element.setAttribute("description", this->description(i));
         statusRoot.appendChild(element);
     }
@@ -100,7 +100,7 @@ bool GOStatus::tryOpen(QDomElement &root)
     this->_description.clear();
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
-        this->_probability.push_back(BigDecimal::valueOf(element.attribute("probability")));
+        this->_probability.push_back(element.attribute("probability").toDouble());
         this->_description.push_back(element.attribute("description"));
     }
     return true;

@@ -5,7 +5,6 @@
 #include "gostatus.h"
 #include "gooperatorfactory.h"
 #include "dialoggoprobability.h"
-#include "bigdecimal.h"
 #include "goparameter.h"
 #include "messagefactory.h"
 
@@ -100,7 +99,7 @@ void ParameterGOOperator::addProbability0Parameter()
         tableItem = new TableWidgetGOItem(tr("Probability 0"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(item->model()->status()->probability(0).toString());
+        tableItem = new TableWidgetGOItem(item->model()->status()->probability(0));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_0);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -116,7 +115,7 @@ void ParameterGOOperator::addProbability12Parameter()
         tableItem = new TableWidgetGOItem(tr("Probability 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(item->model()->status()->probability(1).toString());
+        tableItem = new TableWidgetGOItem(item->model()->status()->probability(1));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_1);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -124,7 +123,7 @@ void ParameterGOOperator::addProbability12Parameter()
         tableItem = new TableWidgetGOItem(tr("Probability 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(item->model()->status()->probability(2).toString());
+        tableItem = new TableWidgetGOItem(item->model()->status()->probability(2));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_PROBABILITY_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -235,13 +234,13 @@ void ParameterGOOperator::itemChanged(QTableWidgetItem *tableItem)
         item->setY(floatValue);
         break;
     case TableWidgetGOItem::PARAMETER_PROBABILITY_0:
-        item->model()->status()->setProbability(0, BigDecimal::valueOf(goTableItem->text()));
+        item->model()->status()->setProbability(0, goTableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_PROBABILITY_1:
-        item->model()->status()->setProbability(1, BigDecimal::valueOf(goTableItem->text()));
+        item->model()->status()->setProbability(1, goTableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_PROBABILITY_2:
-        item->model()->status()->setProbability(2, BigDecimal::valueOf(goTableItem->text()));
+        item->model()->status()->setProbability(2, goTableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_9_X:
         intValue = goTableItem->text().toInt();

@@ -1,7 +1,6 @@
 #include "gopathset.h"
 #include "gooperator.h"
 #include "gostatus.h"
-#include "bigdecimal.h"
 
 GOPathSet::GOPathSet()
 {
@@ -78,12 +77,12 @@ QString GOPathSet::toCompareString()
 
 QString GOPathSet::toProbabilityString()
 {
-    BigDecimal value = BigDecimal::one();
+    double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
-        value = value * (BigDecimal::one() - this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1));
+        value = value * (1.0 - this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1));
     }
-    return value.toString();
+    return QString("%1").arg(value);
 }
 
 GOPathSet* GOPathSet::copy()

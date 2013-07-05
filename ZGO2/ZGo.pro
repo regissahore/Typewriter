@@ -104,8 +104,6 @@ HEADERS += \
     include/model/go/goaccumulative.h \
     include/model/go/goinput.h \
     include/model/go/gooutput.h \
-    include/model/common/biginteger.h \
-    include/model/common/bigdecimal.h \
     include/model/go/goparameter.h \
     include/view/main/editor/editorgomarkov.h \
     include/model/markov/gomarkovoperator.h \
@@ -146,7 +144,12 @@ HEADERS += \
     include/view/main/dock/toolbox/toolboxgo.h \
     include/view/main/dock/toolbox/toolboxgomarkov.h \
     include/view/main/dock/parameter/parametergomarkovcommoncause.h \
-    include/model/markov/gomarkovoperator1e1.h
+    include/model/markov/gomarkovoperator1e1.h \
+    include/model/markov/gomarkovoperator9a1.h \
+    include/model/markov/gomarkovoperator9a2.h \
+    include/model/markov/gomarkovoperator13a.h \
+    include/model/markov/gomarkovoperator13b.h \
+    include/model/markov/gomarkovoperator15a.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -216,8 +219,6 @@ SOURCES += \
     src/model/go/goaccumulative.cpp \
     src/model/go/goinput.cpp \
     src/model/go/gooutput.cpp \
-    src/model/common/biginteger.cpp \
-    src/model/common/bigdecimal.cpp \
     src/model/go/goparameter.cpp \
     src/view/main/editor/editorgomarkov.cpp \
     src/model/markov/gomarkovoperator.cpp \
@@ -258,7 +259,12 @@ SOURCES += \
     src/view/main/dock/toolbox/toolboxgo.cpp \
     src/view/main/dock/toolbox/toolboxgomarkov.cpp \
     src/view/main/dock/parameter/parametergomarkovcommoncause.cpp \
-    src/model/markov/gomarkovoperator1e1.cpp
+    src/model/markov/gomarkovoperator1e1.cpp \
+    src/model/markov/gomarkovoperator9a1.cpp \
+    src/model/markov/gomarkovoperator9a2.cpp \
+    src/model/markov/gomarkovoperator13a.cpp \
+    src/model/markov/gomarkovoperator13b.cpp \
+    src/model/markov/gomarkovoperator15a.cpp
 
 RESOURCES += \
     resource.qrc

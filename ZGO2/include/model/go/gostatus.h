@@ -7,7 +7,6 @@
 #include <QVector>
 #include <QString>
 #include "domitem.h"
-#include "bigdecimal.h"
 
 class GOStatus : public DomItem
 {
@@ -16,15 +15,15 @@ public:
     virtual ~GOStatus();
     int number() const;
     void setNumber(int number);
-    BigDecimal probability(int index) const;
-    void setProbability(int index, BigDecimal value);
+    double probability(int index) const;
+    void setProbability(int index, double value);
     QString description(int index) const;
     void setDescription(int index, const QString value);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
 protected:
-    QVector<BigDecimal> _probability;
+    QVector<double> _probability;
     QVector<QString> _description;
 };
 

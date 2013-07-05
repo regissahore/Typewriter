@@ -16,7 +16,19 @@ public:
     virtual void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
 
 protected:
-    void updateOuputMarkov(GOMarkovOperator *op);
+    void updateOutputMarkov(GOMarkovOperator *op);
+    void updateOutputMarkov_1(GOMarkovOperator *op);
+    void updateOutputMarkov_2(GOMarkovOperator *op);
+    void updateOutputMarkov_5(GOMarkovOperator *op);
+    void updateOutputMarkov_6(GOMarkovOperator *op);
+    void updateOutputMarkov_10(GOMarkovOperator *op);
+    void updateOutputMarkov_11(GOMarkovOperator *op);
+    void updateOutputMarkov_1_E1(GOMarkovOperator *op);
+    void updateOutputMarkov_9_A1(GOMarkovOperator *op);
+    void updateOutputMarkov_9_A2(GOMarkovOperator *op);
+    void updateOutputMarkov_13_A(GOMarkovOperator *op);
+    void updateOutputMarkov_13_B(GOMarkovOperator *op);
+    void updateOutputMarkov_15_A(GOMarkovOperator *op);
 };
 
 #endif // GOMARKOVANALYSIS_H

@@ -6,7 +6,6 @@
 #include "gooutput.h"
 #include "goparameter.h"
 #include "gostatus.h"
-#include "bigdecimal.h"
 
 GOMarkovOperator::GOMarkovOperator() : GOOperator()
 {
@@ -37,19 +36,16 @@ QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
 
 void GOMarkovOperator::initMarkovStatus(double time, double c12)
 {
-    char s[100];
-    double lamda = this->markovStatus()->frequencyBreakdown().toString().toDouble();
-    double miu = this->markovStatus()->frequencyRepair().toString().toDouble();
+    double lamda = this->markovStatus()->frequencyBreakdown();
+    double miu = this->markovStatus()->frequencyRepair();
     double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time)) + c12;
     if (p1 > 1.0)
     {
         p1 = 1.0;
     }
     double p2 = 1 - p1;
-    sprintf(s, "%.6lf", p1);
-    this->status()->setProbability(1, BigDecimal::valueOf(QString(s)));
-    sprintf(s, "%.6lf", p2);
-    this->status()->setProbability(2, BigDecimal::valueOf(QString(s)));
+    this->status()->setProbability(1, p1);
+    this->status()->setProbability(2, p2);
 }
 
 void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)

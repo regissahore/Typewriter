@@ -8,7 +8,6 @@
 
 class GOOperator;
 class GOAccumulative;
-class BigDecimal;
 
 class GOAnalysis
 {
@@ -20,7 +19,7 @@ public:
 
 protected:
     bool isCommonSignalAppeared(GOOperator *op, int index, QVector<GOOperator *> commonOperator, QVector<int> commonIndex);
-    BigDecimal calcTempAccumulative(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<BigDecimal> &accValues, int accIndex);
+    double calcTempAccumulative(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &accValues, int accIndex);
     virtual void calcAccumulativeProbabilityType1(GOOperator *op);
     virtual void calcAccumulativeProbabilityType2(GOOperator *op);
     virtual void calcAccumulativeProbabilityType3(GOOperator *op);
@@ -39,23 +38,23 @@ protected:
     virtual void calcAccumulativeProbabilityType16(GOOperator *op);
     virtual void calcAccumulativeProbabilityType17(GOOperator *op);
 
-    virtual BigDecimal calcTempAccumulativeType1(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType2(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType3(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType4(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType5(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType6(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType7(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType8(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType9(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<BigDecimal> &accValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType10(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType11(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType12(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType13(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType14(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType15(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType16(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
-    virtual BigDecimal calcTempAccumulativeType17(GOOperator *op, QVector<BigDecimal> inputValues, QVector<BigDecimal> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType1(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType2(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType3(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType4(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType5(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType6(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType7(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType8(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType9(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &accValues, int accIndex);
+    virtual double calcTempAccumulativeType10(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType11(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType12(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType13(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType14(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType15(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType16(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
+    virtual double calcTempAccumulativeType17(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex);
 };
 
 #endif // GOANALYSIS_H

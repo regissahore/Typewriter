@@ -72,7 +72,7 @@ double GOMarkovCommonCause::calcCommonCause(double time) const
     for (int j = 0; j < this->operators()->size(); ++j)
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->operators()->at(j);
-        miuSum += op->markovStatus()->frequencyRepair().toString().toDouble();
+        miuSum += op->markovStatus()->frequencyRepair();
     }
     double c = this->commonCause();
     double c12 = miuSum / (c + miuSum) + (1 - miuSum / (c + miuSum)) * exp(-(c + miuSum) * time);

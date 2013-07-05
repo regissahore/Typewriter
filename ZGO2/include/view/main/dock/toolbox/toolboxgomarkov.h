@@ -36,6 +36,11 @@ private slots:
     void on_buttonOperator10_clicked();
     void on_buttonOperator11_clicked();
     void on_buttonOperator1E1_clicked();
+    void on_buttonOperator9A1_clicked();
+    void on_buttonOperator9A2_clicked();
+    void on_buttonOperator13A_clicked();
+    void on_buttonOperator13B_clicked();
+    void on_buttonOperator15A_clicked();
 
 private:
     Ui::ToolboxGOMarkov *ui;

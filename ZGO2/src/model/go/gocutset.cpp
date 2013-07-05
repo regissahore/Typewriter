@@ -1,5 +1,4 @@
 #include "gocutset.h"
-#include "bigdecimal.h"
 #include "gostatus.h"
 #include "gooperator.h"
 
@@ -19,10 +18,10 @@ GOPathSet* GOCutSet::copy()
 
 QString GOCutSet::toProbabilityString()
 {
-    BigDecimal value = BigDecimal::one();
+    double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
         value = value * this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1);
     }
-    return value.toString();
+    return QString("%1").arg(value);
 }

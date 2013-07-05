@@ -7,7 +7,6 @@
  */
 
 #include <QVector>
-#include "bigdecimal.h"
 
 class GOAccumulative
 {
@@ -16,13 +15,13 @@ public:
     virtual ~GOAccumulative();
     int number() const;
     void setNumber(int number);
-    BigDecimal accumulative(int index) const;
-    BigDecimal probability(int index) const;
-    void setAccumulative(int index, BigDecimal value);
+    double accumulative(int index) const;
+    double probability(int index) const;
+    void setAccumulative(int index, double value);
     GOAccumulative* copy() const;
 
 protected:
-    QVector<BigDecimal> _accumulative;
+    QVector<double> _accumulative;
 };
 
 #endif // GOACCUMULATIVE_H

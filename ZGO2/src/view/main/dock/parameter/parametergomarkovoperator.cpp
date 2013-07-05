@@ -73,7 +73,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         tableItem = new TableWidgetGOItem(tr("Failure Rate"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyBreakdown().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyBreakdown());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -81,7 +81,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         tableItem = new TableWidgetGOItem(tr("Repair Rate"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -89,7 +89,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         tableItem = new TableWidgetGOItem(tr("Repair Time"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem((BigDecimal::one() / ( (GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair()).toString());
+        tableItem = new TableWidgetGOItem((1.0 / ( (GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair()));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -106,7 +106,7 @@ void ParameterGOMarkovOperator::addMarkovMulti1Parameter()
         tableItem = new TableWidgetGOItem(tr("Failure Rate 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyBreakdown().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyBreakdown());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE_1);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -114,7 +114,7 @@ void ParameterGOMarkovOperator::addMarkovMulti1Parameter()
         tableItem = new TableWidgetGOItem(tr("Repair Rate 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_1);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -122,7 +122,7 @@ void ParameterGOMarkovOperator::addMarkovMulti1Parameter()
         tableItem = new TableWidgetGOItem(tr("Repair Time 1"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem((BigDecimal::one() / ( (GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair()).toString());
+        tableItem = new TableWidgetGOItem((1.0 / ( (GOMarkovOperator*)item->model())->markovStatus()->frequencyRepair()));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME_1);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -139,7 +139,7 @@ void ParameterGOMarkovOperator::addMarkovMulti2Parameter()
         tableItem = new TableWidgetGOItem(tr("Failure Rate 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyBreakdown().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyBreakdown());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -147,7 +147,7 @@ void ParameterGOMarkovOperator::addMarkovMulti2Parameter()
         tableItem = new TableWidgetGOItem(tr("Repair Rate 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(((GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyRepair().toString());
+        tableItem = new TableWidgetGOItem(((GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyRepair());
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
 
@@ -155,7 +155,7 @@ void ParameterGOMarkovOperator::addMarkovMulti2Parameter()
         tableItem = new TableWidgetGOItem(tr("Repair Time 2"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem((BigDecimal::one() / ( (GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyRepair()).toString());
+        tableItem = new TableWidgetGOItem((1.0 / ( (GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyRepair()));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME_2);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -169,24 +169,24 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
     {
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE:
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE_1:
-        ((GOMarkovOperator*)item->model())->markovStatus()->setFrequencyBreakdown(tableItem->text());
+        ((GOMarkovOperator*)item->model())->markovStatus()->setFrequencyBreakdown(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR:
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_1:
-        ((GOMarkovOperator*)item->model())->markovStatus()->setFrequencyRepair(tableItem->text());
+        ((GOMarkovOperator*)item->model())->markovStatus()->setFrequencyRepair(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME:
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME_1:
-        ((GOMarkovOperator*)item->model())->markovStatus()->setRepairTime(tableItem->text());
+        ((GOMarkovOperator*)item->model())->markovStatus()->setRepairTime(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_FAILURE_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyBreakdown(tableItem->text());
+        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyBreakdown(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyRepair(tableItem->text());
+        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyRepair(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_REPAIR_TIME_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setRepairTime(tableItem->text());
+        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setRepairTime(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_9_X:
         item->model()->parameter()->setParameter(0, goTableItem->text().toInt());
