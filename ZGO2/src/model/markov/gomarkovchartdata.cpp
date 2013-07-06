@@ -6,8 +6,7 @@
 
 GOMarkovChartData::~GOMarkovChartData()
 {
-    this->ids.clear();
-    this->types.clear();
+    this->names.clear();
     this->times.clear();
     for (int i = 0; i < this->probabilities.size(); ++i)
     {
@@ -22,19 +21,11 @@ bool GOMarkovChartData::save(QString fileName)
     QDomElement root = document.createElement("GO_Markov_Data");
     root.setAttribute("support", "ZHG");
     document.appendChild(root);
-    QDomElement partRoot = document.createElement("ids");
-    for (int i = 0; i < this->ids.size(); ++i)
+    QDomElement partRoot = document.createElement("names");
+    for (int i = 0; i < this->names.size(); ++i)
     {
-        QDomElement element = document.createElement("id");
-        element.setAttribute("value", this->ids[i]);
-        partRoot.appendChild(element);
-    }
-    root.appendChild(partRoot);
-    partRoot = document.createElement("types");
-    for (int i = 0; i < this->types.size(); ++i)
-    {
-        QDomElement element = document.createElement("type");
-        element.setAttribute("value", this->types[i]);
+        QDomElement element = document.createElement("name");
+        element.setAttribute("value", this->names[i]);
         partRoot.appendChild(element);
     }
     root.appendChild(partRoot);
@@ -100,15 +91,9 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     }
     for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
-        this->ids.push_back(element.attribute("value").toInt());
+        this->names.push_back(element.attribute("value"));
     }
     partRoot = partRoot.nextSiblingElement();
-    for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
-    {
-        this->types.push_back(element.attribute("value").toInt());
-    }
-    partRoot = partRoot.nextSiblingElement();
-
     for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->times.push_back(element.attribute("value").toDouble());
@@ -147,16 +132,16 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
     out << "<table>" << endl;
     out << "<tr style='text-align: center;'>" << endl;
     out << "<th>" + QObject::tr("Time") + "</th>" << endl;
-    for (int i = 0; i < ids.size(); ++i)
+    for (int i = 0; i < names.size(); ++i)
     {
-        out << "<th>" << ids[i] << "</th>" << endl;
+        out << "<th>" << names[i] << "</th>" << endl;
     }
     out << "</tr>" << endl;
     for (int i = 0; i < times.size(); ++i)
     {
         out << "<tr>" << endl;
         out << "<td>" << times[i] << "</td>" << endl;
-        for (int j = 0; j < ids.size(); ++j)
+        for (int j = 0; j < names.size(); ++j)
         {
             out << "<td>" << probabilities[j][i] << "</td>" << endl;
         }

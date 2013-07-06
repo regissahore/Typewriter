@@ -13,6 +13,7 @@
 #include "gomarkovchartdata.h"
 #include "gomarkovoperatorfactory.h"
 #include "goinput.h"
+#include "gooutput.h"
 #include "gosignal.h"
 #include "gomarkovcommoncause.h"
 
@@ -92,9 +93,19 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     GOMarkovChartData *data = new GOMarkovChartData();
     for (int i = 0; i < this->_operator.size(); ++i)
     {
-        data->ids.push_back(this->_operator[i]->id());
-        data->types.push_back(this->_operator[i]->type());
-        data->probabilities.push_back(QVector<double>());
+        if (this->_operator[i]->output()->number() == 1)
+        {
+            data->names.push_back(QString("%1").arg(this->_operator[i]->id()));
+            data->probabilities.push_back(QVector<double>());
+        }
+        else
+        {
+            for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
+            {
+                data->names.push_back(QString("%1 (%2)").arg(this->_operator[i]->id()).arg(j + 1));
+                data->probabilities.push_back(QVector<double>());
+            }
+        }
     }
     for (int i = 0; i < count; ++i)
     {
@@ -136,10 +147,13 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             delete data;
             return 0L;
         }
-        for (int j = 0; j < this->_operator.size(); ++j)
+        for (int j = 0, index = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
-            data->probabilities[j].push_back(op->accmulatives()->at(0)->probability(1));
+            for (int k = 0; k < this->_operator[j]->output()->number(); ++k)
+            {
+                data->probabilities[index++].push_back(op->accmulatives()->at(k)->probability(1));
+            }
         }
         // Fixed the error caused by common cause.
         for (int j = 0; j < this->_commonCause.size(); ++j)
@@ -159,7 +173,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                r00.push_back(op->accmulatives()->at(0)->probability(1));
+                for (int l = 0; l < this->_operator[k]->output()->number(); ++l)
+                {
+                    r00.push_back(op->accmulatives()->at(l)->probability(1));
+                }
             }
 
             QVector<double> r11;
@@ -177,16 +194,15 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                r11.push_back(op->accmulatives()->at(0)->probability(1));
+                for (int l = 0; l < this->_operator[k]->output()->number(); ++l)
+                {
+                    r11.push_back(op->accmulatives()->at(l)->probability(1));
+                }
             }
 
             double c12 = this->_commonCause[j]->calcCommonCause(time);
-            for (int k = 0; k < this->_operator.size(); ++k)
+            for (int k = 0; k < r00.size(); ++k)
             {
-                if (this->_commonCause[j]->containOperator((GOMarkovOperator*)this->_operator[k]))
-                {
-                    continue;
-                }
                 data->probabilities[k][i] += c12 * (r00[k] - r11[k]);
                 if (data->probabilities[k][i] > 1.0)
                 {

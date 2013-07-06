@@ -9,8 +9,7 @@
 class GOMarkovChartData
 {
 public:
-    QVector<int> types;
-    QVector<int> ids;
+    QVector<QString> names;
     QVector<double> times;
     QVector<QVector<double> > probabilities;
     virtual ~GOMarkovChartData();
