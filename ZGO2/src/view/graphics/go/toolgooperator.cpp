@@ -134,8 +134,10 @@ void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
         this->getInputNumber();
         break;
     case GOOperatorFactory::Operator_Type_13:
-        this->getInputNumber();
-        this->getOutputNumber();
+        if (this->getInputNumber())
+        {
+            this->getOutputNumber();
+        }
         break;
     case GOOperatorFactory::Operator_Type_14:
         this->getInputNumber();
@@ -198,7 +200,7 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
 /**
  * Get the input number of the GO model.
  */
-void ToolGOOperator::getInputNumber()
+bool ToolGOOperator::getInputNumber()
 {
     DialogIntegerInput *dialog = new DialogIntegerInput();
     dialog->setWindowTitle(QObject::tr("Input Number"));
@@ -214,14 +216,16 @@ void ToolGOOperator::getInputNumber()
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
+        return false;
     }
+    return true;
 }
 
 
 /**
  * Get the output number of the GO model.
  */
-void ToolGOOperator::getOutputNumber()
+bool ToolGOOperator::getOutputNumber()
 {
     DialogIntegerInput *dialog = new DialogIntegerInput();
     dialog->setWindowTitle(QObject::tr("Output Number"));
@@ -237,5 +241,29 @@ void ToolGOOperator::getOutputNumber()
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
+        return false;
     }
+    return true;
+}
+
+bool ToolGOOperator::getDualNumber()
+{
+    DialogIntegerInput *dialog = new DialogIntegerInput();
+    dialog->setWindowTitle(QObject::tr("Input and Output Number"));
+    dialog->setText(QObject::tr("The number of input and output: "));
+    dialog->integerInput()->setMinimum(1);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
+        this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
+        this->_GOOperator->setModel(this->_GOOperator->model());
+    }
+    else
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        message->paramInt = this->_defaultToolType;
+        this->sceneGO()->sendMessage(message);
+        return false;
+    }
+    return true;
 }

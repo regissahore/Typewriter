@@ -4,10 +4,56 @@
 #include "gomarkovoperatorfactory.h"
 #include "gooperator.h"
 #include "itemgomarkovequivalent.h"
+#include "gomarkovoperator13.h"
 
 ToolGOMarkovOperator::ToolGOMarkovOperator(SceneGO *sceneGO) : ToolGOOperator(sceneGO)
 {
     this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
+}
+
+void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
+{
+    this->_isActivated = true;
+    this->_GOOperator->setPos(event->scenePos());
+    switch (this->_GOOperator->model()->type())
+    {
+    case GOMarkovOperatorFactory::Operator_Type_2:
+        this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_4:
+        this->getOutputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_10:
+        this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_11:
+        this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_13:
+        if (this->getInputNumber())
+        {
+            this->getOutputNumber();
+        }
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_14:
+        this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_13_A:
+    case GOMarkovOperatorFactory::Operator_Type_13_B:
+        if (this->getInputNumber())
+        {
+            if (this->getOutputNumber())
+            {
+                ((GOMarkovOperator13*)this->_GOOperator->model())->initRelation();
+            }
+        }
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_15_A:
+        this->getDualNumber();
+        break;
+    default:
+        break;
+    }
 }
 
 void ToolGOMarkovOperator::setType(const int type)

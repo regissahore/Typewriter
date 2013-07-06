@@ -145,10 +145,10 @@ HEADERS += \
     include/view/main/dock/toolbox/toolboxgomarkov.h \
     include/view/main/dock/parameter/parametergomarkovcommoncause.h \
     include/model/markov/gomarkovoperator1e1.h \
-    include/model/markov/gomarkovoperator13a.h \
-    include/model/markov/gomarkovoperator13b.h \
-    include/model/markov/gomarkovoperator15a.h \
-    include/model/markov/gomarkovoperator9a.h
+    include/model/markov/gomarkovoperator9a.h \
+    include/model/markov/gomarkovoperator13.h \
+    include/view/dialog/dialogmatrixinput.h \
+    include/view/dialog/dialog13ainput.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -259,10 +259,10 @@ SOURCES += \
     src/view/main/dock/toolbox/toolboxgomarkov.cpp \
     src/view/main/dock/parameter/parametergomarkovcommoncause.cpp \
     src/model/markov/gomarkovoperator1e1.cpp \
-    src/model/markov/gomarkovoperator13a.cpp \
-    src/model/markov/gomarkovoperator13b.cpp \
-    src/model/markov/gomarkovoperator15a.cpp \
-    src/model/markov/gomarkovoperator9a.cpp
+    src/model/markov/gomarkovoperator9a.cpp \
+    src/model/markov/gomarkovoperator13.cpp \
+    src/view/dialog/dialogmatrixinput.cpp \
+    src/view/dialog/dialog13ainput.cpp
 
 RESOURCES += \
     resource.qrc
@@ -272,4 +272,5 @@ FORMS += \
     form/gomainwindow.ui \
     form/dialogabout.ui \
     form/toolboxgo.ui \
-    form/toolboxgomarkov.ui
+    form/toolboxgomarkov.ui \
+    form/dialogmatrixinput.ui

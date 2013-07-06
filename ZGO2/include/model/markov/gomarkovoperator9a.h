@@ -14,6 +14,8 @@ public:
     GOMarkovOperator9A();
     virtual ~GOMarkovOperator9A();
     GOMarkovStatus* markovFeedbackStatus() const;
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 private:
     GOMarkovStatus *_feedbackStatus;

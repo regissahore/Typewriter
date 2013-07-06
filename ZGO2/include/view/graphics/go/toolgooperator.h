@@ -18,7 +18,7 @@ public:
     ToolGOOperator(SceneGO *sceneGO);
     ~ToolGOOperator();
     void setType(const int type);
-    void activate(QGraphicsSceneMouseEvent *event);
+    virtual void activate(QGraphicsSceneMouseEvent *event);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
     void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
@@ -26,8 +26,9 @@ protected:
     ItemGOOperator *_GOOperator;
     bool _isActivated;
     int _defaultToolType;
-    void getInputNumber();
-    void getOutputNumber();
+    bool getInputNumber();
+    bool getOutputNumber();
+    bool getDualNumber();
 };
 
 #endif // TOOLGOOPERATOR_H

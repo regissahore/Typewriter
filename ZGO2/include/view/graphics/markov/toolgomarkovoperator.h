@@ -10,6 +10,7 @@ class ToolGOMarkovOperator : public ToolGOOperator
 {
 public:
     ToolGOMarkovOperator(SceneGO *sceneGO);
+    void activate(QGraphicsSceneMouseEvent *event);
     void setType(const int type);
 };
 

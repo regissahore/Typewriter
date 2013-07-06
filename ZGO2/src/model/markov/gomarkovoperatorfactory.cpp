@@ -5,9 +5,7 @@
 #include "gostatus.h"
 #include "gomarkovoperator1e1.h"
 #include "gomarkovoperator9a.h"
-#include "gomarkovoperator13a.h"
-#include "gomarkovoperator13b.h"
-#include "gomarkovoperator15a.h"
+#include "gomarkovoperator13.h"
 
 /**
  * Produce a GOOperator with auto increment ID.
@@ -45,13 +43,8 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         op = new GOMarkovOperator9A();
         break;
     case Operator_Type_13_A:
-        op = new GOMarkovOperator13A();
-        break;
     case Operator_Type_13_B:
-        op = new GOMarkovOperator13B();
-        break;
-    case Operator_Type_15_A:
-        op = new GOMarkovOperator15A();
+        op = new GOMarkovOperator13();
         break;
     }
     op->setType(type);

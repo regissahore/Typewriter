@@ -23,6 +23,7 @@ protected:
 
 protected slots:
     void itemChanged(QTableWidgetItem *tableItem);
+    void itemClicked(QTableWidgetItem *tableItem);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H

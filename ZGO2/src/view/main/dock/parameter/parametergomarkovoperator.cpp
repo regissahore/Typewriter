@@ -10,6 +10,8 @@
 #include "gomarkovoperatorfactory.h"
 #include "gomarkovoperator1e1.h"
 #include "gomarkovoperator9a.h"
+#include "gomarkovoperator13.h"
+#include "dialog13ainput.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -18,7 +20,7 @@ ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : Paramete
 void ParameterGOMarkovOperator::bindItem(void *item)
 {
     this->_item = item;
-    this->_tableWidget->disconnect();
+    this->_tableWidget->disconnect(SIGNAL(itemChanged(QTableWidgetItem*)));
     while (this->_tableWidget->rowCount())
     {
         this->_tableWidget->removeRow(0);
@@ -73,6 +75,7 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     }
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
+    this->connect(this->_tableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(itemClicked(QTableWidgetItem*)));
 }
 
 void ParameterGOMarkovOperator::addMarkovParameter()
@@ -212,13 +215,12 @@ void ParameterGOMarkovOperator::addMarkov13Relation()
     if (0L != this->_item)
     {
         TableWidgetGOItem *tableItem;
-        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         tableItem = new TableWidgetGOItem(tr("Relation"));
         tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        //tableItem = new TableWidgetGOItem(((GOMarkovOperator13A*)item->model())->markovStatus2()->frequencyBreakdown());
+        tableItem = new TableWidgetGOItem(tr("Click to Edit..."));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_13_A);
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
     }
@@ -268,6 +270,28 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_9_REPAIR_TIME_FEEDBACK:
         ((GOMarkovOperator9A*)item->model())->markovFeedbackStatus()->setRepairTime(tableItem->text().toDouble());
+        break;
+    default:
+        break;
+    }
+    item->update();
+    this->bindItem(item);
+}
+
+void ParameterGOMarkovOperator::itemClicked(QTableWidgetItem *tableItem)
+{
+    Dialog13AInput* dialog13A;
+    TableWidgetGOItem *goTableItem = (TableWidgetGOItem*)tableItem;
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    switch (goTableItem->parameterType())
+    {
+    case TableWidgetGOItem::PARAMETER_GO_MARKOV_13_A:
+        dialog13A = new Dialog13AInput(this);
+        dialog13A->setOperator((GOMarkovOperator13*)item->model());
+        if (dialog13A->exec() == QDialog::Accepted)
+        {
+            dialog13A->saveChange();
+        }
         break;
     default:
         break;
