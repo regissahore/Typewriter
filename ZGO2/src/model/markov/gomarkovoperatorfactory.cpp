@@ -16,25 +16,6 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     GOMarkovOperator *op;
     switch (type)
     {
-    case Operator_Type_1:
-    case Operator_Type_2:
-    case Operator_Type_3:
-    case Operator_Type_4:
-    case Operator_Type_5:
-    case Operator_Type_6:
-    case Operator_Type_7:
-    case Operator_Type_8:
-    case Operator_Type_9:
-    case Operator_Type_10:
-    case Operator_Type_11:
-    case Operator_Type_12:
-    case Operator_Type_13:
-    case Operator_Type_14:
-    case Operator_Type_15:
-    case Operator_Type_16:
-    case Operator_Type_17:
-        op = new GOMarkovOperator();
-        break;
     case Operator_Type_1_E1:
         op = new GOMarkovOperator1E1();
         break;
@@ -45,6 +26,9 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     case Operator_Type_13_A:
     case Operator_Type_13_B:
         op = new GOMarkovOperator13();
+        break;
+    default:
+        op = new GOMarkovOperator();
         break;
     }
     op->setType(type);

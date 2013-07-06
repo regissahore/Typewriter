@@ -198,7 +198,22 @@ void GOMarkovAnalysis::calcAccumulativeProbability_13B(GOMarkovOperator13 *op)
 
 void GOMarkovAnalysis::calcAccumulativeProbability_15A(GOMarkovOperator *op)
 {
-    Q_UNUSED(op);
+    double pc = op->markovStatus()->probabilityNormal();
+    op->accmulatives()->clear();
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal* signal = op->input()->signal()->at(i);
+        GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        GOAccumulative *accumulative = prev->accmulatives()->at(prevIndex);
+        double ps = accumulative->probability(1);
+        double pr1 = ps * pc;
+        op->accmulatives()->push_back(new GOAccumulative());
+        op->accmulatives()->at(i)->setNumber(3);
+        op->accmulatives()->at(i)->setAccumulative(0, 0.0);
+        op->accmulatives()->at(i)->setAccumulative(1, pr1);
+        op->accmulatives()->at(i)->setAccumulative(2, 1.0);
+    }
 }
 
 void GOMarkovAnalysis::updateOutputMarkov(GOMarkovOperator *op)
@@ -347,5 +362,22 @@ void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
 
 void GOMarkovAnalysis::updateOutputMarkov_15_A(GOMarkovOperator *op)
 {
-    Q_UNUSED(op);
+    double lamdaC = op->markovStatus()->frequencyBreakdown();
+    op->markovOutputStatus()->clear();
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal* signal = op->input()->signal()->at(i);
+        GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(prevIndex);
+        double pr1 = op->accmulatives()->at(i)->probability(1);
+        double pr2 = 1 - pr1;
+        double lamdaS = prevStatus->frequencyBreakdown();
+        double lamdaR = lamdaS + lamdaC;
+        double miuR = lamdaR * pr1 / pr2;
+        op->markovOutputStatus()->push_back(new GOMarkovStatus());
+        op->markovOutputStatus()->at(i)->setProbabilityNormal(pr1);
+        op->markovOutputStatus()->at(i)->setFrequencyBreakdown(lamdaR);
+        op->markovOutputStatus()->at(i)->setFrequencyRepair(miuR);
+    }
 }
