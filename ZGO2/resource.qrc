@@ -35,6 +35,13 @@
         <file>resource/image/tool_op14.png</file>
         <file>resource/image/tool_op15.png</file>
         <file>resource/image/tool_op16.png</file>
+        <file>resource/image/tool_op1E.png</file>
+        <file>resource/image/tool_op9A1.png</file>
+        <file>resource/image/tool_op9A2.png</file>
+        <file>resource/image/tool_op13A.png</file>
+        <file>resource/image/tool_op13B.png</file>
+        <file>resource/image/tool_op15A.png</file>
+        <file>resource/image/tool_op17.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>

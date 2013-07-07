@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>182</width>
-        <height>426</height>
+        <y>-17</y>
+        <width>165</width>
+        <height>443</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -66,6 +66,12 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -112,6 +118,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -156,6 +168,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -202,6 +220,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -246,6 +270,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -292,6 +322,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -336,6 +372,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -382,6 +424,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -426,6 +474,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -472,6 +526,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -517,6 +577,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -561,6 +627,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>

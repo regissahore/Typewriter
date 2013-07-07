@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>184</width>
-    <height>428</height>
+    <width>283</width>
+    <height>533</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-169</y>
-        <width>195</width>
-        <height>579</height>
+        <y>0</y>
+        <width>264</width>
+        <height>739</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -66,6 +66,12 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -112,6 +118,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -156,6 +168,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -202,6 +220,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -238,6 +262,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -273,6 +303,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -312,12 +348,63 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonOperator1E1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">text-align: left;
+padding-left: 16px;
+background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
+border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
+</string>
+         </property>
+         <property name="text">
+          <string>Two Breakdown Status</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op1E.png</normaloff>:/icon/resource/image/tool_op1E.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonOperator2">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -364,6 +451,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -408,6 +501,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -454,6 +553,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -498,6 +603,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -544,6 +655,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -582,12 +699,108 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="buttonOperator9A1">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">text-align: left;
+padding-left: 16px;
+background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
+border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
+</string>
+         </property>
+         <property name="text">
+          <string>Breakdown Feedback</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op9A1.png</normaloff>:/icon/resource/image/tool_op9A1.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonOperator9A2">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
+           <stylestrategy>PreferAntialias</stylestrategy>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">text-align: left;
+padding-left: 16px;
+background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
+border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
+</string>
+         </property>
+         <property name="text">
+          <string>No Breakdown Feedback</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op9A2.png</normaloff>:/icon/resource/image/tool_op9A2.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="buttonOperator10">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
          </property>
          <property name="font">
           <font>
@@ -634,6 +847,12 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
            <family>微软雅黑</family>
@@ -672,113 +891,6 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="buttonOperator1E1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <family>微软雅黑</family>
-           <pointsize>10</pointsize>
-           <stylestrategy>PreferAntialias</stylestrategy>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">text-align: left;
-padding-left: 16px;
-background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
-border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
-</string>
-         </property>
-         <property name="text">
-          <string>Two Breakdown Status</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonOperator9A1">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <stylestrategy>PreferAntialias</stylestrategy>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">text-align: left;
-padding-left: 16px;
-background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
-border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
-</string>
-         </property>
-         <property name="text">
-          <string>9A1</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="buttonOperator9A2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="font">
-          <font>
-           <stylestrategy>PreferAntialias</stylestrategy>
-          </font>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">text-align: left;
-padding-left: 16px;
-background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
-border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
-</string>
-         </property>
-         <property name="text">
-          <string>9A2</string>
-         </property>
-         <property name="icon">
-          <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
-         </property>
-         <property name="iconSize">
-          <size>
-           <width>24</width>
-           <height>24</height>
-          </size>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="buttonOperator13A">
          <property name="sizePolicy">
           <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
@@ -786,8 +898,18 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
          </property>
@@ -799,11 +921,11 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
 </string>
          </property>
          <property name="text">
-          <string>13A</string>
+          <string>Multiplex Input and Output (×)</string>
          </property>
          <property name="icon">
           <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
+           <normaloff>:/icon/resource/image/tool_op13A.png</normaloff>:/icon/resource/image/tool_op13A.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -821,8 +943,18 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
          </property>
@@ -834,11 +966,11 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
 </string>
          </property>
          <property name="text">
-          <string>13B</string>
+          <string>Multiplex Input and Output (+)</string>
          </property>
          <property name="icon">
           <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
+           <normaloff>:/icon/resource/image/tool_op13B.png</normaloff>:/icon/resource/image/tool_op13B.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -856,8 +988,18 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
            <stylestrategy>PreferAntialias</stylestrategy>
           </font>
          </property>
@@ -869,11 +1011,11 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
 </string>
          </property>
          <property name="text">
-          <string>15A</string>
+          <string>Corresponding Gate</string>
          </property>
          <property name="icon">
           <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_equivalent.png</normaloff>:/icon/resource/image/tool_equivalent.png</iconset>
+           <normaloff>:/icon/resource/image/tool_op15A.png</normaloff>:/icon/resource/image/tool_op15A.png</iconset>
          </property>
          <property name="iconSize">
           <size>
