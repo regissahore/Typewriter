@@ -15,6 +15,9 @@ doxygen
 # Language Files
 *.qm
 
+# Photoshop Files
+*.psd
+
 # GO Results
 *.html
 *.goc
