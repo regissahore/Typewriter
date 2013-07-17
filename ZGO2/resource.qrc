@@ -42,6 +42,23 @@
         <file>resource/image/tool_op13B.png</file>
         <file>resource/image/tool_op15A.png</file>
         <file>resource/image/tool_op17.png</file>
+        <file>resource/image/tool_op9B.png</file>
+        <file>resource/image/tool_op15B.png</file>
+        <file>resource/image/tool_op18.png</file>
+        <file>resource/image/tool_op18A.png</file>
+        <file>resource/image/tool_op19.png</file>
+        <file>resource/image/tool_op20.png</file>
+        <file>resource/image/tool_op21.png</file>
+        <file>resource/image/tool_op22.png</file>
+        <file>resource/image/tool_op22A.png</file>
+        <file>resource/image/tool_op22B.png</file>
+        <file>resource/image/tool_op23.png</file>
+        <file>resource/image/tool_op24.png</file>
+        <file>resource/image/tool_op25.png</file>
+        <file>resource/image/tool_op26.png</file>
+        <file>resource/image/tool_op27.png</file>
+        <file>resource/image/tool_op28.png</file>
+        <file>resource/image/tool_op29.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>
