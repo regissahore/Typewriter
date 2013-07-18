@@ -38,8 +38,8 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
     case GOMarkovOperatorFactory::Operator_Type_14:
         this->getInputNumber();
         break;
-    case GOMarkovOperatorFactory::Operator_Type_13_A:
-    case GOMarkovOperatorFactory::Operator_Type_13_B:
+    case GOMarkovOperatorFactory::Operator_Type_13A:
+    case GOMarkovOperatorFactory::Operator_Type_13B:
         if (this->getInputNumber())
         {
             if (this->getOutputNumber())
@@ -48,7 +48,7 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
             }
         }
         break;
-    case GOMarkovOperatorFactory::Operator_Type_15_A:
+    case GOMarkovOperatorFactory::Operator_Type_15A:
         this->getDualNumber();
         break;
     default:
@@ -113,23 +113,20 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_17:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_17);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1_E1:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_1_E1);
-        break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A1:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9_A1);
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9A1);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A2:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9_A2);
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9A2);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_A:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13_A);
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13A);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_B:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13_B);
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13B);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15_A:
-        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_15_A);
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_15A);
         break;
     }
     QList<QGraphicsItem*> items = this->graphicsScene()->items();

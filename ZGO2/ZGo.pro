@@ -144,11 +144,46 @@ HEADERS += \
     include/view/main/dock/toolbox/toolboxgo.h \
     include/view/main/dock/toolbox/toolboxgomarkov.h \
     include/view/main/dock/parameter/parametergomarkovcommoncause.h \
-    include/model/markov/gomarkovoperator1e1.h \
-    include/model/markov/gomarkovoperator9a.h \
-    include/model/markov/gomarkovoperator13.h \
     include/view/dialog/dialogmatrixinput.h \
-    include/view/dialog/dialog13ainput.h
+    include/view/dialog/dialog13ainput.h \
+    include/model/markov/gomarkovoperator1.h \
+    include/model/markov/gomarkovoperator2.h \
+    include/model/markov/gomarkovoperator3.h \
+    include/model/markov/gomarkovoperator4.h \
+    include/model/markov/gomarkovoperator5.h \
+    include/model/markov/gomarkovoperator6.h \
+    include/model/markov/gomarkovoperator7.h \
+    include/model/markov/gomarkovoperator8.h \
+    include/model/markov/gomarkovoperator9.h \
+    include/model/markov/gomarkovoperator9a.h \
+    include/model/markov/gomarkovoperator9a1.h \
+    include/model/markov/gomarkovoperator9a2.h \
+    include/model/markov/gomarkovoperator9b.h \
+    include/model/markov/gomarkovoperator10.h \
+    include/model/markov/gomarkovoperator11.h \
+    include/model/markov/gomarkovoperator12.h \
+    include/model/markov/gomarkovoperator13.h \
+    include/model/markov/gomarkovoperator14.h \
+    include/model/markov/gomarkovoperator15.h \
+    include/model/markov/gomarkovoperator15a.h \
+    include/model/markov/gomarkovoperator15b.h \
+    include/model/markov/gomarkovoperator16.h \
+    include/model/markov/gomarkovoperator17.h \
+    include/model/markov/gomarkovoperator18.h \
+    include/model/markov/gomarkovoperator18a.h \
+    include/model/markov/gomarkovoperator19.h \
+    include/model/markov/gomarkovoperator20.h \
+    include/model/markov/gomarkovoperator21.h \
+    include/model/markov/gomarkovoperator22.h \
+    include/model/markov/gomarkovoperator22a.h \
+    include/model/markov/gomarkovoperator22b.h \
+    include/model/markov/gomarkovoperator23.h \
+    include/model/markov/gomarkovoperator24.h \
+    include/model/markov/gomarkovoperator25.h \
+    include/model/markov/gomarkovoperator26.h \
+    include/model/markov/gomarkovoperator27.h \
+    include/model/markov/gomarkovoperator28.h \
+    include/model/markov/gomarkovoperator29.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -258,11 +293,46 @@ SOURCES += \
     src/view/main/dock/toolbox/toolboxgo.cpp \
     src/view/main/dock/toolbox/toolboxgomarkov.cpp \
     src/view/main/dock/parameter/parametergomarkovcommoncause.cpp \
-    src/model/markov/gomarkovoperator1e1.cpp \
-    src/model/markov/gomarkovoperator9a.cpp \
-    src/model/markov/gomarkovoperator13.cpp \
     src/view/dialog/dialogmatrixinput.cpp \
-    src/view/dialog/dialog13ainput.cpp
+    src/view/dialog/dialog13ainput.cpp \
+    src/model/markov/gomarkovoperator1.cpp \
+    src/model/markov/gomarkovoperator2.cpp \
+    src/model/markov/gomarkovoperator3.cpp \
+    src/model/markov/gomarkovoperator4.cpp \
+    src/model/markov/gomarkovoperator5.cpp \
+    src/model/markov/gomarkovoperator6.cpp \
+    src/model/markov/gomarkovoperator7.cpp \
+    src/model/markov/gomarkovoperator8.cpp \
+    src/model/markov/gomarkovoperator9.cpp \
+    src/model/markov/gomarkovoperator9a.cpp \
+    src/model/markov/gomarkovoperator9a1.cpp \
+    src/model/markov/gomarkovoperator9a2.cpp \
+    src/model/markov/gomarkovoperator9b.cpp \
+    src/model/markov/gomarkovoperator10.cpp \
+    src/model/markov/gomarkovoperator11.cpp \
+    src/model/markov/gomarkovoperator12.cpp \
+    src/model/markov/gomarkovoperator13.cpp \
+    src/model/markov/gomarkovoperator14.cpp \
+    src/model/markov/gomarkovoperator15.cpp \
+    src/model/markov/gomarkovoperator15a.cpp \
+    src/model/markov/gomarkovoperator15b.cpp \
+    src/model/markov/gomarkovoperator16.cpp \
+    src/model/markov/gomarkovoperator17.cpp \
+    src/model/markov/gomarkovoperator18.cpp \
+    src/model/markov/gomarkovoperator18a.cpp \
+    src/model/markov/gomarkovoperator19.cpp \
+    src/model/markov/gomarkovoperator20.cpp \
+    src/model/markov/gomarkovoperator21.cpp \
+    src/model/markov/gomarkovoperator22.cpp \
+    src/model/markov/gomarkovoperator22a.cpp \
+    src/model/markov/gomarkovoperator22b.cpp \
+    src/model/markov/gomarkovoperator23.cpp \
+    src/model/markov/gomarkovoperator24.cpp \
+    src/model/markov/gomarkovoperator25.cpp \
+    src/model/markov/gomarkovoperator26.cpp \
+    src/model/markov/gomarkovoperator27.cpp \
+    src/model/markov/gomarkovoperator28.cpp \
+    src/model/markov/gomarkovoperator29.cpp
 
 RESOURCES += \
     resource.qrc

@@ -9,7 +9,6 @@
 #include "gomarkovstatus.h"
 #include "goaccumulative.h"
 #include "gomarkovoperatorfactory.h"
-#include "gomarkovoperator1e1.h"
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator13.h"
 
@@ -21,21 +20,21 @@ void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, double time)
 {
     switch (op->TypedItem::type())
     {
-    case GOMarkovOperatorFactory::Operator_Type_9_A1:
+    case GOMarkovOperatorFactory::Operator_Type_9A1:
         GOMarkovAnalysis::calcAccumulativeProbability_9A1((GOMarkovOperator9A*)op, time);
         break;
-    case GOMarkovOperatorFactory::Operator_Type_9_A2:
+    case GOMarkovOperatorFactory::Operator_Type_9A2:
         GOMarkovAnalysis::calcAccumulativeProbability_9A2((GOMarkovOperator9A*)op, time);
         break;
-    case GOMarkovOperatorFactory::Operator_Type_13_A:
+    case GOMarkovOperatorFactory::Operator_Type_13A:
         GOMarkovAnalysis::calcAccumulativeProbability_13A((GOMarkovOperator13*)op);
         this->updateOutputMarkov((GOMarkovOperator*)op);
         break;
-    case GOMarkovOperatorFactory::Operator_Type_13_B:
+    case GOMarkovOperatorFactory::Operator_Type_13B:
         GOMarkovAnalysis::calcAccumulativeProbability_13B((GOMarkovOperator13*)op);
         this->updateOutputMarkov((GOMarkovOperator*)op);
         break;
-    case GOMarkovOperatorFactory::Operator_Type_15_A:
+    case GOMarkovOperatorFactory::Operator_Type_15A:
         GOMarkovAnalysis::calcAccumulativeProbability_15A((GOMarkovOperator*)op);
         this->updateOutputMarkov((GOMarkovOperator*)op);
         break;
@@ -244,10 +243,7 @@ void GOMarkovAnalysis::updateOutputMarkov(GOMarkovOperator *op)
     case GOMarkovOperatorFactory::Operator_Type_11:
         this->updateOutputMarkov_11(op);
         break;
-    case GOMarkovOperatorFactory::Operator_Type_1_E1:
-        this->updateOutputMarkov_1_E1(op);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_15_A:
+    case GOMarkovOperatorFactory::Operator_Type_15A:
         this->updateOutputMarkov_15_A(op);
         break;
     }
@@ -345,7 +341,8 @@ void GOMarkovAnalysis::updateOutputMarkov_11(GOMarkovOperator *op)
 
 void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
 {
-    GOSignal* signal = op->input()->signal()->at(0);
+    Q_UNUSED(op);
+    /*GOSignal* signal = op->input()->signal()->at(0);
     GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
     int prevIndex = prev->output()->getSignalIndex(signal);
     GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(prevIndex);
@@ -357,7 +354,7 @@ void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
     double lamdaR = lamdaS + lamdaC1 + lamdaC2;
     double miuR = lamdaR * pr1 / pr2;
     op->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
-    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);*/
 }
 
 void GOMarkovAnalysis::updateOutputMarkov_15_A(GOMarkovOperator *op)

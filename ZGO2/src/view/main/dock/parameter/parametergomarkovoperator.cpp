@@ -8,7 +8,6 @@
 #include "messagefactory.h"
 #include "goparameter.h"
 #include "gomarkovoperatorfactory.h"
-#include "gomarkovoperator1e1.h"
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator13.h"
 #include "dialog13ainput.h"
@@ -55,20 +54,16 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_11:
         this->addOperator11KParameter();
         break;
-    case GOMarkovOperatorFactory::Operator_Type_1_E1:
-        this->addMarkov1Multi1Parameter();
-        this->addMarkov1Multi2Parameter();
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_9_A1:
-    case GOMarkovOperatorFactory::Operator_Type_9_A2:
+    case GOMarkovOperatorFactory::Operator_Type_9A1:
+    case GOMarkovOperatorFactory::Operator_Type_9A2:
         this->addMarkovParameter();
         this->addMarkov9FeedbackParameter();
         break;
-    case GOMarkovOperatorFactory::Operator_Type_13_A:
-    case GOMarkovOperatorFactory::Operator_Type_13_B:
+    case GOMarkovOperatorFactory::Operator_Type_13A:
+    case GOMarkovOperatorFactory::Operator_Type_13B:
         this->addMarkov13Relation();
         break;
-    case GOMarkovOperatorFactory::Operator_Type_15_A:
+    case GOMarkovOperatorFactory::Operator_Type_15A:
         this->addMarkovParameter();
         break;
     default:
@@ -148,7 +143,7 @@ void ParameterGOMarkovOperator::addMarkov1Multi2Parameter()
 {
     if (0L != this->_item)
     {
-        TableWidgetGOItem *tableItem;
+        /*TableWidgetGOItem *tableItem;
         ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -173,7 +168,7 @@ void ParameterGOMarkovOperator::addMarkov1Multi2Parameter()
         this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
         tableItem = new TableWidgetGOItem((1.0 / ( (GOMarkovOperator1E1*)item->model())->markovStatus2()->frequencyRepair()));
         tableItem->setParameterType(TableWidgetGOItem::PARAMETER_GO_MARKOV_1_REPAIR_TIME_2);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);*/
     }
 }
 
@@ -245,13 +240,13 @@ void ParameterGOMarkovOperator::itemChanged(QTableWidgetItem *tableItem)
         ((GOMarkovOperator*)item->model())->markovStatus()->setRepairTime(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_1_FAILURE_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyBreakdown(tableItem->text().toDouble());
+        //((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyBreakdown(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_1_REPAIR_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyRepair(tableItem->text().toDouble());
+        //((GOMarkovOperator1E1*)item->model())->markovStatus2()->setFrequencyRepair(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_MARKOV_1_REPAIR_TIME_2:
-        ((GOMarkovOperator1E1*)item->model())->markovStatus2()->setRepairTime(tableItem->text().toDouble());
+        //((GOMarkovOperator1E1*)item->model())->markovStatus2()->setRepairTime(tableItem->text().toDouble());
         break;
     case TableWidgetGOItem::PARAMETER_GO_9_X:
         item->model()->parameter()->setParameter(0, goTableItem->text().toInt());

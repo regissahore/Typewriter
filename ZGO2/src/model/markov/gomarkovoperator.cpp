@@ -48,6 +48,19 @@ void GOMarkovOperator::initMarkovStatus(double time, double c12)
     this->status()->setProbability(2, p2);
 }
 
+void GOMarkovOperator::calcOutputMarkovStatus(double time)
+{
+    Q_UNUSED(time);
+}
+
+double GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+{
+    Q_UNUSED(time);
+    Q_UNUSED(input);
+    Q_UNUSED(subInput);
+    return 0.0;
+}
+
 void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("model");

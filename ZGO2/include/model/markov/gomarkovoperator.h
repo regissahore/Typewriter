@@ -16,9 +16,11 @@ public:
     virtual ~GOMarkovOperator();
     GOMarkovStatus* markovStatus() const;
     QVector<GOMarkovStatus*>* markovOutputStatus() const;
-    virtual void initMarkovStatus(double time, double c12 = 0.0);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    virtual void initMarkovStatus(double time, double c12 = 0.0);
+    virtual void calcOutputMarkovStatus(double time);
+    virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput);
 
 private:
     GOMarkovStatus *_markovStatus;

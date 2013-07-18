@@ -4,7 +4,6 @@
 #include "gomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
 #include "itemgomarkovcommoncause.h"
-#include "gomarkovoperator1e1.h"
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator13.h"
 
@@ -78,25 +77,7 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     this->setY(root.attribute("y", "0").toFloat());
     int type = root.attribute("type").toInt();
     QDomElement element = root.firstChildElement();
-    GOMarkovOperator *model;
-    switch (type)
-    {
-    case GOMarkovOperatorFactory::Operator_Type_1_E1:
-        model = new GOMarkovOperator1E1();
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_9_A1:
-    case GOMarkovOperatorFactory::Operator_Type_9_A2:
-        model = new GOMarkovOperator9A();
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_13:
-    case GOMarkovOperatorFactory::Operator_Type_13_A:
-    case GOMarkovOperatorFactory::Operator_Type_13_B:
-        model = new GOMarkovOperator13();
-        break;
-    default:
-        model = new GOMarkovOperator();
-        break;
-    }
+    GOMarkovOperator *model = GOMarkovOperatorFactory::produce(type);
     if (!model->tryOpen(element))
     {
         return false;
