@@ -11,6 +11,7 @@ class GOMarkovOperator1 : public GOMarkovOperator
 public:
     GOMarkovOperator1();
     ~GOMarkovOperator1();
+    QString typeName() const;
     bool isDualBreakdown() const;
     bool isBreakdownCorrelate() const;
     void setDualBreakdown(bool value);

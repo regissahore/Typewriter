@@ -299,6 +299,88 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     return op;*/
 }
 
+QString GOMarkovOperatorFactory::typeName(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_1:
+        return "1";
+    case Operator_Type_2:
+        return "2";
+    case Operator_Type_3:
+        return "3";
+    case Operator_Type_4:
+        return "4";
+    case Operator_Type_5:
+        return "5";
+    case Operator_Type_6:
+        return "6";
+    case Operator_Type_7:
+        return "7";
+    case Operator_Type_8:
+        return "8";
+    case Operator_Type_9:
+        return "9";
+    case Operator_Type_9A1:
+        return "9A1";
+    case Operator_Type_9A2:
+        return "9A2";
+    case Operator_Type_9B:
+        return "9B";
+    case Operator_Type_10:
+        return "10";
+    case Operator_Type_11:
+        return "11";
+    case Operator_Type_12:
+        return "12";
+    case Operator_Type_13:
+        return "13";
+    case Operator_Type_14:
+        return "14";
+    case Operator_Type_15:
+        return "15";
+    case Operator_Type_15A:
+        return "15A";
+    case Operator_Type_15B:
+        return "15B";
+    case Operator_Type_16:
+        return "16";
+    case Operator_Type_17:
+        return "17";
+    case Operator_Type_18:
+        return "18";
+    case Operator_Type_18A:
+        return "18A";
+    case Operator_Type_19:
+        return "19";
+    case Operator_Type_20:
+        return "20";
+    case Operator_Type_21:
+        return "21";
+    case Operator_Type_22:
+        return "22";
+    case Operator_Type_22A:
+        return "22A";
+    case Operator_Type_22B:
+        return "22B";
+    case Operator_Type_23:
+        return "23";
+    case Operator_Type_24:
+        return "24";
+    case Operator_Type_25:
+        return "25";
+    case Operator_Type_26:
+        return "26";
+    case Operator_Type_27:
+        return "27";
+    case Operator_Type_28:
+        return "28";
+    case Operator_Type_29:
+        return "29";
+    }
+    return "No Name";
+}
+
 bool GOMarkovOperatorFactory::isLogical(const int type)
 {
     switch (type)

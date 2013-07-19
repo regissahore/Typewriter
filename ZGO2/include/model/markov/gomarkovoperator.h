@@ -22,9 +22,12 @@ public:
     virtual void calcOutputMarkovStatus(double time);
     virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput);
 
-private:
+protected:
     GOMarkovStatus *_markovStatus;
     QVector<GOMarkovStatus*> *_outputStatus;
+    GOMarkovOperator* getPrevOperator(int index = 0);
+    GOMarkovStatus* getPrevMarkovStatus(int index = 0);
+    void initOutputMarkovStatus();
 };
 
 #endif // GOMARKOVOPERATOR_H

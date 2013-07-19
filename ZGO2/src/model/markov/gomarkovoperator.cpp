@@ -6,6 +6,7 @@
 #include "gooutput.h"
 #include "goparameter.h"
 #include "gostatus.h"
+#include "gosignal.h"
 
 GOMarkovOperator::GOMarkovOperator() : GOOperator()
 {
@@ -59,6 +60,29 @@ double GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<double>
     Q_UNUSED(input);
     Q_UNUSED(subInput);
     return 0.0;
+}
+
+GOMarkovOperator* GOMarkovOperator::getPrevOperator(int index)
+{
+    GOSignal *signal = this->input()->signal()->at(index);
+    return (GOMarkovOperator*)signal->next(this);
+}
+
+GOMarkovStatus* GOMarkovOperator::getPrevMarkovStatus(int index)
+{
+    GOSignal *signal = this->input()->signal()->at(index);
+    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    GOMarkovStatus *status = prev->markovOutputStatus()->at(prevIndex);
+    return status;
+}
+
+void GOMarkovOperator::initOutputMarkovStatus()
+{
+    for (int i = this->_outputStatus->size(); i < this->output()->number(); ++i)
+    {
+        this->_outputStatus->push_back(new GOMarkovStatus());
+    }
 }
 
 void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)

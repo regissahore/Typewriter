@@ -61,6 +61,38 @@ void ItemGOMarkovOperator::move(QGraphicsSceneMouseEvent *event)
     }
 }
 
+void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
+{
+    Q_UNUSED(item);
+    Q_UNUSED(widget);
+    painter->setPen(Qt::SolidLine);
+    painter->setPen(this->_color);
+    painter->setBrush(Qt::NoBrush);
+    QFont font;
+    font.setPixelSize(16);
+    painter->setFont(font);
+    QString typeName = GOMarkovOperatorFactory::typeName(this->model()->type());
+    if (this->isSource())
+    {
+        painter->drawText(QRectF(-25, -25, 47, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString(typeName + "-%1").arg(this->model()->id()));
+        QPoint points[3];
+        points[0].setX(25);
+        points[0].setY(0);
+        points[1].setX(-22);
+        points[1].setY(-25);
+        points[2].setX(-22);
+        points[2].setY(25);
+        painter->drawPolygon(points, 3);
+    }
+    else
+    {
+        painter->drawText(QRectF(-25, -25, 50, 50),
+                          Qt::AlignHCenter | Qt::AlignVCenter,
+                          QString(typeName + "-%1").arg(this->model()->type()).arg(this->model()->id()));
+        painter->drawEllipse(QPoint(0, 0), 25, 25);
+    }
+}
+
 void ItemGOMarkovOperator::setModelType(const int type)
 {
     this->_model = GOMarkovOperatorFactory::produce(type);

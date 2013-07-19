@@ -4,6 +4,8 @@
  * A operator model factory of Markov repairable system.
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <QString>
+
 class GOMarkovOperator;
 
 class GOMarkovOperatorFactory
@@ -52,6 +54,7 @@ public:
         Operator_Type_29
     };
     static GOMarkovOperator* produce(const int type);
+    static QString typeName(const int type);
     static bool isLogical(const int type);
 };
 #endif // GOMARKOVOPERATORFACTORY_H

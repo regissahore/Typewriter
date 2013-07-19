@@ -19,6 +19,7 @@ public:
     ItemGOMarkovCommonCause* fatherCommonCause() const;
     void setFatherCommonCause(ItemGOMarkovCommonCause* commonCause);
     void move(QGraphicsSceneMouseEvent *event);
+    void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void setModelType(const int type);
     bool tryOpen(QDomElement &root);
 

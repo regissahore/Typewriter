@@ -9,6 +9,43 @@
 #include "gomarkovstatus.h"
 #include "goaccumulative.h"
 #include "gomarkovoperatorfactory.h"
+/*#include "gomarkovoperator1.h"
+#include "gomarkovoperator2.h"
+#include "gomarkovoperator3.h"
+#include "gomarkovoperator4.h"
+#include "gomarkovoperator5.h"
+#include "gomarkovoperator6.h"
+#include "gomarkovoperator7.h"
+#include "gomarkovoperator8.h"
+#include "gomarkovoperator9.h"
+#include "gomarkovoperator9a1.h"
+#include "gomarkovoperator9a2.h"
+#include "gomarkovoperator9b.h"
+#include "gomarkovoperator10.h"
+#include "gomarkovoperator11.h"
+#include "gomarkovoperator12.h"
+#include "gomarkovoperator13.h"
+#include "gomarkovoperator14.h"
+#include "gomarkovoperator15.h"
+#include "gomarkovoperator15a.h"
+#include "gomarkovoperator15b.h"
+#include "gomarkovoperator16.h"
+#include "gomarkovoperator17.h"
+#include "gomarkovoperator18.h"
+#include "gomarkovoperator18a.h"
+#include "gomarkovoperator19.h"
+#include "gomarkovoperator20.h"
+#include "gomarkovoperator21.h"
+#include "gomarkovoperator22.h"
+#include "gomarkovoperator22a.h"
+#include "gomarkovoperator22b.h"
+#include "gomarkovoperator23.h"
+#include "gomarkovoperator24.h"
+#include "gomarkovoperator25.h"
+#include "gomarkovoperator26.h"
+#include "gomarkovoperator27.h"
+#include "gomarkovoperator28.h"
+#include "gomarkovoperator29.h"*/
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator13.h"
 
@@ -18,7 +55,8 @@ GOMarkovAnalysis::GOMarkovAnalysis() : GOAnalysis()
 
 void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, double time)
 {
-    switch (op->TypedItem::type())
+    ((GOMarkovOperator*)op)->calcOutputMarkovStatus(time);
+    /*switch (op->TypedItem::type())
     {
     case GOMarkovOperatorFactory::Operator_Type_9A1:
         GOMarkovAnalysis::calcAccumulativeProbability_9A1((GOMarkovOperator9A*)op, time);
@@ -41,7 +79,7 @@ void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, double time)
     default:
         this->GOAnalysis::calcAccumulativeProbability(op);
         this->updateOutputMarkov((GOMarkovOperator*)op);
-    }
+    }*/
 }
 
 void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time)
