@@ -1,3 +1,5 @@
+#include <QLabel>
+#include <QSpinBox>
 #include "parametergosignal.h"
 #include "tablewidgetgoitem.h"
 #include "itemgosignal.h"
@@ -20,52 +22,42 @@ void ParameterGOSignal::bindItem(void *item)
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
 }
 
+void ParameterGOSignal::addIDParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOSignal *item = (ItemGOSignal*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("ID"), this));
+        this->_spinBoxID = new QSpinBox(this);
+        this->_spinBoxID->setMinimum(1);
+        this->_spinBoxID->setMaximum(0x7fffffff);
+        this->_spinBoxID->setValue(item->model()->id());
+        this->connect(this->_spinBoxID, SIGNAL(valueChanged(int)), this, SLOT(setItemID(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBoxID);
+    }
+}
+
+void ParameterGOSignal::setItemID(int value)
+{
+    ItemGOSignal *item = (ItemGOSignal*)this->_item;
+    item->model()->setId(value);
+    item->update();
+}
+
 void ParameterGOSignal::addSignalParameter()
 {
     if (0L != this->_item)
     {
-        TableWidgetGOItem *tableItem;
+        this->addIDParameter();
+
         ItemGOSignal *item = (ItemGOSignal*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Operator 1"));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->start()->op->model()->id()));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Operator 1"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(QString("%1").arg(item->start()->op->model()->id()), this));
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Operator 2"));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->end()->op->model()->id()));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
-
-        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("ID"));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->id()));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_ID);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Operator 2"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(QString("%1").arg(item->end()->op->model()->id()), this));
     }
-}
-
-void ParameterGOSignal::itemChanged(QTableWidgetItem *tableItem)
-{
-    TableWidgetGOItem *goTableItem = (TableWidgetGOItem*)tableItem;
-    ItemGOSignal *item = (ItemGOSignal*)this->_item;
-    int intValue;
-    switch (goTableItem->parameterType())
-    {
-    case TableWidgetGOItem::PARAMETER_ID:
-        intValue = goTableItem->text().toInt();
-        item->model()->setId(intValue);
-        break;
-    default:
-        break;
-    }
-    item->update();
-    this->bindItem(item);
 }

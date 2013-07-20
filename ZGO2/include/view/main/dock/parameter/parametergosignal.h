@@ -14,10 +14,10 @@ public:
     void bindItem(void *item);
 
 protected:
+    void addIDParameter();
     void addSignalParameter();
 
-protected slots:
-    void itemChanged(QTableWidgetItem *tableItem);
+    void setItemID(int value);
 };
 
 #endif // PARAMETERGOSIGNAL_H
