@@ -61,13 +61,7 @@ void GOMarkovOperator1::initMarkovStatus(double time, double c12)
         double p1 = miu1 / s1 * miu2 / s2 +
                 (s1 * s1 + (miu1 + miu2) * s1 + miu1 * miu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
                 (s2 * s2 + (miu1 + miu2) * s2 + miu1 * miu2) / (s2 * (s2 - s1)) * exp(s2 * time);
-        if (p1 > 1.0)
-        {
-            p1 = 1.0;
-        }
-        double p2 = 1 - p1;
-        this->status()->setProbability(1, p1);
-        this->status()->setProbability(2, p2);
+        this->markovStatus()->setProbabilityNormal(p1);
     }
     else
     {

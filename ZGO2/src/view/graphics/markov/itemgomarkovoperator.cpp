@@ -88,7 +88,7 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     {
         painter->drawText(QRectF(-25, -25, 50, 50),
                           Qt::AlignHCenter | Qt::AlignVCenter,
-                          QString(typeName + "-%1").arg(this->model()->type()).arg(this->model()->id()));
+                          QString(typeName + "-%1").arg(this->model()->id()));
         painter->drawEllipse(QPoint(0, 0), 25, 25);
     }
 }

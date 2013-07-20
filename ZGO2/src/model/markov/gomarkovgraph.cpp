@@ -152,7 +152,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
             for (int k = 0; k < this->_operator[j]->output()->number(); ++k)
             {
-                data->probabilities[index++].push_back(op->accmulatives()->at(k)->probability(1));
+                data->probabilities[index++].push_back(op->markovOutputStatus()->at(k)->probabilityNormal());
             }
         }
         // Fixed the error caused by common cause.
@@ -301,24 +301,11 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath)
         out << "<table>" << endl;
         out << "<tr>" << endl;
         out << "<th>" + QObject::tr("Status") + "</th>" << endl;
-        out << "<th>" + QObject::tr("Accumulative") + "</th>" << endl;
         out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
         out << "</tr>" << endl;
-        for (int j = 0; j < list[i]->accmulatives()->at(0)->number(); ++j)
-        {
-            out << "<tr>" << endl;
-            out << QString("<td style='text-align:center;'>%1</td>").arg(j);
-            out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
-            if (j == 0)
-            {
-                out << "<td>" << list[i]->accmulatives()->at(0)->accumulative(j) << "</td>";
-            }
-            else
-            {
-                out << "<td>" << (list[i]->accmulatives()->at(0)->accumulative(j) - list[i]->accmulatives()->at(0)->accumulative(j - 1)) << "</td>";
-            }
-            out << "</tr>" << endl;
-        }
+        out << "<tr>" << endl;
+        out << QString("<td>Normal</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityNormal()) << endl;
+        out << QString("<td>Breakdown</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityBreakdown()) << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Failure Rate") + "</td>" << endl;
         out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown() << "</td>";

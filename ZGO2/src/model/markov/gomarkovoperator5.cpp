@@ -23,7 +23,6 @@ void GOMarkovOperator5::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
     this->initOutputMarkovStatus();
-    GOMarkovStatus *status = this->_markovStatus;
     double PR = this->_markovStatus->probabilityNormal();
     double lambdaR = this->_markovStatus->frequencyBreakdown();
     double miuR = this->_markovStatus->frequencyRepair();
