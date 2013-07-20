@@ -36,9 +36,6 @@ protected slots:
     virtual void setItemPosX(double value);
     virtual void setItemPosY(double value);
     virtual void setItemID(int value);
-
-    virtual void itemChanged(QTableWidgetItem *tableItem);
-    virtual void itemClicked(QTableWidgetItem *tableItem);
 };
 
 #endif // PARAMETERABSTRACT_H

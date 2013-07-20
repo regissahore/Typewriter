@@ -3,7 +3,6 @@
 #include <QPushButton>
 #include <QDoubleSpinBox>
 #include "parametergooperator.h"
-#include "tablewidgetgoitem.h"
 #include "itemgooperator.h"
 #include "gooperator.h"
 #include "gostatus.h"

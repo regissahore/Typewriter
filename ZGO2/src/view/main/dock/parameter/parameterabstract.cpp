@@ -5,7 +5,6 @@
 #include <QDoubleSpinBox>
 #include "parameterabstract.h"
 #include "itemdrawable.h"
-#include "tablewidgetgoitem.h"
 #include "identifieditem.h"
 
 ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent), Messager()
@@ -113,14 +112,4 @@ void ParameterAbstract::addTypeParameter()
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Type"), this));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(QString("%1").arg(item->TypedItem::type()), this));
     }
-}
-
-void ParameterAbstract::itemChanged(QTableWidgetItem *tableItem)
-{
-    Q_UNUSED(tableItem);
-}
-
-void ParameterAbstract::itemClicked(QTableWidgetItem *tableItem)
-{
-    Q_UNUSED(tableItem);
 }

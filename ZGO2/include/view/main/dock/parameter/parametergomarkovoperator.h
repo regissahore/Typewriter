@@ -6,6 +6,8 @@
  */
 #include "parametergooperator.h"
 
+class QDoubleSpinBox;
+
 class ParameterGOMarkovOperator : public ParameterGOOperator
 {
     Q_OBJECT
@@ -14,16 +16,17 @@ public:
     void bindItem(void *item);
 
 protected:
+    QDoubleSpinBox *_spinBoxFrequencyBreakdown;
+    QDoubleSpinBox *_spinBoxFrequencyRepair;
+    QDoubleSpinBox *_spinBoxRepairTime;
+
     void addTypeParameter();
     void addMarkovParameter();
-    void addMarkov1Multi1Parameter();
-    void addMarkov1Multi2Parameter();
-    void addMarkov9FeedbackParameter();
-    void addMarkov13Relation();
 
 protected slots:
-    void itemChanged(QTableWidgetItem *tableItem);
-    void itemClicked(QTableWidgetItem *tableItem);
+    void setItemFrequencyBreakdown(double value);
+    void setItemFrequencyRepair(double value);
+    void setItemRepairTime(double value);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H

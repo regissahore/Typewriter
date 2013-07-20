@@ -1,7 +1,6 @@
 #include <QLabel>
 #include <QSpinBox>
 #include "parametergomarkovequivalent.h"
-#include "tablewidgetgoitem.h"
 #include "itemgomarkovequivalent.h"
 #include "gomarkovequivalent.h"
 

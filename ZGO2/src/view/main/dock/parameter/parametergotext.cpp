@@ -2,7 +2,6 @@
 #include <QLineEdit>
 #include "parametergotext.h"
 #include "itemgotext.h"
-#include "tablewidgetgoitem.h"
 
 ParameterGOText::ParameterGOText(QWidget *parent) : ParameterAbstract(parent)
 {

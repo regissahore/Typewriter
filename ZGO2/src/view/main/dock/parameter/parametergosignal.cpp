@@ -1,7 +1,6 @@
 #include <QLabel>
 #include <QSpinBox>
 #include "parametergosignal.h"
-#include "tablewidgetgoitem.h"
 #include "itemgosignal.h"
 #include "itemgooperator.h"
 #include "gooperator.h"
