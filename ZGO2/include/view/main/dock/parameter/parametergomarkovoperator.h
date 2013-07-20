@@ -7,6 +7,7 @@
 #include "parametergooperator.h"
 
 class QDoubleSpinBox;
+class QCheckBox;
 
 class ParameterGOMarkovOperator : public ParameterGOOperator
 {
@@ -19,14 +20,28 @@ protected:
     QDoubleSpinBox *_spinBoxFrequencyBreakdown;
     QDoubleSpinBox *_spinBoxFrequencyRepair;
     QDoubleSpinBox *_spinBoxRepairTime;
+    int _markov1DualBreakdownPos;
+    QCheckBox *_checkBox1DualBreakdown;
+    QCheckBox *_checkBox1BreakdownCorrelate;
+    QDoubleSpinBox *_spinBox1Status2FrequencyBreakdown;
+    QDoubleSpinBox *_spinBox1Status2FrequencyRepair;
+    QDoubleSpinBox *_spinBox1Status2RepairTime;
 
     void addTypeParameter();
     void addMarkovParameter();
+    void addMarkov1DualBreakdownParameter();
+    void addMarkov1BreakdownCorrelateparameter();
+    void addMarkov1Status2Parameter();
 
 protected slots:
     void setItemFrequencyBreakdown(double value);
     void setItemFrequencyRepair(double value);
     void setItemRepairTime(double value);
+    void setItemMarkov1DualBreakdown(bool value);
+    void setItemMarkov1BreakdownCorrelate(bool value);
+    void setItemMarkov1FrequencyBreakdown2(double value);
+    void setItemMarkov1FrequencyRepair2(double value);
+    void setItemMarkov1RepairTime2(double value);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H

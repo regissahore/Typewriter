@@ -84,10 +84,7 @@ void GOMarkovOperator1::calcOutputMarkovStatus(double time)
 
 void GOMarkovOperator1::calcOutputMarkovStatusNormal()
 {
-    GOSignal *signal = this->input()->signal()->at(0);
-    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
-    int index = prev->output()->getSignalIndex(signal);
-    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(index);
+    GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(0);
     double PS = prevStatus->probabilityNormal();
     double PC = this->markovStatus()->probabilityNormal();
     double PR = PS * PC;
@@ -96,25 +93,23 @@ void GOMarkovOperator1::calcOutputMarkovStatusNormal()
     double lamdaC = this->markovStatus()->frequencyBreakdown();
     double lamdaR = lamdaS + lamdaC;
     double miuR = lamdaR * PR / QR;
-    this->markovOutputStatus()->clear();
-    GOMarkovStatus *outputStatus = new GOMarkovStatus();
-    outputStatus->setProbabilityNormal(PR);
-    outputStatus->setFrequencyBreakdown(lamdaR);
-    outputStatus->setFrequencyRepair(miuR);
-    this->markovOutputStatus()->push_back(outputStatus);
+    this->initOutputMarkovStatus();
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
 
 void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
 {
-    GOSignal *signal = this->input()->signal()->at(0);
-    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
-    int index = prev->output()->getSignalIndex(signal);
-    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(index);
+    GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(0);
     double PS = prevStatus->probabilityNormal();
     double QS = prevStatus->probabilityBreakdown();
     double PC = this->markovStatus()->probabilityNormal();
     double QC = this->markovStatus()->probabilityBreakdown();
     double G1 = PS * PC;
+    double test1 = PS * QC;
+    double test2 = QS * PC;
+    double test3 = test1 + test2;
     double G2 = PS * QC + QS * PC;
     double PR = G1 / (G1 + G2);
     double lamdaS = prevStatus->frequencyBreakdown();
@@ -123,12 +118,10 @@ void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
     double miuC = this->markovStatus()->frequencyRepair();
     double lamdaR = lamdaS + lamdaC;
     double miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
-    this->markovOutputStatus()->clear();
-    GOMarkovStatus *outputStatus = new GOMarkovStatus();
-    outputStatus->setProbabilityNormal(PR);
-    outputStatus->setFrequencyBreakdown(lamdaR);
-    outputStatus->setFrequencyRepair(miuR);
-    this->markovOutputStatus()->push_back(outputStatus);
+    this->initOutputMarkovStatus();
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
 
 void GOMarkovOperator1::save(QDomDocument &document, QDomElement &root)
@@ -139,6 +132,8 @@ void GOMarkovOperator1::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
+    element.setAttribute("dual", this->isDualBreakdown());
+    element.setAttribute("breakdown", this->isBreakdownCorrelate());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
@@ -157,6 +152,8 @@ bool GOMarkovOperator1::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
+    this->setDualBreakdown(root.attribute("dual").toInt());
+    this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {
