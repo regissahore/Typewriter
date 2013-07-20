@@ -6,6 +6,9 @@
  */
 #include "parameterabstract.h"
 
+class QPushButton;
+class QDoubleSpinBox;
+
 class ParameterGOOperator : public ParameterAbstract
 {
     Q_OBJECT
@@ -14,6 +17,14 @@ public:
     void bindItem(void *item);
 
 protected:
+    QDoubleSpinBox *_spinBoxProbability0;
+    QDoubleSpinBox *_spinBoxProbability1;
+    QDoubleSpinBox *_spinBoxProbability2;
+    QPushButton *_buttonMulitpleProbability;
+    QSpinBox *_spinBox9X;
+    QSpinBox *_spinBox9Y;
+    QSpinBox *_spinBox11K;
+
     void addIDParameter();
     void addTypeParameter();
     void addOperatorParameter();
@@ -21,14 +32,18 @@ protected:
     void addProbability12Parameter();
     void addProbabilityMultipleParameter();
     void addOutputParameter();
-    void addOperator9XYParameter();
-    void addOperator11KParameter();
-
-    void setItemID(int value);
+    virtual void addOperator9XYParameter();
+    virtual void addOperator11KParameter();
 
 protected slots:
-    void itemChanged(QTableWidgetItem *tableItem);
-    void itemClicked(QTableWidgetItem *tableItem);
+    void setItemID(int value);
+    void setItemProbability0(double value);
+    void setItemProbability1(double value);
+    void setItemProbability2(double value);
+    void setItemMultipleProbability();
+    virtual void setItem9X(int value);
+    virtual void setItem9Y(int value);
+    virtual void setItem11K(int value);
 };
 
 #endif // PARAMETERGOOPERATOR_H
