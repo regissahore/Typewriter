@@ -1,3 +1,6 @@
+#include <QLabel>
+#include <QSpinBox>
+#include <QDoubleSpinBox>
 #include "parametergooperator.h"
 #include "tablewidgetgoitem.h"
 #include "itemgooperator.h"
@@ -66,27 +69,47 @@ void ParameterGOOperator::bindItem(void *item)
     this->connect(this->_tableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(itemClicked(QTableWidgetItem*)));
 }
 
-void ParameterGOOperator::addOperatorParameter()
+void ParameterGOOperator::addIDParameter()
 {
     if (0L != this->_item)
     {
         ItemGOOperator *item = (ItemGOOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        TableWidgetGOItem *tableItem = new TableWidgetGOItem(tr("ID"));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->id()));
-        tableItem->setParameterType(TableWidgetGOItem::PARAMETER_ID);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
-
-        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        tableItem = new TableWidgetGOItem(tr("Type"));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 0, tableItem);
-        tableItem = new TableWidgetGOItem(QString("%1").arg(item->model()->type()));
-        tableItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled);
-        this->_tableWidget->setItem(this->_tableWidget->rowCount() - 1, 1, tableItem);
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("ID"), this));
+        this->_spinBoxID = new QSpinBox(this);
+        this->_spinBoxID->setMinimum(1);
+        this->_spinBoxID->setMaximum(0x7fffffff);
+        this->_spinBoxID->setValue(item->model()->id());
+        this->connect(this->_spinBoxID, SIGNAL(valueChanged(int)), this, SLOT(setItemID(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBoxID);
     }
+}
+
+void ParameterGOOperator::addTypeParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Type"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(QString("%1").arg(item->model()->type()), this));
+    }
+}
+
+void ParameterGOOperator::addOperatorParameter()
+{
+    if (0L != this->_item)
+    {
+        this->addIDParameter();
+        this->addTypeParameter();
+    }
+}
+
+void ParameterGOOperator::setItemID(int value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->model()->setId(value);
+    item->update();
 }
 
 void ParameterGOOperator::addProbability0Parameter()

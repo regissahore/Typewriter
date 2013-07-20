@@ -1,3 +1,4 @@
+#include <QLabel>
 #include "parametergomarkovoperator.h"
 #include "itemgomarkovoperator.h"
 #include "gomarkovoperator.h"
@@ -71,6 +72,17 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     }
     this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
     this->connect(this->_tableWidget, SIGNAL(itemClicked(QTableWidgetItem*)), this, SLOT(itemClicked(QTableWidgetItem*)));
+}
+
+void ParameterGOMarkovOperator::addTypeParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Type"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(GOMarkovOperatorFactory::typeName(item->model()->type()), this));
+    }
 }
 
 void ParameterGOMarkovOperator::addMarkovParameter()

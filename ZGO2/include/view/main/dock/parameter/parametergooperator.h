@@ -14,6 +14,8 @@ public:
     void bindItem(void *item);
 
 protected:
+    void addIDParameter();
+    void addTypeParameter();
     void addOperatorParameter();
     void addProbability0Parameter();
     void addProbability12Parameter();
@@ -21,6 +23,8 @@ protected:
     void addOutputParameter();
     void addOperator9XYParameter();
     void addOperator11KParameter();
+
+    void setItemID(int value);
 
 protected slots:
     void itemChanged(QTableWidgetItem *tableItem);

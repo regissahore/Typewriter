@@ -8,6 +8,9 @@
 #include <QTableWidget>
 #include "messager.h"
 
+class QSpinBox;
+class QDoubleSpinBox;
+
 class ParameterAbstract : public QWidget, public Messager
 {
     Q_OBJECT
@@ -20,11 +23,20 @@ public:
 protected:
     QTableWidget *_tableWidget;
     void* _item;
+
+    QDoubleSpinBox *_spinBoxPosX;
+    QDoubleSpinBox *_spinBoxPosY;
+    QSpinBox *_spinBoxID;
+
     void addPositionParameter();
-    void addIDParameter();
-    void addTypeParameter();
+    virtual void addIDParameter();
+    virtual void addTypeParameter();
 
 protected slots:
+    virtual void setItemPosX(double value);
+    virtual void setItemPosY(double value);
+    virtual void setItemID(int value);
+
     virtual void itemChanged(QTableWidgetItem *tableItem);
     virtual void itemClicked(QTableWidgetItem *tableItem);
 };
