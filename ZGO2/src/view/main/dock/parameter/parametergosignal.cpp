@@ -13,13 +13,7 @@ ParameterGOSignal::ParameterGOSignal(QWidget *parent) : ParameterAbstract(parent
 void ParameterGOSignal::bindItem(void *item)
 {
     this->_item = item;
-    this->_tableWidget->disconnect();
-    while (this->_tableWidget->rowCount())
-    {
-        this->_tableWidget->removeRow(0);
-    }
     this->addSignalParameter();
-    this->connect(this->_tableWidget, SIGNAL(itemChanged(QTableWidgetItem*)), this, SLOT(itemChanged(QTableWidgetItem*)));
 }
 
 void ParameterGOSignal::addIDParameter()

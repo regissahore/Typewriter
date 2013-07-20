@@ -6,6 +6,8 @@
  */
 #include "parameterabstract.h"
 
+class QLineEdit;
+
 class ParameterGOText : public ParameterAbstract
 {
     Q_OBJECT
@@ -14,10 +16,11 @@ public:
     void bindItem(void *item);
 
 protected:
+    QLineEdit *_lineEditText;
     void addTextParameter();
 
 protected slots:
-    void itemChanged(QTableWidgetItem *tableItem);
+    void setItemText(QString value);
 };
 
 #endif // PARAMETERGOTEXT_H
