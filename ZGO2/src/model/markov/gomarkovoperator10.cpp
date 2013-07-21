@@ -116,16 +116,58 @@ double GOMarkovOperator10::calcTempOutputMarkovStatusNormal(QVector<double> inpu
 
 void GOMarkovOperator10::calcOutputMarkovStatusCorrelate()
 {
+    double lambdaR = 0.0;
+    double lmSum = 0.0;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
+        double lambdaSi = prevStatus->frequencyBreakdown();
+        double muSi = prevStatus->frequencyRepair();
+        lambdaR += lambdaSi;
+        lmSum += lambdaSi / muSi;
+    }
+    double muR = lambdaR / lmSum;
+    double PR = 1 / (1 + lambdaR / muR);
+    this->initOutputMarkovStatus();
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
 void GOMarkovOperator10::calcCommonOutputMarkovStatusCorrelate(double PR)
 {
-
+    double lambdaR = 0.0;
+    double lmSum = 0.0;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
+        double lambdaSi = prevStatus->frequencyBreakdown();
+        double muSi = prevStatus->frequencyRepair();
+        lambdaR += lambdaSi;
+        lmSum += lambdaSi / muSi;
+    }
+    double muR = lambdaR / lmSum;
+    this->initOutputMarkovStatus();
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
 double GOMarkovOperator10::calcTempOutputMarkovStatusCorrelate(QVector<double> input)
 {
-
+    Q_UNUSED(input);
+    double lambdaR = 0.0;
+    double lmSum = 0.0;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
+        double lambdaSi = prevStatus->frequencyBreakdown();
+        double muSi = prevStatus->frequencyRepair();
+        lambdaR += lambdaSi;
+        lmSum += lambdaSi / muSi;
+    }
+    double muR = lambdaR / lmSum;
+    return 1 / (1 + lambdaR / muR);
 }
 
 void GOMarkovOperator10::save(QDomDocument &document, QDomElement &root)
