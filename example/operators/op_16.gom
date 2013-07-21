@@ -1,0 +1,42 @@
+<GO_Project support="ZHG">
+    <scene>
+        <signal id="2">
+            <io type="2" index="0" id="2"/>
+            <io type="1" index="0" id="3"/>
+        </signal>
+        <signal id="1">
+            <io type="2" index="0" id="1"/>
+            <io type="0" index="0" id="3"/>
+        </signal>
+        <operator type="23" x="-209" y="0">
+            <model type="23" breakdown="0" output="2" id="3" input="1" subInput="1">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+        <operator type="4" x="-333" y="-74">
+            <model type="4" breakdown="0" output="1" id="2" input="0" subInput="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+        <operator type="4" x="-385" y="1">
+            <model type="4" breakdown="0" output="1" id="1" input="0" subInput="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+    </scene>
+</GO_Project>
