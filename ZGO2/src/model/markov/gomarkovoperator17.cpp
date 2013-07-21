@@ -139,8 +139,8 @@ void GOMarkovOperator17::calcOutputMarkovStatusCorrelate()
     double QS1 = 1.0 - PS1;
     double QS2 = 1.0 - PS2;
     double QC = 1.0 - PC;
-    double G1 = PS1 * PC;
-    double G2 = QS1 * PC + QC * PS1;
+    double G1 = PC;
+    double G2 = PS1 * QC;
     double G3 = PS1 * PS2 * PC;
     double G4 = QS1 * PS2 * PC + QS2 * PS1 * PC + QC * PS1 * PS2;
     double PR1 = G1 / (G1 + G2);
@@ -193,12 +193,10 @@ double GOMarkovOperator17::calcTempOutputMarkovStatusCorrelate1(double PS1, doub
 {
     Q_UNUSED(PS2);
     double PC = this->markovStatus()->probabilityNormal();
-    double QS1 = 1.0 - PS1;
     double QC = 1.0 - PC;
-    double G1 = PS1 * PC;
-    double G2 = QS1 * PC + QC * PS1;
-    double PR1 = G1 / (G1 + G2);
-    return PR1;
+    double G1 = PC;
+    double G2 = PS1 * QC;
+    return G1 / (G1 + G2);
 }
 
 double GOMarkovOperator17::calcTempOutputMarkovStatusCorrelate2(double PS1, double PS2)
@@ -209,6 +207,5 @@ double GOMarkovOperator17::calcTempOutputMarkovStatusCorrelate2(double PS1, doub
     double QC = 1.0 - PC;
     double G3 = PS1 * PS2 * PC;
     double G4 = QS1 * PS2 * PC + QS2 * PS1 * PC + QC * PS1 * PS2;
-    double PR2 = G3 / (G3 + G4);
-    return PR2;
+    return G3 / (G3 + G4);
 }
