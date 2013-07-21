@@ -11,13 +11,9 @@ class GOMarkovOperator10 : public GOMarkovOperator
 public:
     GOMarkovOperator10();
     ~GOMarkovOperator10();
-    bool isBreakdownCorrelate() const;
-    void setBreakdownCorrelate(bool value);
     void calcOutputMarkovStatus(double time);
     void calcCommonOutputMarkovStatus(double PR);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput);
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
 
 private:
     bool _isBreakdownCorrelate;

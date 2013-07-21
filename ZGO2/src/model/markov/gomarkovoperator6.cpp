@@ -20,16 +20,6 @@ GOMarkovOperator6::~GOMarkovOperator6()
     this->GOMarkovOperator::~GOMarkovOperator();
 }
 
-bool GOMarkovOperator6::isBreakdownCorrelate() const
-{
-    return this->_isBreakdownCorrelate;
-}
-
-void GOMarkovOperator6::setBreakdownCorrelate(bool value)
-{
-    this->_isBreakdownCorrelate = value;
-}
-
 void GOMarkovOperator6::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
@@ -157,49 +147,4 @@ double GOMarkovOperator6::calcTempOutputMarkovStatusCorrelate(double PS1, double
 {
     double PC = this->markovStatus()->probabilityNormal();
     return PS1 * PS2 * PC;
-}
-
-void GOMarkovOperator6::save(QDomDocument &document, QDomElement &root)
-{
-    QDomElement element = document.createElement("model");
-    element.setAttribute("type", this->type());
-    element.setAttribute("id", this->id());
-    element.setAttribute("input", this->input()->number());
-    element.setAttribute("subInput", this->subInput()->number());
-    element.setAttribute("output", this->output()->number());
-    element.setAttribute("breakdown", this->isBreakdownCorrelate());
-    root.appendChild(element);
-    this->status()->save(document, element);
-    this->markovStatus()->save(document, element);
-    this->parameter()->save(document, element);
-}
-
-bool GOMarkovOperator6::tryOpen(QDomElement &root)
-{
-    if (root.tagName() != "model")
-    {
-        return false;
-    }
-    this->setType(root.attribute("type").toInt());
-    this->setId(root.attribute("id").toInt());
-    this->input()->setNumber(root.attribute("input").toInt());
-    this->subInput()->setNumber(root.attribute("subInput").toInt());
-    this->output()->setNumber(root.attribute("output").toInt());
-    this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
-    QDomElement element = root.firstChildElement();
-    if (!this->status()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->markovStatus()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->parameter()->tryOpen(element))
-    {
-        return false;
-    }
-    return true;
 }

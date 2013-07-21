@@ -28,19 +28,9 @@ bool GOMarkovOperator1::isDualBreakdown() const
     return this->_isDualBreakdown;
 }
 
-bool GOMarkovOperator1::isBreakdownCorrelate() const
-{
-    return this->_isBreakdownCorrelate;
-}
-
 void GOMarkovOperator1::setDualBreakdown(bool value)
 {
     this->_isDualBreakdown = value;
-}
-
-void GOMarkovOperator1::setBreakdownCorrelate(bool value)
-{
-    this->_isBreakdownCorrelate = value;
 }
 
 GOMarkovStatus* GOMarkovOperator1::markovStatus2() const

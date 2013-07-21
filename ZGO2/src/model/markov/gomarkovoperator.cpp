@@ -12,6 +12,7 @@ GOMarkovOperator::GOMarkovOperator() : GOOperator()
 {
     this->_markovStatus = new GOMarkovStatus();
     this->_outputStatus = new QVector<GOMarkovStatus*>();
+    this->setBreakdownCorrelate(false);
 }
 
 GOMarkovOperator::~GOMarkovOperator()
@@ -23,6 +24,16 @@ GOMarkovOperator::~GOMarkovOperator()
         delete this->_outputStatus->at(i);
     }
     delete this->_outputStatus;
+}
+
+bool GOMarkovOperator::isBreakdownCorrelate() const
+{
+    return this->_isBreakdownCorrelate;
+}
+
+void GOMarkovOperator::setBreakdownCorrelate(bool value)
+{
+    this->_isBreakdownCorrelate = value;
 }
 
 GOMarkovStatus* GOMarkovOperator::markovStatus() const
@@ -107,6 +118,7 @@ void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
+    element.setAttribute("breakdown", this->isBreakdownCorrelate());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
@@ -124,6 +136,7 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
+    this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {

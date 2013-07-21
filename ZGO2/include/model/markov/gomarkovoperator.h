@@ -18,6 +18,8 @@ public:
     QVector<GOMarkovStatus*>* markovOutputStatus() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    bool isBreakdownCorrelate() const;
+    void setBreakdownCorrelate(bool value);
     virtual void initMarkovStatus(double time, double c12 = 0.0);
     virtual void calcOutputMarkovStatus(double time);
     virtual void calcCommonOutputMarkovStatus(double PR);
@@ -26,6 +28,7 @@ public:
 protected:
     GOMarkovStatus *_markovStatus;
     QVector<GOMarkovStatus*> *_outputStatus;
+    bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
     GOMarkovOperator* getPrevOperator(int index = 0);
     GOMarkovOperator* getPrevSubOperator(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
