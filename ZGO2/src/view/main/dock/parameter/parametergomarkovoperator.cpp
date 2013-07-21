@@ -13,6 +13,7 @@
 #include "dialog13ainput.h"
 #include "gomarkovoperator1.h"
 #include "gomarkovoperator6.h"
+#include "gomarkovoperator10.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -38,7 +39,10 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     case GOMarkovOperatorFactory::Operator_Type_6:
         this->addMarkovParameter();
-        this->addMarkov6BreakdownCorrelateparameter();
+        this->addMarkov6BreakdownCorrelateParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_10:
+        this->addMarkov10BreakdownCorrelateParameter();
         break;
     default:
         break;
@@ -245,7 +249,7 @@ void ParameterGOMarkovOperator::setItemMarkov1RepairTime2(double value)
     this->_spinBox1Status2FrequencyRepair->setValue(1.0 / value);
 }
 
-void ParameterGOMarkovOperator::addMarkov6BreakdownCorrelateparameter()
+void ParameterGOMarkovOperator::addMarkov6BreakdownCorrelateParameter()
 {
     if (0L != this->_item)
     {
@@ -265,5 +269,28 @@ void ParameterGOMarkovOperator::setItemMarkov6BreakdownCorrelate(bool value)
 {
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator6 *model = (GOMarkovOperator6*)item->model();
+    model->setBreakdownCorrelate(value);
+}
+
+void ParameterGOMarkovOperator::addMarkov10BreakdownCorrelateParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator10 *model = (GOMarkovOperator10*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Breakdown Correlate"), this));
+        this->_checkBox10BreakdownCorrelate = new QCheckBox(this);
+        this->_checkBox10BreakdownCorrelate->setChecked(model->isBreakdownCorrelate());
+        this->connect(this->_checkBox10BreakdownCorrelate, SIGNAL(toggled(bool)), this, SLOT(setItemMarkov10BreakdownCorrelate(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_checkBox10BreakdownCorrelate);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov10BreakdownCorrelate(bool value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator10 *model = (GOMarkovOperator10*)item->model();
     model->setBreakdownCorrelate(value);
 }
