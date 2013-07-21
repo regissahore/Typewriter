@@ -28,6 +28,7 @@ public:
         Operator_Type_10,
         Operator_Type_11,
         Operator_Type_12,
+        Operator_Type_12A,
         Operator_Type_13,
         Operator_Type_13A,
         Operator_Type_13B,

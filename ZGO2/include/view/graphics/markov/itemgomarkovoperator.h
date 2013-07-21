@@ -26,6 +26,7 @@ public:
 protected:
     ItemGOMarkovEquivalent *_fatherEquivalent;
     ItemGOMarkovCommonCause *_fatherCommonCause;
+    bool isSource() const;
 };
 
 #endif // ITEMGOMARKOVOPERATOR_H

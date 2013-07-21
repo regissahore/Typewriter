@@ -67,9 +67,24 @@ GOMarkovOperator* GOMarkovOperator::getPrevOperator(int index)
     return (GOMarkovOperator*)signal->next(this);
 }
 
+GOMarkovOperator* GOMarkovOperator::getPrevSubOperator(int index)
+{
+    GOSignal *signal = this->subInput()->signal()->at(index);
+    return (GOMarkovOperator*)signal->next(this);
+}
+
 GOMarkovStatus* GOMarkovOperator::getPrevMarkovStatus(int index)
 {
     GOSignal *signal = this->input()->signal()->at(index);
+    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    GOMarkovStatus *status = prev->markovOutputStatus()->at(prevIndex);
+    return status;
+}
+
+GOMarkovStatus* GOMarkovOperator::getPrevSubMarkovStatus(int index)
+{
+    GOSignal *signal = this->subInput()->signal()->at(index);
     GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
     int prevIndex = prev->output()->getSignalIndex(signal);
     GOMarkovStatus *status = prev->markovOutputStatus()->at(prevIndex);

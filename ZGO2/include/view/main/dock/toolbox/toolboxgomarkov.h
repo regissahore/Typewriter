@@ -28,19 +28,24 @@ private slots:
     void on_buttonCommonCause_clicked();
     void on_buttonOperator1_clicked();
     void on_buttonOperator2_clicked();
-    void on_buttonOperator3_clicked();
     void on_buttonOperator5_clicked();
     void on_buttonOperator6_clicked();
-    void on_buttonOperator7_clicked();
-    void on_buttonOperator9_clicked();
-    void on_buttonOperator10_clicked();
-    void on_buttonOperator11_clicked();
-    void on_buttonOperator1E1_clicked();
     void on_buttonOperator9A1_clicked();
     void on_buttonOperator9A2_clicked();
+    void on_buttonOperator10_clicked();
+    void on_buttonOperator11_clicked();
+    void on_buttonOperator12A_clicked();
     void on_buttonOperator13A_clicked();
     void on_buttonOperator13B_clicked();
     void on_buttonOperator15A_clicked();
+    void on_buttonOperator15B_clicked();
+    void on_buttonOperator16_clicked();
+    void on_buttonOperator17_clicked();
+    void on_buttonOperator19_clicked();
+    void on_buttonOperator20_clicked();
+    void on_buttonOperator22A_clicked();
+    void on_buttonOperator22B_clicked();
+    void on_buttonOperator23_clicked();
 
 private:
     Ui::ToolboxGOMarkov *ui;

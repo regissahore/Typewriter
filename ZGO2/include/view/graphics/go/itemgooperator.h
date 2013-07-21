@@ -46,7 +46,7 @@ protected:
     QVector<QVector<ItemGOSignal*>*> *_outputSignal;
 
     GOOperator *_model; /** The model of GO operator. */
-    bool isSource() const;
+    virtual bool isSource() const;
 };
 
 #endif // ITEMGOOPERATOR_H

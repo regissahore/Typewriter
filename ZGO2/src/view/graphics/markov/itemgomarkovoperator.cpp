@@ -117,3 +117,9 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     this->setModel(model);
     return true;
 }
+
+bool ItemGOMarkovOperator::isSource() const
+{
+    return this->model()->type() == GOMarkovOperatorFactory::Operator_Type_4 ||
+            this->model()->type() == GOMarkovOperatorFactory::Operator_Type_5;
+}

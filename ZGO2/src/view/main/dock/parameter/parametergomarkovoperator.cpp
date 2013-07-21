@@ -12,6 +12,7 @@
 #include "gomarkovoperatorfactory.h"
 #include "dialog13ainput.h"
 #include "gomarkovoperator1.h"
+#include "gomarkovoperator6.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -30,8 +31,14 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkov1DualBreakdownParameter();
         this->addMarkov1BreakdownCorrelateparameter();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_2:
+        break;
     case GOMarkovOperatorFactory::Operator_Type_5:
         this->addMarkovParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_6:
+        this->addMarkovParameter();
+        this->addMarkov6BreakdownCorrelateparameter();
         break;
     default:
         break;
@@ -236,4 +243,27 @@ void ParameterGOMarkovOperator::setItemMarkov1RepairTime2(double value)
     GOMarkovOperator1 *model = (GOMarkovOperator1*)item->model();
     model->markovStatus2()->setRepairTime(1.0 / value);
     this->_spinBox1Status2FrequencyRepair->setValue(1.0 / value);
+}
+
+void ParameterGOMarkovOperator::addMarkov6BreakdownCorrelateparameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator6 *model = (GOMarkovOperator6*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Breakdown Correlate"), this));
+        this->_checkBox6BreakdownCorrelate = new QCheckBox(this);
+        this->_checkBox6BreakdownCorrelate->setChecked(model->isBreakdownCorrelate());
+        this->connect(this->_checkBox6BreakdownCorrelate, SIGNAL(toggled(bool)), this, SLOT(setItemMarkov6BreakdownCorrelate(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_checkBox6BreakdownCorrelate);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov6BreakdownCorrelate(bool value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator6 *model = (GOMarkovOperator6*)item->model();
+    model->setBreakdownCorrelate(value);
 }

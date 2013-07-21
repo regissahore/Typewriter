@@ -26,12 +26,14 @@ protected:
     QDoubleSpinBox *_spinBox1Status2FrequencyBreakdown;
     QDoubleSpinBox *_spinBox1Status2FrequencyRepair;
     QDoubleSpinBox *_spinBox1Status2RepairTime;
+    QCheckBox *_checkBox6BreakdownCorrelate;
 
     void addTypeParameter();
     void addMarkovParameter();
     void addMarkov1DualBreakdownParameter();
     void addMarkov1BreakdownCorrelateparameter();
     void addMarkov1Status2Parameter();
+    void addMarkov6BreakdownCorrelateparameter();
 
 protected slots:
     void setItemFrequencyBreakdown(double value);
@@ -42,6 +44,7 @@ protected slots:
     void setItemMarkov1FrequencyBreakdown2(double value);
     void setItemMarkov1FrequencyRepair2(double value);
     void setItemMarkov1RepairTime2(double value);
+    void setItemMarkov6BreakdownCorrelate(bool value);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H

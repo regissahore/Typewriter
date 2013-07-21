@@ -27,7 +27,9 @@ protected:
     GOMarkovStatus *_markovStatus;
     QVector<GOMarkovStatus*> *_outputStatus;
     GOMarkovOperator* getPrevOperator(int index = 0);
+    GOMarkovOperator* getPrevSubOperator(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
+    GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
     void initOutputMarkovStatus();
 };
 
