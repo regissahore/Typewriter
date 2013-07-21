@@ -1,7 +1,7 @@
 #ifndef GOMARKOVOPERATOR5_H
 #define GOMARKOVOPERATOR5_H
 /**
- * 两状态单元。有两故障和与输入信号有停工相关两种模式。
+ * 单信号发生器。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "gomarkovoperator.h"
