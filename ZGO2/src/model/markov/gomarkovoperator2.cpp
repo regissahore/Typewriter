@@ -39,3 +39,34 @@ void GOMarkovOperator2::calcOutputMarkovStatus(double time)
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
+
+void GOMarkovOperator2::calcCommonOutputMarkovStatus(double PR)
+{
+    double QR = 1.0 - PR;
+    double miuR = 0.0;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
+        double QSi = prevStatus->probabilityBreakdown();
+        double miuSi = prevStatus->frequencyRepair();
+        QR *= QSi;
+        miuR += miuSi;
+    }
+    double lambdaR = miuR * QR / PR;
+    this->initOutputMarkovStatus();
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+}
+
+double GOMarkovOperator2::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+{
+    Q_UNUSED(time);
+    Q_UNUSED(subInput);
+    double QR = 1.0;
+    for (int i = 0; i < input.size(); ++i)
+    {
+        QR *= 1.0 - input[i];
+    }
+    return 1.0 - QR;
+}

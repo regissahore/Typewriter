@@ -66,7 +66,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
         }
         if (commonList.size() == 0)
         {
-            ((GOMarkovAnalysis*)this->_analysis)->calcAccumulativeProbability(list[i], time);
+            ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], time);
         }
         else
         {
@@ -77,7 +77,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
                 commonOperator.push_back(commonList[j].op);
                 commonIndex.push_back(commonList[j].outputIndex);
             }
-            ((GOMarkovAnalysis*)this->_analysis)->calcAccumulativeProbability(list[i], commonOperator, commonIndex, time);
+            ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], commonOperator, commonIndex, time);
         }
     }
     list.clear();

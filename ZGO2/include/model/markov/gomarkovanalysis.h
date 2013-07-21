@@ -14,8 +14,9 @@ class GOMarkovAnalysis : public GOAnalysis
 {
 public:
     GOMarkovAnalysis();
-    void calcAccumulativeProbability(GOOperator *op, double time);
-    void calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time);
+    void calcMarkovStatus(GOMarkovOperator *op, double time);
+    void calcMarkovStatus(GOMarkovOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time);
+    double calcTempMarkovStatus(GOMarkovOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &normalValues, double time);
 
 protected:
     void calcAccumulativeProbability_9A1(GOMarkovOperator9A *op, double time);

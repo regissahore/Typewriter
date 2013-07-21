@@ -82,6 +82,17 @@ void GOMarkovOperator1::calcOutputMarkovStatus(double time)
     }
 }
 
+double GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+{
+    Q_UNUSED(time);
+    Q_UNUSED(subInput);
+    if (this->isBreakdownCorrelate())
+    {
+        return this->calcTempOutputMarkovStatusCorrelate(input[0]);
+    }
+    return this->calcTempOutputMarkovStatusNormal(input[0]);
+}
+
 void GOMarkovOperator1::calcOutputMarkovStatusNormal()
 {
     GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(0);
@@ -101,6 +112,12 @@ void GOMarkovOperator1::calcOutputMarkovStatusNormal()
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+}
+
+double GOMarkovOperator1::calcTempOutputMarkovStatusNormal(double PS)
+{
+    double PC = this->markovStatus()->probabilityNormal();
+    return PS * PC;
 }
 
 void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
@@ -127,6 +144,16 @@ void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+}
+
+double GOMarkovOperator1::calcTempOutputMarkovStatusCorrelate(double PS)
+{
+    double QS = 1 - PS;
+    double PC = this->markovStatus()->probabilityNormal();
+    double QC = 1 - PC;
+    double G1 = PS * PC;
+    double G2 = PS * QC + QS * PC;
+    return G1 / (G1 + G2);
 }
 
 void GOMarkovOperator1::save(QDomDocument &document, QDomElement &root)

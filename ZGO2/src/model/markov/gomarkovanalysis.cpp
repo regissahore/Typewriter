@@ -9,86 +9,108 @@
 #include "gomarkovstatus.h"
 #include "goaccumulative.h"
 #include "gomarkovoperatorfactory.h"
-/*#include "gomarkovoperator1.h"
-#include "gomarkovoperator2.h"
-#include "gomarkovoperator3.h"
-#include "gomarkovoperator4.h"
-#include "gomarkovoperator5.h"
-#include "gomarkovoperator6.h"
-#include "gomarkovoperator7.h"
-#include "gomarkovoperator8.h"
-#include "gomarkovoperator9.h"
-#include "gomarkovoperator9a1.h"
-#include "gomarkovoperator9a2.h"
-#include "gomarkovoperator9b.h"
-#include "gomarkovoperator10.h"
-#include "gomarkovoperator11.h"
-#include "gomarkovoperator12.h"
-#include "gomarkovoperator13.h"
-#include "gomarkovoperator14.h"
-#include "gomarkovoperator15.h"
-#include "gomarkovoperator15a.h"
-#include "gomarkovoperator15b.h"
-#include "gomarkovoperator16.h"
-#include "gomarkovoperator17.h"
-#include "gomarkovoperator18.h"
-#include "gomarkovoperator18a.h"
-#include "gomarkovoperator19.h"
-#include "gomarkovoperator20.h"
-#include "gomarkovoperator21.h"
-#include "gomarkovoperator22.h"
-#include "gomarkovoperator22a.h"
-#include "gomarkovoperator22b.h"
-#include "gomarkovoperator23.h"
-#include "gomarkovoperator24.h"
-#include "gomarkovoperator25.h"
-#include "gomarkovoperator26.h"
-#include "gomarkovoperator27.h"
-#include "gomarkovoperator28.h"
-#include "gomarkovoperator29.h"*/
-#include "gomarkovoperator9a.h"
-#include "gomarkovoperator13.h"
 
 GOMarkovAnalysis::GOMarkovAnalysis() : GOAnalysis()
 {
 }
 
-void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, double time)
+void GOMarkovAnalysis::calcMarkovStatus(GOMarkovOperator *op, double time)
 {
-    ((GOMarkovOperator*)op)->calcOutputMarkovStatus(time);
-    /*switch (op->TypedItem::type())
+    op->calcOutputMarkovStatus(time);
+}
+
+void GOMarkovAnalysis::calcMarkovStatus(GOMarkovOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time)
+{
+    int commonNum = commonOperator.size();
+    double value = 0.0;
+    for (int i = 0; i < (1 << commonNum); ++i)
     {
-    case GOMarkovOperatorFactory::Operator_Type_9A1:
-        GOMarkovAnalysis::calcAccumulativeProbability_9A1((GOMarkovOperator9A*)op, time);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_9A2:
-        GOMarkovAnalysis::calcAccumulativeProbability_9A2((GOMarkovOperator9A*)op, time);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_13A:
-        GOMarkovAnalysis::calcAccumulativeProbability_13A((GOMarkovOperator13*)op);
-        this->updateOutputMarkov((GOMarkovOperator*)op);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_13B:
-        GOMarkovAnalysis::calcAccumulativeProbability_13B((GOMarkovOperator13*)op);
-        this->updateOutputMarkov((GOMarkovOperator*)op);
-        break;
-    case GOMarkovOperatorFactory::Operator_Type_15A:
-        GOMarkovAnalysis::calcAccumulativeProbability_15A((GOMarkovOperator*)op);
-        this->updateOutputMarkov((GOMarkovOperator*)op);
-        break;
-    default:
-        this->GOAnalysis::calcAccumulativeProbability(op);
-        this->updateOutputMarkov((GOMarkovOperator*)op);
-    }*/
+        QVector<double> normalValues;
+        for (int j = 0; j < commonNum; ++j)
+        {
+            if (i & (1 << j))
+            {
+                normalValues.push_back(1.0);
+            }
+            else
+            {
+                normalValues.push_back(0.0);
+            }
+        }
+        double factor = calcTempMarkovStatus(op, -1, commonOperator, commonIndex, normalValues, time);
+        for (int j = 0; j < commonNum; ++j)
+        {
+            int temp = commonIndex[j];
+            commonIndex[j] = -1;
+            double normal = calcTempMarkovStatus((GOMarkovOperator*)commonOperator[j], temp, commonOperator, commonIndex, normalValues, time);
+            commonIndex[j] = temp;
+            if (normal < 0.0)
+            {
+                normal = -normal;
+            }
+            if (normalValues[j] < 0.5)
+            {
+                normal = 1.0 - normal;
+            }
+            factor = factor * normal;
+        }
+        value = value + factor;
+    }
+    op->calcCommonOutputMarkovStatus(value);
 }
 
-void GOMarkovAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time)
+double GOMarkovAnalysis::calcTempMarkovStatus(GOMarkovOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &normalValues, double time)
 {
-    Q_UNUSED(time);
-    this->GOAnalysis::calcAccumulativeProbability(op, commonOperator, commonIndex);
-    this->updateOutputMarkov((GOMarkovOperator*)op);
+    for (int i = 0; i < commonOperator.size(); ++i)
+    {
+        if (op == commonOperator[i] && index == commonIndex[i])
+        {
+            return normalValues[i];
+        }
+    }
+    bool appeared = false;
+    QVector<double> inputValues;
+    QVector<double> subInputValues;
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        double value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
+        if (value < 0.0)
+        {
+            inputValues.push_back(-value);
+        }
+        else
+        {
+            appeared = true;
+            inputValues.push_back(value);
+        }
+    }
+    for (int i = 0; i < op->subInput()->number(); ++i)
+    {
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        double value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
+        if (value < 0.0)
+        {
+            subInputValues.push_back(-value);
+        }
+        else
+        {
+            appeared = true;
+            subInputValues.push_back(value);
+        }
+    }
+    if (appeared)
+    {
+        return op->calcTempOutputMarkovStatus(time, inputValues, subInputValues);
+    }
+    return -op->markovOutputStatus()->at(index)->probabilityNormal();
 }
 
+/*
 void GOMarkovAnalysis::calcAccumulativeProbability_9A1(GOMarkovOperator9A *op, double time)
 {
     GOSignal* signal = op->input()->signal()->at(0);
@@ -380,7 +402,7 @@ void GOMarkovAnalysis::updateOutputMarkov_11(GOMarkovOperator *op)
 void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
 {
     Q_UNUSED(op);
-    /*GOSignal* signal = op->input()->signal()->at(0);
+    GOSignal* signal = op->input()->signal()->at(0);
     GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
     int prevIndex = prev->output()->getSignalIndex(signal);
     GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(prevIndex);
@@ -392,7 +414,7 @@ void GOMarkovAnalysis::updateOutputMarkov_1_E1(GOMarkovOperator *op)
     double lamdaR = lamdaS + lamdaC1 + lamdaC2;
     double miuR = lamdaR * pr1 / pr2;
     op->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
-    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);*/
+    op->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
 
 void GOMarkovAnalysis::updateOutputMarkov_15_A(GOMarkovOperator *op)
@@ -415,4 +437,4 @@ void GOMarkovAnalysis::updateOutputMarkov_15_A(GOMarkovOperator *op)
         op->markovOutputStatus()->at(i)->setFrequencyBreakdown(lamdaR);
         op->markovOutputStatus()->at(i)->setFrequencyRepair(miuR);
     }
-}
+}*/

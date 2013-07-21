@@ -19,6 +19,7 @@ public:
     GOMarkovStatus* markovStatus2() const;
     void initMarkovStatus(double time, double c12);
     void calcOutputMarkovStatus(double time);
+    double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -27,8 +28,9 @@ private:
     bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
     GOMarkovStatus *_markovStatus2;
     void calcOutputMarkovStatusNormal();
-    void calcOutputMarkovStatusDual();
     void calcOutputMarkovStatusCorrelate();
+    double calcTempOutputMarkovStatusNormal(double PS);
+    double calcTempOutputMarkovStatusCorrelate(double PS);
 };
 
 #endif // GOMARKOVOPERATOR1_H
