@@ -22,8 +22,8 @@ public:
     void setBreakdownCorrelate(bool value);
     virtual void initMarkovStatus(double time, double c12 = 0.0);
     virtual void calcOutputMarkovStatus(double time);
-    virtual void calcCommonOutputMarkovStatus(double PR);
-    virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput);
+    virtual void calcCommonOutputMarkovStatus(QVector<double> PR);
+    virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
 
 protected:
     GOMarkovStatus *_markovStatus;

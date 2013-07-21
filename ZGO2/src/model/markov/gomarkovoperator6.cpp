@@ -33,9 +33,10 @@ void GOMarkovOperator6::calcOutputMarkovStatus(double time)
     }
 }
 
-double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
 {
     Q_UNUSED(time);
+    Q_UNUSED(index);
     if (this->isBreakdownCorrelate())
     {
         return this->calcTempOutputMarkovStatusCorrelate(input[0], subInput[0]);
@@ -43,16 +44,16 @@ double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double
     return this->calcTempOutputMarkovStatusNormal(input[0], subInput[0]);
 }
 
-void GOMarkovOperator6::calcCommonOutputMarkovStatus(double PR)
+void GOMarkovOperator6::calcCommonOutputMarkovStatus(QVector<double> PR)
 {
     Q_UNUSED(time);
     if (this->isBreakdownCorrelate())
     {
-        this->calcCommonOutputMarkovStatusCorrelate(PR);
+        this->calcCommonOutputMarkovStatusCorrelate(PR[0]);
     }
     else
     {
-        this->calcCommonOutputMarkovStatusNormal(PR);
+        this->calcCommonOutputMarkovStatusNormal(PR[0]);
     }
 }
 

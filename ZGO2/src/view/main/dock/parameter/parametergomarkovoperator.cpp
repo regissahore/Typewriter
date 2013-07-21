@@ -42,6 +42,14 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_10:
         this->addMarkovBreakdownCorrelateParameter();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_16:
+        this->addMarkovParameter();
+        this->addMarkovBreakdownCorrelateParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_17:
+        this->addMarkovParameter();
+        this->addMarkovBreakdownCorrelateParameter();
+        break;
     default:
         break;
     }

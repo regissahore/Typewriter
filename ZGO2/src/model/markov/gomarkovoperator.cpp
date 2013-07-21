@@ -59,16 +59,17 @@ void GOMarkovOperator::calcOutputMarkovStatus(double time)
     Q_UNUSED(time);
 }
 
-void GOMarkovOperator::calcCommonOutputMarkovStatus(double PR)
+void GOMarkovOperator::calcCommonOutputMarkovStatus(QVector<double> PR)
 {
     Q_UNUSED(PR);
 }
 
-double GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+double GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(input);
     Q_UNUSED(subInput);
+    Q_UNUSED(index);
     return this->markovStatus()->probabilityNormal();
 }
 

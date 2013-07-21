@@ -72,10 +72,11 @@ void GOMarkovOperator1::calcOutputMarkovStatus(double time)
     }
 }
 
-double GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput)
+double GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
+    Q_UNUSED(index);
     if (this->isBreakdownCorrelate())
     {
         return this->calcTempOutputMarkovStatusCorrelate(input[0]);
