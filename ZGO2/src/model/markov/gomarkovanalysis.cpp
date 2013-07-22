@@ -14,11 +14,6 @@ GOMarkovAnalysis::GOMarkovAnalysis() : GOAnalysis()
 {
 }
 
-void GOMarkovAnalysis::calcMarkovStatus(GOMarkovOperator *op, double time)
-{
-    op->calcOutputMarkovStatus(time);
-}
-
 void GOMarkovAnalysis::calcMarkovStatus(GOMarkovOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time)
 {
     int commonNum = commonOperator.size();

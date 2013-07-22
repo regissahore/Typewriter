@@ -29,12 +29,12 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menuFIle_F">
+   <widget class="QMenu" name="menuFile_F">
     <property name="title">
-     <string>FIle(&amp;F)</string>
+     <string>File(&amp;F)</string>
     </property>
     <addaction name="actionNew"/>
     <addaction name="actionNew_Markov"/>
@@ -81,7 +81,7 @@
     <addaction name="actionTool_DockWidget"/>
     <addaction name="actionParameter_DockWidget"/>
    </widget>
-   <addaction name="menuFIle_F"/>
+   <addaction name="menuFile_F"/>
    <addaction name="menuView_V"/>
    <addaction name="menuAnalysis_A"/>
    <addaction name="menuLanguage_L"/>

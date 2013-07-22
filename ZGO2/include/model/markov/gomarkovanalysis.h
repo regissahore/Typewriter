@@ -14,7 +14,6 @@ class GOMarkovAnalysis : public GOAnalysis
 {
 public:
     GOMarkovAnalysis();
-    void calcMarkovStatus(GOMarkovOperator *op, double time);
     void calcMarkovStatus(GOMarkovOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time);
     double calcTempMarkovStatus(GOMarkovOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &normalValues, double time);
 

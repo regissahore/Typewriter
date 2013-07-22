@@ -161,7 +161,6 @@ void GOMarkovOperator1::save(QDomDocument &document, QDomElement &root)
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
     this->markovStatus2()->save(document, element);
-    this->parameter()->save(document, element);
 }
 
 bool GOMarkovOperator1::tryOpen(QDomElement &root)
@@ -189,11 +188,6 @@ bool GOMarkovOperator1::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus2()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->parameter()->tryOpen(element))
     {
         return false;
     }

@@ -7,11 +7,13 @@
 #include "gooperatorfactory.h"
 #include "gomarkovstatus.h"
 #include "gostatus.h"
+#include "goinput.h"
 #include "messagefactory.h"
 #include "goparameter.h"
 #include "gomarkovoperatorfactory.h"
 #include "dialog13ainput.h"
 #include "gomarkovoperator1.h"
+#include "gomarkovoperator11.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -41,6 +43,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     case GOMarkovOperatorFactory::Operator_Type_10:
         this->addMarkovBreakdownCorrelateParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_11:
+        this->addMarkov11KParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_16:
         this->addMarkovParameter();
@@ -253,4 +258,29 @@ void ParameterGOMarkovOperator::setItemMarkov1RepairTime2(double value)
     GOMarkovOperator1 *model = (GOMarkovOperator1*)item->model();
     model->markovStatus2()->setRepairTime(1.0 / value);
     this->_spinBox1Status2FrequencyRepair->setValue(1.0 / value);
+}
+
+void ParameterGOMarkovOperator::addMarkov11KParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("K"), this));
+        this->_spinBox11K = new QSpinBox(this);
+        this->_spinBox11K->setMinimum(1);
+        this->_spinBox11K->setMaximum(op->input()->number());
+        this->_spinBox11K->setValue(op->K());
+        this->connect(this->_spinBox11K, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11K(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBox11K);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov11K(int value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+    op->setK(value);
 }

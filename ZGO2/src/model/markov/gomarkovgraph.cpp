@@ -66,7 +66,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
         }
         if (commonList.size() == 0)
         {
-            ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], time);
+            ((GOMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
         }
         else
         {
