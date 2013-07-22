@@ -51,6 +51,9 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
     case GOMarkovOperatorFactory::Operator_Type_15A:
         this->getDualNumber();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_15B:
+        this->getInputNumber();
+        break;
     default:
         break;
     }

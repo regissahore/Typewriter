@@ -24,6 +24,7 @@ public:
     virtual void calcOutputMarkovStatus(double time);
     virtual void calcCommonOutputMarkovStatus(QVector<double> PR);
     virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    virtual void initOutputMarkovStatus();
 
 protected:
     GOMarkovStatus *_markovStatus;
@@ -33,7 +34,6 @@ protected:
     GOMarkovOperator* getPrevSubOperator(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
-    void initOutputMarkovStatus();
 };
 
 #endif // GOMARKOVOPERATOR_H

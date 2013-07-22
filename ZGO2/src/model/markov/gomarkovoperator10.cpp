@@ -72,7 +72,6 @@ void GOMarkovOperator10::calcOutputMarkovStatusNormal()
     }
     double QR = 1.0 - PR;
     double muR = lambdaR * PR / QR;
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
@@ -89,7 +88,6 @@ void GOMarkovOperator10::calcCommonOutputMarkovStatusNormal(double PR)
     }
     double QR = 1.0 - PR;
     double muR = lambdaR * PR / QR;
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
@@ -119,7 +117,6 @@ void GOMarkovOperator10::calcOutputMarkovStatusCorrelate()
     }
     double muR = lambdaR / lmSum;
     double PR = 1 / (1 + lambdaR / muR);
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
@@ -138,7 +135,6 @@ void GOMarkovOperator10::calcCommonOutputMarkovStatusCorrelate(double PR)
         lmSum += lambdaSi / muSi;
     }
     double muR = lambdaR / lmSum;
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);

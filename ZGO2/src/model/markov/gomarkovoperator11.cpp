@@ -69,7 +69,6 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
         }
     }
     //double QR = 1.0 - PR;
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
 }
 

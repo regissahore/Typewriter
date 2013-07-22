@@ -50,6 +50,8 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_15A:
         this->addMarkovParameter();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_15B:
+        break;
     case GOMarkovOperatorFactory::Operator_Type_16:
         this->addMarkovParameter();
         this->addMarkovBreakdownCorrelateParameter();

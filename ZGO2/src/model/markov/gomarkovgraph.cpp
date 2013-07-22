@@ -93,7 +93,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     GOMarkovChartData *data = new GOMarkovChartData();
     for (int i = 0; i < this->_operator.size(); ++i)
     {
-        if (this->_operator[i]->output()->number() == 1)
+        GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
+        op->initOutputMarkovStatus();
+        int outputNum = op->markovOutputStatus()->size();
+        if (outputNum == 1)
         {
             data->names.push_back(QString("%1").arg(this->_operator[i]->id()));
             data->probabilities.push_back(QVector<double>());
@@ -102,7 +105,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         }
         else
         {
-            for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
+            for (int j = 0; j < outputNum; ++j)
             {
                 data->names.push_back(QString("%1 (%2)").arg(this->_operator[i]->id()).arg(j + 1));
                 data->probabilities.push_back(QVector<double>());
@@ -154,7 +157,8 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         for (int j = 0, index = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
-            for (int k = 0; k < this->_operator[j]->output()->number(); ++k)
+            int outputNum = op->markovOutputStatus()->size();
+            for (int k = 0; k < outputNum; ++k)
             {
                 data->probabilities[index].push_back(op->markovOutputStatus()->at(k)->probabilityNormal());
                 data->lambdas[index].push_back(op->markovOutputStatus()->at(k)->frequencyBreakdown());
@@ -200,7 +204,8 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                for (int l = 0; l < this->_operator[k]->output()->number(); ++l)
+                int outputNum = op->markovOutputStatus()->size();
+                for (int l = 0; l < outputNum; ++l)
                 {
                     r11.push_back(op->accmulatives()->at(l)->probability(1));
                 }
