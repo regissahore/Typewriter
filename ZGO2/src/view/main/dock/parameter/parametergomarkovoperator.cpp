@@ -65,6 +65,8 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_19:
         this->addMarkovParameter();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_20:
+        break;
     default:
         break;
     }

@@ -51,13 +51,13 @@ double GOMarkovOperator16::calcTempOutputMarkovStatus(double time, QVector<doubl
     double PS2 = subInput[0];
     if (this->isBreakdownCorrelate())
     {
-        if (index == 1)
+        if (index == 0)
         {
             return this->calcTempOutputMarkovStatusCorrelate1(PS1, PS2);
         }
         return this->calcTempOutputMarkovStatusCorrelate2(PS1, PS2);
     }
-    if (index == 1)
+    if (index == 0)
     {
         return this->calcTempOutputMarkovStatusNormal1(PS1, PS2);
     }
