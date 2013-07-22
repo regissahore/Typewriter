@@ -1,7 +1,7 @@
 #ifndef GOMARKOVOPERATOR15A_H
 #define GOMARKOVOPERATOR15A_H
 /**
- * 两状态单元。有两故障和与输入信号有停工相关两种模式。
+ * 对应门。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "gomarkovoperator.h"
@@ -11,23 +11,8 @@ class GOMarkovOperator15A : public GOMarkovOperator
 public:
     GOMarkovOperator15A();
     ~GOMarkovOperator15A();
-    bool isDualBreakdown() const;
-    bool isBreakdownCorrelate() const;
-    void setDualBreakdown(bool value);
-    void setBreakdownCorrelate(bool value);
-    GOMarkovStatus* markovStatus2() const;
-    void initMarkovStatus(double time, double c12);
     void calcOutputMarkovStatus(double time);
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
-
-private:
-    bool _isDualBreakdown; /*! 是否是两故障模式。*/
-    bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
-    GOMarkovStatus *_markovStatus2;
-    void calcOutputMarkovStatusNormal();
-    void calcOutputMarkovStatusDual();
-    void calcOutputMarkovStatusCorrelate();
+    double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
 };
 
 #endif // GOMARKOVOPERATOR1_H

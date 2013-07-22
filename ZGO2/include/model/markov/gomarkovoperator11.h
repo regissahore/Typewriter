@@ -1,7 +1,7 @@
 #ifndef GOMARKOVOPERATOR11_H
 #define GOMARKOVOPERATOR11_H
 /**
- * 两状态单元。有两故障和与输入信号有停工相关两种模式。
+ * M取K门。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "gomarkovoperator.h"
