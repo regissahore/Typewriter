@@ -7,6 +7,8 @@ namespace Ui {
 class DialogMatrixInput;
 }
 
+class QTableWidget;
+
 class DialogMatrixInput : public QDialog
 {
     Q_OBJECT
@@ -14,6 +16,7 @@ class DialogMatrixInput : public QDialog
 public:
     explicit DialogMatrixInput(QWidget *parent = 0);
     ~DialogMatrixInput();
+    QTableWidget* table() const;
     
 protected:
     Ui::DialogMatrixInput *ui;

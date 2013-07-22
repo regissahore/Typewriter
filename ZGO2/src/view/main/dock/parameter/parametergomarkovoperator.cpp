@@ -1,5 +1,6 @@
 #include <QLabel>
 #include <QCheckBox>
+#include <QPushButton>
 #include <QDoubleSpinBox>
 #include "parametergomarkovoperator.h"
 #include "itemgomarkovoperator.h"
@@ -8,12 +9,15 @@
 #include "gomarkovstatus.h"
 #include "gostatus.h"
 #include "goinput.h"
+#include "gooutput.h"
 #include "messagefactory.h"
 #include "goparameter.h"
 #include "gomarkovoperatorfactory.h"
 #include "dialog13ainput.h"
 #include "gomarkovoperator1.h"
 #include "gomarkovoperator11.h"
+#include "gomarkovoperator22.h"
+#include "dialogmatrixinput.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
 {
@@ -66,6 +70,12 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkovParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_20:
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_22:
+    case GOMarkovOperatorFactory::Operator_Type_22A:
+    case GOMarkovOperatorFactory::Operator_Type_22B:
+        this->addMarkovParameter();
+        this->addMarkov22Markov2Parameter();
         break;
     default:
         break;
@@ -295,4 +305,50 @@ void ParameterGOMarkovOperator::setItemMarkov11K(int value)
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
     op->setK(value);
+}
+
+void ParameterGOMarkovOperator::addMarkov22Markov2Parameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator22 *op = (GOMarkovOperator22*)item->model();
+        for (int i = op->lambda2()->size(); i < op->output()->number(); ++i)
+        {
+            op->lambda2()->push_back(0.0);
+            op->mu2()->push_back(1.0);
+        }
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Markov 2"), this));
+        QPushButton *button = new QPushButton(this);
+        button->setText(tr("Click to Edit..."));
+        this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov22Markov2()));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, button);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov22Markov2()
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator22 *op = (GOMarkovOperator22*)item->model();
+    DialogMatrixInput *dialog = new DialogMatrixInput(this);
+    dialog->setWindowTitle(tr("Operator 22 Markov Status 2"));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("lambda")));
+    dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("mu")));
+    dialog->table()->setRowCount(op->output()->number());
+    dialog->table()->setColumnCount(2);
+    for (int i = 0; i < op->output()->number(); ++i)
+    {
+        dialog->table()->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(op->lambda2()->at(i))));
+        dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->mu2()->at(i))));
+    }
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        for (int i = 0; i < op->output()->number(); ++i)
+        {
+            (*op->lambda2())[i] = dialog->table()->item(i, 0)->text().toDouble();
+            (*op->mu2())[i] = dialog->table()->item(i, 1)->text().toDouble();
+        }
+    }
+    delete dialog;
 }

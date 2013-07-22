@@ -15,3 +15,7 @@ DialogMatrixInput::~DialogMatrixInput()
     delete ui;
 }
 
+QTableWidget* DialogMatrixInput::table() const
+{
+    return this->ui->tableData;
+}

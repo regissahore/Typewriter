@@ -38,9 +38,6 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
             this->getOutputNumber();
         }
         break;
-    case GOMarkovOperatorFactory::Operator_Type_14:
-        this->getInputNumber();
-        break;
     case GOMarkovOperatorFactory::Operator_Type_13A:
     case GOMarkovOperatorFactory::Operator_Type_13B:
         if (this->getInputNumber())
@@ -51,11 +48,19 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
             }
         }
         break;
+    case GOMarkovOperatorFactory::Operator_Type_14:
+        this->getInputNumber();
+        break;
     case GOMarkovOperatorFactory::Operator_Type_15A:
         this->getDualNumber();
         break;
     case GOMarkovOperatorFactory::Operator_Type_15B:
         this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_22:
+    case GOMarkovOperatorFactory::Operator_Type_22A:
+    case GOMarkovOperatorFactory::Operator_Type_22B:
+        this->getOutputNumber();
         break;
     default:
         break;
