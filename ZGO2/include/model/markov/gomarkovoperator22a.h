@@ -1,7 +1,7 @@
 #ifndef GOMARKOVOPERATOR22A_H
 #define GOMARKOVOPERATOR22A_H
 /**
- * 两状态单元。有两故障和与输入信号有停工相关两种模式。
+ * m位n通阀操作符。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "gomarkovoperator22.h"
