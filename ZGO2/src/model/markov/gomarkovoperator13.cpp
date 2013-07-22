@@ -7,7 +7,10 @@
 
 GOMarkovOperator13::GOMarkovOperator13() : GOMarkovOperator()
 {
-    this->_relation = new QVector<QVector<double> >();
+    this->input()->setNumber(3);
+    this->subInput()->setNumber(0);
+    this->output()->setNumber(3);
+    this->_relation = new QVector<QVector<int> >();
 }
 
 GOMarkovOperator13::~GOMarkovOperator13()
@@ -26,15 +29,15 @@ void GOMarkovOperator13::initRelation()
     this->_relation->clear();
     for (int i = 0; i < this->input()->number(); ++i)
     {
-        this->_relation->push_back(QVector<double>());
+        this->_relation->push_back(QVector<int>());
         for (int j = 0; j < this->output()->number(); ++j)
         {
-            (*this->_relation)[i].push_back(0.0);
+            (*this->_relation)[i].push_back(0);
         }
     }
 }
 
-QVector<QVector<double> >* GOMarkovOperator13::relation()
+QVector<QVector<int> > *GOMarkovOperator13::relation()
 {
     return this->_relation;
 }

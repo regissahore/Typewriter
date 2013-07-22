@@ -20,6 +20,8 @@
 #include "gomarkovoperator12.h"
 #include "gomarkovoperator12a.h"
 #include "gomarkovoperator13.h"
+#include "gomarkovoperator13a.h"
+#include "gomarkovoperator13b.h"
 #include "gomarkovoperator14.h"
 #include "gomarkovoperator15.h"
 #include "gomarkovoperator15a.h"
@@ -101,6 +103,12 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         break;
     case Operator_Type_13:
         op = new GOMarkovOperator13();
+        break;
+    case Operator_Type_13A:
+        op = new GOMarkovOperator13A();
+        break;
+    case Operator_Type_13B:
+        op = new GOMarkovOperator13B();
         break;
     case Operator_Type_14:
         op = new GOMarkovOperator14();
@@ -208,6 +216,10 @@ QString GOMarkovOperatorFactory::typeName(const int type)
         return "12A";
     case Operator_Type_13:
         return "13";
+    case Operator_Type_13A:
+        return "13A";
+    case Operator_Type_13B:
+        return "13B";
     case Operator_Type_14:
         return "14";
     case Operator_Type_15:

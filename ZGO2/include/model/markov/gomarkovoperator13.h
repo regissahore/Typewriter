@@ -1,7 +1,7 @@
 #ifndef GOMARKOVOPERATOR13_H
 #define GOMARKOVOPERATOR13_H
 /**
- * The GO Markov operator 13.
+ * 多路输入输出器。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QVector>
@@ -13,14 +13,14 @@ public:
     GOMarkovOperator13();
     virtual ~GOMarkovOperator13();
     void initRelation();
-    QVector<QVector<double> >* relation();
+    QVector<QVector<int> >* relation();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     void saveRelation(QDomDocument &document, QDomElement &root);
     bool tryOpenRelation(QDomElement &root);
 
 protected:
-    QVector<QVector<double> > *_relation;
+    QVector<QVector<int> > *_relation;
 };
 
 #endif // GOMARKOVOPERATOR13_H

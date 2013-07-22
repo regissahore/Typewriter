@@ -144,7 +144,6 @@ HEADERS += \
     include/view/main/dock/toolbox/toolboxgomarkov.h \
     include/view/main/dock/parameter/parametergomarkovcommoncause.h \
     include/view/dialog/dialogmatrixinput.h \
-    include/view/dialog/dialog13ainput.h \
     include/model/markov/gomarkovoperator1.h \
     include/model/markov/gomarkovoperator2.h \
     include/model/markov/gomarkovoperator3.h \
@@ -183,7 +182,9 @@ HEADERS += \
     include/model/markov/gomarkovoperator27.h \
     include/model/markov/gomarkovoperator28.h \
     include/model/markov/gomarkovoperator29.h \
-    include/model/markov/gomarkovoperator12a.h
+    include/model/markov/gomarkovoperator12a.h \
+    include/model/markov/gomarkovoperator13a.h \
+    include/model/markov/gomarkovoperator13b.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -293,7 +294,6 @@ SOURCES += \
     src/view/main/dock/toolbox/toolboxgomarkov.cpp \
     src/view/main/dock/parameter/parametergomarkovcommoncause.cpp \
     src/view/dialog/dialogmatrixinput.cpp \
-    src/view/dialog/dialog13ainput.cpp \
     src/model/markov/gomarkovoperator1.cpp \
     src/model/markov/gomarkovoperator2.cpp \
     src/model/markov/gomarkovoperator3.cpp \
@@ -332,7 +332,9 @@ SOURCES += \
     src/model/markov/gomarkovoperator27.cpp \
     src/model/markov/gomarkovoperator28.cpp \
     src/model/markov/gomarkovoperator29.cpp \
-    src/model/markov/gomarkovoperator12a.cpp
+    src/model/markov/gomarkovoperator12a.cpp \
+    src/model/markov/gomarkovoperator13a.cpp \
+    src/model/markov/gomarkovoperator13b.cpp
 
 RESOURCES += \
     resource.qrc

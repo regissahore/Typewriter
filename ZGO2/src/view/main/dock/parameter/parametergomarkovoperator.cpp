@@ -16,6 +16,7 @@
 #include "dialog13ainput.h"
 #include "gomarkovoperator1.h"
 #include "gomarkovoperator11.h"
+#include "gomarkovoperator13.h"
 #include "gomarkovoperator22.h"
 #include "gomarkovoperator23.h"
 #include "dialogmatrixinput.h"
@@ -53,6 +54,11 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkov11KParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_12A:
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_13:
+    case GOMarkovOperatorFactory::Operator_Type_13A:
+    case GOMarkovOperatorFactory::Operator_Type_13B:
+        this->addMarkov13RelationParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_15A:
         this->addMarkovParameter();
@@ -394,6 +400,50 @@ void ParameterGOMarkovOperator::setItemMarkov23Alpha()
         for (int i = 0; i < op->input()->number(); ++i)
         {
             (*op->alpha())[i] = dialog->table()->item(i, 0)->text().toDouble();
+        }
+    }
+    delete dialog;
+}
+
+void ParameterGOMarkovOperator::addMarkov13RelationParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator13 *op = (GOMarkovOperator13*)item->model();
+        op->initRelation();
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Relation"), this));
+        QPushButton *button = new QPushButton(this);
+        button->setText(tr("Click to Edit..."));
+        this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov13Relation()));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, button);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov13Relation()
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator13 *op = (GOMarkovOperator13*)item->model();
+    DialogMatrixInput *dialog = new DialogMatrixInput(this);
+    dialog->setWindowTitle(tr("Operator 13 Relation"));
+    dialog->table()->setRowCount(op->input()->number());
+    dialog->table()->setColumnCount(op->output()->number());
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        for (int j = 0; j < op->output()->number(); ++j)
+        {
+            dialog->table()->setItem(i, j, new QTableWidgetItem(QString("%1").arg(op->relation()->at(i).at(j))));
+        }
+    }
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        for (int i = 0; i < op->input()->number(); ++i)
+        {
+            for (int j = 0; j < op->output()->number(); ++j)
+            {
+                (*op->relation())[i][j] = dialog->table()->item(i, j)->text().toDouble();
+            }
         }
     }
     delete dialog;
