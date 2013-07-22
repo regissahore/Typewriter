@@ -29,6 +29,9 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
     case GOMarkovOperatorFactory::Operator_Type_11:
         this->getInputNumber();
         break;
+    case GOMarkovOperatorFactory::Operator_Type_12A:
+        this->getOutputNumber();
+        break;
     case GOMarkovOperatorFactory::Operator_Type_13:
         if (this->getInputNumber())
         {

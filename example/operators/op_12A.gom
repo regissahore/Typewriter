@@ -1,0 +1,56 @@
+<GO_Project support="ZHG">
+    <scene>
+        <signal id="3">
+            <io id="3" index="0" type="2"/>
+            <io id="4" index="0" type="0"/>
+        </signal>
+        <operator x="-176" y="-103" type="15">
+            <model input="1" subInput="0" output="2" id="4" breakdown="0" type="15">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0" repair="1"/>
+            </model>
+        </operator>
+        <signal id="2">
+            <io id="2" index="0" type="2"/>
+            <io id="3" index="1" type="0"/>
+        </signal>
+        <signal id="1">
+            <io id="1" index="0" type="2"/>
+            <io id="3" index="0" type="0"/>
+        </signal>
+        <operator x="-368" y="-103" type="22">
+            <model input="2" subInput="0" output="1" id="3" breakdown="0" type="22">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0" repair="1"/>
+            </model>
+        </operator>
+        <operator x="-556" y="-69" type="4">
+            <model input="0" subInput="0" output="1" id="2" breakdown="0" type="4">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+        <operator x="-556" y="-141" type="4">
+            <model input="0" subInput="0" output="1" id="1" breakdown="0" type="4">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+    </scene>
+</GO_Project>

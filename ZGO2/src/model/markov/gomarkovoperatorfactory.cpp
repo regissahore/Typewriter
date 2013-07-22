@@ -18,6 +18,7 @@
 #include "gomarkovoperator10.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator12.h"
+#include "gomarkovoperator12a.h"
 #include "gomarkovoperator13.h"
 #include "gomarkovoperator14.h"
 #include "gomarkovoperator15.h"
@@ -95,6 +96,9 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     case Operator_Type_12:
         op = new GOMarkovOperator12();
         break;
+    case Operator_Type_12A:
+        op = new GOMarkovOperator12A();
+        break;
     case Operator_Type_13:
         op = new GOMarkovOperator13();
         break;
@@ -164,139 +168,6 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     }
     op->setType(type);
     return op;
-    /*GOMarkovOperator *op;
-    switch (type)
-    {
-    case Operator_Type_9_A1:
-    case Operator_Type_9_A2:
-        op = new GOMarkovOperator9A();
-        break;
-    case Operator_Type_13_A:
-    case Operator_Type_13_B:
-        op = new GOMarkovOperator13();
-        break;
-    default:
-        op = new GOMarkovOperator();
-        break;
-    }
-    op->setType(type);
-    switch (type)
-    {
-    case Operator_Type_1:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_2:
-        op->input()->setNumber(2);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        op->status()->setNumber(0);
-        break;
-    case Operator_Type_3:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_4:
-        op->input()->setNumber(0);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(3);
-        break;
-    case Operator_Type_5:
-        op->input()->setNumber(0);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_6:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(1);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_7:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(1);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_8:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_9:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(1);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_10:
-        op->input()->setNumber(2);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        op->status()->setNumber(0);
-        break;
-    case Operator_Type_11:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        op->status()->setNumber(0);
-        break;
-    case Operator_Type_12:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(2);
-        break;
-    case Operator_Type_13:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(3);
-        break;
-    case Operator_Type_14:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_15:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_16:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(1);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_17:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(1);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_9_A1:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_9_A2:
-        op->input()->setNumber(1);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(1);
-        break;
-    case Operator_Type_13_A:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(3);
-        break;
-    case Operator_Type_13_B:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(3);
-        break;
-    case Operator_Type_15_A:
-        op->input()->setNumber(3);
-        op->subInput()->setNumber(0);
-        op->output()->setNumber(3);
-        break;
-    }
-    return op;*/
 }
 
 QString GOMarkovOperatorFactory::typeName(const int type)
@@ -333,6 +204,8 @@ QString GOMarkovOperatorFactory::typeName(const int type)
         return "11";
     case Operator_Type_12:
         return "12";
+    case Operator_Type_12A:
+        return "12A";
     case Operator_Type_13:
         return "13";
     case Operator_Type_14:
@@ -386,10 +259,41 @@ bool GOMarkovOperatorFactory::isLogical(const int type)
     switch (type)
     {
     case Operator_Type_2:
-        return true;
     case Operator_Type_10:
-        return true;
     case Operator_Type_11:
+        return true;
+    }
+    return false;
+}
+
+bool GOMarkovOperatorFactory::isCommonPossible(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_2:
+    case Operator_Type_6:
+    case Operator_Type_7:
+    case Operator_Type_10:
+    case Operator_Type_11:
+    case Operator_Type_13A:
+    case Operator_Type_13B:
+    case Operator_Type_16:
+    case Operator_Type_17:
+    case Operator_Type_20:
+    case Operator_Type_22A:
+    case Operator_Type_22B:
+    case Operator_Type_23:
+        return true;
+    }
+    return false;
+}
+
+bool GOMarkovOperatorFactory::isVectorOutput(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_15B:
+    case Operator_Type_19:
         return true;
     }
     return false;

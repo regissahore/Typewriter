@@ -182,7 +182,8 @@ HEADERS += \
     include/model/markov/gomarkovoperator26.h \
     include/model/markov/gomarkovoperator27.h \
     include/model/markov/gomarkovoperator28.h \
-    include/model/markov/gomarkovoperator29.h
+    include/model/markov/gomarkovoperator29.h \
+    include/model/markov/gomarkovoperator12a.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -330,7 +331,8 @@ SOURCES += \
     src/model/markov/gomarkovoperator26.cpp \
     src/model/markov/gomarkovoperator27.cpp \
     src/model/markov/gomarkovoperator28.cpp \
-    src/model/markov/gomarkovoperator29.cpp
+    src/model/markov/gomarkovoperator29.cpp \
+    src/model/markov/gomarkovoperator12a.cpp
 
 RESOURCES += \
     resource.qrc
