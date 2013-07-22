@@ -17,6 +17,7 @@
 #include "gomarkovoperator1.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator22.h"
+#include "gomarkovoperator23.h"
 #include "dialogmatrixinput.h"
 
 ParameterGOMarkovOperator::ParameterGOMarkovOperator(QWidget *parent) : ParameterGOOperator(parent)
@@ -76,6 +77,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_22B:
         this->addMarkovParameter();
         this->addMarkov22Markov2Parameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_23:
+        this->addMarkov23AlphaParameter();
         break;
     default:
         break;
@@ -348,6 +352,48 @@ void ParameterGOMarkovOperator::setItemMarkov22Markov2()
         {
             (*op->lambda2())[i] = dialog->table()->item(i, 0)->text().toDouble();
             (*op->mu2())[i] = dialog->table()->item(i, 1)->text().toDouble();
+        }
+    }
+    delete dialog;
+}
+
+void ParameterGOMarkovOperator::addMarkov23AlphaParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator23 *op = (GOMarkovOperator23*)item->model();
+        for (int i = op->alpha()->size(); i < op->input()->number(); ++i)
+        {
+            op->alpha()->push_back(0.0);
+        }
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Alpha"), this));
+        QPushButton *button = new QPushButton(this);
+        button->setText(tr("Click to Edit..."));
+        this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov23Alpha()));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, button);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov23Alpha()
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator23 *op = (GOMarkovOperator23*)item->model();
+    DialogMatrixInput *dialog = new DialogMatrixInput(this);
+    dialog->setWindowTitle(tr("Operator 23 Alpha"));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("alpha")));
+    dialog->table()->setRowCount(op->input()->number());
+    dialog->table()->setColumnCount(1);
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        dialog->table()->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(op->alpha()->at(i))));
+    }
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        for (int i = 0; i < op->input()->number(); ++i)
+        {
+            (*op->alpha())[i] = dialog->table()->item(i, 0)->text().toDouble();
         }
     }
     delete dialog;

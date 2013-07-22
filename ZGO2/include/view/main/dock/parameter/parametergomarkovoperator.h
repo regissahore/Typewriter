@@ -36,6 +36,7 @@ protected:
     void addMarkov1Status2Parameter();
     void addMarkov11KParameter();
     void addMarkov22Markov2Parameter();
+    void addMarkov23AlphaParameter();
 
 protected slots:
     void setItemFrequencyBreakdown(double value);
@@ -48,6 +49,7 @@ protected slots:
     void setItemMarkov1RepairTime2(double value);
     void setItemMarkov11K(int value);
     void setItemMarkov22Markov2();
+    void setItemMarkov23Alpha();
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H
