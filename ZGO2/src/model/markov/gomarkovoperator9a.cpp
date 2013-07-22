@@ -7,6 +7,9 @@
 
 GOMarkovOperator9A::GOMarkovOperator9A() : GOMarkovOperator()
 {
+    this->input()->setNumber(1);
+    this->subInput()->setNumber(0);
+    this->output()->setNumber(1);
     this->_feedbackStatus = new GOMarkovStatus();
 }
 
