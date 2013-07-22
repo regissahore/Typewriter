@@ -103,10 +103,10 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A1:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A1:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9A1);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A2:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A2:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_9A2);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
@@ -118,16 +118,16 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_12);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12A:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_12A);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13A:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13A);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13B:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_13B);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_14:
@@ -136,10 +136,10 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_15);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15A:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_15A);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15B:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_15B);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_16:
@@ -151,7 +151,7 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_18);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18A:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_18A);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_19:
@@ -166,10 +166,10 @@ void ToolGOMarkovOperator::setType(const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_22);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22A:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_22A);
         break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22B:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_22B);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_23:

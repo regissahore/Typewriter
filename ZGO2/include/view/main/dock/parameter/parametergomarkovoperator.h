@@ -40,6 +40,7 @@ protected:
     void addMarkov9FeedbackParameter();
     void addMarkov11KParameter();
     void addMarkov13RelationParameter();
+    void addMarkov18ABackupParameter();
     void addMarkov22Markov2Parameter();
     void addMarkov23AlphaParameter();
 
@@ -57,6 +58,7 @@ protected slots:
     void setItemMarkov9FeedbackRepairTime(double value);
     void setItemMarkov11K(int value);
     void setItemMarkov13Relation();
+    void setItemMarkov18ABackup(double value);
     void setItemMarkov22Markov2();
     void setItemMarkov23Alpha();
 };

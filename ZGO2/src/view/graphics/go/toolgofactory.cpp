@@ -73,30 +73,30 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_7:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_8:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A1:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_A2:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A1:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A2:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12A:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_A:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13B:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_14:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15_A:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_15B:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_16:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_17:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18_A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_18A:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_19:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_20:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_21:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22_A:
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22_B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22A:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_22B:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_23:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_24:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_25:

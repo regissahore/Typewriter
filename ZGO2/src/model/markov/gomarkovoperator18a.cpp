@@ -9,132 +9,80 @@
 
 GOMarkovOperator18A::GOMarkovOperator18A() : GOMarkovOperator()
 {
-    this->input()->setNumber(1);
+    this->input()->setNumber(2);
     this->subInput()->setNumber(0);
     this->output()->setNumber(1);
-    this->setDualBreakdown(false);
-    this->setBreakdownCorrelate(false);
-    this->_markovStatus2 = new GOMarkovStatus();
+    this->setBackup(0.0);
 }
 
 GOMarkovOperator18A::~GOMarkovOperator18A()
 {
     this->GOMarkovOperator::~GOMarkovOperator();
-    delete this->_markovStatus2;
 }
 
-bool GOMarkovOperator18A::isDualBreakdown() const
+double GOMarkovOperator18A::backup() const
 {
-    return this->_isDualBreakdown;
+    return this->_backup;
 }
 
-bool GOMarkovOperator18A::isBreakdownCorrelate() const
+void GOMarkovOperator18A::setBackup(double value)
 {
-    return this->_isBreakdownCorrelate;
-}
-
-void GOMarkovOperator18A::setDualBreakdown(bool value)
-{
-    this->_isDualBreakdown = value;
-}
-
-void GOMarkovOperator18A::setBreakdownCorrelate(bool value)
-{
-    this->_isBreakdownCorrelate = value;
-}
-
-GOMarkovStatus* GOMarkovOperator18A::markovStatus2() const
-{
-    return this->_markovStatus2;
-}
-
-void GOMarkovOperator18A::initMarkovStatus(double time, double c12)
-{
-    if (this->isDualBreakdown())
-    {
-        double lamda1 = this->markovStatus()->frequencyBreakdown();
-        double miu1 = this->markovStatus()->frequencyRepair();
-        double lamda2 = this->markovStatus2()->frequencyBreakdown();
-        double miu2 = this->markovStatus2()->frequencyRepair();
-        double s1 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
-        double s2 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) - sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
-        double p1 = miu1 / s1 * miu2 / s2 +
-                (s1 * s1 + (miu1 + miu2) * s1 + miu1 * miu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
-                (s2 * s2 + (miu1 + miu2) * s2 + miu1 * miu2) / (s2 * (s2 - s1)) * exp(s2 * time);
-        if (p1 > 1.0)
-        {
-            p1 = 1.0;
-        }
-        double p2 = 1 - p1;
-        this->status()->setProbability(1, p1);
-        this->status()->setProbability(2, p2);
-    }
-    else
-    {
-        this->GOMarkovOperator::initMarkovStatus(time, c12);
-    }
+    this->_backup = value;
 }
 
 void GOMarkovOperator18A::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
-    if (this->isBreakdownCorrelate())
+    GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
+    GOMarkovStatus *status2 = this->getPrevMarkovStatus(1);
+    double PS1 = status1->probabilityNormal();
+    double PS2 = status2->probabilityNormal();
+    double lambdaS1 = status1->frequencyBreakdown();
+    double muS1 = status1->frequencyRepair();
+    double muS2 = status2->frequencyRepair();
+    double P0 = PS1 * this->backup();
+    double PR = PS1 + PS2;
+    if (PR > 1.0)
     {
-        this->calcOutputMarkovStatusCorrelate();
+        PR = 1.0;
     }
-    else
-    {
-        this->calcOutputMarkovStatusNormal();
-    }
+    double muR = muS1 + muS2;
+    double lambdaR = (lambdaS1 * (PS1 - P0) + lambdaS1 * PS2) / PR;
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator18A::calcOutputMarkovStatusNormal()
+void GOMarkovOperator18A::calcCommonOutputMarkovStatus(QVector<double> PR)
 {
-    GOSignal *signal = this->input()->signal()->at(0);
-    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
-    int index = prev->output()->getSignalIndex(signal);
-    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(index);
-    double PS = prevStatus->probabilityNormal();
-    double PC = this->markovStatus()->probabilityNormal();
-    double PR = PS * PC;
-    double QR = 1 - PR;
-    double lamdaS = prevStatus->frequencyBreakdown();
-    double lamdaC = this->markovStatus()->frequencyBreakdown();
-    double lamdaR = lamdaS + lamdaC;
-    double miuR = lamdaR * PR / QR;
-    this->markovOutputStatus()->clear();
-    GOMarkovStatus *outputStatus = new GOMarkovStatus();
-    outputStatus->setProbabilityNormal(PR);
-    outputStatus->setFrequencyBreakdown(lamdaR);
-    outputStatus->setFrequencyRepair(miuR);
-    this->markovOutputStatus()->push_back(outputStatus);
+    GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
+    GOMarkovStatus *status2 = this->getPrevMarkovStatus(1);
+    double PS1 = status1->probabilityNormal();
+    double PS2 = status2->probabilityNormal();
+    double lambdaS1 = status1->frequencyBreakdown();
+    double muS1 = status1->frequencyRepair();
+    double muS2 = status2->frequencyRepair();
+    double P0 = PS1 * this->backup();
+    double muR = muS1 + muS2;
+    double lambdaR = (lambdaS1 * (PS1 - P0) + lambdaS1 * PS2) / PR[0];
+    this->markovOutputStatus()->at(0)->setProbabilityNormal(PR[0]);
+    this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator18A::calcOutputMarkovStatusCorrelate()
+double GOMarkovOperator18A::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
 {
-    GOSignal *signal = this->input()->signal()->at(0);
-    GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(this);
-    int index = prev->output()->getSignalIndex(signal);
-    GOMarkovStatus *prevStatus = prev->markovOutputStatus()->at(index);
-    double PS = prevStatus->probabilityNormal();
-    double QS = prevStatus->probabilityBreakdown();
-    double PC = this->markovStatus()->probabilityNormal();
-    double QC = this->markovStatus()->probabilityBreakdown();
-    double G1 = PS * PC;
-    double G2 = PS * QC + QS * PC;
-    double PR = G1 / (G1 + G2);
-    double lamdaS = prevStatus->frequencyBreakdown();
-    double miuS = prevStatus->frequencyRepair();
-    double lamdaC = this->markovStatus()->frequencyBreakdown();
-    double miuC = this->markovStatus()->frequencyRepair();
-    double lamdaR = lamdaS + lamdaC;
-    double miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
-    this->markovOutputStatus()->clear();
-    GOMarkovStatus *outputStatus = new GOMarkovStatus();
-    outputStatus->setProbabilityNormal(PR);
-    outputStatus->setFrequencyBreakdown(lamdaR);
-    outputStatus->setFrequencyRepair(miuR);
-    this->markovOutputStatus()->push_back(outputStatus);
+    Q_UNUSED(time);
+    Q_UNUSED(subInput);
+    Q_UNUSED(index);
+    double PS1 = input[0];
+    double PS2 = input[1];
+    double PR = PS1 + PS2;
+    if (PR > 1.0)
+    {
+        PR = 1.0;
+    }
+    return PR;
 }
 
 void GOMarkovOperator18A::save(QDomDocument &document, QDomElement &root)
@@ -145,11 +93,10 @@ void GOMarkovOperator18A::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
+    element.setAttribute("backup", this->backup());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
-    this->markovStatus2()->save(document, element);
-    this->parameter()->save(document, element);
 }
 
 bool GOMarkovOperator18A::tryOpen(QDomElement &root)
@@ -163,6 +110,7 @@ bool GOMarkovOperator18A::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
+    this->setBackup(root.attribute("backup").toDouble());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {
@@ -170,16 +118,6 @@ bool GOMarkovOperator18A::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->markovStatus2()->tryOpen(element))
-    {
-        return false;
-    }
-    element = element.nextSiblingElement();
-    if (!this->parameter()->tryOpen(element))
     {
         return false;
     }

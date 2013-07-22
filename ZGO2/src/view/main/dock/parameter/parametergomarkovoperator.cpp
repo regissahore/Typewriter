@@ -17,6 +17,7 @@
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator13.h"
+#include "gomarkovoperator18a.h"
 #include "gomarkovoperator22.h"
 #include "gomarkovoperator23.h"
 #include "dialogmatrixinput.h"
@@ -77,6 +78,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_17:
         this->addMarkovParameter();
         this->addMarkovBreakdownCorrelateParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_18A:
+        this->addMarkov18ABackupParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_19:
         this->addMarkovParameter();
@@ -517,4 +521,31 @@ void ParameterGOMarkovOperator::setItemMarkov9FeedbackRepairTime(double value)
     GOMarkovOperator9A *model = (GOMarkovOperator9A*)item->model();
     model->markovFeedbackStatus()->setRepairTime(1.0 / value);
     this->_spinBox9FeedbackFrequencyRepair->setValue(1.0 / value);
+}
+
+void ParameterGOMarkovOperator::addMarkov18ABackupParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator18A *model = (GOMarkovOperator18A*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Backup Probability"), this));
+        QDoubleSpinBox *spin = new QDoubleSpinBox(this);
+        spin->setMinimum(0.0);
+        spin->setMaximum(1.0);
+        spin->setDecimals(6);
+        spin->setSingleStep(0.01);
+        spin->setValue(model->backup());
+        this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18ABackup(double)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov18ABackup(double value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator18A *model = (GOMarkovOperator18A*)item->model();
+    model->setBackup(value);
 }
