@@ -18,6 +18,7 @@
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator13.h"
 #include "gomarkovoperator18a.h"
+#include "gomarkovoperator19.h"
 #include "gomarkovoperator22.h"
 #include "gomarkovoperator23.h"
 #include "dialogmatrixinput.h"
@@ -49,6 +50,7 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkovBreakdownCorrelateParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_9A1:
+        this->addMarkovBreakdownCorrelateParameter();
     case GOMarkovOperatorFactory::Operator_Type_9A2:
         this->addMarkovParameter();
         this->addMarkov9FeedbackParameter();
@@ -84,6 +86,8 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     case GOMarkovOperatorFactory::Operator_Type_19:
         this->addMarkovParameter();
+        this->addMarkov19DeltaNumParameter();
+        this->addMarkov19DeltaParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_20:
         break;
@@ -548,4 +552,80 @@ void ParameterGOMarkovOperator::setItemMarkov18ABackup(double value)
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator18A *model = (GOMarkovOperator18A*)item->model();
     model->setBackup(value);
+}
+
+void ParameterGOMarkovOperator::addMarkov19DeltaNumParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator19 *model = (GOMarkovOperator19*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta Number"), this));
+        QSpinBox *spin = new QSpinBox(this);
+        spin->setMinimum(1);
+        spin->setMaximum(0x7fffffff);
+        spin->setValue(model->deltaNum());
+        this->connect(spin, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov19DeltaNum(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov19DeltaNum(int value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
+    op->setDeltaNum(value);
+}
+
+void ParameterGOMarkovOperator::addMarkov19DeltaParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
+        for (int i = op->a()->size(); i < op->deltaNum(); ++i)
+        {
+            op->a()->push_back(1);
+            op->delta()->push_back(1.0);
+        }
+        while (op->deltaNum() < op->a()->size())
+        {
+            op->a()->pop_back();
+            op->delta()->pop_back();
+        }
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta"), this));
+        QPushButton *button = new QPushButton(this);
+        button->setText(tr("Click to Edit..."));
+        this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov19Delta()));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, button);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov19Delta()
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
+    DialogMatrixInput *dialog = new DialogMatrixInput(this);
+    dialog->setWindowTitle(tr("Operator 19 Delta"));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("i")));
+    dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("delta")));
+    dialog->table()->setRowCount(op->deltaNum());
+    dialog->table()->setColumnCount(2);
+    for (int i = 0; i < op->deltaNum(); ++i)
+    {
+        dialog->table()->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(op->a()->at(i))));
+        dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
+    }
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        for (int i = 0; i < op->deltaNum(); ++i)
+        {
+            (*op->a())[i] = dialog->table()->item(i, 0)->text().toInt();
+            (*op->delta())[i] = dialog->table()->item(i, 1)->text().toDouble();
+        }
+    }
+    delete dialog;
 }

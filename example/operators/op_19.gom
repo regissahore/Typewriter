@@ -1,15 +1,22 @@
 <GO_Project support="ZHG">
     <scene>
-        <signal id="4">
-            <io type="2" id="4" index="0"/>
-            <io type="0" id="5" index="0"/>
-        </signal>
-        <signal id="5">
-            <io type="2" id="3" index="0"/>
-            <io type="0" id="4" index="2"/>
-        </signal>
-        <operator type="4" x="-486" y="-23">
-            <model input="0" subInput="0" breakdown="0" type="4" output="1" id="3">
+        <operator x="-162" y="-79" type="27">
+            <model id="5" output="2" breakdown="0" delta="3" type="27" subInput="0" input="1">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+                <markov2>
+                    <node delta="0.2" a="1"/>
+                    <node delta="0.3" a="2"/>
+                    <node delta="0.4" a="3"/>
+                </markov2>
+            </model>
+        </operator>
+        <operator x="-486" y="-138" type="4">
+            <model id="1" output="1" breakdown="0" type="4" subInput="0" input="0">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="1"/>
@@ -18,16 +25,18 @@
                 <status breakdown="0.5" repair="0.8"/>
             </model>
         </operator>
-        <signal id="2">
-            <io type="2" id="2" index="0"/>
-            <io type="0" id="4" index="1"/>
-        </signal>
-        <signal id="1">
-            <io type="2" id="1" index="0"/>
-            <io type="0" id="4" index="0"/>
-        </signal>
-        <operator type="22" x="-314" y="-79">
-            <model input="3" subInput="0" breakdown="0" type="22" output="1" id="4">
+        <operator x="-486" y="-80" type="4">
+            <model id="2" output="1" breakdown="0" type="4" subInput="0" input="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status breakdown="0.5" repair="0.8"/>
+            </model>
+        </operator>
+        <operator x="-314" y="-79" type="22">
+            <model id="4" output="1" breakdown="0" type="22" subInput="0" input="3">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="1"/>
@@ -36,8 +45,16 @@
                 <status breakdown="0" repair="1"/>
             </model>
         </operator>
-        <operator type="4" x="-486" y="-80">
-            <model input="0" subInput="0" breakdown="0" type="4" output="1" id="2">
+        <signal id="1">
+            <io id="1" type="2" index="0"/>
+            <io id="4" type="0" index="0"/>
+        </signal>
+        <signal id="2">
+            <io id="2" type="2" index="0"/>
+            <io id="4" type="0" index="1"/>
+        </signal>
+        <operator x="-486" y="-23" type="4">
+            <model id="3" output="1" breakdown="0" type="4" subInput="0" input="0">
                 <status>
                     <status_0 description="" probability="0"/>
                     <status_1 description="" probability="1"/>
@@ -46,25 +63,13 @@
                 <status breakdown="0.5" repair="0.8"/>
             </model>
         </operator>
-        <operator type="4" x="-486" y="-138">
-            <model input="0" subInput="0" breakdown="0" type="4" output="1" id="1">
-                <status>
-                    <status_0 description="" probability="0"/>
-                    <status_1 description="" probability="1"/>
-                    <status_2 description="" probability="0"/>
-                </status>
-                <status breakdown="0.5" repair="0.8"/>
-            </model>
-        </operator>
-        <operator type="27" x="-162" y="-79">
-            <model input="1" subInput="0" breakdown="0" type="27" output="2" id="5">
-                <status>
-                    <status_0 description="" probability="0"/>
-                    <status_1 description="" probability="1"/>
-                    <status_2 description="" probability="0"/>
-                </status>
-                <status breakdown="0.5" repair="0.8"/>
-            </model>
-        </operator>
+        <signal id="5">
+            <io id="3" type="2" index="0"/>
+            <io id="4" type="0" index="2"/>
+        </signal>
+        <signal id="4">
+            <io id="4" type="2" index="0"/>
+            <io id="5" type="0" index="0"/>
+        </signal>
     </scene>
 </GO_Project>
