@@ -38,8 +38,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-413</y>
-        <width>248</width>
+        <y>-172</y>
+        <width>238</width>
         <height>965</height>
        </rect>
       </property>
@@ -730,7 +730,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="icon">
           <iconset resource="../resource.qrc">
-           <normaloff>:/icon/resource/image/tool_op12.png</normaloff>:/icon/resource/image/tool_op12.png</iconset>
+           <normaloff>:/icon/resource/image/tool_op12A.png</normaloff>:/icon/resource/image/tool_op12A.png</iconset>
          </property>
          <property name="iconSize">
           <size>

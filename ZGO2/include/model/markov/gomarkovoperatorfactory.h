@@ -58,6 +58,8 @@ public:
     static QString typeName(const int type);
     static bool isLogical(const int type);
     static bool isCommonPossible(const int type);
+    static bool isVectorInput(const int type);
+    static bool isVectorSubInput(const int type);
     static bool isVectorOutput(const int type);
 };
 #endif // GOMARKOVOPERATORFACTORY_H

@@ -46,7 +46,6 @@ double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double
 
 void GOMarkovOperator6::calcCommonOutputMarkovStatus(QVector<double> PR)
 {
-    Q_UNUSED(time);
     if (this->isBreakdownCorrelate())
     {
         this->calcCommonOutputMarkovStatusCorrelate(PR[0]);

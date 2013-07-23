@@ -60,7 +60,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     for (int i = 0; i < list.size(); ++i)
     {
         QVector<GOGraph::Output> commonList;
-        if (list[i]->input()->number() + list[i]->subInput()->number() > 1)
+        if (GOMarkovOperatorFactory::isCommonPossible(list[i]->TypedItem::type()))
         {
             commonList = this->getCommonSignalList(list[i]);
         }

@@ -300,6 +300,28 @@ bool GOMarkovOperatorFactory::isCommonPossible(const int type)
     return false;
 }
 
+bool GOMarkovOperatorFactory::isVectorInput(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_19:
+    case Operator_Type_12A:
+        return true;
+    }
+    return false;
+}
+
+bool GOMarkovOperatorFactory::isVectorSubInput(const int type)
+{
+    switch (type)
+    {
+    case Operator_Type_22A:
+    case Operator_Type_22B:
+        return true;
+    }
+    return false;
+}
+
 bool GOMarkovOperatorFactory::isVectorOutput(const int type)
 {
     switch (type)
