@@ -19,6 +19,16 @@ protected:
     double calcTempOutputMarkovStatusNormal(double time);
     void calcOutputMarkovStatusBreakdown(double time);
     double calcTempOutputMarkovStatusBreakdown(double time);
+
+private:
+    double calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2);
+    double func0(double t, double x0, double x1, double x2, double lambda1, double lambda2, double mu1, double mu2);
+    double func1(double t, double x0, double x1, double lambda1, double mu1);
+    double func2(double t, double x0, double x2, double lambda2, double mu2);
+    double _rk0;
+    double _rk1;
+    double _rk2;
+    double _rkt;
 };
 
 #endif // GOMARKOVOPERATOR1_H
