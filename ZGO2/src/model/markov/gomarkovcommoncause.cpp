@@ -75,8 +75,9 @@ double GOMarkovCommonCause::calcCommonCause(double time) const
         miuSum += op->markovStatus()->frequencyRepair();
     }
     double c = this->commonCause();
-    double c12 = miuSum / (c + miuSum) + (1 - miuSum / (c + miuSum)) * exp(-(c + miuSum) * time);
-    return 1 - c12;
+    //double c12 = c / (c + miuSum) + (gammaC - c / (c + miuSum)) * exp(-(c + miuSum) * time);
+    //return 1 - c12;
+    return 0.0;
 }
 
 bool GOMarkovCommonCause::containOperator(GOMarkovOperator* op) const

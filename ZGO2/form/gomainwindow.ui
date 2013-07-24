@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -57,16 +57,6 @@
     <addaction name="actionFind_Path"/>
     <addaction name="actionFind_Cut"/>
    </widget>
-   <widget class="QMenu" name="menuLanguage_L">
-    <property name="enabled">
-     <bool>false</bool>
-    </property>
-    <property name="title">
-     <string>Language(&amp;L)</string>
-    </property>
-    <addaction name="actionChinese_Simplified"/>
-    <addaction name="actionEnglish"/>
-   </widget>
    <widget class="QMenu" name="menuHelp_H">
     <property name="title">
      <string>Help(&amp;H)</string>
@@ -81,10 +71,17 @@
     <addaction name="actionTool_DockWidget"/>
     <addaction name="actionParameter_DockWidget"/>
    </widget>
+   <widget class="QMenu" name="menuEdit_E">
+    <property name="title">
+     <string>Edit(&amp;E)</string>
+    </property>
+    <addaction name="actionCopy_C"/>
+    <addaction name="actionDelete_D"/>
+   </widget>
    <addaction name="menuFile_F"/>
+   <addaction name="menuEdit_E"/>
    <addaction name="menuView_V"/>
    <addaction name="menuAnalysis_A"/>
-   <addaction name="menuLanguage_L"/>
    <addaction name="menuHelp_H"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -135,6 +132,10 @@
    </property>
   </action>
   <action name="actionNew_Markov">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/new_markov.png</normaloff>:/icon/resource/image/new_markov.png</iconset>
+   </property>
    <property name="text">
     <string>New Markov</string>
    </property>
@@ -319,6 +320,29 @@
    </property>
    <property name="text">
     <string>Analysis Toolbar</string>
+   </property>
+  </action>
+  <action name="actionCopy_C">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/copy.png</normaloff>:/icon/resource/image/copy.png</iconset>
+   </property>
+   <property name="text">
+    <string>Copy(&amp;C)</string>
+   </property>
+  </action>
+  <action name="actionDelete_D">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/delete.png</normaloff>:/icon/resource/image/delete.png</iconset>
+   </property>
+   <property name="text">
+    <string>Delete(&amp;D)</string>
+   </property>
+  </action>
+  <action name="actionDelete_All">
+   <property name="text">
+    <string>Delete All</string>
    </property>
   </action>
  </widget>

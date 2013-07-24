@@ -102,6 +102,7 @@ void GOMainWindow::initDock()
 void GOMainWindow::initToolBar()
 {
     this->ui->toolBarFile->addAction(this->ui->actionNew);
+    this->ui->toolBarFile->addAction(this->ui->actionNew_Markov);
     this->ui->toolBarFile->addAction(this->ui->actionOpen_O);
     this->ui->toolBarFile->addAction(this->ui->actionClose_C);
     this->ui->toolBarFile->addSeparator();
@@ -112,6 +113,9 @@ void GOMainWindow::initToolBar()
     this->ui->toolBarAnalysis->addAction(this->ui->actionAnalysis_Probability);
     this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Path);
     this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Cut);
+    this->ui->toolBarAnalysis->addSeparator();
+    this->ui->toolBarAnalysis->addAction((this->ui->actionCopy_C));
+    this->ui->toolBarAnalysis->addAction((this->ui->actionDelete_D));
 }
 
 void GOMainWindow::on_actionNew_triggered()
