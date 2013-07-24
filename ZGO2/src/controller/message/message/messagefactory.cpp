@@ -55,6 +55,16 @@ QString MessageFactory::getMessageTypeName(int messageType)
         return QObject::tr("TYPE_EDITOR_ANALYSIS");
     case TYPE_TOOL_SELECTION:
         return QObject::tr("TYPE_TOOL_SELECTION");
+    case TYPE_OUTPUT_CLEAR:
+        return QObject::tr("TYPE_OUTPUT_CLEAR");
+    case TYPE_OUTPUT_TEXT:
+        return QObject::tr("TYPE_OUTPUT_TEXT");
+    case TYPE_OUTPUT_SAMELINE_TEXT:
+        return QObject::tr("TYPE_OUTPUT_SAMELINE_TEXT");
+    case TYPE_OUTPUT_CORRECT:
+        return QObject::tr("TYPE_OUTPUT_CORRECT");
+    case TYPE_OUTPUT_ERROR:
+        return QObject::tr("TYPE_OUTPUT_ERROR");
     default:
         return QObject::tr("TYPE_UNDEFINED");
     }

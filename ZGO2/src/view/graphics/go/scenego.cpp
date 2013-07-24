@@ -284,6 +284,7 @@ void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 GOGraph* SceneGO::generatorGOGraph()
 {
     GOGraph *graph = new GOGraph();
+    graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
     {

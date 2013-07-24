@@ -2,6 +2,7 @@
 #include <QString>
 #include <QObject>
 #include <QFile>
+#include <QTime>
 #include <QTextStream>
 #include <qmath.h>
 #include "gostatus.h"
@@ -16,6 +17,8 @@
 #include "gooutput.h"
 #include "gosignal.h"
 #include "gomarkovcommoncause.h"
+#include "messagefactory.h"
+#include "messager.h"
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -90,6 +93,14 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
  */
 GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
+    Message *message;
+    QTime time;
+    time.start();
+    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_CLEAR);
+    this->sendMessage(message);
+    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_TEXT);
+    message->paramString = "Start Analysising...";
+    this->sendMessage(message);
     GOMarkovChartData *data = new GOMarkovChartData();
     for (int i = 0; i < this->_operator.size(); ++i)
     {
@@ -228,6 +239,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             op->markovStatus()->setFrequencyBreakdown(lamdas[j]);
         }
     }
+    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_CORRECT);
+    message->paramString = QString("Analysis Completed. It takes %1 seconds. ").arg(time.elapsed() / 1000.0);
+    this->sendMessage(message);
     return data;
 }
 

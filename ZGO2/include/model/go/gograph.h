@@ -6,6 +6,7 @@
  */
 #include <QMap>
 #include <QVector>
+#include "messager.h"
 
 class GOOperator;
 class GOSignal;
@@ -14,11 +15,12 @@ class GOCutSet;
 class GOPathSetSetSet;
 class GOAnalysis;
 
-class GOGraph
+class GOGraph : public Messager
 {
 public:
     GOGraph();
     virtual ~GOGraph();
+    void bindMessage(MessageController *controller);
     QVector<int> getSource() const;
     QVector<GOOperator*> getOperator() const;
     QVector<GOSignal*> getSignal() const;

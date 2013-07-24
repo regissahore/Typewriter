@@ -30,6 +30,11 @@ public:
         TYPE_EDITOR_ANALYSIS_PATH,
         TYPE_EDITOR_ANALYSIS_CUT,
         TYPE_TOOL_SELECTION,
+        TYPE_OUTPUT_CLEAR,
+        TYPE_OUTPUT_TEXT,
+        TYPE_OUTPUT_SAMELINE_TEXT,
+        TYPE_OUTPUT_CORRECT,
+        TYPE_OUTPUT_ERROR,
         TYPE_END
     };
     static Message* produce(int messageType);

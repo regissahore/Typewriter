@@ -15,7 +15,7 @@
 #include "gopathsetset.h"
 #include "gopathsetsetset.h"
 
-GOGraph::GOGraph()
+GOGraph::GOGraph() : Messager()
 {
     this->_error = "";
     this->_analysis = new GOAnalysis();
@@ -27,6 +27,12 @@ GOGraph::~GOGraph()
     this->_operator.clear();
     this->_signal.clear();
     this->_operatorPos.clear();
+    this->Messager::~Messager();
+}
+
+void GOGraph::bindMessage(MessageController *controller)
+{
+    this->MessageCreator::setMessageController(controller);
 }
 
 QVector<int> GOGraph::getSource() const

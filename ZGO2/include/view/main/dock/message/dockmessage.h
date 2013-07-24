@@ -8,7 +8,9 @@
 #include <QDockWidget>
 #include <QGridLayout>
 #include "messager.h"
-#include "debugconsole.h"
+
+class DebugConsole;
+class OutputConsole;
 
 class DockMessage : public QDockWidget, public Messager
 {
@@ -19,6 +21,7 @@ public:
 
 protected:
     DebugConsole *_debugConsole;
+    OutputConsole *_outputConsole;
 };
 
 #endif // DOCKMESSAGE_H

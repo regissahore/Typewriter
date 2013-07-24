@@ -184,7 +184,8 @@ HEADERS += \
     include/model/markov/gomarkovoperator29.h \
     include/model/markov/gomarkovoperator12a.h \
     include/model/markov/gomarkovoperator13a.h \
-    include/model/markov/gomarkovoperator13b.h
+    include/model/markov/gomarkovoperator13b.h \
+    include/view/main/dock/message/outputconsole.h
 
 SOURCES += \
     src/controller/defination/definationtooltype.cpp \
@@ -334,7 +335,8 @@ SOURCES += \
     src/model/markov/gomarkovoperator29.cpp \
     src/model/markov/gomarkovoperator12a.cpp \
     src/model/markov/gomarkovoperator13a.cpp \
-    src/model/markov/gomarkovoperator13b.cpp
+    src/model/markov/gomarkovoperator13b.cpp \
+    src/view/main/dock/message/outputconsole.cpp
 
 RESOURCES += \
     resource.qrc
@@ -345,4 +347,5 @@ FORMS += \
     form/dialogabout.ui \
     form/toolboxgo.ui \
     form/toolboxgomarkov.ui \
-    form/dialogmatrixinput.ui
+    form/dialogmatrixinput.ui \
+    form/outputconsole.ui

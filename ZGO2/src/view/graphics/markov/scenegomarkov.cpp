@@ -142,6 +142,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
 GOGraph* SceneGOMarkov::generatorGOGraph()
 {
     GOMarkovGraph *graph = new GOMarkovGraph();
+    graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     QVector<ItemGOMarkovOperator*> operators;
     QVector<ItemGOMarkovOperator*> equivalentOperators;
