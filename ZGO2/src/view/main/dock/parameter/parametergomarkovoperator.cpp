@@ -60,6 +60,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         break;
     case GOMarkovOperatorFactory::Operator_Type_11:
         this->addMarkov11KParameter();
+        this->addMarkov11IParameter();
+        this->addMarkov11LParameter();
+        this->addMarkov11JParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_12A:
         break;
@@ -314,12 +317,63 @@ void ParameterGOMarkovOperator::addMarkov11KParameter()
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("K"), this));
-        this->_spinBox11K = new QSpinBox(this);
-        this->_spinBox11K->setMinimum(1);
-        this->_spinBox11K->setMaximum(op->input()->number());
-        this->_spinBox11K->setValue(op->K());
-        this->connect(this->_spinBox11K, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11K(int)));
-        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBox11K);
+        QSpinBox *spin = new QSpinBox(this);
+        spin->setMinimum(1);
+        spin->setMaximum(op->input()->number());
+        spin->setValue(op->K());
+        this->connect(spin, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11K(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::addMarkov11IParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("I"), this));
+        QSpinBox *spin = new QSpinBox(this);
+        spin->setMinimum(0);
+        spin->setValue(op->I());
+        this->connect(spin, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11I(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::addMarkov11LParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("L"), this));
+        QSpinBox *spin = new QSpinBox(this);
+        spin->setMinimum(0);
+        spin->setValue(op->L());
+        this->connect(spin, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11L(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::addMarkov11JParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("J"), this));
+        QSpinBox *spin = new QSpinBox(this);
+        spin->setMinimum(0);
+        spin->setValue(op->J());
+        this->connect(spin, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov11J(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
     }
 }
 
@@ -328,6 +382,27 @@ void ParameterGOMarkovOperator::setItemMarkov11K(int value)
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
     op->setK(value);
+}
+
+void ParameterGOMarkovOperator::setItemMarkov11I(int value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+    op->setI(value);
+}
+
+void ParameterGOMarkovOperator::setItemMarkov11L(int value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+    op->setL(value);
+}
+
+void ParameterGOMarkovOperator::setItemMarkov11J(int value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator11 *op = (GOMarkovOperator11*)item->model();
+    op->setJ(value);
 }
 
 void ParameterGOMarkovOperator::addMarkov22Markov2Parameter()

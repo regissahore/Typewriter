@@ -27,7 +27,6 @@ protected:
     QDoubleSpinBox *_spinBox1Status2FrequencyBreakdown;
     QDoubleSpinBox *_spinBox1Status2FrequencyRepair;
     QDoubleSpinBox *_spinBox1Status2RepairTime;
-    QSpinBox *_spinBoxMarkov11K;
     QDoubleSpinBox *_spinBox9FeedbackFrequencyBreakdown;
     QDoubleSpinBox *_spinBox9FeedbackFrequencyRepair;
     QDoubleSpinBox *_spinBox9FeedbackRepairTime;
@@ -39,6 +38,9 @@ protected:
     void addMarkov1Status2Parameter();
     void addMarkov9FeedbackParameter();
     void addMarkov11KParameter();
+    void addMarkov11IParameter();
+    void addMarkov11LParameter();
+    void addMarkov11JParameter();
     void addMarkov13RelationParameter();
     void addMarkov18ABackupParameter();
     void addMarkov19DeltaNumParameter();
@@ -59,6 +61,9 @@ protected slots:
     void setItemMarkov9FeedbackFrequencyRepair(double value);
     void setItemMarkov9FeedbackRepairTime(double value);
     void setItemMarkov11K(int value);
+    void setItemMarkov11I(int value);
+    void setItemMarkov11L(int value);
+    void setItemMarkov11J(int value);
     void setItemMarkov13Relation();
     void setItemMarkov18ABackup(double value);
     void setItemMarkov19DeltaNum(int value);

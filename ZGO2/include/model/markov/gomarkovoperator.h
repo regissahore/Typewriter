@@ -25,15 +25,15 @@ public:
     virtual void calcCommonOutputMarkovStatus(QVector<double> PR);
     virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
     virtual void initOutputMarkovStatus();
+    GOMarkovOperator* getPrevOperator(int index = 0);
+    GOMarkovOperator* getPrevSubOperator(int index = 0);
+    GOMarkovStatus* getPrevMarkovStatus(int index = 0);
+    GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
 
 protected:
     GOMarkovStatus *_markovStatus;
     QVector<GOMarkovStatus*> *_outputStatus;
     bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
-    GOMarkovOperator* getPrevOperator(int index = 0);
-    GOMarkovOperator* getPrevSubOperator(int index = 0);
-    GOMarkovStatus* getPrevMarkovStatus(int index = 0);
-    GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
 };
 
 #endif // GOMARKOVOPERATOR_H

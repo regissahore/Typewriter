@@ -45,9 +45,9 @@ protected:
     QString _error;
     GOAnalysis *_analysis;
     bool checkCycleAndConnection();
-    bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
-    QVector<GOOperator*> getTopologicalOrder();
-    QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
+    virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
+    virtual QVector<GOOperator*> getTopologicalOrder();
+    virtual QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     QVector<Output> getCommonSignalList(GOOperator *op);
     QVector<GOOperator*> getEndList();
     void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);

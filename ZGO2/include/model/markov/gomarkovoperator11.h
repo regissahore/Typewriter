@@ -12,7 +12,13 @@ public:
     GOMarkovOperator11();
     ~GOMarkovOperator11();
     int K() const;
+    int I() const;
+    int L() const;
+    int J() const;
     void setK(int value);
+    void setI(int value);
+    void setL(int value);
+    void setJ(int value);
     void calcOutputMarkovStatus(double time);
     void calcCommonOutputMarkovStatus(QVector<double> PR);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
@@ -21,6 +27,9 @@ public:
 
 private:
     int _K;
+    int _I;
+    int _L;
+    int _J;
 };
 
 #endif // GOMARKOVOPERATOR1_H

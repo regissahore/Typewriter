@@ -231,6 +231,195 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     return data;
 }
 
+bool GOMarkovGraph::isContainCycleDfs(QVector<bool> &visit,
+                                QVector<int> &dfn,
+                                QVector<int> &low,
+                                QVector<int> &stack,
+                                int &timeStamp,
+                                int u)
+{
+    dfn[u] = low[u] = timeStamp++;
+    visit[u] = true;
+    stack.push_back(u);
+    GOOperator *op = this->_operator[u];
+    if (op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+    {
+        for (int i = 0; i < op->output()->number(); ++i)
+        {
+            for (int j = 0; j < op->output()->signal()->at(i)->size(); ++j)
+            {
+                GOOperator *next = op->output()->signal()->at(i)->at(j)->next(op);
+                int v = this->_operatorPos[next];
+                if (dfn[v] == -1)
+                {
+                    if (this->isContainCycleDfs(visit, dfn, low, stack, timeStamp, v))
+                    {
+                        return true;
+                    }
+                    if (low[v] < low[u])
+                    {
+                        low[u] = low[v];
+                    }
+                }
+                else if (visit[v])
+                {
+                    if (dfn[v] < low[u])
+                    {
+                        low[u] = dfn[v];
+                    }
+                }
+            }
+        }
+    }
+    if (dfn[u] == low[u])
+    {
+        int count = 0;
+        int temp;
+        do
+        {
+            temp = stack[stack.size() - 1];
+            stack.pop_back();
+            visit[temp] = false;
+            ++ count;
+        }
+        while (temp != u);
+        if (count > 1)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+
+QVector<GOOperator*> GOMarkovGraph::getTopologicalOrder()
+{
+    QVector<GOOperator*> topList;
+    QVector<bool> outside;
+    QVector<int> inputNumber;
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        outside.push_back(false);
+        int carry = 0;
+        GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
+        for (int j = 0; j < op->input()->number(); ++j)
+        {
+            if (op->getPrevOperator(j)->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_21)
+            {
+                ++carry;
+            }
+        }
+        for (int j = 0; j < op->subInput()->number(); ++j)
+        {
+            if (op->getPrevSubOperator(j)->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_21)
+            {
+                ++carry;
+            }
+        }
+        inputNumber.push_back(this->_operator[i]->input()->number() + this->_operator[i]->subInput()->number() - carry);
+    }
+    while (topList.size() != this->_operator.size())
+    {
+        for (int i = 0; i < this->_operator.size(); ++i)
+        {
+            if (inputNumber[i] == 0 && !outside[i])
+            {
+                topList.push_back(this->_operator[i]);
+                outside[i] = true;
+                for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
+                {
+                    for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
+                    {
+                        GOOperator *next = this->_operator[i]->output()->signal()->at(j)->at(k)->next(this->_operator[i]);
+                        bool appear = false;
+                        for (int l = 0; l < k; ++l)
+                        {
+                            GOOperator *history = this->_operator[i]->output()->signal()->at(j)->at(l)->next(this->_operator[i]);
+                            if (next == history)
+                            {
+                                appear = true;
+                                break;
+                            }
+                        }
+                        if (appear)
+                        {
+                            continue;
+                        }
+                        int index = this->_operatorPos[next];
+                        --inputNumber[index];
+                    }
+                }
+            }
+        }
+    }
+    return topList;
+}
+
+QVector< QVector<GOGraph::Output> > GOMarkovGraph::getAncestorList(GOOperator *op, int outputIndex, int signalIndex)
+{
+    Output commonSignal;
+    commonSignal.op = op;
+    commonSignal.outputIndex = outputIndex;
+    commonSignal.signalIndex = signalIndex;
+    if (op->input()->number() == 0)
+    {
+        QVector< QVector<Output> > vector;
+        QVector<Output> list;
+        list.push_back(commonSignal);
+        vector.push_back(list);
+        return vector;
+    }
+    QVector< QVector<Output> > vector;
+    for (int i = 0; i < op->input()->number(); ++i)
+    {
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        outputIndex = prev->output()->getSignalIndex(signal);
+        for (int j = 0; j < prev->output()->signal()->at(outputIndex)->size(); ++j)
+        {
+            if (prev->output()->signal()->at(outputIndex)->at(j)->next(prev) == op)
+            {
+                signalIndex = j;
+                break;
+            }
+        }
+        QVector< QVector<Output> > pathList;
+        if (prev->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+        {
+             pathList = this->getAncestorList(prev, outputIndex, signalIndex);
+        }
+        for (int j = 0; j < pathList.size(); ++j)
+        {
+            pathList[j].push_front(commonSignal);
+            vector.push_back(pathList[j]);
+        }
+    }
+    for (int i = 0; i < op->subInput()->number(); ++i)
+    {
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        outputIndex = prev->output()->getSignalIndex(signal);
+        for (int j = 0; j < prev->output()->signal()->at(outputIndex)->size(); ++j)
+        {
+            if (prev->output()->signal()->at(outputIndex)->at(j)->next(prev) == op)
+            {
+                signalIndex = j;
+                break;
+            }
+        }
+        QVector< QVector<Output> > pathList;
+        if (prev->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+        {
+             pathList = this->getAncestorList(prev, outputIndex, signalIndex);
+        }
+        for (int j = 0; j < pathList.size(); ++j)
+        {
+            pathList[j].push_front(commonSignal);
+            vector.push_back(pathList[j]);
+        }
+    }
+    return vector;
+}
+
 bool GOMarkovGraph::saveAsHTML(const QString filePath)
 {
     this->_error = "";

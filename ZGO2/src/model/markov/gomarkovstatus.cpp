@@ -3,6 +3,7 @@
 
 GOMarkovStatus::GOMarkovStatus()
 {
+    this->setProbabilityNormal(1.0);
     this->setFrequencyBreakdown(0.0);
     this->setFrequencyRepair(1.0);
 }
