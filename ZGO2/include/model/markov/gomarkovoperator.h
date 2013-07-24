@@ -15,9 +15,13 @@ public:
     GOMarkovOperator();
     virtual ~GOMarkovOperator();
     GOMarkovStatus* markovStatus() const;
+    GOMarkovStatus* markovStatus1() const;
+    GOMarkovStatus* markovStatus2() const;
     QVector<GOMarkovStatus*>* markovOutputStatus() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    bool isDualBreakdown() const;
+    void setDualBreakdown(bool value);
     bool isBreakdownCorrelate() const;
     void setBreakdownCorrelate(bool value);
     virtual void initMarkovStatus(double time, double c12 = 0.0);
@@ -29,10 +33,15 @@ public:
     GOMarkovOperator* getPrevSubOperator(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
+    virtual bool errorDetect();
+    virtual GOMarkovOperator* copy();
 
 protected:
     GOMarkovStatus *_markovStatus;
     QVector<GOMarkovStatus*> *_outputStatus;
+    GOMarkovStatus *_markovStatus1;
+    GOMarkovStatus *_markovStatus2;
+    bool _isDualBreakdown; /*! 是否是两故障模式。*/
     bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
 };
 

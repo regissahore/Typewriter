@@ -11,19 +11,11 @@ class GOMarkovOperator1 : public GOMarkovOperator
 public:
     GOMarkovOperator1();
     ~GOMarkovOperator1();
-    QString typeName() const;
-    bool isDualBreakdown() const;
-    void setDualBreakdown(bool value);
-    GOMarkovStatus* markovStatus2() const;
     void initMarkovStatus(double time, double c12);
     void calcOutputMarkovStatus(double time);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
 
 private:
-    bool _isDualBreakdown; /*! 是否是两故障模式。*/
-    GOMarkovStatus *_markovStatus2;
     void calcOutputMarkovStatusNormal();
     void calcOutputMarkovStatusCorrelate();
     double calcTempOutputMarkovStatusNormal(double PS);
