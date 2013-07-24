@@ -15,8 +15,13 @@ public:
     GOMarkovCommonCause();
     virtual ~GOMarkovCommonCause();
     QVector<GOMarkovOperator *>* operators() const;
-    double commonCause() const;
-    void setCommonCause(double value);
+    double breakdownTotal() const;
+    void setBreakdownTotal(double value);
+    double breakdownIndividual() const;
+    void setBreakdownIndividual(double value);
+    double gammaC() const;
+    void setGammaC(double value);
+    double breakdownCommon() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     QVector<int>* idList() const;
@@ -26,7 +31,9 @@ public:
 protected:
     QVector<GOMarkovOperator*> *_operators;
     QVector<int> *_idList;
-    double _commonCause;
+    double _breakdownTotal;
+    double _breakdownIndividual;
+    double _gammaC;
 };
 
 #endif // GOMARKOVCOMMONCAUSE_H

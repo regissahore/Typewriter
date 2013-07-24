@@ -6,8 +6,6 @@
  */
 #include "parameterabstract.h"
 
-class QDoubleSpinBox;
-
 class ParameterGOMarkovCommonCause : public ParameterAbstract
 {
     Q_OBJECT
@@ -15,11 +13,10 @@ public:
     ParameterGOMarkovCommonCause(QWidget *parent = 0);
     void bindItem(void *item);
 
-protected:
-    QDoubleSpinBox *_spinBoxCommonCause;
-
 protected slots:
-    void setItemCommonCause(double value);
+    void setItemBreakdownTotal(double value);
+    void setItemBreakdownIndividual(double value);
+    void setItemGammaC(double value);
 };
 
 #endif // PARAMETERGOMARKOVCOMMONCAUSE_H
