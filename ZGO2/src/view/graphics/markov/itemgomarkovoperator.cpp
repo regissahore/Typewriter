@@ -74,19 +74,31 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     QString typeName = GOMarkovOperatorFactory::typeName(this->model()->type());
     if (this->isSource())
     {
-        painter->drawText(QRectF(-25, -25, 47, 50), Qt::AlignHCenter | Qt::AlignVCenter, QString(typeName + "-%1").arg(this->model()->id()));
+        painter->drawText(QRectF(-100, -100, 200, 200), Qt::AlignHCenter | Qt::AlignVCenter, QString(typeName + "-%1").arg(this->model()->id()));
         QPoint points[3];
-        points[0].setX(25);
-        points[0].setY(0);
-        points[1].setX(-22);
-        points[1].setY(-25);
-        points[2].setX(-22);
-        points[2].setY(25);
+        if (this->isHorizonFlip())
+        {
+            points[0].setX(-25);
+            points[0].setY(0);
+            points[1].setX(22);
+            points[1].setY(-25);
+            points[2].setX(22);
+            points[2].setY(25);
+        }
+        else
+        {
+            points[0].setX(25);
+            points[0].setY(0);
+            points[1].setX(-22);
+            points[1].setY(-25);
+            points[2].setX(-22);
+            points[2].setY(25);
+        }
         painter->drawPolygon(points, 3);
     }
     else
     {
-        painter->drawText(QRectF(-25, -25, 50, 50),
+        painter->drawText(QRectF(-100, -100, 200, 200),
                           Qt::AlignHCenter | Qt::AlignVCenter,
                           QString(typeName + "-%1").arg(this->model()->id()));
         painter->drawEllipse(QPoint(0, 0), 25, 25);
