@@ -16,7 +16,6 @@ public:
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
 
 private:
-    bool _isBreakdownCorrelate;
     void calcOutputMarkovStatusNormal();
     void calcOutputMarkovStatusCorrelate();
     void calcCommonOutputMarkovStatusNormal(double PR);

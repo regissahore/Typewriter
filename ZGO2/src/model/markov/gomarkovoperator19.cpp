@@ -149,6 +149,38 @@ bool GOMarkovOperator19::errorDetect(Messager *messager)
     return false;
 }
 
+GOMarkovOperator* GOMarkovOperator19::copy()
+{
+    GOMarkovOperator19 *op = new GOMarkovOperator19();
+    op->setType(this->TypedItem::type());
+    op->input()->setNumber(this->input()->number());
+    op->subInput()->setNumber(this->subInput()->number());
+    op->output()->setNumber(this->output()->number());
+
+    op->setDualBreakdown(this->isDualBreakdown());
+    op->setBreakdownCorrelate(this->isBreakdownCorrelate());
+
+    op->markovStatus()->setProbabilityNormal(this->markovStatus()->probabilityNormal());
+    op->markovStatus()->setFrequencyBreakdown(this->markovStatus()->frequencyBreakdown());
+    op->markovStatus()->setFrequencyRepair(this->markovStatus()->frequencyRepair());
+
+    op->markovStatus1()->setProbabilityNormal(this->markovStatus1()->probabilityNormal());
+    op->markovStatus1()->setFrequencyBreakdown(this->markovStatus1()->frequencyBreakdown());
+    op->markovStatus1()->setFrequencyRepair(this->markovStatus1()->frequencyRepair());
+
+    op->markovStatus2()->setProbabilityNormal(this->markovStatus2()->probabilityNormal());
+    op->markovStatus2()->setFrequencyBreakdown(this->markovStatus2()->frequencyBreakdown());
+    op->markovStatus2()->setFrequencyRepair(this->markovStatus2()->frequencyRepair());
+
+    op->setDeltaNum(this->deltaNum());
+    for (int i = 0; i < this->deltaNum(); ++i)
+    {
+        op->a()->push_back(this->a()->at(i));
+        op->delta()->push_back(this->delta()->at(i));
+    }
+    return op;
+}
+
 void GOMarkovOperator19::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("model");
