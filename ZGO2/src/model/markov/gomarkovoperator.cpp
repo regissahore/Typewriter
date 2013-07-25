@@ -77,10 +77,32 @@ QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
 
 void GOMarkovOperator::initMarkovStatus(double time, double c12)
 {
-    double lamda = this->markovStatus()->frequencyBreakdown();
-    double miu = this->markovStatus()->frequencyRepair();
-    double p1 = miu / (lamda + miu) * (1 + lamda / miu * exp(-(lamda + miu) * time)) + c12;
-    this->markovStatus()->setProbabilityNormal(p1);
+    if (this->isDualBreakdown())
+    {
+        double lambda1 = this->markovStatus1()->frequencyBreakdown();
+        double mu1 = this->markovStatus1()->frequencyRepair();
+        double lambda2 = this->markovStatus2()->frequencyBreakdown();
+        double mu2 = this->markovStatus2()->frequencyRepair();
+        double s1 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) + sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
+        double s2 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) - sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
+        double PC = mu1 * mu2 / s1 / s2 +
+                (s1 * s1 + (mu1 + mu2) * s1 + mu1 * mu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
+                (s2 * s2 + (mu1 + mu2) * s2 + mu1 * mu2) / (s2 * (s2 - s1)) * exp(s2 * time) +
+                c12;
+        double QC = 1.0 - PC;
+        double lambdaR = lambda1 + lambda2;
+        double muR = lambdaR * PC / QC;
+        this->markovStatus()->setProbabilityNormal(PC);
+        this->markovStatus()->setFrequencyBreakdown(lambdaR);
+        this->markovStatus()->setFrequencyRepair(muR);
+    }
+    else
+    {
+        double lambda = this->markovStatus()->frequencyBreakdown();
+        double mu = this->markovStatus()->frequencyRepair();
+        double PC = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time)) + c12;
+        this->markovStatus()->setProbabilityNormal(PC);
+    }
 }
 
 void GOMarkovOperator::calcOutputMarkovStatus(double time)

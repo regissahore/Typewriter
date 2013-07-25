@@ -25,7 +25,7 @@ public:
     void setDualBreakdown(bool value);
     bool isBreakdownCorrelate() const;
     void setBreakdownCorrelate(bool value);
-    virtual void initMarkovStatus(double time, double c12 = 0.0);
+    void initMarkovStatus(double time, double c12 = 0.0);
     virtual void calcOutputMarkovStatus(double time);
     virtual void calcCommonOutputMarkovStatus(QVector<double> PR);
     virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);

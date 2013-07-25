@@ -203,34 +203,28 @@ double GOMarkovOperator9A1::calcNormalProbability(double time, double lambda1, d
 }
 
 /**
- * P0(t + Δt) = (1 - λ1 * Δt - λ2 * Δt) * P0(t) + μ1 * Δt * P1(t) + μ2 * Δt * P2(t)
- * P0'(t) = P0(t + Δt) - P0(t)= (1 - λ1 * Δt - λ2 * Δt) * P0(t) + μ1 * Δt * P1(t) + μ2 * Δt * P2(t) - P0(t)
+ * P0'(t) = - (λ1 + λ2) * P0(t) + μ1 * P1(t) + μ2 * P2(t)
  */
 double GOMarkovOperator9A1::func0(double t, double x0, double x1, double x2, double lambda1, double lambda2, double mu1, double mu2)
 {
     Q_UNUSED(t);
-    return (1.0 - lambda1 * RK_STEP - lambda2 * RK_STEP) * x0 +
-            mu1 * RK_STEP * x1 +
-            mu2 * RK_STEP * x2 -
-            x0;
+    return - (lambda1 + lambda2) * x0 + mu1 * x1 + mu2 * x2;
 }
 
 /**
- * P1(t + Δt) = λ1 * Δt * P0(t) + (1 - μ1 * Δt) * P1(t)
- * P1'(t) = P1(t + Δt) - P1(t) = λ1 * Δt * P0(t) + (1 - μ1 * Δt) * P1(t) - P1(t)
+ * P1'(t) = λ1 * P0(t) - μ1 * P1(t)
  */
 double GOMarkovOperator9A1::func1(double t, double x0, double x1, double lambda1, double mu1)
 {
     Q_UNUSED(t);
-    return lambda1 * RK_STEP * x0 + (1.0 - mu1 * RK_STEP) * x1 - x1;
+    return lambda1 * x0 - mu1 * x1;
 }
 
 /**
- * P2(t + Δt) = λ2 * Δt * P0(t) + (1 - μ2 * Δt) * P2(t)
- * P2'(t) = P2(t + Δt) - P2(t) = λ2 * Δt * P0(t) + (1 - μ2 * Δt) * P2(t) - P2(t)
+ * P2'(t) = λ2 * P0(t) - μ2 * P2(t)
  */
 double GOMarkovOperator9A1::func2(double t, double x0, double x2, double lambda2, double mu2)
 {
     Q_UNUSED(t);
-    return lambda2 * RK_STEP * x0 + (1.0 - mu2 * RK_STEP) * x2 - x2;
+    return lambda2 * x0 - mu2 * x2;
 }

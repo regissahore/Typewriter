@@ -46,6 +46,7 @@ protected:
     void addMarkov11LParameter();
     void addMarkov11JParameter();
     void addMarkov13RelationParameter();
+    void addMarkov18LambdaB1Parameter();
     void addMarkov18ABackupParameter();
     void addMarkov19DeltaNumParameter();
     void addMarkov19DeltaParameter();
@@ -72,6 +73,7 @@ protected slots:
     void setItemMarkov11L(int value);
     void setItemMarkov11J(int value);
     void setItemMarkov13Relation();
+    void setItemMarkov18LambdaB1(double value);
     void setItemMarkov18ABackup(double value);
     void setItemMarkov19DeltaNum(int value);
     void setItemMarkov19Delta();

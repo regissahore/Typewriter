@@ -16,6 +16,7 @@
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator13.h"
+#include "gomarkovoperator18.h"
 #include "gomarkovoperator18a.h"
 #include "gomarkovoperator19.h"
 #include "gomarkovoperator22.h"
@@ -81,6 +82,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_17:
         this->addMarkovDualBreakdownParameter();
         this->addMarkovBreakdownCorrelateParameter();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_18:
+        this->addMarkov18LambdaB1Parameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_18A:
         this->addMarkov18ABackupParameter();
@@ -780,4 +784,31 @@ void ParameterGOMarkovOperator::setItemMarkov19Delta()
         }
     }
     delete dialog;
+}
+
+void ParameterGOMarkovOperator::addMarkov18LambdaB1Parameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator18 *model = (GOMarkovOperator18*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Lambda b1"), this));
+        QDoubleSpinBox *spin = new QDoubleSpinBox(this);
+        spin->setMinimum(0.0);
+        spin->setMaximum(1.0);
+        spin->setDecimals(6);
+        spin->setSingleStep(0.01);
+        spin->setValue(model->lambdaB1());
+        this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18LambdaB1(double)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov18LambdaB1(double value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator18 *model = (GOMarkovOperator18*)item->model();
+    model->setLambdaB1(value);
 }
