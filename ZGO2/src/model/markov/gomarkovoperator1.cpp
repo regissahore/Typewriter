@@ -19,27 +19,6 @@ GOMarkovOperator1::~GOMarkovOperator1()
     this->GOMarkovOperator::~GOMarkovOperator();
 }
 
-void GOMarkovOperator1::initMarkovStatus(double time, double c12)
-{
-    if (this->isDualBreakdown())
-    {
-        double lamda1 = this->markovStatus()->frequencyBreakdown();
-        double miu1 = this->markovStatus()->frequencyRepair();
-        double lamda2 = this->markovStatus2()->frequencyBreakdown();
-        double miu2 = this->markovStatus2()->frequencyRepair();
-        double s1 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) + sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
-        double s2 = 0.5 * (-(lamda1 + lamda2 + miu1 + miu2) - sqrt((lamda1 - lamda2 + miu1 - miu2) * (lamda1 - lamda2 + miu1 - miu2) + 4 * lamda1 * lamda2));
-        double p1 = miu1 * miu2 / s1 / s2 +
-                (s1 * s1 + (miu1 + miu2) * s1 + miu1 * miu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
-                (s2 * s2 + (miu1 + miu2) * s2 + miu1 * miu2) / (s2 * (s2 - s1)) * exp(s2 * time);
-        this->markovStatus()->setProbabilityNormal(p1);
-    }
-    else
-    {
-        this->GOMarkovOperator::initMarkovStatus(time, c12);
-    }
-}
-
 void GOMarkovOperator1::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

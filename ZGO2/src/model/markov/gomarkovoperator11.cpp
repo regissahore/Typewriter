@@ -1,3 +1,4 @@
+#include <QObject>
 #include <qmath.h>
 #include "gomarkovoperator11.h"
 #include "goinput.h"
@@ -6,6 +7,9 @@
 #include "gosignal.h"
 #include "goparameter.h"
 #include "gomarkovstatus.h"
+#include "messager.h"
+#include "messagefactory.h"
+#include "gomarkovoperatorfactory.h"
 
 GOMarkovOperator11::GOMarkovOperator11() : GOMarkovOperator()
 {
@@ -254,6 +258,64 @@ double GOMarkovOperator11::calcTempOutputMarkovStatus(double time, QVector<doubl
         }
     }
     return PR;
+}
+
+bool GOMarkovOperator11::errorDetect(Messager *messager)
+{
+    if (this->GOMarkovOperator::errorDetect(messager))
+    {
+        return true;
+    }
+    GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
+    for (int i = 1; i < this->input()->number(); ++i)
+    {
+        GOMarkovStatus *status2 = this->getPrevMarkovStatus(i);
+        if (fabs(status1->frequencyBreakdown() - status2->frequencyBreakdown()) > 1e-6)
+        {
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same breakdown rate.").arg(this->id());
+            messager->sendMessage(message);
+            return true;
+        }
+        if (fabs(status1->frequencyRepair() - status2->frequencyRepair()) > 1e-6)
+        {
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same repair rate.").arg(this->id());
+            messager->sendMessage(message);
+            return true;
+        }
+    }
+    return false;
+}
+
+GOMarkovOperator* GOMarkovOperator11::copy()
+{
+    GOMarkovOperator11 *op = new GOMarkovOperator11();
+    op->setType(this->TypedItem::type());
+    op->input()->setNumber(this->input()->number());
+    op->subInput()->setNumber(this->subInput()->number());
+    op->output()->setNumber(this->output()->number());
+
+    op->setDualBreakdown(this->isDualBreakdown());
+    op->setBreakdownCorrelate(this->isBreakdownCorrelate());
+
+    op->markovStatus()->setProbabilityNormal(this->markovStatus()->probabilityNormal());
+    op->markovStatus()->setFrequencyBreakdown(this->markovStatus()->frequencyBreakdown());
+    op->markovStatus()->setFrequencyRepair(this->markovStatus()->frequencyRepair());
+
+    op->markovStatus1()->setProbabilityNormal(this->markovStatus1()->probabilityNormal());
+    op->markovStatus1()->setFrequencyBreakdown(this->markovStatus1()->frequencyBreakdown());
+    op->markovStatus1()->setFrequencyRepair(this->markovStatus1()->frequencyRepair());
+
+    op->markovStatus2()->setProbabilityNormal(this->markovStatus2()->probabilityNormal());
+    op->markovStatus2()->setFrequencyBreakdown(this->markovStatus2()->frequencyBreakdown());
+    op->markovStatus2()->setFrequencyRepair(this->markovStatus2()->frequencyRepair());
+
+    op->setK(this->K());
+    op->setI(this->I());
+    op->setL(this->L());
+    op->setJ(this->J());
+    return op;
 }
 
 void GOMarkovOperator11::save(QDomDocument &document, QDomElement &root)

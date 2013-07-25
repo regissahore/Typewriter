@@ -1,3 +1,4 @@
+#include <QObject>
 #include <qmath.h>
 #include "gomarkovoperator12a.h"
 #include "goinput.h"
@@ -6,6 +7,9 @@
 #include "gosignal.h"
 #include "goparameter.h"
 #include "gomarkovstatus.h"
+#include "messager.h"
+#include "messagefactory.h"
+#include "gomarkovoperatorfactory.h"
 
 GOMarkovOperator12A::GOMarkovOperator12A() : GOMarkovOperator()
 {
@@ -40,4 +44,28 @@ double GOMarkovOperator12A::calcTempOutputMarkovStatus(double time, QVector<doub
     Q_UNUSED(time);
     Q_UNUSED(subInput);
     return input[index];
+}
+
+bool GOMarkovOperator12A::errorDetect(Messager *messager)
+{
+    if (this->GOMarkovOperator::errorDetect(messager))
+    {
+        return true;
+    }
+    GOMarkovOperator *op = this->getPrevOperator();
+    if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The input should be a vector.").arg(this->id());
+        messager->sendMessage(message);
+        return true;
+    }
+    if (this->output()->number() != op->markovOutputStatus()->size())
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of output should matches the length of the input vector.").arg(this->id());
+        messager->sendMessage(message);
+        return true;
+    }
+    return false;
 }

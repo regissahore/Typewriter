@@ -22,6 +22,8 @@ public:
     void calcOutputMarkovStatus(double time);
     void calcCommonOutputMarkovStatus(QVector<double> PR);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    bool errorDetect(Messager *messager);
+    GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

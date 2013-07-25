@@ -11,7 +11,6 @@ class GOMarkovOperator1 : public GOMarkovOperator
 public:
     GOMarkovOperator1();
     ~GOMarkovOperator1();
-    void initMarkovStatus(double time, double c12);
     void calcOutputMarkovStatus(double time);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
 

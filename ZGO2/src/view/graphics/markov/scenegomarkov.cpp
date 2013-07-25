@@ -369,9 +369,5 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             }
             delete data;
         }
-        else
-        {
-            QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
-        }
     }
 }

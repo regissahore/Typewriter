@@ -57,6 +57,9 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     this->_error = "";
     if (!this->checkCycleAndConnection())
     {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+        message->paramString = QObject::tr("Error: Graph ") + this->_error;
+        this->sendMessage(message);
         return;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
@@ -101,6 +104,19 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_TEXT);
     message->paramString = "Start Analysising...";
     this->sendMessage(message);
+    bool isOperatorError = false;
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
+        if (op->errorDetect(this))
+        {
+            isOperatorError = true;
+        }
+    }
+    if (isOperatorError)
+    {
+        return 0L;
+    }
     GOMarkovChartData *data = new GOMarkovChartData();
     for (int i = 0; i < this->_operator.size(); ++i)
     {

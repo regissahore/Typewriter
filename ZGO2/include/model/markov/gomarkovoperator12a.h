@@ -13,6 +13,7 @@ public:
     ~GOMarkovOperator12A();
     void calcOutputMarkovStatus(double time);
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    bool errorDetect(Messager *messager);
 };
 
 #endif // GOMARKOVOPERATOR12A_H

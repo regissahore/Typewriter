@@ -1,3 +1,4 @@
+#include <QObject>
 #include <qmath.h>
 #include "gomarkovoperator19.h"
 #include "goinput.h"
@@ -6,6 +7,9 @@
 #include "gosignal.h"
 #include "goparameter.h"
 #include "gomarkovstatus.h"
+#include "messager.h"
+#include "messagefactory.h"
+#include "gomarkovoperatorfactory.h"
 
 GOMarkovOperator19::GOMarkovOperator19() : GOMarkovOperator()
 {
@@ -119,6 +123,30 @@ double GOMarkovOperator19::calcTempOutputMarkovStatus(double time, QVector<doubl
         return PR1;
     }
     return PR2;
+}
+
+bool GOMarkovOperator19::errorDetect(Messager *messager)
+{
+    if (this->GOMarkovOperator::errorDetect(messager))
+    {
+        return true;
+    }
+    GOMarkovOperator *op = this->getPrevSubOperator();
+    if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The input should be a vector.").arg(this->id());
+        messager->sendMessage(message);
+        return true;
+    }
+    if (this->deltaNum() != op->markovOutputStatus()->size())
+    {
+        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of delta should matches the length of the input vector.").arg(this->id());
+        messager->sendMessage(message);
+        return true;
+    }
+    return false;
 }
 
 void GOMarkovOperator19::save(QDomDocument &document, QDomElement &root)

@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <QObject>
 #include <qmath.h>
 #include "gomarkovoperator.h"
 #include "gomarkovstatus.h"
@@ -7,6 +8,9 @@
 #include "goparameter.h"
 #include "gostatus.h"
 #include "gosignal.h"
+#include "messager.h"
+#include "messagefactory.h"
+#include "gomarkovoperatorfactory.h"
 
 GOMarkovOperator::GOMarkovOperator() : GOOperator()
 {
@@ -136,28 +140,35 @@ void GOMarkovOperator::initOutputMarkovStatus()
     }
 }
 
-bool GOMarkovOperator::errorDetect()
+bool GOMarkovOperator::errorDetect(Messager *messager)
 {
+    bool flag = false;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         if (this->input()->signal()->at(i) == 0)
         {
-            return true;
+            flag = true;
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have input at %2.").arg(this->id()).arg(i + 1);
+            messager->sendMessage(message);
         }
     }
     for (int i = 0; i < this->subInput()->number(); ++i)
     {
         if (this->subInput()->signal()->at(i) == 0)
         {
-            return true;
+            flag = true;
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have sub input at %2.").arg(this->id()).arg(i + 1);
+            messager->sendMessage(message);
         }
     }
-    return false;
+    return flag;
 }
 
 GOMarkovOperator* GOMarkovOperator::copy()
 {
-    GOMarkovOperator *op = new GOMarkovOperator();
+    GOMarkovOperator *op = GOMarkovOperatorFactory::produce(this->TypedItem::type());
     op->setType(this->TypedItem::type());
     op->input()->setNumber(this->input()->number());
     op->subInput()->setNumber(this->subInput()->number());

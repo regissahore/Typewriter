@@ -8,6 +8,7 @@
 #include "gooperator.h"
 
 class GOMarkovStatus;
+class Messager;
 
 class GOMarkovOperator : public GOOperator
 {
@@ -33,7 +34,7 @@ public:
     GOMarkovOperator* getPrevSubOperator(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
-    virtual bool errorDetect();
+    virtual bool errorDetect(Messager *messager);
     virtual GOMarkovOperator* copy();
 
 protected:

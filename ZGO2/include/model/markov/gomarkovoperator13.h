@@ -18,6 +18,7 @@ public:
     bool tryOpen(QDomElement &root);
     void saveRelation(QDomDocument &document, QDomElement &root);
     bool tryOpenRelation(QDomElement &root);
+    GOMarkovOperator* copy();
 
 protected:
     QVector<QVector<int> > *_relation;

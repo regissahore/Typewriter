@@ -13,6 +13,7 @@ public:
     ~GOMarkovOperator22();
     QVector<double>* lambda2() const;
     QVector<double>* mu2() const;
+    bool errorDetect(Messager *messager);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
