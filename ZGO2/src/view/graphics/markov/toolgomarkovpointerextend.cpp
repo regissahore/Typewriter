@@ -7,6 +7,7 @@
 #include "itemmoveable.h"
 #include "itemgomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
+#include "itemgofactory.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -122,6 +123,14 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     this->sceneGO()->sendMessage(message);
                 }
             }
+        }
+    }
+    else if (event->key() == Qt::Key_Delete)
+    {
+        if (this->_item != 0L)
+        {
+            ItemGOFactory::deleteItem(this->_item);
+            this->_item = 0L;
         }
     }
 }
