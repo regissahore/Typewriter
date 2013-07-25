@@ -13,6 +13,7 @@ public:
 
 protected:
     bool mousePressStatusNullItem(QGraphicsSceneMouseEvent *event);
+    void keyReleaseEvent(QKeyEvent *event);
 };
 
 #endif // TOOLGOMARKOVPOINTEREXTEND_H

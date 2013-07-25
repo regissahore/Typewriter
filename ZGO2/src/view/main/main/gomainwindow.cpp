@@ -182,16 +182,6 @@ void GOMainWindow::on_actionFind_Cut_triggered()
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT));
 }
 
-void GOMainWindow::on_actionChinese_Simplified_triggered()
-{
-
-}
-
-void GOMainWindow::on_actionEnglish_triggered()
-{
-
-}
-
 void GOMainWindow::on_actionAbout_triggered()
 {
     DialogAbout dialog(this);
@@ -210,6 +200,12 @@ void GOMainWindow::on_actionTool_DockWidget_toggled(bool value)
     this->_dockToolbox->setVisible(value);
 }
 
+void GOMainWindow::on_actionMessage_DockWidget_toggled(bool value)
+{
+    this->ui->actionMessage_DockWidget->setChecked(value);
+    this->_dockMessage->setVisible(value);
+}
+
 void GOMainWindow::on_actionParameter_DockWidget_toggled(bool value)
 {
     this->ui->actionParameter_DockWidget->setChecked(value);
@@ -224,4 +220,14 @@ void GOMainWindow::on_actionFile_Toolbar_toggled(bool value)
 void GOMainWindow::on_actionAnalysis_Toolbar_toggled(bool value)
 {
     this->ui->toolBarAnalysis->setVisible(value);
+}
+
+void GOMainWindow::on_actionCopy_C_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_COPY));
+}
+
+void GOMainWindow::on_actionDelete_D_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_DELETE));
 }

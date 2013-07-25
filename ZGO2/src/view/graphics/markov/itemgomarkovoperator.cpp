@@ -99,6 +99,18 @@ void ItemGOMarkovOperator::setModelType(const int type)
     this->setModel(this->_model);
 }
 
+ItemGOMarkovOperator* ItemGOMarkovOperator::copy()
+{
+    ItemGOMarkovOperator* op = new ItemGOMarkovOperator();
+    op->setType(this->TypedItem::type());
+    op->setX(this->x() + 100);
+    op->setY(this->y() + 100);
+    op->setIsHorizonFlip(this->isHorizonFlip());
+    op->setIsVerticalFlip(this->isVerticalFlip());
+    op->setModel(((GOMarkovOperator*)this->model())->copy());
+    return op;
+}
+
 bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
 {
     if (root.tagName() != "operator")

@@ -3,7 +3,10 @@
 #include "definationeditorselectiontype.h"
 #include "messagefactory.h"
 #include "scenego.h"
+#include "gooperator.h"
 #include "itemmoveable.h"
+#include "itemgomarkovoperator.h"
+#include "itemgomarkovequivalent.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -69,4 +72,56 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
         }
     }
     return false;
+}
+
+void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_C)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            if (this->_item != 0L)
+            {
+                if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                {
+                    ItemGOMarkovOperator *item = ((ItemGOMarkovOperator*)this->_item)->copy();
+                    this->sceneGO()->addItem(item);
+                    this->_item->setColor(Qt::black);
+                    QList<QGraphicsItem*> items = this->graphicsScene()->items();
+                    QVector<bool> visit;
+                    for (int i = 0; i <= items.size() + 1; ++i)
+                    {
+                        visit.push_back(false);
+                    }
+                    for (int i = 0; i < items.size(); ++i)
+                    {
+                        ItemDrawable* item = (ItemDrawable*)items.at(i);
+                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                        {
+                            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+                            visit[op->model()->id()] = true;
+                        }
+                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+                        {
+                            ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
+                            visit[eq->id()] = true;
+                        }
+                    }
+                    for (int i = 1; i <= items.size() + 1; ++i)
+                    {
+                        if (!visit[i])
+                        {
+                            item->model()->setId(i);
+                            break;
+                        }
+                    }
+                    this->_item = item;
+                    this->_item->setColor(QColor(Qt::darkBlue));
+                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                    message->setMessage(this->_item);
+                    this->sceneGO()->sendMessage(message);
+                }
+            }
+        }
+    }
 }

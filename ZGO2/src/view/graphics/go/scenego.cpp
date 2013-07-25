@@ -69,6 +69,7 @@ void SceneGO::bindMessage(MessageController *controller)
  */
 void SceneGO::messageEvent(Message *message)
 {
+    QKeyEvent *event = 0L;
     switch (message->type())
     {
     case MessageFactory::TYPE_TOOL_SELECTION:
@@ -83,8 +84,20 @@ void SceneGO::messageEvent(Message *message)
     case MessageFactory::TYPE_EDITOR_ANALYSIS_CUT:
         this->analysisCut(message->paramString);
         break;
+    case MessageFactory::TYPE_EDITOR_COPY:
+        event = new QKeyEvent(QEvent::KeyRelease, Qt::Key_C, Qt::ControlModifier);
+        this->_tool->keyReleaseEvent(event);
+        break;
+    case MessageFactory::TYPE_EDITOR_DELETE:
+        event = new QKeyEvent(QEvent::KeyRelease, Qt::Key_Delete, Qt::NoModifier);
+        this->_tool->keyReleaseEvent(event);
+        break;
     default:
         break;
+    }
+    if (event != 0L)
+    {
+        delete event;
     }
 }
 

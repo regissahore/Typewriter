@@ -53,14 +53,15 @@ private slots:
     void on_actionAnalysis_Probability_triggered();
     void on_actionFind_Path_triggered();
     void on_actionFind_Cut_triggered();
-    void on_actionChinese_Simplified_triggered();
-    void on_actionEnglish_triggered();
     void on_actionAbout_triggered();
     void on_actionHelp_triggered();
     void on_actionTool_DockWidget_toggled(bool value);
     void on_actionParameter_DockWidget_toggled(bool value);
+    void on_actionMessage_DockWidget_toggled(bool value);
     void on_actionFile_Toolbar_toggled(bool value);
     void on_actionAnalysis_Toolbar_toggled(bool value);
+    void on_actionCopy_C_triggered();
+    void on_actionDelete_D_triggered();
 };
 
 #endif // GOMAINWINDOW_H

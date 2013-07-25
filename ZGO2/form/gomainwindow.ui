@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -70,6 +70,7 @@
     </property>
     <addaction name="actionTool_DockWidget"/>
     <addaction name="actionParameter_DockWidget"/>
+    <addaction name="actionMessage_DockWidget"/>
    </widget>
    <widget class="QMenu" name="menuEdit_E">
     <property name="title">
@@ -343,6 +344,17 @@
   <action name="actionDelete_All">
    <property name="text">
     <string>Delete All</string>
+   </property>
+  </action>
+  <action name="actionMessage_DockWidget">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Message DockWidget</string>
    </property>
   </action>
  </widget>

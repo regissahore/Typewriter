@@ -21,6 +21,7 @@ public:
     void move(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void setModelType(const int type);
+    ItemGOMarkovOperator* copy();
     bool tryOpen(QDomElement &root);
 
 protected:
