@@ -21,6 +21,8 @@ ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
     this->_subInputSignal = new QVector<ItemGOSignal*>();
     this->_outputSignal = new QVector<QVector<ItemGOSignal*>*>();
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR);
+    this->setIsHorizonFlip(false);
+    this->setIsVerticalFlip(false);
 }
 
 /**
@@ -146,8 +148,16 @@ void ItemGOOperator::setModel(GOOperator *model)
             this->_subInputArrows->push_back(arrow);
             this->_subInputSignal->push_back(0L);
         }
-        this->prepareGeometryChange();
     }
+    if (this->isHorizonFlip())
+    {
+        this->horizonFlip();
+    }
+    if (this->isVerticalFlip())
+    {
+        this->verticalFlip();
+    }
+    this->prepareGeometryChange();
 }
 
 /**
@@ -237,6 +247,81 @@ bool ItemGOOperator::isSelectable(float x, float y, float width, float height)
             bottom > thisBottom;
 }
 
+bool ItemGOOperator::isHorizonFlip() const
+{
+    return this->_isHorizonFlip;
+}
+
+bool ItemGOOperator::isVerticalFlip() const
+{
+    return this->_isVerticalFlip;
+}
+
+void ItemGOOperator::setIsHorizonFlip(bool value)
+{
+    this->_isHorizonFlip = value;
+}
+
+void ItemGOOperator::setIsVerticalFlip(bool value)
+{
+    this->_isVerticalFlip = value;
+}
+
+void ItemGOOperator::horizonFlip()
+{
+    for (int i = 0; i < this->_inputArrows->size(); ++i)
+    {
+        this->_inputArrows->at(i)->setPos(-this->_inputArrows->at(i)->x(),
+                                          this->_inputArrows->at(i)->y());
+        this->_inputArrows->at(i)->setEnd(-this->_inputArrows->at(i)->end().x(),
+                                          this->_inputArrows->at(i)->end().y());
+    }
+    for (int i = 0; i < this->_outputArrows->size(); ++i)
+    {
+        this->_outputArrows->at(i)->setPos(-this->_outputArrows->at(i)->x(),
+                                           this->_outputArrows->at(i)->y());
+        this->_outputArrows->at(i)->setEnd(-this->_outputArrows->at(i)->end().x(),
+                                           this->_outputArrows->at(i)->end().y());
+    }
+    QList<ItemGOSignal *> signal = this->getConnectedSignals();
+    for (int i = 0; i < signal.size(); ++i)
+    {
+        signal[i]->updatePosition();
+    }
+    this->update();
+}
+
+void ItemGOOperator::verticalFlip()
+{
+    for (int i = 0; i < this->_inputArrows->size(); ++i)
+    {
+        this->_inputArrows->at(i)->setPos(this->_inputArrows->at(i)->x(),
+                                          -this->_inputArrows->at(i)->y());
+        this->_inputArrows->at(i)->setEnd(this->_inputArrows->at(i)->end().x(),
+                                          -this->_inputArrows->at(i)->end().y());
+    }
+    for (int i = 0; i < this->_subInputArrows->size(); ++i)
+    {
+        this->_subInputArrows->at(i)->setPos(this->_subInputArrows->at(i)->x(),
+                                        -this->_subInputArrows->at(i)->y());
+        this->_subInputArrows->at(i)->setEnd(this->_subInputArrows->at(i)->end().x(),
+                                             -this->_subInputArrows->at(i)->end().y());
+    }
+    for (int i = 0; i < this->_outputArrows->size(); ++i)
+    {
+        this->_outputArrows->at(i)->setPos(this->_outputArrows->at(i)->x(),
+                                           -this->_outputArrows->at(i)->y());
+        this->_outputArrows->at(i)->setEnd(this->_outputArrows->at(i)->end().x(),
+                                           -this->_outputArrows->at(i)->end().y());
+    }
+    QList<ItemGOSignal *> signal = this->getConnectedSignals();
+    for (int i = 0; i < signal.size(); ++i)
+    {
+        signal[i]->updatePosition();
+    }
+    this->update();
+}
+
 /**
  * Start moving the item.
  * @param event Mouse event.
@@ -300,8 +385,17 @@ QPoint ItemGOOperator::getInputPosition(int index)
         return QPoint(0, 0);
     }
     int height = (number - 1) * 25;
+    int x = -75;
     int y = - (height >> 1) + index * 25;
-    return QPoint(-75, y);
+    if (isHorizonFlip())
+    {
+        x = -x;
+    }
+    if (isVerticalFlip())
+    {
+        y = -y;
+    }
+    return QPoint(x, y);
 }
 
 /**
@@ -311,7 +405,17 @@ QPoint ItemGOOperator::getInputPosition(int index)
 QPoint ItemGOOperator::getSubInputPosition(int index)
 {
     Q_UNUSED(index);
-    return QPoint(0, -75);
+    int x = 0;
+    int y = -75;
+    if (isHorizonFlip())
+    {
+        x = -x;
+    }
+    if (isVerticalFlip())
+    {
+        y = -y;
+    }
+    return QPoint(x, y);
 }
 
 /**
@@ -326,8 +430,17 @@ QPoint ItemGOOperator::getOutputPosition(int index)
         return QPoint(0, 0);
     }
     int height = (number - 1) * 25;
+    int x = 75;
     int y = - (height >> 1) + index * 25;
-    return QPoint(75, y);
+    if (isHorizonFlip())
+    {
+        x = -x;
+    }
+    if (isVerticalFlip())
+    {
+        y = -y;
+    }
+    return QPoint(x, y);
 }
 
 QVector<ItemGOSignal*>* ItemGOOperator::input() const
@@ -454,6 +567,8 @@ void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("x", this->pos().x());
     element.setAttribute("y", this->pos().y());
     element.setAttribute("type", this->model()->type());
+    element.setAttribute("horizon", this->isHorizonFlip());
+    element.setAttribute("vertical", this->isVerticalFlip());
     root.appendChild(element);
     this->model()->save(document, element);
 }
@@ -466,6 +581,8 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
     }
     this->setX(root.attribute("x", "0").toFloat());
     this->setY(root.attribute("y", "0").toFloat());
+    this->setIsHorizonFlip(root.attribute("horizon", "0").toInt());
+    this->setIsVerticalFlip(root.attribute("vertical", "0").toInt());
     QDomElement element = root.firstChildElement();
     GOOperator *model = new GOOperator();
     if (!model->tryOpen(element))

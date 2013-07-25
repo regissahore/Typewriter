@@ -1,4 +1,5 @@
 #include <QLabel>
+#include <QCheckBox>
 #include <QSpinBox>
 #include <QPushButton>
 #include <QDoubleSpinBox>
@@ -95,6 +96,7 @@ void ParameterGOOperator::addOperatorParameter()
 {
     if (0L != this->_item)
     {
+        this->addFlipParameter();
         this->addIDParameter();
         this->addTypeParameter();
     }
@@ -105,6 +107,43 @@ void ParameterGOOperator::setItemID(int value)
     ItemGOOperator *item = (ItemGOOperator*)this->_item;
     item->model()->setId(value);
     item->update();
+}
+
+void ParameterGOOperator::addFlipParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        QCheckBox *checkBox;
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Horizon Flip"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isHorizonFlip());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemHorizonFlip(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Vertical Flip"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isVerticalFlip());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemVerticalFlip(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
+void ParameterGOOperator::setItemHorizonFlip(bool value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->setIsHorizonFlip(value);
+    item->horizonFlip();
+}
+
+void ParameterGOOperator::setItemVerticalFlip(bool value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->setIsVerticalFlip(value);
+    item->verticalFlip();
 }
 
 void ParameterGOOperator::addProbability0Parameter()

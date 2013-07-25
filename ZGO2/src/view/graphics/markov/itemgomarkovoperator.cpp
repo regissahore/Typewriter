@@ -107,6 +107,8 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     }
     this->setX(root.attribute("x", "0").toFloat());
     this->setY(root.attribute("y", "0").toFloat());
+    this->setIsHorizonFlip(root.attribute("horizon").toInt());
+    this->setIsVerticalFlip(root.attribute("vertical").toInt());
     int type = root.attribute("type").toInt();
     QDomElement element = root.firstChildElement();
     GOMarkovOperator *model = GOMarkovOperatorFactory::produce(type);

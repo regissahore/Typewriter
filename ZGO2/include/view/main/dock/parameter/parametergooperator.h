@@ -28,6 +28,7 @@ protected:
     void addIDParameter();
     void addTypeParameter();
     void addOperatorParameter();
+    void addFlipParameter();
     void addProbability0Parameter();
     void addProbability12Parameter();
     void addProbabilityMultipleParameter();
@@ -44,6 +45,8 @@ protected slots:
     virtual void setItem9X(int value);
     virtual void setItem9Y(int value);
     virtual void setItem11K(int value);
+    void setItemHorizonFlip(bool value);
+    void setItemVerticalFlip(bool value);
 };
 
 #endif // PARAMETERGOOPERATOR_H

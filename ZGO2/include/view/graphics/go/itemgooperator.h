@@ -23,6 +23,12 @@ public:
     QRectF boundingRect() const;
     bool isSelectable(float x, float y);
     bool isSelectable(float x, float y, float width, float height);
+    bool isHorizonFlip() const;
+    bool isVerticalFlip() const;
+    void horizonFlip();
+    void verticalFlip();
+    void setIsHorizonFlip(bool value);
+    void setIsVerticalFlip(bool value);
     void move(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     QPoint getInputPosition(int index);
@@ -46,6 +52,10 @@ protected:
     QVector<QVector<ItemGOSignal*>*> *_outputSignal;
 
     GOOperator *_model; /** The model of GO operator. */
+
+    bool _isHorizonFlip;
+    bool _isVerticalFlip;
+
     virtual bool isSource() const;
 };
 
