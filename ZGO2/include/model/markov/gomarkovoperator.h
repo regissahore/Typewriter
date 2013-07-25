@@ -19,8 +19,6 @@ public:
     GOMarkovStatus* markovStatus1() const;
     GOMarkovStatus* markovStatus2() const;
     QVector<GOMarkovStatus*>* markovOutputStatus() const;
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
     bool isDualBreakdown() const;
     void setDualBreakdown(bool value);
     bool isBreakdownCorrelate() const;
@@ -36,6 +34,8 @@ public:
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
     virtual bool errorDetect(Messager *messager);
     virtual GOMarkovOperator* copy();
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     GOMarkovStatus *_markovStatus;

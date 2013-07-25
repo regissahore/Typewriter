@@ -125,44 +125,41 @@ void ParameterGOMarkovOperator::addMarkovParameter()
 {
     if (0L != this->_item)
     {
-        if (0L != this->_item)
-        {
-            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
-            GOMarkovStatus *status = ((GOMarkovOperator*)item->model())->markovStatus();
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovStatus *status = ((GOMarkovOperator*)item->model())->markovStatus();
 
-            this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Repair Time"), this));
-            this->_spinBoxRepairTime = new QDoubleSpinBox(this);
-            this->_spinBoxRepairTime->setMinimum(1e-6);
-            this->_spinBoxRepairTime->setMaximum(1e100);
-            this->_spinBoxRepairTime->setDecimals(6);
-            this->_spinBoxRepairTime->setSingleStep(0.01);
-            this->_spinBoxRepairTime->setValue(1.0 / status->frequencyRepair());
-            this->connect(this->_spinBoxRepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemRepairTime(double)));
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxRepairTime);
+        this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Repair Time"), this));
+        this->_spinBoxRepairTime = new QDoubleSpinBox(this);
+        this->_spinBoxRepairTime->setMinimum(1e-6);
+        this->_spinBoxRepairTime->setMaximum(1e100);
+        this->_spinBoxRepairTime->setDecimals(6);
+        this->_spinBoxRepairTime->setSingleStep(0.01);
+        this->_spinBoxRepairTime->setValue(1.0 / status->frequencyRepair());
+        this->connect(this->_spinBoxRepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemRepairTime(double)));
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxRepairTime);
 
-            this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Repair Rate"), this));
-            this->_spinBoxFrequencyRepair = new QDoubleSpinBox(this);
-            this->_spinBoxFrequencyRepair->setMinimum(1e-6);
-            this->_spinBoxFrequencyRepair->setMaximum(1e100);
-            this->_spinBoxFrequencyRepair->setDecimals(6);
-            this->_spinBoxFrequencyRepair->setSingleStep(0.01);
-            this->_spinBoxFrequencyRepair->setValue(status->frequencyRepair());
-            this->connect(this->_spinBoxFrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyRepair(double)));
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxFrequencyRepair);
+        this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Repair Rate"), this));
+        this->_spinBoxFrequencyRepair = new QDoubleSpinBox(this);
+        this->_spinBoxFrequencyRepair->setMinimum(1e-6);
+        this->_spinBoxFrequencyRepair->setMaximum(1e100);
+        this->_spinBoxFrequencyRepair->setDecimals(6);
+        this->_spinBoxFrequencyRepair->setSingleStep(0.01);
+        this->_spinBoxFrequencyRepair->setValue(status->frequencyRepair());
+        this->connect(this->_spinBoxFrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyRepair(double)));
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxFrequencyRepair);
 
-            this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Failure Rate"), this));
-            this->_spinBoxFrequencyBreakdown = new QDoubleSpinBox(this);
-            this->_spinBoxFrequencyBreakdown->setMinimum(0.0);
-            this->_spinBoxFrequencyBreakdown->setMaximum(1e100);
-            this->_spinBoxFrequencyBreakdown->setDecimals(6);
-            this->_spinBoxFrequencyBreakdown->setSingleStep(0.01);
-            this->_spinBoxFrequencyBreakdown->setValue(status->frequencyBreakdown());
-            this->connect(this->_spinBoxFrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyBreakdown(double)));
-            this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxFrequencyBreakdown);
-        }
+        this->_tableWidget->insertRow(this->_markovDualBreakdownPos);
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 0, new QLabel(tr("Failure Rate"), this));
+        this->_spinBoxFrequencyBreakdown = new QDoubleSpinBox(this);
+        this->_spinBoxFrequencyBreakdown->setMinimum(0.0);
+        this->_spinBoxFrequencyBreakdown->setMaximum(1e100);
+        this->_spinBoxFrequencyBreakdown->setDecimals(6);
+        this->_spinBoxFrequencyBreakdown->setSingleStep(0.01);
+        this->_spinBoxFrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->connect(this->_spinBoxFrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyBreakdown(double)));
+        this->_tableWidget->setCellWidget(this->_markovDualBreakdownPos, 1, this->_spinBoxFrequencyBreakdown);
     }
 }
 
@@ -362,7 +359,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime1(double value)
 {
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
-    model->markovStatus1()->setRepairTime(1.0 / value);
+    model->markovStatus1()->setFrequencyRepair(1.0 / value);
     this->_spinBoxStatus1FrequencyRepair->setValue(1.0 / value);
 }
 
@@ -385,7 +382,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime2(double value)
 {
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
-    model->markovStatus2()->setRepairTime(1.0 / value);
+    model->markovStatus2()->setFrequencyRepair(1.0 / value);
     this->_spinBoxStatus2FrequencyRepair->setValue(1.0 / value);
 }
 

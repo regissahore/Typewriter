@@ -152,14 +152,19 @@
 <context>
     <name>DockMessage</name>
     <message>
-        <location filename="../src/view/main/dock/message/dockmessage.cpp" line="8"/>
+        <location filename="../src/view/main/dock/message/dockmessage.cpp" line="12"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/message/dockmessage.cpp" line="13"/>
+        <location filename="../src/view/main/dock/message/dockmessage.cpp" line="19"/>
         <source>Debug</source>
         <translation>调试</translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/message/dockmessage.cpp" line="23"/>
+        <source>Output</source>
+        <translation type="unfinished">输出</translation>
     </message>
 </context>
 <context>
@@ -181,12 +186,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../src/view/main/editor/editor.cpp" line="213"/>
+        <location filename="../src/view/main/editor/editor.cpp" line="215"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/view/main/editor/editor.cpp" line="213"/>
+        <location filename="../src/view/main/editor/editor.cpp" line="215"/>
         <source>GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)</source>
         <translation>GO图文件(*.go *.gom);;HTML文件(*.html);;GO Chart(*.goc)</translation>
     </message>
@@ -299,17 +304,16 @@
         <translation>分析(&amp;A)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="65"/>
         <source>Language(&amp;L)</source>
-        <translation>语言(&amp;L)</translation>
+        <translation type="obsolete">语言(&amp;L)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="72"/>
+        <location filename="../form/gomainwindow.ui" line="62"/>
         <source>Help(&amp;H)</source>
         <translation>帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="93"/>
+        <location filename="../form/gomainwindow.ui" line="91"/>
         <source>File</source>
         <translation>文件</translation>
     </message>
@@ -328,159 +332,184 @@
         <translation>文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="79"/>
+        <location filename="../form/gomainwindow.ui" line="69"/>
         <source>View(&amp;V)</source>
         <translation>视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="110"/>
+        <location filename="../form/gomainwindow.ui" line="77"/>
+        <source>Edit(&amp;E)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="108"/>
         <source>Analysis</source>
         <translation>分析</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="131"/>
+        <location filename="../form/gomainwindow.ui" line="129"/>
         <source>New</source>
         <translation>新建</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="134"/>
+        <location filename="../form/gomainwindow.ui" line="132"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="139"/>
+        <location filename="../form/gomainwindow.ui" line="141"/>
         <source>New Markov</source>
         <translation>新建 可修系统</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="148"/>
+        <location filename="../form/gomainwindow.ui" line="150"/>
         <source>Open...(&amp;O)</source>
         <translation>打开...(&amp;O)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="151"/>
+        <location filename="../form/gomainwindow.ui" line="153"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="160"/>
+        <location filename="../form/gomainwindow.ui" line="162"/>
         <source>Close(&amp;C)</source>
         <translation>关闭(&amp;C)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="163"/>
+        <location filename="../form/gomainwindow.ui" line="165"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="168"/>
+        <location filename="../form/gomainwindow.ui" line="170"/>
         <source>Close All</source>
         <translation>关闭所有</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="171"/>
+        <location filename="../form/gomainwindow.ui" line="173"/>
         <source>Ctrl+Shift+W</source>
         <translation>Ctrl+Shift+W</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="180"/>
+        <location filename="../form/gomainwindow.ui" line="182"/>
         <source>Save(&amp;S)</source>
         <translation>保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="183"/>
+        <location filename="../form/gomainwindow.ui" line="185"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="192"/>
+        <location filename="../form/gomainwindow.ui" line="194"/>
         <source>Save As...</source>
         <translation>另存为...</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="201"/>
+        <location filename="../form/gomainwindow.ui" line="203"/>
         <source>Save All</source>
         <translation>保存所有</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="204"/>
+        <location filename="../form/gomainwindow.ui" line="206"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="213"/>
+        <location filename="../form/gomainwindow.ui" line="215"/>
         <source>Quit(&amp;Q)</source>
         <translation>退出(&amp;Q)</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="216"/>
+        <location filename="../form/gomainwindow.ui" line="218"/>
         <source>Ctrl+Q</source>
         <translation>Ctrl+Q</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="221"/>
+        <location filename="../form/gomainwindow.ui" line="223"/>
         <source>Chinese Simplified</source>
         <translation>简体中文</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="226"/>
+        <location filename="../form/gomainwindow.ui" line="228"/>
         <source>English</source>
         <translation>英语</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="235"/>
+        <location filename="../form/gomainwindow.ui" line="237"/>
         <source>About</source>
         <translation>关于</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="244"/>
+        <location filename="../form/gomainwindow.ui" line="246"/>
         <source>Help</source>
         <translation>帮助</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="247"/>
+        <location filename="../form/gomainwindow.ui" line="249"/>
         <source>F1</source>
         <translation>F1</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="256"/>
+        <location filename="../form/gomainwindow.ui" line="258"/>
         <source>Analysis Probability</source>
         <translation>概率分析</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="259"/>
+        <location filename="../form/gomainwindow.ui" line="261"/>
         <source>F9</source>
         <translation>F9</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="268"/>
+        <location filename="../form/gomainwindow.ui" line="270"/>
         <source>Find Path</source>
         <translation>路集计算</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="277"/>
+        <location filename="../form/gomainwindow.ui" line="279"/>
         <source>Find Cut</source>
         <translation>割集计算</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="288"/>
+        <location filename="../form/gomainwindow.ui" line="290"/>
         <source>Tool DockWidget</source>
         <translation>工具悬浮窗</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="299"/>
+        <location filename="../form/gomainwindow.ui" line="301"/>
         <source>Parameter DockWidget</source>
         <translation>参数悬浮窗</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="310"/>
+        <location filename="../form/gomainwindow.ui" line="312"/>
         <source>File Toolbar</source>
         <translation>文件工具栏</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="321"/>
+        <location filename="../form/gomainwindow.ui" line="323"/>
         <source>Analysis Toolbar</source>
         <translation>分析工具栏</translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="332"/>
+        <source>Copy(&amp;C)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="341"/>
+        <source>Delete(&amp;D)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="346"/>
+        <source>Delete All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="357"/>
+        <source>Message DockWidget</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ZHG GO Methodology</source>
@@ -561,6 +590,14 @@
     </message>
 </context>
 <context>
+    <name>OutputConsole</name>
+    <message>
+        <location filename="../form/outputconsole.ui" line="14"/>
+        <source>Output Console</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ParameterAbstract</name>
     <message>
         <location filename="../src/view/main/dock/parameter/parameterabstract.cpp" line="23"/>
@@ -596,9 +633,23 @@
 <context>
     <name>ParameterGOMarkovCommonCause</name>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="19"/>
         <source>Common Cause</source>
-        <translation>共因失效</translation>
+        <translation type="obsolete">共因失效</translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="20"/>
+        <source>Breakdown Total</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="31"/>
+        <source>Breakdown Individual</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="42"/>
+        <source>Gamma C</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -626,136 +677,185 @@
 <context>
     <name>ParameterGOMarkovOperator</name>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="123"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="156"/>
         <source>Failure Rate</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="134"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="145"/>
         <source>Repair Rate</source>
         <translation>维修率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="145"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="134"/>
         <source>Repair Time</source>
         <translation>维修时间</translation>
     </message>
     <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="261"/>
         <source>Failure Rate 1</source>
-        <translation type="obsolete">故障率 1</translation>
+        <translation type="unfinished">故障率 1</translation>
     </message>
     <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="250"/>
         <source>Repair Rate 1</source>
-        <translation type="obsolete">维修率 1</translation>
+        <translation type="unfinished">维修率 1</translation>
     </message>
     <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="239"/>
         <source>Repair Time 1</source>
-        <translation type="obsolete">维修时间 1</translation>
+        <translation type="unfinished">维修时间 1</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="244"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="303"/>
         <source>Failure Rate 2</source>
         <translation>故障率 2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="233"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="292"/>
         <source>Repair Rate 2</source>
         <translation>维修率 2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="110"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="119"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="186"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="198"/>
         <source>Dual Breakdown</source>
         <translation>两故障模式</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="206"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="223"/>
         <source>Breakdown Correlate</source>
         <translation>停工相关</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="222"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="281"/>
         <source>Repair Time 2</source>
         <translation>维修时间 2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="312"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="400"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="341"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="418"/>
+        <source>I</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="435"/>
+        <source>L</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="452"/>
+        <source>J</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="501"/>
         <source>Markov 2</source>
         <translation>马尔科夫2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="354"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="514"/>
         <source>Operator 22 Markov Status 2</source>
         <translation>操作符22状态2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="355"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="515"/>
         <source>lambda</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="356"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="516"/>
         <source>mu</source>
         <translation>维修率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="386"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="546"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="399"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="559"/>
         <source>Operator 23 Alpha</source>
         <translation>操作符23 Alpha</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="400"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="560"/>
         <source>alpha</source>
         <translation>alpha</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="438"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="598"/>
         <source>Operator 13 Relation</source>
         <translation>操作符13 关系</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="469"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="629"/>
         <source>Failure Rate Feedback</source>
         <translation>反馈故障率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="480"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="640"/>
         <source>Repair Rate Feedback</source>
         <translation>反馈维修率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="491"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="651"/>
         <source>Repair Time Feedback</source>
         <translation>反馈维修时间</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="534"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="694"/>
         <source>Backup Probability</source>
         <translation>备用概率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="425"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="721"/>
+        <source>Delta Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="755"/>
+        <source>Delta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="768"/>
+        <source>Operator 19 Delta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="769"/>
+        <source>i</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="770"/>
+        <source>delta</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="797"/>
+        <source>Lambda b1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="585"/>
         <source>Relation</source>
         <translation>关系</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="343"/>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="388"/>
-        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="427"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="503"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="548"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="587"/>
+        <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="757"/>
         <source>Click to Edit...</source>
         <translation>点击编辑...</translation>
     </message>
@@ -763,37 +863,47 @@
 <context>
     <name>ParameterGOOperator</name>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="73"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="74"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="89"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="90"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="116"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="120"/>
+        <source>Horizon Flip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="127"/>
+        <source>Vertical Flip</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="155"/>
         <source>Probability 0</source>
         <translation>概率0</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="140"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="179"/>
         <source>Probability 1</source>
         <translation>概率1</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="151"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="190"/>
         <source>Probability 2</source>
         <translation>概率2</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="180"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="219"/>
         <source>Probabilities</source>
         <translation>状态概率</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="182"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="221"/>
         <source>Click to edit</source>
         <translation>点击编辑</translation>
     </message>
@@ -802,17 +912,17 @@
         <translation type="obsolete">输出</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="227"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="266"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="236"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="275"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="270"/>
+        <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="309"/>
         <source>K</source>
         <translation>K</translation>
     </message>
@@ -922,95 +1032,120 @@
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="59"/>
+        <source>TYPE_OUTPUT_CLEAR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controller/message/message/messagefactory.cpp" line="61"/>
+        <source>TYPE_OUTPUT_TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controller/message/message/messagefactory.cpp" line="63"/>
+        <source>TYPE_OUTPUT_SAMELINE_TEXT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controller/message/message/messagefactory.cpp" line="65"/>
+        <source>TYPE_OUTPUT_CORRECT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controller/message/message/messagefactory.cpp" line="67"/>
+        <source>TYPE_OUTPUT_ERROR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/controller/message/message/messagefactory.cpp" line="69"/>
         <source>TYPE_UNDEFINED</source>
         <translation>类型_未定义</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="118"/>
+        <location filename="../src/model/go/gograph.cpp" line="124"/>
         <source>The input of the operator is null. </source>
         <translation>存在操作符的输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="126"/>
+        <location filename="../src/model/go/gograph.cpp" line="132"/>
         <source>The sub input of the operator is null. </source>
         <translation>存在操作符的辅输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="149"/>
+        <location filename="../src/model/go/gograph.cpp" line="155"/>
         <source>The GO graph contains cycle. </source>
         <translation>GO图中存在环。</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="158"/>
+        <location filename="../src/model/go/gograph.cpp" line="164"/>
         <source>The GO graph is not connected. </source>
         <translation>GO图不连通。</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="649"/>
-        <location filename="../src/model/go/gograph.cpp" line="755"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="240"/>
+        <location filename="../src/model/go/gograph.cpp" line="655"/>
+        <location filename="../src/model/go/gograph.cpp" line="761"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="459"/>
         <source>Can&apos;t open file </source>
         <translation>无法打开文件</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="680"/>
+        <location filename="../src/model/go/gograph.cpp" line="686"/>
         <location filename="../src/model/markov/gomarkovchartdata.cpp" line="131"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="271"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="490"/>
         <source>Analysis Result</source>
         <translation>分析结果</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="693"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="284"/>
+        <location filename="../src/model/go/gograph.cpp" line="699"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="503"/>
         <source>Operator</source>
         <translation>操作符</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="694"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="285"/>
+        <location filename="../src/model/go/gograph.cpp" line="700"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="504"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="700"/>
-        <location filename="../src/model/go/gograph.cpp" line="715"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="291"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="314"/>
+        <location filename="../src/model/go/gograph.cpp" line="706"/>
+        <location filename="../src/model/go/gograph.cpp" line="721"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="510"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="533"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="701"/>
-        <location filename="../src/model/go/gograph.cpp" line="717"/>
-        <location filename="../src/model/go/gograph.cpp" line="784"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="292"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="315"/>
+        <location filename="../src/model/go/gograph.cpp" line="707"/>
+        <location filename="../src/model/go/gograph.cpp" line="723"/>
+        <location filename="../src/model/go/gograph.cpp" line="790"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="511"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="534"/>
         <location filename="../src/view/graphics/markov/itemgomarkovchart.cpp" line="122"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="716"/>
+        <location filename="../src/model/go/gograph.cpp" line="722"/>
         <source>Accumulative</source>
         <translation>累积概率</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="772"/>
+        <location filename="../src/model/go/gograph.cpp" line="778"/>
         <source>Path or cut is not exist. </source>
         <translation>路集或割集不存在。</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="781"/>
+        <location filename="../src/model/go/gograph.cpp" line="787"/>
         <source>No.</source>
         <translation>No.</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="782"/>
+        <location filename="../src/model/go/gograph.cpp" line="788"/>
         <source>Order</source>
         <translation>阶数</translation>
     </message>
     <message>
-        <location filename="../src/model/go/gograph.cpp" line="783"/>
+        <location filename="../src/model/go/gograph.cpp" line="789"/>
         <source>ID List</source>
         <translation>ID列表</translation>
     </message>
@@ -1070,30 +1205,35 @@
         <translation> : %1</translation>
     </message>
     <message>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="302"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="321"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="61"/>
+        <source>Error: Graph </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="521"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="540"/>
         <source>Failure Rate</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="306"/>
-        <location filename="../src/model/markov/gomarkovgraph.cpp" line="326"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="525"/>
+        <location filename="../src/model/markov/gomarkovgraph.cpp" line="545"/>
         <source>Repair Rate</source>
         <translation>维修率</translation>
     </message>
     <message>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="368"/>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="394"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="382"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="408"/>
         <source>Set order</source>
         <translation>设置阶数</translation>
     </message>
     <message>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="369"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="383"/>
         <source>Input path order: </source>
         <translation>输入路集阶数：</translation>
     </message>
     <message>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="395"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="409"/>
         <source>Input cut order: </source>
         <translation>输入割集阶数：</translation>
     </message>
@@ -1113,13 +1253,69 @@
         <source>No equivalent is valid.</source>
         <translation>等效不存在。</translation>
     </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator.cpp" line="174"/>
+        <location filename="../src/model/markov/gomarkovoperator.cpp" line="184"/>
+        <location filename="../src/model/markov/gomarkovoperator11.cpp" line="276"/>
+        <location filename="../src/model/markov/gomarkovoperator11.cpp" line="283"/>
+        <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="59"/>
+        <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="66"/>
+        <location filename="../src/model/markov/gomarkovoperator19.cpp" line="138"/>
+        <location filename="../src/model/markov/gomarkovoperator19.cpp" line="145"/>
+        <location filename="../src/model/markov/gomarkovoperator22.cpp" line="52"/>
+        <location filename="../src/model/markov/gomarkovoperator22.cpp" line="59"/>
+        <source>Error: Operator </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator.cpp" line="174"/>
+        <source>-%1 does not have input at %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator.cpp" line="184"/>
+        <source>-%1 does not have sub input at %2.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator11.cpp" line="276"/>
+        <source>-%1 &apos;s input should have same breakdown rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator11.cpp" line="283"/>
+        <source>-%1 &apos;s input should have same repair rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="59"/>
+        <location filename="../src/model/markov/gomarkovoperator19.cpp" line="138"/>
+        <source>-%1 The input should be a vector.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="66"/>
+        <location filename="../src/model/markov/gomarkovoperator22.cpp" line="59"/>
+        <source>-%1 The number of output should matches the length of the input vector.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator19.cpp" line="145"/>
+        <source>-%1 The number of delta should matches the length of the input vector.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/model/markov/gomarkovoperator22.cpp" line="52"/>
+        <source>-%1 The sub-input should be a vector.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>SceneGO</name>
     <message>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="360"/>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="384"/>
-        <location filename="../src/view/graphics/go/scenego.cpp" line="410"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="374"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="398"/>
+        <location filename="../src/view/graphics/go/scenego.cpp" line="424"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -1127,9 +1323,8 @@
 <context>
     <name>SceneGOMarkov</name>
     <message>
-        <location filename="../src/view/graphics/markov/scenegomarkov.cpp" line="373"/>
         <source>Error</source>
-        <translation>错误</translation>
+        <translation type="obsolete">错误</translation>
     </message>
 </context>
 <context>
@@ -1414,31 +1609,37 @@
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1028"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1069"/>
         <source>Backup Gate</source>
         <translation>备用门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1069"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1110"/>
         <source>Overpressure Protection</source>
         <translation>超压保护操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1110"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1151"/>
         <source>NOT Gate</source>
         <translation>非门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1151"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1187"/>
+        <source>Overall Feedback</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../form/toolboxgomarkov.ui" line="1228"/>
         <source>M Bits N Through</source>
         <translation>M位N通阀操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1192"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1269"/>
         <source>M Bits N Through 2</source>
         <translation>M位N通阀操作符 2</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1233"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1310"/>
         <source>Combination</source>
         <translation>工况组合器</translation>
     </message>

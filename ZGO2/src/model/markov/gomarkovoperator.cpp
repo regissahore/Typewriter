@@ -253,10 +253,12 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     {
         return false;
     }
+    element = element.nextSiblingElement();
     if (!this->markovStatus1()->tryOpen(element))
     {
         return false;
     }
+    element = element.nextSiblingElement();
     if (!this->markovStatus2()->tryOpen(element))
     {
         return false;

@@ -81,27 +81,7 @@ double GOMarkovOperator23::calcTempOutputMarkovStatus(double time, QVector<doubl
 
 GOMarkovOperator* GOMarkovOperator23::copy()
 {
-    GOMarkovOperator23 *op = new GOMarkovOperator23();
-    op->setType(this->TypedItem::type());
-    op->input()->setNumber(this->input()->number());
-    op->subInput()->setNumber(this->subInput()->number());
-    op->output()->setNumber(this->output()->number());
-
-    op->setDualBreakdown(this->isDualBreakdown());
-    op->setBreakdownCorrelate(this->isBreakdownCorrelate());
-
-    op->markovStatus()->setProbabilityNormal(this->markovStatus()->probabilityNormal());
-    op->markovStatus()->setFrequencyBreakdown(this->markovStatus()->frequencyBreakdown());
-    op->markovStatus()->setFrequencyRepair(this->markovStatus()->frequencyRepair());
-
-    op->markovStatus1()->setProbabilityNormal(this->markovStatus1()->probabilityNormal());
-    op->markovStatus1()->setFrequencyBreakdown(this->markovStatus1()->frequencyBreakdown());
-    op->markovStatus1()->setFrequencyRepair(this->markovStatus1()->frequencyRepair());
-
-    op->markovStatus2()->setProbabilityNormal(this->markovStatus2()->probabilityNormal());
-    op->markovStatus2()->setFrequencyBreakdown(this->markovStatus2()->frequencyBreakdown());
-    op->markovStatus2()->setFrequencyRepair(this->markovStatus2()->frequencyRepair());
-
+    GOMarkovOperator23 *op = (GOMarkovOperator23*)this->GOMarkovOperator::copy();
     for (int i = 0; i < this->input()->number(); ++i)
     {
         op->alpha()->push_back(this->alpha()->at(i));
@@ -117,10 +97,13 @@ void GOMarkovOperator23::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
+    element.setAttribute("dual", this->isDualBreakdown());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
+    this->markovStatus1()->save(document, element);
+    this->markovStatus2()->save(document, element);
     QDomElement subElement = document.createElement("markov2");
     for (int i = 0; i < this->input()->number(); ++i)
     {
@@ -142,6 +125,7 @@ bool GOMarkovOperator23::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
+    this->setDualBreakdown(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
@@ -150,6 +134,16 @@ bool GOMarkovOperator23::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus1()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus2()->tryOpen(element))
     {
         return false;
     }
