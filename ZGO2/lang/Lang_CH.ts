@@ -164,7 +164,7 @@
     <message>
         <location filename="../src/view/main/dock/message/dockmessage.cpp" line="23"/>
         <source>Output</source>
-        <translation type="unfinished">输出</translation>
+        <translation>输出</translation>
     </message>
 </context>
 <context>
@@ -339,7 +339,7 @@
     <message>
         <location filename="../form/gomainwindow.ui" line="77"/>
         <source>Edit(&amp;E)</source>
-        <translation type="unfinished"></translation>
+        <translation>编辑(&amp;E)</translation>
     </message>
     <message>
         <location filename="../form/gomainwindow.ui" line="108"/>
@@ -494,22 +494,22 @@
     <message>
         <location filename="../form/gomainwindow.ui" line="332"/>
         <source>Copy(&amp;C)</source>
-        <translation type="unfinished"></translation>
+        <translation>复制(&amp;C)</translation>
     </message>
     <message>
         <location filename="../form/gomainwindow.ui" line="341"/>
         <source>Delete(&amp;D)</source>
-        <translation type="unfinished"></translation>
+        <translation>删除(&amp;D)</translation>
     </message>
     <message>
         <location filename="../form/gomainwindow.ui" line="346"/>
         <source>Delete All</source>
-        <translation type="unfinished"></translation>
+        <translation>删除所有</translation>
     </message>
     <message>
         <location filename="../form/gomainwindow.ui" line="357"/>
         <source>Message DockWidget</source>
-        <translation type="unfinished"></translation>
+        <translation>消息悬浮窗</translation>
     </message>
     <message>
         <source>ZHG GO Methodology</source>
@@ -594,7 +594,7 @@
     <message>
         <location filename="../form/outputconsole.ui" line="14"/>
         <source>Output Console</source>
-        <translation type="unfinished"></translation>
+        <translation>输出信息</translation>
     </message>
 </context>
 <context>
@@ -639,17 +639,17 @@
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="20"/>
         <source>Breakdown Total</source>
-        <translation type="unfinished"></translation>
+        <translation>整体故障率</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="31"/>
         <source>Breakdown Individual</source>
-        <translation type="unfinished"></translation>
+        <translation>单独故障率</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovcommoncause.cpp" line="42"/>
         <source>Gamma C</source>
-        <translation type="unfinished"></translation>
+        <translation>γc</translation>
     </message>
 </context>
 <context>
@@ -694,17 +694,17 @@
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="261"/>
         <source>Failure Rate 1</source>
-        <translation type="unfinished">故障率 1</translation>
+        <translation>故障率 1</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="250"/>
         <source>Repair Rate 1</source>
-        <translation type="unfinished">维修率 1</translation>
+        <translation>维修率 1</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="239"/>
         <source>Repair Time 1</source>
-        <translation type="unfinished">维修时间 1</translation>
+        <translation>维修时间 1</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="303"/>
@@ -744,17 +744,17 @@
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="418"/>
         <source>I</source>
-        <translation type="unfinished"></translation>
+        <translation>停工故障数I</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="435"/>
         <source>L</source>
-        <translation type="unfinished"></translation>
+        <translation>维修工数L</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="452"/>
         <source>J</source>
-        <translation type="unfinished"></translation>
+        <translation>备用指示J</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="501"/>
@@ -819,32 +819,32 @@
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="721"/>
         <source>Delta Number</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta数量</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="755"/>
         <source>Delta</source>
-        <translation type="unfinished"></translation>
+        <translation>Delta</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="768"/>
         <source>Operator 19 Delta</source>
-        <translation type="unfinished"></translation>
+        <translation>操作符19 Delta</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="769"/>
         <source>i</source>
-        <translation type="unfinished"></translation>
+        <translation>i</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="770"/>
         <source>delta</source>
-        <translation type="unfinished"></translation>
+        <translation>delta</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="797"/>
         <source>Lambda b1</source>
-        <translation type="unfinished"></translation>
+        <translation>λb1</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergomarkovoperator.cpp" line="585"/>
@@ -875,12 +875,12 @@
     <message>
         <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="120"/>
         <source>Horizon Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>水平翻转</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="127"/>
         <source>Vertical Flip</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直翻转</translation>
     </message>
     <message>
         <location filename="../src/view/main/dock/parameter/parametergooperator.cpp" line="155"/>
@@ -1033,27 +1033,27 @@
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="59"/>
         <source>TYPE_OUTPUT_CLEAR</source>
-        <translation type="unfinished"></translation>
+        <translation>类型_输出_清空</translation>
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="61"/>
         <source>TYPE_OUTPUT_TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>类型_输出_文本</translation>
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="63"/>
         <source>TYPE_OUTPUT_SAMELINE_TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>类型_输出_同行_文本</translation>
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="65"/>
         <source>TYPE_OUTPUT_CORRECT</source>
-        <translation type="unfinished"></translation>
+        <translation>类型_输出_正确</translation>
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="67"/>
         <source>TYPE_OUTPUT_ERROR</source>
-        <translation type="unfinished"></translation>
+        <translation>类型_输出_错误</translation>
     </message>
     <message>
         <location filename="../src/controller/message/message/messagefactory.cpp" line="69"/>
@@ -1207,7 +1207,7 @@
     <message>
         <location filename="../src/model/markov/gomarkovgraph.cpp" line="61"/>
         <source>Error: Graph </source>
-        <translation type="unfinished"></translation>
+        <translation>错误: GO图</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovgraph.cpp" line="521"/>
@@ -1265,49 +1265,49 @@
         <location filename="../src/model/markov/gomarkovoperator22.cpp" line="52"/>
         <location filename="../src/model/markov/gomarkovoperator22.cpp" line="59"/>
         <source>Error: Operator </source>
-        <translation type="unfinished"></translation>
+        <translation>错误: 操作符</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator.cpp" line="174"/>
         <source>-%1 does not have input at %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 在%2没有输入。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator.cpp" line="184"/>
         <source>-%1 does not have sub input at %2.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator11.cpp" line="276"/>
         <source>-%1 &apos;s input should have same breakdown rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 输入应该具有相同的故障率。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator11.cpp" line="283"/>
         <source>-%1 &apos;s input should have same repair rate.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 输入应该具有相同的维修率。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="59"/>
         <location filename="../src/model/markov/gomarkovoperator19.cpp" line="138"/>
         <source>-%1 The input should be a vector.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 输入信号应该是一个向量。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator12a.cpp" line="66"/>
         <location filename="../src/model/markov/gomarkovoperator22.cpp" line="59"/>
         <source>-%1 The number of output should matches the length of the input vector.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 输出的数量应该等于输入向量的长度。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator19.cpp" line="145"/>
         <source>-%1 The number of delta should matches the length of the input vector.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 delta的数量应该等于输入向量的长度。</translation>
     </message>
     <message>
         <location filename="../src/model/markov/gomarkovoperator22.cpp" line="52"/>
         <source>-%1 The sub-input should be a vector.</source>
-        <translation type="unfinished"></translation>
+        <translation>-%1 辅助输入应该是一个向量。</translation>
     </message>
 </context>
 <context>
@@ -1626,7 +1626,7 @@
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1187"/>
         <source>Overall Feedback</source>
-        <translation type="unfinished"></translation>
+        <translation>整体反馈</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1228"/>
