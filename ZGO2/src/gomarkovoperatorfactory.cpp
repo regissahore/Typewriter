@@ -273,6 +273,10 @@ bool GOMarkovOperatorFactory::isLogical(const int type)
     case Operator_Type_2:
     case Operator_Type_10:
     case Operator_Type_11:
+    case Operator_Type_12A:
+    case Operator_Type_15B:
+    case Operator_Type_20:
+    case Operator_Type_23:
         return true;
     }
     return false;

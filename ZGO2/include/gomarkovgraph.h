@@ -30,6 +30,10 @@ protected:
     virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
     virtual QVector<GOOperator*> getTopologicalOrder();
     virtual QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
+    virtual GOPathSetSetSet findPath(int order);
+    virtual GOPathSetSetSet findCut(int order);
+    virtual void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
+    virtual void findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOMARKOVGRAPH_H

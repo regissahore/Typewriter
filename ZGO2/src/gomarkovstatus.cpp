@@ -59,6 +59,15 @@ void GOMarkovStatus::setRepairTime(double value)
     this->setFrequencyRepair(1.0 / value);
 }
 
+GOMarkovStatus* GOMarkovStatus::copy() const
+{
+    GOMarkovStatus *status = new GOMarkovStatus();
+    status->setProbabilityNormal(this->_probabilityNormal);
+    status->setFrequencyBreakdown(this->_frequencyBreakdown);
+    status->setFrequencyRepair(this->_frequencyRepair);
+    return status;
+}
+
 void GOMarkovStatus::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("status");

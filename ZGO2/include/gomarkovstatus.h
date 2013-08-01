@@ -27,6 +27,7 @@ public:
     void setFrequencyBreakdown(double value);
     void setFrequencyRepair(double value);
     void setRepairTime(double value);
+    GOMarkovStatus* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

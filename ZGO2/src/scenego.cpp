@@ -386,6 +386,7 @@ void SceneGO::analysisPath(const QString filePath)
     {
         GOGraph *graph = this->generatorGOGraph();
         GOPathSetSetSet path = graph->findPath(dialog->integerInput()->value());
+        path = graph->findPath(dialog->integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", path);

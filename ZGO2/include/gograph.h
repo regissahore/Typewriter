@@ -27,8 +27,8 @@ public:
     void addOperator(GOOperator *op);
     void addSignal(GOSignal *signal);
     virtual void calcAccumulativeProbability();
-    GOPathSetSetSet findPath(int order);
-    GOPathSetSetSet findCut(int order);
+    virtual GOPathSetSetSet findPath(int order);
+    virtual GOPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
     virtual bool saveAsHTML(const QString filePath);
     virtual bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
@@ -52,8 +52,8 @@ protected:
     virtual QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     QVector<Output> getCommonSignalList(GOOperator *op);
     QVector<GOOperator*> getEndList();
-    void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
-    void findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
+    virtual void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
+    virtual void findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOGRAPH_H

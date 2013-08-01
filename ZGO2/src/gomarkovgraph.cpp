@@ -19,6 +19,10 @@
 #include "gomarkovcommoncause.h"
 #include "messagefactory.h"
 #include "messager.h"
+#include "gocutset.h"
+#include "gopathset.h"
+#include "gopathsetset.h"
+#include "gopathsetsetset.h"
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -448,6 +452,228 @@ QVector< QVector<GOGraph::Output> > GOMarkovGraph::getAncestorList(GOOperator *o
         }
     }
     return vector;
+}
+
+GOPathSetSetSet GOMarkovGraph::findPath(int order)
+{
+    GOPathSetSetSet path;
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return path;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    GOPathSet tempPath;
+    if (order > list.size())
+    {
+        order = list.size();
+    }
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GOMarkovOperator* op = (GOMarkovOperator*)list[i];
+        op->initOutputMarkovStatus();
+    }
+    for (int i = 1; i <= order; ++i)
+    {
+        this->findPathDfs(path, list, tempPath, 0, 0, i);
+    }
+    return path;
+}
+
+GOPathSetSetSet GOMarkovGraph::findCut(int order)
+{
+    GOPathSetSetSet path;
+    this->_error = "";
+    if (!this->checkCycleAndConnection())
+    {
+        return path;
+    }
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    GOCutSet tempPath;
+    if (order > list.size())
+    {
+        order = list.size();
+    }
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GOMarkovOperator* op = (GOMarkovOperator*)list[i];
+        op->initOutputMarkovStatus();
+    }
+    for (int i = 1; i <= order; ++i)
+    {
+        this->findCutDfs(path, list, tempPath, 0, 0, i);
+    }
+    return path;
+}
+
+void GOMarkovGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order)
+{
+    if (number == order)
+    {
+        QVector<GOOperator*> endList;
+        for (int i = 0; i < list.size(); ++i)
+        {
+            for (int j = 0; j < list[i]->output()->number(); ++j)
+            {
+                if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    endList.push_back(list[i]);
+                    break;
+                }
+            }
+        }
+        bool flag = false;
+        if (endList.size() > path.endList().size())
+        {
+            flag = true;
+        }
+        else
+        {
+            for (int i = 0; i < path.list().size(); ++i)
+            {
+                bool contain = false;
+                for (int j = 0; j < path.list().at(i)->list().size(); ++j)
+                {
+                    if (tempPath.isContain(path.list().at(i)->list().at(j)))
+                    {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (flag)
+        {
+            for (int i = 0; i < list.size(); ++i)
+            {
+                GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+                op->calcOutputMarkovStatus(0.0);
+            }
+            for (int i = 0; i < endList.size(); ++i)
+            {
+                GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
+                bool flag = false;
+                for (int j = 0; j < list[i]->output()->number(); ++j)
+                {
+                    if (op->markovOutputStatus()->at(j)->probabilityNormal() >= 1.0 - 1e-8)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    path.add(endList[i], tempPath.copy());
+                }
+            }
+        }
+        return;
+    }
+    if (number > order || index >= list.size())
+    {
+        return;
+    }
+    if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+    {
+        GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+        op->markovStatus()->setProbabilityNormal(1.0);
+        tempPath.add(list[index]);
+        this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
+        tempPath.removeEnd();
+    }
+    GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+    op->markovStatus()->setProbabilityNormal(0.0);
+    this->findPathDfs(path, list, tempPath, index + 1, number, order);
+}
+
+void GOMarkovGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order)
+{
+    if (number == order)
+    {
+        QVector<GOOperator*> endList;
+        for (int i = 0; i < list.size(); ++i)
+        {
+            for (int j = 0; j < list[i]->output()->number(); ++j)
+            {
+                if (list[i]->output()->signal()->at(j)->size() == 0)
+                {
+                    endList.push_back(list[i]);
+                    break;
+                }
+            }
+        }
+        bool flag = false;
+        if (endList.size() > cut.endList().size())
+        {
+            flag = true;
+        }
+        else
+        {
+            for (int i = 0; i < cut.list().size(); ++i)
+            {
+                bool contain = false;
+                for (int j = 0; j < cut.list().at(i)->list().size(); ++j)
+                {
+                    if (tempPath.isContain(cut.list().at(i)->list().at(j)))
+                    {
+                        contain = true;
+                        break;
+                    }
+                }
+                if (!contain)
+                {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+        if (flag)
+        {
+            for (int i = 0; i < list.size(); ++i)
+            {
+                GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+                op->calcOutputMarkovStatus(0.0);
+            }
+            for (int i = 0; i < endList.size(); ++i)
+            {
+                GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
+                bool flag = false;
+                for (int j = 0; j < list[i]->output()->number(); ++j)
+                {
+                    if (op->markovOutputStatus()->at(j)->probabilityBreakdown() >= 1.0 - 1e-8)
+                    {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    cut.add(endList[i], tempPath.copy());
+                }
+            }
+        }
+        return;
+    }
+    if (number > order || index >= list.size())
+    {
+        return;
+    }
+    if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+    {
+        GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+        op->markovStatus()->setProbabilityBreakdown(1.0);
+        tempPath.add(list[index]);
+        this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
+        tempPath.removeEnd();
+    }
+    GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+    op->markovStatus()->setProbabilityBreakdown(0.0);
+    this->findCutDfs(cut, list, tempPath, index + 1, number, order);
 }
 
 bool GOMarkovGraph::saveAsHTML(const QString filePath)
