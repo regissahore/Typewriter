@@ -21,7 +21,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = new QDoubleSpinBox(this);
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(6);
+        spin->setDecimals(12);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->breakdownTotal());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownTotal(double)));
@@ -32,7 +32,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = new QDoubleSpinBox(this);
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(6);
+        spin->setDecimals(12);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->breakdownIndividual());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownIndividual(double)));
@@ -43,7 +43,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = new QDoubleSpinBox(this);
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(6);
+        spin->setDecimals(12);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->gammaC());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemGammaC(double)));

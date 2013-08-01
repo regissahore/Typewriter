@@ -133,7 +133,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         this->_spinBoxRepairTime = new QDoubleSpinBox(this);
         this->_spinBoxRepairTime->setMinimum(1e-6);
         this->_spinBoxRepairTime->setMaximum(1e100);
-        this->_spinBoxRepairTime->setDecimals(6);
+        this->_spinBoxRepairTime->setDecimals(12);
         this->_spinBoxRepairTime->setSingleStep(0.01);
         this->_spinBoxRepairTime->setValue(1.0 / status->frequencyRepair());
         this->connect(this->_spinBoxRepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemRepairTime(double)));
@@ -144,7 +144,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         this->_spinBoxFrequencyRepair = new QDoubleSpinBox(this);
         this->_spinBoxFrequencyRepair->setMinimum(1e-6);
         this->_spinBoxFrequencyRepair->setMaximum(1e100);
-        this->_spinBoxFrequencyRepair->setDecimals(6);
+        this->_spinBoxFrequencyRepair->setDecimals(12);
         this->_spinBoxFrequencyRepair->setSingleStep(0.01);
         this->_spinBoxFrequencyRepair->setValue(status->frequencyRepair());
         this->connect(this->_spinBoxFrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyRepair(double)));
@@ -155,7 +155,7 @@ void ParameterGOMarkovOperator::addMarkovParameter()
         this->_spinBoxFrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxFrequencyBreakdown->setMinimum(0.0);
         this->_spinBoxFrequencyBreakdown->setMaximum(1e100);
-        this->_spinBoxFrequencyBreakdown->setDecimals(6);
+        this->_spinBoxFrequencyBreakdown->setDecimals(12);
         this->_spinBoxFrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxFrequencyBreakdown->setValue(status->frequencyBreakdown());
         this->connect(this->_spinBoxFrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemFrequencyBreakdown(double)));
@@ -237,7 +237,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1RepairTime = new QDoubleSpinBox(this);
         this->_spinBoxStatus1RepairTime->setMinimum(1e-6);
         this->_spinBoxStatus1RepairTime->setMaximum(1e100);
-        this->_spinBoxStatus1RepairTime->setDecimals(6);
+        this->_spinBoxStatus1RepairTime->setDecimals(12);
         this->_spinBoxStatus1RepairTime->setSingleStep(0.01);
         this->_spinBoxStatus1RepairTime->setValue(1.0 / status->frequencyRepair());
         this->connect(this->_spinBoxStatus1RepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovRepairTime1(double)));
@@ -248,7 +248,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1FrequencyRepair = new QDoubleSpinBox(this);
         this->_spinBoxStatus1FrequencyRepair->setMinimum(1e-6);
         this->_spinBoxStatus1FrequencyRepair->setMaximum(1e100);
-        this->_spinBoxStatus1FrequencyRepair->setDecimals(6);
+        this->_spinBoxStatus1FrequencyRepair->setDecimals(12);
         this->_spinBoxStatus1FrequencyRepair->setSingleStep(0.01);
         this->_spinBoxStatus1FrequencyRepair->setValue(status->frequencyRepair());
         this->connect(this->_spinBoxStatus1FrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyRepair1(double)));
@@ -259,7 +259,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus1FrequencyBreakdown->setMinimum(0.0);
         this->_spinBoxStatus1FrequencyBreakdown->setMaximum(1e100);
-        this->_spinBoxStatus1FrequencyBreakdown->setDecimals(6);
+        this->_spinBoxStatus1FrequencyBreakdown->setDecimals(12);
         this->_spinBoxStatus1FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus1FrequencyBreakdown->setValue(status->frequencyBreakdown());
         this->connect(this->_spinBoxStatus1FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown1(double)));
@@ -279,7 +279,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2RepairTime = new QDoubleSpinBox(this);
         this->_spinBoxStatus2RepairTime->setMinimum(1e-6);
         this->_spinBoxStatus2RepairTime->setMaximum(1e100);
-        this->_spinBoxStatus2RepairTime->setDecimals(6);
+        this->_spinBoxStatus2RepairTime->setDecimals(12);
         this->_spinBoxStatus2RepairTime->setSingleStep(0.01);
         this->_spinBoxStatus2RepairTime->setValue(1.0 / status->frequencyRepair());
         this->connect(this->_spinBoxStatus2RepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovRepairTime2(double)));
@@ -290,7 +290,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2FrequencyRepair = new QDoubleSpinBox(this);
         this->_spinBoxStatus2FrequencyRepair->setMinimum(1e-6);
         this->_spinBoxStatus2FrequencyRepair->setMaximum(1e100);
-        this->_spinBoxStatus2FrequencyRepair->setDecimals(6);
+        this->_spinBoxStatus2FrequencyRepair->setDecimals(12);
         this->_spinBoxStatus2FrequencyRepair->setSingleStep(0.01);
         this->_spinBoxStatus2FrequencyRepair->setValue(status->frequencyRepair());
         this->connect(this->_spinBoxStatus2FrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyRepair2(double)));
@@ -301,7 +301,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus2FrequencyBreakdown->setMinimum(0.0);
         this->_spinBoxStatus2FrequencyBreakdown->setMaximum(1e100);
-        this->_spinBoxStatus2FrequencyBreakdown->setDecimals(6);
+        this->_spinBoxStatus2FrequencyBreakdown->setDecimals(12);
         this->_spinBoxStatus2FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus2FrequencyBreakdown->setValue(status->frequencyBreakdown());
         this->connect(this->_spinBoxStatus2FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown2(double)));
@@ -627,7 +627,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackFrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBox9FeedbackFrequencyBreakdown->setMinimum(0.0);
         this->_spinBox9FeedbackFrequencyBreakdown->setMaximum(1e100);
-        this->_spinBox9FeedbackFrequencyBreakdown->setDecimals(6);
+        this->_spinBox9FeedbackFrequencyBreakdown->setDecimals(12);
         this->_spinBox9FeedbackFrequencyBreakdown->setSingleStep(0.01);
         this->_spinBox9FeedbackFrequencyBreakdown->setValue(status->frequencyBreakdown());
         this->connect(this->_spinBox9FeedbackFrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov9FeedbackFrequencyBreakdown(double)));
@@ -638,7 +638,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackFrequencyRepair = new QDoubleSpinBox(this);
         this->_spinBox9FeedbackFrequencyRepair->setMinimum(1e-6);
         this->_spinBox9FeedbackFrequencyRepair->setMaximum(1e100);
-        this->_spinBox9FeedbackFrequencyRepair->setDecimals(6);
+        this->_spinBox9FeedbackFrequencyRepair->setDecimals(12);
         this->_spinBox9FeedbackFrequencyRepair->setSingleStep(0.01);
         this->_spinBox9FeedbackFrequencyRepair->setValue(status->frequencyRepair());
         this->connect(this->_spinBox9FeedbackFrequencyRepair, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov9FeedbackFrequencyRepair(double)));
@@ -649,7 +649,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackRepairTime = new QDoubleSpinBox(this);
         this->_spinBox9FeedbackRepairTime->setMinimum(1e-6);
         this->_spinBox9FeedbackRepairTime->setMaximum(1e100);
-        this->_spinBox9FeedbackRepairTime->setDecimals(6);
+        this->_spinBox9FeedbackRepairTime->setDecimals(12);
         this->_spinBox9FeedbackRepairTime->setSingleStep(0.01);
         this->_spinBox9FeedbackRepairTime->setValue(1.0 / status->frequencyRepair());
         this->connect(this->_spinBox9FeedbackRepairTime, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov9FeedbackRepairTime(double)));
@@ -692,7 +692,7 @@ void ParameterGOMarkovOperator::addMarkov18ABackupParameter()
         QDoubleSpinBox *spin = new QDoubleSpinBox(this);
         spin->setMinimum(0.0);
         spin->setMaximum(1.0);
-        spin->setDecimals(6);
+        spin->setDecimals(12);
         spin->setSingleStep(0.01);
         spin->setValue(model->backup());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18ABackup(double)));
@@ -795,7 +795,7 @@ void ParameterGOMarkovOperator::addMarkov18LambdaB1Parameter()
         QDoubleSpinBox *spin = new QDoubleSpinBox(this);
         spin->setMinimum(0.0);
         spin->setMaximum(1.0);
-        spin->setDecimals(6);
+        spin->setDecimals(12);
         spin->setSingleStep(0.01);
         spin->setValue(model->lambdaB1());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18LambdaB1(double)));

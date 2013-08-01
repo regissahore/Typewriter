@@ -156,7 +156,7 @@ void ParameterGOOperator::addProbability0Parameter()
         this->_spinBoxProbability0 = new QDoubleSpinBox(this);
         this->_spinBoxProbability0->setMinimum(0.0);
         this->_spinBoxProbability0->setMaximum(1.0);
-        this->_spinBoxProbability0->setDecimals(6);
+        this->_spinBoxProbability0->setDecimals(12);
         this->_spinBoxProbability0->setSingleStep(0.01);
         this->_spinBoxProbability0->setValue(item->model()->status()->probability(0));
         this->connect(this->_spinBoxProbability0, SIGNAL(valueChanged(double)), this, SLOT(setItemProbability0(double)));
@@ -180,7 +180,7 @@ void ParameterGOOperator::addProbability12Parameter()
         this->_spinBoxProbability1 = new QDoubleSpinBox(this);
         this->_spinBoxProbability1->setMinimum(0.0);
         this->_spinBoxProbability1->setMaximum(1.0);
-        this->_spinBoxProbability1->setDecimals(6);
+        this->_spinBoxProbability1->setDecimals(12);
         this->_spinBoxProbability1->setSingleStep(0.01);
         this->_spinBoxProbability1->setValue(item->model()->status()->probability(1));
         this->connect(this->_spinBoxProbability1, SIGNAL(valueChanged(double)), this, SLOT(setItemProbability1(double)));
@@ -191,7 +191,7 @@ void ParameterGOOperator::addProbability12Parameter()
         this->_spinBoxProbability2 = new QDoubleSpinBox(this);
         this->_spinBoxProbability2->setMinimum(0.0);
         this->_spinBoxProbability2->setMaximum(1.0);
-        this->_spinBoxProbability2->setDecimals(6);
+        this->_spinBoxProbability2->setDecimals(12);
         this->_spinBoxProbability2->setSingleStep(0.01);
         this->_spinBoxProbability2->setValue(item->model()->status()->probability(2));
         this->connect(this->_spinBoxProbability2, SIGNAL(valueChanged(double)), this, SLOT(setItemProbability2(double)));

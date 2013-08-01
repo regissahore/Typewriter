@@ -262,7 +262,6 @@ SOURCES += \
     src/toolgomarkovequivalent.cpp \
     src/toolgomarkovpointerextend.cpp \
     src/parametergomarkovequivalent.cpp \
-    src/dialoggo9xy.cpp \
     src/dialoggomarkovperiod.cpp \
     src/gomarkovchartdata.cpp \
     src/itemgomarkovchart.cpp \

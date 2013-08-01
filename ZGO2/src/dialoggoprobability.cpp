@@ -47,7 +47,7 @@ DialogGOProbability::DialogGOProbability(QWidget *parent) : QDialog(parent)
     this->_probabilitySpin = new QDoubleSpinBox(this);
     _probabilitySpin->setMinimum(0.0);
     _probabilitySpin->setMaximum(1.0);
-    _probabilitySpin->setDecimals(6);
+    _probabilitySpin->setDecimals(12);
     this->connect(_probabilitySpin, SIGNAL(valueChanged(QString)), this, SLOT(updateView(QString)));
     rightLayout->addWidget(_probabilitySpin, 0, 1);
     QLabel *descLabel = new QLabel(this);
