@@ -6,6 +6,8 @@
 #include "itemgomarkovcommoncause.h"
 #include "gomarkovoperator9a.h"
 #include "gomarkovoperator13.h"
+#include "goinput.h"
+#include "gooutput.h"
 
 ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
@@ -103,6 +105,71 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
                           QString(typeName + "-%1").arg(this->model()->id()));
         painter->drawEllipse(QPoint(0, 0), 25, 25);
     }
+    painter->setPen(Qt::gray);
+    for (int i = 0; i < this->model()->input()->number(); ++i)
+    {
+        QPoint pos = this->getInputPosition(i);
+        QString text = "S";
+        if (this->model()->input()->number() + this->model()->subInput()->number() != 1)
+        {
+            text += QString("%1").arg(i + 1);
+        }
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->subInput()->number(); ++i)
+    {
+        QPoint pos = this->getSubInputPosition(i);
+        QString text = "S";
+        if (this->model()->input()->number() + this->model()->subInput()->number() != 1)
+        {
+            text += QString("%1").arg(this->model()->input()->number() + i + 1);
+        }
+        if (pos.y() < 0)
+        {
+            painter->drawText(QRectF(pos.x() - 20, pos.y() + 10, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 20, pos.y() - 110, 100, 100),
+                              Qt::AlignLeft | Qt::AlignBottom,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        QPoint pos = this->getOutputPosition(i);
+        QString text = "R";
+        if (this->model()->output()->number() != 1)
+        {
+            text += QString("%1").arg(i + 1);
+        }
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    painter->setPen(this->_color);
 }
 
 void ItemGOMarkovOperator::setModelType(const int type)
