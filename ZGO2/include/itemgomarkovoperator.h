@@ -30,6 +30,7 @@ protected:
     bool isSource() const;
     void paint(QPainter *painter);
     void paint9A(QPainter *painter);
+    void paint22B(QPainter *painter);
 };
 
 #endif // ITEMGOMARKOVOPERATOR_H

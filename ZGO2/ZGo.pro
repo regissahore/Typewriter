@@ -111,7 +111,6 @@ HEADERS += \
     include/toolgomarkovequivalent.h \
     include/toolgomarkovpointerextend.h \
     include/parametergomarkovequivalent.h \
-    include/srcdialoggo9xy.h \
     include/dialoggomarkovperiod.h \
     include/gomarkovchartdata.h \
     include/itemgomarkovchart.h \

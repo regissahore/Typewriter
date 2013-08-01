@@ -73,6 +73,9 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     case GOMarkovOperatorFactory::Operator_Type_9A2:
         this->paint9A(painter);
         break;
+    case GOMarkovOperatorFactory::Operator_Type_22B:
+        this->paint22B(painter);
+        break;
     default:
         this->paint(painter);
         break;
@@ -248,6 +251,86 @@ void ItemGOMarkovOperator::paint9A(QPainter *painter)
     {
         QPoint pos = this->getOutputPosition(i);
         QString text = "R";
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    painter->setPen(this->_color);
+}
+
+void ItemGOMarkovOperator::paint22B(QPainter *painter)
+{
+    painter->setPen(Qt::SolidLine);
+    painter->setPen(this->_color);
+    painter->setBrush(Qt::NoBrush);
+    QFont font;
+    font.setPixelSize(16);
+    painter->setFont(font);
+    QString typeName = GOMarkovOperatorFactory::typeName(this->model()->type());
+    painter->drawText(QRectF(-100, -100, 200, 200),
+                      Qt::AlignHCenter | Qt::AlignVCenter,
+                      QString(typeName + "-%1").arg(this->model()->id()));
+    painter->drawEllipse(QPoint(0, 0), 25, 25);
+    painter->setPen(Qt::gray);
+    for (int i = 0; i < this->model()->input()->number(); ++i)
+    {
+        QPoint pos = this->getInputPosition(i);
+        QString text = "S";
+        if (i == 0)
+        {
+            text += "1";
+        }
+        else if (i == 1)
+        {
+            text += "3";
+        }
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->subInput()->number(); ++i)
+    {
+        QPoint pos = this->getSubInputPosition(i);
+        QString text = "S2";
+        if (pos.y() < 0)
+        {
+            painter->drawText(QRectF(pos.x() - 20, pos.y() + 10, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 20, pos.y() - 110, 100, 100),
+                              Qt::AlignLeft | Qt::AlignBottom,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        QPoint pos = this->getOutputPosition(i);
+        QString text = "R";
+        if (this->model()->output()->number() != 1)
+        {
+            text += QString("%1").arg(i + 1);
+        }
         if (pos.x() < 0)
         {
             painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
