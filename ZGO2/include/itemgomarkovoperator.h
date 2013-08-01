@@ -28,6 +28,8 @@ protected:
     ItemGOMarkovEquivalent *_fatherEquivalent;
     ItemGOMarkovCommonCause *_fatherCommonCause;
     bool isSource() const;
+    void paint(QPainter *painter);
+    void paint9A(QPainter *painter);
 };
 
 #endif // ITEMGOMARKOVOPERATOR_H

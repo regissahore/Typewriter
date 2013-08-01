@@ -67,6 +67,20 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    switch (this->model()->TypedItem::type())
+    {
+    case GOMarkovOperatorFactory::Operator_Type_9A1:
+    case GOMarkovOperatorFactory::Operator_Type_9A2:
+        this->paint9A(painter);
+        break;
+    default:
+        this->paint(painter);
+        break;
+    }
+}
+
+void ItemGOMarkovOperator::paint(QPainter *painter)
+{
     painter->setPen(Qt::SolidLine);
     painter->setPen(this->_color);
     painter->setBrush(Qt::NoBrush);
@@ -156,6 +170,84 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
         {
             text += QString("%1").arg(i + 1);
         }
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    painter->setPen(this->_color);
+}
+
+void ItemGOMarkovOperator::paint9A(QPainter *painter)
+{
+    painter->setPen(Qt::SolidLine);
+    painter->setPen(this->_color);
+    painter->setBrush(Qt::NoBrush);
+    QFont font;
+    font.setPixelSize(16);
+    painter->setFont(font);
+    QString typeName = GOMarkovOperatorFactory::typeName(this->model()->type());
+    painter->drawText(QRectF(-100, -100, 200, 200),
+                      Qt::AlignHCenter | Qt::AlignVCenter,
+                      QString(typeName + "-%1").arg(this->model()->id()));
+    painter->drawEllipse(QPoint(0, 0), 25, 25);
+    QPointF pos[6];
+    pos[0].setX(40), pos[0].setY(0);
+    pos[1].setX(40), pos[1].setY(-50);
+    pos[2].setX(0), pos[2].setY(-50);
+    pos[3].setX(0), pos[3].setY(-25);
+    pos[4].setX(-4), pos[4].setY(-40);
+    pos[5].setX(4), pos[5].setY(-40);
+    if (this->isHorizonFlip())
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            pos[i].setX(-pos[i].x());
+        }
+    }
+    if (this->isVerticalFlip())
+    {
+        for (int i = 0; i < 6; ++i)
+        {
+            pos[i].setY(-pos[i].y());
+        }
+    }
+    for (int i = 0; i < 3; ++i)
+    {
+        painter->drawLine(pos[i], pos[i + 1]);
+    }
+    painter->setBrush(this->_color);
+    painter->drawPolygon(pos + 3, 3);
+    painter->setPen(Qt::gray);
+    for (int i = 0; i < this->model()->input()->number(); ++i)
+    {
+        QPoint pos = this->getInputPosition(i);
+        QString text = "S";
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        QPoint pos = this->getOutputPosition(i);
+        QString text = "R";
         if (pos.x() < 0)
         {
             painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
