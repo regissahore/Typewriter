@@ -9,6 +9,8 @@
 
 class GOMarkovStatus;
 class Messager;
+class RungeKuttaBreakdown3;
+class RungeKuttaBreakdown4;
 
 class GOMarkovOperator : public GOOperator
 {
@@ -18,9 +20,11 @@ public:
     GOMarkovStatus* markovStatus() const;
     GOMarkovStatus* markovStatus1() const;
     GOMarkovStatus* markovStatus2() const;
+    GOMarkovStatus* markovStatus3() const;
+    GOMarkovStatus* markovStatus4() const;
     QVector<GOMarkovStatus*>* markovOutputStatus() const;
-    bool isDualBreakdown() const;
-    void setDualBreakdown(bool value);
+    int breakdownNum() const;
+    void setBreakdownNum(const int value);
     bool isBreakdownCorrelate() const;
     void setBreakdownCorrelate(bool value);
     void initMarkovStatus(double time, double c12 = 0.0);
@@ -42,7 +46,11 @@ protected:
     QVector<GOMarkovStatus*> *_outputStatus;
     GOMarkovStatus *_markovStatus1;
     GOMarkovStatus *_markovStatus2;
-    bool _isDualBreakdown; /*! 是否是两故障模式。*/
+    GOMarkovStatus *_markovStatus3;
+    GOMarkovStatus *_markovStatus4;
+    RungeKuttaBreakdown3 *_rkBreakdown3;
+    RungeKuttaBreakdown4 *_rkBreakdown4;
+    int _breakdownNum;
     bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
 };
 

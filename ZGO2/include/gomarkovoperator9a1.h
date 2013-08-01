@@ -6,6 +6,8 @@
  */
 #include "gomarkovoperator9a.h"
 
+class RungeKuttaMarkov9A1;
+
 class GOMarkovOperator9A1 : public GOMarkovOperator9A
 {
 public:
@@ -15,20 +17,11 @@ public:
     double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
 
 protected:
+    RungeKuttaMarkov9A1 *_rungeKutta;
     void calcOutputMarkovStatusNormal(double time);
     double calcTempOutputMarkovStatusNormal(double time);
     void calcOutputMarkovStatusBreakdown(double time);
     double calcTempOutputMarkovStatusBreakdown(double time);
-
-private:
-    double calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2);
-    double func0(double t, double x0, double x1, double x2, double lambda1, double lambda2, double mu1, double mu2);
-    double func1(double t, double x0, double x1, double lambda1, double mu1);
-    double func2(double t, double x0, double x2, double lambda2, double mu2);
-    double _rk0;
-    double _rk1;
-    double _rk2;
-    double _rkt;
 };
 
 #endif // GOMARKOVOPERATOR1_H

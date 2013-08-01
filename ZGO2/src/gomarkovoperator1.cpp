@@ -54,7 +54,7 @@ void GOMarkovOperator1::calcOutputMarkovStatusNormal()
     double lamdaS = prevStatus->frequencyBreakdown();
     double lamdaC = this->markovStatus()->frequencyBreakdown();
     double lamdaR = lamdaS + lamdaC;
-    if (this->isDualBreakdown())
+    if (this->breakdownNum())
     {
         lamdaR += this->markovStatus2()->frequencyBreakdown();
     }
@@ -85,7 +85,7 @@ void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
     double lamdaC = this->markovStatus()->frequencyBreakdown();
     double miuC = this->markovStatus()->frequencyRepair();
     double lamdaR = lamdaS + lamdaC;
-    if (this->isDualBreakdown())
+    if (this->breakdownNum())
     {
         lamdaR += this->markovStatus2()->frequencyBreakdown();
     }

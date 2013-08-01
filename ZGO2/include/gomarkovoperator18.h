@@ -6,6 +6,8 @@
  */
 #include "gomarkovoperator.h"
 
+class RungeKuttaMarkov18;
+
 class GOMarkovOperator18 : public GOMarkovOperator
 {
 public:
@@ -20,19 +22,7 @@ public:
     bool tryOpen(QDomElement &root);
 
 protected:
-    double _lambdaB1;
-
-private:
-    double calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2);
-    double func0(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double _rk0;
-    double _rk1;
-    double _rk2;
-    double _rk3;
-    double _rkt;
+    RungeKuttaMarkov18 *_rungeKutta;
 };
 
 #endif // GOMARKOVOPERATOR1_H

@@ -168,7 +168,11 @@ HEADERS += \
     include/gomarkovoperator12a.h \
     include/gomarkovoperator13a.h \
     include/gomarkovoperator13b.h \
-    include/outputconsole.h
+    include/outputconsole.h \
+    include/rungekuttamarkov9a1.h \
+    include/rungekuttamarkov18.h \
+    include/rungekuttabreakdown3.h \
+    include/rungekuttabreakdown4.h
 
 SOURCES += \
     src/main.cpp \
@@ -318,7 +322,11 @@ SOURCES += \
     src/gomarkovoperator12a.cpp \
     src/gomarkovoperator13a.cpp \
     src/gomarkovoperator13b.cpp \
-    src/outputconsole.cpp
+    src/outputconsole.cpp \
+    src/rungekuttamarkov9a1.cpp \
+    src/rungekuttamarkov18.cpp \
+    src/rungekuttabreakdown3.cpp \
+    src/rungekuttabreakdown4.cpp
 
 RESOURCES += \
     resource.qrc

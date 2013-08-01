@@ -100,7 +100,7 @@ void GOMarkovOperator18A::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
-    element.setAttribute("dual", this->isDualBreakdown());
+    element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
     element.setAttribute("backup", this->backup());
     root.appendChild(element);
@@ -121,7 +121,7 @@ bool GOMarkovOperator18A::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
-    this->setDualBreakdown(root.attribute("dual").toInt());
+    this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     this->setBackup(root.attribute("backup").toDouble());
     QDomElement element = root.firstChildElement();
