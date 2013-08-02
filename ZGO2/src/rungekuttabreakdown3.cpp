@@ -8,22 +8,22 @@ RungeKuttaBreakdown3::RungeKuttaBreakdown3()
 
 double RungeKuttaBreakdown3::rk0() const
 {
-    return 1.0 - this->_rk0;
+    return this->_rk0;
 }
 
 double RungeKuttaBreakdown3::rk1() const
 {
-    return 1.0 - this->_rk1;
+    return this->_rk1;
 }
 
 double RungeKuttaBreakdown3::rk2() const
 {
-    return 1.0 - this->_rk2;
+    return this->_rk2;
 }
 
 double RungeKuttaBreakdown3::rk3() const
 {
-    return 1.0 - this->_rk3;
+    return this->_rk3;
 }
 
 /**
@@ -41,11 +41,11 @@ double RungeKuttaBreakdown3::calcNormalProbability(double time, double lambda1, 
 {
     if (time < RK_STEP)
     {
-        this->_rk0 = 0.0;
-        this->_rk1 = 1.0;
-        this->_rk2 = 1.0;
-        this->_rk3 = 1.0;
-        this->_rkt = 1.0;
+        this->_rk0 = 1.0;
+        this->_rk1 = 0.0;
+        this->_rk2 = 0.0;
+        this->_rk3 = 0.0;
+        this->_rkt = 0.0;
     }
     while (this->_rkt < time)
     {
@@ -176,7 +176,7 @@ double RungeKuttaBreakdown3::calcNormalProbability(double time, double lambda1, 
 }
 
 /**
- * Q0'(t) = - (λ1 + λ2 + λ3) + μ1 * Q1(t) + μ2 * Q2(t) + μ3 * Q3(t)
+ * P0'(t) = - (λ1 + λ2 + λ3) + μ1 * P1(t) + μ2 * P2(t) + μ3 * P3(t)
  */
 double RungeKuttaBreakdown3::func0(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -186,7 +186,7 @@ double RungeKuttaBreakdown3::func0(double t, double x0, double x1, double x2, do
 }
 
 /**
- * Q1'(t) = λ1 * Q0(t) + μ1 * Q1(t)
+ * P1'(t) = λ1 * P0(t) + μ1 * P1(t)
  */
 double RungeKuttaBreakdown3::func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -201,7 +201,7 @@ double RungeKuttaBreakdown3::func1(double t, double x0, double x1, double x2, do
 }
 
 /**
- * Q2'(t) = λ2 * Q0(t) + μ2 * Q2(t)
+ * P2'(t) = λ2 * P0(t) + μ2 * P2(t)
  */
 double RungeKuttaBreakdown3::func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -216,7 +216,7 @@ double RungeKuttaBreakdown3::func2(double t, double x0, double x1, double x2, do
 }
 
 /**
- * Q3'(t) = λ3 * Q0(t) + μ3 * Q3(t)
+ * P3'(t) = λ3 * P0(t) + μ3 * P3(t)
  */
 double RungeKuttaBreakdown3::func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {

@@ -196,6 +196,7 @@ void ParameterGOMarkovOperator::addMarkovBreakdownNumParameter()
         this->_spinBoxBreakdownNum = new QSpinBox(this);
         this->_spinBoxBreakdownNum->setMinimum(1);
         this->_spinBoxBreakdownNum->setMaximum(4);
+        this->_spinBoxBreakdownNum->setValue(model->breakdownNum());
         this->connect(this->_spinBoxBreakdownNum, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkovBreakdownNum(int)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBoxBreakdownNum);
         switch (model->breakdownNum())
