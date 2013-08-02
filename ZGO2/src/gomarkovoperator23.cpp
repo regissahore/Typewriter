@@ -104,6 +104,8 @@ void GOMarkovOperator23::save(QDomDocument &document, QDomElement &root)
     this->markovStatus()->save(document, element);
     this->markovStatus1()->save(document, element);
     this->markovStatus2()->save(document, element);
+    this->markovStatus3()->save(document, element);
+    this->markovStatus4()->save(document, element);
     QDomElement subElement = document.createElement("markov2");
     for (int i = 0; i < this->input()->number(); ++i)
     {
@@ -144,6 +146,16 @@ bool GOMarkovOperator23::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus2()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus3()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus4()->tryOpen(element))
     {
         return false;
     }

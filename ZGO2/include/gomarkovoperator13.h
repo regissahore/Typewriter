@@ -14,11 +14,11 @@ public:
     virtual ~GOMarkovOperator13();
     void initRelation();
     QVector<QVector<int> >* relation();
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
     void saveRelation(QDomDocument &document, QDomElement &root);
     bool tryOpenRelation(QDomElement &root);
     GOMarkovOperator* copy();
+    void save(QDomDocument &document, QDomElement &root);
+    bool tryOpen(QDomElement &root);
 
 protected:
     QVector<QVector<int> > *_relation;

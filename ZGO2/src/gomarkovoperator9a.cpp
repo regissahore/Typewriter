@@ -48,6 +48,8 @@ void GOMarkovOperator9A::save(QDomDocument &document, QDomElement &root)
     this->markovStatus()->save(document, element);
     this->markovStatus1()->save(document, element);
     this->markovStatus2()->save(document, element);
+    this->markovStatus3()->save(document, element);
+    this->markovStatus4()->save(document, element);
     this->markovFeedbackStatus()->save(document, element);
 }
 

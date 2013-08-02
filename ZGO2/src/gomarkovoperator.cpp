@@ -273,6 +273,14 @@ GOMarkovOperator* GOMarkovOperator::copy()
     op->markovStatus2()->setProbabilityNormal(this->markovStatus2()->probabilityNormal());
     op->markovStatus2()->setFrequencyBreakdown(this->markovStatus2()->frequencyBreakdown());
     op->markovStatus2()->setFrequencyRepair(this->markovStatus2()->frequencyRepair());
+
+    op->markovStatus3()->setProbabilityNormal(this->markovStatus3()->probabilityNormal());
+    op->markovStatus3()->setFrequencyBreakdown(this->markovStatus3()->frequencyBreakdown());
+    op->markovStatus3()->setFrequencyRepair(this->markovStatus3()->frequencyRepair());
+
+    op->markovStatus4()->setProbabilityNormal(this->markovStatus4()->probabilityNormal());
+    op->markovStatus4()->setFrequencyBreakdown(this->markovStatus4()->frequencyBreakdown());
+    op->markovStatus4()->setFrequencyRepair(this->markovStatus4()->frequencyRepair());
     return op;
 }
 

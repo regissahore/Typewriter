@@ -57,6 +57,8 @@ void GOMarkovOperator13::save(QDomDocument &document, QDomElement &root)
     this->markovStatus()->save(document, element);
     this->markovStatus1()->save(document, element);
     this->markovStatus2()->save(document, element);
+    this->markovStatus3()->save(document, element);
+    this->markovStatus4()->save(document, element);
     this->saveRelation(document, element);
 }
 
@@ -107,6 +109,16 @@ bool GOMarkovOperator13::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     if (!this->markovStatus2()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus3()->tryOpen(element))
+    {
+        return false;
+    }
+    element = element.nextSiblingElement();
+    if (!this->markovStatus4()->tryOpen(element))
     {
         return false;
     }
