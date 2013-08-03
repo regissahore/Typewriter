@@ -186,7 +186,7 @@ double RungeKuttaBreakdown3::func0(double t, double x0, double x1, double x2, do
 }
 
 /**
- * P1'(t) = λ1 * P0(t) + μ1 * P1(t)
+ * P1'(t) = λ1 * P0(t) - μ1 * P1(t)
  */
 double RungeKuttaBreakdown3::func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -197,11 +197,11 @@ double RungeKuttaBreakdown3::func1(double t, double x0, double x1, double x2, do
     Q_UNUSED(lambda3);
     Q_UNUSED(mu2);
     Q_UNUSED(mu3);
-    return lambda1 * x0 + mu1 * x1;
+    return lambda1 * x0 - mu1 * x1;
 }
 
 /**
- * P2'(t) = λ2 * P0(t) + μ2 * P2(t)
+ * P2'(t) = λ2 * P0(t) - μ2 * P2(t)
  */
 double RungeKuttaBreakdown3::func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -212,11 +212,11 @@ double RungeKuttaBreakdown3::func2(double t, double x0, double x1, double x2, do
     Q_UNUSED(lambda3);
     Q_UNUSED(mu1);
     Q_UNUSED(mu3);
-    return lambda2 * x0 + mu2 * x2;
+    return lambda2 * x0 - mu2 * x2;
 }
 
 /**
- * P3'(t) = λ3 * P0(t) + μ3 * P3(t)
+ * P3'(t) = λ3 * P0(t) - μ3 * P3(t)
  */
 double RungeKuttaBreakdown3::func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3)
 {
@@ -227,5 +227,5 @@ double RungeKuttaBreakdown3::func3(double t, double x0, double x1, double x2, do
     Q_UNUSED(lambda2);
     Q_UNUSED(mu1);
     Q_UNUSED(mu2);
-    return lambda3 * x0 + mu3 * x3;
+    return lambda3 * x0 - mu3 * x3;
 }
