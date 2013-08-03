@@ -18,6 +18,7 @@
 #include "gopathsetsetset.h"
 #include "gocutset.h"
 #include "dialogintegerinput.h"
+#include "itemempty.h"
 
 /**
  * The constructor.
@@ -26,6 +27,10 @@
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
+    this->_emptyTopLeft = new ItemEmpty();
+    this->_emptyBottomRight = new ItemEmpty();
+    this->addItem(this->_emptyTopLeft);
+    this->addItem(this->_emptyBottomRight);
 }
 
 /**
@@ -287,6 +292,7 @@ void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     {
         this->_tool->mouseReleaseEvent(event);
     }
+    this->extendEdge(event->scenePos().x(), event->scenePos().y());
     this->QGraphicsScene::mouseReleaseEvent(event);
 }
 
@@ -427,4 +433,25 @@ void SceneGO::analysisCut(const QString filePath)
         delete graph;
     }
     delete dialog;
+}
+
+void SceneGO::extendEdge(float x, float y)
+{
+    float extendStep = 500;
+    if (x - extendStep < this->_emptyTopLeft->x())
+    {
+        this->_emptyTopLeft->setX(x - extendStep);
+    }
+    if (y - extendStep < this->_emptyTopLeft->y())
+    {
+        this->_emptyTopLeft->setY(y - extendStep);
+    }
+    if (x + extendStep > this->_emptyBottomRight->x())
+    {
+        this->_emptyBottomRight->setX(x + extendStep);
+    }
+    if (y + extendStep > this->_emptyBottomRight->y())
+    {
+        this->_emptyBottomRight->setY(y + extendStep);
+    }
 }

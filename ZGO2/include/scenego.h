@@ -8,6 +8,7 @@
 class Message;
 class ToolGOAbstract;
 class GOGraph;
+class ItemEmpty;
 
 class SceneGO : public QGraphicsScene, public Messager, public DomItem
 {
@@ -24,9 +25,12 @@ public:
     virtual void analysisProbability(const QString filePath);
     void analysisPath(const QString filePath);
     void analysisCut(const QString filePath);
+    void extendEdge(float x, float y);
 
 protected:
     ToolGOAbstract *_tool;
+    ItemEmpty *_emptyTopLeft;
+    ItemEmpty *_emptyBottomRight;
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);
