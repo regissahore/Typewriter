@@ -149,6 +149,16 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->prepareGeometryChange();
 }
 
+double ItemGOSignal::cornerX() const
+{
+    return this->_cornerX;
+}
+
+void ItemGOSignal::setCornerX(const double value)
+{
+    this->_cornerX = value;
+}
+
 /**
  * Set the end position.
  * @param pos End position.
@@ -174,7 +184,9 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
-    painter->drawLine(QPointF(0, 0), this->_endPos);
+    painter->drawLine(QPointF(0, 0), QPointF(cornerX(), 0));
+    painter->drawLine(QPointF(cornerX(), 0), QPointF(cornerX(), this->_endPos.y()));
+    painter->drawLine(QPointF(cornerX(), this->_endPos.y()), this->_endPos);
     painter->drawText((this->_endPos.x() >> 1) + 5, (this->_endPos.y() >> 1), QString("%1").arg(this->model()->id()));
 }
 
@@ -235,6 +247,7 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
     {
         QDomElement signalRoot = document.createElement("signal");
         signalRoot.setAttribute("id", this->model()->id());
+        signalRoot.setAttribute("corner", this->cornerX());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
         element.setAttribute("id", this->start()->op->model()->id());
@@ -256,6 +269,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
         return false;
     }
     this->model()->setId(root.attribute("id").toInt());
+    this->setCornerX(root.attribute("corner").toInt());
     QDomElement element = root.firstChildElement();
     this->_start->id = element.attribute("id").toInt();
     this->_start->type = element.attribute("type").toInt();

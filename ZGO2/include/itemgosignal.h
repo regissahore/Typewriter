@@ -32,6 +32,8 @@ public:
     SignalConnection* end();
     void setEndPosition(QPointF pos);
     void setEndPosition(int x, int y);
+    double cornerX() const;
+    void setCornerX(const double value);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void updatePosition();
     void removeConnection();
@@ -43,6 +45,7 @@ protected:
     SignalConnection *_start;
     SignalConnection *_end;
     QPoint _endPos;
+    double _cornerX;
     GOSignal *_model;
 };
 

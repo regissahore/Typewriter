@@ -266,10 +266,10 @@ bool GOMarkovOperator11::errorDetect(Messager *messager)
     {
         return true;
     }
-    GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
+    GOMarkovStatus *status1 = this->getPrevOperator(0)->markovStatus1();
     for (int i = 1; i < this->input()->number(); ++i)
     {
-        GOMarkovStatus *status2 = this->getPrevMarkovStatus(i);
+        GOMarkovStatus *status2 = this->getPrevOperator(i)->markovStatus1();
         if (fabs(status1->frequencyBreakdown() - status2->frequencyBreakdown()) > 1e-6)
         {
             Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);

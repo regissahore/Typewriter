@@ -135,7 +135,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
     for (int i = 0; i < names.size(); ++i)
     {
         out << "<th>" << names[i] << "</th>" << endl;
-        out << "<th>" << names[i] << "</th>" << endl;
+        //out << "<th>" << names[i] << "</th>" << endl;
         out << "<th>" << names[i] << "</th>" << endl;
         out << "<th>" << names[i] << "</th>" << endl;
     }
@@ -147,7 +147,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         for (int j = 0; j < names.size(); ++j)
         {
             out << "<td>" << probabilities[j][i] << "</td>" << endl;
-            out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
+            //out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
             out << "<td>" << lambdas[j][i] << "</td>" << endl;
             out << "<td>" << mius[j][i] << "</td>" << endl;
         }

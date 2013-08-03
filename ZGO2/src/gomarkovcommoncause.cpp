@@ -7,6 +7,8 @@ GOMarkovCommonCause::GOMarkovCommonCause() : DomItem()
 {
     this->_breakdownTotal = 0.0;
     this->_breakdownIndividual = 0.0;
+    this->_breakdownCommon = 0.0;
+    this->_belta = 0.0;
     this->_gammaC = 1.0;
     this->_idList = new QVector<int>();
     this->_operators = new QVector<GOMarkovOperator*>();
@@ -40,6 +42,28 @@ void GOMarkovCommonCause::setBreakdownIndividual(double value)
     this->_breakdownIndividual = value;
 }
 
+double GOMarkovCommonCause::breakdownCommon() const
+{
+    return this->_breakdownCommon;
+}
+
+void GOMarkovCommonCause::setBreakdownCommon(double value)
+{
+    this->_breakdownCommon = value;
+}
+
+double GOMarkovCommonCause::belta() const
+{
+    return this->_belta;
+}
+
+void GOMarkovCommonCause::setBelta(double value)
+{
+    this->_belta = value;
+    this->_breakdownCommon = this->_breakdownTotal * value;
+    this->_breakdownIndividual =this->_breakdownTotal * (1.0 - value);
+}
+
 double GOMarkovCommonCause::gammaC() const
 {
     return this->_gammaC;
@@ -50,16 +74,13 @@ void GOMarkovCommonCause::setGammaC(double value)
     this->_gammaC = value;
 }
 
-double GOMarkovCommonCause::breakdownCommon() const
-{
-    return this->breakdownTotal() - this->breakdownIndividual();
-}
-
 void GOMarkovCommonCause::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement commonRoot = document.createElement("commoncause");
     commonRoot.setAttribute("total", this->breakdownTotal());
     commonRoot.setAttribute("individual", this->breakdownIndividual());
+    commonRoot.setAttribute("common", this->breakdownCommon());
+    commonRoot.setAttribute("belta", this->belta());
     commonRoot.setAttribute("gammac", this->gammaC());
     for (int i = 0; i < this->operators()->size(); ++i)
     {
@@ -78,6 +99,8 @@ bool GOMarkovCommonCause::tryOpen(QDomElement &root)
     }
     this->setBreakdownTotal(root.attribute("total").toDouble());
     this->setBreakdownIndividual(root.attribute("individual").toDouble());
+    this->setBreakdownCommon(root.attribute("common").toDouble());
+    this->setBelta(root.attribute("belta").toDouble());
     this->setGammaC(root.attribute("gammac").toDouble());
     this->_idList->clear();
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
@@ -99,14 +122,16 @@ QVector<int>* GOMarkovCommonCause::idList() const
 
 double GOMarkovCommonCause::calcCommonCause(double time) const
 {
-    double miuSum = 0.0;
+    double muSum = 0.0;
     for (int j = 0; j < this->operators()->size(); ++j)
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->operators()->at(j);
-        miuSum += op->markovStatus()->frequencyRepair();
+        muSum += op->markovStatus1()->frequencyRepair();
     }
     double c = this->breakdownCommon();
-    double c12 = c / (c + miuSum) + (this->gammaC() - c / (c + miuSum)) * exp(-(c + miuSum) * time);
+    double p1 = c / (c + muSum);
+    double p2 = exp(-(c + muSum) * time);
+    double c12 = p1 + (this->gammaC() - p1) * p2;
     return 1.0 - c12;
 }
 

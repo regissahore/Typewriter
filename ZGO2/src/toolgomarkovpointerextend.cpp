@@ -23,7 +23,8 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             continue;
         }
@@ -42,7 +43,8 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0 ; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             continue;
         }
@@ -59,7 +61,8 @@ bool ToolGOMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {

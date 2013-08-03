@@ -322,6 +322,7 @@ void ToolGOPointerExtend::mouseMoveStatusSignalConnecting(QGraphicsSceneMouseEve
 {
     this->_signal->setEndPosition(event->scenePos().x() - this->_signal->pos().x(),
                                           event->scenePos().y() - this->_signal->pos().y());
+    this->_signal->setCornerX((event->scenePos().x() - this->_signal->pos().x()) * 0.5);
 }
 
 void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouseEvent *event)
@@ -348,6 +349,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->type = DefinationGOType::GO_OPERATOR_INPUT;
                     QPointF end = op->pos() + op->getInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
+                    this->_signal->setCornerX(end.x() * 0.5);
                     this->_signal->start()->op->setSignal(this->_signal,
                                                               this->_signal->start()->type,
                                                               this->_signal->start()->index);
@@ -371,6 +373,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->type = DefinationGOType::GO_OPERATOR_SUBINPUT;
                     QPointF end = op->pos() + op->getSubInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
+                    this->_signal->setCornerX(end.x() * 0.5);
                     this->_signal->start()->op->setSignal(this->_signal,
                                                               this->_signal->start()->type,
                                                               this->_signal->start()->index);

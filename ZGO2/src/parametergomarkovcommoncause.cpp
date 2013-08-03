@@ -18,7 +18,8 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Breakdown Total"), this));
-        spin = new QDoubleSpinBox(this);
+        this->_spinBoxTotal = new QDoubleSpinBox(this);
+        spin = this->_spinBoxTotal;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
         spin->setDecimals(12);
@@ -29,7 +30,8 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Breakdown Individual"), this));
-        spin = new QDoubleSpinBox(this);
+        this->_spinBoxIndividual = new QDoubleSpinBox(this);
+        spin = this->_spinBoxIndividual;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
         spin->setDecimals(12);
@@ -39,8 +41,33 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Breakdown Common"), this));
+        this->_spinBoxCommon = new QDoubleSpinBox(this);
+        spin = this->_spinBoxCommon;
+        spin->setMinimum(0.0);
+        spin->setMaximum(1e100);
+        spin->setDecimals(12);
+        spin->setSingleStep(0.01);
+        spin->setValue(item->model()->breakdownCommon());
+        this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownCommon(double)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Belta"), this));
+        this->_spinBoxBelta = new QDoubleSpinBox(this);
+        spin = this->_spinBoxBelta;
+        spin->setMinimum(0.0);
+        spin->setMaximum(1.0);
+        spin->setDecimals(12);
+        spin->setSingleStep(0.01);
+        spin->setValue(item->model()->belta());
+        this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBelta(double)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Gamma C"), this));
-        spin = new QDoubleSpinBox(this);
+        this->_spinBoxGammaC = new QDoubleSpinBox(this);
+        spin = this->_spinBoxGammaC;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
         spin->setDecimals(12);
@@ -61,6 +88,20 @@ void ParameterGOMarkovCommonCause::setItemBreakdownIndividual(double value)
 {
     ItemGOMarkovCommonCause *item = (ItemGOMarkovCommonCause*)this->_item;
     item->model()->setBreakdownIndividual(value);
+}
+
+void ParameterGOMarkovCommonCause::setItemBreakdownCommon(double value)
+{
+    ItemGOMarkovCommonCause *item = (ItemGOMarkovCommonCause*)this->_item;
+    item->model()->setBreakdownIndividual(value);
+}
+
+void ParameterGOMarkovCommonCause::setItemBelta(double value)
+{
+    ItemGOMarkovCommonCause *item = (ItemGOMarkovCommonCause*)this->_item;
+    item->model()->setBelta(value);
+    this->_spinBoxCommon->setValue(item->model()->breakdownCommon());
+    this->_spinBoxIndividual->setValue(item->model()->breakdownIndividual());
 }
 
 void ParameterGOMarkovCommonCause::setItemGammaC(double value)

@@ -1,4 +1,5 @@
 #include <QDomDocument>
+#include <QMessageBox>
 #include "editorgo.h"
 #include "gosignalfactory.h"
 #include "messagefactory.h"
@@ -76,31 +77,36 @@ bool EditorGO::tryOpen(const QString path)
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly))
     {
+        QMessageBox::critical(this, tr("Error"), tr("Can not read file."));
         return false;
     }
     if (!document.setContent(&file))
     {
         file.close();
+        QMessageBox::critical(this, tr("Error"), tr("The file content is broken. "));
         return false;
     }
     file.close();
     QDomElement root = document.firstChildElement();
     if (root.isNull())
     {
+        QMessageBox::critical(this, tr("Error"), tr("The file content is broken. "));
         return false;
     }
     if (root.attribute("support") != "ZHG")
     {
+        QMessageBox::critical(this, tr("Error"), tr("The file content is broken. "));
         return false;
     }
     QDomElement element = root.firstChildElement();
     if (document.isNull())
     {
+        QMessageBox::critical(this, tr("Error"), tr("The file content is broken. "));
         return false;
     }
     if (!this->_view->tryOpen(element))
     {
-        return false;
+        QMessageBox::critical(this, tr("Error"), tr("The file content is broken. "));
     }
     this->setModified(false);
     return true;
