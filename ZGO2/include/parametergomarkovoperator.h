@@ -18,9 +18,6 @@ public:
     void bindItem(void *item);
 
 protected:
-    QDoubleSpinBox *_spinBoxFrequencyBreakdown;
-    QDoubleSpinBox *_spinBoxFrequencyRepair;
-    QDoubleSpinBox *_spinBoxRepairTime;
     QCheckBox *_checkBoxBreakdownCorrelate;
     int _markovBreakdownNumPos;
     QSpinBox *_spinBoxBreakdownNum;
@@ -41,7 +38,6 @@ protected:
     QDoubleSpinBox *_spinBox9FeedbackRepairTime;
 
     void addTypeParameter();
-    void addMarkovParameter();
     void addMarkovBreakdownCorrelateParameter();
     void addMarkovBreakdownNumParameter();
     void addMarkovStatus1Parameter();
@@ -62,26 +58,23 @@ protected:
     void addMarkov23AlphaParameter();
 
 protected slots:
-    void setItemFrequencyBreakdown(double value);
-    void setItemFrequencyRepair(double value);
-    void setItemRepairTime(double value);
     void setItemMarkovBreakdownCorrelate(bool value);
     void setItemMarkovBreakdownNum(int value);
     void setItemMarkovFrequencyBreakdown1(double value);
-    void setItemMarkovFrequencyRepair1(double value);
-    void setItemMarkovRepairTime1(double value);
+    void setItemMarkovFrequencyRepair1();
+    void setItemMarkovRepairTime1();
     void setItemMarkovFrequencyBreakdown2(double value);
-    void setItemMarkovFrequencyRepair2(double value);
-    void setItemMarkovRepairTime2(double value);
+    void setItemMarkovFrequencyRepair2();
+    void setItemMarkovRepairTime2();
     void setItemMarkovFrequencyBreakdown3(double value);
-    void setItemMarkovFrequencyRepair3(double value);
-    void setItemMarkovRepairTime3(double value);
+    void setItemMarkovFrequencyRepair3();
+    void setItemMarkovRepairTime3();
     void setItemMarkovFrequencyBreakdown4(double value);
-    void setItemMarkovFrequencyRepair4(double value);
-    void setItemMarkovRepairTime4(double value);
+    void setItemMarkovFrequencyRepair4();
+    void setItemMarkovRepairTime4();
     void setItemMarkov9FeedbackFrequencyBreakdown(double value);
-    void setItemMarkov9FeedbackFrequencyRepair(double value);
-    void setItemMarkov9FeedbackRepairTime(double value);
+    void setItemMarkov9FeedbackFrequencyRepair();
+    void setItemMarkov9FeedbackRepairTime();
     void setItemMarkov11K(int value);
     void setItemMarkov11I(int value);
     void setItemMarkov11L(int value);
