@@ -64,6 +64,8 @@
         <file>resource/image/copy.png</file>
         <file>resource/image/delete.png</file>
         <file>resource/image/paste.png</file>
+        <file>resource/image/zoomin.png</file>
+        <file>resource/image/zoomout.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>

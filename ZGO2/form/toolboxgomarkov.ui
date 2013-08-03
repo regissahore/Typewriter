@@ -38,8 +38,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
-        <width>248</width>
+        <y>-317</y>
+        <width>238</width>
         <height>1046</height>
        </rect>
       </property>
@@ -721,6 +721,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -897,6 +898,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -938,6 +940,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -979,6 +982,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1020,6 +1024,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1061,6 +1066,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1102,6 +1108,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1143,6 +1150,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1182,6 +1190,11 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
            <height>36</height>
           </size>
          </property>
+         <property name="font">
+          <font>
+           <family>微软雅黑</family>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">text-align: left;
 padding-left: 16px;
@@ -1220,6 +1233,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1261,6 +1275,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>
@@ -1302,6 +1317,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="font">
           <font>
+           <family>微软雅黑</family>
            <pointsize>10</pointsize>
           </font>
          </property>

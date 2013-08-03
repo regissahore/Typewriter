@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>23</height>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -361,6 +361,10 @@
    </property>
   </action>
   <action name="actionZoom_In">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/zoomin.png</normaloff>:/icon/resource/image/zoomin.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom In</string>
    </property>
@@ -369,6 +373,10 @@
    </property>
   </action>
   <action name="actionZoom_Out">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/zoomout.png</normaloff>:/icon/resource/image/zoomout.png</iconset>
+   </property>
    <property name="text">
     <string>Zoom Out</string>
    </property>
