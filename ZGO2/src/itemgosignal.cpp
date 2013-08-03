@@ -1,10 +1,12 @@
 #include <QtAlgorithms>
+#include <algorithm>
 #include "itemgosignal.h"
 #include "itemgooperator.h"
 #include "gooperator.h"
 #include "definationgotype.h"
 #include "definationeditorselectiontype.h"
 #include "gosignalfactory.h"
+using namespace std;
 
 /**
  * Constructor.
@@ -58,14 +60,21 @@ QRectF ItemGOSignal::boundingRect() const
 
 bool ItemGOSignal::isSelectable(float x, float y)
 {
-    if (this->_endPos.x() == 0 && this->_endPos.y() == 0)
-    {
-        return false;
-    }
     x -= this->pos().x();
     y -= this->pos().y();
-    qreal length = qFabs((1.0 * this->_endPos.y() * x - this->_endPos.x() * y) / qSqrt(this->_endPos.x() * this->_endPos.x() + this->_endPos.y() * this->_endPos.y()));
-    return length < 5;
+    if (x > min(0, cornerX()) && x < max(0, cornerX()))
+    {
+        return fabs(y - 0.0) < 5.0;
+    }
+    if (x > min(cornerX(), this->_endPos.x()) && x < max(cornerX(), this->_endPos.x()))
+    {
+        return fabs(y - this->_endPos.y()) < 5.0;
+    }
+    if (y > min(0, this->_endPos.y()) && y < max(0, this->_endPos.y()))
+    {
+        return fabs(x - cornerX()) < 5.0;
+    }
+    return false;
 }
 
 bool ItemGOSignal::isSelectable(float x, float y, float width, float height)
@@ -149,12 +158,12 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->prepareGeometryChange();
 }
 
-double ItemGOSignal::cornerX() const
+int ItemGOSignal::cornerX() const
 {
     return this->_cornerX;
 }
 
-void ItemGOSignal::setCornerX(const double value)
+void ItemGOSignal::setCornerX(const int value)
 {
     this->_cornerX = value;
 }
@@ -187,7 +196,9 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     painter->drawLine(QPointF(0, 0), QPointF(cornerX(), 0));
     painter->drawLine(QPointF(cornerX(), 0), QPointF(cornerX(), this->_endPos.y()));
     painter->drawLine(QPointF(cornerX(), this->_endPos.y()), this->_endPos);
-    painter->drawText((this->_endPos.x() >> 1) + 5, (this->_endPos.y() >> 1), QString("%1").arg(this->model()->id()));
+    painter->drawText(cornerX() + 5,
+                      (this->_endPos.y() >> 1) - 5,
+                      QString("%1").arg(this->model()->id()));
 }
 
 /**

@@ -203,12 +203,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(1e100);
-            }
-            for (int k = 0; k < this->_operator.size(); ++k)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[k];
-                op->initMarkovStatus(time);
+                op->markovStatus()->setProbabilityBreakdown(1.0);
             }
             this->calcAccumulativeProbability(time);
             for (int k = 0; k < this->_operator.size(); ++k)
@@ -224,12 +219,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(0.0);
-            }
-            for (int k = 0; k < this->_operator.size(); ++k)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[k];
-                op->initMarkovStatus(time);
+                op->markovStatus()->setProbabilityNormal(1.0);
             }
             this->calcAccumulativeProbability(time);
             for (int k = 0; k < this->_operator.size(); ++k)

@@ -105,7 +105,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                             ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
                             visit[op->model()->id()] = true;
                         }
-                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
+                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
                         {
                             ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
                             visit[eq->id()] = true;

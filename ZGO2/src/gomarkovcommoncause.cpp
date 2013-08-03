@@ -132,7 +132,7 @@ double GOMarkovCommonCause::calcCommonCause(double time) const
     double p1 = c / (c + muSum);
     double p2 = exp(-(c + muSum) * time);
     double c12 = p1 + (this->gammaC() - p1) * p2;
-    return 1.0 - c12;
+    return c12;
 }
 
 bool GOMarkovCommonCause::containOperator(GOMarkovOperator* op) const

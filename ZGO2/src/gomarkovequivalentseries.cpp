@@ -15,8 +15,8 @@ GOMarkovStatus GOMarkovEquivalentSeries::getEquivalentStatus()
         double lamdaFracSum = 0.0;
         for (int i = 0; i < this->_operators->size(); ++i)
         {
-            lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
-            lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus()->frequencyBreakdown() / this->_operators->at(i)->markovStatus()->frequencyRepair();
+            lamda = lamda + this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
+            lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus1()->frequencyBreakdown() / this->_operators->at(i)->markovStatus1()->frequencyRepair();
         }
         double miu = lamda / lamdaFracSum;
         status.setFrequencyBreakdown(lamda);
@@ -28,8 +28,8 @@ GOMarkovStatus GOMarkovEquivalentSeries::getEquivalentStatus()
         double p1 = 1.0;
         for (int i = 0; i < this->_operators->size(); ++i)
         {
-            lamda = lamda + this->_operators->at(i)->markovStatus()->frequencyBreakdown();
-            p1 = p1 * this->_operators->at(i)->markovStatus()->probabilityNormal();
+            lamda = lamda + this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
+            p1 = p1 * this->_operators->at(i)->markovStatus1()->probabilityNormal();
         }
         double miu = lamda * p1 / (1.0 - p1);
         status.setFrequencyBreakdown(lamda);

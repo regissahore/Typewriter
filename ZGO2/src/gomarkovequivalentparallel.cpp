@@ -28,8 +28,8 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
         K = this->_operators->at(this->_operators->size() - 1)->parameter()->parameter(0);
         break;
     }
-    double lamda = this->_operators->at(0)->markovStatus()->frequencyBreakdown();
-    double miu = this->_operators->at(0)->markovStatus()->frequencyRepair();
+    double lamda = this->_operators->at(0)->markovStatus1()->frequencyBreakdown();
+    double miu = this->_operators->at(0)->markovStatus1()->frequencyRepair();
     QVector<double> a;
     QVector<double> b;
     a.push_back(0.0);

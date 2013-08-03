@@ -178,8 +178,11 @@ QRectF ItemGOOperator::boundingRect() const
             num = this->model()->output()->number();
         }
         int height = (num - 1) * 25 + 50;
+        if (isHorizonFlip())
+        {
+            return QRectF(-25, -height * 0.5, 97, height);
+        }
         return QRectF(-22, -height * 0.5, 97, height);
-        return QRectF(-25, -25, 50, 50);
     }
     else
     {
