@@ -57,6 +57,9 @@ void ToolGOPointerExtend::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     case Status_Item_Moving:
         this->mouseMoveStatusItemMoving(event);
         break;
+    case Status_Signal_Adjusting:
+        this->mouseMoveStatusSignalAdjusting(event);
+        break;
     default:
         break;
     }
@@ -77,6 +80,9 @@ void ToolGOPointerExtend::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         break;
     case Status_Scene_Moving:
         this->mouseReleaseStatusSceneMoving(event);
+        break;
+    case Status_Signal_Adjusting:
+        this->mouseReleaseStatusSignalAdjusting(event);
         break;
     default:
         break;
@@ -112,9 +118,12 @@ void ToolGOPointerExtend::mousePressStatusNull(QGraphicsSceneMouseEvent *event)
 {
     if (!this->mousePressStatusNullSignal(event))
     {
-        if (!this->mousePressStatusNullItem(event))
+        if (!this->mousePressStatusNullSignalAdjust(event))
         {
-            this->mousePressStatusNullScene(event);
+            if (!this->mousePressStatusNullItem(event))
+            {
+                this->mousePressStatusNullScene(event);
+            }
         }
     }
 }
@@ -145,6 +154,31 @@ bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
                     this->graphicsView()->setCursor(Qt::CrossCursor);
                     return true;
                 }
+            }
+        }
+    }
+    return false;
+}
+
+bool ToolGOPointerExtend::mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEvent *event)
+{
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 8, event->scenePos().y() - 8, 16, 16));
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *signal = (ItemGOSignal*)items.at(i);
+            if (signal->isCornerLineSelectable(event->scenePos().x(), event->scenePos().y()))
+            {
+                this->_status = Status_Signal_Adjusting;
+                this->_item = signal;
+                this->_item->setColor(QColor(Qt::darkBlue));
+                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                message->setMessage(this->_item);
+                this->sceneGO()->sendMessage(message);
+                this->graphicsView()->setCursor(Qt::SizeHorCursor);
+                return true;
             }
         }
     }
@@ -202,9 +236,12 @@ void ToolGOPointerExtend::mouseMoveStatusNull(QGraphicsSceneMouseEvent *event)
 {
     if (!this->mouseMoveStatusNullSignal(event))
     {
-        if (!this->mouseMoveStatusNullItem(event))
+        if (!this->mouseMoveStatusNullSignalAdjust(event))
         {
-            this->mouseMoveStatusNullScene(event);
+            if (!this->mouseMoveStatusNullItem(event))
+            {
+                this->mouseMoveStatusNullScene(event);
+            }
         }
     }
 }
@@ -227,6 +264,25 @@ bool ToolGOPointerExtend::mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *ev
                     this->graphicsView()->setCursor(Qt::CrossCursor);
                     return true;
                 }
+            }
+        }
+    }
+    return false;
+}
+
+bool ToolGOPointerExtend::mouseMoveStatusNullSignalAdjust(QGraphicsSceneMouseEvent *event)
+{
+    QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 8, event->scenePos().y() - 8, 16, 16));
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *signal = (ItemGOSignal*)items.at(i);
+            if (signal->isCornerLineSelectable(event->scenePos().x(), event->scenePos().y()))
+            {
+                this->graphicsView()->setCursor(Qt::SizeHorCursor);
+                return true;
             }
         }
     }
@@ -322,7 +378,6 @@ void ToolGOPointerExtend::mouseMoveStatusSignalConnecting(QGraphicsSceneMouseEve
 {
     this->_signal->setEndPosition(event->scenePos().x() - this->_signal->pos().x(),
                                           event->scenePos().y() - this->_signal->pos().y());
-    this->_signal->setCornerX((event->scenePos().x() - this->_signal->pos().x()) * 0.5);
 }
 
 void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouseEvent *event)
@@ -349,7 +404,6 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->type = DefinationGOType::GO_OPERATOR_INPUT;
                     QPointF end = op->pos() + op->getInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
-                    this->_signal->setCornerX(end.x() * 0.5);
                     this->_signal->start()->op->setSignal(this->_signal,
                                                               this->_signal->start()->type,
                                                               this->_signal->start()->index);
@@ -373,7 +427,6 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->type = DefinationGOType::GO_OPERATOR_SUBINPUT;
                     QPointF end = op->pos() + op->getSubInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
-                    this->_signal->setCornerX(end.x() * 0.5);
                     this->_signal->start()->op->setSignal(this->_signal,
                                                               this->_signal->start()->type,
                                                               this->_signal->start()->index);
@@ -395,6 +448,26 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
         ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_signal);
     }
     this->_signal = 0L;
+    this->graphicsView()->setCursor(Qt::ArrowCursor);
+    this->_status = Status_Null;
+}
+
+void ToolGOPointerExtend::mouseMoveStatusSignalAdjusting(QGraphicsSceneMouseEvent *event)
+{
+    if (this->_item)
+    {
+        ItemGOSignal *signal = (ItemGOSignal*)this->_item;
+        double len1 = event->scenePos().x() - signal->pos().x();
+        double len2 = signal->endPos().x();
+        double proportion = len1 / len2;
+        signal->setCornerProportion(proportion);
+        signal->update();
+    }
+}
+
+void ToolGOPointerExtend::mouseReleaseStatusSignalAdjusting(QGraphicsSceneMouseEvent *event)
+{
+    Q_UNUSED(event);
     this->graphicsView()->setCursor(Qt::ArrowCursor);
     this->_status = Status_Null;
 }

@@ -62,17 +62,33 @@ bool ItemGOSignal::isSelectable(float x, float y)
 {
     x -= this->pos().x();
     y -= this->pos().y();
-    if (x > min(0, cornerX()) && x < max(0, cornerX()))
+    qreal corner = this->_endPos.x() * cornerProportion();
+    if (x > min(0.0, corner) && x < max(0.0, corner))
     {
         return fabs(y - 0.0) < 5.0;
     }
-    if (x > min(cornerX(), this->_endPos.x()) && x < max(cornerX(), this->_endPos.x()))
+    if (x > min(corner, this->_endPos.x()) && x < max(corner, this->_endPos.x()))
     {
         return fabs(y - this->_endPos.y()) < 5.0;
     }
-    if (y > min(0, this->_endPos.y()) && y < max(0, this->_endPos.y()))
+    if (y > min(0.0, this->_endPos.y()) && y < max(0.0, this->_endPos.y()))
     {
-        return fabs(x - cornerX()) < 5.0;
+        return fabs(x - corner) < 5.0;
+    }
+    return false;
+}
+
+bool ItemGOSignal::isCornerLineSelectable(float x, float y)
+{
+    x -= this->pos().x();
+    y -= this->pos().y();
+    qreal corner = this->_endPos.x() * cornerProportion();
+    if (y > min(0.0, this->_endPos.y()))
+    {
+        if (y < max(0.0, this->_endPos.y()))
+        {
+            return fabs(x - corner) < 5.0;
+        }
     }
     return false;
 }
@@ -145,6 +161,11 @@ ItemGOSignal::SignalConnection* ItemGOSignal::end()
     return this->_end;
 }
 
+QPointF ItemGOSignal::endPos() const
+{
+    return this->_endPos;
+}
+
 /**
  * Set the end position.
  * @param x X position.
@@ -158,14 +179,25 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->prepareGeometryChange();
 }
 
-int ItemGOSignal::cornerX() const
+float ItemGOSignal::cornerProportion() const
 {
-    return this->_cornerX;
+    return this->_cornerProportion;
 }
 
-void ItemGOSignal::setCornerX(const int value)
+void ItemGOSignal::setCornerProportion(const float value)
 {
-    this->_cornerX = value;
+    if (value > 1.0f)
+    {
+        this->_cornerProportion = 1.0f;
+    }
+    else if (value < 0.0f)
+    {
+        this->_cornerProportion = 0.0f;
+    }
+    else
+    {
+        this->_cornerProportion = value;
+    }
 }
 
 /**
@@ -193,11 +225,12 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
-    painter->drawLine(QPointF(0, 0), QPointF(cornerX(), 0));
-    painter->drawLine(QPointF(cornerX(), 0), QPointF(cornerX(), this->_endPos.y()));
-    painter->drawLine(QPointF(cornerX(), this->_endPos.y()), this->_endPos);
-    painter->drawText(cornerX() + 5,
-                      (this->_endPos.y() >> 1) - 5,
+    float corner = this->_endPos.x() * cornerProportion();
+    painter->drawLine(QPointF(0, 0), QPointF(corner, 0));
+    painter->drawLine(QPointF(corner, 0), QPointF(corner, this->_endPos.y()));
+    painter->drawLine(QPointF(corner, this->_endPos.y()), this->_endPos);
+    painter->drawText(corner + 5,
+                      this->_endPos.y() * 0.5 - 5,
                       QString("%1").arg(this->model()->id()));
 }
 
@@ -258,7 +291,7 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
     {
         QDomElement signalRoot = document.createElement("signal");
         signalRoot.setAttribute("id", this->model()->id());
-        signalRoot.setAttribute("corner", this->cornerX());
+        signalRoot.setAttribute("corner", this->cornerProportion());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
         element.setAttribute("id", this->start()->op->model()->id());
@@ -280,7 +313,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
         return false;
     }
     this->model()->setId(root.attribute("id").toInt());
-    this->setCornerX(root.attribute("corner").toInt());
+    this->setCornerProportion(root.attribute("corner").toFloat());
     QDomElement element = root.firstChildElement();
     this->_start->id = element.attribute("id").toInt();
     this->_start->type = element.attribute("type").toInt();

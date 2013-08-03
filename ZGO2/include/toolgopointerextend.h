@@ -26,7 +26,8 @@ protected:
         Status_Null,                // Nothing is selected, the mouse and key is released.
         Status_Scene_Moving,        // Moving the scene.
         Status_Item_Moving,         // Moving the item.
-        Status_Signal_Connecting    // Connect operators with signals.
+        Status_Signal_Connecting,   // Connect operators with signals.
+        Status_Signal_Adjusting
     };
     Status _status;
     ItemDrawable* _item;
@@ -35,10 +36,12 @@ protected:
     bool isAround(QPointF pos1, QPointF pos2);
     void mousePressStatusNull(QGraphicsSceneMouseEvent *event);
     bool mousePressStatusNullSignal(QGraphicsSceneMouseEvent *event);
+    bool mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEvent *event);
     virtual bool mousePressStatusNullItem(QGraphicsSceneMouseEvent *event);
     bool mousePressStatusNullScene(QGraphicsSceneMouseEvent *event);
     void mouseMoveStatusNull(QGraphicsSceneMouseEvent *event);
     bool mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *event);
+    bool mouseMoveStatusNullSignalAdjust(QGraphicsSceneMouseEvent *event);
     bool mouseMoveStatusNullItem(QGraphicsSceneMouseEvent *event);
     bool mouseMoveStatusNullScene(QGraphicsSceneMouseEvent *event);
     void mouseReleaseStatusNull(QGraphicsSceneMouseEvent *event);
@@ -50,6 +53,9 @@ protected:
 
     void mouseMoveStatusSignalConnecting(QGraphicsSceneMouseEvent *event);
     void mouseReleaseStatusSignalConnecting(QGraphicsSceneMouseEvent *event);
+
+    void mouseMoveStatusSignalAdjusting(QGraphicsSceneMouseEvent *event);
+    void mouseReleaseStatusSignalAdjusting(QGraphicsSceneMouseEvent *event);
 };
 
 #endif // TOOLGOPOINTEREXTEND_H
