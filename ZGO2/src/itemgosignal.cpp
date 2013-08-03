@@ -20,6 +20,7 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->_end->op = 0L;
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
     this->_model = GOSignalFactory::produce();
+    this->setCornerProportion(0.5f);
 }
 
 /**

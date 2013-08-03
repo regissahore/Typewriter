@@ -231,3 +231,13 @@ void GOMainWindow::on_actionDelete_D_triggered()
 {
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_DELETE));
 }
+
+void GOMainWindow::on_actionZoom_In_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_IN));
+}
+
+void GOMainWindow::on_actionZoom_Out_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_OUT));
+}

@@ -166,47 +166,26 @@ void ItemGOOperator::setModel(GOOperator *model)
  */
 QRectF ItemGOOperator::boundingRect() const
 {
-    if (this->isSource())
+    int num = 1;
+    if (this->model()->input()->number() > num)
     {
-        int num = 3;
-        if (this->model()->input()->number() > num)
-        {
-            num = this->model()->input()->number();
-        }
-        if (this->model()->output()->number() > num)
-        {
-            num = this->model()->output()->number();
-        }
-        int height = (num - 1) * 25 + 50;
-        if (isHorizonFlip())
-        {
-            return QRectF(-25, -height * 0.5, 97, height);
-        }
-        return QRectF(-22, -height * 0.5, 97, height);
+        num = this->model()->input()->number();
     }
-    else
+    if (this->model()->output()->number() > num)
     {
-        int num = 1;
-        if (this->model()->input()->number() > num)
-        {
-            num = this->model()->input()->number();
-        }
-        if (this->model()->output()->number() > num)
-        {
-            num = this->model()->output()->number();
-        }
-        int height = (num - 1) * 25;
-        if (height < 50)
-        {
-            height = 50;
-        }
-        if ((height >> 1) < 75 && this->model()->subInput()->number() > 0)
-        {
-            height = 75 + (height >> 1);
-            return QRectF(-75, -75, 150, height);
-        }
-        return QRectF(-75, -height * 0.5, 150, height);
+        num = this->model()->output()->number();
     }
+    int height = (num - 1) * 25;
+    if (height < 50)
+    {
+        height = 50;
+    }
+    if ((height >> 1) < 75 && this->model()->subInput()->number() > 0)
+    {
+        height = 75 + (height >> 1);
+        return QRectF(-75, -75, 150, height);
+    }
+    return QRectF(-75, -height * 0.5, 150, height);
 }
 
 bool ItemGOOperator::isSelectable(float x, float y)

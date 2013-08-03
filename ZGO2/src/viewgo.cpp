@@ -1,4 +1,5 @@
 #include "viewgo.h"
+#include "messagefactory.h"
 
 /**
  * 构造函数。
@@ -27,7 +28,18 @@ void ViewGO::bindMessage(MessageController *controller)
 
 void ViewGO::messageEvent(Message *message)
 {
-    this->_scene->messageEvent(message);
+    switch (message->type())
+    {
+    case MessageFactory::TYPE_EDITOR_ZOOM_IN:
+        zoomIn();
+        break;
+    case MessageFactory::TYPE_EDITOR_ZOOM_OUT:
+        zoomOut();
+        break;
+    default:
+        this->_scene->messageEvent(message);
+        break;
+    }
 }
 
 void ViewGO::save(QDomDocument &document, QDomElement &root)

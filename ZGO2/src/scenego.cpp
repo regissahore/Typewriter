@@ -437,7 +437,7 @@ void SceneGO::analysisCut(const QString filePath)
 
 void SceneGO::extendEdge(float x, float y)
 {
-    float extendStep = 500;
+    float extendStep = 200;
     if (x - extendStep < this->_emptyTopLeft->x())
     {
         this->_emptyTopLeft->setX(x - extendStep);

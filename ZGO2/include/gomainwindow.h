@@ -62,6 +62,8 @@ private slots:
     void on_actionAnalysis_Toolbar_toggled(bool value);
     void on_actionCopy_C_triggered();
     void on_actionDelete_D_triggered();
+    void on_actionZoom_In_triggered();
+    void on_actionZoom_Out_triggered();
 };
 
 #endif // GOMAINWINDOW_H

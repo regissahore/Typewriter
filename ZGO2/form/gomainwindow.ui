@@ -78,6 +78,9 @@
     </property>
     <addaction name="actionCopy_C"/>
     <addaction name="actionDelete_D"/>
+    <addaction name="separator"/>
+    <addaction name="actionZoom_In"/>
+    <addaction name="actionZoom_Out"/>
    </widget>
    <addaction name="menuFile_F"/>
    <addaction name="menuEdit_E"/>
@@ -128,9 +131,6 @@
    <property name="text">
     <string>New</string>
    </property>
-   <property name="shortcut">
-    <string>Ctrl+N</string>
-   </property>
   </action>
   <action name="actionNew_Markov">
    <property name="icon">
@@ -139,6 +139,9 @@
    </property>
    <property name="text">
     <string>New Markov</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="actionOpen_O">
@@ -355,6 +358,22 @@
    </property>
    <property name="text">
     <string>Message DockWidget</string>
+   </property>
+  </action>
+  <action name="actionZoom_In">
+   <property name="text">
+    <string>Zoom In</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+=</string>
+   </property>
+  </action>
+  <action name="actionZoom_Out">
+   <property name="text">
+    <string>Zoom Out</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+-</string>
    </property>
   </action>
  </widget>
