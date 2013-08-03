@@ -22,7 +22,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = this->_spinBoxTotal;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(12);
+        spin->setDecimals(10);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->breakdownTotal());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownTotal(double)));
@@ -34,7 +34,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = this->_spinBoxIndividual;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(12);
+        spin->setDecimals(10);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->breakdownIndividual());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownIndividual(double)));
@@ -46,7 +46,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = this->_spinBoxCommon;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(12);
+        spin->setDecimals(10);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->breakdownCommon());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBreakdownCommon(double)));
@@ -58,7 +58,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = this->_spinBoxBelta;
         spin->setMinimum(0.0);
         spin->setMaximum(1.0);
-        spin->setDecimals(12);
+        spin->setDecimals(10);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->belta());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemBelta(double)));
@@ -70,7 +70,7 @@ void ParameterGOMarkovCommonCause::bindItem(void *item)
         spin = this->_spinBoxGammaC;
         spin->setMinimum(0.0);
         spin->setMaximum(1e100);
-        spin->setDecimals(12);
+        spin->setDecimals(10);
         spin->setSingleStep(0.01);
         spin->setValue(item->model()->gammaC());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemGammaC(double)));
