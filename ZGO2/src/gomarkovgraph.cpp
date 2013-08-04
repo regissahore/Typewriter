@@ -132,7 +132,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             data->names.push_back(QString("%1").arg(this->_operator[i]->id()));
             data->probabilities.push_back(QVector<double>());
             data->lambdas.push_back(QVector<double>());
-            data->mius.push_back(QVector<double>());
+            data->mus.push_back(QVector<double>());
         }
         else
         {
@@ -141,7 +141,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 data->names.push_back(QString("%1 (%2)").arg(this->_operator[i]->id()).arg(j + 1));
                 data->probabilities.push_back(QVector<double>());
                 data->lambdas.push_back(QVector<double>());
-                data->mius.push_back(QVector<double>());
+                data->mus.push_back(QVector<double>());
             }
         }
     }
@@ -193,7 +193,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             {
                 data->probabilities[index].push_back(op->markovOutputStatus()->at(k)->probabilityNormal());
                 data->lambdas[index].push_back(op->markovOutputStatus()->at(k)->frequencyBreakdown());
-                data->mius[index++].push_back(op->markovOutputStatus()->at(k)->frequencyRepair());
+                data->mus[index++].push_back(op->markovOutputStatus()->at(k)->frequencyRepair());
             }
         }
         // Fixed the error caused by common cause.

@@ -21,6 +21,7 @@ bool GOMarkovChartData::save(QString fileName)
     QDomElement root = document.createElement("GO_Markov_Data");
     root.setAttribute("support", "ZHG");
     document.appendChild(root);
+
     QDomElement partRoot = document.createElement("names");
     for (int i = 0; i < this->names.size(); ++i)
     {
@@ -29,6 +30,7 @@ bool GOMarkovChartData::save(QString fileName)
         partRoot.appendChild(element);
     }
     root.appendChild(partRoot);
+
     partRoot = document.createElement("times");
     for (int i = 0; i < this->times.size(); ++i)
     {
@@ -37,6 +39,7 @@ bool GOMarkovChartData::save(QString fileName)
         partRoot.appendChild(element);
     }
     root.appendChild(partRoot);
+
     partRoot = document.createElement("probabilities");
     for (int i = 0; i < this->probabilities.size(); ++i)
     {
@@ -50,6 +53,35 @@ bool GOMarkovChartData::save(QString fileName)
         partRoot.appendChild(partElement);
     }
     root.appendChild(partRoot);
+
+    partRoot = document.createElement("lambdas");
+    for (int i = 0; i < this->probabilities.size(); ++i)
+    {
+        QDomElement partElement = document.createElement("lambdas");
+        for (int j = 0; j < this->lambdas[i].size(); ++j)
+        {
+            QDomElement element = document.createElement("lambdas");
+            element.setAttribute("value", this->lambdas[i][j]);
+            partElement.appendChild(element);
+        }
+        partRoot.appendChild(partElement);
+    }
+    root.appendChild(partRoot);
+
+    partRoot = document.createElement("mus");
+    for (int i = 0; i < this->probabilities.size(); ++i)
+    {
+        QDomElement partElement = document.createElement("mus");
+        for (int j = 0; j < this->mus[i].size(); ++j)
+        {
+            QDomElement element = document.createElement("mus");
+            element.setAttribute("value", this->mus[i][j]);
+            partElement.appendChild(element);
+        }
+        partRoot.appendChild(partElement);
+    }
+    root.appendChild(partRoot);
+
     QFile file(fileName);
     if (!file.open(QIODevice::WriteOnly))
     {
@@ -84,6 +116,7 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     {
         return false;
     }
+
     QDomElement partRoot = root.firstChildElement();
     if (document.isNull())
     {
@@ -93,11 +126,13 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     {
         this->names.push_back(element.attribute("value"));
     }
+
     partRoot = partRoot.nextSiblingElement();
     for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->times.push_back(element.attribute("value").toDouble());
     }
+
     partRoot = partRoot.nextSiblingElement();
     for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
@@ -107,6 +142,27 @@ bool GOMarkovChartData::tryOpen(QString fileName)
             this->probabilities[this->probabilities.size() - 1].push_back(element2.attribute("value").toDouble());
         }
     }
+
+    partRoot = partRoot.nextSiblingElement();
+    for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
+    {
+        this->lambdas.push_back(QVector<double>());
+        for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
+        {
+            this->lambdas[this->lambdas.size() - 1].push_back(element2.attribute("value").toDouble());
+        }
+    }
+
+    partRoot = partRoot.nextSiblingElement();
+    for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
+    {
+        this->mus.push_back(QVector<double>());
+        for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
+        {
+            this->mus[this->mus.size() - 1].push_back(element2.attribute("value").toDouble());
+        }
+    }
+
     return true;
 }
 
@@ -149,7 +205,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>" << probabilities[j][i] << "</td>" << endl;
             //out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
             out << "<td>" << lambdas[j][i] << "</td>" << endl;
-            out << "<td>" << mius[j][i] << "</td>" << endl;
+            out << "<td>" << mus[j][i] << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }

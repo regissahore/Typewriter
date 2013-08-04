@@ -15,6 +15,16 @@ EditorGOMarkovChart::EditorGOMarkovChart(QWidget *parent) : EditorAbstract(paren
     this->setModified(false);
 }
 
+void EditorGOMarkovChart::bindMessage(MessageController *controller)
+{
+    this->MessageCreator::_messageController = controller;
+}
+
+void EditorGOMarkovChart::activate()
+{
+    this->_view->activate(this->MessageCreator::_messageController);
+}
+
 bool EditorGOMarkovChart::save()
 {
     return this->_view->save(this->path());

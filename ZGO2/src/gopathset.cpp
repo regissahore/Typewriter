@@ -1,6 +1,8 @@
 #include "gopathset.h"
 #include "gooperator.h"
 #include "gostatus.h"
+#include "gomarkovoperator.h"
+#include "gomarkovstatus.h"
 
 GOPathSet::GOPathSet()
 {

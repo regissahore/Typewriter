@@ -4,6 +4,8 @@
 #include "gomarkovchartdata.h"
 #include "itemgomarkovchart.h"
 #include "itemarrow.h"
+#include "messagecontroller.h"
+#include "messagefactory.h"
 
 SceneGOMarkovChart::SceneGOMarkovChart(QObject *parent) : QGraphicsScene(parent)
 {
@@ -11,30 +13,20 @@ SceneGOMarkovChart::SceneGOMarkovChart(QObject *parent) : QGraphicsScene(parent)
     this->_chartItem = new ItemGOMarkovChart();
     this->_chartItem->setPos(50, 50);
     this->addItem(this->_chartItem);
-    this->_leftArrow = new ItemArrow();
-    this->_leftArrow->setPos(430, 600);
-    this->_leftArrow->setEnd(-30, 0);
-    this->addItem(this->_leftArrow);
-    this->_rightArrow = new ItemArrow();
-    this->_rightArrow->setPos(470, 600);
-    this->_rightArrow->setEnd(30, 0);
-    this->addItem(this->_rightArrow);
-    this->_leftText = new QGraphicsTextItem(tr("Prev"));
-    this->_leftText->setPos(400, 600);
-    this->addItem(this->_leftText);
-    this->_rightText = new QGraphicsTextItem(tr("Next"));
-    this->_rightText->setPos(470, 600);
-    this->addItem(this->_rightText);
+    this->_chartItem->setChart(this->_chartData);
 }
 
 SceneGOMarkovChart::~SceneGOMarkovChart()
 {
     delete this->_chartItem;
     delete this->_chartData;
-    delete this->_leftArrow;
-    delete this->_rightArrow;
-    delete this->_leftText;
-    delete this->_rightText;
+}
+
+void SceneGOMarkovChart::activate(MessageController *controller)
+{
+    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    message->setMessage(this->_chartItem);
+    controller->send(message);
 }
 
 bool SceneGOMarkovChart::save(QString path)
@@ -59,62 +51,10 @@ bool SceneGOMarkovChart::tryOpen(QString path)
 void SceneGOMarkovChart::selectOperator(int index)
 {
     this->_currentIndex = index;
-    this->_chartItem->setTitle(this->_chartData->names[index]);
-    this->_chartItem->setProbability(this->_chartData->probabilities[index]);
+    this->_chartItem->setDisplayItem(index);
 }
 
 void SceneGOMarkovChart::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     this->_chartItem->setDetailIndex(event->scenePos().x(), event->scenePos().y());
-}
-
-void SceneGOMarkovChart::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
-{
-    QList<QGraphicsItem*> items = this->items(QRectF(event->scenePos().x() - 5, event->scenePos().y() - 5, 10, 10));
-    for (int i = 0; i < items.size(); ++i)
-    {
-        if (items[i] == this->_leftArrow || items[i] == this->_leftText)
-        {
-            --this->_currentIndex;
-            if (this->_currentIndex < 0)
-            {
-                this->_currentIndex = this->_chartData->names.size() - 1;
-            }
-            this->selectOperator(this->_currentIndex);
-        }
-        else if (items[i] == this->_rightArrow || items[i] == this->_rightText)
-        {
-            ++this->_currentIndex;
-            if (this->_currentIndex >= this->_chartData->names.size())
-            {
-                this->_currentIndex = 0;
-            }
-            this->selectOperator(this->_currentIndex);
-        }
-    }
-}
-
-void SceneGOMarkovChart::keyReleaseEvent(QKeyEvent *event)
-{
-    if (this->_chartData->names.size() > 0)
-    {
-        if (event->key() == Qt::Key_Left)
-        {
-            --this->_currentIndex;
-            if (this->_currentIndex < 0)
-            {
-                this->_currentIndex = this->_chartData->names.size() - 1;
-            }
-            this->selectOperator(this->_currentIndex);
-        }
-        else if (event->key() == Qt::Key_Right)
-        {
-            ++this->_currentIndex;
-            if (this->_currentIndex >= this->_chartData->names.size())
-            {
-                this->_currentIndex = 0;
-            }
-            this->selectOperator(this->_currentIndex);
-        }
-    }
 }

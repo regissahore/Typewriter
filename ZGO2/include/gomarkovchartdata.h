@@ -13,7 +13,7 @@ public:
     QVector<double> times;
     QVector<QVector<double> > probabilities;
     QVector<QVector<double> > lambdas;
-    QVector<QVector<double> > mius;
+    QVector<QVector<double> > mus;
     virtual ~GOMarkovChartData();
     bool save(QString fileName);
     bool tryOpen(QString fileName);

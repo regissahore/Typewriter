@@ -173,7 +173,8 @@ HEADERS += \
     include/rungekuttamarkov18.h \
     include/rungekuttabreakdown3.h \
     include/rungekuttabreakdown4.h \
-    include/itemempty.h
+    include/itemempty.h \
+    include/parametergomarkovchart.h
 
 SOURCES += \
     src/main.cpp \
@@ -328,7 +329,8 @@ SOURCES += \
     src/rungekuttamarkov18.cpp \
     src/rungekuttabreakdown3.cpp \
     src/rungekuttabreakdown4.cpp \
-    src/itemempty.cpp
+    src/itemempty.cpp \
+    src/parametergomarkovchart.cpp
 
 RESOURCES += \
     resource.qrc

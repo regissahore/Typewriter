@@ -89,6 +89,7 @@ void Editor::currentChange(int index)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = (*this->_editors)[index]->type();
+        this->sendMessage(message);
         for (int i = 0; i < this->_editors->size(); ++i)
         {
             if (i == index)
@@ -100,7 +101,6 @@ void Editor::currentChange(int index)
                 this->_editors->at(i)->inactivate();
             }
         }
-        this->sendMessage(message);
     }
     else
     {

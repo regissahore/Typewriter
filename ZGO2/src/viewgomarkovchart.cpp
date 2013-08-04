@@ -7,6 +7,11 @@ ViewGOMarkovChart::ViewGOMarkovChart(QWidget *parent) : GraphicsView(parent)
     this->setScene(this->_scene);
 }
 
+void ViewGOMarkovChart::activate(MessageController *controller)
+{
+    this->_scene->activate(controller);
+}
+
 bool ViewGOMarkovChart::save(QString path)
 {
     return this->_scene->save(path);

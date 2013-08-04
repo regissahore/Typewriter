@@ -9,6 +9,7 @@
 class ItemArrow;
 class GOMarkovChartData;
 class ItemGOMarkovChart;
+class MessageController;
 
 class SceneGOMarkovChart : public QGraphicsScene
 {
@@ -16,20 +17,15 @@ class SceneGOMarkovChart : public QGraphicsScene
 public:
     explicit SceneGOMarkovChart(QObject *parent = 0);
     ~SceneGOMarkovChart();
+    void activate(MessageController *controller);
     bool save(QString path);
     bool tryOpen(QString path);
     void selectOperator(int index);
     void mouseMoveEvent(QGraphicsSceneMouseEvent *event);
-    void mouseReleaseEvent(QGraphicsSceneMouseEvent *event);
-    void keyReleaseEvent(QKeyEvent *event);
 
 protected:
     GOMarkovChartData *_chartData;
     ItemGOMarkovChart *_chartItem;
-    ItemArrow *_leftArrow;
-    ItemArrow *_rightArrow;
-    QGraphicsTextItem *_leftText;
-    QGraphicsTextItem *_rightText;
     int _currentIndex;
 };
 
