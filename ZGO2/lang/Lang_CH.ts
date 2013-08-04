@@ -186,12 +186,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../src/editor.cpp" line="217"/>
+        <location filename="../src/editor.cpp" line="218"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/editor.cpp" line="217"/>
+        <location filename="../src/editor.cpp" line="218"/>
         <source>GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)</source>
         <translation>GO图文件(*.go *.gom);;HTML文件(*.html);;GO Chart(*.goc)</translation>
     </message>
@@ -203,32 +203,32 @@
 <context>
     <name>EditorAbstract</name>
     <message>
-        <location filename="../src/editorabstract.cpp" line="11"/>
+        <location filename="../src/editorabstract.cpp" line="12"/>
         <source>Empty</source>
         <translation>空文件</translation>
     </message>
     <message>
-        <location filename="../src/editorabstract.cpp" line="14"/>
+        <location filename="../src/editorabstract.cpp" line="15"/>
         <source>ZHG Files(*.zhg)</source>
         <translation>ZHG文件(*.zhg)</translation>
     </message>
     <message>
-        <location filename="../src/editorabstract.cpp" line="71"/>
+        <location filename="../src/editorabstract.cpp" line="72"/>
         <source>Save File</source>
         <translation>保存文件</translation>
     </message>
     <message>
-        <location filename="../src/editorabstract.cpp" line="96"/>
+        <location filename="../src/editorabstract.cpp" line="99"/>
         <source>Save File As</source>
         <translation>保存文件为</translation>
     </message>
     <message>
-        <location filename="../src/editorabstract.cpp" line="122"/>
+        <location filename="../src/editorabstract.cpp" line="127"/>
         <source>Warning</source>
         <translation>警告</translation>
     </message>
     <message>
-        <location filename="../src/editorabstract.cpp" line="122"/>
+        <location filename="../src/editorabstract.cpp" line="127"/>
         <source>The file is modified, do you want to save the file?</source>
         <translation>文件已改动，是否保存文件？</translation>
     </message>
@@ -536,24 +536,29 @@
         <translation>消息悬浮窗</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="365"/>
+        <location filename="../form/gomainwindow.ui" line="369"/>
         <source>Zoom In</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="368"/>
+        <location filename="../form/gomainwindow.ui" line="372"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="373"/>
+        <location filename="../form/gomainwindow.ui" line="381"/>
         <source>Zoom Out</source>
         <translation>缩小</translation>
     </message>
     <message>
-        <location filename="../form/gomainwindow.ui" line="376"/>
+        <location filename="../form/gomainwindow.ui" line="384"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
+    </message>
+    <message>
+        <location filename="../form/gomainwindow.ui" line="389"/>
+        <source>Recent Files(&amp;R)</source>
+        <translation>近期文件(&amp;R)</translation>
     </message>
     <message>
         <source>ZHG GO Methodology</source>
@@ -672,6 +677,34 @@
         <location filename="../src/parameterabstract.cpp" line="112"/>
         <source>Type</source>
         <translation>类型</translation>
+    </message>
+</context>
+<context>
+    <name>ParameterGOMarkovChart</name>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="23"/>
+        <source>Signal</source>
+        <translation>信号</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="36"/>
+        <source>Display P</source>
+        <translation>显示正常概率</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="46"/>
+        <source>Display Q</source>
+        <translation>显示故障概率</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="56"/>
+        <source>Display Lambda</source>
+        <translation>显示故障率</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="66"/>
+        <source>Display Mu</source>
+        <translation>显示维修率</translation>
     </message>
 </context>
 <context>
@@ -1015,17 +1048,22 @@
 <context>
     <name>ParameterGOSignal</name>
     <message>
-        <location filename="../src/parametergosignal.cpp" line="49"/>
+        <location filename="../src/parametergosignal.cpp" line="50"/>
         <source>Operator 1</source>
         <translation>操作符1</translation>
     </message>
     <message>
-        <location filename="../src/parametergosignal.cpp" line="53"/>
+        <location filename="../src/parametergosignal.cpp" line="54"/>
         <source>Operator 2</source>
         <translation>操作符2</translation>
     </message>
     <message>
-        <location filename="../src/parametergosignal.cpp" line="24"/>
+        <location filename="../src/parametergosignal.cpp" line="58"/>
+        <source>Is Straight</source>
+        <translation>是否是直线</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergosignal.cpp" line="25"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
@@ -1174,7 +1212,7 @@
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="686"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="131"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="187"/>
         <location filename="../src/gomarkovgraph.cpp" line="706"/>
         <source>Analysis Result</source>
         <translation>分析结果</translation>
@@ -1205,7 +1243,6 @@
         <location filename="../src/gograph.cpp" line="790"/>
         <location filename="../src/gomarkovgraph.cpp" line="727"/>
         <location filename="../src/gomarkovgraph.cpp" line="750"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="122"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
@@ -1323,8 +1360,8 @@
         <translation>输入割集阶数：</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="134"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="142"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="190"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="292"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
@@ -1394,6 +1431,26 @@
         <source>-%1 The sub-input should be a vector.</source>
         <translation>-%1 辅助输入应该是一个向量。</translation>
     </message>
+    <message>
+        <location filename="../src/itemgomarkovchart.cpp" line="226"/>
+        <source>Normal Probability</source>
+        <translation>正常概率</translation>
+    </message>
+    <message>
+        <location filename="../src/itemgomarkovchart.cpp" line="241"/>
+        <source>Failure Probability</source>
+        <translation>失败概率</translation>
+    </message>
+    <message>
+        <location filename="../src/itemgomarkovchart.cpp" line="256"/>
+        <source>Lambda</source>
+        <translation>故障率</translation>
+    </message>
+    <message>
+        <location filename="../src/itemgomarkovchart.cpp" line="271"/>
+        <source>Mu</source>
+        <translation>维修率</translation>
+    </message>
 </context>
 <context>
     <name>SceneGO</name>
@@ -1415,14 +1472,12 @@
 <context>
     <name>SceneGOMarkovChart</name>
     <message>
-        <location filename="../src/scenegomarkovchart.cpp" line="22"/>
         <source>Prev</source>
-        <translation>上一个</translation>
+        <translation type="obsolete">上一个</translation>
     </message>
     <message>
-        <location filename="../src/scenegomarkovchart.cpp" line="25"/>
         <source>Next</source>
-        <translation>下一个</translation>
+        <translation type="obsolete">下一个</translation>
     </message>
 </context>
 <context>
@@ -1658,73 +1713,73 @@
         <translation>M取K门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="735"/>
+        <location filename="../form/toolboxgomarkov.ui" line="736"/>
         <source>State Separation</source>
         <translation>状态分离器</translation>
     </message>
     <message utf8="true">
-        <location filename="../form/toolboxgomarkov.ui" line="780"/>
+        <location filename="../form/toolboxgomarkov.ui" line="781"/>
         <source>Multiplex Input and Output (×)</source>
         <translation>多路输入输出器 (×)</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="825"/>
+        <location filename="../form/toolboxgomarkov.ui" line="826"/>
         <source>Multiplex Input and Output (+)</source>
         <translation>多路输入输出器 (+)</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="870"/>
+        <location filename="../form/toolboxgomarkov.ui" line="871"/>
         <source>Corresponding Gate</source>
         <translation>对应门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="911"/>
+        <location filename="../form/toolboxgomarkov.ui" line="913"/>
         <source>Parallel Computing</source>
         <translation>工况并行计算</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="952"/>
+        <location filename="../form/toolboxgomarkov.ui" line="955"/>
         <source>Restore Open</source>
         <translation>要求恢复已导通元件</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="993"/>
+        <location filename="../form/toolboxgomarkov.ui" line="997"/>
         <source>Restore Close</source>
         <translation>要求恢复已关断元件</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1034"/>
-        <location filename="../form/toolboxgomarkov.ui" line="1075"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1039"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1081"/>
         <source>Backup Gate</source>
         <translation>备用门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1116"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1123"/>
         <source>Overpressure Protection</source>
         <translation>超压保护操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1157"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1165"/>
         <source>NOT Gate</source>
         <translation>非门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1193"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1206"/>
         <source>Overall Feedback</source>
         <translation>整体反馈</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1234"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1248"/>
         <source>M Bits N Through</source>
         <translation>M位N通阀操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1275"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1290"/>
         <source>M Bits N Through 2</source>
         <translation>M位N通阀操作符 2</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1316"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1332"/>
         <source>Combination</source>
         <translation>工况组合器</translation>
     </message>
