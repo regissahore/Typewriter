@@ -21,6 +21,7 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
     this->_model = GOSignalFactory::produce();
     this->setCornerProportion(0.5f);
+    this->setIsBrokenLine(true);
 }
 
 /**
@@ -61,6 +62,13 @@ QRectF ItemGOSignal::boundingRect() const
 
 bool ItemGOSignal::isSelectable(float x, float y)
 {
+    if (this->isStraightLine())
+    {
+        x -= this->pos().x();
+        y -= this->pos().y();
+        qreal length = qFabs((1.0 * this->_endPos.y() * x - this->_endPos.x() * y) / qSqrt(this->_endPos.x() * this->_endPos.x() + this->_endPos.y() * this->_endPos.y()));
+        return length < 5.0;
+    }
     x -= this->pos().x();
     y -= this->pos().y();
     qreal corner = this->_endPos.x() * cornerProportion();
@@ -81,6 +89,10 @@ bool ItemGOSignal::isSelectable(float x, float y)
 
 bool ItemGOSignal::isCornerLineSelectable(float x, float y)
 {
+    if (this->isStraightLine())
+    {
+        return false;
+    }
     x -= this->pos().x();
     y -= this->pos().y();
     qreal corner = this->_endPos.x() * cornerProportion();
@@ -180,6 +192,26 @@ void ItemGOSignal::setEndPosition(int x, int y)
     this->prepareGeometryChange();
 }
 
+bool ItemGOSignal::isStraightLine() const
+{
+    return this->_isStraightLine;
+}
+
+bool ItemGOSignal::isBrokenLine() const
+{
+    return !this->_isStraightLine;
+}
+
+void ItemGOSignal::setIsStraightLine(const bool value)
+{
+    this->_isStraightLine = value;
+}
+
+void ItemGOSignal::setIsBrokenLine(const bool value)
+{
+    this->_isStraightLine = !value;
+}
+
 float ItemGOSignal::cornerProportion() const
 {
     return this->_cornerProportion;
@@ -226,13 +258,23 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
-    float corner = this->_endPos.x() * cornerProportion();
-    painter->drawLine(QPointF(0, 0), QPointF(corner, 0));
-    painter->drawLine(QPointF(corner, 0), QPointF(corner, this->_endPos.y()));
-    painter->drawLine(QPointF(corner, this->_endPos.y()), this->_endPos);
-    painter->drawText(corner + 5,
-                      this->_endPos.y() * 0.5 - 5,
-                      QString("%1").arg(this->model()->id()));
+    if (this->isStraightLine())
+    {
+        painter->drawLine(QPointF(0, 0), this->endPos());
+        painter->drawText(this->endPos().x() * 0.5 - 10,
+                          this->endPos().y() * 0.5 + 10,
+                          QString("%1").arg(this->model()->id()));
+    }
+    else
+    {
+        float corner = this->_endPos.x() * cornerProportion();
+        painter->drawLine(QPointF(0, 0), QPointF(corner, 0));
+        painter->drawLine(QPointF(corner, 0), QPointF(corner, this->_endPos.y()));
+        painter->drawLine(QPointF(corner, this->_endPos.y()), this->_endPos);
+        painter->drawText(corner + 5,
+                          this->_endPos.y() * 0.5 - 5,
+                          QString("%1").arg(this->model()->id()));
+    }
 }
 
 /**
@@ -293,6 +335,7 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
         QDomElement signalRoot = document.createElement("signal");
         signalRoot.setAttribute("id", this->model()->id());
         signalRoot.setAttribute("corner", this->cornerProportion());
+        signalRoot.setAttribute("straight", this->isStraightLine());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
         element.setAttribute("id", this->start()->op->model()->id());
@@ -315,6 +358,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
     }
     this->model()->setId(root.attribute("id").toInt());
     this->setCornerProportion(root.attribute("corner").toFloat());
+    this->setIsStraightLine(root.attribute("straight").toInt());
     QDomElement element = root.firstChildElement();
     this->_start->id = element.attribute("id").toInt();
     this->_start->type = element.attribute("type").toInt();

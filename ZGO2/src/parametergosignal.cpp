@@ -1,5 +1,6 @@
 #include <QLabel>
 #include <QSpinBox>
+#include <QCheckBox>
 #include "parametergosignal.h"
 #include "itemgosignal.h"
 #include "itemgooperator.h"
@@ -52,5 +53,19 @@ void ParameterGOSignal::addSignalParameter()
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Operator 2"), this));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(QString("%1").arg(item->end()->op->model()->id()), this));
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Is Straight"), this));
+        QCheckBox *checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isStraightLine());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setIsStraightLine(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
     }
+}
+
+void ParameterGOSignal::setIsStraightLine(bool value)
+{
+    ItemGOSignal *signal = (ItemGOSignal*)this->_item;
+    signal->setIsStraightLine(value);
+    signal->update();
 }

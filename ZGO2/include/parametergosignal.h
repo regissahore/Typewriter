@@ -17,7 +17,9 @@ protected:
     void addIDParameter();
     void addSignalParameter();
 
+protected slots:
     void setItemID(int value);
+    void setIsStraightLine(bool value);
 };
 
 #endif // PARAMETERGOSIGNAL_H

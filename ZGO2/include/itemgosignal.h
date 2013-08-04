@@ -34,6 +34,10 @@ public:
     QPointF endPos() const;
     void setEndPosition(QPointF pos);
     void setEndPosition(int x, int y);
+    bool isStraightLine() const;
+    bool isBrokenLine() const;
+    void setIsStraightLine(const bool value);
+    void setIsBrokenLine(const bool value);
     float cornerProportion() const;
     void setCornerProportion(const float value);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
@@ -47,6 +51,7 @@ protected:
     SignalConnection *_start;
     SignalConnection *_end;
     QPointF _endPos;
+    bool _isStraightLine;
     float _cornerProportion;
     GOSignal *_model;
 };
