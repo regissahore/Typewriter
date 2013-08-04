@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "itemgooperator.h"
 #include "itemarrow.h"
 #include "gooperator.h"
@@ -7,6 +8,7 @@
 #include "definationeditorselectiontype.h"
 #include "goinput.h"
 #include "gooutput.h"
+using namespace std;
 
 /**
  * Constructor.
@@ -185,7 +187,20 @@ QRectF ItemGOOperator::boundingRect() const
         height = 75 + (height >> 1);
         return QRectF(-75, -75, 150, height);
     }
-    return QRectF(-75, -height * 0.5, 150, height);
+    double y = -height * 0.5;
+    if (this->model()->subInput()->number() > 0)
+    {
+        height = max(75.0, height * 0.5) + (height * 0.5);
+        if (this->isVerticalFlip())
+        {
+            y = -25;
+        }
+        else
+        {
+            y = -75;
+        }
+    }
+    return QRectF(-75, y, 150, height);
 }
 
 bool ItemGOOperator::isSelectable(float x, float y)
@@ -271,6 +286,7 @@ void ItemGOOperator::horizonFlip()
         signal[i]->updatePosition();
     }
     this->update();
+    this->prepareGeometryChange();
 }
 
 void ItemGOOperator::verticalFlip()
@@ -302,6 +318,7 @@ void ItemGOOperator::verticalFlip()
         signal[i]->updatePosition();
     }
     this->update();
+    this->prepareGeometryChange();
 }
 
 /**
