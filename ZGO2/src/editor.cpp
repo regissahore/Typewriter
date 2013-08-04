@@ -2,6 +2,7 @@
 #include "editor.h"
 #include "messagefactory.h"
 #include "editorabstract.h"
+#include "globalconfig.h"
 
 /**
  * 构造函数。
@@ -214,9 +215,11 @@ void Editor::createNewTab(int type)
  */
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), "", tr("GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), GlobalConfig::getInstance()->lastestPath(), tr("GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)"));
     if (filePath != "")
     {
+        GlobalConfig::getInstance()->setLastestPath(QFileInfo(filePath).absolutePath());
+        GlobalConfig::getInstance()->addLastestFile(QFileInfo(filePath).absoluteFilePath());
         QString extension = "";
         for (int i = filePath.length() - 1; i >= 0; --i)
         {

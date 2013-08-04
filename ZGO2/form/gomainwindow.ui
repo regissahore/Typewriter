@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -382,6 +382,11 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+-</string>
+   </property>
+  </action>
+  <action name="actionRecent_Files_R">
+   <property name="text">
+    <string>Recent Files(&amp;R)</string>
    </property>
   </action>
  </widget>

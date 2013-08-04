@@ -1,6 +1,7 @@
 #include <QFile>
 #include "editorabstract.h"
 #include "messagefactory.h"
+#include "globalconfig.h"
 
 /**
  * 构造函数。
@@ -68,11 +69,13 @@ bool EditorAbstract::trySave()
 {
     if (this->path() == "")
     {
-        QString filePath = QFileDialog::getSaveFileName(this, tr("Save File"), ".", this->_filter);
+        QString filePath = QFileDialog::getSaveFileName(this, tr("Save File"), GlobalConfig::getInstance()->lastestPath(), this->_filter);
         if (filePath == "")
         {
             return false;
         }
+        GlobalConfig::getInstance()->setLastestPath(QFileInfo(filePath).absolutePath());
+        GlobalConfig::getInstance()->addLastestFile(QFileInfo(filePath).absoluteFilePath());
         if (QFileInfo(filePath).suffix() != this->_suffix)
         {
             filePath.append("." + this->_suffix);
@@ -93,11 +96,13 @@ bool EditorAbstract::trySave()
  */
 bool EditorAbstract::trySaveAs()
 {
-    QString filePath = QFileDialog::getSaveFileName(this, tr("Save File As"), ".", this->_filter);
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Save File As"), GlobalConfig::getInstance()->lastestPath(), this->_filter);
     if (filePath == "")
     {
         return false;
     }
+    GlobalConfig::getInstance()->setLastestPath(QFileInfo(filePath).absolutePath());
+    GlobalConfig::getInstance()->addLastestFile(QFileInfo(filePath).absoluteFilePath());
     if (QFileInfo(filePath).suffix() != this->_suffix)
     {
         filePath.append("." + this->_suffix);

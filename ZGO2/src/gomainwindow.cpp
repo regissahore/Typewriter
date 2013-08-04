@@ -5,6 +5,7 @@
 #include "gomainwindow.h"
 #include "ui_gomainwindow.h"
 #include "dialogabout.h"
+#include "globalconfig.h"
 
 GOMainWindow::GOMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -57,6 +58,7 @@ void GOMainWindow::messageEvent(Message *message)
  */
 void GOMainWindow::closeEvent(QCloseEvent *event)
 {
+    GlobalConfig::getInstance()->save();
     if (this->_close)
     {
         this->QMainWindow::closeEvent(event);
@@ -97,6 +99,19 @@ void GOMainWindow::initDock()
     this->_dockParameter->bindMessage(this->_messageController);
     this->addDockWidget(Qt::RightDockWidgetArea, this->_dockParameter);
     this->connect(this->_dockParameter, SIGNAL(visibilityChanged(bool)), this, SLOT(on_actionParameter_DockWidget_toggled(bool)));
+    GlobalConfig *config = GlobalConfig::getInstance();
+    if (!config->isShowDockTool())
+    {
+        this->ui->actionTool_DockWidget->setChecked(false);
+    }
+    if (!config->isShowDockParameter())
+    {
+        this->ui->actionParameter_DockWidget->setChecked(false);
+    }
+    if (!config->isShowDockMessage())
+    {
+        this->ui->actionMessage_DockWidget->setChecked(false);
+    }
 }
 
 void GOMainWindow::initToolBar()
@@ -198,18 +213,21 @@ void GOMainWindow::on_actionTool_DockWidget_toggled(bool value)
 {
     this->ui->actionTool_DockWidget->setChecked(value);
     this->_dockToolbox->setVisible(value);
+    GlobalConfig::getInstance()->setIsShowDockTool(value);
 }
 
 void GOMainWindow::on_actionMessage_DockWidget_toggled(bool value)
 {
     this->ui->actionMessage_DockWidget->setChecked(value);
     this->_dockMessage->setVisible(value);
+    GlobalConfig::getInstance()->setIsShowDockMessage(value);
 }
 
 void GOMainWindow::on_actionParameter_DockWidget_toggled(bool value)
 {
     this->ui->actionParameter_DockWidget->setChecked(value);
     this->_dockParameter->setVisible(value);
+    GlobalConfig::getInstance()->setIsShowDockParameter(value);
 }
 
 void GOMainWindow::on_actionFile_Toolbar_toggled(bool value)
