@@ -1677,12 +1677,12 @@
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="448"/>
         <source>Signal</source>
-        <translation>信号发生器</translation>
+        <translation>单信号发生器</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="499"/>
         <source>Open</source>
-        <translation>有信号而导通元件</translation>
+        <translation>有条件而导通的元件</translation>
     </message>
     <message>
         <source>Close</source>
@@ -1720,12 +1720,12 @@
     <message utf8="true">
         <location filename="../form/toolboxgomarkov.ui" line="781"/>
         <source>Multiplex Input and Output (×)</source>
-        <translation>多路输入输出器 (×)</translation>
+        <translation>多路输入输出器 (“×”)</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="826"/>
         <source>Multiplex Input and Output (+)</source>
-        <translation>多路输入输出器 (+)</translation>
+        <translation>多路输入输出器 (“+”)</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="871"/>
@@ -1735,7 +1735,7 @@
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="913"/>
         <source>Parallel Computing</source>
-        <translation>工况并行计算</translation>
+        <translation type="unfinished">整合门</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="955"/>
@@ -1756,17 +1756,17 @@
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1123"/>
         <source>Overpressure Protection</source>
-        <translation>超压保护操作符</translation>
+        <translation>超压（流）保护门</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1165"/>
         <source>NOT Gate</source>
-        <translation>非门</translation>
+        <translation>非门控制</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1206"/>
         <source>Overall Feedback</source>
-        <translation>整体反馈</translation>
+        <translation>反馈计算门</translation>
     </message>
     <message>
         <location filename="../form/toolboxgomarkov.ui" line="1248"/>
