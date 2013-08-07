@@ -1,7 +1,13 @@
+#include <QObject>
+#include <qmath.h>
 #include "gomarkovcommoncause.h"
 #include "gomarkovoperator.h"
 #include "gomarkovstatus.h"
 #include "qmath.h"
+#include "messagecontroller.h"
+#include "messagefactory.h"
+#include "messager.h"
+#include "gomarkovoperatorfactory.h"
 
 GOMarkovCommonCause::GOMarkovCommonCause() : DomItem()
 {
@@ -142,6 +148,26 @@ bool GOMarkovCommonCause::containOperator(GOMarkovOperator* op) const
         if (this->_operators->at(i) == op)
         {
             return true;
+        }
+    }
+    return false;
+}
+
+bool GOMarkovCommonCause::errorDetect(Messager *messager)
+{
+    if (this->_operators->size() > 0)
+    {
+        double lambda1 = this->_operators->at(0)->markovStatus1()->frequencyBreakdown();
+        for (int i = 1; i < this->_operators->size(); ++i)
+        {
+            double lambda2 = this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
+            if (fabs(lambda1 - lambda2) > 1e-8)
+            {
+                Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
+                message->paramString = QObject::tr("Error: Common Cause ") + QObject::tr("should have same breakdown frequency. ");
+                messager->sendMessage(message);
+                return true;
+            }
         }
     }
     return false;

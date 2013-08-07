@@ -8,6 +8,7 @@
 #include "domitem.h"
 
 class GOMarkovOperator;
+class Messager;
 
 class GOMarkovCommonCause : DomItem
 {
@@ -28,6 +29,7 @@ public:
     QVector<int>* idList() const;
     double calcCommonCause(double time) const;
     bool containOperator(GOMarkovOperator* op) const;
+    bool errorDetect(Messager *messager);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
