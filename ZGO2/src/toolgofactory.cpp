@@ -73,9 +73,12 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_7:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_8:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A1:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A2:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B1:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B2:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:

@@ -4,22 +4,13 @@
  * 反馈操作符。
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "gomarkovoperator.h"
+#include "gomarkovoperator9.h"
 
-class GOMarkovStatus;
-
-class GOMarkovOperator9A : public GOMarkovOperator
+class GOMarkovOperator9A : public GOMarkovOperator9
 {
 public:
     GOMarkovOperator9A();
     virtual ~GOMarkovOperator9A();
-    GOMarkovStatus* markovFeedbackStatus() const;
-    GOMarkovOperator* copy();
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
-
-private:
-    GOMarkovStatus *_feedbackStatus;
 };
 
 #endif // GOMARKOVOPERATOR9A_H

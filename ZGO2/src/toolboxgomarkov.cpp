@@ -61,6 +61,12 @@ void ToolboxGOMarkov::messageEvent(Message *message)
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A2:
             this->setSelectedTool(this->ui->buttonOperator9A2);
             break;
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B1:
+            this->setSelectedTool(this->ui->buttonOperator9B1);
+            break;
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B2:
+            this->setSelectedTool(this->ui->buttonOperator9B2);
+            break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
             this->setSelectedTool(this->ui->buttonOperator10);
             break;
@@ -188,6 +194,20 @@ void ToolboxGOMarkov::on_buttonOperator9A2_clicked()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9A2;
+    this->sendMessage(message);
+}
+
+void ToolboxGOMarkov::on_buttonOperator9B1_clicked()
+{
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B1;
+    this->sendMessage(message);
+}
+
+void ToolboxGOMarkov::on_buttonOperator9B2_clicked()
+{
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B2;
     this->sendMessage(message);
 }
 

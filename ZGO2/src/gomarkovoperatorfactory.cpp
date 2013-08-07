@@ -12,9 +12,12 @@
 #include "gomarkovoperator7.h"
 #include "gomarkovoperator8.h"
 #include "gomarkovoperator9.h"
+#include "gomarkovoperator9a.h"
 #include "gomarkovoperator9a1.h"
 #include "gomarkovoperator9a2.h"
 #include "gomarkovoperator9b.h"
+#include "gomarkovoperator9b1.h"
+#include "gomarkovoperator9b2.h"
 #include "gomarkovoperator10.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator12.h"
@@ -80,6 +83,9 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     case Operator_Type_9:
         op = new GOMarkovOperator9();
         break;
+    case Operator_Type_9A:
+        op = new GOMarkovOperator9A();
+        break;
     case Operator_Type_9A1:
         op = new GOMarkovOperator9A1();
         break;
@@ -88,6 +94,12 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         break;
     case Operator_Type_9B:
         op = new GOMarkovOperator9B();
+        break;
+    case Operator_Type_9B1:
+        op = new GOMarkovOperator9B1();
+        break;
+    case Operator_Type_9B2:
+        op = new GOMarkovOperator9B2();
         break;
     case Operator_Type_10:
         op = new GOMarkovOperator10();
@@ -200,12 +212,18 @@ QString GOMarkovOperatorFactory::typeName(const int type)
         return "8";
     case Operator_Type_9:
         return "9";
+    case Operator_Type_9A:
+        return "9A";
     case Operator_Type_9A1:
         return "9A1";
     case Operator_Type_9A2:
         return "9A2";
     case Operator_Type_9B:
         return "9B";
+    case Operator_Type_9B1:
+        return "9B1";
+    case Operator_Type_9B2:
+        return "9B2";
     case Operator_Type_10:
         return "10";
     case Operator_Type_11:
@@ -289,6 +307,8 @@ bool GOMarkovOperatorFactory::isCommonPossible(const int type)
     case Operator_Type_2:
     case Operator_Type_6:
     case Operator_Type_7:
+    case Operator_Type_9B1:
+    case Operator_Type_9B2:
     case Operator_Type_10:
     case Operator_Type_11:
     case Operator_Type_13A:

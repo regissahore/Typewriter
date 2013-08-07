@@ -7,9 +7,9 @@
 #include "goparameter.h"
 #include "gomarkovstatus.h"
 
-GOMarkovOperator9B::GOMarkovOperator9B() : GOMarkovOperator()
+GOMarkovOperator9B::GOMarkovOperator9B() : GOMarkovOperator9()
 {
-    this->input()->setNumber(1);
+    this->input()->setNumber(2);
     this->subInput()->setNumber(0);
     this->output()->setNumber(1);
 }

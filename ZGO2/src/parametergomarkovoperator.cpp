@@ -13,7 +13,7 @@
 #include "messagefactory.h"
 #include "goparameter.h"
 #include "gomarkovoperatorfactory.h"
-#include "gomarkovoperator9a.h"
+#include "gomarkovoperator9.h"
 #include "gomarkovoperator11.h"
 #include "gomarkovoperator13.h"
 #include "gomarkovoperator18.h"
@@ -49,8 +49,9 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkovBreakdownCorrelateParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_9A1:
-        this->addMarkovBreakdownCorrelateParameter();
     case GOMarkovOperatorFactory::Operator_Type_9A2:
+    case GOMarkovOperatorFactory::Operator_Type_9B1:
+    case GOMarkovOperatorFactory::Operator_Type_9B2:
         this->addMarkovBreakdownNumParameter();
         this->addMarkov9FeedbackParameter();
         break;
@@ -698,7 +699,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
     if (0L != this->_item)
     {
         ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
-        GOMarkovStatus *status = ((GOMarkovOperator9A*)item->model())->markovFeedbackStatus();
+        GOMarkovStatus *status = ((GOMarkovOperator9*)item->model())->markovFeedbackStatus();
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Failure Rate Feedback"), this));
@@ -738,7 +739,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
 void ParameterGOMarkovOperator::setItemMarkov9FeedbackFrequencyBreakdown(double value)
 {
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
-    GOMarkovOperator9A *model = (GOMarkovOperator9A*)item->model();
+    GOMarkovOperator9 *model = (GOMarkovOperator9*)item->model();
     model->markovFeedbackStatus()->setFrequencyBreakdown(value);
 }
 
@@ -746,7 +747,7 @@ void ParameterGOMarkovOperator::setItemMarkov9FeedbackFrequencyRepair()
 {
     double value = this->_spinBox9FeedbackFrequencyRepair->value();
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
-    GOMarkovOperator9A *model = (GOMarkovOperator9A*)item->model();
+    GOMarkovOperator9 *model = (GOMarkovOperator9*)item->model();
     model->markovFeedbackStatus()->setFrequencyRepair(value);
     this->_spinBox9FeedbackRepairTime->setValue(1.0 / value);
 }
@@ -755,7 +756,7 @@ void ParameterGOMarkovOperator::setItemMarkov9FeedbackRepairTime()
 {
     double value = this->_spinBox9FeedbackRepairTime->value();
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
-    GOMarkovOperator9A *model = (GOMarkovOperator9A*)item->model();
+    GOMarkovOperator9 *model = (GOMarkovOperator9*)item->model();
     model->markovFeedbackStatus()->setRepairTime(1.0 / value);
     this->_spinBox9FeedbackFrequencyRepair->setValue(1.0 / value);
 }

@@ -4,9 +4,9 @@
  *
  * @author ZHG <CyberZHG@gmail.com>
  */
-#include "gomarkovoperator.h"
+#include "gomarkovoperator9.h"
 
-class GOMarkovOperator9B : public GOMarkovOperator
+class GOMarkovOperator9B : public GOMarkovOperator9
 {
 public:
     GOMarkovOperator9B();
