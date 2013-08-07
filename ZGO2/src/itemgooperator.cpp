@@ -25,6 +25,8 @@ ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR);
     this->setIsHorizonFlip(false);
     this->setIsVerticalFlip(false);
+    this->_isShowOutput = new QVector<bool>();
+    this->_isShowOutput->push_back(true);
 }
 
 /**
@@ -43,6 +45,7 @@ ItemGOOperator::~ItemGOOperator()
         this->_outputSignal->at(i)->clear();
     }
     this->_outputSignal->clear();
+    delete this->_isShowOutput;
 }
 
 void ItemGOOperator::setModelType(const int type)
@@ -150,6 +153,11 @@ void ItemGOOperator::setModel(GOOperator *model)
             this->_subInputArrows->push_back(arrow);
             this->_subInputSignal->push_back(0L);
         }
+    }
+    this->_isShowOutput->clear();
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        this->_isShowOutput->push_back(true);
     }
     if (this->isHorizonFlip())
     {
@@ -351,6 +359,10 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        this->_outputArrows->at(i)->setVisible(this->isShowOutput()->at(i));
+    }
     if (this->isSource())
     {
         painter->drawText(QRectF(-100, -100, 200, 200), Qt::AlignHCenter | Qt::AlignVCenter, QString("%1 - %2").arg(this->model()->type()).arg(this->model()->id()));
@@ -572,6 +584,11 @@ QList<ItemGOSignal *> ItemGOOperator::getConnectedSignals() const
     return signal;
 }
 
+QVector<bool>* ItemGOOperator::isShowOutput() const
+{
+    return this->_isShowOutput;
+}
+
 void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("operator");
@@ -580,6 +597,10 @@ void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("type", this->model()->type());
     element.setAttribute("horizon", this->isHorizonFlip());
     element.setAttribute("vertical", this->isVerticalFlip());
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        element.setAttribute(QString("show_output_%1").arg(i), this->isShowOutput()->at(i));
+    }
     root.appendChild(element);
     this->model()->save(document, element);
 }
@@ -601,6 +622,10 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
         return false;
     }
     this->setModel(model);
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        (*this->isShowOutput())[i] = root.attribute(QString("show_output_%1").arg(i), "1").toInt();
+    }
     return true;
 }
 

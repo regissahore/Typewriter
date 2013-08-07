@@ -8,6 +8,7 @@
 #include "gomarkovoperator13.h"
 #include "goinput.h"
 #include "gooutput.h"
+#include "itemarrow.h"
 
 ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
@@ -67,6 +68,10 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        this->_outputArrows->at(i)->setVisible(this->isShowOutput()->at(i));
+    }
     switch (this->model()->TypedItem::type())
     {
     case GOMarkovOperatorFactory::Operator_Type_9A1:
@@ -167,23 +172,26 @@ void ItemGOMarkovOperator::paint(QPainter *painter)
     }
     for (int i = 0; i < this->model()->output()->number(); ++i)
     {
-        QPoint pos = this->getOutputPosition(i);
-        QString text = "R";
-        if (this->model()->output()->number() != 1)
+        if (this->isShowOutput()->at(i))
         {
-            text += QString("%1").arg(i + 1);
-        }
-        if (pos.x() < 0)
-        {
-            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
-                              Qt::AlignLeft | Qt::AlignTop,
-                              text);
-        }
-        else
-        {
-            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
-                              Qt::AlignRight | Qt::AlignTop,
-                              text);
+            QPoint pos = this->getOutputPosition(i);
+            QString text = "R";
+            if (this->model()->output()->number() != 1)
+            {
+                text += QString("%1").arg(i + 1);
+            }
+            if (pos.x() < 0)
+            {
+                painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                                  Qt::AlignLeft | Qt::AlignTop,
+                                  text);
+            }
+            else
+            {
+                painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                                  Qt::AlignRight | Qt::AlignTop,
+                                  text);
+            }
         }
     }
     painter->setPen(this->_color);
@@ -362,6 +370,10 @@ ItemGOMarkovOperator* ItemGOMarkovOperator::copy()
     op->setIsHorizonFlip(this->isHorizonFlip());
     op->setIsVerticalFlip(this->isVerticalFlip());
     op->setModel(((GOMarkovOperator*)this->model())->copy());
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        (*op->isShowOutput())[i] = this->isShowOutput()->at(i);
+    }
     return op;
 }
 
@@ -383,6 +395,10 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
         return false;
     }
     this->setModel(model);
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        (*this->isShowOutput())[i] = root.attribute(QString("show_output_%1").arg(i), "1").toInt();
+    }
     return true;
 }
 

@@ -77,10 +77,14 @@ void ParameterGOMarkovOperator::bindItem(void *item)
     case GOMarkovOperatorFactory::Operator_Type_15B:
         break;
     case GOMarkovOperatorFactory::Operator_Type_16:
+        this->addMarkovShowOutput1Parameter();
+        this->addMarkovShowOutput2Parameter();
         this->addMarkovBreakdownNumParameter();
         this->addMarkovBreakdownCorrelateParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_17:
+        this->addMarkovShowOutput1Parameter();
+        this->addMarkovShowOutput2Parameter();
         this->addMarkovBreakdownNumParameter();
         this->addMarkovBreakdownCorrelateParameter();
         break;
@@ -91,6 +95,8 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkov18ABackupParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_19:
+        this->addMarkovShowOutput1Parameter();
+        this->addMarkovShowOutput2Parameter();
         this->addMarkovBreakdownNumParameter();
         this->addMarkov19DeltaNumParameter();
         this->addMarkov19DeltaParameter();
@@ -889,4 +895,50 @@ void ParameterGOMarkovOperator::setItemMarkov18LambdaB1(double value)
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator18 *model = (GOMarkovOperator18*)item->model();
     model->setLambdaB1(value);
+}
+
+void ParameterGOMarkovOperator::addMarkovShowOutput1Parameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        QCheckBox *checkBox;
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Show R1"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isShowOutput()->at(0));
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkovShowOutput1(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
+void ParameterGOMarkovOperator::addMarkovShowOutput2Parameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        QCheckBox *checkBox;
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Show R2"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isShowOutput()->at(1));
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkovShowOutput2(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkovShowOutput1(bool value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    (*item->isShowOutput())[0] = value;
+    item->update();
+}
+
+void ParameterGOMarkovOperator::setItemMarkovShowOutput2(bool value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    (*item->isShowOutput())[1] = value;
+    item->update();
 }

@@ -12,6 +12,7 @@
 #include "goparameter.h"
 #include "messagefactory.h"
 #include "goinput.h"
+#include "gooutput.h"
 
 ParameterGOOperator::ParameterGOOperator(QWidget *parent) : ParameterAbstract(parent)
 {

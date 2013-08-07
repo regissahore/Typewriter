@@ -40,6 +40,7 @@ public:
     void setSignal(ItemGOSignal *signal, int type, int index);
     void removeSignal(ItemGOSignal *signal, int type, int index);
     QList<ItemGOSignal*> getConnectedSignals() const;
+    QVector<bool>* isShowOutput() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -50,6 +51,7 @@ protected:
     QVector<ItemGOSignal*> *_inputSignal;
     QVector<ItemGOSignal*> *_subInputSignal;
     QVector<QVector<ItemGOSignal*>*> *_outputSignal;
+    QVector<bool> *_isShowOutput;
 
     GOOperator *_model; /** The model of GO operator. */
 

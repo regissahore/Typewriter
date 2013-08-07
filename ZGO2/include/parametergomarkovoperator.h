@@ -56,6 +56,8 @@ protected:
     void addMarkov19DeltaParameter();
     void addMarkov22Markov2Parameter();
     void addMarkov23AlphaParameter();
+    void addMarkovShowOutput1Parameter();
+    void addMarkovShowOutput2Parameter();
 
 protected slots:
     void setItemMarkovBreakdownCorrelate(bool value);
@@ -86,6 +88,8 @@ protected slots:
     void setItemMarkov19Delta();
     void setItemMarkov22Markov2();
     void setItemMarkov23Alpha();
+    void setItemMarkovShowOutput1(bool value);
+    void setItemMarkovShowOutput2(bool value);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H
