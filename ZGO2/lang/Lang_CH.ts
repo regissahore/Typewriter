@@ -689,12 +689,12 @@
     <message>
         <location filename="../src/parametergomarkovchart.cpp" line="36"/>
         <source>Display P</source>
-        <translation>显示正常概率</translation>
+        <translation>显示可用度</translation>
     </message>
     <message>
         <location filename="../src/parametergomarkovchart.cpp" line="46"/>
         <source>Display Q</source>
-        <translation>显示故障概率</translation>
+        <translation>显示不可用度</translation>
     </message>
     <message>
         <location filename="../src/parametergomarkovchart.cpp" line="56"/>
@@ -1434,12 +1434,12 @@
     <message>
         <location filename="../src/itemgomarkovchart.cpp" line="226"/>
         <source>Normal Probability</source>
-        <translation>正常概率</translation>
+        <translation>可用度</translation>
     </message>
     <message>
         <location filename="../src/itemgomarkovchart.cpp" line="241"/>
         <source>Failure Probability</source>
-        <translation>失败概率</translation>
+        <translation>不可用度</translation>
     </message>
     <message>
         <location filename="../src/itemgomarkovchart.cpp" line="256"/>
