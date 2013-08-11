@@ -18,7 +18,7 @@ public:
     struct SignalConnection
     {
         ItemGOOperator *op;
-        int id; /** Just use for initialization. */
+        int id; /** 只应用于初始化操作。 */
         int type;
         int index;
     };
@@ -43,6 +43,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void updatePosition();
     void removeConnection();
+    ItemGOSignal* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     GOSignal *model();

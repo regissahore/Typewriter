@@ -254,6 +254,7 @@ bool GOMarkovOperator::errorDetect(Messager *messager)
 GOMarkovOperator* GOMarkovOperator::copy()
 {
     GOMarkovOperator *op = GOMarkovOperatorFactory::produce(this->TypedItem::type());
+    op->setId(this->id());
     op->setType(this->TypedItem::type());
     op->input()->setNumber(this->input()->number());
     op->subInput()->setNumber(this->subInput()->number());

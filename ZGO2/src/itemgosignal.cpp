@@ -328,6 +328,20 @@ void ItemGOSignal::removeConnection()
     }
 }
 
+ItemGOSignal* ItemGOSignal::copy() const
+{
+    ItemGOSignal* signal = new ItemGOSignal();
+    signal->_start->id = this->_start->id;
+    signal->_start->type = this->_start->type;
+    signal->_start->index = this->_start->index;
+    signal->_end->id = this->_end->id;
+    signal->_end->type = this->_end->type;
+    signal->_end->index = this->_end->index;
+    signal->_isStraightLine = this->_isStraightLine;
+    signal->_cornerProportion = this->_cornerProportion;
+    return signal;
+}
+
 void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
 {
     if (this->_start->op != 0L && this->_end->op != 0L)

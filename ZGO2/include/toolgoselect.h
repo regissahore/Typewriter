@@ -28,6 +28,7 @@ protected:
     Status _status;
     ItemSelection *_selection;
     QList<QGraphicsItem *> _items;
+    void copy();
 };
 
 #endif // TOOLGOSELECT_H

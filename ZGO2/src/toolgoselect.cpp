@@ -4,6 +4,9 @@
 #include "itemgosignal.h"
 #include "itemgofactory.h"
 #include "definationeditorselectiontype.h"
+#include "itemgomarkovoperator.h"
+#include "gomarkovoperator.h"
+#include "scenego.h"
 
 /**
  * Constructor.
@@ -24,6 +27,10 @@ ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
  */
 ToolGOSelect::~ToolGOSelect()
 {
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ((ItemDrawable*)this->_items.at(i))->setColor(Qt::black);
+    }
     this->_items.clear();
     delete this->_selection;
 }
@@ -60,6 +67,10 @@ void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
         else
         {
             this->_status = Status_Null;
+            for (int i = 0; i < this->_items.size(); ++i)
+            {
+                ((ItemDrawable*)this->_items.at(i))->setColor(Qt::black);
+            }
             this->_items.clear();
             this->mousePressEvent(event);
         }
@@ -155,6 +166,10 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                 this->_items.push_back(items[i]);
             }
         }
+        for (int i = 0; i < this->_items.size(); ++i)
+        {
+            ((ItemDrawable*)this->_items.at(i))->setColor(Qt::darkBlue);
+        }
         break;
     case Status_Moving:
         for (int i = 0; i < this->_items.size(); ++i)
@@ -183,5 +198,145 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
     {
         ItemGOFactory::deleteItems(this->_items);
         this->_items.clear();
+    }
+    else if (event->key() == Qt::Key_C)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            this->copy();
+        }
+    }
+}
+
+void ToolGOSelect::copy()
+{
+    //寻找出现过的操作符中最大的ID。
+    int maxId = 0;
+    QList<QGraphicsItem*> items = this->graphicsScene()->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable* item = (ItemDrawable*)items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+            if (op->model()->id() > maxId)
+            {
+                maxId = op->model()->id();
+            }
+        }
+    }
+    maxId += 1;
+    //寻找选中的操作符中最小的ID。
+    int minSelectedId = 0x7fffffff;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+            if (op->model()->id() < minSelectedId)
+            {
+                minSelectedId = op->model()->id();
+            }
+        }
+    }
+    if (minSelectedId == 0x7fffffff)
+    {
+        return;
+    }
+    int increaseId = maxId - minSelectedId;
+    //复制操作符。
+    QVector<ItemGOMarkovOperator*> newOps;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+            ItemGOMarkovOperator *newOp = op->copy();
+            newOp->model()->setId(newOp->model()->id() + increaseId);
+            newOp->setX(op->x() + 100);
+            newOp->setY(op->y() + 100);
+            newOps.push_back(newOp);
+            this->sceneGO()->addItem(newOp);
+        }
+    }
+    //复制信号流。
+    QVector<ItemGOSignal*> newSignals;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *signal = (ItemGOSignal*)item;
+            ItemGOSignal *newSignal = signal->copy();
+            newSignal->start()->id += increaseId;
+            newSignal->end()->id += increaseId;
+            int find = 0;
+            for (int j = 0; j < newOps.size(); ++j)
+            {
+                item = (ItemDrawable*)newOps.at(j);
+                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                {
+                    ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+                    if (op->model()->id() == newSignal->start()->id)
+                    {
+                        newSignal->start()->op = op;
+                        newSignal->start()->op->setSignal(newSignal,
+                                                          newSignal->start()->type,
+                                                          newSignal->start()->index);
+                        ++find;
+                        break;
+                    }
+                }
+            }
+            for (int j = 0; j < newOps.size(); ++j)
+            {
+                item = (ItemDrawable*)newOps.at(j);
+                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                {
+                    ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+                    if (op->model()->id() == newSignal->end()->id)
+                    {
+                        newSignal->end()->op = op;
+                        newSignal->end()->op->setSignal(newSignal,
+                                                        newSignal->end()->type,
+                                                        newSignal->end()->index);
+                        ++find;
+                        break;
+                    }
+                }
+            }
+            if (find == 2)
+            {
+                newSignals.push_back(newSignal);
+                this->sceneGO()->addItem(newSignal);
+                newSignal->updatePosition();
+            }
+            else
+            {
+                delete newSignal;
+            }
+        }
+    }
+    //更换选择内容。
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ((ItemDrawable*)this->_items.at(i))->setColor(Qt::black);
+    }
+    this->_items.clear();
+    this->_selection->setX(this->_selection->x() + 100);
+    this->_selection->setY(this->_selection->y() + 100);
+    for (int i = 0; i< newOps.size(); ++i)
+    {
+        this->_items.push_back(newOps[i]);
+    }
+    for (int i = 0; i < newSignals.size(); ++i)
+    {
+        this->_items.push_back(newSignals[i]);
+    }
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ((ItemDrawable*)this->_items.at(i))->setColor(Qt::darkBlue);
     }
 }
