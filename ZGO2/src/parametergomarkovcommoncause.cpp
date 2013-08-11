@@ -93,7 +93,7 @@ void ParameterGOMarkovCommonCause::setItemBreakdownIndividual(double value)
 void ParameterGOMarkovCommonCause::setItemBreakdownCommon(double value)
 {
     ItemGOMarkovCommonCause *item = (ItemGOMarkovCommonCause*)this->_item;
-    item->model()->setBreakdownIndividual(value);
+    item->model()->setBreakdownCommon(value);
 }
 
 void ParameterGOMarkovCommonCause::setItemBelta(double value)
