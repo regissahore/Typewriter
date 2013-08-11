@@ -12,6 +12,8 @@
 #include "gomarkovcommoncause.h"
 #include "gomarkovequivalent.h"
 #include "itemgotext.h"
+#include "messagefactory.h"
+#include "messager.h"
 
 /**
  * Constructor.
