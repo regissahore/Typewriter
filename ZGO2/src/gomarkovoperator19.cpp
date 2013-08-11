@@ -16,9 +16,11 @@ GOMarkovOperator19::GOMarkovOperator19() : GOMarkovOperator()
     this->input()->setNumber(1);
     this->subInput()->setNumber(0);
     this->output()->setNumber(2);
-    this->_deltaNum = 0;
+    this->_deltaNum = 1;
     this->_a = new QVector<int>();
     this->_delta = new QVector<double>();
+    this->_a->push_back(1);
+    this->_delta->push_back(0.0);
 }
 
 GOMarkovOperator19::~GOMarkovOperator19()
@@ -131,18 +133,11 @@ bool GOMarkovOperator19::errorDetect(Messager *messager)
     {
         return true;
     }
-    GOMarkovOperator *op = this->getPrevSubOperator();
+    GOMarkovOperator *op = this->getPrevOperator();
     if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
         message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The input should be a vector.").arg(this->id());
-        messager->sendMessage(message);
-        return true;
-    }
-    if (this->deltaNum() != op->markovOutputStatus()->size())
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of delta should matches the length of the input vector.").arg(this->id());
         messager->sendMessage(message);
         return true;
     }
@@ -236,6 +231,8 @@ bool GOMarkovOperator19::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     QDomElement node = element.firstChildElement();
+    this->a()->clear();
+    this->delta()->clear();
     for (int i = 0; i < this->deltaNum(); ++i)
     {
         this->a()->push_back(node.attribute("a").toInt());

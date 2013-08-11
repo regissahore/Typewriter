@@ -817,6 +817,11 @@ void ParameterGOMarkovOperator::setItemMarkov19DeltaNum(int value)
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
     op->setDeltaNum(value);
+    for (int i = op->delta()->size(); i < op->deltaNum(); ++i)
+    {
+        op->a()->push_back(1);
+        op->delta()->push_back(0.0);
+    }
 }
 
 void ParameterGOMarkovOperator::addMarkov19DeltaParameter()
