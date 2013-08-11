@@ -9,6 +9,7 @@
 #include "itemgomarkovequivalent.h"
 #include "itemgofactory.h"
 #include "itemgotext.h"
+#include "gomarkovoperator.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -139,6 +140,28 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     this->sceneGO()->sendMessage(message);
                 }
             }
+        }
+    }
+    else if (event->key() == Qt::Key_G)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+            {
+                ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)this->_item;
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    ((GOMarkovOperator*)op->model())->setIsGlobalFeedback(false);
+                }
+                else
+                {
+                    ((GOMarkovOperator*)op->model())->setIsGlobalFeedback(true);
+                }
+                op->update();
+            }
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            message->setMessage(this->_item);
+            this->sceneGO()->sendMessage(message);
         }
     }
     else if (event->key() == Qt::Key_Delete)

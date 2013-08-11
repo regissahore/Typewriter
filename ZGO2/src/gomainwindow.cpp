@@ -259,3 +259,13 @@ void GOMainWindow::on_actionZoom_Out_triggered()
 {
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_OUT));
 }
+
+void GOMainWindow::on_actionSet_Global_Feedback_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK));
+}
+
+void GOMainWindow::on_actionUnset_Global_Feedback_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK));
+}

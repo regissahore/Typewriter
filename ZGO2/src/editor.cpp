@@ -135,6 +135,8 @@ void Editor::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_DELETE, this);
     controller->listen(MessageFactory::TYPE_EDITOR_ZOOM_IN, this);
     controller->listen(MessageFactory::TYPE_EDITOR_ZOOM_OUT, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK, this);
+    controller->listen(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK, this);
     // 如果已经有打开的tab则发送编辑器类别消息。
     currentChange(this->_tabWidget->currentIndex());
 }

@@ -30,6 +30,8 @@ protected:
     QList<QGraphicsItem *> _items;
     void selectAll();
     void copy();
+    void setGlobalFeedback();
+    void unsetGlobalFeedback();
 };
 
 #endif // TOOLGOSELECT_H

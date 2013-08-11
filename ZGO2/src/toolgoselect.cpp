@@ -220,6 +220,20 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
             this->selectAll();
         }
     }
+    else if (event->key() == Qt::Key_G)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            if (event->modifiers() & Qt::ShiftModifier)
+            {
+                this->unsetGlobalFeedback();
+            }
+            else
+            {
+                this->setGlobalFeedback();
+            }
+        }
+    }
 }
 
 void ToolGOSelect::selectAll()
@@ -466,5 +480,33 @@ void ToolGOSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ((ItemDrawable*)this->_items.at(i))->setColor(Qt::darkBlue);
+    }
+}
+
+void ToolGOSelect::setGlobalFeedback()
+{
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_items[i];
+            GOMarkovOperator *op = (GOMarkovOperator*)item->model();
+            op->setIsGlobalFeedback(true);
+            item->update();
+        }
+    }
+}
+
+void ToolGOSelect::unsetGlobalFeedback()
+{
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_items[i];
+            GOMarkovOperator *op = (GOMarkovOperator*)item->model();
+            op->setIsGlobalFeedback(false);
+            item->update();
+        }
     }
 }

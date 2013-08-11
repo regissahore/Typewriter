@@ -64,6 +64,8 @@ private slots:
     void on_actionDelete_D_triggered();
     void on_actionZoom_In_triggered();
     void on_actionZoom_Out_triggered();
+    void on_actionSet_Global_Feedback_triggered();
+    void on_actionUnset_Global_Feedback_triggered();
 };
 
 #endif // GOMAINWINDOW_H
