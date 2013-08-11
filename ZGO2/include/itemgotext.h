@@ -16,6 +16,7 @@ public:
     bool isSelectable(float x, float y, float w, float h);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
+    ItemGOText* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

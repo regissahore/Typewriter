@@ -11,6 +11,7 @@
 #include "itemgomarkovequivalent.h"
 #include "gomarkovcommoncause.h"
 #include "gomarkovequivalent.h"
+#include "itemgotext.h"
 
 /**
  * Constructor.
@@ -307,10 +308,6 @@ void ToolGOSelect::copy()
             }
         }
     }
-    if (minSelectedId == 0x7fffffff)
-    {
-        return;
-    }
     int increaseId = maxId - minSelectedId;
     //复制操作符。
     QVector<ItemGOMarkovOperator*> newOps;
@@ -425,6 +422,21 @@ void ToolGOSelect::copy()
             }
         }
     }
+    //文字的复制。
+    QVector<ItemGOText*> newTexts;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable* item = (ItemDrawable*)this->_items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
+        {
+            ItemGOText *text = (ItemGOText*)item;
+            ItemGOText *newText = text->copy();
+            newText->setX(text->x() + 100);
+            newText->setY(text->y() + 100);
+            newTexts.push_back(newText);
+            this->sceneGO()->addItem(newText);
+        }
+    }
     //更换选择内容。
     for (int i = 0; i < this->_items.size(); ++i)
     {
@@ -444,6 +456,10 @@ void ToolGOSelect::copy()
     for (int i = 0; i < newCommons.size(); ++i)
     {
         this->_items.push_back(newCommons[i]);
+    }
+    for (int i = 0; i < newTexts.size(); ++i)
+    {
+        this->_items.push_back(newTexts[i]);
     }
     for (int i = 0; i < this->_items.size(); ++i)
     {

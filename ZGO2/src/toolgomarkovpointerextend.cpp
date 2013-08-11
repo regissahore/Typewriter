@@ -8,6 +8,7 @@
 #include "itemgomarkovoperator.h"
 #include "itemgomarkovequivalent.h"
 #include "itemgofactory.h"
+#include "itemgotext.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -121,6 +122,18 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     }
                     this->_item = item;
                     this->_item->setColor(QColor(Qt::darkBlue));
+                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                    message->setMessage(this->_item);
+                    this->sceneGO()->sendMessage(message);
+                }
+                else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
+                {
+                    ItemGOText *item = ((ItemGOText*)this->_item)->copy();
+                    item->setX(((ItemGOText*)this->_item)->x() + 100);
+                    item->setY(((ItemGOText*)this->_item)->y() + 100);
+                    this->sceneGO()->addItem(item);
+                    this->_item->setColor(Qt::black);
+                    this->_item = item;
                     Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                     message->setMessage(this->_item);
                     this->sceneGO()->sendMessage(message);

@@ -84,6 +84,15 @@ void ItemGOText::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWid
     painter->drawText(0, 0, 1000, 1000, Qt::AlignLeft | Qt::AlignTop, this->text());
 }
 
+ItemGOText* ItemGOText::copy() const
+{
+    ItemGOText *text = new ItemGOText();
+    text->_text = this->_text;
+    text->setX(this->x() + 100);
+    text->setY(this->y() + 100);
+    return text;
+}
+
 void ItemGOText::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("text");
