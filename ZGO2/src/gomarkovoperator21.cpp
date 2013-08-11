@@ -13,6 +13,7 @@ GOMarkovOperator21::GOMarkovOperator21() : GOMarkovOperator()
     this->subInput()->setNumber(0);
     this->output()->setNumber(1);
     this->initOutputMarkovStatus();
+    this->setIsGlobalFeedback(true);
 }
 
 GOMarkovOperator21::~GOMarkovOperator21()

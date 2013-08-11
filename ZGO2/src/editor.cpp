@@ -264,6 +264,7 @@ void Editor::tryOpen()
         else if (extension.compare(extension, ".goc", Qt::CaseInsensitive) == 0)
         {
             EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV_CHART);
+            editor->bindMessage(this->MessageCreator::_messageController);
             editor->setPath(filePath);
             editor->tryOpen(filePath);
             this->_editors->push_back(editor);
