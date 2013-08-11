@@ -206,6 +206,69 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
             this->copy();
         }
     }
+    else if (event->key() == Qt::Key_A)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            this->selectAll();
+        }
+    }
+}
+
+void ToolGOSelect::selectAll()
+{
+    QList<QGraphicsItem*> items = this->graphicsScene()->items();
+    if (items.size() > 2)
+    {
+        //计算操作符的位置范围。
+        int left, right;
+        int top, bottom;
+        bool flag = true;
+        this->_items.clear();
+        for (int i = 0; i < items.size(); ++i)
+        {
+            ItemDrawable* item = (ItemDrawable*)items[i];
+            if (item->TypedItem::type() != DefinationEditorSelectionType::EDITOR_SELECTION_EMPTY)
+            {
+                if (flag)
+                {
+                    left = item->x();
+                    right = item->x();
+                    top = item->y();
+                    bottom = item->y();
+                    flag = false;
+                }
+                else
+                {
+                    if (item->x() < left)
+                    {
+                        left = item->x();
+                    }
+                    if (item->x() > right)
+                    {
+                        right = item->x();
+                    }
+                    if (item->y() < top)
+                    {
+                        top = item->y();
+                    }
+                    if (item->y() > bottom)
+                    {
+                        bottom = item->y();
+                    }
+                }
+                this->_items.push_back(item);
+                item->setColor(Qt::darkBlue);
+            }
+        }
+        left -= 50;
+        right += 50;
+        top -= 50;
+        bottom += 50;
+        this->_selection->setPos(left, top);
+        this->_selection->setEnd(QPoint(right - left, bottom - top));
+        this->_selection->setVisible(true);
+    }
 }
 
 void ToolGOSelect::copy()
