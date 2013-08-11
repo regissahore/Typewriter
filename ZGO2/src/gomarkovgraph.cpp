@@ -568,13 +568,16 @@ void GOMarkovGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &lis
     {
         return;
     }
-    if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+    if (!((GOMarkovOperator*)list[index])->isGlobalFeedback())
     {
-        GOMarkovOperator* op = (GOMarkovOperator*)list[index];
-        op->markovStatus()->setProbabilityNormal(1.0);
-        tempPath.add(list[index]);
-        this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
-        tempPath.removeEnd();
+        if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+        {
+            GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+            op->markovStatus()->setProbabilityNormal(1.0);
+            tempPath.add(list[index]);
+            this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
+            tempPath.removeEnd();
+        }
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
     op->markovStatus()->setProbabilityNormal(0.0);
@@ -653,13 +656,16 @@ void GOMarkovGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list,
     {
         return;
     }
-    if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+    if (!((GOMarkovOperator*)list[index])->isGlobalFeedback())
     {
-        GOMarkovOperator* op = (GOMarkovOperator*)list[index];
-        op->markovStatus()->setProbabilityBreakdown(1.0);
-        tempPath.add(list[index]);
-        this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
-        tempPath.removeEnd();
+        if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
+        {
+            GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+            op->markovStatus()->setProbabilityBreakdown(1.0);
+            tempPath.add(list[index]);
+            this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
+            tempPath.removeEnd();
+        }
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
     op->markovStatus()->setProbabilityBreakdown(0.0);
