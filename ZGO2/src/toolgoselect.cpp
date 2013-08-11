@@ -228,8 +228,8 @@ void ToolGOSelect::selectAll()
     if (items.size() > 2)
     {
         //计算操作符的位置范围。
-        int left, right;
-        int top, bottom;
+        int left = 0, right = 0;
+        int top = 0, bottom = 0;
         bool flag = true;
         this->_items.clear();
         for (int i = 0; i < items.size(); ++i)
