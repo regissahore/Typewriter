@@ -542,7 +542,7 @@ void GOMarkovGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &lis
             for (int i = 0; i < list.size(); ++i)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-                op->calcOutputMarkovStatus(0.0);
+                op->calcOutputMarkovStatus(1e10);
             }
             for (int i = 0; i < endList.size(); ++i)
             {
@@ -573,6 +573,7 @@ void GOMarkovGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &lis
         if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
         {
             GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+            op->initMarkovStatus(1e10);
             op->markovStatus()->setProbabilityNormal(1.0);
             tempPath.add(list[index]);
             this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
@@ -580,7 +581,8 @@ void GOMarkovGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &lis
         }
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
-    op->markovStatus()->setProbabilityNormal(0.0);
+    op->initMarkovStatus(1e10);
+    //op->markovStatus()->setProbabilityNormal(0.0);
     this->findPathDfs(path, list, tempPath, index + 1, number, order);
 }
 
@@ -630,7 +632,7 @@ void GOMarkovGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list,
             for (int i = 0; i < list.size(); ++i)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-                op->calcOutputMarkovStatus(0.0);
+                op->calcOutputMarkovStatus(1e10);
             }
             for (int i = 0; i < endList.size(); ++i)
             {
@@ -661,6 +663,7 @@ void GOMarkovGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list,
         if (!GOMarkovOperatorFactory::isLogical(list[index]->type()))
         {
             GOMarkovOperator* op = (GOMarkovOperator*)list[index];
+            op->initMarkovStatus(1e10);
             op->markovStatus()->setProbabilityBreakdown(1.0);
             tempPath.add(list[index]);
             this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
@@ -668,7 +671,8 @@ void GOMarkovGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list,
         }
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
-    op->markovStatus()->setProbabilityBreakdown(0.0);
+    op->initMarkovStatus(1e10);
+    //op->markovStatus()->setProbabilityBreakdown(0.0);
     this->findCutDfs(cut, list, tempPath, index + 1, number, order);
 }
 
