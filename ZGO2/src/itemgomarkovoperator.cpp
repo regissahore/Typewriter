@@ -68,6 +68,10 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
+    {
+        painter->setOpacity(0.5);
+    }
     for (int i = 0; i < this->model()->output()->number(); ++i)
     {
         this->_outputArrows->at(i)->setVisible(this->isShowOutput()->at(i));
@@ -84,6 +88,10 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     default:
         this->paint(painter);
         break;
+    }
+    if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
+    {
+        painter->setOpacity(1.0);
     }
 }
 

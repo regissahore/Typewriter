@@ -121,11 +121,33 @@ void ParameterGOMarkovOperator::addTypeParameter()
 {
     if (0L != this->_item)
     {
-        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Type"), this));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, new QLabel(GOMarkovOperatorFactory::typeName(item->model()->type()), this));
     }
+}
+
+void ParameterGOMarkovOperator::addOperatorParameter()
+{
+    this->ParameterGOOperator::addOperatorParameter();
+    if (this->_item != 0L)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Global Feedback"), this));
+        QCheckBox *checkBox = new QCheckBox(this);
+        checkBox->setChecked(((GOMarkovOperator*)item->model())->isGlobalFeedback());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkovGlobalFeedback(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkovGlobalFeedback(bool value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    ((GOMarkovOperator*)item->model())->setIsGlobalFeedback(value);
+    item->update();
 }
 
 void ParameterGOMarkovOperator::addMarkovBreakdownNumParameter()

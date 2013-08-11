@@ -38,6 +38,7 @@ protected:
     QDoubleSpinBox *_spinBox9FeedbackRepairTime;
 
     void addTypeParameter();
+    void addOperatorParameter();
     void addMarkovBreakdownCorrelateParameter();
     void addMarkovBreakdownNumParameter();
     void addMarkovStatus1Parameter();
@@ -60,6 +61,7 @@ protected:
     void addMarkovShowOutput2Parameter();
 
 protected slots:
+    void setItemMarkovGlobalFeedback(bool value);
     void setItemMarkovBreakdownCorrelate(bool value);
     void setItemMarkovBreakdownNum(int value);
     void setItemMarkovFrequencyBreakdown1(double value);

@@ -37,6 +37,8 @@ public:
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
     virtual bool errorDetect(Messager *messager);
+    bool isGlobalFeedback() const;
+    void setIsGlobalFeedback(const bool value);
     virtual GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
@@ -51,7 +53,8 @@ protected:
     RungeKuttaBreakdown3 *_rkBreakdown3;
     RungeKuttaBreakdown4 *_rkBreakdown4;
     int _breakdownNum;
-    bool _isBreakdownCorrelate; /*! 是否和输入信号有停工相关。*/
+    bool _isBreakdownCorrelate; /** 是否和输入信号有停工相关。*/
+    bool _isGlobalFeedback; /** 是否是整体反馈的成员。*/
 };
 
 #endif // GOMARKOVOPERATOR_H

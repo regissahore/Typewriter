@@ -251,6 +251,16 @@ bool GOMarkovOperator::errorDetect(Messager *messager)
     return flag;
 }
 
+bool GOMarkovOperator::isGlobalFeedback() const
+{
+    return this->_isGlobalFeedback;
+}
+
+void GOMarkovOperator::setIsGlobalFeedback(const bool value)
+{
+    this->_isGlobalFeedback = value;
+}
+
 GOMarkovOperator* GOMarkovOperator::copy()
 {
     GOMarkovOperator *op = GOMarkovOperatorFactory::produce(this->TypedItem::type());
@@ -262,6 +272,7 @@ GOMarkovOperator* GOMarkovOperator::copy()
 
     op->setBreakdownNum(this->breakdownNum());
     op->setBreakdownCorrelate(this->isBreakdownCorrelate());
+    op->setIsGlobalFeedback(this->isGlobalFeedback());
 
     op->markovStatus()->setProbabilityNormal(this->markovStatus()->probabilityNormal());
     op->markovStatus()->setFrequencyBreakdown(this->markovStatus()->frequencyBreakdown());
@@ -295,6 +306,7 @@ void GOMarkovOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("output", this->output()->number());
     element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
+    element.setAttribute("global_feedback", this->isGlobalFeedback());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
@@ -317,6 +329,7 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
     this->output()->setNumber(root.attribute("output").toInt());
     this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
+    this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {

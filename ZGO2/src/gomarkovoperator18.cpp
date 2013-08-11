@@ -86,6 +86,7 @@ void GOMarkovOperator18::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("output", this->output()->number());
     element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
+    element.setAttribute("global_feedback", this->isGlobalFeedback());
     element.setAttribute("lambdab1", this->_rungeKutta->lambdaB1());
     root.appendChild(element);
     this->status()->save(document, element);
@@ -109,6 +110,7 @@ bool GOMarkovOperator18::tryOpen(QDomElement &root)
     this->output()->setNumber(root.attribute("output").toInt());
     this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
+    this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
     this->_rungeKutta->setLambdaB1(root.attribute("lambdab1").toDouble());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))

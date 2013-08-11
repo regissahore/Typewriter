@@ -27,7 +27,7 @@ protected:
 
     void addIDParameter();
     void addTypeParameter();
-    void addOperatorParameter();
+    virtual void addOperatorParameter();
     void addFlipParameter();
     void addProbability0Parameter();
     void addProbability12Parameter();

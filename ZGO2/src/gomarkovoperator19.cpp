@@ -166,6 +166,7 @@ void GOMarkovOperator19::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("output", this->output()->number());
     element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
+    element.setAttribute("global_feedback", this->isGlobalFeedback());
     element.setAttribute("delta", this->deltaNum());
     root.appendChild(element);
     this->status()->save(document, element);
@@ -198,6 +199,7 @@ bool GOMarkovOperator19::tryOpen(QDomElement &root)
     this->output()->setNumber(root.attribute("output").toInt());
     this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
+    this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
     this->setDeltaNum(root.attribute("delta").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
