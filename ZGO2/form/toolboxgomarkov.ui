@@ -38,7 +38,7 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>0</y>
+        <y>-135</y>
         <width>238</width>
         <height>1120</height>
        </rect>
@@ -1275,6 +1275,7 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          <property name="font">
           <font>
            <family>微软雅黑</family>
+           <pointsize>10</pointsize>
           </font>
          </property>
          <property name="styleSheet">

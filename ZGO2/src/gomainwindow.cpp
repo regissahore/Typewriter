@@ -129,8 +129,11 @@ void GOMainWindow::initToolBar()
     this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Path);
     this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Cut);
     this->ui->toolBarAnalysis->addSeparator();
-    this->ui->toolBarAnalysis->addAction((this->ui->actionCopy_C));
-    this->ui->toolBarAnalysis->addAction((this->ui->actionDelete_D));
+    this->ui->toolBarAnalysis->addAction(this->ui->actionCopy_C);
+    this->ui->toolBarAnalysis->addAction(this->ui->actionDelete_D);
+    this->ui->toolBarAnalysis->addSeparator();
+    this->ui->toolBarAnalysis->addAction(this->ui->actionSet_Global_Feedback);
+    this->ui->toolBarAnalysis->addAction(this->ui->actionUnset_Global_Feedback);
 }
 
 void GOMainWindow::on_actionNew_triggered()

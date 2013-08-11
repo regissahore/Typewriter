@@ -26,6 +26,7 @@ GOMarkovOperator::GOMarkovOperator() : GOOperator()
     this->_markovStatus4 = new GOMarkovStatus();
     this->_rkBreakdown3 = new RungeKuttaBreakdown3();
     this->_rkBreakdown4 = new RungeKuttaBreakdown4();
+    this->setIsGlobalFeedback(false);
 }
 
 GOMarkovOperator::~GOMarkovOperator()

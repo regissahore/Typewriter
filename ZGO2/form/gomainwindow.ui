@@ -393,6 +393,10 @@
    </property>
   </action>
   <action name="actionSet_Global_Feedback">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/set_global_feedback.png</normaloff>:/icon/resource/image/set_global_feedback.png</iconset>
+   </property>
    <property name="text">
     <string>Set Global Feedback</string>
    </property>
@@ -401,6 +405,10 @@
    </property>
   </action>
   <action name="actionUnset_Global_Feedback">
+   <property name="icon">
+    <iconset resource="../resource.qrc">
+     <normaloff>:/icon/resource/image/unset_global_feedback.png</normaloff>:/icon/resource/image/unset_global_feedback.png</iconset>
+   </property>
    <property name="text">
     <string>Unset Global Feedback</string>
    </property>
