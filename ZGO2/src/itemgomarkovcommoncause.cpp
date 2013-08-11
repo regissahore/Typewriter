@@ -95,6 +95,17 @@ QVector<ItemGOMarkovOperator*>* ItemGOMarkovCommonCause::operatorItems() const
     return this->_operatorItems;
 }
 
+ItemGOMarkovCommonCause* ItemGOMarkovCommonCause::copy()
+{
+    ItemGOMarkovCommonCause *common = new ItemGOMarkovCommonCause();
+    common->_model = this->model()->copy();
+    for (int i = 0; i < this->_operatorItems->size(); ++i)
+    {
+        common->_operatorItems->push_back(0L);
+    }
+    return common;
+}
+
 void ItemGOMarkovCommonCause::save(QDomDocument &document, QDomElement &root)
 {
     this->model()->save(document, root);

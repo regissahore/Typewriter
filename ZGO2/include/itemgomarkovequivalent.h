@@ -41,6 +41,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
     void move(QGraphicsSceneMouseEvent *event);
     void updateBoundary();
+    ItemGOMarkovEquivalent* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     void bindOperators(QList<ItemGOMarkovOperator *> &operatorList, QList<ItemGOMarkovEquivalent *> &equivalentList);

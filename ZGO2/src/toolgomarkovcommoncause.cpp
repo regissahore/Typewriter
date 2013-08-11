@@ -7,6 +7,7 @@
 #include "itemgomarkovoperator.h"
 #include "itemgomarkovcommoncause.h"
 #include "gomarkovcommoncause.h"
+#include "gomarkovoperator.h"
 
 ToolGOMarkovCommonCause::ToolGOMarkovCommonCause(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -115,6 +116,7 @@ void ToolGOMarkovCommonCause::addCommonCause()
         {
             common->operatorItems()->push_back(operators[i]);
             common->model()->operators()->push_back((GOMarkovOperator*)(operators[i]->model()));
+            common->model()->idList()->push_back(((GOMarkovOperator*)(operators[i]->model()))->id());
             operators[i]->setFatherCommonCause(common);
         }
         common->updateBoundary();

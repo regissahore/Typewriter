@@ -7,6 +7,10 @@
 #include "itemgomarkovoperator.h"
 #include "gomarkovoperator.h"
 #include "scenego.h"
+#include "itemgomarkovcommoncause.h"
+#include "itemgomarkovequivalent.h"
+#include "gomarkovcommoncause.h"
+#include "gomarkovequivalent.h"
 
 /**
  * Constructor.
@@ -382,6 +386,45 @@ void ToolGOSelect::copy()
             }
         }
     }
+    //复制共因失效。
+    QVector<ItemGOMarkovCommonCause*> newCommons;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable* item = (ItemDrawable*)this->_items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
+        {
+            ItemGOMarkovCommonCause *common = (ItemGOMarkovCommonCause*)item;
+            ItemGOMarkovCommonCause *newCommon = common->copy();
+            for (int j = 0; j < newCommon->model()->idList()->size(); ++j)
+            {
+                (*newCommon->model()->idList())[j] += increaseId;
+            }
+            int find = 0;
+            for (int j = 0; j < newOps.size(); ++j)
+            {
+                for (int k = 0; k < newCommon->model()->idList()->size(); ++k)
+                {
+                    if (newOps[j]->model()->id() == newCommon->model()->idList()->at(k))
+                    {
+                        (*newCommon->operatorItems())[k] = newOps[j];
+                        (*newCommon->model()->operators())[k] = (GOMarkovOperator*)newOps[j]->model();
+                        ++find;
+                        break;
+                    }
+                }
+            }
+            if (find == newCommon->model()->idList()->size())
+            {
+                for (int j = 0; j < newCommon->operatorItems()->size(); ++j)
+                {
+                    newCommon->operatorItems()->at(j)->setFatherCommonCause(newCommon);
+                }
+                newCommons.push_back(newCommon);
+                this->sceneGO()->addItem(newCommon);
+                newCommon->updateBoundary();
+            }
+        }
+    }
     //更换选择内容。
     for (int i = 0; i < this->_items.size(); ++i)
     {
@@ -397,6 +440,10 @@ void ToolGOSelect::copy()
     for (int i = 0; i < newSignals.size(); ++i)
     {
         this->_items.push_back(newSignals[i]);
+    }
+    for (int i = 0; i < newCommons.size(); ++i)
+    {
+        this->_items.push_back(newCommons[i]);
     }
     for (int i = 0; i < this->_items.size(); ++i)
     {

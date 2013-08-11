@@ -80,6 +80,25 @@ void GOMarkovCommonCause::setGammaC(double value)
     this->_gammaC = value;
 }
 
+GOMarkovCommonCause* GOMarkovCommonCause::copy() const
+{
+    GOMarkovCommonCause *common = new GOMarkovCommonCause();
+    for (int i = 0; i < this->_idList->size(); ++i)
+    {
+        common->_idList->push_back(this->_idList->at(i));
+    }
+    for (int i = 0; i < this->_operators->size(); ++i)
+    {
+        common->_operators->push_back(0L);
+    }
+    common->_breakdownTotal = this->_breakdownTotal;
+    common->_breakdownIndividual = this->_breakdownIndividual;
+    common->_breakdownCommon = this->_breakdownCommon;
+    common->_belta = this->_belta;
+    common->_gammaC = this->_gammaC;
+    return common;
+}
+
 void GOMarkovCommonCause::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement commonRoot = document.createElement("commoncause");
@@ -106,7 +125,7 @@ bool GOMarkovCommonCause::tryOpen(QDomElement &root)
     this->setBreakdownTotal(root.attribute("total").toDouble());
     this->setBreakdownIndividual(root.attribute("individual").toDouble());
     this->setBreakdownCommon(root.attribute("common").toDouble());
-    this->setBelta(root.attribute("belta").toDouble());
+    this->_belta = root.attribute("belta").toDouble();
     this->setGammaC(root.attribute("gammac").toDouble());
     this->_idList->clear();
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())

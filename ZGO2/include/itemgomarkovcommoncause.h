@@ -21,6 +21,7 @@ public:
     void bindOperators(QList<ItemGOMarkovOperator*> &operatorList);
     void updateBoundary();
     QVector<ItemGOMarkovOperator*>* operatorItems() const;
+    ItemGOMarkovCommonCause* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

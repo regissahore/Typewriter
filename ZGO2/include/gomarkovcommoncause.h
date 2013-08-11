@@ -30,6 +30,7 @@ public:
     double calcCommonCause(double time) const;
     bool containOperator(GOMarkovOperator* op) const;
     bool errorDetect(Messager *messager);
+    GOMarkovCommonCause* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 

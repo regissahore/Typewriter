@@ -655,6 +655,12 @@ void ItemGOMarkovEquivalent::updateBoundary()
     }
 }
 
+ItemGOMarkovEquivalent* ItemGOMarkovEquivalent::copy() const
+{
+    ItemGOMarkovEquivalent* eq = new ItemGOMarkovEquivalent();
+    return eq;
+}
+
 void ItemGOMarkovEquivalent::save(QDomDocument &document, QDomElement &root)
 {
     if (this->model() == 0L)
