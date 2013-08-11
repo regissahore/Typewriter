@@ -38,8 +38,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-214</y>
-        <width>248</width>
+        <y>0</y>
+        <width>238</width>
         <height>1120</height>
        </rect>
       </property>
@@ -632,6 +632,10 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          <property name="text">
           <string>9B1</string>
          </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op9B1.png</normaloff>:/icon/resource/image/tool_op9B1.png</iconset>
+         </property>
          <property name="iconSize">
           <size>
            <width>24</width>
@@ -668,6 +672,10 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="text">
           <string>9B2</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op9B2.png</normaloff>:/icon/resource/image/tool_op9B2.png</iconset>
          </property>
          <property name="iconSize">
           <size>

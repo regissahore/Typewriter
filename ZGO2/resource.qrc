@@ -66,6 +66,8 @@
         <file>resource/image/paste.png</file>
         <file>resource/image/zoomin.png</file>
         <file>resource/image/zoomout.png</file>
+        <file>resource/image/tool_op9B1.png</file>
+        <file>resource/image/tool_op9B2.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>

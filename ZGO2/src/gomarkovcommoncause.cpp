@@ -164,7 +164,7 @@ bool GOMarkovCommonCause::errorDetect(Messager *messager)
             if (fabs(lambda1 - lambda2) > 1e-8)
             {
                 Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-                message->paramString = QObject::tr("Error: Common Cause ") + QObject::tr("should have same breakdown frequency. ");
+                message->paramString = QObject::tr("Error: Common Cause ") + QObject::tr("%1 %2 should have same breakdown frequency. ").arg(this->_operators->at(0)->id()).arg(this->_operators->at(i)->id());
                 messager->sendMessage(message);
                 return true;
             }
