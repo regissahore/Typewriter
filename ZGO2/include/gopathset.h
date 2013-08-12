@@ -21,6 +21,7 @@ public:
     QString toIdString();
     QString toCompareString();
     virtual QString toProbabilityString();
+    virtual QString toMarkovProbabilityString();
     virtual GOPathSet* copy();
     bool isContain(GOPathSet *set);
 

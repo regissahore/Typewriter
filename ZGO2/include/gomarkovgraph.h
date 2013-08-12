@@ -23,6 +23,7 @@ public:
     void calcAccumulativeProbability(double time);
     GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
     bool saveAsHTML(const QString filePath);
+    bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 
 protected:
     QVector<GOMarkovEquivalent*> _equivalent;

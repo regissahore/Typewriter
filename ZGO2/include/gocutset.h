@@ -12,6 +12,7 @@ public:
     GOCutSet();
     GOPathSet *copy();
     QString toProbabilityString();
+    QString toMarkovProbabilityString();
 };
 
 #endif // GOCUTSET_H

@@ -1,6 +1,8 @@
 #include "gocutset.h"
 #include "gostatus.h"
 #include "gooperator.h"
+#include "gomarkovoperator.h"
+#include "gomarkovstatus.h"
 
 GOCutSet::GOCutSet() : GOPathSet()
 {
@@ -22,6 +24,18 @@ QString GOCutSet::toProbabilityString()
     for (int i = 0; i < this->_list.size(); ++i)
     {
         value = value * this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1);
+    }
+    return QString("%1").arg(value);
+}
+
+QString GOCutSet::toMarkovProbabilityString()
+{
+    double value = 1.0;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        GOMarkovOperator* op = (GOMarkovOperator*)this->_list[i];
+        op->initMarkovStatus(1e10);
+        value = value * (1.0 - op->markovStatus()->probabilityBreakdown());
     }
     return QString("%1").arg(value);
 }
