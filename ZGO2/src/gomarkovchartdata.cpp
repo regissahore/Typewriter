@@ -185,31 +185,89 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
     out << "<body>" << endl;
     out << "<input type = hidden value = ZHG/>";
     out << "<h1>" + QObject::tr("Analysis Result") + "</h1>" << endl;
+
     out << "<table>" << endl;
     out << "<tr style='text-align: center;'>" << endl;
     out << "<th>" + QObject::tr("Time") + "</th>" << endl;
+    out << "<th>" + QObject::tr("Property") + "</th>" << endl;
     for (int i = 0; i < names.size(); ++i)
     {
-        out << "<th>" << names[i] << "</th>" << endl;
-        //out << "<th>" << names[i] << "</th>" << endl;
-        out << "<th>" << names[i] << "</th>" << endl;
         out << "<th>" << names[i] << "</th>" << endl;
     }
     out << "</tr>" << endl;
     for (int i = 0; i < times.size(); ++i)
     {
         out << "<tr>" << endl;
-        out << "<td>" << times[i] << "</td>" << endl;
+        out << "<td>" << times[i] << "</td>";
+        out << "<td>" << QObject::tr("Probability Normal") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
             out << "<td>" << probabilities[j][i] << "</td>" << endl;
-            //out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
+        }
+        out << "</tr>" << endl;
+        out << "<tr>" << endl;
+        out << "<td></td>";
+        out << "<td>" << QObject::tr("Probability Breakdown") << "</td>" << endl;
+        for (int j = 0; j < names.size(); ++j)
+        {
+            out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
+        }
+        out << "</tr>" << endl;
+        out << "<tr>" << endl;
+        out << "<td></td>";
+        out << "<td>" << QObject::tr("Frequency Breakdown") << "</td>" << endl;
+        for (int j = 0; j < names.size(); ++j)
+        {
+            out << "<td>" << lambdas[j][i] << "</td>" << endl;
+        }
+        out << "</tr>" << endl;
+        out << "<tr>" << endl;
+        out << "<td></td>";
+        out << "<td>" << QObject::tr("Frequency Repair") << "</td>" << endl;
+        for (int j = 0; j < names.size(); ++j)
+        {
+            out << "<td>" << mus[j][i] << "</td>" << endl;
+        }
+        out << "</tr>" << endl;
+    }
+    out << "</table>" << endl;
+
+    out << "<table>" << endl;
+    out << "<tr style='text-align: center;'>" << endl;
+    out << "<th>" + QObject::tr("Time") + "</th>" << endl;
+    for (int i = 0; i < names.size(); ++i)
+    {
+        out << "<th>" << names[i] << "</th>" << endl;
+        out << "<th></th>" << endl;
+        out << "<th></th>" << endl;
+        out << "<th></th>" << endl;
+    }
+    out << "</tr>" << endl;
+    out << "<tr>";
+    out << "<td></td>";
+    for (int i = 0; i < names.size(); ++i)
+    {
+        out << "<td>" << QObject::tr("Probability Normal") << "</td>" << endl;
+        out << "<td>" << QObject::tr("Probability Breakdown") << "</td>" << endl;
+        out << "<td>" << QObject::tr("Frequency Breakdown") << "</td>" << endl;
+        out << "<td>" << QObject::tr("Frequency Repair") << "</td>" << endl;
+    }
+    out << "</tr>" << endl;
+    for (int i = 0; i < times.size(); ++i)
+    {
+        out << "<tr>" << endl;
+        out << "<td>" << times[i] << "</td>";
+        for (int j = 0; j < names.size(); ++j)
+        {
+            out << "<td>" << probabilities[j][i] << "</td>" << endl;
+            out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
             out << "<td>" << lambdas[j][i] << "</td>" << endl;
             out << "<td>" << mus[j][i] << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }
     out << "</table>" << endl;
+
     out << "</body>" << endl;
     out << "</html>" << endl;
     file.close();
