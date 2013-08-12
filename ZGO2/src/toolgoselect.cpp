@@ -494,6 +494,13 @@ void ToolGOSelect::setGlobalFeedback()
             op->setIsGlobalFeedback(true);
             item->update();
         }
+        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *item = (ItemGOSignal*)this->_items[i];
+            GOSignal *signal = item->model();
+            signal->setIsGlobalFeedback(true);
+            item->update();
+        }
     }
 }
 
@@ -506,6 +513,13 @@ void ToolGOSelect::unsetGlobalFeedback()
             ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_items[i];
             GOMarkovOperator *op = (GOMarkovOperator*)item->model();
             op->setIsGlobalFeedback(false);
+            item->update();
+        }
+        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            ItemGOSignal *item = (ItemGOSignal*)this->_items[i];
+            GOSignal *signal = item->model();
+            signal->setIsGlobalFeedback(false);
             item->update();
         }
     }

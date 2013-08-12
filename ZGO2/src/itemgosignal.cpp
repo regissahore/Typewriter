@@ -252,6 +252,10 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    if (this->model()->isGlobalFeedback())
+    {
+        painter->setOpacity(0.5);
+    }
     painter->setPen(Qt::SolidLine);
     painter->setPen(this->_color);
     painter->setBrush(this->_color);
@@ -274,6 +278,10 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
         painter->drawText(corner + 5,
                           this->_endPos.y() * 0.5 - 5,
                           QString("%1").arg(this->model()->id()));
+    }
+    if (this->model()->isGlobalFeedback())
+    {
+        painter->setOpacity(1.0);
     }
 }
 
@@ -339,6 +347,7 @@ ItemGOSignal* ItemGOSignal::copy() const
     signal->_end->index = this->_end->index;
     signal->_isStraightLine = this->_isStraightLine;
     signal->_cornerProportion = this->_cornerProportion;
+    signal->model()->setIsGlobalFeedback(this->model()->isGlobalFeedback());
     return signal;
 }
 
@@ -350,6 +359,7 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
         signalRoot.setAttribute("id", this->model()->id());
         signalRoot.setAttribute("corner", this->cornerProportion());
         signalRoot.setAttribute("straight", this->isStraightLine());
+        signalRoot.setAttribute("global_feedback", this->model()->isGlobalFeedback());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
         element.setAttribute("id", this->start()->op->model()->id());
@@ -373,6 +383,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
     this->model()->setId(root.attribute("id").toInt());
     this->setCornerProportion(root.attribute("corner").toFloat());
     this->setIsStraightLine(root.attribute("straight").toInt());
+    this->model()->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
     QDomElement element = root.firstChildElement();
     this->_start->id = element.attribute("id").toInt();
     this->_start->type = element.attribute("type").toInt();
@@ -384,7 +395,7 @@ bool ItemGOSignal::tryOpen(QDomElement &root)
     return true;
 }
 
-GOSignal *ItemGOSignal::model()
+GOSignal *ItemGOSignal::model() const
 {
     return this->_model;
 }

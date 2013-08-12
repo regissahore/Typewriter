@@ -10,6 +10,8 @@
 #include "itemgofactory.h"
 #include "itemgotext.h"
 #include "gomarkovoperator.h"
+#include "itemgosignal.h"
+#include "gosignal.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -158,6 +160,19 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     ((GOMarkovOperator*)op->model())->setIsGlobalFeedback(true);
                 }
                 op->update();
+            }
+            else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+            {
+                ItemGOSignal *signal = (ItemGOSignal*)this->_item;
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    signal->model()->setIsGlobalFeedback(false);
+                }
+                else
+                {
+                    signal->model()->setIsGlobalFeedback(true);
+                }
+                signal->update();
             }
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);

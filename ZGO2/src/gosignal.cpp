@@ -5,6 +5,7 @@ GOSignal::GOSignal()
 {
     this->_u = 0L;
     this->_v = 0L;
+    this->setIsGlobalFeedback(false);
 }
 
 GOSignal::~GOSignal()
@@ -38,4 +39,14 @@ void GOSignal::setU(GOOperator *u)
 void GOSignal::setV(GOOperator *v)
 {
     this->_v = v;
+}
+
+bool GOSignal::isGlobalFeedback() const
+{
+    return this->_isGlobalFeedback;
+}
+
+void GOSignal::setIsGlobalFeedback(const bool value)
+{
+    this->_isGlobalFeedback = value;
 }

@@ -46,7 +46,7 @@ public:
     ItemGOSignal* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
-    GOSignal *model();
+    GOSignal *model() const;
 
 protected:
     SignalConnection *_start;

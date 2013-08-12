@@ -1,3 +1,4 @@
+#include <QColor>
 #include "itemgomarkovoperator.h"
 #include "definationeditorselectiontype.h"
 #include "gomarkovoperatorfactory.h"
@@ -68,6 +69,7 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
 {
     Q_UNUSED(item);
     Q_UNUSED(widget);
+    this->updateArrowColor();
     if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
     {
         painter->setOpacity(0.5);
@@ -414,4 +416,66 @@ bool ItemGOMarkovOperator::isSource() const
 {
     return this->model()->type() == GOMarkovOperatorFactory::Operator_Type_4 ||
             this->model()->type() == GOMarkovOperatorFactory::Operator_Type_5;
+}
+
+void ItemGOMarkovOperator::updateArrowColor()
+{
+    if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
+    {
+        for (int i = 0; i < this->_inputSignal->size(); ++i)
+        {
+            if (this->_inputSignal->at(i) == 0L)
+            {
+                this->_inputArrows->at(i)->setColor(QColor(127, 0, 0, 127));
+            }
+            else
+            {
+                this->_inputArrows->at(i)->setColor(QColor(0, 0, 0, 127));
+            }
+        }
+        for (int i = 0; i < this->_subInputSignal->size(); ++i)
+        {
+            if (this->_subInputSignal->at(i) == 0L)
+            {
+                this->_subInputArrows->at(i)->setColor(QColor(127, 0, 0, 127));
+            }
+            else
+            {
+                this->_subInputArrows->at(i)->setColor(QColor(0, 0, 0, 127));
+            }
+        }
+        for (int i = 0; i < this->_outputSignal->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setColor(QColor(0, 0, 0, 127));
+        }
+    }
+    else
+    {
+        for (int i = 0; i < this->_inputSignal->size(); ++i)
+        {
+            if (this->_inputSignal->at(i) == 0L)
+            {
+                this->_inputArrows->at(i)->setColor(Qt::darkRed);
+            }
+            else
+            {
+                this->_inputArrows->at(i)->setColor(Qt::black);
+            }
+        }
+        for (int i = 0; i < this->_subInputSignal->size(); ++i)
+        {
+            if (this->_subInputSignal->at(i) == 0L)
+            {
+                this->_subInputArrows->at(i)->setColor(Qt::darkRed);
+            }
+            else
+            {
+                this->_subInputArrows->at(i)->setColor(Qt::black);
+            }
+        }
+        for (int i = 0; i < this->_outputSignal->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setColor(Qt::black);
+        }
+    }
 }

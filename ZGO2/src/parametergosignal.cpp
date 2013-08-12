@@ -60,6 +60,13 @@ void ParameterGOSignal::addSignalParameter()
         checkBox->setChecked(item->isStraightLine());
         this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setIsStraightLine(bool)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Global Feedback"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->model()->isGlobalFeedback());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setIsGlobalFeedback(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
     }
 }
 
@@ -67,5 +74,12 @@ void ParameterGOSignal::setIsStraightLine(bool value)
 {
     ItemGOSignal *signal = (ItemGOSignal*)this->_item;
     signal->setIsStraightLine(value);
+    signal->update();
+}
+
+void ParameterGOSignal::setIsGlobalFeedback(bool value)
+{
+    ItemGOSignal *signal = (ItemGOSignal*)this->_item;
+    signal->model()->setIsGlobalFeedback(value);
     signal->update();
 }

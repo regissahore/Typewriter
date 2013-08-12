@@ -18,10 +18,13 @@ public:
     GOOperator* next(GOOperator *op) const;
     void setU(GOOperator* u);
     void setV(GOOperator* v);
+    bool isGlobalFeedback() const;
+    void setIsGlobalFeedback(const bool value);
 
 protected:
     GOOperator* _u; /** One ID of the connected operator. */
     GOOperator* _v; /** The other ID of the connected operator. */
+    bool _isGlobalFeedback;
 };
 
 #endif // GOSIGNAL_H

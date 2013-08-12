@@ -31,6 +31,7 @@ protected:
     void paint(QPainter *painter);
     void paint9A(QPainter *painter);
     void paint22B(QPainter *painter);
+    void updateArrowColor();
 };
 
 #endif // ITEMGOMARKOVOPERATOR_H

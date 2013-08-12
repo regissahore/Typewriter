@@ -528,14 +528,14 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
         if (index >= 0 && index < this->model()->input()->number())
         {
             (*this->_inputSignal)[index] = 0L;
-            this->_inputArrows->at(index)->setColor(QColor(Qt::red));
+            this->_inputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
     case DefinationGOType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
             (*this->_subInputSignal)[index] = 0L;
-            this->_subInputArrows->at(index)->setColor(QColor(Qt::red));
+            this->_subInputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
     case DefinationGOType::GO_OPERATOR_OUTPUT:

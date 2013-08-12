@@ -20,6 +20,7 @@ protected:
 protected slots:
     void setItemID(int value);
     void setIsStraightLine(bool value);
+    void setIsGlobalFeedback(bool value);
 };
 
 #endif // PARAMETERGOSIGNAL_H
