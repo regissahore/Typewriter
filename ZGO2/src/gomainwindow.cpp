@@ -272,3 +272,13 @@ void GOMainWindow::on_actionUnset_Global_Feedback_triggered()
 {
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK));
 }
+
+void GOMainWindow::on_actionShow_Parameter_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SHOW_PARAMETER));
+}
+
+void GOMainWindow::on_actionHide_Parameter_triggered()
+{
+    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_HIDE_PARAMETER));
+}

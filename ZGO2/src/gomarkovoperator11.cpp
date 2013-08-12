@@ -1,4 +1,5 @@
 #include <QObject>
+#include <QPainter>
 #include <qmath.h>
 #include "gomarkovoperator11.h"
 #include "goinput.h"
@@ -286,6 +287,15 @@ bool GOMarkovOperator11::errorDetect(Messager *messager)
         }
     }
     return false;
+}
+
+void GOMarkovOperator11::paintParameter(QPainter *painter)
+{
+    int y = 30;
+    painter->drawText(-50, y, QObject::tr("K: %1").arg(this->K()));
+    painter->drawText(-50, y + 20, QObject::tr("I: %1").arg(this->I()));
+    painter->drawText(-50, y + 40, QObject::tr("J: %1").arg(this->J()));
+    painter->drawText(-50, y + 60, QObject::tr("L: %1").arg(this->L()));
 }
 
 GOMarkovOperator* GOMarkovOperator11::copy()

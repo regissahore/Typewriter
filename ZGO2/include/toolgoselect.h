@@ -32,6 +32,8 @@ protected:
     void copy();
     void setGlobalFeedback();
     void unsetGlobalFeedback();
+    void setShowParameter();
+    void setHideParameter();
 };
 
 #endif // TOOLGOSELECT_H

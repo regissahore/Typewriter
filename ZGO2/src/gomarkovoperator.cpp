@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <QObject>
+#include <QPainter>
 #include <qmath.h>
 #include "gomarkovoperator.h"
 #include "gomarkovstatus.h"
@@ -362,4 +363,40 @@ bool GOMarkovOperator::tryOpen(QDomElement &root)
         return false;
     }
     return true;
+}
+
+void GOMarkovOperator::paintParameter(QPainter *painter)
+{
+    if (!GOMarkovOperatorFactory::isLogical(this->TypedItem::type()))
+    {
+        this->paintMarkovParameter(painter);
+    }
+}
+
+void GOMarkovOperator::paintMarkovParameter(QPainter *painter)
+{
+    int y = 30;
+    if (this->breakdownNum() > 0)
+    {
+        painter->drawText(-50, y, QObject::tr("Lambda 1: %1").arg(this->_markovStatus1->frequencyBreakdown()));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 1: %1").arg(this->_markovStatus1->frequencyRepair()));
+    }
+    y += 40;
+    if (this->breakdownNum() > 1)
+    {
+        painter->drawText(-50, y, QObject::tr("Lambda 2: %1").arg(this->_markovStatus2->frequencyBreakdown()));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 2: %1").arg(this->_markovStatus2->frequencyRepair()));
+    }
+    y += 40;
+    if (this->breakdownNum() > 2)
+    {
+        painter->drawText(-50, y, QObject::tr("Lambda 3: %1").arg(this->_markovStatus3->frequencyBreakdown()));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 3: %1").arg(this->_markovStatus3->frequencyRepair()));
+    }
+    y += 40;
+    if (this->breakdownNum() > 3)
+    {
+        painter->drawText(-50, y, QObject::tr("Lambda 4: %1").arg(this->_markovStatus4->frequencyBreakdown()));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 4: %1").arg(this->_markovStatus4->frequencyRepair()));
+    }
 }

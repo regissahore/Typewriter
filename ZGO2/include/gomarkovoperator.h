@@ -7,6 +7,7 @@
 #include <QVector>
 #include "gooperator.h"
 
+class QPainter;
 class GOMarkovStatus;
 class Messager;
 class RungeKuttaBreakdown3;
@@ -39,6 +40,7 @@ public:
     virtual bool errorDetect(Messager *messager);
     bool isGlobalFeedback() const;
     void setIsGlobalFeedback(const bool value);
+    virtual void paintParameter(QPainter *painter);
     virtual GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
@@ -55,6 +57,7 @@ protected:
     int _breakdownNum;
     bool _isBreakdownCorrelate; /** 是否和输入信号有停工相关。*/
     bool _isGlobalFeedback; /** 是否是整体反馈的成员。*/
+    void paintMarkovParameter(QPainter *painter);
 };
 
 #endif // GOMARKOVOPERATOR_H

@@ -41,6 +41,8 @@ public:
     void removeSignal(ItemGOSignal *signal, int type, int index);
     QList<ItemGOSignal*> getConnectedSignals() const;
     QVector<bool>* isShowOutput() const;
+    bool isDrawParameter() const;
+    void setIsDrawParameter(const bool value);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -57,6 +59,7 @@ protected:
 
     bool _isHorizonFlip;
     bool _isVerticalFlip;
+    bool _isDrawParameter;
 
     virtual bool isSource() const;
 };

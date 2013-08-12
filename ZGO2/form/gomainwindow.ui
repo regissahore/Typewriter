@@ -29,7 +29,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile_F">
@@ -84,6 +84,9 @@
     <addaction name="separator"/>
     <addaction name="actionSet_Global_Feedback"/>
     <addaction name="actionUnset_Global_Feedback"/>
+    <addaction name="separator"/>
+    <addaction name="actionShow_Parameter"/>
+    <addaction name="actionHide_Parameter"/>
    </widget>
    <addaction name="menuFile_F"/>
    <addaction name="menuEdit_E"/>
@@ -414,6 +417,22 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+Shift+G</string>
+   </property>
+  </action>
+  <action name="actionShow_Parameter">
+   <property name="text">
+    <string>Show Parameter</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="actionHide_Parameter">
+   <property name="text">
+    <string>Hide Parameter</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+P</string>
    </property>
   </action>
  </widget>

@@ -62,6 +62,7 @@ protected:
 
 protected slots:
     void setItemMarkovGlobalFeedback(bool value);
+    void setItemMarkovShowParameter(bool value);
     void setItemMarkovBreakdownCorrelate(bool value);
     void setItemMarkovBreakdownNum(int value);
     void setItemMarkovFrequencyBreakdown1(double value);

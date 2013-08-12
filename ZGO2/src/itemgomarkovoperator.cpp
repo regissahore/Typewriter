@@ -91,6 +91,10 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
         this->paint(painter);
         break;
     }
+    if (this->isDrawParameter())
+    {
+        ((GOMarkovOperator*)this->model())->paintParameter(painter);
+    }
     if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
     {
         painter->setOpacity(1.0);
@@ -397,6 +401,7 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     this->setY(root.attribute("y", "0").toFloat());
     this->setIsHorizonFlip(root.attribute("horizon").toInt());
     this->setIsVerticalFlip(root.attribute("vertical").toInt());
+    this->setIsDrawParameter(root.attribute("parameter", "0").toInt());
     int type = root.attribute("type").toInt();
     QDomElement element = root.firstChildElement();
     GOMarkovOperator *model = GOMarkovOperatorFactory::produce(type);

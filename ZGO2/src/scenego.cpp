@@ -105,6 +105,14 @@ void SceneGO::messageEvent(Message *message)
         event = new QKeyEvent(QEvent::KeyRelease, Qt::Key_Delete, Qt::NoModifier);
         this->_tool->keyReleaseEvent(event);
         break;
+    case MessageFactory::TYPE_EDITOR_SHOW_PARAMETER:
+        event = new QKeyEvent(QEvent::KeyRelease, Qt::Key_P, Qt::ControlModifier);
+        this->_tool->keyReleaseEvent(event);
+        break;
+    case MessageFactory::TYPE_EDITOR_HIDE_PARAMETER:
+        event = new QKeyEvent(QEvent::KeyRelease, Qt::Key_P, Qt::ControlModifier | Qt::ShiftModifier);
+        this->_tool->keyReleaseEvent(event);
+        break;
     default:
         break;
     }

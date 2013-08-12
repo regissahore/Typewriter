@@ -234,6 +234,20 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
             }
         }
     }
+    else if (event->key() == Qt::Key_P)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            if (event->modifiers() & Qt::ShiftModifier)
+            {
+                this->setHideParameter();
+            }
+            else
+            {
+                this->setShowParameter();
+            }
+        }
+    }
 }
 
 void ToolGOSelect::selectAll()
@@ -520,6 +534,32 @@ void ToolGOSelect::unsetGlobalFeedback()
             ItemGOSignal *item = (ItemGOSignal*)this->_items[i];
             GOSignal *signal = item->model();
             signal->setIsGlobalFeedback(false);
+            item->update();
+        }
+    }
+}
+
+void ToolGOSelect::setShowParameter()
+{
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_items[i];
+            item->setIsDrawParameter(true);
+            item->update();
+        }
+    }
+}
+
+void ToolGOSelect::setHideParameter()
+{
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_items[i];
+            item->setIsDrawParameter(false);
             item->update();
         }
     }

@@ -27,6 +27,7 @@ ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
     this->setIsVerticalFlip(false);
     this->_isShowOutput = new QVector<bool>();
     this->_isShowOutput->push_back(true);
+    this->setIsDrawParameter(false);
 }
 
 /**
@@ -589,6 +590,16 @@ QVector<bool>* ItemGOOperator::isShowOutput() const
     return this->_isShowOutput;
 }
 
+bool ItemGOOperator::isDrawParameter() const
+{
+    return this->_isDrawParameter;
+}
+
+void ItemGOOperator::setIsDrawParameter(const bool value)
+{
+    this->_isDrawParameter = value;
+}
+
 void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("operator");
@@ -597,6 +608,7 @@ void ItemGOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("type", this->model()->type());
     element.setAttribute("horizon", this->isHorizonFlip());
     element.setAttribute("vertical", this->isVerticalFlip());
+    element.setAttribute("parameter", this->isDrawParameter());
     for (int i = 0; i < this->model()->output()->number(); ++i)
     {
         element.setAttribute(QString("show_output_%1").arg(i), this->isShowOutput()->at(i));
@@ -615,6 +627,7 @@ bool ItemGOOperator::tryOpen(QDomElement &root)
     this->setY(root.attribute("y", "0").toFloat());
     this->setIsHorizonFlip(root.attribute("horizon", "0").toInt());
     this->setIsVerticalFlip(root.attribute("vertical", "0").toInt());
+    this->setIsDrawParameter(root.attribute("parameter", "0").toInt());
     QDomElement element = root.firstChildElement();
     GOOperator *model = new GOOperator();
     if (!model->tryOpen(element))

@@ -140,6 +140,13 @@ void ParameterGOMarkovOperator::addOperatorParameter()
         checkBox->setChecked(((GOMarkovOperator*)item->model())->isGlobalFeedback());
         this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkovGlobalFeedback(bool)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Show Parameter"), this));
+        checkBox = new QCheckBox(this);
+        checkBox->setChecked(item->isDrawParameter());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkovShowParameter(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
     }
 }
 
@@ -147,6 +154,13 @@ void ParameterGOMarkovOperator::setItemMarkovGlobalFeedback(bool value)
 {
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     ((GOMarkovOperator*)item->model())->setIsGlobalFeedback(value);
+    item->update();
+}
+
+void ParameterGOMarkovOperator::setItemMarkovShowParameter(bool value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    item->setIsDrawParameter(value);
     item->update();
 }
 

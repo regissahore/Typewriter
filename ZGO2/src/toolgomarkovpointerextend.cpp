@@ -179,6 +179,28 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
             this->sceneGO()->sendMessage(message);
         }
     }
+    else if (event->key() == Qt::Key_P)
+    {
+        if (event->modifiers() & Qt::ControlModifier)
+        {
+            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+            {
+                ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+                if (event->modifiers() & Qt::ShiftModifier)
+                {
+                    item->setIsDrawParameter(false);
+                }
+                else
+                {
+                    item->setIsDrawParameter(true);
+                }
+                item->update();
+            }
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            message->setMessage(this->_item);
+            this->sceneGO()->sendMessage(message);
+        }
+    }
     else if (event->key() == Qt::Key_Delete)
     {
         if (this->_item != 0L)
