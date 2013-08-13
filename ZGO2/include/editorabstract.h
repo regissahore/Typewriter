@@ -27,12 +27,12 @@ public:
     void bindMessage(MessageController *controller);
     virtual void activate();
     virtual void inactivate();
+    void setModified(bool value);
 
 protected:
     QString _filter; /** 用于文件保存的类型。 */
     QString _suffix;
     virtual bool save();
-    void setModified(bool value);
 
 private:
     QString _path; /** 正在编辑的文件的路径，如果没保存则为空。*/

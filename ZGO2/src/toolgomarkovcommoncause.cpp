@@ -8,6 +8,8 @@
 #include "itemgomarkovcommoncause.h"
 #include "gomarkovcommoncause.h"
 #include "gomarkovoperator.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOMarkovCommonCause::ToolGOMarkovCommonCause(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -121,6 +123,7 @@ void ToolGOMarkovCommonCause::addCommonCause()
         }
         common->updateBoundary();
         this->graphicsScene()->addItem(common);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(common);
         this->sceneGO()->sendMessage(message);

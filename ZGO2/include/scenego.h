@@ -9,6 +9,7 @@ class Message;
 class ToolGOAbstract;
 class GOGraph;
 class ItemEmpty;
+class ViewGO;
 
 class SceneGO : public QGraphicsScene, public Messager, public DomItem
 {
@@ -26,11 +27,13 @@ public:
     void analysisPath(const QString filePath);
     void analysisCut(const QString filePath);
     void extendEdge(float x, float y);
+    ViewGO* viewGO() const;
 
 protected:
     ToolGOAbstract *_tool;
     ItemEmpty *_emptyTopLeft;
     ItemEmpty *_emptyBottomRight;
+    ViewGO *_viewGO;
     void keyPressEvent(QKeyEvent *event);
     void keyReleaseEvent(QKeyEvent *event);
     void mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event);

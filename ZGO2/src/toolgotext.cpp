@@ -6,6 +6,8 @@
 #include "scenego.h"
 #include "dialogstringinput.h"
 #include "definationtooltype.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOText::ToolGOText(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -62,6 +64,7 @@ void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_item);
         this->sceneGO()->sendMessage(message);

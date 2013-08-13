@@ -8,6 +8,8 @@
 #include "definationeditorselectiontype.h"
 #include "messagefactory.h"
 #include "definationtooltype.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOMarkovEquivalent::ToolGOMarkovEquivalent(SceneGO *sceneGO) : ToolGOSelect(sceneGO)
 {
@@ -132,6 +134,7 @@ void ToolGOMarkovEquivalent::addEquivalent()
     else
     {
         this->graphicsScene()->addItem(equivalent);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(equivalent);
         this->sceneGO()->sendMessage(message);

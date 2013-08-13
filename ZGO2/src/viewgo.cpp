@@ -1,5 +1,6 @@
 #include "viewgo.h"
 #include "messagefactory.h"
+#include "editorgo.h"
 
 /**
  * 构造函数。
@@ -7,6 +8,7 @@
  */
 ViewGO::ViewGO(QWidget *parent) : GraphicsView(parent)
 {
+    this->_editor = (EditorGO*)parent;
     this->_scene = new SceneGO(this);
     this->setScene(this->_scene);
 }
@@ -50,4 +52,9 @@ void ViewGO::save(QDomDocument &document, QDomElement &root)
 bool ViewGO::tryOpen(QDomElement &root)
 {
     return this->_scene->tryOpen(root);
+}
+
+EditorGO* ViewGO::editor() const
+{
+    return this->_editor;
 }

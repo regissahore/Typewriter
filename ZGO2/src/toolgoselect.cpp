@@ -15,6 +15,8 @@
 #include "itemgotext.h"
 #include "messagefactory.h"
 #include "messager.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 /**
  * Constructor.
@@ -120,6 +122,7 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
             }
         }
         this->_selection->move(event);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         break;
     default:
         break;
@@ -206,6 +209,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
     {
         ItemGOFactory::deleteItems(this->_items);
         this->_items.clear();
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     else if (event->key() == Qt::Key_C)
     {
@@ -213,6 +217,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
         {
             this->copy();
         }
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     else if (event->key() == Qt::Key_A)
     {
@@ -234,6 +239,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
                 this->setGlobalFeedback();
             }
         }
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     else if (event->key() == Qt::Key_P)
     {
@@ -248,6 +254,7 @@ void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
                 this->setShowParameter();
             }
         }
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
 }
 

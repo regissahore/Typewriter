@@ -12,6 +12,8 @@
 #include "gomarkovoperator.h"
 #include "itemgosignal.h"
 #include "gosignal.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOMarkovPointerExtend::ToolGOMarkovPointerExtend(SceneGO *sceneGO) : ToolGOPointerExtend(sceneGO)
 {
@@ -142,6 +144,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     this->sceneGO()->sendMessage(message);
                 }
             }
+            this->sceneGO()->viewGO()->editor()->setModified(true);
         }
     }
     else if (event->key() == Qt::Key_G)
@@ -174,6 +177,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 }
                 signal->update();
             }
+            this->sceneGO()->viewGO()->editor()->setModified(true);
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGO()->sendMessage(message);
@@ -196,6 +200,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 }
                 item->update();
             }
+            this->sceneGO()->viewGO()->editor()->setModified(true);
             Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGO()->sendMessage(message);
@@ -207,6 +212,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
         {
             ItemGOFactory::deleteItem(this->_item);
             this->_item = 0L;
+            this->sceneGO()->viewGO()->editor()->setModified(true);
         }
     }
 }

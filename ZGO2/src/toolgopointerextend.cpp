@@ -13,6 +13,8 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "messagefactory.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOPointerExtend::ToolGOPointerExtend(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -102,6 +104,7 @@ void ToolGOPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 this->_item = 0L;
             }
         }
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         break;
     default:
         break;
@@ -352,6 +355,7 @@ void ToolGOPointerExtend::mouseMoveStatusItemMoving(QGraphicsSceneMouseEvent *ev
     {
         ((ItemMoveable*)this->_item)->move(event);
     }
+    this->sceneGO()->viewGO()->editor()->setModified(true);
 }
 
 void ToolGOPointerExtend::mouseReleaseStatusItemMoving(QGraphicsSceneMouseEvent *event)
@@ -452,6 +456,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
     else
     {
         ItemGOFactory::sendSelectionMessage(this->sceneGO(), this->_signal);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     this->_signal = 0L;
     this->graphicsView()->setCursor(Qt::ArrowCursor);
@@ -468,6 +473,7 @@ void ToolGOPointerExtend::mouseMoveStatusSignalAdjusting(QGraphicsSceneMouseEven
         double proportion = len1 / len2;
         signal->setCornerProportion(proportion);
         signal->update();
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
 }
 

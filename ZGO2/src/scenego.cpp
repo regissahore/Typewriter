@@ -19,6 +19,7 @@
 #include "gocutset.h"
 #include "dialogintegerinput.h"
 #include "itemempty.h"
+#include "viewgo.h"
 
 /**
  * The constructor.
@@ -31,6 +32,7 @@ SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
     this->_emptyBottomRight = new ItemEmpty();
     this->addItem(this->_emptyTopLeft);
     this->addItem(this->_emptyBottomRight);
+    this->_viewGO = (ViewGO*)parent;
 }
 
 /**
@@ -470,4 +472,9 @@ void SceneGO::extendEdge(float x, float y)
     {
         this->_emptyBottomRight->setY(y + extendStep);
     }
+}
+
+ViewGO* SceneGO::viewGO() const
+{
+    return this->_viewGO;
 }

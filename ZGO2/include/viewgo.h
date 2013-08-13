@@ -10,6 +10,8 @@
 #include "messager.h"
 #include "domitem.h"
 
+class EditorGO;
+
 class ViewGO : public GraphicsView, public Messager, public DomItem
 {
     Q_OBJECT
@@ -20,9 +22,11 @@ public:
     void messageEvent(Message *message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
+    EditorGO* editor() const;
     
 protected:
     SceneGO *_scene; /** GO法的场景。 */
+    EditorGO *_editor;
 };
 
 #endif // VIEWGO_H

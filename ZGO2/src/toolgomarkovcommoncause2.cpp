@@ -10,6 +10,8 @@
 #include "scenego.h"
 #include "gomarkovcommoncause.h"
 #include "itemgofactory.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 ToolGOMarkovCommonCause2::ToolGOMarkovCommonCause2(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -78,6 +80,7 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
         if (event->button() == Qt::LeftButton)
         {
             this->_status = Status_Finished;
+            this->sceneGO()->viewGO()->editor()->setModified(true);
             Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
             message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
             this->sceneGO()->sendMessage(message);

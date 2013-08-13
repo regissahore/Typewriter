@@ -7,6 +7,8 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "definationeditorselectiontype.h"
+#include "viewgo.h"
+#include "editorgo.h"
 
 /**
  * Constructor. The protected variable _GOOperator should be initialized and added to the scene.
@@ -177,6 +179,7 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         this->sceneGO()->sendMessage(message);
         this->setType(this->TypedItem::type());
         this->activate(event);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     else if (event->button() == Qt::RightButton)
     {
