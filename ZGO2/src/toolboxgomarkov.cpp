@@ -40,7 +40,7 @@ void ToolboxGOMarkov::messageEvent(Message *message)
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
             this->setSelectedTool(this->ui->buttonEquivalent);
             break;
-        case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE:
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2:
             this->setSelectedTool(this->ui->buttonCommonCause);
             break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1:
@@ -150,7 +150,7 @@ void ToolboxGOMarkov::on_buttonEquivalent_clicked()
 void ToolboxGOMarkov::on_buttonCommonCause_clicked()
 {
     Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2;
     this->sendMessage(message);
 }
 

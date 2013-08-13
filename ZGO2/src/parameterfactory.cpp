@@ -6,6 +6,7 @@
 #include "parametergomarkovoperator.h"
 #include "parametergomarkovequivalent.h"
 #include "parametergomarkovcommoncause.h"
+#include "parametergomarkovcommoncause2.h"
 #include "parametergomarkovchart.h"
 
 /**
@@ -35,6 +36,9 @@ ParameterAbstract* ParameterFactory::produce(int type)
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE:
         parameter = new ParameterGOMarkovCommonCause();
+        break;
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2:
+        parameter = new ParameterGOMarkovCommonCause2();
         break;
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_CHART:
         parameter = new ParameterGOMarkovChart();

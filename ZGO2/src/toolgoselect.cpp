@@ -414,7 +414,7 @@ void ToolGOSelect::copy()
         }
     }
     //复制共因失效。
-    QVector<ItemGOMarkovCommonCause*> newCommons;
+    /*QVector<ItemGOMarkovCommonCause*> newCommons;
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
@@ -451,7 +451,7 @@ void ToolGOSelect::copy()
                 newCommon->updateBoundary();
             }
         }
-    }
+    }*/
     //文字的复制。
     QVector<ItemGOText*> newTexts;
     for (int i = 0; i < this->_items.size(); ++i)
@@ -483,10 +483,10 @@ void ToolGOSelect::copy()
     {
         this->_items.push_back(newSignals[i]);
     }
-    for (int i = 0; i < newCommons.size(); ++i)
+    /*for (int i = 0; i < newCommons.size(); ++i)
     {
         this->_items.push_back(newCommons[i]);
-    }
+    }*/
     for (int i = 0; i < newTexts.size(); ++i)
     {
         this->_items.push_back(newTexts[i]);

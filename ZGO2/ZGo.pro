@@ -177,7 +177,10 @@ HEADERS += \
     include/parametergomarkovchart.h \
     include/globalconfig.h \
     include/gomarkovoperator9b1.h \
-    include/gomarkovoperator9b2.h
+    include/gomarkovoperator9b2.h \
+    include/toolgomarkovcommoncause2.h \
+    include/itemgomarkovcommoncause2.h \
+    include/parametergomarkovcommoncause2.h
 
 SOURCES += \
     src/main.cpp \
@@ -336,7 +339,10 @@ SOURCES += \
     src/parametergomarkovchart.cpp \
     src/globalconfig.cpp \
     src/gomarkovoperator9b1.cpp \
-    src/gomarkovoperator9b2.cpp
+    src/gomarkovoperator9b2.cpp \
+    src/toolgomarkovcommoncause2.cpp \
+    src/itemgomarkovcommoncause2.cpp \
+    src/parametergomarkovcommoncause2.cpp
 
 RESOURCES += \
     resource.qrc

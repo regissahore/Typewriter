@@ -16,6 +16,7 @@
 #include "gomarkovchartdata.h"
 #include "gomarkovequivalent.h"
 #include "itemgomarkovcommoncause.h"
+#include "itemgomarkovcommoncause2.h"
 #include "gomarkovcommoncause.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
@@ -33,7 +34,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     QList<ItemGOMarkovOperator*> operatorList;
     QList<ItemGOSignal*> signalList;
     QList<ItemGOMarkovEquivalent*> equivalentList;
-    QList<ItemGOMarkovCommonCause*> commoncauseList;
+    QList<ItemGOMarkovCommonCause2*> commoncauseList;
     for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
@@ -89,7 +90,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
         }
         else if (element.tagName() == "commoncause")
         {
-            ItemGOMarkovCommonCause *item = new ItemGOMarkovCommonCause();
+            ItemGOMarkovCommonCause2 *item = new ItemGOMarkovCommonCause2();
             this->addItem(item);
             if (item->tryOpen(element))
             {
@@ -163,6 +164,11 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             ItemGOMarkovCommonCause *common = (ItemGOMarkovCommonCause*)item;
+            graph->addCommonCause(common->model());
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2)
+        {
+            ItemGOMarkovCommonCause2 *common = (ItemGOMarkovCommonCause2*)item;
             graph->addCommonCause(common->model());
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
