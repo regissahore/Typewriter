@@ -89,6 +89,8 @@ ItemGOMarkovCommonCause2* ItemGOMarkovCommonCause2::copy()
     {
         common->_operatorItems->push_back(0L);
     }
+    common->setX(this->scenePos().x() + 100);
+    common->setY(this->scenePos().y() + 100);
     return common;
 }
 

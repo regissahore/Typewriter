@@ -8,6 +8,7 @@
 #include "gomarkovoperator.h"
 #include "scenego.h"
 #include "itemgomarkovcommoncause.h"
+#include "itemgomarkovcommoncause2.h"
 #include "itemgomarkovequivalent.h"
 #include "gomarkovcommoncause.h"
 #include "gomarkovequivalent.h"
@@ -413,8 +414,8 @@ void ToolGOSelect::copy()
             }
         }
     }
-    //复制共因失效。
-    /*QVector<ItemGOMarkovCommonCause*> newCommons;
+    //复制共因失效1。
+    QVector<ItemGOMarkovCommonCause*> newCommons;
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
@@ -451,7 +452,67 @@ void ToolGOSelect::copy()
                 newCommon->updateBoundary();
             }
         }
-    }*/
+    }
+    //复制共因失效2。
+    QVector<ItemGOMarkovCommonCause2*> fatherCommons;
+    for (int i = 0; i < this->_items.size(); ++i)
+    {
+        ItemDrawable* item = (ItemDrawable*)this->_items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGOMarkovOperator* op = (ItemGOMarkovOperator*)item;
+            if (op->fatherCommonCause2() != 0L)
+            {
+                bool flag = true;
+                for (int j = 0; j < fatherCommons.size(); ++j)
+                {
+                    if (fatherCommons[j] == op->fatherCommonCause2())
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    fatherCommons.push_back(op->fatherCommonCause2());
+                }
+            }
+        }
+    }
+    QVector<ItemGOMarkovCommonCause2*> newCommons2;
+    for (int i = 0; i < fatherCommons.size(); ++i)
+    {
+        ItemGOMarkovCommonCause2 *common = fatherCommons[i];
+        ItemGOMarkovCommonCause2 *newCommon = common->copy();
+        for (int j = 0; j < newCommon->model()->idList()->size(); ++j)
+        {
+            (*newCommon->model()->idList())[j] += increaseId;
+        }
+        int find = 0;
+        for (int j = 0; j < newOps.size(); ++j)
+        {
+            for (int k = 0; k < newCommon->model()->idList()->size(); ++k)
+            {
+                if (newOps[j]->model()->id() == newCommon->model()->idList()->at(k))
+                {
+                    (*newCommon->operatorItems())[k] = newOps[j];
+                    (*newCommon->model()->operators())[k] = (GOMarkovOperator*)newOps[j]->model();
+                    ++find;
+                    break;
+                }
+            }
+        }
+        if (find == newCommon->model()->idList()->size())
+        {
+            for (int j = 0; j < newCommon->operatorItems()->size(); ++j)
+            {
+                newCommon->operatorItems()->at(j)->setFatherCommonCause2(newCommon);
+            }
+            newCommons2.push_back(newCommon);
+            this->sceneGO()->addItem(newCommon);
+            newCommon->updateBoundary();
+        }
+    }
     //文字的复制。
     QVector<ItemGOText*> newTexts;
     for (int i = 0; i < this->_items.size(); ++i)
@@ -483,10 +544,14 @@ void ToolGOSelect::copy()
     {
         this->_items.push_back(newSignals[i]);
     }
-    /*for (int i = 0; i < newCommons.size(); ++i)
+    for (int i = 0; i < newCommons.size(); ++i)
     {
         this->_items.push_back(newCommons[i]);
-    }*/
+    }
+    for (int i = 0; i < newCommons2.size(); ++i)
+    {
+        this->_items.push_back(newCommons2[i]);
+    }
     for (int i = 0; i < newTexts.size(); ++i)
     {
         this->_items.push_back(newTexts[i]);
