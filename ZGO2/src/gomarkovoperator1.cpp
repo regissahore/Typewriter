@@ -54,10 +54,6 @@ void GOMarkovOperator1::calcOutputMarkovStatusNormal()
     double lamdaS = prevStatus->frequencyBreakdown();
     double lamdaC = this->markovStatus()->frequencyBreakdown();
     double lamdaR = lamdaS + lamdaC;
-    if (this->breakdownNum())
-    {
-        lamdaR += this->markovStatus2()->frequencyBreakdown();
-    }
     double miuR = lamdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
@@ -85,10 +81,6 @@ void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
     double lamdaC = this->markovStatus()->frequencyBreakdown();
     double miuC = this->markovStatus()->frequencyRepair();
     double lamdaR = lamdaS + lamdaC;
-    if (this->breakdownNum())
-    {
-        lamdaR += this->markovStatus2()->frequencyBreakdown();
-    }
     double miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);

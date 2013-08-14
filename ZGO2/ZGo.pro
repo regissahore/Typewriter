@@ -180,7 +180,8 @@ HEADERS += \
     include/gomarkovoperator9b2.h \
     include/toolgomarkovcommoncause2.h \
     include/itemgomarkovcommoncause2.h \
-    include/parametergomarkovcommoncause2.h
+    include/parametergomarkovcommoncause2.h \
+    include/doublevector.h
 
 SOURCES += \
     src/main.cpp \
@@ -342,7 +343,8 @@ SOURCES += \
     src/gomarkovoperator9b2.cpp \
     src/toolgomarkovcommoncause2.cpp \
     src/itemgomarkovcommoncause2.cpp \
-    src/parametergomarkovcommoncause2.cpp
+    src/parametergomarkovcommoncause2.cpp \
+    src/doublevector.cpp
 
 RESOURCES += \
     resource.qrc
