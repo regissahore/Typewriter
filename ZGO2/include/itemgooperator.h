@@ -43,6 +43,8 @@ public:
     QVector<bool>* isShowOutput() const;
     bool isDrawParameter() const;
     void setIsDrawParameter(const bool value);
+    bool isDrawName() const;
+    void setIsDrawName(const bool value);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -60,6 +62,7 @@ protected:
     bool _isHorizonFlip;
     bool _isVerticalFlip;
     bool _isDrawParameter;
+    bool _isDrawName;
 
     virtual bool isSource() const;
 };

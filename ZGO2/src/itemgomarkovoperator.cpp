@@ -90,6 +90,10 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     {
         this->_outputArrows->at(i)->setVisible(this->isShowOutput()->at(i));
     }
+    if (this->isDrawName())
+    {
+        painter->drawText(-200, -230, 400, 200, Qt::AlignHCenter | Qt::AlignBottom, this->model()->name());
+    }
     switch (this->model()->TypedItem::type())
     {
     case GOMarkovOperatorFactory::Operator_Type_9A1:
@@ -414,6 +418,7 @@ bool ItemGOMarkovOperator::tryOpen(QDomElement &root)
     this->setIsHorizonFlip(root.attribute("horizon").toInt());
     this->setIsVerticalFlip(root.attribute("vertical").toInt());
     this->setIsDrawParameter(root.attribute("parameter", "0").toInt());
+    this->setIsDrawName(root.attribute("name", "0").toInt());
     int type = root.attribute("type").toInt();
     QDomElement element = root.firstChildElement();
     GOMarkovOperator *model = GOMarkovOperatorFactory::produce(type);

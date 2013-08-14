@@ -108,6 +108,20 @@ void ParameterGOOperator::addNameParameter()
     }
 }
 
+void ParameterGOOperator::addIsDrawNameParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Display Name"), this));
+        QCheckBox *checkBox = new QCheckBox();
+        checkBox->setChecked(item->isDrawName());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemIsDrawName(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
 void ParameterGOOperator::addOperatorParameter()
 {
     if (0L != this->_item)
@@ -116,6 +130,7 @@ void ParameterGOOperator::addOperatorParameter()
         this->addIDParameter();
         this->addTypeParameter();
         this->addNameParameter();
+        this->addIsDrawNameParameter();
     }
 }
 
@@ -130,6 +145,13 @@ void ParameterGOOperator::setItemName(QString value)
 {
     ItemGOOperator *item = (ItemGOOperator*)this->_item;
     item->model()->setName(value);
+    item->update();
+}
+
+void ParameterGOOperator::setItemIsDrawName(bool value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->setIsDrawName(value);
     item->update();
 }
 
