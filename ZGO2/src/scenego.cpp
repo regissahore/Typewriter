@@ -189,12 +189,12 @@ bool SceneGO::tryOpen(QDomElement &root)
     {
         for (int j = 0; j < operatorList.size(); ++j)
         {
-            if (signalList[i]->start()->id == operatorList[j]->model()->id())
+            if (signalList[i]->start()->id == operatorList[j]->model()->realID())
             {
                 signalList[i]->start()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->start()->type, signalList[i]->start()->index);
             }
-            if (signalList[i]->end()->id == operatorList[j]->model()->id())
+            if (signalList[i]->end()->id == operatorList[j]->model()->realID())
             {
                 signalList[i]->end()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->end()->type, signalList[i]->end()->index);

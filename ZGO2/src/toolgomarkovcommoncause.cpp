@@ -118,7 +118,7 @@ void ToolGOMarkovCommonCause::addCommonCause()
         {
             common->operatorItems()->push_back(operators[i]);
             common->model()->operators()->push_back((GOMarkovOperator*)(operators[i]->model()));
-            common->model()->idList()->push_back(((GOMarkovOperator*)(operators[i]->model()))->id());
+            common->model()->idList()->push_back(((GOMarkovOperator*)(operators[i]->model()))->realID());
             operators[i]->setFatherCommonCause(common);
         }
         common->updateBoundary();

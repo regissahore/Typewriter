@@ -97,6 +97,7 @@ void GOMarkovOperator18A::save(QDomDocument &document, QDomElement &root)
     QDomElement element = document.createElement("model");
     element.setAttribute("type", this->type());
     element.setAttribute("id", this->id());
+    element.setAttribute("real", this->realID());
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
@@ -122,6 +123,14 @@ bool GOMarkovOperator18A::tryOpen(QDomElement &root)
     }
     this->setType(root.attribute("type").toInt());
     this->setId(root.attribute("id").toInt());
+    if (root.hasAttribute("real"))
+    {
+        this->setRealID(root.attribute("real").toInt());
+    }
+    else
+    {
+        this->setRealID(root.attribute("id").toInt());
+    }
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());

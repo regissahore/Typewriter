@@ -316,7 +316,7 @@ void ToolGOSelect::selectAll()
 
 void ToolGOSelect::copy()
 {
-    //寻找出现过的操作符中最大的ID。
+    //寻找出现过的操作符中最大的Real ID。
     int maxId = 0;
     QList<QGraphicsItem*> items = this->graphicsScene()->items();
     for (int i = 0; i < items.size(); ++i)
@@ -325,14 +325,14 @@ void ToolGOSelect::copy()
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
-            if (op->model()->id() > maxId)
+            if (op->model()->realID() > maxId)
             {
-                maxId = op->model()->id();
+                maxId = op->model()->realID();
             }
         }
     }
     maxId += 1;
-    //寻找选中的操作符中最小的ID。
+    //寻找选中的操作符中最小的Real ID。
     int minSelectedId = 0x7fffffff;
     for (int i = 0; i < this->_items.size(); ++i)
     {
@@ -340,9 +340,9 @@ void ToolGOSelect::copy()
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
-            if (op->model()->id() < minSelectedId)
+            if (op->model()->realID() < minSelectedId)
             {
-                minSelectedId = op->model()->id();
+                minSelectedId = op->model()->realID();
             }
         }
     }
@@ -356,7 +356,7 @@ void ToolGOSelect::copy()
         {
             ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
             ItemGOMarkovOperator *newOp = op->copy();
-            newOp->model()->setId(newOp->model()->id() + increaseId);
+            newOp->model()->setRealID(newOp->model()->realID() + increaseId);
             newOp->setX(op->x() + 100);
             newOp->setY(op->y() + 100);
             newOps.push_back(newOp);
@@ -381,7 +381,7 @@ void ToolGOSelect::copy()
                 if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
                     ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
-                    if (op->model()->id() == newSignal->start()->id)
+                    if (op->model()->realID() == newSignal->start()->id)
                     {
                         newSignal->start()->op = op;
                         newSignal->start()->op->setSignal(newSignal,
@@ -398,7 +398,7 @@ void ToolGOSelect::copy()
                 if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
                     ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
-                    if (op->model()->id() == newSignal->end()->id)
+                    if (op->model()->realID() == newSignal->end()->id)
                     {
                         newSignal->end()->op = op;
                         newSignal->end()->op->setSignal(newSignal,
@@ -439,7 +439,7 @@ void ToolGOSelect::copy()
             {
                 for (int k = 0; k < newCommon->model()->idList()->size(); ++k)
                 {
-                    if (newOps[j]->model()->id() == newCommon->model()->idList()->at(k))
+                    if (newOps[j]->model()->realID() == newCommon->model()->idList()->at(k))
                     {
                         (*newCommon->operatorItems())[k] = newOps[j];
                         (*newCommon->model()->operators())[k] = (GOMarkovOperator*)newOps[j]->model();
@@ -500,7 +500,7 @@ void ToolGOSelect::copy()
         {
             for (int k = 0; k < newCommon->model()->idList()->size(); ++k)
             {
-                if (newOps[j]->model()->id() == newCommon->model()->idList()->at(k))
+                if (newOps[j]->model()->realID() == newCommon->model()->idList()->at(k))
                 {
                     (*newCommon->operatorItems())[k] = newOps[j];
                     (*newCommon->model()->operators())[k] = (GOMarkovOperator*)newOps[j]->model();

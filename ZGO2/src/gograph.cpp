@@ -1,5 +1,6 @@
 #include <QObject>
 #include <QFile>
+#include <QMap>
 #include <QTextStream>
 #include "gograph.h"
 #include "gooperator.h"
@@ -389,8 +390,8 @@ QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
 GOPathSetSetSet GOGraph::findPath(int order)
 {
     GOPathSetSetSet path;
-    this->_error = "";
-    if (!this->checkCycleAndConnection())
+    this->calcAccumulativeProbability();
+    if (this->_error != "")
     {
         return path;
     }
@@ -515,8 +516,8 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
 GOPathSetSetSet GOGraph::findCut(int order)
 {
     GOPathSetSetSet path;
-    this->_error = "";
-    if (!this->checkCycleAndConnection())
+    this->calcAccumulativeProbability();
+    if (this->_error != "")
     {
         return path;
     }

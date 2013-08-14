@@ -98,6 +98,7 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     this->sceneGO()->addItem(item);
                     this->_item->setColor(Qt::black);
                     QList<QGraphicsItem*> items = this->graphicsScene()->items();
+
                     QVector<bool> visit;
                     for (int i = 0; i <= items.size() + 1; ++i)
                     {
@@ -125,6 +126,35 @@ void ToolGOMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                             break;
                         }
                     }
+
+                    visit.clear();
+                    for (int i = 0; i <= items.size() + 1; ++i)
+                    {
+                        visit.push_back(false);
+                    }
+                    for (int i = 0; i < items.size(); ++i)
+                    {
+                        ItemDrawable* item = (ItemDrawable*)items.at(i);
+                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                        {
+                            ItemGOMarkovOperator *op = (ItemGOMarkovOperator*)item;
+                            visit[op->model()->realID()] = true;
+                        }
+                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
+                        {
+                            ItemGOMarkovEquivalent *eq = (ItemGOMarkovEquivalent*)item;
+                            visit[eq->id()] = true;
+                        }
+                    }
+                    for (int i = 1; i <= items.size() + 1; ++i)
+                    {
+                        if (!visit[i])
+                        {
+                            item->model()->setRealID(i);
+                            break;
+                        }
+                    }
+
                     this->_item = item;
                     this->_item->setColor(QColor(Qt::darkBlue));
                     Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);

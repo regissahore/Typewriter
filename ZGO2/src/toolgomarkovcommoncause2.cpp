@@ -70,6 +70,7 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
                 for (int i = 0; i < this->_operatorList->size(); ++i)
                 {
                     this->_commonItem->operatorItems()->push_back(this->operatorList()->at(i));
+                    this->_commonItem->model()->idList()->push_back(this->_operatorList->at(i)->model()->realID());
                     this->_commonItem->model()->operators()->push_back((GOMarkovOperator*)this->_operatorList->at(i)->model());
                     this->_operatorList->at(i)->setFatherCommonCause2(this->_commonItem);
                 }

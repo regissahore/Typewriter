@@ -110,7 +110,7 @@ void GOMarkovCommonCause::save(QDomDocument &document, QDomElement &root)
     for (int i = 0; i < this->operators()->size(); ++i)
     {
         QDomElement element = document.createElement("operator");
-        element.setAttribute("id", this->operators()->at(i)->id());
+        element.setAttribute("id", this->operators()->at(i)->realID());
         commonRoot.appendChild(element);
     }
     root.appendChild(commonRoot);

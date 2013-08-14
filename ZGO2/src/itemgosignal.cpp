@@ -362,12 +362,12 @@ void ItemGOSignal::save(QDomDocument &document, QDomElement &root)
         signalRoot.setAttribute("global_feedback", this->model()->isGlobalFeedback());
         root.appendChild(signalRoot);
         QDomElement element = document.createElement("io");
-        element.setAttribute("id", this->start()->op->model()->id());
+        element.setAttribute("id", this->start()->op->model()->realID());
         element.setAttribute("type", this->start()->type);
         element.setAttribute("index", this->start()->index);
         signalRoot.appendChild(element);
         element = document.createElement("io");
-        element.setAttribute("id", this->end()->op->model()->id());
+        element.setAttribute("id", this->end()->op->model()->realID());
         element.setAttribute("type", this->end()->type);
         element.setAttribute("index", this->end()->index);
         signalRoot.appendChild(element);

@@ -149,7 +149,7 @@ bool ToolGOPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
                     this->_signal = new ItemGOSignal();
                     items = this->graphicsScene()->items();
                     this->_signal->model()->setId(model->id());
-                    this->_signal->start()->id = op->model()->id();
+                    this->_signal->start()->id = op->model()->realID();
                     this->_signal->start()->op = op;
                     this->_signal->start()->index = j;
                     this->_signal->start()->type = DefinationGOType::GO_OPERATOR_OUTPUT;
@@ -409,7 +409,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                 if (isAround(event->scenePos(), op->pos() + op->getInputPosition(j)))
                 {
                     this->_signal->end()->op = op;
-                    this->_signal->end()->id = op->model()->id();
+                    this->_signal->end()->id = op->model()->realID();
                     this->_signal->end()->index = j;
                     this->_signal->end()->type = DefinationGOType::GO_OPERATOR_INPUT;
                     QPointF end = op->pos() + op->getInputPosition(j) - this->_signal->pos();

@@ -45,7 +45,7 @@ void ItemGOMarkovCommonCause::bindOperators(QList<ItemGOMarkovOperator*> &operat
     {
         for (int j = 0; j < this->model()->idList()->size(); ++j)
         {
-            if (operatorList[i]->model()->id() == this->model()->idList()->at(j))
+            if (operatorList[i]->model()->realID() == this->model()->idList()->at(j))
             {
                 this->_operatorItems->push_back(operatorList[i]);
                 this->model()->operators()->push_back((GOMarkovOperator*)operatorList[i]->model());

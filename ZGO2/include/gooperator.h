@@ -20,6 +20,8 @@ class GOOperator : public IdentifiedItem, public TypedItem, public DomItem
 public:
     GOOperator();
     virtual ~GOOperator();
+    int realID() const;
+    void setRealID(const int value);
     GOInput* input() const;
     GOInput* subInput() const;
     GOOutput* output() const;
@@ -31,7 +33,8 @@ public:
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
-private:
+protected:
+    int _realID;
     GOInput *_input;
     GOInput *_subInput;
     GOOutput *_output;

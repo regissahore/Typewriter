@@ -10,12 +10,23 @@
  */
 GOOperator::GOOperator()
 {
+    this->setRealID(0);
     this->_input = new GOInput();
     this->_subInput = new GOInput();
     this->_output = new GOOutput();
     this->_status = new GOStatus();
     this->_accumulatives = new QVector<GOAccumulative*>();
     this->_parameter = new GOParameter();
+}
+
+int GOOperator::realID() const
+{
+    return this->_realID;
+}
+
+void GOOperator::setRealID(const int value)
+{
+    this->_realID = value;
 }
 
 GOOperator::~GOOperator()
@@ -90,6 +101,7 @@ void GOOperator::save(QDomDocument &document, QDomElement &root)
     QDomElement element = document.createElement("model");
     element.setAttribute("type", this->type());
     element.setAttribute("id", this->id());
+    element.setAttribute("real", this->realID());
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
@@ -107,6 +119,14 @@ bool GOOperator::tryOpen(QDomElement &root)
     }
     this->setType(root.attribute("type").toInt());
     this->setId(root.attribute("id").toInt());
+    if (root.hasAttribute("real"))
+    {
+        this->setRealID(root.attribute("real").toInt());
+    }
+    else
+    {
+        this->setRealID(root.attribute("id").toInt());
+    }
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());

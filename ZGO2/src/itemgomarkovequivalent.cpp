@@ -727,7 +727,7 @@ void ItemGOMarkovEquivalent::bindOperators(QList<ItemGOMarkovOperator*> &operato
             int id = this->model()->idList()->at(i);
             for (int j = 0; j < operatorList.size(); ++j)
             {
-                if (operatorList[j]->model()->id() == id)
+                if (operatorList[j]->model()->realID() == id)
                 {
                     this->model()->operators()->push_back((GOMarkovOperator*)operatorList[j]->model());
                     operatorList[j]->setFatherEquivalent(this);

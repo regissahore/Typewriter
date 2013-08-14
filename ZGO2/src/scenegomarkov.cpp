@@ -107,12 +107,12 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     {
         for (int j = 0; j < operatorList.size(); ++j)
         {
-            if (signalList[i]->start()->id == operatorList[j]->model()->id())
+            if (signalList[i]->start()->id == operatorList[j]->model()->realID())
             {
                 signalList[i]->start()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->start()->type, signalList[i]->start()->index);
             }
-            if (signalList[i]->end()->id == operatorList[j]->model()->id())
+            if (signalList[i]->end()->id == operatorList[j]->model()->realID())
             {
                 signalList[i]->end()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->end()->type, signalList[i]->end()->index);
@@ -195,15 +195,15 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGOSignal *itemSignal = (ItemGOSignal*)item;
-            int u = itemSignal->start()->op->model()->id();
-            int v = itemSignal->end()->op->model()->id();
+            int u = itemSignal->start()->op->model()->realID();
+            int v = itemSignal->end()->op->model()->realID();
             bool insideU = false;
             bool insideV = false;
             GOMarkovOperator *operatorU = 0L;
             GOMarkovOperator *operatorV = 0L;
             for (int j = 0; j < operators.size(); ++j)
             {
-                if (operators[j]->model()->id() == u)
+                if (operators[j]->model()->realID() == u)
                 {
                     if (operators[j]->fatherEquivalent() != 0L)
                     {
@@ -211,7 +211,7 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
                         u = operators[j]->rootEquivalent()->id();
                         for (int k = 0; k < operators.size(); ++k)
                         {
-                            if (operators[k]->model()->id() == u)
+                            if (operators[k]->model()->realID() == u)
                             {
                                 operatorU = (GOMarkovOperator*)operators[k]->model();
                                 break;
@@ -223,7 +223,7 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
                         operatorU = (GOMarkovOperator*)operators[j]->model();
                     }
                 }
-                if (operators[j]->model()->id() == v)
+                if (operators[j]->model()->realID() == v)
                 {
                     if (operators[j]->fatherEquivalent() != 0L)
                     {
@@ -231,7 +231,7 @@ GOGraph* SceneGOMarkov::generatorGOGraph()
                         v = operators[j]->rootEquivalent()->id();
                         for (int k = 0; k < operators.size(); ++k)
                         {
-                            if (operators[k]->model()->id() == v)
+                            if (operators[k]->model()->realID() == v)
                             {
                                 operatorV = (GOMarkovOperator*)operators[k]->model();
                                 break;
