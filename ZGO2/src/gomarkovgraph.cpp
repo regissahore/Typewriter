@@ -546,7 +546,7 @@ GOPathSetSetSet GOMarkovGraph::findCut(int order)
     return path;
 }
 
-void GOMarkovGraph::findPathDfs(QMap<int, QVector<double>* > normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order)
+void GOMarkovGraph::findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
@@ -637,7 +637,7 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<double>* > normals, GOPathSetS
     this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
 }
 
-void GOMarkovGraph::findCutDfs(QMap<int, QVector<double> *> fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order)
+void GOMarkovGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {

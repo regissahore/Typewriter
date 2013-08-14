@@ -396,6 +396,17 @@ GOPathSetSetSet GOGraph::findPath(int order)
         return path;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
+    QMap<int, QVector<double>* > normals;
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GOOperator* op = list[i];
+        QVector<double> *normal = new QVector<double>();
+        for (int i = 0; i < op->output()->number(); ++i)
+        {
+            normal->push_back(op->accmulatives()->at(i)->probability(1));
+        }
+        normals[op->realID()] = normal;
+    }
     GOPathSet tempPath;
     if (order > list.size())
     {
@@ -403,12 +414,17 @@ GOPathSetSetSet GOGraph::findPath(int order)
     }
     for (int i = 1; i <= order; ++i)
     {
-        this->findPathDfs(path, list, tempPath, 0, 0, i);
+        this->findPathDfs(normals, path, list, tempPath, 0, 0, i);
     }
+    for (QMap<int, QVector<double>* >::iterator it = normals.begin(); it != normals.end(); ++it)
+    {
+        delete it.value();
+    }
+    normals.clear();
     return path;
 }
 
-void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GOPathSet &tempPath, int index, int number, int order)
+void GOGraph::findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSetSetSet &path, QVector<GOOperator *> &list, GOPathSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
@@ -462,6 +478,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
                 {
                     if (endList[i]->accmulatives()->at(j)->accumulative(1) > 1.0 - 1e-8)
                     {
+                        tempPath.setTotalProbablity(normals[endList[i]->realID()]->at(j));
                         flag = true;
                         break;
                     }
@@ -489,7 +506,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         }
         list[index]->status()->setProbability(1, 1.0);
         tempPath.add(list[index]);
-        this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
+        this->findPathDfs(normals, path, list, tempPath, index + 1, number + 1, order);
         tempPath.removeEnd();
         for (int i = 0; i < list[index]->status()->number(); ++i)
         {
@@ -505,7 +522,7 @@ void GOGraph::findPathDfs(GOPathSetSetSet &path, QVector<GOOperator *> &list, GO
         list[index]->status()->setProbability(i, 0.0);
     }
     list[index]->status()->setProbability(list[index]->status()->number() - 1, 1.0);
-    this->findPathDfs(path, list, tempPath, index + 1, number, order);
+    this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
         list[index]->status()->setProbability(i, copy->probability(i));
@@ -522,6 +539,17 @@ GOPathSetSetSet GOGraph::findCut(int order)
         return path;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
+    QMap<int, QVector<double>* > fails;
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GOOperator* op = list[i];
+        QVector<double> *fail = new QVector<double>();
+        for (int i = 0; i < op->output()->number(); ++i)
+        {
+            fail->push_back(1.0 - op->accmulatives()->at(i)->probability(1));
+        }
+        fails[op->realID()] = fail;
+    }
     GOCutSet tempPath;
     if (order > list.size())
     {
@@ -529,12 +557,17 @@ GOPathSetSetSet GOGraph::findCut(int order)
     }
     for (int i = 1; i <= order; ++i)
     {
-        this->findCutDfs(path, list, tempPath, 0, 0, i);
+        this->findCutDfs(fails, path, list, tempPath, 0, 0, i);
     }
+    for (QMap<int, QVector<double>* >::iterator it = fails.begin(); it != fails.end(); ++it)
+    {
+        delete it.value();
+    }
+    fails.clear();
     return path;
 }
 
-void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCutSet &tempPath, int index, int number, int order)
+void GOGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCutSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
@@ -591,6 +624,7 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
                     double b = endList[i]->accmulatives()->at(j)->accumulative(number - 2);
                     if (a - b >= 1.0 - 1e-8)
                     {
+                        tempPath.setTotalProbablity(fails[endList[i]->realID()]->at(j));
                         flag = true;
                         break;
                     }
@@ -618,7 +652,7 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         }
         list[index]->status()->setProbability(list[index]->status()->number() - 1, 1.0);
         tempPath.add(list[index]);
-        this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
+        this->findCutDfs(fails, cut, list, tempPath, index + 1, number + 1, order);
         tempPath.removeEnd();
         for (int i = 0; i < list[index]->status()->number(); ++i)
         {
@@ -634,7 +668,7 @@ void GOGraph::findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator *> &list, GOCu
         list[index]->status()->setProbability(i, 0.0);
     }
     list[index]->status()->setProbability(1, 1.0);
-    this->findCutDfs(cut, list, tempPath, index + 1, number, order);
+    this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
     for (int i = 0; i < list[index]->status()->number(); ++i)
     {
         list[index]->status()->setProbability(i, copy->probability(i));

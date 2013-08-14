@@ -1291,108 +1291,108 @@
         <translation>类型_未定义</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="124"/>
+        <location filename="../src/gograph.cpp" line="125"/>
         <source>The input of the operator is null. </source>
         <translation>存在操作符的输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="132"/>
+        <location filename="../src/gograph.cpp" line="133"/>
         <source>The sub input of the operator is null. </source>
         <translation>存在操作符的辅输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="155"/>
+        <location filename="../src/gograph.cpp" line="156"/>
         <source>The GO graph contains cycle. </source>
         <translation>GO图中存在环。</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="164"/>
+        <location filename="../src/gograph.cpp" line="165"/>
         <source>The GO graph is not connected. </source>
         <translation>GO图不连通。</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="655"/>
-        <location filename="../src/gograph.cpp" line="761"/>
-        <location filename="../src/gomarkovgraph.cpp" line="685"/>
-        <location filename="../src/gomarkovgraph.cpp" line="796"/>
+        <location filename="../src/gograph.cpp" line="690"/>
+        <location filename="../src/gograph.cpp" line="796"/>
+        <location filename="../src/gomarkovgraph.cpp" line="737"/>
+        <location filename="../src/gomarkovgraph.cpp" line="848"/>
         <source>Can&apos;t open file </source>
         <translation>无法打开文件</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="686"/>
+        <location filename="../src/gograph.cpp" line="721"/>
         <location filename="../src/gomarkovchartdata.cpp" line="187"/>
-        <location filename="../src/gomarkovgraph.cpp" line="716"/>
+        <location filename="../src/gomarkovgraph.cpp" line="768"/>
         <source>Analysis Result</source>
         <translation>分析结果</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="699"/>
-        <location filename="../src/gomarkovgraph.cpp" line="729"/>
+        <location filename="../src/gograph.cpp" line="734"/>
+        <location filename="../src/gomarkovgraph.cpp" line="781"/>
         <source>Operator</source>
         <translation>操作符</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="700"/>
-        <location filename="../src/gomarkovgraph.cpp" line="730"/>
+        <location filename="../src/gograph.cpp" line="735"/>
+        <location filename="../src/gomarkovgraph.cpp" line="782"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="706"/>
-        <location filename="../src/gograph.cpp" line="721"/>
-        <location filename="../src/gomarkovgraph.cpp" line="736"/>
-        <location filename="../src/gomarkovgraph.cpp" line="759"/>
+        <location filename="../src/gograph.cpp" line="741"/>
+        <location filename="../src/gograph.cpp" line="756"/>
+        <location filename="../src/gomarkovgraph.cpp" line="788"/>
+        <location filename="../src/gomarkovgraph.cpp" line="811"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="707"/>
-        <location filename="../src/gograph.cpp" line="723"/>
-        <location filename="../src/gograph.cpp" line="797"/>
-        <location filename="../src/gomarkovgraph.cpp" line="737"/>
-        <location filename="../src/gomarkovgraph.cpp" line="760"/>
-        <location filename="../src/gomarkovgraph.cpp" line="832"/>
+        <location filename="../src/gograph.cpp" line="742"/>
+        <location filename="../src/gograph.cpp" line="758"/>
+        <location filename="../src/gograph.cpp" line="832"/>
+        <location filename="../src/gomarkovgraph.cpp" line="789"/>
+        <location filename="../src/gomarkovgraph.cpp" line="812"/>
+        <location filename="../src/gomarkovgraph.cpp" line="884"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="722"/>
+        <location filename="../src/gograph.cpp" line="757"/>
         <source>Accumulative</source>
         <translation>累积概率</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="778"/>
-        <location filename="../src/gomarkovgraph.cpp" line="813"/>
+        <location filename="../src/gograph.cpp" line="813"/>
+        <location filename="../src/gomarkovgraph.cpp" line="865"/>
         <source>Path or cut is not exist. </source>
         <translation>路集或割集不存在。</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="787"/>
-        <location filename="../src/gomarkovgraph.cpp" line="822"/>
+        <location filename="../src/gograph.cpp" line="822"/>
+        <location filename="../src/gomarkovgraph.cpp" line="874"/>
         <source>No.</source>
         <translation>No.</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="788"/>
-        <location filename="../src/gomarkovgraph.cpp" line="823"/>
+        <location filename="../src/gograph.cpp" line="823"/>
+        <location filename="../src/gomarkovgraph.cpp" line="875"/>
         <source>Order</source>
         <translation>阶数</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="789"/>
-        <location filename="../src/gomarkovgraph.cpp" line="824"/>
+        <location filename="../src/gograph.cpp" line="824"/>
+        <location filename="../src/gomarkovgraph.cpp" line="876"/>
         <source>ID List</source>
-        <translation>ID列表</translation>
+        <translation>编号</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="790"/>
-        <location filename="../src/gomarkovgraph.cpp" line="825"/>
+        <location filename="../src/gograph.cpp" line="825"/>
+        <location filename="../src/gomarkovgraph.cpp" line="877"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
-        <location filename="../src/gograph.cpp" line="799"/>
-        <location filename="../src/gomarkovgraph.cpp" line="834"/>
+        <location filename="../src/gograph.cpp" line="834"/>
+        <location filename="../src/gomarkovgraph.cpp" line="886"/>
         <source>Importance</source>
         <translation>重要度</translation>
     </message>
@@ -1402,32 +1402,32 @@
         <translation>文字</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="209"/>
+        <location filename="../src/toolgooperator.cpp" line="234"/>
         <source>Input Number</source>
         <translation>输入数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="210"/>
+        <location filename="../src/toolgooperator.cpp" line="235"/>
         <source>The number of input: </source>
         <translation>输入的数量：</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="234"/>
+        <location filename="../src/toolgooperator.cpp" line="259"/>
         <source>Output Number</source>
         <translation>输出数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="235"/>
+        <location filename="../src/toolgooperator.cpp" line="260"/>
         <source>The number of output: </source>
         <translation>输出的数量：</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="255"/>
+        <location filename="../src/toolgooperator.cpp" line="280"/>
         <source>Input and Output Number</source>
         <translation>输入和输出数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="256"/>
+        <location filename="../src/toolgooperator.cpp" line="281"/>
         <source>The number of input and output: </source>
         <translation>输入和输出的数量:</translation>
     </message>
@@ -1452,19 +1452,19 @@
         <translation> : %1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="65"/>
+        <location filename="../src/gomarkovgraph.cpp" line="66"/>
         <source>Error: Graph </source>
         <translation>错误: GO图</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="747"/>
-        <location filename="../src/gomarkovgraph.cpp" line="766"/>
+        <location filename="../src/gomarkovgraph.cpp" line="799"/>
+        <location filename="../src/gomarkovgraph.cpp" line="818"/>
         <source>Failure Rate</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="751"/>
-        <location filename="../src/gomarkovgraph.cpp" line="771"/>
+        <location filename="../src/gomarkovgraph.cpp" line="803"/>
+        <location filename="../src/gomarkovgraph.cpp" line="823"/>
         <source>Repair Rate</source>
         <translation>维修率</translation>
     </message>
@@ -1557,42 +1557,42 @@
         <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="384"/>
+        <location filename="../src/gomarkovoperator.cpp" line="394"/>
         <source>Lambda 1: %1</source>
         <translation>故障率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="385"/>
+        <location filename="../src/gomarkovoperator.cpp" line="395"/>
         <source>    Mu 1: %1</source>
         <translation>维修率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="390"/>
+        <location filename="../src/gomarkovoperator.cpp" line="400"/>
         <source>Lambda 2: %1</source>
         <translation>故障率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="391"/>
+        <location filename="../src/gomarkovoperator.cpp" line="401"/>
         <source>    Mu 2: %1</source>
         <translation>维修率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="396"/>
+        <location filename="../src/gomarkovoperator.cpp" line="406"/>
         <source>Lambda 3: %1</source>
         <translation>故障率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="397"/>
+        <location filename="../src/gomarkovoperator.cpp" line="407"/>
         <source>    Mu 3: %1</source>
         <translation>维修率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="402"/>
+        <location filename="../src/gomarkovoperator.cpp" line="412"/>
         <source>Lambda 4: %1</source>
         <translation>故障率4：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="403"/>
+        <location filename="../src/gomarkovoperator.cpp" line="413"/>
         <source>    Mu 4: %1</source>
         <translation>维修率4：%1</translation>
     </message>
@@ -1712,12 +1712,12 @@
         <translation>操作符：</translation>
     </message>
     <message>
-        <location filename="../src/gocutset.cpp" line="46"/>
+        <location filename="../src/gocutset.cpp" line="47"/>
         <source>Cut Failure Probablity</source>
         <translation>割集失效概率</translation>
     </message>
     <message>
-        <location filename="../src/gopathset.cpp" line="119"/>
+        <location filename="../src/gopathset.cpp" line="149"/>
         <source>Path Success Probablity</source>
         <translation>路集成功概率</translation>
     </message>
