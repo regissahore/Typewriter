@@ -126,7 +126,6 @@ void GOMainWindow::initToolBar()
     this->ui->toolBarFile->addAction(this->ui->actionSave_All);
 
     this->ui->toolBarAnalysis->addAction(this->ui->actionAnalysis_Probability);
-    this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Path);
     this->ui->toolBarAnalysis->addAction(this->ui->actionFind_Cut);
     this->ui->toolBarAnalysis->addSeparator();
     this->ui->toolBarAnalysis->addAction(this->ui->actionCopy_C);
