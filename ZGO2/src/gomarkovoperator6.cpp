@@ -33,7 +33,7 @@ void GOMarkovOperator6::calcOutputMarkovStatus(double time)
     }
 }
 
-double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(index);
@@ -44,7 +44,7 @@ double GOMarkovOperator6::calcTempOutputMarkovStatus(double time, QVector<double
     return this->calcTempOutputMarkovStatusNormal(input[0], subInput[0]);
 }
 
-void GOMarkovOperator6::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator6::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
     if (this->isBreakdownCorrelate())
     {
@@ -60,41 +60,41 @@ void GOMarkovOperator6::calcOutputMarkovStatusNormal()
 {
     GOMarkovStatus* prevStatus1 = this->getPrevMarkovStatus();
     GOMarkovStatus* prevStatus2 = this->getPrevSubMarkovStatus();
-    double PS1 = prevStatus1->probabilityNormal();
-    double PS2 = prevStatus2->probabilityNormal();
-    double PC = this->markovStatus()->probabilityNormal();
-    double PR = PS1 * PS2 * PC;
-    double QR = 1 - PR;
-    double lambdaS1 = prevStatus1->frequencyBreakdown();
-    double lambdaS2 = prevStatus2->frequencyBreakdown();
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double lambdaR = lambdaS1 + lambdaS2 + lambdaC;
-    double muR = lambdaR * PR / QR;
+    DoubleVector PS1 = prevStatus1->probabilityNormal();
+    DoubleVector PS2 = prevStatus2->probabilityNormal();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PR = PS1 * PS2 * PC;
+    DoubleVector QR = 1 - PR;
+    DoubleVector lambdaS1 = prevStatus1->frequencyBreakdown();
+    DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC;
+    DoubleVector muR = lambdaR * PR / QR;
     this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator6::calcCommonOutputMarkovStatusNormal(double PR)
+void GOMarkovOperator6::calcCommonOutputMarkovStatusNormal(DoubleVector PR)
 {
-    double QR = 1.0 - PR;
+    DoubleVector QR = 1.0 - PR;
     GOMarkovStatus* prevStatus1 = this->getPrevMarkovStatus();
     GOMarkovStatus* prevStatus2 = this->getPrevSubMarkovStatus();
-    double lambdaS1 = prevStatus1->frequencyBreakdown();
-    double lambdaS2 = prevStatus2->frequencyBreakdown();
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double lambdaR = lambdaS1 + lambdaS2 + lambdaC;
-    double muR = lambdaR * PR / QR;
+    DoubleVector lambdaS1 = prevStatus1->frequencyBreakdown();
+    DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC;
+    DoubleVector muR = lambdaR * PR / QR;
     this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator6::calcTempOutputMarkovStatusNormal(double PS1, double PS2)
+DoubleVector GOMarkovOperator6::calcTempOutputMarkovStatusNormal(DoubleVector PS1, DoubleVector PS2)
 {
-    double PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
     return PS1 * PS2 * PC;
 }
 
@@ -102,49 +102,49 @@ void GOMarkovOperator6::calcOutputMarkovStatusCorrelate()
 {
     GOMarkovStatus* prevStatus1 = this->getPrevMarkovStatus();
     GOMarkovStatus* prevStatus2 = this->getPrevSubMarkovStatus();
-    double PS1 = prevStatus1->probabilityNormal();
-    double QS1 = 1.0 - PS1;
-    double PS2 = prevStatus2->probabilityNormal();
-    double QS2 = 1.0 - PS2;
-    double PC = this->markovStatus()->probabilityNormal();
-    double QC = 1.0 - PC;
-    double G1 = PS1 * PS2 * PC;
-    double G2 = QS1 * PS2 * PC + QS2 * PS1 * PC + QC * PS1 * PS2;
-    double PR = G1 / (G1 + G2);
-    double lambdaS1 = prevStatus1->frequencyBreakdown();
-    double lambdaS2 = prevStatus2->frequencyBreakdown();
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double lambdaR = lambdaS1 + lambdaS2 + lambdaC;
-    double muS1 = prevStatus1->frequencyRepair();
-    double muS2 = prevStatus2->frequencyRepair();
-    double muC = this->markovStatus()->frequencyRepair();
-    double muR = lambdaR / (lambdaS1 / muS1 + lambdaS2 / muS2 + lambdaC / muC);
+    DoubleVector PS1 = prevStatus1->probabilityNormal();
+    DoubleVector QS1 = 1.0 - PS1;
+    DoubleVector PS2 = prevStatus2->probabilityNormal();
+    DoubleVector QS2 = 1.0 - PS2;
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    DoubleVector QC = 1.0 - PC;
+    DoubleVector G1 = PS1 * PS2 * PC;
+    DoubleVector G2 = QS1 * PS2 * PC + QS2 * PS1 * PC + QC * PS1 * PS2;
+    DoubleVector PR = G1 / (G1 + G2);
+    DoubleVector lambdaS1 = prevStatus1->frequencyBreakdown();
+    DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC;
+    DoubleVector muS1 = prevStatus1->frequencyRepair();
+    DoubleVector muS2 = prevStatus2->frequencyRepair();
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector muR = lambdaR / (lambdaS1 / muS1 + lambdaS2 / muS2 + lambdaC / muC);
     this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator6::calcCommonOutputMarkovStatusCorrelate(double PR)
+void GOMarkovOperator6::calcCommonOutputMarkovStatusCorrelate(DoubleVector PR)
 {
     GOMarkovStatus* prevStatus1 = this->getPrevMarkovStatus();
     GOMarkovStatus* prevStatus2 = this->getPrevSubMarkovStatus();
-    double lambdaS1 = prevStatus1->frequencyBreakdown();
-    double lambdaS2 = prevStatus2->frequencyBreakdown();
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double lambdaR = lambdaS1 + lambdaS2 + lambdaC;
-    double muS1 = prevStatus1->frequencyRepair();
-    double muS2 = prevStatus2->frequencyRepair();
-    double muC = this->markovStatus()->frequencyRepair();
-    double muR = lambdaR / (lambdaS1 / muS1 + lambdaS2 / muS2 + lambdaC / muC);
+    DoubleVector lambdaS1 = prevStatus1->frequencyBreakdown();
+    DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC;
+    DoubleVector muS1 = prevStatus1->frequencyRepair();
+    DoubleVector muS2 = prevStatus2->frequencyRepair();
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector muR = lambdaR / (lambdaS1 / muS1 + lambdaS2 / muS2 + lambdaC / muC);
     this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator6::calcTempOutputMarkovStatusCorrelate(double PS1, double PS2)
+DoubleVector GOMarkovOperator6::calcTempOutputMarkovStatusCorrelate(DoubleVector PS1, DoubleVector PS2)
 {
-    double PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
     return PS1 * PS2 * PC;
 }

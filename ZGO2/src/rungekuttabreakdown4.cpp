@@ -1,32 +1,32 @@
 #include "rungekuttabreakdown4.h"
-const double RK_STEP = 0.0001;
+const DoubleVector RK_STEP = 0.0001;
 
 RungeKuttaBreakdown4::RungeKuttaBreakdown4()
 {
     this->_rkt = 0.0;
 }
 
-double RungeKuttaBreakdown4::rk0() const
+DoubleVector RungeKuttaBreakdown4::rk0() const
 {
     return this->_rk0;
 }
 
-double RungeKuttaBreakdown4::rk1() const
+DoubleVector RungeKuttaBreakdown4::rk1() const
 {
     return this->_rk1;
 }
 
-double RungeKuttaBreakdown4::rk2() const
+DoubleVector RungeKuttaBreakdown4::rk2() const
 {
     return this->_rk2;
 }
 
-double RungeKuttaBreakdown4::rk3() const
+DoubleVector RungeKuttaBreakdown4::rk3() const
 {
     return this->_rk3;
 }
 
-double RungeKuttaBreakdown4::rk4() const
+DoubleVector RungeKuttaBreakdown4::rk4() const
 {
     return this->_rk4;
 }
@@ -42,7 +42,7 @@ double RungeKuttaBreakdown4::rk4() const
  * P0(0) = 1.0
  * P1(0) = P2(0) = P3(0) = 0.0
  */
-double RungeKuttaBreakdown4::calcNormalProbability(double time, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     if (time < RK_STEP)
     {
@@ -55,7 +55,7 @@ double RungeKuttaBreakdown4::calcNormalProbability(double time, double lambda1, 
     }
     while (this->_rkt < time)
     {
-        double k1[5], k2[5], k3[5], k4[5];
+        DoubleVector k1[5], k2[5], k3[5], k4[5];
         k1[0] = func0(this->_rkt,
                       this->_rk0,
                       this->_rk1,
@@ -233,7 +233,7 @@ double RungeKuttaBreakdown4::calcNormalProbability(double time, double lambda1, 
 /**
  * P0'(t) = - (λ1 + λ2 + λ3 + λ4) + μ1 * P1(t) + μ2 * P2(t) + μ3 * P3(t) + μ4 * P4(t)
  */
-double RungeKuttaBreakdown4::func0(double t, double x0, double x1, double x2, double x3, double x4, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     Q_UNUSED(t);
     Q_UNUSED(x0);
@@ -243,7 +243,7 @@ double RungeKuttaBreakdown4::func0(double t, double x0, double x1, double x2, do
 /**
  * P1'(t) = λ1 * Q0(t) - μ1 * P1(t)
  */
-double RungeKuttaBreakdown4::func1(double t, double x0, double x1, double x2, double x3, double x4, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     Q_UNUSED(t);
     Q_UNUSED(x2);
@@ -261,7 +261,7 @@ double RungeKuttaBreakdown4::func1(double t, double x0, double x1, double x2, do
 /**
  * P2'(t) = λ2 * Q0(t) - μ2 * P2(t)
  */
-double RungeKuttaBreakdown4::func2(double t, double x0, double x1, double x2, double x3, double x4, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     Q_UNUSED(t);
     Q_UNUSED(x1);
@@ -279,7 +279,7 @@ double RungeKuttaBreakdown4::func2(double t, double x0, double x1, double x2, do
 /**
  * P3'(t) = λ3 * Q0(t) - μ3 * P3(t)
  */
-double RungeKuttaBreakdown4::func3(double t, double x0, double x1, double x2, double x3, double x4, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     Q_UNUSED(t);
     Q_UNUSED(x1);
@@ -297,7 +297,7 @@ double RungeKuttaBreakdown4::func3(double t, double x0, double x1, double x2, do
 /**
  * P4'(t) = λ4 * Q0(t) - μ4 * P4(t)
  */
-double RungeKuttaBreakdown4::func4(double t, double x0, double x1, double x2, double x3, double x4, double lambda1, double lambda2, double lambda3, double lambda4, double mu1, double mu2, double mu3, double mu4)
+DoubleVector RungeKuttaBreakdown4::func4(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
 {
     Q_UNUSED(t);
     Q_UNUSED(x1);

@@ -5,6 +5,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "gograph.h"
+#include "doublevector.h"
 
 class GOMarkovEquivalent;
 class GOMarkovCommonCause;
@@ -33,8 +34,8 @@ protected:
     virtual QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     virtual GOPathSetSetSet findPath(int order);
     virtual GOPathSetSetSet findCut(int order);
-    virtual void findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
-    virtual void findCutDfs(QMap<int, QVector<double>* > &fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
+    virtual void findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
+    virtual void findCutDfs(QMap<int, QVector<DoubleVector>* > &fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOMARKOVGRAPH_H

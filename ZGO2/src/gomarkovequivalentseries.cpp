@@ -11,27 +11,27 @@ GOMarkovStatus GOMarkovEquivalentSeries::getEquivalentStatus()
     GOMarkovStatus status;
     if (this->I() == 1)
     {
-        double lamda = 0.0;
-        double lamdaFracSum = 0.0;
+        DoubleVector lamda = 0.0;
+        DoubleVector lamdaFracSum = 0.0;
         for (int i = 0; i < this->_operators->size(); ++i)
         {
             lamda = lamda + this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
             lamdaFracSum = lamdaFracSum + this->_operators->at(i)->markovStatus1()->frequencyBreakdown() / this->_operators->at(i)->markovStatus1()->frequencyRepair();
         }
-        double miu = lamda / lamdaFracSum;
+        DoubleVector miu = lamda / lamdaFracSum;
         status.setFrequencyBreakdown(lamda);
         status.setFrequencyRepair(miu);
     }
     else
     {
-        double lamda = 0.0;
-        double p1 = 1.0;
+        DoubleVector lamda = 0.0;
+        DoubleVector p1 = 1.0;
         for (int i = 0; i < this->_operators->size(); ++i)
         {
             lamda = lamda + this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
             p1 = p1 * this->_operators->at(i)->markovStatus1()->probabilityNormal();
         }
-        double miu = lamda * p1 / (1.0 - p1);
+        DoubleVector miu = lamda * p1 / (1.0 - p1);
         status.setFrequencyBreakdown(lamda);
         status.setFrequencyRepair(miu);
     }

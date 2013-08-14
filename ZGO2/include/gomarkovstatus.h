@@ -5,6 +5,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "domitem.h"
+#include "doublevector.h"
 
 class QString;
 
@@ -13,29 +14,23 @@ class GOMarkovStatus : public DomItem
 public:
     GOMarkovStatus();
     virtual ~GOMarkovStatus();
-    double probabilityNormal() const;
-    double probabilityBreakdown() const;
-    double frequencyBreakdown() const;
-    double frequencyRepair() const;
-    void setProbabilityNormal(QString value);
-    void setProbabilityBreakdown(QString value);
-    void setFrequencyBreakdown(QString value);
-    void setFrequencyRepair(QString value);
-    void setRepairTime(QString value);
-    void setProbabilityNormal(double value);
-    void setProbabilityBreakdown(double value);
-    void setFrequencyBreakdown(double value);
-    void setFrequencyRepair(double value);
-    void setRepairTime(double value);
+    DoubleVector probabilityNormal() const;
+    DoubleVector probabilityBreakdown() const;
+    DoubleVector frequencyBreakdown() const;
+    DoubleVector frequencyRepair() const;
+    void setProbabilityNormal(DoubleVector value);
+    void setProbabilityBreakdown(DoubleVector value);
+    void setFrequencyBreakdown(DoubleVector value);
+    void setFrequencyRepair(DoubleVector value);
+    void setRepairTime(DoubleVector value);
     GOMarkovStatus* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
 protected:
-    double _probabilityNormal;
-    double _probabilityBreakdown;
-    double _frequencyBreakdown;
-    double _frequencyRepair;
+    DoubleVector _probabilityNormal;
+    DoubleVector _frequencyBreakdown;
+    DoubleVector _frequencyRepair;
 };
 
 #endif // GOMARKOVSTATUS_H

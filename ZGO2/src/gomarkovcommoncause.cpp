@@ -151,7 +151,7 @@ double GOMarkovCommonCause::calcCommonCause(double time) const
     for (int j = 0; j < this->operators()->size(); ++j)
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->operators()->at(j);
-        muSum += op->markovStatus1()->frequencyRepair();
+        muSum += op->markovStatus1()->frequencyRepair().getValue(0);
     }
     double c = this->breakdownCommon();
     double p1 = c / (c + muSum);
@@ -176,10 +176,10 @@ bool GOMarkovCommonCause::errorDetect(Messager *messager)
 {
     if (this->_operators->size() > 0)
     {
-        double lambda1 = this->_operators->at(0)->markovStatus1()->frequencyBreakdown();
+        double lambda1 = this->_operators->at(0)->markovStatus1()->frequencyBreakdown().getValue(0);
         for (int i = 1; i < this->_operators->size(); ++i)
         {
-            double lambda2 = this->_operators->at(i)->markovStatus1()->frequencyBreakdown();
+            double lambda2 = this->_operators->at(i)->markovStatus1()->frequencyBreakdown().getValue(0);
             if (fabs(lambda1 - lambda2) > 1e-8)
             {
                 Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);

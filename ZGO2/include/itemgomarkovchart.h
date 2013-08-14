@@ -6,6 +6,7 @@
  */
 #include <QList>
 #include "itemdrawable.h"
+#include "doublevector.h"
 
 class ItemArrow;
 class GOMarkovChartData;
@@ -17,10 +18,10 @@ public:
     ~ItemGOMarkovChart();
     void setTitle(const QString title);
     void setTime(QVector<double> time);
-    void setP(QVector<double> P);
-    void setQ(QVector<double> Q);
-    void setLambda(QVector<double> lambda);
-    void setMu(QVector<double> mu);
+    void setP(QVector<DoubleVector> P);
+    void setQ(QVector<DoubleVector> Q);
+    void setLambda(QVector<DoubleVector> lambda);
+    void setMu(QVector<DoubleVector> mu);
     void setDetailIndex(float x, float y);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
@@ -30,10 +31,10 @@ public:
     bool isDisplayQ() const;
     bool isDisplayLambda() const;
     bool isDisplayMu() const;
-    void setIsDisplayP(const double value);
-    void setIsDisplayQ(const double value);
-    void setIsDisplayLambda(const double value);
-    void setIsDisplayMu(const double value);
+    void setIsDisplayP(const bool value);
+    void setIsDisplayQ(const bool value);
+    void setIsDisplayLambda(const bool value);
+    void setIsDisplayMu(const bool value);
     int chartNum() const;
     int totalHeight() const;
     int displayIndex() const;
@@ -43,20 +44,20 @@ public:
 protected:
     QString _title;
     QList<double> _time;
-    QList<double> _P;
-    QList<double> _Q;
-    QList<double> _lambda;
-    QList<double> _mu;
+    QList<DoubleVector> _P;
+    QList<DoubleVector> _Q;
+    QList<DoubleVector> _lambda;
+    QList<DoubleVector> _mu;
     ItemArrow *_xAxis[4];
     ItemArrow *_yAxis[4];
-    double _maxP;
-    double _minP;
-    double _maxQ;
-    double _minQ;
-    double _maxLambda;
-    double _minLambda;
-    double _maxMu;
-    double _minMu;
+    DoubleVector _maxP;
+    DoubleVector _minP;
+    DoubleVector _maxQ;
+    DoubleVector _minQ;
+    DoubleVector _maxLambda;
+    DoubleVector _minLambda;
+    DoubleVector _maxMu;
+    DoubleVector _minMu;
     int _detailIndex;
     GOMarkovChartData *_chart;
     bool _isDisplayP;

@@ -224,7 +224,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1RepairTime->setMaximum(1e100);
         this->_spinBoxStatus1RepairTime->setDecimals(10);
         this->_spinBoxStatus1RepairTime->setSingleStep(0.01);
-        this->_spinBoxStatus1RepairTime->setValue(1.0 / status->frequencyRepair());
+        this->_spinBoxStatus1RepairTime->setValue((1.0 / status->frequencyRepair()).getValue(0));
         this->connect(this->_spinBoxStatus1RepairTime, SIGNAL(editingFinished()), this, SLOT(setItemMarkovRepairTime1()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus1RepairTime);
 
@@ -235,7 +235,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1FrequencyRepair->setMaximum(1e100);
         this->_spinBoxStatus1FrequencyRepair->setDecimals(10);
         this->_spinBoxStatus1FrequencyRepair->setSingleStep(0.01);
-        this->_spinBoxStatus1FrequencyRepair->setValue(status->frequencyRepair());
+        this->_spinBoxStatus1FrequencyRepair->setValue(status->frequencyRepair().getValue(0));
         this->connect(this->_spinBoxStatus1FrequencyRepair, SIGNAL(editingFinished()), this, SLOT(setItemMarkovFrequencyRepair1()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus1FrequencyRepair);
 
@@ -246,7 +246,7 @@ void ParameterGOMarkovOperator::addMarkovStatus1Parameter()
         this->_spinBoxStatus1FrequencyBreakdown->setMaximum(1e100);
         this->_spinBoxStatus1FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus1FrequencyBreakdown->setSingleStep(0.01);
-        this->_spinBoxStatus1FrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->_spinBoxStatus1FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
         this->connect(this->_spinBoxStatus1FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown1(double)));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus1FrequencyBreakdown);
     }
@@ -266,7 +266,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2RepairTime->setMaximum(1e100);
         this->_spinBoxStatus2RepairTime->setDecimals(10);
         this->_spinBoxStatus2RepairTime->setSingleStep(0.01);
-        this->_spinBoxStatus2RepairTime->setValue(1.0 / status->frequencyRepair());
+        this->_spinBoxStatus2RepairTime->setValue((1.0 / status->frequencyRepair()).getValue(0));
         this->connect(this->_spinBoxStatus2RepairTime, SIGNAL(editingFinished()), this, SLOT(setItemMarkovRepairTime2()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus2RepairTime);
 
@@ -277,7 +277,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2FrequencyRepair->setMaximum(1e100);
         this->_spinBoxStatus2FrequencyRepair->setDecimals(10);
         this->_spinBoxStatus2FrequencyRepair->setSingleStep(0.01);
-        this->_spinBoxStatus2FrequencyRepair->setValue(status->frequencyRepair());
+        this->_spinBoxStatus2FrequencyRepair->setValue(status->frequencyRepair().getValue(0));
         this->connect(this->_spinBoxStatus2FrequencyRepair, SIGNAL(editingFinished()), this, SLOT(setItemMarkovFrequencyRepair2()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus2FrequencyRepair);
 
@@ -288,7 +288,7 @@ void ParameterGOMarkovOperator::addMarkovStatus2Parameter()
         this->_spinBoxStatus2FrequencyBreakdown->setMaximum(1e100);
         this->_spinBoxStatus2FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus2FrequencyBreakdown->setSingleStep(0.01);
-        this->_spinBoxStatus2FrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->_spinBoxStatus2FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
         this->connect(this->_spinBoxStatus2FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown2(double)));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus2FrequencyBreakdown);
     }
@@ -308,7 +308,7 @@ void ParameterGOMarkovOperator::addMarkovStatus3Parameter()
         this->_spinBoxStatus3RepairTime->setMaximum(1e100);
         this->_spinBoxStatus3RepairTime->setDecimals(10);
         this->_spinBoxStatus3RepairTime->setSingleStep(0.01);
-        this->_spinBoxStatus3RepairTime->setValue(1.0 / status->frequencyRepair());
+        this->_spinBoxStatus3RepairTime->setValue((1.0 / status->frequencyRepair()).getValue(0));
         this->connect(this->_spinBoxStatus3RepairTime, SIGNAL(editingFinished()), this, SLOT(setItemMarkovRepairTime3()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus3RepairTime);
 
@@ -319,7 +319,7 @@ void ParameterGOMarkovOperator::addMarkovStatus3Parameter()
         this->_spinBoxStatus3FrequencyRepair->setMaximum(1e100);
         this->_spinBoxStatus3FrequencyRepair->setDecimals(10);
         this->_spinBoxStatus3FrequencyRepair->setSingleStep(0.01);
-        this->_spinBoxStatus3FrequencyRepair->setValue(status->frequencyRepair());
+        this->_spinBoxStatus3FrequencyRepair->setValue(status->frequencyRepair().getValue(0));
         this->connect(this->_spinBoxStatus3FrequencyRepair, SIGNAL(editingFinished()), this, SLOT(setItemMarkovFrequencyRepair3()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus3FrequencyRepair);
 
@@ -330,7 +330,7 @@ void ParameterGOMarkovOperator::addMarkovStatus3Parameter()
         this->_spinBoxStatus3FrequencyBreakdown->setMaximum(1e100);
         this->_spinBoxStatus3FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus3FrequencyBreakdown->setSingleStep(0.01);
-        this->_spinBoxStatus3FrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->_spinBoxStatus3FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
         this->connect(this->_spinBoxStatus3FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown3(double)));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus3FrequencyBreakdown);
     }
@@ -350,7 +350,7 @@ void ParameterGOMarkovOperator::addMarkovStatus4Parameter()
         this->_spinBoxStatus4RepairTime->setMaximum(1e100);
         this->_spinBoxStatus4RepairTime->setDecimals(10);
         this->_spinBoxStatus4RepairTime->setSingleStep(0.01);
-        this->_spinBoxStatus4RepairTime->setValue(1.0 / status->frequencyRepair());
+        this->_spinBoxStatus4RepairTime->setValue((1.0 / status->frequencyRepair()).getValue(0));
         this->connect(this->_spinBoxStatus4RepairTime, SIGNAL(editingFinished()), this, SLOT(setItemMarkovRepairTime4()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus4RepairTime);
 
@@ -361,7 +361,7 @@ void ParameterGOMarkovOperator::addMarkovStatus4Parameter()
         this->_spinBoxStatus4FrequencyRepair->setMaximum(1e100);
         this->_spinBoxStatus4FrequencyRepair->setDecimals(10);
         this->_spinBoxStatus4FrequencyRepair->setSingleStep(0.01);
-        this->_spinBoxStatus4FrequencyRepair->setValue(status->frequencyRepair());
+        this->_spinBoxStatus4FrequencyRepair->setValue(status->frequencyRepair().getValue(0));
         this->connect(this->_spinBoxStatus4FrequencyRepair, SIGNAL(editingFinished()), this, SLOT(setItemMarkovFrequencyRepair4()));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus4FrequencyRepair);
 
@@ -372,7 +372,7 @@ void ParameterGOMarkovOperator::addMarkovStatus4Parameter()
         this->_spinBoxStatus4FrequencyBreakdown->setMaximum(1e100);
         this->_spinBoxStatus4FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus4FrequencyBreakdown->setSingleStep(0.01);
-        this->_spinBoxStatus4FrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->_spinBoxStatus4FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
         this->connect(this->_spinBoxStatus4FrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkovFrequencyBreakdown4(double)));
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 1, this->_spinBoxStatus4FrequencyBreakdown);
     }
@@ -420,7 +420,7 @@ void ParameterGOMarkovOperator::setItemMarkovFrequencyRepair1()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus1()->setFrequencyRepair(value);
-    this->_spinBoxStatus1RepairTime->setValue(1.0 / model->markovStatus1()->frequencyRepair());
+    this->_spinBoxStatus1RepairTime->setValue((1.0 / model->markovStatus1()->frequencyRepair()).getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovRepairTime1()
@@ -429,7 +429,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime1()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus1()->setFrequencyRepair(1.0 / value);
-    this->_spinBoxStatus1FrequencyRepair->setValue(model->markovStatus1()->frequencyRepair());
+    this->_spinBoxStatus1FrequencyRepair->setValue(model->markovStatus1()->frequencyRepair().getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovFrequencyBreakdown2(double value)
@@ -445,7 +445,7 @@ void ParameterGOMarkovOperator::setItemMarkovFrequencyRepair2()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus2()->setFrequencyRepair(value);
-    this->_spinBoxStatus2RepairTime->setValue(1.0 / model->markovStatus2()->frequencyRepair());
+    this->_spinBoxStatus2RepairTime->setValue(1.0 / model->markovStatus2()->frequencyRepair().getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovRepairTime2()
@@ -454,7 +454,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime2()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus2()->setFrequencyRepair(1.0 / value);
-    this->_spinBoxStatus2FrequencyRepair->setValue(model->markovStatus2()->frequencyRepair());
+    this->_spinBoxStatus2FrequencyRepair->setValue((model->markovStatus2()->frequencyRepair()).getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovFrequencyBreakdown3(double value)
@@ -470,7 +470,7 @@ void ParameterGOMarkovOperator::setItemMarkovFrequencyRepair3()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus3()->setFrequencyRepair(value);
-    this->_spinBoxStatus3RepairTime->setValue(1.0 / model->markovStatus3()->frequencyRepair());
+    this->_spinBoxStatus3RepairTime->setValue((1.0 / model->markovStatus3()->frequencyRepair()).getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovRepairTime3()
@@ -479,7 +479,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime3()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus3()->setFrequencyRepair(1.0 / value);
-    this->_spinBoxStatus3FrequencyRepair->setValue(model->markovStatus3()->frequencyRepair());
+    this->_spinBoxStatus3FrequencyRepair->setValue(model->markovStatus3()->frequencyRepair().getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovFrequencyBreakdown4(double value)
@@ -495,7 +495,7 @@ void ParameterGOMarkovOperator::setItemMarkovFrequencyRepair4()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus4()->setFrequencyRepair(value);
-    this->_spinBoxStatus4RepairTime->setValue(1.0 / model->markovStatus4()->frequencyRepair());
+    this->_spinBoxStatus4RepairTime->setValue((1.0 / model->markovStatus4()->frequencyRepair()).getValue(0));
 }
 
 void ParameterGOMarkovOperator::setItemMarkovRepairTime4()
@@ -504,7 +504,7 @@ void ParameterGOMarkovOperator::setItemMarkovRepairTime4()
     ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
     GOMarkovOperator *model = (GOMarkovOperator*)item->model();
     model->markovStatus4()->setFrequencyRepair(1.0 / value);
-    this->_spinBoxStatus4FrequencyRepair->setValue(model->markovStatus4()->frequencyRepair());
+    this->_spinBoxStatus4FrequencyRepair->setValue(model->markovStatus4()->frequencyRepair().getValue(0));
 }
 
 void ParameterGOMarkovOperator::addMarkov11KParameter()
@@ -750,7 +750,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackFrequencyBreakdown->setMaximum(1e100);
         this->_spinBox9FeedbackFrequencyBreakdown->setDecimals(10);
         this->_spinBox9FeedbackFrequencyBreakdown->setSingleStep(0.01);
-        this->_spinBox9FeedbackFrequencyBreakdown->setValue(status->frequencyBreakdown());
+        this->_spinBox9FeedbackFrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
         this->connect(this->_spinBox9FeedbackFrequencyBreakdown, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov9FeedbackFrequencyBreakdown(double)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBox9FeedbackFrequencyBreakdown);
 
@@ -761,7 +761,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackFrequencyRepair->setMaximum(1e100);
         this->_spinBox9FeedbackFrequencyRepair->setDecimals(10);
         this->_spinBox9FeedbackFrequencyRepair->setSingleStep(0.01);
-        this->_spinBox9FeedbackFrequencyRepair->setValue(status->frequencyRepair());
+        this->_spinBox9FeedbackFrequencyRepair->setValue(status->frequencyRepair().getValue(0));
         this->connect(this->_spinBox9FeedbackFrequencyRepair, SIGNAL(editingFinished()), this, SLOT(setItemMarkov9FeedbackFrequencyRepair()));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBox9FeedbackFrequencyRepair);
 
@@ -772,7 +772,7 @@ void ParameterGOMarkovOperator::addMarkov9FeedbackParameter()
         this->_spinBox9FeedbackRepairTime->setMaximum(1e100);
         this->_spinBox9FeedbackRepairTime->setDecimals(10);
         this->_spinBox9FeedbackRepairTime->setSingleStep(0.01);
-        this->_spinBox9FeedbackRepairTime->setValue(1.0 / status->frequencyRepair());
+        this->_spinBox9FeedbackRepairTime->setValue((1.0 / status->frequencyRepair()).getValue(0));
         this->connect(this->_spinBox9FeedbackRepairTime, SIGNAL(editingFinished()), this, SLOT(setItemMarkov9FeedbackRepairTime()));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinBox9FeedbackRepairTime);
     }
@@ -927,7 +927,7 @@ void ParameterGOMarkovOperator::addMarkov18LambdaB1Parameter()
         spin->setMaximum(1.0);
         spin->setDecimals(10);
         spin->setSingleStep(0.01);
-        spin->setValue(model->lambdaB1());
+        spin->setValue(model->lambdaB1().getValue(0));
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18LambdaB1(double)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
     }

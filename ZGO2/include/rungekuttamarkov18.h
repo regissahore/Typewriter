@@ -5,30 +5,31 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QObject>
+#include "doublevector.h"
 
 class RungeKuttaMarkov18
 {
 public:
     RungeKuttaMarkov18();
-    double rk0() const;
-    double rk1() const;
-    double rk2() const;
-    double rk3() const;
-    double lambdaB1() const;
-    void setLambdaB1(const double value);
-    double calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2);
-    double func0(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
-    double func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2);
+    DoubleVector rk0() const;
+    DoubleVector rk1() const;
+    DoubleVector rk2() const;
+    DoubleVector rk3() const;
+    DoubleVector lambdaB1() const;
+    void setLambdaB1(const DoubleVector value);
+    DoubleVector calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2);
+    DoubleVector func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2);
+    DoubleVector func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2);
+    DoubleVector func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2);
+    DoubleVector func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2);
 
 protected:
-    double _rk0;
-    double _rk1;
-    double _rk2;
-    double _rk3;
-    double _rkt;
-    double _lambdaB1;
+    DoubleVector _rk0;
+    DoubleVector _rk1;
+    DoubleVector _rk2;
+    DoubleVector _rk3;
+    DoubleVector _rkt;
+    DoubleVector _lambdaB1;
 };
 
 #endif // RUNGEKUTTAMARKOV18_H

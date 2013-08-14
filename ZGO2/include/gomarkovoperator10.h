@@ -12,16 +12,16 @@ public:
     GOMarkovOperator10();
     ~GOMarkovOperator10();
     void calcOutputMarkovStatus(double time);
-    void calcCommonOutputMarkovStatus(QVector<double> PR);
-    double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);
+    DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
 
 private:
     void calcOutputMarkovStatusNormal();
     void calcOutputMarkovStatusCorrelate();
-    void calcCommonOutputMarkovStatusNormal(double PR);
-    void calcCommonOutputMarkovStatusCorrelate(double PR);
-    double calcTempOutputMarkovStatusNormal(QVector<double> input);
-    double calcTempOutputMarkovStatusCorrelate(QVector<double> input);
+    void calcCommonOutputMarkovStatusNormal(DoubleVector PR);
+    void calcCommonOutputMarkovStatusCorrelate(DoubleVector PR);
+    DoubleVector calcTempOutputMarkovStatusNormal(QVector<DoubleVector> input);
+    DoubleVector calcTempOutputMarkovStatusCorrelate(QVector<DoubleVector> input);
 };
 
 #endif // GOMARKOVOPERATOR1_H

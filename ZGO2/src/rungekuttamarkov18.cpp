@@ -6,32 +6,32 @@ RungeKuttaMarkov18::RungeKuttaMarkov18()
     this->_rkt = 0.0;
 }
 
-double RungeKuttaMarkov18::rk0() const
+DoubleVector RungeKuttaMarkov18::rk0() const
 {
     return this->_rk0;
 }
 
-double RungeKuttaMarkov18::rk1() const
+DoubleVector RungeKuttaMarkov18::rk1() const
 {
     return this->_rk1;
 }
 
-double RungeKuttaMarkov18::rk2() const
+DoubleVector RungeKuttaMarkov18::rk2() const
 {
     return this->_rk2;
 }
 
-double RungeKuttaMarkov18::rk3() const
+DoubleVector RungeKuttaMarkov18::rk3() const
 {
     return this->_rk3;
 }
 
-double RungeKuttaMarkov18::lambdaB1() const
+DoubleVector RungeKuttaMarkov18::lambdaB1() const
 {
     return this->_lambdaB1;
 }
 
-void RungeKuttaMarkov18::setLambdaB1(const double value)
+void RungeKuttaMarkov18::setLambdaB1(const DoubleVector value)
 {
     this->_lambdaB1 = value;
 }
@@ -47,7 +47,7 @@ void RungeKuttaMarkov18::setLambdaB1(const double value)
  * P0(0) = 1.0
  * P1(0) = P2(0) = P3(0) = 0.0
  */
-double RungeKuttaMarkov18::calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2)
+DoubleVector RungeKuttaMarkov18::calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     if (time < RK_STEP)
     {
@@ -59,7 +59,7 @@ double RungeKuttaMarkov18::calcNormalProbability(double time, double lambda1, do
     }
     while (this->_rkt < time)
     {
-        double k1[4], k2[4], k3[4], k4[4];
+        DoubleVector k1[4], k2[4], k3[4], k4[4];
         k1[0] = func0(this->_rkt,
                       this->_rk0,
                       this->_rk1,
@@ -172,7 +172,7 @@ double RungeKuttaMarkov18::calcNormalProbability(double time, double lambda1, do
 /**
  * P0'(t) = μ1 * P1(t) + μ2 * P2(t) - (λ1 + λb1) * P0(t)
  */
-double RungeKuttaMarkov18::func0(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2)
+DoubleVector RungeKuttaMarkov18::func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
     Q_UNUSED(x3);
@@ -183,7 +183,7 @@ double RungeKuttaMarkov18::func0(double t, double x0, double x1, double x2, doub
 /**
  * P1'(t) = λ1 * P0(t) + μ2 * P3(t) - (μ1 + λ2) * P1(t)
  */
-double RungeKuttaMarkov18::func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2)
+DoubleVector RungeKuttaMarkov18::func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
     Q_UNUSED(x2);
@@ -193,7 +193,7 @@ double RungeKuttaMarkov18::func1(double t, double x0, double x1, double x2, doub
 /**
  * P2'(t) = λb1 * P0(t) - μ1 * P3(t) - (μ1 + λ1) * P2(t)
  */
-double RungeKuttaMarkov18::func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2)
+DoubleVector RungeKuttaMarkov18::func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
     Q_UNUSED(x1);
@@ -205,7 +205,7 @@ double RungeKuttaMarkov18::func2(double t, double x0, double x1, double x2, doub
 /**
  * P3'(t) = λ2 * P1(t) - λ1 * P2(t) - (μ1 + μ2) * P3(t)
  */
-double RungeKuttaMarkov18::func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double mu1, double mu2)
+DoubleVector RungeKuttaMarkov18::func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
     Q_UNUSED(x0);

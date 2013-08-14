@@ -526,8 +526,6 @@ GOMarkovOperator* ItemGOMarkovEquivalent::getEquivalentOperator()
     GOMarkovStatus status = this->model()->getEquivalentStatus();
     GOMarkovOperator *op = GOMarkovOperatorFactory::produce(GOMarkovOperatorFactory::Operator_Type_1);
     op->setId(this->id());
-    op->status()->setProbability(1, status.probabilityNormal());
-    op->status()->setProbability(2, status.probabilityBreakdown());
     op->markovStatus()->setFrequencyBreakdown(status.frequencyBreakdown());
     op->markovStatus()->setFrequencyRepair(status.frequencyRepair());
     return op;

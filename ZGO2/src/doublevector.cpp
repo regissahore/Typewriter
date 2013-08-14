@@ -9,6 +9,12 @@ DoubleVector::DoubleVector()
     this->_values.push_back(0.0);
 }
 
+DoubleVector::DoubleVector(const double value)
+{
+    this->setIsVector(false);
+    this->_values.push_back(value);
+}
+
 DoubleVector::~DoubleVector()
 {
     this->_values.clear();
@@ -93,11 +99,6 @@ void DoubleVector::setValue(const int pos, const double value)
     }
 }
 
-void DoubleVector::setValue(const double value)
-{
-    this->setValue(0, value);
-}
-
 void DoubleVector::setAll(const double value)
 {
     for (int i = 0; i < this->length(); ++i)
@@ -125,12 +126,139 @@ DoubleVector DoubleVector::Zero(int len)
 DoubleVector DoubleVector::Exp(const DoubleVector &a)
 {
     DoubleVector b;
+    b.setIsVector(a.isVector());
     b.setLength(a.length());
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, exp(a.getValue(i)));
     }
     return b;
+}
+
+DoubleVector DoubleVector::Sqrt(const DoubleVector &a)
+{
+    DoubleVector b;
+    b.setIsVector(a.isVector());
+    b.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        b.setValue(i, sqrt(a.getValue(i)));
+    }
+    return b;
+}
+
+DoubleVector& DoubleVector::operator +=(const DoubleVector &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) + a.getValue(i));
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator -=(const DoubleVector &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) - a.getValue(i));
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator *=(const DoubleVector &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) * a.getValue(i));
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator /=(const DoubleVector &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) / a.getValue(i));
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator +=(const double &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) + a);
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator -=(const double &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) - a);
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator *=(const double &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) * a);
+    }
+    return *this;
+}
+
+DoubleVector& DoubleVector::operator /=(const double &a)
+{
+    for (int i = 0; i < this->length(); ++i)
+    {
+        this->setValue(i, this->getValue(i) / a);
+    }
+    return *this;
+}
+
+DoubleVector operator -(const DoubleVector &a)
+{
+    DoubleVector b;
+    b.setIsVector(a.isVector());
+    b.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        b.setValue(i, - a.getValue(i));
+    }
+    return b;
+}
+
+bool operator <(const DoubleVector &a, const DoubleVector &b)
+{
+    return a.getValue(0) > b.getValue(0);
+}
+
+bool operator <(const DoubleVector &a, const double b)
+{
+    return a.getValue(0) < b;
+}
+
+bool operator <(const double a, const DoubleVector &b)
+{
+    return a < b.getValue(0);
+}
+
+bool operator >(const DoubleVector &a, const DoubleVector &b)
+{
+    return a.getValue(0) > b.getValue(0);
+}
+
+bool operator >(const DoubleVector &a, const double b)
+{
+    return a.getValue(0) > b;
+}
+
+bool operator >(const double a, const DoubleVector &b)
+{
+    return a > b.getValue(0);
 }
 
 DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
@@ -181,6 +309,102 @@ DoubleVector operator /(const DoubleVector &a, const DoubleVector &b)
     for (int i = 0; i < len; ++i)
     {
         c.setValue(i, a.getValue(i) / b.getValue(i));
+    }
+    return c;
+}
+
+DoubleVector operator +(const DoubleVector &a, const double b)
+{
+    DoubleVector c;
+    c.setIsVector(a.isVector());
+    c.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        c.setValue(i, a.getValue(i) + b);
+    }
+    return c;
+}
+
+DoubleVector operator -(const DoubleVector &a, const double b)
+{
+    DoubleVector c;
+    c.setIsVector(a.isVector());
+    c.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        c.setValue(i, a.getValue(i) - b);
+    }
+    return c;
+}
+
+DoubleVector operator *(const DoubleVector &a, const double b)
+{
+    DoubleVector c;
+    c.setIsVector(a.isVector());
+    c.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        c.setValue(i, a.getValue(i) * b);
+    }
+    return c;
+}
+
+DoubleVector operator /(const DoubleVector &a, const double b)
+{
+    DoubleVector c;
+    c.setIsVector(a.isVector());
+    c.setLength(a.length());
+    for (int i = 0; i < a.length(); ++i)
+    {
+        c.setValue(i, a.getValue(i) / b);
+    }
+    return c;
+}
+
+DoubleVector operator +(const double a, const DoubleVector &b)
+{
+    DoubleVector c;
+    c.setIsVector(b.isVector());
+    c.setLength(b.length());
+    for (int i = 0; i < b.length(); ++i)
+    {
+        c.setValue(i, a + b.getValue(i));
+    }
+    return c;
+}
+
+DoubleVector operator -(const double a, const DoubleVector &b)
+{
+    DoubleVector c;
+    c.setIsVector(b.isVector());
+    c.setLength(b.length());
+    for (int i = 0; i < b.length(); ++i)
+    {
+        c.setValue(i, a - b.getValue(i));
+    }
+    return c;
+}
+
+DoubleVector operator *(const double a, const DoubleVector &b)
+{
+    DoubleVector c;
+    c.setIsVector(b.isVector());
+    c.setLength(b.length());
+    for (int i = 0; i < b.length(); ++i)
+    {
+        c.setValue(i, a * b.getValue(i));
+    }
+    return c;
+}
+
+DoubleVector operator /(const double a, const DoubleVector &b)
+{
+    DoubleVector c;
+    c.setIsVector(b.isVector());
+    c.setLength(b.length());
+    for (int i = 0; i < b.length(); ++i)
+    {
+        c.setValue(i, a / b.getValue(i));
     }
     return c;
 }

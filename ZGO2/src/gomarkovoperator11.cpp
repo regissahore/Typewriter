@@ -69,13 +69,13 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
     int inputNum = this->input()->number();
-    QVector<double> input;
+    QVector<DoubleVector> input;
     for (int i = 0; i < inputNum; ++i)
     {
         GOMarkovStatus* prevStatus = this->getPrevMarkovStatus(i);
         input.push_back(prevStatus->probabilityNormal());
     }
-    double PR = 0.0;
+    DoubleVector PR = 0.0;
     for (int i = 0; i < (1 << inputNum); ++i)
     {
         int successNum = 0;
@@ -88,7 +88,7 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
         }
         if (successNum >= this->K())
         {
-            double temp = 1.0;
+            DoubleVector temp = 1.0;
             for (int j = 0; j < inputNum; ++j)
             {
                 if (i & (1 << j))
@@ -109,10 +109,10 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
     int J = this->J();
     int M = this->input()->number();
     int K = this->K();
-    double lambda = this->getPrevMarkovStatus()->frequencyBreakdown();
-    double mu = this->getPrevMarkovStatus()->frequencyRepair();
-    QVector<double> a;
-    QVector<double> b;
+    DoubleVector lambda = this->getPrevMarkovStatus()->frequencyBreakdown();
+    DoubleVector mu = this->getPrevMarkovStatus()->frequencyRepair();
+    QVector<DoubleVector> a;
+    QVector<DoubleVector> b;
     a.push_back(0.0);
     b.push_back(1.0);
     int maxIndex = M - K;
@@ -140,14 +140,14 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
             b.push_back(L * mu);
         }
     }
-    QVector<double> p;
+    QVector<DoubleVector> p;
     p.push_back(1.0);
     for (int i = 1; i <= I + 1; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }
-    double sum1 = 0.0;
-    double sum2 = 0.0;
+    DoubleVector sum1 = 0.0;
+    DoubleVector sum2 = 0.0;
     for (int i = 0; i <= M - K; ++i)
     {
         sum1 = sum1 + p[i];
@@ -156,24 +156,24 @@ void GOMarkovOperator11::calcOutputMarkovStatus(double time)
     {
         sum2 = sum2 + p[i];
     }
-    double lambdaR = p[M - K] * a[M - K + 1] / sum1;
-    double muR = p[M - K + 1] * b[M - K + 1] / sum2;
+    DoubleVector lambdaR = p[M - K] * a[M - K + 1] / sum1;
+    DoubleVector muR = p[M - K + 1] * b[M - K + 1] / sum2;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator11::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator11::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
     int I = this->I();
     int L = this->L();
     int J = this->J();
     int M = this->input()->number();
     int K = this->K();
-    double lambda = this->getPrevMarkovStatus()->frequencyBreakdown();
-    double mu = this->getPrevMarkovStatus()->frequencyRepair();
-    QVector<double> a;
-    QVector<double> b;
+    DoubleVector lambda = this->getPrevMarkovStatus()->frequencyBreakdown();
+    DoubleVector mu = this->getPrevMarkovStatus()->frequencyRepair();
+    QVector<DoubleVector> a;
+    QVector<DoubleVector> b;
     a.push_back(0.0);
     b.push_back(1.0);
     int maxIndex = M - K;
@@ -201,14 +201,14 @@ void GOMarkovOperator11::calcCommonOutputMarkovStatus(QVector<double> PR)
             b.push_back(L * mu);
         }
     }
-    QVector<double> p;
+    QVector<DoubleVector> p;
     p.push_back(1.0);
     for (int i = 1; i <= I + 1; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }
-    double sum1 = 0.0;
-    double sum2 = 0.0;
+    DoubleVector sum1 = 0.0;
+    DoubleVector sum2 = 0.0;
     for (int i = 0; i <= M - K; ++i)
     {
         sum1 = sum1 + p[i];
@@ -217,20 +217,20 @@ void GOMarkovOperator11::calcCommonOutputMarkovStatus(QVector<double> PR)
     {
         sum2 = sum2 + p[i];
     }
-    double lambdaR = p[M - K] * a[M - K + 1] / sum1;
-    double muR = p[M - K + 1] * b[M - K + 1] / sum2;
+    DoubleVector lambdaR = p[M - K] * a[M - K + 1] / sum1;
+    DoubleVector muR = p[M - K + 1] * b[M - K + 1] / sum2;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR[0]);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator11::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator11::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
     int inputNum = this->input()->number();
-    double PR = 0.0;
+    DoubleVector PR = 0.0;
     for (int i = 0; i < (1 << inputNum); ++i)
     {
         int successNum = 0;
@@ -243,7 +243,7 @@ double GOMarkovOperator11::calcTempOutputMarkovStatus(double time, QVector<doubl
         }
         if (successNum >= this->K())
         {
-            double temp = 1.0;
+            DoubleVector temp = 1.0;
             for (int j = 0; j < inputNum; ++j)
             {
                 if (i & (1 << j))
@@ -271,14 +271,14 @@ bool GOMarkovOperator11::errorDetect(Messager *messager)
     for (int i = 1; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *status2 = this->getPrevOperator(i)->markovStatus1();
-        if (fabs(status1->frequencyBreakdown() - status2->frequencyBreakdown()) > 1e-6)
+        if (fabs(status1->frequencyBreakdown().getValue(0) - status2->frequencyBreakdown().getValue(0)) > 1e-6)
         {
             Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
             message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same breakdown rate.").arg(this->id());
             messager->sendMessage(message);
             return true;
         }
-        if (fabs(status1->frequencyRepair() - status2->frequencyRepair()) > 1e-6)
+        if (fabs(status1->frequencyRepair().getValue(0) - status2->frequencyRepair().getValue(0)) > 1e-6)
         {
             Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
             message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same repair rate.").arg(this->id());

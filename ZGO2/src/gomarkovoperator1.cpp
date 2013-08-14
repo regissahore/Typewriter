@@ -32,7 +32,7 @@ void GOMarkovOperator1::calcOutputMarkovStatus(double time)
     }
 }
 
-double GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
@@ -47,52 +47,52 @@ double GOMarkovOperator1::calcTempOutputMarkovStatus(double time, QVector<double
 void GOMarkovOperator1::calcOutputMarkovStatusNormal()
 {
     GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(0);
-    double PS = prevStatus->probabilityNormal();
-    double PC = this->markovStatus()->probabilityNormal();
-    double PR = PS * PC;
-    double QR = 1 - PR;
-    double lamdaS = prevStatus->frequencyBreakdown();
-    double lamdaC = this->markovStatus()->frequencyBreakdown();
-    double lamdaR = lamdaS + lamdaC;
-    double miuR = lamdaR * PR / QR;
+    DoubleVector PS = prevStatus->probabilityNormal();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PR = PS * PC;
+    DoubleVector QR = 1 - PR;
+    DoubleVector lamdaS = prevStatus->frequencyBreakdown();
+    DoubleVector lamdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lamdaR = lamdaS + lamdaC;
+    DoubleVector miuR = lamdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
 
-double GOMarkovOperator1::calcTempOutputMarkovStatusNormal(double PS)
+DoubleVector GOMarkovOperator1::calcTempOutputMarkovStatusNormal(DoubleVector PS)
 {
-    double PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
     return PS * PC;
 }
 
 void GOMarkovOperator1::calcOutputMarkovStatusCorrelate()
 {
     GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(0);
-    double PS = prevStatus->probabilityNormal();
-    double QS = prevStatus->probabilityBreakdown();
-    double PC = this->markovStatus()->probabilityNormal();
-    double QC = this->markovStatus()->probabilityBreakdown();
-    double G1 = PS * PC;
-    double G2 = PS * QC + QS * PC;
-    double PR = G1 / (G1 + G2);
-    double lamdaS = prevStatus->frequencyBreakdown();
-    double miuS = prevStatus->frequencyRepair();
-    double lamdaC = this->markovStatus()->frequencyBreakdown();
-    double miuC = this->markovStatus()->frequencyRepair();
-    double lamdaR = lamdaS + lamdaC;
-    double miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
+    DoubleVector PS = prevStatus->probabilityNormal();
+    DoubleVector QS = prevStatus->probabilityBreakdown();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    DoubleVector QC = this->markovStatus()->probabilityBreakdown();
+    DoubleVector G1 = PS * PC;
+    DoubleVector G2 = PS * QC + QS * PC;
+    DoubleVector PR = G1 / (G1 + G2);
+    DoubleVector lamdaS = prevStatus->frequencyBreakdown();
+    DoubleVector miuS = prevStatus->frequencyRepair();
+    DoubleVector lamdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector miuC = this->markovStatus()->frequencyRepair();
+    DoubleVector lamdaR = lamdaS + lamdaC;
+    DoubleVector miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
 }
 
-double GOMarkovOperator1::calcTempOutputMarkovStatusCorrelate(double PS)
+DoubleVector GOMarkovOperator1::calcTempOutputMarkovStatusCorrelate(DoubleVector PS)
 {
-    double QS = 1 - PS;
-    double PC = this->markovStatus()->probabilityNormal();
-    double QC = 1 - PC;
-    double G1 = PS * PC;
-    double G2 = PS * QC + QS * PC;
+    DoubleVector QS = 1 - PS;
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    DoubleVector QC = 1 - PC;
+    DoubleVector G1 = PS * PC;
+    DoubleVector G2 = PS * QC + QS * PC;
     return G1 / (G1 + G2);
 }

@@ -6,6 +6,7 @@
  */
 #include <QVector>
 #include "gooperator.h"
+#include "doublevector.h"
 
 class QPainter;
 class GOMarkovStatus;
@@ -30,8 +31,8 @@ public:
     void setBreakdownCorrelate(bool value);
     void initMarkovStatus(double time, double c12 = 0.0);
     virtual void calcOutputMarkovStatus(double time);
-    virtual void calcCommonOutputMarkovStatus(QVector<double> PR);
-    virtual double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    virtual void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);
+    virtual DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
     virtual void initOutputMarkovStatus();
     GOMarkovOperator* getPrevOperator(int index = 0);
     GOMarkovOperator* getPrevSubOperator(int index = 0);

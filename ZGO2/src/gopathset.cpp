@@ -90,14 +90,14 @@ double GOPathSet::toProbability() const
 
 double GOPathSet::toMarkovProbability() const
 {
-    double value = 1.0;
+    DoubleVector value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
         GOMarkovOperator* op = (GOMarkovOperator*)this->_list[i];
         op->initMarkovStatus(1e10);
         value = value * op->markovStatus()->probabilityNormal();
     }
-    return value;
+    return value.getValue(0);
 }
 
 double GOPathSet::toImportance() const

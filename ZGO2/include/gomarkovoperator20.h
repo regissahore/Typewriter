@@ -12,8 +12,8 @@ public:
     GOMarkovOperator20();
     ~GOMarkovOperator20();
     void calcOutputMarkovStatus(double time);
-    void calcCommonOutputMarkovStatus(QVector<double> PR);
-    double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);
+    DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
 };
 
 #endif // GOMARKOVOPERATOR1_H

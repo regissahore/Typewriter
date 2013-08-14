@@ -25,15 +25,15 @@ void GOMarkovOperator21::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
     GOMarkovStatus *status = this->getPrevMarkovStatus();
-    double PR = status->probabilityNormal();
-    double lambdaR = status->frequencyBreakdown();
-    double muR = status->frequencyRepair();
+    DoubleVector PR = status->probabilityNormal();
+    DoubleVector lambdaR = status->frequencyBreakdown();
+    DoubleVector muR = status->frequencyRepair();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator21::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator21::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);

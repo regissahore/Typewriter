@@ -5,6 +5,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include "goanalysis.h"
+#include "doublevector.h"
 
 class GOMarkovOperator;
 class GOMarkovOperator9A;
@@ -15,7 +16,7 @@ class GOMarkovAnalysis : public GOAnalysis
 public:
     GOMarkovAnalysis();
     void calcMarkovStatus(GOMarkovOperator *op, QVector<GOOperator *> commonOperator, QVector<int> commonIndex, double time);
-    double calcTempMarkovStatus(GOMarkovOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &normalValues, double time);
+    DoubleVector calcTempMarkovStatus(GOMarkovOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<DoubleVector> &normalValues, double time);
 
 protected:
     void calcAccumulativeProbability_9A1(GOMarkovOperator9A *op, double time);

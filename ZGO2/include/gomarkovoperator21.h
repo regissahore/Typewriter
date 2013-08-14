@@ -12,7 +12,7 @@ public:
     GOMarkovOperator21();
     ~GOMarkovOperator21();
     void calcOutputMarkovStatus(double time);
-    double calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index);
+    DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
 };
 
 #endif // GOMARKOVOPERATOR1_H

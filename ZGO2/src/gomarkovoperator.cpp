@@ -101,69 +101,69 @@ void GOMarkovOperator::initMarkovStatus(double time, double c12)
 {
     if (1 == this->breakdownNum())
     {
-        double lambda = this->markovStatus1()->frequencyBreakdown();
-        double mu = this->markovStatus1()->frequencyRepair();
-        double PC = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time)) + c12;
+        DoubleVector lambda = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector mu = this->markovStatus1()->frequencyRepair();
+        DoubleVector PC = mu / (lambda + mu) * (1 + lambda / mu * DoubleVector::Exp(-(lambda + mu) * time)) + c12;
         this->markovStatus()->setProbabilityNormal(PC);
         this->markovStatus()->setFrequencyBreakdown(lambda);
         this->markovStatus()->setFrequencyRepair(mu);
     }
     else if (2 == this->breakdownNum())
     {
-        double lambda1 = this->markovStatus1()->frequencyBreakdown();
-        double mu1 = this->markovStatus1()->frequencyRepair();
-        double lambda2 = this->markovStatus2()->frequencyBreakdown();
-        double mu2 = this->markovStatus2()->frequencyRepair();
-        double s1 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) + sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
-        double s2 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) - sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
-        double PC = mu1 * mu2 / s1 / s2 +
-                (s1 * s1 + (mu1 + mu2) * s1 + mu1 * mu2) / (s1 * (s1 - s2)) * exp(s1 * time) +
-                (s2 * s2 + (mu1 + mu2) * s2 + mu1 * mu2) / (s2 * (s2 - s1)) * exp(s2 * time) +
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        DoubleVector s1 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) + DoubleVector::Sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
+        DoubleVector s2 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) - DoubleVector::Sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
+        DoubleVector PC = mu1 * mu2 / s1 / s2 +
+                (s1 * s1 + (mu1 + mu2) * s1 + mu1 * mu2) / (s1 * (s1 - s2)) * DoubleVector::Exp(s1 * time) +
+                (s2 * s2 + (mu1 + mu2) * s2 + mu1 * mu2) / (s2 * (s2 - s1)) * DoubleVector::Exp(s2 * time) +
                 c12;
-        double QC = 1.0 - PC;
-        double lambdaR = lambda1 + lambda2;
-        double muR = lambdaR * PC / QC;
+        DoubleVector QC = 1.0 - PC;
+        DoubleVector lambdaR = lambda1 + lambda2;
+        DoubleVector muR = lambdaR * PC / QC;
         this->markovStatus()->setProbabilityNormal(PC);
         this->markovStatus()->setFrequencyBreakdown(lambdaR);
         this->markovStatus()->setFrequencyRepair(muR);
     }
     else if (3 == this->breakdownNum())
     {
-        double lambda1 = this->markovStatus1()->frequencyBreakdown();
-        double lambda2 = this->markovStatus2()->frequencyBreakdown();
-        double lambda3 = this->markovStatus3()->frequencyBreakdown();
-        double mu1 = this->markovStatus1()->frequencyRepair();
-        double mu2 = this->markovStatus2()->frequencyRepair();
-        double mu3 = this->markovStatus3()->frequencyRepair();
-        double PC = this->_rkBreakdown3->calcNormalProbability(time, lambda1, lambda2, lambda3, mu1, mu2, mu3);
-        double P0 = this->_rkBreakdown3->rk0();
-        double P1 = this->_rkBreakdown3->rk1();
-        double P2 = this->_rkBreakdown3->rk2();
-        double P3 = this->_rkBreakdown3->rk3();
-        double lambda = lambda1 + lambda2 + lambda3;
-        double mu = (mu1 * P1 + mu2 * P2 + mu3 * P3) / (1 - P0);
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
+        DoubleVector PC = this->_rkBreakdown3->calcNormalProbability(time, lambda1, lambda2, lambda3, mu1, mu2, mu3);
+        DoubleVector P0 = this->_rkBreakdown3->rk0();
+        DoubleVector P1 = this->_rkBreakdown3->rk1();
+        DoubleVector P2 = this->_rkBreakdown3->rk2();
+        DoubleVector P3 = this->_rkBreakdown3->rk3();
+        DoubleVector lambda = lambda1 + lambda2 + lambda3;
+        DoubleVector mu = (mu1 * P1 + mu2 * P2 + mu3 * P3) / (1 - P0);
         this->markovStatus()->setProbabilityNormal(PC);
         this->markovStatus()->setFrequencyBreakdown(lambda);
         this->markovStatus()->setFrequencyRepair(mu);
     }
     else if (4 == this->breakdownNum())
     {
-        double lambda1 = this->markovStatus1()->frequencyBreakdown();
-        double lambda2 = this->markovStatus2()->frequencyBreakdown();
-        double lambda3 = this->markovStatus3()->frequencyBreakdown();
-        double lambda4 = this->markovStatus4()->frequencyBreakdown();
-        double mu1 = this->markovStatus1()->frequencyRepair();
-        double mu2 = this->markovStatus2()->frequencyRepair();
-        double mu3 = this->markovStatus3()->frequencyRepair();
-        double mu4 = this->markovStatus4()->frequencyRepair();
-        double PC = this->_rkBreakdown4->calcNormalProbability(time, lambda1, lambda2, lambda3, lambda4, mu1, mu2, mu3, mu4);
-        double P0 = this->_rkBreakdown4->rk0();
-        double P1 = this->_rkBreakdown4->rk1();
-        double P2 = this->_rkBreakdown4->rk2();
-        double P3 = this->_rkBreakdown4->rk3();
-        double P4 = this->_rkBreakdown4->rk4();
-        double lambda = lambda1 + lambda2 + lambda3 + lambda4;
-        double mu = (mu1 * P1 + mu2 * P2 + mu3 * P3 + mu4 * P4) / (1 - P0);
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
+        DoubleVector lambda4 = this->markovStatus4()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
+        DoubleVector mu4 = this->markovStatus4()->frequencyRepair();
+        DoubleVector PC = this->_rkBreakdown4->calcNormalProbability(time, lambda1, lambda2, lambda3, lambda4, mu1, mu2, mu3, mu4);
+        DoubleVector P0 = this->_rkBreakdown4->rk0();
+        DoubleVector P1 = this->_rkBreakdown4->rk1();
+        DoubleVector P2 = this->_rkBreakdown4->rk2();
+        DoubleVector P3 = this->_rkBreakdown4->rk3();
+        DoubleVector P4 = this->_rkBreakdown4->rk4();
+        DoubleVector lambda = lambda1 + lambda2 + lambda3 + lambda4;
+        DoubleVector mu = (mu1 * P1 + mu2 * P2 + mu3 * P3 + mu4 * P4) / (1 - P0);
         this->markovStatus()->setProbabilityNormal(PC);
         this->markovStatus()->setFrequencyBreakdown(lambda);
         this->markovStatus()->setFrequencyRepair(mu);
@@ -175,12 +175,12 @@ void GOMarkovOperator::calcOutputMarkovStatus(double time)
     Q_UNUSED(time);
 }
 
-void GOMarkovOperator::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
     Q_UNUSED(PR);
 }
 
-double GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(input);
@@ -391,25 +391,25 @@ void GOMarkovOperator::paintMarkovParameter(QPainter *painter)
     int y = 30;
     if (this->breakdownNum() > 0)
     {
-        painter->drawText(-50, y, QObject::tr("Lambda 1: %1").arg(this->_markovStatus1->frequencyBreakdown()));
-        painter->drawText(-50, y + 20, QObject::tr("    Mu 1: %1").arg(this->_markovStatus1->frequencyRepair()));
+        painter->drawText(-50, y, QObject::tr("Lambda 1: %1").arg(this->_markovStatus1->frequencyBreakdown().getValue(0)));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 1: %1").arg(this->_markovStatus1->frequencyRepair().getValue(0)));
     }
     y += 40;
     if (this->breakdownNum() > 1)
     {
-        painter->drawText(-50, y, QObject::tr("Lambda 2: %1").arg(this->_markovStatus2->frequencyBreakdown()));
-        painter->drawText(-50, y + 20, QObject::tr("    Mu 2: %1").arg(this->_markovStatus2->frequencyRepair()));
+        painter->drawText(-50, y, QObject::tr("Lambda 2: %1").arg(this->_markovStatus2->frequencyBreakdown().getValue(0)));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 2: %1").arg(this->_markovStatus2->frequencyRepair().getValue(0)));
     }
     y += 40;
     if (this->breakdownNum() > 2)
     {
-        painter->drawText(-50, y, QObject::tr("Lambda 3: %1").arg(this->_markovStatus3->frequencyBreakdown()));
-        painter->drawText(-50, y + 20, QObject::tr("    Mu 3: %1").arg(this->_markovStatus3->frequencyRepair()));
+        painter->drawText(-50, y, QObject::tr("Lambda 3: %1").arg(this->_markovStatus3->frequencyBreakdown().getValue(0)));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 3: %1").arg(this->_markovStatus3->frequencyRepair().getValue(0)));
     }
     y += 40;
     if (this->breakdownNum() > 3)
     {
-        painter->drawText(-50, y, QObject::tr("Lambda 4: %1").arg(this->_markovStatus4->frequencyBreakdown()));
-        painter->drawText(-50, y + 20, QObject::tr("    Mu 4: %1").arg(this->_markovStatus4->frequencyRepair()));
+        painter->drawText(-50, y, QObject::tr("Lambda 4: %1").arg(this->_markovStatus4->frequencyBreakdown().getValue(0)));
+        painter->drawText(-50, y + 20, QObject::tr("    Mu 4: %1").arg(this->_markovStatus4->frequencyRepair().getValue(0)));
     }
 }

@@ -47,7 +47,7 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->probabilities[i].size(); ++j)
         {
             QDomElement element = document.createElement("probability");
-            element.setAttribute("value", this->probabilities[i][j]);
+            element.setAttribute("value", this->probabilities[i][j].getValue(0));
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -61,7 +61,7 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->lambdas[i].size(); ++j)
         {
             QDomElement element = document.createElement("lambdas");
-            element.setAttribute("value", this->lambdas[i][j]);
+            element.setAttribute("value", this->lambdas[i][j].getValue(0));
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -75,7 +75,7 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->mus[i].size(); ++j)
         {
             QDomElement element = document.createElement("mus");
-            element.setAttribute("value", this->mus[i][j]);
+            element.setAttribute("value", this->mus[i][j].getValue(0));
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -136,7 +136,7 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     partRoot = partRoot.nextSiblingElement();
     for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
-        this->probabilities.push_back(QVector<double>());
+        this->probabilities.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             this->probabilities[this->probabilities.size() - 1].push_back(element2.attribute("value").toDouble());
@@ -146,7 +146,7 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     partRoot = partRoot.nextSiblingElement();
     for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
-        this->lambdas.push_back(QVector<double>());
+        this->lambdas.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             this->lambdas[this->lambdas.size() - 1].push_back(element2.attribute("value").toDouble());
@@ -156,7 +156,7 @@ bool GOMarkovChartData::tryOpen(QString fileName)
     partRoot = partRoot.nextSiblingElement();
     for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
-        this->mus.push_back(QVector<double>());
+        this->mus.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             this->mus[this->mus.size() - 1].push_back(element2.attribute("value").toDouble());
@@ -202,7 +202,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Probability Normal") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << probabilities[j][i] << "</td>" << endl;
+            out << "<td>" << probabilities[j][i].getValue(0) << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -210,7 +210,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Probability Breakdown") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
+            out << "<td>" << 1.0 - probabilities[j][i].getValue(0) << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -218,7 +218,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Frequency Breakdown") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << lambdas[j][i] << "</td>" << endl;
+            out << "<td>" << lambdas[j][i].getValue(0) << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -226,7 +226,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Frequency Repair") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << mus[j][i] << "</td>" << endl;
+            out << "<td>" << mus[j][i].getValue(0) << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }
@@ -259,10 +259,10 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << times[i] << "</td>";
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << probabilities[j][i] << "</td>" << endl;
-            out << "<td>" << 1.0 - probabilities[j][i] << "</td>" << endl;
-            out << "<td>" << lambdas[j][i] << "</td>" << endl;
-            out << "<td>" << mus[j][i] << "</td>" << endl;
+            out << "<td>" << probabilities[j][i].getValue(0) << "</td>" << endl;
+            out << "<td>" << 1.0 - probabilities[j][i].getValue(0) << "</td>" << endl;
+            out << "<td>" << lambdas[j][i].getValue(0) << "</td>" << endl;
+            out << "<td>" << mus[j][i].getValue(0) << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }

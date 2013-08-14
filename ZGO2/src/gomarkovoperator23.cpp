@@ -30,15 +30,15 @@ QVector<double>* GOMarkovOperator23::alpha() const
 void GOMarkovOperator23::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
-    double PR = 0.0;
-    double lambdaR = 0.0;
-    double muR = 0.0;
+    DoubleVector PR = 0.0;
+    DoubleVector lambdaR = 0.0;
+    DoubleVector muR = 0.0;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *status = this->getPrevMarkovStatus(i);
-        double PS = status->probabilityNormal();
-        double lambdaS = status->frequencyBreakdown();
-        double muS = status->frequencyRepair();
+        DoubleVector PS = status->probabilityNormal();
+        DoubleVector lambdaS = status->frequencyBreakdown();
+        DoubleVector muS = status->frequencyRepair();
         PR += PS * this->alpha()->at(i);
         lambdaR += lambdaS * this->alpha()->at(i);
         muR += muS * this->alpha()->at(i);
@@ -48,15 +48,15 @@ void GOMarkovOperator23::calcOutputMarkovStatus(double time)
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator23::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator23::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
-    double lambdaR = 0.0;
-    double muR = 0.0;
+    DoubleVector lambdaR = 0.0;
+    DoubleVector muR = 0.0;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *status = this->getPrevMarkovStatus(i);
-        double lambdaS = status->frequencyBreakdown();
-        double muS = status->frequencyRepair();
+        DoubleVector lambdaS = status->frequencyBreakdown();
+        DoubleVector muS = status->frequencyRepair();
         lambdaR += lambdaS * this->alpha()->at(i);
         muR += muS * this->alpha()->at(i);
     }
@@ -65,15 +65,15 @@ void GOMarkovOperator23::calcCommonOutputMarkovStatus(QVector<double> PR)
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator23::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator23::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
-    double PR = 0.0;
+    DoubleVector PR = 0.0;
     for (int i = 0; i < this->input()->number(); ++i)
     {
-        double PS = input[i];
+        DoubleVector PS = input[i];
         PR += PS * this->alpha()->at(i);
     }
     return PR;

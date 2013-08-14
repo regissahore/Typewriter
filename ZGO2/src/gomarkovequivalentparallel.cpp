@@ -28,10 +28,10 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
         K = this->_operators->at(this->_operators->size() - 1)->parameter()->parameter(0);
         break;
     }
-    double lamda = this->_operators->at(0)->markovStatus1()->frequencyBreakdown();
-    double miu = this->_operators->at(0)->markovStatus1()->frequencyRepair();
-    QVector<double> a;
-    QVector<double> b;
+    DoubleVector lamda = this->_operators->at(0)->markovStatus1()->frequencyBreakdown();
+    DoubleVector miu = this->_operators->at(0)->markovStatus1()->frequencyRepair();
+    QVector<DoubleVector> a;
+    QVector<DoubleVector> b;
     a.push_back(0.0);
     b.push_back(1.0);
     int maxIndex = M - K;
@@ -59,14 +59,14 @@ GOMarkovStatus GOMarkovEquivalentParallel::getEquivalentStatus()
             b.push_back(L * miu);
         }
     }
-    QVector<double> p;
+    QVector<DoubleVector> p;
     p.push_back(1.0);
     for (int i = 1; i <= I + 1; ++i)
     {
         p.push_back(p[i - 1] * a[i] / b[i]);
     }
-    double sum1 = 0.0;
-    double sum2 = 0.0;
+    DoubleVector sum1 = 0.0;
+    DoubleVector sum2 = 0.0;
     for (int i = 0; i <= M - K; ++i)
     {
         sum1 = sum1 + p[i];

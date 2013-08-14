@@ -26,25 +26,25 @@ void GOMarkovOperator15A::calcOutputMarkovStatus(double time)
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
-        double PS = prevStatus->probabilityNormal();
-        double PC = this->markovStatus()->probabilityNormal();
-        double PR = PS * PC;
-        double QR = 1 - PR;
-        double lambdaS = prevStatus->frequencyBreakdown();
-        double lambdaC = this->markovStatus()->frequencyBreakdown();
-        double lambdaR = lambdaS + lambdaC;
-        double muR = lambdaR * PR / QR;
+        DoubleVector PS = prevStatus->probabilityNormal();
+        DoubleVector PC = this->markovStatus()->probabilityNormal();
+        DoubleVector PR = PS * PC;
+        DoubleVector QR = 1 - PR;
+        DoubleVector lambdaS = prevStatus->frequencyBreakdown();
+        DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+        DoubleVector lambdaR = lambdaS + lambdaC;
+        DoubleVector muR = lambdaR * PR / QR;
         this->markovOutputStatus()->at(i)->setProbabilityNormal(PR);
         this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
         this->markovOutputStatus()->at(i)->setFrequencyRepair(muR);
     }
 }
 
-double GOMarkovOperator15A::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator15A::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
-    double PS = input[index];
-    double PC = this->markovStatus()->probabilityNormal();
+    DoubleVector PS = input[index];
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
     return PS * PC;
 }

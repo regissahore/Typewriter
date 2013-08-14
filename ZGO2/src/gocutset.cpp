@@ -32,14 +32,14 @@ double GOCutSet::toProbability() const
 
 double GOCutSet::toMarkovProbability() const
 {
-    double value = 1.0;
+    DoubleVector value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
         GOMarkovOperator* op = (GOMarkovOperator*)this->_list[i];
         op->initMarkovStatus(1e10);
         value = value * op->markovStatus()->probabilityBreakdown();
     }
-    return value;
+    return value.getValue(0);
 }
 
 QString GOCutSet::getProbabilityName() const

@@ -74,7 +74,7 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
                     this->_commonItem->model()->operators()->push_back((GOMarkovOperator*)this->_operatorList->at(i)->model());
                     this->_operatorList->at(i)->setFatherCommonCause2(this->_commonItem);
                 }
-                this->_commonItem->model()->setBreakdownTotal(((GOMarkovOperator*)this->_operatorList->at(0)->model())->markovStatus1()->frequencyBreakdown());
+                this->_commonItem->model()->setBreakdownTotal(((GOMarkovOperator*)this->_operatorList->at(0)->model())->markovStatus1()->frequencyBreakdown().getValue(0));
                 this->sceneGO()->addItem(this->_commonItem);
                 this->_commonItem->setPos(event->scenePos());
                 this->_commonItem->updateBoundary();

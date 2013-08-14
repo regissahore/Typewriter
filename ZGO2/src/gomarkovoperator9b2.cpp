@@ -14,73 +14,73 @@ GOMarkovOperator9B2::~GOMarkovOperator9B2()
 void GOMarkovOperator9B2::calcOutputMarkovStatus(double time)
 {
     GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    double lambdaS1 = status1->frequencyBreakdown();
-    double muS1 = status1->frequencyRepair();
+    DoubleVector lambdaS1 = status1->frequencyBreakdown();
+    DoubleVector muS1 = status1->frequencyRepair();
     GOMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    double lambdaS2 = status2->frequencyBreakdown();
-    double muS2 = status2->frequencyRepair();
-    double lambdaS = lambdaS1 + lambdaS2;
-    double muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double muC = this->markovStatus()->frequencyRepair();
-    double lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    double muF = this->markovFeedbackStatus()->frequencyRepair();
-    double lambdaE = lambdaC + lambdaF;
-    double muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
-    double PR = (muS * muE +
-                 lambdaE * muS * exp(-(muE + lambdaE) * time) +
-                 lambdaS * muE * exp(-(muS + lambdaS) * time) +
-                 lambdaS * lambdaE * exp(-(muE + lambdaE + muS + lambdaS) * time)) /
+    DoubleVector lambdaS2 = status2->frequencyBreakdown();
+    DoubleVector muS2 = status2->frequencyRepair();
+    DoubleVector lambdaS = lambdaS1 + lambdaS2;
+    DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaE = lambdaC + lambdaF;
+    DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
+    DoubleVector PR = (muS * muE +
+                 lambdaE * muS * DoubleVector::Exp(-(muE + lambdaE) * time) +
+                 lambdaS * muE * DoubleVector::Exp(-(muS + lambdaS) * time) +
+                 lambdaS * lambdaE * DoubleVector::Exp(-(muE + lambdaE + muS + lambdaS) * time)) /
             ((muS + lambdaS) * (muE + lambdaE));
-    double QR = 1.0 - PR;
-    double lambdaR = lambdaS + lambdaE;
-    double muR = lambdaR * PR / QR;
+    DoubleVector QR = 1.0 - PR;
+    DoubleVector lambdaR = lambdaS + lambdaE;
+    DoubleVector muR = lambdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-void GOMarkovOperator9B2::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator9B2::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
     GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    double lambdaS1 = status1->frequencyBreakdown();
+    DoubleVector lambdaS1 = status1->frequencyBreakdown();
     GOMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    double lambdaS2 = status2->frequencyBreakdown();
-    double lambdaS = lambdaS1 + lambdaS2;
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    double lambdaE = lambdaC + lambdaF;
-    double QR = 1.0 - PR[0];
-    double lambdaR = lambdaS + lambdaE;
-    double muR = lambdaR * PR[0] / QR;
+    DoubleVector lambdaS2 = status2->frequencyBreakdown();
+    DoubleVector lambdaS = lambdaS1 + lambdaS2;
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
+    DoubleVector lambdaE = lambdaC + lambdaF;
+    DoubleVector QR = 1.0 - PR[0];
+    DoubleVector lambdaR = lambdaS + lambdaE;
+    DoubleVector muR = lambdaR * PR[0] / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR[0]);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
-double GOMarkovOperator9B2::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator9B2::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(input);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
     GOMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    double lambdaS1 = status1->frequencyBreakdown();
-    double muS1 = status1->frequencyRepair();
+    DoubleVector lambdaS1 = status1->frequencyBreakdown();
+    DoubleVector muS1 = status1->frequencyRepair();
     GOMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    double lambdaS2 = status2->frequencyBreakdown();
-    double muS2 = status2->frequencyRepair();
-    double lambdaS = lambdaS1 + lambdaS2;
-    double muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
-    double lambdaC = this->markovStatus()->frequencyBreakdown();
-    double muC = this->markovStatus()->frequencyRepair();
-    double lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    double muF = this->markovFeedbackStatus()->frequencyRepair();
-    double lambdaE = lambdaC + lambdaF;
-    double muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
-    double PR = (muS * muE +
-                 lambdaE * muS * exp(-(muE + lambdaE) * time) +
-                 lambdaS * muE * exp(-(muS + lambdaS) * time) +
-                 lambdaS * lambdaE * exp(-(muE + lambdaE + muS + lambdaS) * time)) /
+    DoubleVector lambdaS2 = status2->frequencyBreakdown();
+    DoubleVector muS2 = status2->frequencyRepair();
+    DoubleVector lambdaS = lambdaS1 + lambdaS2;
+    DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaE = lambdaC + lambdaF;
+    DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
+    DoubleVector PR = (muS * muE +
+                 lambdaE * muS * DoubleVector::Exp(-(muE + lambdaE) * time) +
+                 lambdaS * muE * DoubleVector::Exp(-(muS + lambdaS) * time) +
+                 lambdaS * lambdaE * DoubleVector::Exp(-(muE + lambdaE + muS + lambdaS) * time)) /
             ((muS + lambdaS) * (muE + lambdaE));
     return PR;
 }

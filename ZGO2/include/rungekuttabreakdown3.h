@@ -5,27 +5,28 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QObject>
+#include "doublevector.h"
 
 class RungeKuttaBreakdown3
 {
 public:
     RungeKuttaBreakdown3();
-    double rk0() const;
-    double rk1() const;
-    double rk2() const;
-    double rk3() const;
-    double calcNormalProbability(double time, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3);
-    double func0(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3);
-    double func1(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3);
-    double func2(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3);
-    double func3(double t, double x0, double x1, double x2, double x3, double lambda1, double lambda2, double lambda3, double mu1, double mu2, double mu3);
+    DoubleVector rk0() const;
+    DoubleVector rk1() const;
+    DoubleVector rk2() const;
+    DoubleVector rk3() const;
+    DoubleVector calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3);
+    DoubleVector func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3);
+    DoubleVector func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3);
+    DoubleVector func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3);
+    DoubleVector func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3);
 
 protected:
-    double _rk0;
-    double _rk1;
-    double _rk2;
-    double _rk3;
-    double _rkt;
+    DoubleVector _rk0;
+    DoubleVector _rk1;
+    DoubleVector _rk2;
+    DoubleVector _rk3;
+    DoubleVector _rkt;
 };
 
 #endif // RUNGEKUTTABREAKDOWN3_H

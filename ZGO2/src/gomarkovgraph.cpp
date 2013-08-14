@@ -135,25 +135,25 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         if (outputNum == 1)
         {
             data->names.push_back(QString("%1").arg(this->_operator[i]->id()));
-            data->probabilities.push_back(QVector<double>());
-            data->lambdas.push_back(QVector<double>());
-            data->mus.push_back(QVector<double>());
+            data->probabilities.push_back(QVector<DoubleVector>());
+            data->lambdas.push_back(QVector<DoubleVector>());
+            data->mus.push_back(QVector<DoubleVector>());
         }
         else
         {
             for (int j = 0; j < outputNum; ++j)
             {
                 data->names.push_back(QString("%1 (%2)").arg(this->_operator[i]->id()).arg(j + 1));
-                data->probabilities.push_back(QVector<double>());
-                data->lambdas.push_back(QVector<double>());
-                data->mus.push_back(QVector<double>());
+                data->probabilities.push_back(QVector<DoubleVector>());
+                data->lambdas.push_back(QVector<DoubleVector>());
+                data->mus.push_back(QVector<DoubleVector>());
             }
         }
     }
     for (int i = 0; i < count; ++i)
     {
         // Record initial value of lamda.
-        QVector<double> lamdas;
+        QVector<DoubleVector> lamdas;
         for (int j = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
@@ -208,7 +208,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         // Fixed the error caused by common cause.
         for (int j = 0; j < this->_commonCause.size(); ++j)
         {
-            QVector<double> r00;
+            QVector<DoubleVector> r00;
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
@@ -228,7 +228,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 }
             }
 
-            QVector<double> r11;
+            QVector<DoubleVector> r11;
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)this->_commonCause[j]->operators()->at(k);
@@ -471,11 +471,11 @@ GOPathSetSetSet GOMarkovGraph::findPath(int order)
         return path;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
-    QMap<int, QVector<double>* > normals;
+    QMap<int, QVector<DoubleVector>* > normals;
     for (int i = 0; i < list.size(); ++i)
     {
         GOMarkovOperator* op = (GOMarkovOperator*)list[i];
-        QVector<double> *normal = new QVector<double>();
+        QVector<DoubleVector> *normal = new QVector<DoubleVector>();
         for (int i = 0; i < op->output()->number(); ++i)
         {
             normal->push_back(op->markovOutputStatus()->at(i)->probabilityNormal());
@@ -496,7 +496,7 @@ GOPathSetSetSet GOMarkovGraph::findPath(int order)
     {
         this->findPathDfs(normals, path, list, tempPath, 0, 0, i);
     }
-    for (QMap<int, QVector<double>* >::iterator it = normals.begin(); it != normals.end(); ++it)
+    for (QMap<int, QVector<DoubleVector>* >::iterator it = normals.begin(); it != normals.end(); ++it)
     {
         delete it.value();
     }
@@ -513,11 +513,11 @@ GOPathSetSetSet GOMarkovGraph::findCut(int order)
         return path;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
-    QMap<int, QVector<double>* > fails;
+    QMap<int, QVector<DoubleVector>* > fails;
     for (int i = 0; i < list.size(); ++i)
     {
         GOMarkovOperator* op = (GOMarkovOperator*)list[i];
-        QVector<double> *fail = new QVector<double>();
+        QVector<DoubleVector> *fail = new QVector<DoubleVector>();
         for (int i = 0; i < op->output()->number(); ++i)
         {
             fail->push_back(op->markovOutputStatus()->at(i)->probabilityBreakdown());
@@ -538,7 +538,7 @@ GOPathSetSetSet GOMarkovGraph::findCut(int order)
     {
         this->findCutDfs(fails, path, list, tempPath, 0, 0, i);
     }
-    for (QMap<int, QVector<double>* >::iterator it = fails.begin(); it != fails.end(); ++it)
+    for (QMap<int, QVector<DoubleVector>* >::iterator it = fails.begin(); it != fails.end(); ++it)
     {
         delete it.value();
     }
@@ -546,7 +546,7 @@ GOPathSetSetSet GOMarkovGraph::findCut(int order)
     return path;
 }
 
-void GOMarkovGraph::findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order)
+void GOMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
@@ -600,9 +600,9 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSet
                 bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (op->markovOutputStatus()->at(j)->probabilityNormal() >= 1.0 - 1e-8)
+                    if (op->markovOutputStatus()->at(j)->probabilityNormal() > 1.0 - 1e-8)
                     {
-                        tempPath.setTotalProbablity(normals[op->realID()]->at(j));
+                        tempPath.setTotalProbablity(normals[op->realID()]->at(j).getValue(0));
                         flag = true;
                         break;
                     }
@@ -633,11 +633,10 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<double> *> &normals, GOPathSet
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
     op->initMarkovStatus(1e10);
-    //op->markovStatus()->setProbabilityNormal(0.0);
     this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
 }
 
-void GOMarkovGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order)
+void GOMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
@@ -691,9 +690,9 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSet
                 bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (op->markovOutputStatus()->at(j)->probabilityBreakdown() >= 1.0 - 1e-8)
+                    if (op->markovOutputStatus()->at(j)->probabilityBreakdown() > 1.0 - 1e-8)
                     {
-                        tempPath.setTotalProbablity(fails[op->realID()]->at(j));
+                        tempPath.setTotalProbablity(fails[op->realID()]->at(j).getValue(0));
                         flag = true;
                         break;
                     }
@@ -724,7 +723,6 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSet
     }
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
     op->initMarkovStatus(1e10);
-    //op->markovStatus()->setProbabilityBreakdown(0.0);
     this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
 }
 
@@ -797,11 +795,11 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath)
         }
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Failure Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyBreakdown() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyBreakdown().getValue(0) << "</td>";
         out << "</tr>" << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Repair Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyRepair() << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovStatus()->frequencyRepair().getValue(0) << "</td>";
         out << "</tr>" << endl;
         out << "</table>" << endl;
         out << "</td>" << endl;
@@ -812,17 +810,17 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath)
         out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
         out << "</tr>" << endl;
         out << "<tr>" << endl;
-        out << QString("<td>Normal</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityNormal()) << endl;
-        out << QString("<td>Breakdown</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityBreakdown()) << endl;
+        out << QString("<td>Normal</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityNormal().getValue(0)) << endl;
+        out << QString("<td>Breakdown</td><td>%1</td>").arg(((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->probabilityBreakdown().getValue(0)) << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Failure Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown() << "</td>";
-        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown()) << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown().getValue(0) << "</td>";
+        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyBreakdown().getValue(0)) << "</td>";
         out << "</tr>" << endl;
         out << "<tr>" << endl;
         out << "<td>" + QObject::tr("Repair Rate") + "</td>" << endl;
-        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair() << "</td>";
-        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair()) << "</td>";
+        out << "<td>" << ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair().getValue(0) << "</td>";
+        out << "<td>" << (1.0 / ((GOMarkovOperator*)list[i])->markovOutputStatus()->at(0)->frequencyRepair().getValue(0)) << "</td>";
         out << "</tr>" << endl;
         out << "</table>" << endl;
         out << "</td>" << endl;

@@ -15,8 +15,8 @@ GOMarkovOperator13A::~GOMarkovOperator13A()
 void GOMarkovOperator13A::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
-    QVector<double> PS;
-    QVector<double> lambdaS;
+    QVector<DoubleVector> PS;
+    QVector<DoubleVector> lambdaS;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *status = this->getPrevMarkovStatus(i);
@@ -25,8 +25,8 @@ void GOMarkovOperator13A::calcOutputMarkovStatus(double time)
     }
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        double PR = 1.0;
-        double lambdaR = 0.0;
+        DoubleVector PR = 1.0;
+        DoubleVector lambdaR = 0.0;
         for (int j = 0; j < this->input()->number(); ++j)
         {
             if (this->relation()->at(j).at(i))
@@ -35,17 +35,17 @@ void GOMarkovOperator13A::calcOutputMarkovStatus(double time)
                 lambdaR += lambdaS[j];
             }
         }
-        double QR = 1.0 - PR;
-        double muR = lambdaR * PR / QR;
+        DoubleVector QR = 1.0 - PR;
+        DoubleVector muR = lambdaR * PR / QR;
         this->markovOutputStatus()->at(i)->setProbabilityNormal(PR);
         this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
         this->markovOutputStatus()->at(i)->setFrequencyRepair(muR);
     }
 }
 
-void GOMarkovOperator13A::calcCommonOutputMarkovStatus(QVector<double> PR)
+void GOMarkovOperator13A::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
-    QVector<double> lambdaS;
+    QVector<DoubleVector> lambdaS;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GOMarkovStatus *status = this->getPrevMarkovStatus(i);
@@ -53,7 +53,7 @@ void GOMarkovOperator13A::calcCommonOutputMarkovStatus(QVector<double> PR)
     }
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        double lambdaR = 0.0;
+        DoubleVector lambdaR = 0.0;
         for (int j = 0; j < this->input()->number(); ++j)
         {
             if (this->relation()->at(j).at(i))
@@ -61,24 +61,24 @@ void GOMarkovOperator13A::calcCommonOutputMarkovStatus(QVector<double> PR)
                 lambdaR += lambdaS[j];
             }
         }
-        double QR = 1.0 - PR[i];
-        double muR = lambdaR * PR[i] / QR;
+        DoubleVector QR = 1.0 - PR[i];
+        DoubleVector muR = lambdaR * PR[i] / QR;
         this->markovOutputStatus()->at(i)->setProbabilityNormal(PR[i]);
         this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
         this->markovOutputStatus()->at(i)->setFrequencyRepair(muR);
     }
 }
 
-double GOMarkovOperator13A::calcTempOutputMarkovStatus(double time, QVector<double> input, QVector<double> subInput, int index)
+DoubleVector GOMarkovOperator13A::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
-    QVector<double> PS;
+    QVector<DoubleVector> PS;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         PS.push_back(input[i]);
     }
-    double PR = 1.0;
+    DoubleVector PR = 1.0;
     for (int j = 0; j < this->input()->number(); ++j)
     {
         if (this->relation()->at(j).at(index))
