@@ -11,7 +11,7 @@ class GOMarkovOperator19 : public GOMarkovOperator
 public:
     GOMarkovOperator19();
     ~GOMarkovOperator19();
-    QVector<int>* a() const;
+    QVector<bool>* isRelevant() const;
     QVector<double>* delta() const;
     int deltaNum() const;
     void setDeltaNum(int value);
@@ -23,7 +23,7 @@ public:
     bool tryOpen(QDomElement &root);
 
 protected:
-    QVector<int> *_a;
+    QVector<bool> *_isRelevant;
     QVector<double> *_delta;
     int _deltaNum;
 };

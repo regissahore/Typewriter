@@ -2,6 +2,7 @@
 #include <QCheckBox>
 #include <QSpinBox>
 #include <QPushButton>
+#include <QLineEdit>
 #include <QDoubleSpinBox>
 #include "parametergooperator.h"
 #include "itemgooperator.h"
@@ -93,6 +94,20 @@ void ParameterGOOperator::addTypeParameter()
     }
 }
 
+void ParameterGOOperator::addNameParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOOperator *item = (ItemGOOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Name"), this));
+        QLineEdit *lineEdit = new QLineEdit();
+        lineEdit->setText(item->model()->name());
+        this->connect(lineEdit, SIGNAL(textChanged(QString)), this, SLOT(setItemName(QString)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, lineEdit);
+    }
+}
+
 void ParameterGOOperator::addOperatorParameter()
 {
     if (0L != this->_item)
@@ -100,6 +115,7 @@ void ParameterGOOperator::addOperatorParameter()
         this->addFlipParameter();
         this->addIDParameter();
         this->addTypeParameter();
+        this->addNameParameter();
     }
 }
 
@@ -107,6 +123,13 @@ void ParameterGOOperator::setItemID(int value)
 {
     ItemGOOperator *item = (ItemGOOperator*)this->_item;
     item->model()->setId(value);
+    item->update();
+}
+
+void ParameterGOOperator::setItemName(QString value)
+{
+    ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->model()->setName(value);
     item->update();
 }
 

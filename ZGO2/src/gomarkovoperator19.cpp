@@ -17,24 +17,24 @@ GOMarkovOperator19::GOMarkovOperator19() : GOMarkovOperator()
     this->subInput()->setNumber(0);
     this->output()->setNumber(2);
     this->_deltaNum = 1;
-    this->_a = new QVector<int>();
+    this->_isRelevant = new QVector<bool>();
     this->_delta = new QVector<double>();
-    this->_a->push_back(1);
+    this->_isRelevant->push_back(1);
     this->_delta->push_back(0.0);
 }
 
 GOMarkovOperator19::~GOMarkovOperator19()
 {
     this->GOMarkovOperator::~GOMarkovOperator();
-    this->_a->clear();
-    delete this->_a;
+    this->_isRelevant->clear();
+    delete this->_isRelevant;
     this->_delta->clear();
     delete this->_delta;
 }
 
-QVector<int>* GOMarkovOperator19::a() const
+QVector<bool> *GOMarkovOperator19::isRelevant() const
 {
-    return this->_a;
+    return this->_isRelevant;
 }
 
 QVector<double>* GOMarkovOperator19::delta() const
@@ -66,16 +66,12 @@ void GOMarkovOperator19::calcOutputMarkovStatus(double time)
         PS.push_back(status->probabilityNormal());
         lambdaS.push_back(status->frequencyBreakdown());
         muS.push_back(status->frequencyRepair());
-        if (this->a()->at(i) == 1)
+        if (this->isRelevant()->at(i))
         {
-            PS[i] *= this->delta()->at(i);
+            PS[i] = (1.0 - PS[i]) * this->delta()->at(i);
+            lambdaS[i] *= this->delta()->at(i);
+            muS[i] *= this->delta()->at(i);
         }
-        else
-        {
-            PS[i] = (1 - PS[i]) * this->delta()->at(i);
-        }
-        lambdaS[i] *= this->delta()->at(i);
-        muS[i] *= this->delta()->at(i);
     }
     double PC = this->markovStatus()->probabilityNormal();
     double lambdaC = this->markovStatus()->frequencyBreakdown();
@@ -112,6 +108,10 @@ double GOMarkovOperator19::calcTempOutputMarkovStatus(double time, QVector<doubl
     for (int i = 0; i < N; ++i)
     {
         PS.push_back(input[i]);
+        if (this->isRelevant()->at(i))
+        {
+            PS[i] = (1.0 - PS[i]) * this->delta()->at(i);
+        }
     }
     double PC = this->markovStatus()->probabilityNormal();
     double PR2 = 0.0;
@@ -150,7 +150,7 @@ GOMarkovOperator* GOMarkovOperator19::copy()
     op->setDeltaNum(this->deltaNum());
     for (int i = 0; i < this->deltaNum(); ++i)
     {
-        op->a()->push_back(this->a()->at(i));
+        op->isRelevant()->push_back(this->isRelevant()->at(i));
         op->delta()->push_back(this->delta()->at(i));
     }
     return op;
@@ -167,6 +167,7 @@ void GOMarkovOperator19::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
     element.setAttribute("global_feedback", this->isGlobalFeedback());
+    element.setAttribute("name", this->name());
     element.setAttribute("delta", this->deltaNum());
     root.appendChild(element);
     this->status()->save(document, element);
@@ -179,7 +180,7 @@ void GOMarkovOperator19::save(QDomDocument &document, QDomElement &root)
     for (int i = 0; i < this->deltaNum(); ++i)
     {
         QDomElement node = document.createElement("node");
-        node.setAttribute("a", this->a()->at(i));
+        node.setAttribute("a", this->isRelevant()->at(i));
         node.setAttribute("delta", this->delta()->at(i));
         subElement.appendChild(node);
     }
@@ -200,6 +201,7 @@ bool GOMarkovOperator19::tryOpen(QDomElement &root)
     this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
+    this->setName(root.attribute("name", ""));
     this->setDeltaNum(root.attribute("delta").toInt());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
@@ -233,11 +235,11 @@ bool GOMarkovOperator19::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     QDomElement node = element.firstChildElement();
-    this->a()->clear();
+    this->isRelevant()->clear();
     this->delta()->clear();
     for (int i = 0; i < this->deltaNum(); ++i)
     {
-        this->a()->push_back(node.attribute("a").toInt());
+        this->isRelevant()->push_back(node.attribute("a").toInt());
         this->delta()->push_back(node.attribute("delta").toDouble());
         node = node.nextSiblingElement();
     }

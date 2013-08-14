@@ -75,6 +75,16 @@ GOParameter* GOOperator::parameter() const
     return this->_parameter;
 }
 
+QString GOOperator::name() const
+{
+    return this->_name;
+}
+
+void GOOperator::setName(const QString name)
+{
+    this->_name = name;
+}
+
 void GOOperator::save(QDomDocument &document, QDomElement &root)
 {
     QDomElement element = document.createElement("model");
@@ -83,6 +93,7 @@ void GOOperator::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("input", this->input()->number());
     element.setAttribute("subInput", this->subInput()->number());
     element.setAttribute("output", this->output()->number());
+    element.setAttribute("name", this->name());
     root.appendChild(element);
     this->status()->save(document, element);
     this->parameter()->save(document, element);
@@ -99,6 +110,7 @@ bool GOOperator::tryOpen(QDomElement &root)
     this->input()->setNumber(root.attribute("input").toInt());
     this->subInput()->setNumber(root.attribute("subInput").toInt());
     this->output()->setNumber(root.attribute("output").toInt());
+    this->setName(root.attribute("name", ""));
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {

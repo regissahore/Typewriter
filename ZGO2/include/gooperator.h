@@ -26,6 +26,8 @@ public:
     GOStatus *status() const;
     QVector<GOAccumulative*>* accmulatives() const;
     GOParameter *parameter() const;
+    QString name() const;
+    void setName(const QString name);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
@@ -36,6 +38,7 @@ private:
     GOStatus  *_status;
     QVector<GOAccumulative*> *_accumulatives;
     GOParameter *_parameter;
+    QString _name;
 };
 
 #endif // GOOPERATOR_H

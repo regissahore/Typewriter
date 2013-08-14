@@ -855,7 +855,7 @@ void ParameterGOMarkovOperator::setItemMarkov19DeltaNum(int value)
     op->setDeltaNum(value);
     for (int i = op->delta()->size(); i < op->deltaNum(); ++i)
     {
-        op->a()->push_back(1);
+        op->isRelevant()->push_back(1);
         op->delta()->push_back(0.0);
     }
 }
@@ -866,14 +866,14 @@ void ParameterGOMarkovOperator::addMarkov19DeltaParameter()
     {
         ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
         GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
-        for (int i = op->a()->size(); i < op->deltaNum(); ++i)
+        for (int i = op->isRelevant()->size(); i < op->deltaNum(); ++i)
         {
-            op->a()->push_back(1);
+            op->isRelevant()->push_back(1);
             op->delta()->push_back(1.0);
         }
-        while (op->deltaNum() < op->a()->size())
+        while (op->deltaNum() < op->isRelevant()->size())
         {
-            op->a()->pop_back();
+            op->isRelevant()->pop_back();
             op->delta()->pop_back();
         }
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -891,20 +891,22 @@ void ParameterGOMarkovOperator::setItemMarkov19Delta()
     GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
     DialogMatrixInput *dialog = new DialogMatrixInput(this);
     dialog->setWindowTitle(tr("Operator 19 Delta"));
-    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("i")));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Is Relevent")));
     dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("delta")));
     dialog->table()->setRowCount(op->deltaNum());
     dialog->table()->setColumnCount(2);
     for (int i = 0; i < op->deltaNum(); ++i)
     {
-        dialog->table()->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(op->a()->at(i))));
+        QCheckBox *checkBox = new QCheckBox();
+        checkBox->setChecked(op->isRelevant()->at(i));
+        dialog->table()->setCellWidget(i, 0, checkBox);
         dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
     }
     if (dialog->exec() == QDialog::Accepted)
     {
         for (int i = 0; i < op->deltaNum(); ++i)
         {
-            (*op->a())[i] = dialog->table()->item(i, 0)->text().toInt();
+            (*op->isRelevant())[i] = ((QCheckBox*)dialog->table()->cellWidget(i, 0))->isChecked();
             (*op->delta())[i] = dialog->table()->item(i, 1)->text().toDouble();
         }
     }

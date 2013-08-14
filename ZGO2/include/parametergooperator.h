@@ -27,6 +27,7 @@ protected:
 
     void addIDParameter();
     void addTypeParameter();
+    void addNameParameter();
     virtual void addOperatorParameter();
     void addFlipParameter();
     void addProbability0Parameter();
@@ -38,6 +39,7 @@ protected:
 
 protected slots:
     void setItemID(int value);
+    void setItemName(QString value);
     void setItemProbability0(double value);
     void setItemProbability1(double value);
     void setItemProbability2(double value);

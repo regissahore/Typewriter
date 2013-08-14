@@ -85,6 +85,7 @@ void GOMarkovOperator22::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("dual", this->breakdownNum());
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
     element.setAttribute("global_feedback", this->isGlobalFeedback());
+    element.setAttribute("name", this->name());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
@@ -117,6 +118,7 @@ bool GOMarkovOperator22::tryOpen(QDomElement &root)
     this->setBreakdownNum(root.attribute("dual").toInt());
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
+    this->setName(root.attribute("name", ""));
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {
