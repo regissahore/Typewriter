@@ -12,6 +12,7 @@
 #include "itemgofactory.h"
 #include "viewgo.h"
 #include "editorgo.h"
+#include "gomarkovstatus.h"
 
 ToolGOMarkovCommonCause2::ToolGOMarkovCommonCause2(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -63,16 +64,26 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
         else
         {
             this->_status = Status_Finishing;
-            this->_commonItem = new ItemGOMarkovCommonCause2();
-            for (int i = 0; i < this->_operatorList->size(); ++i)
+            if (this->_operatorList->size() > 1)
             {
-                this->_commonItem->operatorItems()->push_back(this->operatorList()->at(i));
-                this->_commonItem->model()->operators()->push_back((GOMarkovOperator*)this->_operatorList->at(i)->model());
-                this->_operatorList->at(i)->setFatherCommonCause2(this->_commonItem);
+                this->_commonItem = new ItemGOMarkovCommonCause2();
+                for (int i = 0; i < this->_operatorList->size(); ++i)
+                {
+                    this->_commonItem->operatorItems()->push_back(this->operatorList()->at(i));
+                    this->_commonItem->model()->operators()->push_back((GOMarkovOperator*)this->_operatorList->at(i)->model());
+                    this->_operatorList->at(i)->setFatherCommonCause2(this->_commonItem);
+                }
+                this->_commonItem->model()->setBreakdownTotal(((GOMarkovOperator*)this->_operatorList->at(0)->model())->markovStatus1()->frequencyBreakdown());
+                this->sceneGO()->addItem(this->_commonItem);
+                this->_commonItem->setPos(event->scenePos());
+                this->_commonItem->updateBoundary();
             }
-            this->sceneGO()->addItem(this->_commonItem);
-            this->_commonItem->setPos(event->scenePos());
-            this->_commonItem->updateBoundary();
+            else
+            {
+                Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+                message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
+                this->sceneGO()->sendMessage(message);
+            }
         }
     }
     else if (this->_status == Status_Finishing)
