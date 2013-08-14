@@ -126,6 +126,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
         op->initOutputMarkovStatus();
+        if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+        {
+            continue;
+        }
         int outputNum = op->markovOutputStatus()->size();
         if (outputNum == 1)
         {
@@ -188,6 +192,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         for (int j = 0, index = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
+            if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+            {
+                continue;
+            }
             int outputNum = op->markovOutputStatus()->size();
             for (int k = 0; k < outputNum; ++k)
             {
@@ -209,6 +217,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
+                if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+                {
+                    continue;
+                }
                 for (int l = 0; l < this->_operator[k]->output()->number(); ++l)
                 {
                     r00.push_back(op->markovOutputStatus()->at(l)->probabilityNormal());
@@ -225,6 +237,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_operator.size(); ++k)
             {
                 GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
+                if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
+                {
+                    continue;
+                }
                 int outputNum = op->markovOutputStatus()->size();
                 for (int l = 0; l < outputNum; ++l)
                 {
@@ -249,6 +265,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             op->markovStatus()->setFrequencyBreakdown(lamdas[j]);
         }
     }
+
     message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_CORRECT);
     message->paramString = QString("Analysis Completed. It takes %1 seconds. ").arg(time.elapsed() / 1000.0);
     this->sendMessage(message);
