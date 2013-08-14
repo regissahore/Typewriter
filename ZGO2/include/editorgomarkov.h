@@ -10,6 +10,7 @@ class EditorGOMarkov : public EditorGO
 {
 public:
     EditorGOMarkov(QWidget *parent = 0);
+    void activate();
 };
 
 #endif // EDITORGOMARKOV_H

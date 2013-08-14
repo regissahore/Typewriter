@@ -399,6 +399,8 @@ ItemGOMarkovOperator* ItemGOMarkovOperator::copy()
     op->setY(this->y() + 100);
     op->setIsHorizonFlip(this->isHorizonFlip());
     op->setIsVerticalFlip(this->isVerticalFlip());
+    op->setIsDrawParameter(this->isDrawParameter());
+    op->setIsDrawName(this->isDrawName());
     op->setModel(((GOMarkovOperator*)this->model())->copy());
     for (int i = 0; i < this->model()->output()->number(); ++i)
     {
