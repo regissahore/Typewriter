@@ -94,9 +94,23 @@ QString GOPathSet::toMarkovProbabilityString()
     {
         GOMarkovOperator* op = (GOMarkovOperator*)this->_list[i];
         op->initMarkovStatus(1e10);
-        value = value * (1.0 - op->markovStatus()->probabilityNormal());
+        value = value * op->markovStatus()->probabilityNormal();
     }
     return QString("%1").arg(value);
+}
+
+QString GOPathSet::toNameString()
+{
+    QString res;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        if (i)
+        {
+            res += " ";
+        }
+        res += this->_list[i]->name();
+    }
+    return res;
 }
 
 GOPathSet* GOPathSet::copy()

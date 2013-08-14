@@ -822,7 +822,9 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;
             out << "<th>" + QObject::tr("Order") + "</th>" << endl;
             out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
+            out << "<th>" + QObject::tr("Name") + "</th>" << endl;
             out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+            out << "<th>" + QObject::tr("Importance") + "</th>" << endl;
             out << "</tr>" << endl;
             for (int j = 0; j < path.list().at(i)->list().size(); ++j)
             {
@@ -830,7 +832,9 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
                 out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
+                out << "<td>" + path.list().at(i)->list().at(j)->toNameString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toMarkovProbabilityString() + "</td>" << endl;
+                out << "<td></td>" << endl;
                 out << "</tr>" << endl;
             }
             out << "</table>" << endl;

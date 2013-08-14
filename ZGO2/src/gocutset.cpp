@@ -35,7 +35,7 @@ QString GOCutSet::toMarkovProbabilityString()
     {
         GOMarkovOperator* op = (GOMarkovOperator*)this->_list[i];
         op->initMarkovStatus(1e10);
-        value = value * (1.0 - op->markovStatus()->probabilityBreakdown());
+        value = value * op->markovStatus()->probabilityBreakdown();
     }
     return QString("%1").arg(value);
 }
