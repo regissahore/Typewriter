@@ -1,3 +1,4 @@
+#include <QObject>
 #include "gocutset.h"
 #include "gostatus.h"
 #include "gooperator.h"
@@ -38,4 +39,9 @@ QString GOCutSet::toMarkovProbabilityString()
         value = value * op->markovStatus()->probabilityBreakdown();
     }
     return QString("%1").arg(value);
+}
+
+QString GOCutSet::getProbabilityName() const
+{
+    return QObject::tr("Cut Failure Probablity");
 }

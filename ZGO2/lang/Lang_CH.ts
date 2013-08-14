@@ -268,7 +268,7 @@
 <context>
     <name>EditorGOMarkov</name>
     <message>
-        <location filename="../src/editorgomarkov.cpp" line="9"/>
+        <location filename="../src/editorgomarkov.cpp" line="11"/>
         <source>GO Markov Files(*.gom)</source>
         <translation>GO可修系统(*.gom)</translation>
     </message>
@@ -1029,8 +1029,12 @@
     </message>
     <message>
         <location filename="../src/parametergomarkovoperator.cpp" line="894"/>
+        <source>Is Relevent</source>
+        <translation>是否关联</translation>
+    </message>
+    <message>
         <source>i</source>
-        <translation>i</translation>
+        <translation type="obsolete">i</translation>
     </message>
     <message>
         <location filename="../src/parametergomarkovoperator.cpp" line="895"/>
@@ -1038,17 +1042,17 @@
         <translation>delta</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovoperator.cpp" line="922"/>
+        <location filename="../src/parametergomarkovoperator.cpp" line="924"/>
         <source>Lambda b1</source>
         <translation>λb1</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovoperator.cpp" line="949"/>
+        <location filename="../src/parametergomarkovoperator.cpp" line="951"/>
         <source>Show R1</source>
         <translation>显示R1</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovoperator.cpp" line="965"/>
+        <location filename="../src/parametergomarkovoperator.cpp" line="967"/>
         <source>Show R2</source>
         <translation>显示R2</translation>
     </message>
@@ -1069,47 +1073,57 @@
 <context>
     <name>ParameterGOOperator</name>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="75"/>
+        <location filename="../src/parametergooperator.cpp" line="76"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="91"/>
+        <location filename="../src/parametergooperator.cpp" line="92"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="121"/>
+        <location filename="../src/parametergooperator.cpp" line="103"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergooperator.cpp" line="117"/>
+        <source>Display Name</source>
+        <translation>显示名称</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergooperator.cpp" line="166"/>
         <source>Horizon Flip</source>
         <translation>水平翻转</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="128"/>
+        <location filename="../src/parametergooperator.cpp" line="173"/>
         <source>Vertical Flip</source>
         <translation>垂直翻转</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="156"/>
+        <location filename="../src/parametergooperator.cpp" line="201"/>
         <source>Probability 0</source>
         <translation>概率0</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="180"/>
+        <location filename="../src/parametergooperator.cpp" line="225"/>
         <source>Probability 1</source>
         <translation>概率1</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="191"/>
+        <location filename="../src/parametergooperator.cpp" line="236"/>
         <source>Probability 2</source>
         <translation>概率2</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="220"/>
+        <location filename="../src/parametergooperator.cpp" line="265"/>
         <source>Probabilities</source>
         <translation>状态概率</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="222"/>
+        <location filename="../src/parametergooperator.cpp" line="267"/>
         <source>Click to edit</source>
         <translation>点击编辑</translation>
     </message>
@@ -1118,17 +1132,17 @@
         <translation type="obsolete">输出</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="267"/>
+        <location filename="../src/parametergooperator.cpp" line="312"/>
         <source>X</source>
         <translation>X</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="276"/>
+        <location filename="../src/parametergooperator.cpp" line="321"/>
         <source>Y</source>
         <translation>Y</translation>
     </message>
     <message>
-        <location filename="../src/parametergooperator.cpp" line="310"/>
+        <location filename="../src/parametergooperator.cpp" line="355"/>
         <source>K</source>
         <translation>K</translation>
     </message>
@@ -1334,10 +1348,10 @@
     <message>
         <location filename="../src/gograph.cpp" line="707"/>
         <location filename="../src/gograph.cpp" line="723"/>
-        <location filename="../src/gograph.cpp" line="790"/>
+        <location filename="../src/gograph.cpp" line="797"/>
         <location filename="../src/gomarkovgraph.cpp" line="737"/>
         <location filename="../src/gomarkovgraph.cpp" line="760"/>
-        <location filename="../src/gomarkovgraph.cpp" line="825"/>
+        <location filename="../src/gomarkovgraph.cpp" line="832"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
@@ -1369,6 +1383,18 @@
         <location filename="../src/gomarkovgraph.cpp" line="824"/>
         <source>ID List</source>
         <translation>ID列表</translation>
+    </message>
+    <message>
+        <location filename="../src/gograph.cpp" line="790"/>
+        <location filename="../src/gomarkovgraph.cpp" line="825"/>
+        <source>Name</source>
+        <translation>名称</translation>
+    </message>
+    <message>
+        <location filename="../src/gograph.cpp" line="799"/>
+        <location filename="../src/gomarkovgraph.cpp" line="834"/>
+        <source>Importance</source>
+        <translation>重要度</translation>
     </message>
     <message>
         <location filename="../src/itemgotext.cpp" line="113"/>
@@ -1528,42 +1554,42 @@
         <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="381"/>
+        <location filename="../src/gomarkovoperator.cpp" line="384"/>
         <source>Lambda 1: %1</source>
         <translation>故障率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="382"/>
+        <location filename="../src/gomarkovoperator.cpp" line="385"/>
         <source>    Mu 1: %1</source>
         <translation>维修率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="387"/>
+        <location filename="../src/gomarkovoperator.cpp" line="390"/>
         <source>Lambda 2: %1</source>
         <translation>故障率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="388"/>
+        <location filename="../src/gomarkovoperator.cpp" line="391"/>
         <source>    Mu 2: %1</source>
         <translation>维修率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="393"/>
+        <location filename="../src/gomarkovoperator.cpp" line="396"/>
         <source>Lambda 3: %1</source>
         <translation>故障率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="394"/>
+        <location filename="../src/gomarkovoperator.cpp" line="397"/>
         <source>    Mu 3: %1</source>
         <translation>维修率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="399"/>
+        <location filename="../src/gomarkovoperator.cpp" line="402"/>
         <source>Lambda 4: %1</source>
         <translation>故障率4：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="400"/>
+        <location filename="../src/gomarkovoperator.cpp" line="403"/>
         <source>    Mu 4: %1</source>
         <translation>维修率4：%1</translation>
     </message>
@@ -1659,18 +1685,38 @@
     </message>
     <message>
         <location filename="../src/itemgomarkovcommoncause2.cpp" line="40"/>
+        <source>Individual Breakdown: %1</source>
+        <translation>独立失效率：%1</translation>
+    </message>
+    <message>
+        <location filename="../src/itemgomarkovcommoncause2.cpp" line="41"/>
+        <source>Common Breakdown: %1</source>
+        <translation>共因失效率：%1</translation>
+    </message>
+    <message>
+        <location filename="../src/itemgomarkovcommoncause2.cpp" line="42"/>
         <source>Belta: %1</source>
         <translation>Belta：%1</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovcommoncause2.cpp" line="41"/>
+        <location filename="../src/itemgomarkovcommoncause2.cpp" line="43"/>
         <source>Gamma C: %1</source>
         <translation>γc：%1</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovcommoncause2.cpp" line="42"/>
+        <location filename="../src/itemgomarkovcommoncause2.cpp" line="44"/>
         <source>Operators: </source>
         <translation>操作符：</translation>
+    </message>
+    <message>
+        <location filename="../src/gocutset.cpp" line="46"/>
+        <source>Cut Failure Probablity</source>
+        <translation>割集失效概率</translation>
+    </message>
+    <message>
+        <location filename="../src/gopathset.cpp" line="119"/>
+        <source>Path Success Probablity</source>
+        <translation>路集成功概率</translation>
     </message>
 </context>
 <context>

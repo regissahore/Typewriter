@@ -1,3 +1,4 @@
+#include <QObject>
 #include "gopathset.h"
 #include "gooperator.h"
 #include "gostatus.h"
@@ -111,6 +112,11 @@ QString GOPathSet::toNameString()
         res += this->_list[i]->name();
     }
     return res;
+}
+
+QString GOPathSet::getProbabilityName() const
+{
+    return QObject::tr("Path Success Probablity");
 }
 
 GOPathSet* GOPathSet::copy()

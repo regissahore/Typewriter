@@ -788,7 +788,14 @@ bool GOGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
             out << "<th>" + QObject::tr("Order") + "</th>" << endl;
             out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
             out << "<th>" + QObject::tr("Name") + "</th>" << endl;
-            out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+            if (path.list().at(i)->list().size() > 0)
+            {
+                out << "<th>" + path.list().at(i)->list().at(0)->getProbabilityName() + "</th>" << endl;
+            }
+            else
+            {
+                out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+            }
             out << "<th>" + QObject::tr("Importance") + "</th>" << endl;
             out << "</tr>" << endl;
             for (int j = 0; j < path.list().at(i)->list().size(); ++j)

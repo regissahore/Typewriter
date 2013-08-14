@@ -13,6 +13,7 @@ public:
     GOPathSet *copy();
     QString toProbabilityString();
     QString toMarkovProbabilityString();
+    QString getProbabilityName() const;
 };
 
 #endif // GOCUTSET_H
