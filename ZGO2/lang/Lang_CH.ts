@@ -1487,7 +1487,10 @@
     <message>
         <location filename="../src/gomarkovchartdata.cpp" line="191"/>
         <location filename="../src/gomarkovchartdata.cpp" line="237"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="294"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="315"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="337"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="359"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="381"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
@@ -1645,22 +1648,22 @@
         <translation>-%1 辅助输入应该是一个向量。</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="228"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="241"/>
         <source>Normal Probability</source>
         <translation>可用度</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="243"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="257"/>
         <source>Failure Probability</source>
         <translation>不可用度</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="258"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="273"/>
         <source>Lambda</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="273"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="289"/>
         <source>Mu</source>
         <translation>维修率</translation>
     </message>

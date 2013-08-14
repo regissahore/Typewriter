@@ -34,6 +34,8 @@ public:
     void setIsDisplayQ(const double value);
     void setIsDisplayLambda(const double value);
     void setIsDisplayMu(const double value);
+    int chartNum() const;
+    int totalHeight() const;
     int displayIndex() const;
     void setDisplayItem(int index);
     void setDisplayItem(const QString name);
@@ -45,8 +47,8 @@ protected:
     QList<double> _Q;
     QList<double> _lambda;
     QList<double> _mu;
-    ItemArrow *_xAxis;
-    ItemArrow *_yAxis;
+    ItemArrow *_xAxis[4];
+    ItemArrow *_yAxis[4];
     double _maxP;
     double _minP;
     double _maxQ;

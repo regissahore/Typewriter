@@ -7,7 +7,8 @@
 using namespace std;
 
 const int ITEM_WIDTH = 800;
-const int ITEM_HEIGHT = 600;
+const int ITEM_HEIGHT = 450;
+const int ITEM_SPACING = 10;
 const int CHART_X = 100;
 const int CHART_Y = 100;
 const int CHART_WIDTH = 600;
@@ -17,12 +18,17 @@ const int LINE_WIDTH = 2;
 
 ItemGOMarkovChart::ItemGOMarkovChart(QGraphicsItem *parent) : ItemDrawable(parent)
 {
-    this->_xAxis = new ItemArrow(this);
-    this->_xAxis->setPos(CHART_X, CHART_Y + CHART_HEIGHT);
-    this->_xAxis->setEnd(0, - CHART_HEIGHT);
-    this->_yAxis = new ItemArrow(this);
-    this->_yAxis->setPos(CHART_X, CHART_Y + CHART_HEIGHT);
-    this->_yAxis->setEnd(CHART_WIDTH, 0);
+    int shiftY = 0;
+    for (int i = 0; i < 4; ++i)
+    {
+        this->_xAxis[i] = new ItemArrow(this);
+        this->_xAxis[i]->setPos(CHART_X, CHART_Y + CHART_HEIGHT + shiftY);
+        this->_xAxis[i]->setEnd(0, - CHART_HEIGHT);
+        this->_yAxis[i] = new ItemArrow(this);
+        this->_yAxis[i]->setPos(CHART_X, CHART_Y + CHART_HEIGHT + shiftY);
+        this->_yAxis[i]->setEnd(CHART_WIDTH, 0);
+        shiftY += ITEM_HEIGHT + ITEM_SPACING;
+    }
     this->setColor(Qt::darkGreen);
     this->_detailIndex = 0;
     this->_minP = 0.0;
@@ -81,7 +87,7 @@ void ItemGOMarkovChart::setP(QVector<double> P)
     }
     if (this->_maxP - this->_minP < 1e-3)
     {
-        this->_maxP = 1.0;
+        this->_maxP += this->_maxP;
         this->_minP = 0.0;
     }
     this->update();
@@ -111,7 +117,7 @@ void ItemGOMarkovChart::setQ(QVector<double> Q)
     }
     if (this->_maxQ - this->_minQ < 1e-3)
     {
-        this->_maxQ = 1.0;
+        this->_maxQ += this->_maxQ;
         this->_minQ = 0.0;
     }
     this->update();
@@ -141,9 +147,8 @@ void ItemGOMarkovChart::setLambda(QVector<double> lambda)
     }
     if (this->_maxLambda - this->_minLambda < 1e-3)
     {
-        this->_maxLambda *= 1.1;
-        this->_maxLambda += 0.01;
-        this->_minLambda /= 1.1;
+        this->_maxLambda += this->_maxLambda;
+        this->_minLambda  = 0.0;
     }
     this->update();
 }
@@ -172,9 +177,8 @@ void ItemGOMarkovChart::setMu(QVector<double> mu)
     }
     if (this->_maxMu - this->_minMu < 1e-3)
     {
-        this->_maxMu *= 1.1;
-        this->_maxMu += 0.01;
-        this->_minMu /= 1.2;
+        this->_maxMu += this->_maxMu;
+        this->_minMu = 0.0;
     }
     this->update();
 }
@@ -185,7 +189,7 @@ void ItemGOMarkovChart::setDetailIndex(float x, float y)
     y -= this->y();
     if (x >= CHART_X && x <= ITEM_WIDTH)
     {
-        if (y >= 0 && y <= ITEM_HEIGHT)
+        if (y >= 0 && y <= this->totalHeight())
         {
             float xStep = 1.0f * CHART_WIDTH / this->_time.size();
             this->_detailIndex = floor((x - CHART_X) / xStep);
@@ -200,7 +204,7 @@ void ItemGOMarkovChart::setDetailIndex(float x, float y)
 
 QRectF ItemGOMarkovChart::boundingRect() const
 {
-    return QRectF(0, 0, ITEM_WIDTH, ITEM_HEIGHT);
+    return QRectF(0, 0, ITEM_WIDTH, this->totalHeight());
 }
 
 void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -208,140 +212,232 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     painter->setPen(Qt::SolidLine);
     painter->setPen(Qt::black);
     painter->setBrush(Qt::black);
-    painter->drawText(QRectF(0, 0, ITEM_WIDTH, CHART_Y),
-                      Qt::AlignHCenter | Qt::AlignVCenter,
-                      this->_title);
 
+    for (int i = 0; i < this->chartNum(); ++i)
+    {
+        this->_xAxis[i]->setVisible(true);
+        this->_yAxis[i]->setVisible(true);
+    }
+    for (int i = this->chartNum(); i < 4; ++i)
+    {
+        this->_xAxis[i]->setVisible(false);
+        this->_yAxis[i]->setVisible(false);
+    }
+
+    int shiftY = 0;
     if (this->isDisplayP())
     {
         painter->setPen(Qt::darkGreen);
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
                           QString("%1").arg(this->_minP));
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
                           QString("%1").arg(this->_maxP));
-        painter->drawText(QRectF(0, 0, CHART_X, CHART_Y - TEXT_MARGIN),
+        painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Normal Probability"));
+        shiftY += ITEM_HEIGHT + ITEM_SPACING;
     }
-    else if (this->isDisplayQ())
+    if (this->isDisplayQ())
     {
         painter->setPen(Qt::darkRed);
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
                           QString("%1").arg(this->_minQ));
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
                           QString("%1").arg(this->_maxQ));
-        painter->drawText(QRectF(0, 0, CHART_X, CHART_Y - TEXT_MARGIN),
+        painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Failure Probability"));
+        shiftY += ITEM_HEIGHT + ITEM_SPACING;
     }
-    else if (this->isDisplayLambda())
+    if (this->isDisplayLambda())
     {
         painter->setPen(Qt::darkBlue);
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
                           QString("%1").arg(this->_minLambda));
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
                           QString("%1").arg(this->_maxLambda));
-        painter->drawText(QRectF(0, 0, CHART_X, CHART_Y - TEXT_MARGIN),
+        painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Lambda"));
+        shiftY += ITEM_HEIGHT + ITEM_SPACING;
     }
-    else if (this->isDisplayMu())
+    if (this->isDisplayMu())
     {
         painter->setPen(Qt::darkYellow);
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
                           QString("%1").arg(this->_minMu));
-        painter->drawText(QRectF(0, CHART_Y,
+        painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
                           QString("%1").arg(this->_maxMu));
-        painter->drawText(QRectF(0, 0, CHART_X, CHART_Y - TEXT_MARGIN),
+        painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Mu"));
+        shiftY += ITEM_HEIGHT + ITEM_SPACING;
     }
 
     if (this->_time.size() > 1)
     {
-        painter->drawText(QRectF(CHART_X,
-                                 CHART_Y + CHART_HEIGHT + TEXT_MARGIN,
-                                 CHART_WIDTH,
-                                 ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
-                          Qt::AlignLeft | Qt::AlignTop,
-                          QString("%1").arg(this->_time.at(0)));
-        painter->drawText(QRectF(CHART_X, CHART_Y + CHART_HEIGHT + TEXT_MARGIN,
-                             CHART_WIDTH, ITEM_HEIGHT - CHART_HEIGHT),
-                          Qt::AlignRight | Qt::AlignTop,
-                          QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+        shiftY = 0;
+        if (this->isDisplayP())
+        {
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(0)));
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT),
+                              Qt::AlignRight | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+            painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
+                                     CHART_Y + CHART_HEIGHT + shiftY,
+                                     ITEM_WIDTH - CHART_WIDTH - CHART_X,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QObject::tr("Time"));
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
+        }
+        if (this->isDisplayQ())
+        {
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(0)));
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT),
+                              Qt::AlignRight | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+            painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
+                                     CHART_Y + CHART_HEIGHT + shiftY,
+                                     ITEM_WIDTH - CHART_WIDTH - CHART_X,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QObject::tr("Time"));
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
+        }
+        if (this->isDisplayLambda())
+        {
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(0)));
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT),
+                              Qt::AlignRight | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+            painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
+                                     CHART_Y + CHART_HEIGHT + shiftY,
+                                     ITEM_WIDTH - CHART_WIDTH - CHART_X,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QObject::tr("Time"));
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
+        }
+        if (this->isDisplayMu())
+        {
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(0)));
+            painter->drawText(QRectF(CHART_X,
+                                     CHART_Y + CHART_HEIGHT + TEXT_MARGIN + shiftY,
+                                     CHART_WIDTH,
+                                     ITEM_HEIGHT - CHART_HEIGHT),
+                              Qt::AlignRight | Qt::AlignTop,
+                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+            painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
+                                     CHART_Y + CHART_HEIGHT + shiftY,
+                                     ITEM_WIDTH - CHART_WIDTH - CHART_X,
+                                     ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              QObject::tr("Time"));
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
+        }
     }
-    painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
-                             CHART_Y + CHART_HEIGHT,
-                             ITEM_WIDTH - CHART_WIDTH - CHART_X,
-                             ITEM_HEIGHT - CHART_HEIGHT - CHART_Y),
-                      Qt::AlignLeft | Qt::AlignTop,
-                      QObject::tr("Time"));
     if (this->_time.size() == this->_P.size() && this->_time.size() > 0)
     {
-        if (this->_detailIndex >= 0 && this->_detailIndex < this->_time.size())
+        if (this->_detailIndex > 0 && this->_detailIndex < this->_time.size())
         {
             painter->setPen(Qt::darkGray);
+            shiftY = 0;
             if (this->isDisplayP())
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxP - this->_P[this->_detailIndex]) / (this->_maxP - this->_minP);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxP - this->_P[this->_detailIndex]) / (this->_maxP - this->_minP) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
-                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT), QPointF(x, y));
+                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
                                   QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_P[this->_detailIndex]));
+                shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayQ())
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxQ - this->_Q[this->_detailIndex]) / (this->_maxQ - this->_minQ);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxQ - this->_Q[this->_detailIndex]) / (this->_maxQ - this->_minQ) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
-                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT), QPointF(x, y));
+                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
                                   QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_Q[this->_detailIndex]));
+                shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayLambda())
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda - this->_lambda[this->_detailIndex]) / (this->_maxLambda - this->_minLambda);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda - this->_lambda[this->_detailIndex]) / (this->_maxLambda - this->_minLambda) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
-                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT), QPointF(x, y));
+                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
                                   QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_lambda[this->_detailIndex]));
+                shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayMu())
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxMu - this->_mu[this->_detailIndex]) / (this->_maxMu - this->_minMu);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxMu - this->_mu[this->_detailIndex]) / (this->_maxMu - this->_minMu) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
-                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT), QPointF(x, y));
+                painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
                                   QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_mu[this->_detailIndex]));
+                shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
         }
+        shiftY = 0;
         if (this->isDisplayP())
         {
             painter->setPen(Qt::darkGreen);
@@ -354,7 +450,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             for (int i = 1; i < this->_time.size(); ++i)
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxP - this->_P[i]) / (this->_maxP - this->_minP);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxP - this->_P[i]) / (this->_maxP - this->_minP) + shiftY;
                 if (i > 1)
                 {
                     painter->drawLine(QPointF(lastX, lastY), QPointF(x, y));
@@ -364,6 +460,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             pen.setWidth(1);
             painter->setPen(pen);
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
         }
         if (this->isDisplayQ())
         {
@@ -377,7 +474,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             for (int i = 1; i < this->_time.size(); ++i)
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxQ - this->_Q[i]) / (this->_maxQ - this->_minQ);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxQ - this->_Q[i]) / (this->_maxQ - this->_minQ) + shiftY;
                 if (i > 1)
                 {
                     painter->drawLine(QPointF(lastX, lastY), QPointF(x, y));
@@ -387,6 +484,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             pen.setWidth(1);
             painter->setPen(pen);
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
         }
         if (this->isDisplayLambda())
         {
@@ -400,7 +498,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             for (int i = 1; i < this->_time.size(); ++i)
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda - this->_lambda[i]) / (this->_maxLambda - this->_minLambda);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda - this->_lambda[i]) / (this->_maxLambda - this->_minLambda) + shiftY;
                 if (i > 1)
                 {
                     painter->drawLine(QPointF(lastX, lastY), QPointF(x, y));
@@ -410,6 +508,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             pen.setWidth(1);
             painter->setPen(pen);
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
         }
         if (this->isDisplayMu())
         {
@@ -423,7 +522,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             for (int i = 1; i < this->_time.size(); ++i)
             {
                 float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
-                float y = CHART_Y + CHART_HEIGHT * (this->_maxMu - this->_mu[i]) / (this->_maxMu - this->_minMu);
+                float y = CHART_Y + CHART_HEIGHT * (this->_maxMu - this->_mu[i]) / (this->_maxMu - this->_minMu) + shiftY;
                 if (i > 1)
                 {
                     painter->drawLine(QPointF(lastX, lastY), QPointF(x, y));
@@ -433,6 +532,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             pen.setWidth(1);
             painter->setPen(pen);
+            shiftY += ITEM_HEIGHT + ITEM_SPACING;
         }
     }
 }
@@ -485,6 +585,23 @@ void ItemGOMarkovChart::setIsDisplayLambda(const double value)
 void ItemGOMarkovChart::setIsDisplayMu(const double value)
 {
     this->_isDisplayMu = value;
+}
+
+int ItemGOMarkovChart::chartNum() const
+{
+    int res = 0;
+    res += this->isDisplayP();
+    res += this->isDisplayQ();
+    res += this->isDisplayLambda();
+    res += this->isDisplayMu();
+    return res;
+}
+
+int ItemGOMarkovChart::totalHeight() const
+{
+    int height = this->chartNum();
+    height = height * ITEM_HEIGHT + (height - 1) * ITEM_SPACING + 100;
+    return height;
 }
 
 int ItemGOMarkovChart::displayIndex() const
