@@ -10,9 +10,9 @@ class GOCutSet : public GOPathSet
 {
 public:
     GOCutSet();
-    GOPathSet *copy();
-    QString toProbabilityString();
-    QString toMarkovProbabilityString();
+    GOCutSet *copy();
+    double toProbability() const;
+    double toMarkovProbability() const;
     QString getProbabilityName() const;
 };
 

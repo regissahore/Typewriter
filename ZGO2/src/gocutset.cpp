@@ -9,27 +9,28 @@ GOCutSet::GOCutSet() : GOPathSet()
 {
 }
 
-GOPathSet* GOCutSet::copy()
+GOCutSet* GOCutSet::copy()
 {
     GOCutSet *cut = new GOCutSet();
     for (int i = 0; i < this->_list.size(); ++i)
     {
         cut->add(this->_list[i]);
     }
+    cut->setTotalProbablity(this->totalProbablity());
     return cut;
 }
 
-QString GOCutSet::toProbabilityString()
+double GOCutSet::toProbability() const
 {
     double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
-        value = value * this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1);
+        value = value * (1.0 - this->_list[i]->status()->probability(1));
     }
-    return QString("%1").arg(value);
+    return value;
 }
 
-QString GOCutSet::toMarkovProbabilityString()
+double GOCutSet::toMarkovProbability() const
 {
     double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
@@ -38,7 +39,7 @@ QString GOCutSet::toMarkovProbabilityString()
         op->initMarkovStatus(1e10);
         value = value * op->markovStatus()->probabilityBreakdown();
     }
-    return QString("%1").arg(value);
+    return value;
 }
 
 QString GOCutSet::getProbabilityName() const

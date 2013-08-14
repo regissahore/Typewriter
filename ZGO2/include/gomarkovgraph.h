@@ -33,8 +33,8 @@ protected:
     virtual QVector<QVector<Output> > getAncestorList(GOOperator *op, int outputIndex, int signalIndex);
     virtual GOPathSetSetSet findPath(int order);
     virtual GOPathSetSetSet findCut(int order);
-    virtual void findPathDfs(GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
-    virtual void findCutDfs(GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
+    virtual void findPathDfs(QMap<int, QVector<double> *> normals, GOPathSetSetSet &path, QVector<GOOperator*> &list, GOPathSet &tempPath, int index, int number, int order);
+    virtual void findCutDfs(QMap<int, QVector<double>* > fails, GOPathSetSetSet &cut, QVector<GOOperator*> &list, GOCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOMARKOVGRAPH_H

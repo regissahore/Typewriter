@@ -20,15 +20,24 @@ public:
     void sort();
     QString toIdString();
     QString toCompareString();
-    virtual QString toProbabilityString();
-    virtual QString toMarkovProbabilityString();
+    virtual double toProbability() const;
+    virtual double toMarkovProbability() const;
+    double toImportance() const;
+    double toMarkovImportance() const;
+    QString toProbabilityString() const;
+    QString toMarkovProbabilityString() const;
+    QString toImportanceString() const;
+    QString toMarkovImportanceString() const;
     QString toNameString();
     virtual QString getProbabilityName() const;
     virtual GOPathSet* copy();
     bool isContain(GOPathSet *set);
+    double totalProbablity() const;
+    void setTotalProbablity(const double value);
 
 protected:
     QVector<GOOperator*> _list;
+    double _totalProbability;
 };
 
 #endif // GOPATHSET_H

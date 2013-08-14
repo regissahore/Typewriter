@@ -78,17 +78,17 @@ QString GOPathSet::toCompareString()
     return str;
 }
 
-QString GOPathSet::toProbabilityString()
+double GOPathSet::toProbability() const
 {
     double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
     {
         value = value * (1.0 - this->_list[i]->status()->probability(this->_list[i]->status()->number() - 1));
     }
-    return QString("%1").arg(value);
+    return value;
 }
 
-QString GOPathSet::toMarkovProbabilityString()
+double GOPathSet::toMarkovProbability() const
 {
     double value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)
@@ -97,7 +97,37 @@ QString GOPathSet::toMarkovProbabilityString()
         op->initMarkovStatus(1e10);
         value = value * op->markovStatus()->probabilityNormal();
     }
-    return QString("%1").arg(value);
+    return value;
+}
+
+double GOPathSet::toImportance() const
+{
+    return this->toProbability() / this->totalProbablity();
+}
+
+double GOPathSet::toMarkovImportance() const
+{
+    return this->toMarkovProbability() / this->totalProbablity();
+}
+
+QString GOPathSet::toProbabilityString() const
+{
+    return QString("%1").arg(this->toProbability());
+}
+
+QString GOPathSet::toMarkovProbabilityString() const
+{
+    return QString("%1").arg(this->toMarkovProbability());
+}
+
+QString GOPathSet::toImportanceString() const
+{
+    return QString("%1").arg(this->toImportance());
+}
+
+QString GOPathSet::toMarkovImportanceString() const
+{
+    return QString("%1").arg(this->toMarkovImportance());
 }
 
 QString GOPathSet::toNameString()
@@ -126,6 +156,7 @@ GOPathSet* GOPathSet::copy()
     {
         path->add(this->_list[i]);
     }
+    path->setTotalProbablity(this->totalProbablity());
     return path;
 }
 
@@ -151,4 +182,14 @@ bool GOPathSet::isContain(GOPathSet *set)
         }
     }
     return true;
+}
+
+double GOPathSet::totalProbablity() const
+{
+    return this->_totalProbability;
+}
+
+void GOPathSet::setTotalProbablity(const double value)
+{
+    this->_totalProbability = value;
 }
