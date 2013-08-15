@@ -32,29 +32,59 @@ DoubleVector GOMarkovStatus::frequencyRepair() const
     return this->_frequencyRepair;
 }
 
-void GOMarkovStatus::setProbabilityNormal(DoubleVector value)
+DoubleVector GOMarkovStatus::repairTime() const
+{
+    return 1.0 / this->_frequencyRepair;
+}
+
+void GOMarkovStatus::setProbabilityNormal(const DoubleVector &value)
 {
     this->_probabilityNormal = value;
 }
 
-void GOMarkovStatus::setProbabilityBreakdown(DoubleVector value)
+void GOMarkovStatus::setProbabilityBreakdown(const DoubleVector &value)
 {
     this->_probabilityNormal = 1.0 - value;
 }
 
-void GOMarkovStatus::setFrequencyBreakdown(DoubleVector value)
+void GOMarkovStatus::setFrequencyBreakdown(const DoubleVector &value)
 {
     this->_frequencyBreakdown = value;
 }
 
-void GOMarkovStatus::setFrequencyRepair(DoubleVector value)
+void GOMarkovStatus::setFrequencyRepair(const DoubleVector &value)
 {
     this->_frequencyRepair = value;
 }
 
-void GOMarkovStatus::setRepairTime(DoubleVector value)
+void GOMarkovStatus::setRepairTime(const DoubleVector &value)
 {
     this->setFrequencyRepair(1.0 / value);
+}
+
+void GOMarkovStatus::setProbabilityNormal(const int pos, const double value)
+{
+    this->_probabilityNormal.setValue(pos, value);
+}
+
+void GOMarkovStatus::setProbabilityBreakdown(const int pos, const double value)
+{
+    this->_probabilityNormal.setValue(pos, 1.0 - value);
+}
+
+void GOMarkovStatus::setFrequencyBreakdown(const int pos, const double value)
+{
+    this->_frequencyBreakdown.setValue(pos, value);
+}
+
+void GOMarkovStatus::setFrequencyRepair(const int pos, const double value)
+{
+    this->_frequencyRepair.setValue(pos, value);
+}
+
+void GOMarkovStatus::setRepairTime(const int pos, const double value)
+{
+    this->_frequencyRepair.setValue(pos, 1.0 / value);
 }
 
 GOMarkovStatus* GOMarkovStatus::copy() const
@@ -64,6 +94,13 @@ GOMarkovStatus* GOMarkovStatus::copy() const
     status->setFrequencyBreakdown(this->_frequencyBreakdown);
     status->setFrequencyRepair(this->_frequencyRepair);
     return status;
+}
+
+void GOMarkovStatus::setVectorLength(const int len)
+{
+    this->_frequencyBreakdown.setLength(len);
+    this->_frequencyRepair.setLength(len);
+    this->_probabilityNormal.setLength(len);
 }
 
 void GOMarkovStatus::save(QDomDocument &document, QDomElement &root)

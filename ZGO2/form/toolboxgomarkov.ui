@@ -38,9 +38,9 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-135</y>
-        <width>238</width>
-        <height>1120</height>
+        <y>-60</y>
+        <width>248</width>
+        <height>1194</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -287,6 +287,43 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          <property name="icon">
           <iconset resource="../resource.qrc">
            <normaloff>:/icon/resource/image/tool_common.png</normaloff>:/icon/resource/image/tool_common.png</iconset>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonOperatorSplit">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">text-align: left;
+padding-left: 16px;
+background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
+border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
+</string>
+         </property>
+         <property name="text">
+          <string>Split Point</string>
          </property>
          <property name="iconSize">
           <size>
@@ -784,6 +821,43 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="flat">
           <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonOperator11A">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>36</height>
+          </size>
+         </property>
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">text-align: left;
+padding-left: 16px;
+background-color: linear-gradient(rgb(234, 234, 234), rgb(218, 218, 218));
+border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
+</string>
+         </property>
+         <property name="text">
+          <string>M Take K</string>
+         </property>
+         <property name="iconSize">
+          <size>
+           <width>24</width>
+           <height>24</height>
+          </size>
          </property>
         </widget>
        </item>

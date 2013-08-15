@@ -27,6 +27,7 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
         this->getInputNumber();
         break;
     case GOMarkovOperatorFactory::Operator_Type_11:
+    case GOMarkovOperatorFactory::Operator_Type_11A:
         this->getInputNumber();
         break;
     case GOMarkovOperatorFactory::Operator_Type_12A:
@@ -64,6 +65,9 @@ void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
         break;
     case GOMarkovOperatorFactory::Operator_Type_23:
         this->getInputNumber();
+        break;
+    case GOMarkovOperatorFactory::Operator_Type_Split:
+        this->getOutputNumber();
         break;
     default:
         break;
@@ -126,6 +130,9 @@ void ToolGOMarkovOperator::setType(const int type)
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_11);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11A:
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_11A);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_12);
@@ -204,6 +211,9 @@ void ToolGOMarkovOperator::setType(const int type)
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_29:
         this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_29);
+        break;
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_SPLIT:
+        this->_GOOperator->setModelType(GOMarkovOperatorFactory::Operator_Type_Split);
         break;
     }
     QList<QGraphicsItem*> items = this->graphicsScene()->items();

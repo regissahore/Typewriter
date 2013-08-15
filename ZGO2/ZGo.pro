@@ -181,7 +181,9 @@ HEADERS += \
     include/toolgomarkovcommoncause2.h \
     include/itemgomarkovcommoncause2.h \
     include/parametergomarkovcommoncause2.h \
-    include/doublevector.h
+    include/doublevector.h \
+    include/gomarkovoperator11a.h \
+    include/gomarkovoperatorsplitpoint.h
 
 SOURCES += \
     src/main.cpp \
@@ -344,7 +346,9 @@ SOURCES += \
     src/toolgomarkovcommoncause2.cpp \
     src/itemgomarkovcommoncause2.cpp \
     src/parametergomarkovcommoncause2.cpp \
-    src/doublevector.cpp
+    src/doublevector.cpp \
+    src/gomarkovoperator11a.cpp \
+    src/gomarkovoperatorsplitpoint.cpp
 
 RESOURCES += \
     resource.qrc

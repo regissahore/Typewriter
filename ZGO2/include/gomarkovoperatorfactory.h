@@ -30,6 +30,7 @@ public:
         Operator_Type_9B2 = 14,
         Operator_Type_10 = 15,
         Operator_Type_11 = 16,
+        Operator_Type_11A = 43,
         Operator_Type_12 = 17,
         Operator_Type_12A = 18,
         Operator_Type_13 = 19,
@@ -56,7 +57,8 @@ public:
         Operator_Type_27 = 40,
         Operator_Type_28 = 41,
         Operator_Type_29 = 42,
-        Operator_Total = 43
+        Operator_Type_Split = 44,
+        Operator_Total = 45
     };
     static GOMarkovOperator* produce(const int type);
     static QString typeName(const int type);

@@ -20,6 +20,7 @@
 #include "gomarkovoperator9b2.h"
 #include "gomarkovoperator10.h"
 #include "gomarkovoperator11.h"
+#include "gomarkovoperator11a.h"
 #include "gomarkovoperator12.h"
 #include "gomarkovoperator12a.h"
 #include "gomarkovoperator13.h"
@@ -46,6 +47,7 @@
 #include "gomarkovoperator27.h"
 #include "gomarkovoperator28.h"
 #include "gomarkovoperator29.h"
+#include "gomarkovoperatorsplitpoint.h"
 
 /**
  * Produce a GOOperator with auto increment ID.
@@ -106,6 +108,9 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
         break;
     case Operator_Type_11:
         op = new GOMarkovOperator11();
+        break;
+    case Operator_Type_11A:
+        op = new GOMarkovOperator11A();
         break;
     case Operator_Type_12:
         op = new GOMarkovOperator12();
@@ -185,6 +190,9 @@ GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
     case Operator_Type_29:
         op = new GOMarkovOperator29();
         break;
+    case Operator_Type_Split:
+        op = new GOMarkovOperatorSplitPoint();
+        break;
     }
     op->setType(type);
     return op;
@@ -228,6 +236,8 @@ QString GOMarkovOperatorFactory::typeName(const int type)
         return "10";
     case Operator_Type_11:
         return "11";
+    case Operator_Type_11A:
+        return "11A";
     case Operator_Type_12:
         return "12";
     case Operator_Type_12A:
@@ -280,6 +290,8 @@ QString GOMarkovOperatorFactory::typeName(const int type)
         return "28";
     case Operator_Type_29:
         return "29";
+    case Operator_Type_Split:
+        return "Split";
     }
     return "No Name";
 }
@@ -291,10 +303,12 @@ bool GOMarkovOperatorFactory::isLogical(const int type)
     case Operator_Type_2:
     case Operator_Type_10:
     case Operator_Type_11:
+    case Operator_Type_11A:
     case Operator_Type_12A:
     case Operator_Type_15B:
     case Operator_Type_20:
     case Operator_Type_23:
+    case Operator_Type_Split:
         return true;
     }
     return false;

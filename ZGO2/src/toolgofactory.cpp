@@ -82,6 +82,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_9B2:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_10:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11A:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_12A:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_13:
@@ -108,6 +109,7 @@ ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_27:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_28:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_29:
+    case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_SPLIT:
         tool = new ToolGOMarkovOperator(sceneGO);
         break;
     case DefinationToolType::TOOL_TYPE_GO_SIGNAL:
