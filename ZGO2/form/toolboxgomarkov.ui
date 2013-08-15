@@ -38,8 +38,8 @@
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>-60</y>
-        <width>248</width>
+        <y>-680</y>
+        <width>238</width>
         <height>1194</height>
        </rect>
       </property>
@@ -324,6 +324,10 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="text">
           <string>Split Point</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_split.png</normaloff>:/icon/resource/image/tool_split.png</iconset>
          </property>
          <property name="iconSize">
           <size>
@@ -852,6 +856,10 @@ border-color: rgb(204, 204, 204) rgb(204, 204, 204) rgb(181, 181, 181);
          </property>
          <property name="text">
           <string>M Take K</string>
+         </property>
+         <property name="icon">
+          <iconset resource="../resource.qrc">
+           <normaloff>:/icon/resource/image/tool_op11A.png</normaloff>:/icon/resource/image/tool_op11A.png</iconset>
          </property>
          <property name="iconSize">
           <size>

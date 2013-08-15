@@ -70,6 +70,8 @@
         <file>resource/image/tool_op9B2.png</file>
         <file>resource/image/set_global_feedback.png</file>
         <file>resource/image/unset_global_feedback.png</file>
+        <file>resource/image/tool_op11A.png</file>
+        <file>resource/image/tool_split.png</file>
     </qresource>
     <qresource prefix="/image">
         <file>resource/image/logo.png</file>

@@ -892,13 +892,14 @@ void ParameterGOMarkovOperator::setItemMarkov19Delta()
     GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
     DialogMatrixInput *dialog = new DialogMatrixInput(this);
     dialog->setWindowTitle(tr("Operator 19 Delta"));
-    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Is Relevent")));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Relevent Operator ID")));
     dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("delta")));
     dialog->table()->setRowCount(op->deltaNum());
     dialog->table()->setColumnCount(2);
     for (int i = 0; i < op->deltaNum(); ++i)
     {
         QLineEdit *lineEdit = new QLineEdit();
+        lineEdit->setAlignment(Qt::AlignHCenter);
         lineEdit->setText(op->ids()->at(i));
         dialog->table()->setCellWidget(i, 0, lineEdit);
         dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
