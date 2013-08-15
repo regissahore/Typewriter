@@ -26,16 +26,15 @@ GOMarkovOperator12A::~GOMarkovOperator12A()
 void GOMarkovOperator12A::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);
-    GOMarkovOperator *prevOperator = this->getPrevOperator();
+    GOMarkovStatus *prevStatus = this->getPrevMarkovStatus();
+    DoubleVector PR = prevStatus->probabilityNormal();
+    DoubleVector lambdaR = prevStatus->frequencyBreakdown();
+    DoubleVector muR = prevStatus->frequencyRepair();
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        GOMarkovStatus *prevStatus = prevOperator->markovOutputStatus()->at(i);
-        DoubleVector PR = prevStatus->probabilityNormal();
-        DoubleVector lambdaR = prevStatus->frequencyBreakdown();
-        DoubleVector muR = prevStatus->frequencyRepair();
-        this->markovOutputStatus()->at(i)->setProbabilityNormal(PR);
-        this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
-        this->markovOutputStatus()->at(i)->setFrequencyRepair(muR);
+        this->markovOutputStatus()->at(i)->setProbabilityNormal(PR.getValue(i));
+        this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR.getValue(i));
+        this->markovOutputStatus()->at(i)->setFrequencyRepair(muR.getValue(i));
     }
 }
 
@@ -43,7 +42,7 @@ DoubleVector GOMarkovOperator12A::calcTempOutputMarkovStatus(double time, QVecto
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
-    return input[index];
+    return input[0].getValue(index);
 }
 
 bool GOMarkovOperator12A::errorDetect(Messager *messager)
