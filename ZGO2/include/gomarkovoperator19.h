@@ -11,20 +11,22 @@ class GOMarkovOperator19 : public GOMarkovOperator
 public:
     GOMarkovOperator19();
     ~GOMarkovOperator19();
-    QVector<bool>* isRelevant() const;
+    QVector<QString>* ids() const;
     QVector<double>* delta() const;
     int deltaNum() const;
     void setDeltaNum(int value);
     void calcOutputMarkovStatus(double time);
-    DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
+    void paintParameter(QPainter *painter);
     GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
 protected:
-    QVector<bool> *_isRelevant;
+    QVector<QString> *_ids;
     QVector<double> *_delta;
     int _deltaNum;
+
+    void calcTempOutputMarkovStatus(GOMarkovOperator* op, double time, QString id, double delta, int index);
 };
 
 #endif // GOMARKOVOPERATOR1_H

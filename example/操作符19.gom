@@ -1,0 +1,149 @@
+<GO_Project support="ZHG">
+    <scene>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-560" show_output_0="1" y="-220" type="4">
+            <model id="1" dual="1" name="" global_feedback="0" real="1" input="0" output="1" subInput="0" breakdown="0" type="4">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0.02"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-560" show_output_0="1" y="-120" type="4">
+            <model id="2" dual="1" name="" global_feedback="0" real="2" input="0" output="1" subInput="0" breakdown="0" type="4">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0.02"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-560" show_output_0="1" y="-20" type="4">
+            <model id="3" dual="1" name="" global_feedback="0" real="3" input="0" output="1" subInput="0" breakdown="0" type="4">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0.02"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-370" show_output_0="1" y="-220" type="0">
+            <model id="4" dual="1" name="" global_feedback="0" real="4" input="1" output="1" subInput="0" breakdown="0" type="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-370" show_output_0="1" y="-120" type="0">
+            <model id="5" dual="1" name="" global_feedback="0" real="5" input="1" output="1" subInput="0" breakdown="0" type="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-370" show_output_0="1" y="-20" type="0">
+            <model id="6" dual="1" name="" global_feedback="0" real="6" input="1" output="1" subInput="0" breakdown="0" type="0">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="-140" show_output_0="1" y="-120" type="15">
+            <model id="7" dual="1" name="" global_feedback="0" real="7" input="3" output="1" subInput="0" breakdown="0" type="15">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+            </model>
+        </operator>
+        <operator vertical="0" horizon="0" parameter="1" name="0" x="40" show_output_0="1" y="-120" show_output_1="1" type="30">
+            <model delta="3" id="8" dual="1" name="" global_feedback="0" real="8" input="1" output="2" subInput="0" breakdown="0" type="30">
+                <status>
+                    <status_0 description="" probability="0"/>
+                    <status_1 description="" probability="1"/>
+                    <status_2 description="" probability="0"/>
+                </status>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="0.01" vector="0" length="1" breakdown="0.02"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <status repair="1" vector="0" length="1" breakdown="0"/>
+                <markov2>
+                    <node delta="0" a="null"/>
+                    <node delta="0.2" a="2"/>
+                    <node delta="0.3" a="3"/>
+                </markov2>
+            </model>
+        </operator>
+        <signal straight="0" id="1" global_feedback="0" corner="0.5">
+            <io id="1" index="0" type="2"/>
+            <io id="4" index="0" type="0"/>
+        </signal>
+        <signal straight="0" id="3" global_feedback="0" corner="0.5">
+            <io id="3" index="0" type="2"/>
+            <io id="6" index="0" type="0"/>
+        </signal>
+        <signal straight="1" id="4" global_feedback="0" corner="0.5">
+            <io id="4" index="0" type="2"/>
+            <io id="7" index="0" type="0"/>
+        </signal>
+        <signal straight="1" id="6" global_feedback="0" corner="0.5">
+            <io id="6" index="0" type="2"/>
+            <io id="7" index="2" type="0"/>
+        </signal>
+        <signal straight="0" id="5" global_feedback="0" corner="0.5">
+            <io id="5" index="0" type="2"/>
+            <io id="7" index="1" type="0"/>
+        </signal>
+        <signal straight="0" id="2" global_feedback="0" corner="0.5">
+            <io id="2" index="0" type="2"/>
+            <io id="5" index="0" type="0"/>
+        </signal>
+        <signal straight="0" id="7" global_feedback="0" corner="0.5">
+            <io id="7" index="0" type="2"/>
+            <io id="8" index="0" type="0"/>
+        </signal>
+    </scene>
+</GO_Project>

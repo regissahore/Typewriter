@@ -1,4 +1,5 @@
 #include <QLabel>
+#include <QLineEdit>
 #include <QCheckBox>
 #include <QPushButton>
 #include <QDoubleSpinBox>
@@ -855,7 +856,7 @@ void ParameterGOMarkovOperator::setItemMarkov19DeltaNum(int value)
     op->setDeltaNum(value);
     for (int i = op->delta()->size(); i < op->deltaNum(); ++i)
     {
-        op->isRelevant()->push_back(1);
+        op->ids()->push_back("0");
         op->delta()->push_back(0.0);
     }
 }
@@ -866,14 +867,14 @@ void ParameterGOMarkovOperator::addMarkov19DeltaParameter()
     {
         ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
         GOMarkovOperator19 *op = (GOMarkovOperator19*)item->model();
-        for (int i = op->isRelevant()->size(); i < op->deltaNum(); ++i)
+        for (int i = op->ids()->size(); i < op->deltaNum(); ++i)
         {
-            op->isRelevant()->push_back(1);
+            op->ids()->push_back("0");
             op->delta()->push_back(1.0);
         }
-        while (op->deltaNum() < op->isRelevant()->size())
+        while (op->deltaNum() < op->ids()->size())
         {
-            op->isRelevant()->pop_back();
+            op->ids()->pop_back();
             op->delta()->pop_back();
         }
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -897,16 +898,16 @@ void ParameterGOMarkovOperator::setItemMarkov19Delta()
     dialog->table()->setColumnCount(2);
     for (int i = 0; i < op->deltaNum(); ++i)
     {
-        QCheckBox *checkBox = new QCheckBox();
-        checkBox->setChecked(op->isRelevant()->at(i));
-        dialog->table()->setCellWidget(i, 0, checkBox);
+        QLineEdit *lineEdit = new QLineEdit();
+        lineEdit->setText(op->ids()->at(i));
+        dialog->table()->setCellWidget(i, 0, lineEdit);
         dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
     }
     if (dialog->exec() == QDialog::Accepted)
     {
         for (int i = 0; i < op->deltaNum(); ++i)
         {
-            (*op->isRelevant())[i] = ((QCheckBox*)dialog->table()->cellWidget(i, 0))->isChecked();
+            (*op->ids())[i] = ((QLineEdit*)dialog->table()->cellWidget(i, 0))->text();
             (*op->delta())[i] = dialog->table()->item(i, 1)->text().toDouble();
         }
     }

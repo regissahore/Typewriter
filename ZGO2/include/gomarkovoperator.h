@@ -36,6 +36,8 @@ public:
     virtual void initOutputMarkovStatus();
     GOMarkovOperator* getPrevOperator(int index = 0);
     GOMarkovOperator* getPrevSubOperator(int index = 0);
+    int getPrevIndex(int index = 0);
+    int getPrevSubIndex(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
     virtual bool errorDetect(Messager *messager);

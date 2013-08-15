@@ -201,6 +201,20 @@ GOMarkovOperator* GOMarkovOperator::getPrevSubOperator(int index)
     return (GOMarkovOperator*)signal->next(this);
 }
 
+int GOMarkovOperator::getPrevIndex(int index)
+{
+    GOSignal *signal = this->input()->signal()->at(index);
+    GOMarkovOperator *op = (GOMarkovOperator*)signal->next(this);
+    return op->output()->getSignalIndex(signal);
+}
+
+int GOMarkovOperator::getPrevSubIndex(int index)
+{
+    GOSignal *signal = this->subInput()->signal()->at(index);
+    GOMarkovOperator *op = (GOMarkovOperator*)signal->next(this);
+    return op->output()->getSignalIndex(signal);
+}
+
 GOMarkovStatus* GOMarkovOperator::getPrevMarkovStatus(int index)
 {
     GOSignal *signal = this->input()->signal()->at(index);
