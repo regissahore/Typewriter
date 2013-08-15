@@ -92,7 +92,7 @@ void DoubleVector::setValue(const int pos, const double value)
     }
     else
     {
-        if (pos > 0)
+        if (pos >= 0)
         {
             this->_values[0] = value;
         }

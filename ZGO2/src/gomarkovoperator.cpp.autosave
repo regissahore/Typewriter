@@ -103,10 +103,6 @@ void GOMarkovOperator::initMarkovStatus(double time, double c12)
     {
         DoubleVector lambda = this->markovStatus1()->frequencyBreakdown();
         DoubleVector mu = this->markovStatus1()->frequencyRepair();
-        DoubleVector test0 = lambda + mu;
-        DoubleVector test1 = mu / (lambda + mu);
-        DoubleVector test2 = -(lambda + mu) * time;
-        DoubleVector test3 = DoubleVector::Exp(test2);
         DoubleVector PC = mu / (lambda + mu) * (1.0 + lambda / mu * DoubleVector::Exp(- (lambda + mu) * time)) + c12;
         this->markovStatus()->setProbabilityNormal(PC);
         this->markovStatus()->setFrequencyBreakdown(lambda);
