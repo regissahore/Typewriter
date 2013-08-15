@@ -149,36 +149,48 @@ DoubleVector DoubleVector::Sqrt(const DoubleVector &a)
 
 DoubleVector& DoubleVector::operator +=(const DoubleVector &a)
 {
+    DoubleVector c = *this + a;
+    this->setIsVector(c.isVector());
+    this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, this->getValue(i) + a.getValue(i));
+        this->setValue(i, c.getValue(i));
     }
     return *this;
 }
 
 DoubleVector& DoubleVector::operator -=(const DoubleVector &a)
 {
+    DoubleVector c = *this - a;
+    this->setIsVector(c.isVector());
+    this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, this->getValue(i) - a.getValue(i));
+        this->setValue(i, c.getValue(i));
     }
     return *this;
 }
 
 DoubleVector& DoubleVector::operator *=(const DoubleVector &a)
 {
+    DoubleVector c = *this * a;
+    this->setIsVector(c.isVector());
+    this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, this->getValue(i) * a.getValue(i));
+        this->setValue(i, c.getValue(i));
     }
     return *this;
 }
 
 DoubleVector& DoubleVector::operator /=(const DoubleVector &a)
 {
+    DoubleVector c = *this / a;
+    this->setIsVector(c.isVector());
+    this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, this->getValue(i) / a.getValue(i));
+        this->setValue(i, c.getValue(i));
     }
     return *this;
 }
@@ -233,7 +245,7 @@ DoubleVector operator -(const DoubleVector &a)
 
 bool operator <(const DoubleVector &a, const DoubleVector &b)
 {
-    return a.getValue(0) > b.getValue(0);
+    return a.getValue(0) < b.getValue(0);
 }
 
 bool operator <(const DoubleVector &a, const double b)

@@ -32,9 +32,8 @@ void GOMarkovOperator2::calcOutputMarkovStatus(double time)
         QR *= QSi;
         miuR += miuSi;
     }
-    DoubleVector PR = 1 - QR;
+    DoubleVector PR = 1.0 - QR;
     DoubleVector lambdaR = miuR * QR / PR;
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
@@ -53,7 +52,6 @@ void GOMarkovOperator2::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
         miuR += miuSi;
     }
     DoubleVector lambdaR = miuR * QR / PR[0];
-    this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR[0]);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
