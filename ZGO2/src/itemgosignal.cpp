@@ -262,12 +262,17 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     QFont font;
     font.setPixelSize(16);
     painter->setFont(font);
+    QString idName = QString("%1").arg(this->model()->id());
+    if (this->model()->isGlobalFeedback())
+    {
+        idName += "'";
+    }
     if (this->isStraightLine())
     {
         painter->drawLine(QPointF(0, 0), this->endPos());
         painter->drawText(this->endPos().x() * 0.5 - 10,
                           this->endPos().y() * 0.5 + 10,
-                          QString("%1").arg(this->model()->id()));
+                          idName);
     }
     else
     {
@@ -277,7 +282,7 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
         painter->drawLine(QPointF(corner, this->_endPos.y()), this->_endPos);
         painter->drawText(corner + 5,
                           this->_endPos.y() * 0.5 - 5,
-                          QString("%1").arg(this->model()->id()));
+                          idName);
     }
     if (this->model()->isGlobalFeedback())
     {
@@ -347,6 +352,7 @@ ItemGOSignal* ItemGOSignal::copy() const
     signal->_end->index = this->_end->index;
     signal->_isStraightLine = this->_isStraightLine;
     signal->_cornerProportion = this->_cornerProportion;
+    signal->model()->setId(this->model()->id());
     signal->model()->setIsGlobalFeedback(this->model()->isGlobalFeedback());
     return signal;
 }
