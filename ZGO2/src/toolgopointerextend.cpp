@@ -1,4 +1,5 @@
 #include <QVector>
+#include <qmath.h>
 #include "scenego.h"
 #include "toolgopointerextend.h"
 #include "definationgotype.h"
@@ -69,6 +70,8 @@ void ToolGOPointerExtend::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ToolGOPointerExtend::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     switch (this->_status)
     {
     case Status_Null:
@@ -123,6 +126,8 @@ void ToolGOPointerExtend::mousePressStatusNull(QGraphicsSceneMouseEvent *event)
     {
         if (!this->mousePressStatusNullSignalAdjust(event))
         {
+            event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                                       ((int)event->scenePos().y() / 10) * 10));
             if (!this->mousePressStatusNullItem(event))
             {
                 this->mousePressStatusNullScene(event);
@@ -246,6 +251,8 @@ void ToolGOPointerExtend::mouseMoveStatusNull(QGraphicsSceneMouseEvent *event)
     {
         if (!this->mouseMoveStatusNullSignalAdjust(event))
         {
+            event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                                       ((int)event->scenePos().y() / 10) * 10));
             if (!this->mouseMoveStatusNullItem(event))
             {
                 this->mouseMoveStatusNullScene(event);
@@ -351,6 +358,8 @@ void ToolGOPointerExtend::mouseReleaseStatusNull(QGraphicsSceneMouseEvent *event
 
 void ToolGOPointerExtend::mouseMoveStatusItemMoving(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (this->_item)
     {
         ((ItemMoveable*)this->_item)->move(event);
@@ -465,6 +474,8 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
 
 void ToolGOPointerExtend::mouseMoveStatusSignalAdjusting(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (this->_item)
     {
         ItemGOSignal *signal = (ItemGOSignal*)this->_item;

@@ -404,23 +404,8 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
  */
 QPoint ItemGOOperator::getInputPosition(int index)
 {
-    int number = this->model()->input()->number();
-    if (index < 0 || index >= number)
-    {
-        return QPoint(0, 0);
-    }
-    int height = (number - 1) * 25;
-    int x = -75;
-    int y = - (height >> 1) + index * 25;
-    if (isHorizonFlip())
-    {
-        x = -x;
-    }
-    if (isVerticalFlip())
-    {
-        y = -y;
-    }
-    return QPoint(x, y);
+    return QPoint(this->_inputArrows->at(index)->pos().x(),
+                  this->_inputArrows->at(index)->pos().y());
 }
 
 /**
@@ -429,18 +414,8 @@ QPoint ItemGOOperator::getInputPosition(int index)
  */
 QPoint ItemGOOperator::getSubInputPosition(int index)
 {
-    Q_UNUSED(index);
-    int x = 0;
-    int y = -75;
-    if (isHorizonFlip())
-    {
-        x = -x;
-    }
-    if (isVerticalFlip())
-    {
-        y = -y;
-    }
-    return QPoint(x, y);
+    return QPoint(this->_subInputArrows->at(index)->pos().x(),
+                  this->_subInputArrows->at(index)->pos().y());
 }
 
 /**
@@ -449,23 +424,8 @@ QPoint ItemGOOperator::getSubInputPosition(int index)
  */
 QPoint ItemGOOperator::getOutputPosition(int index)
 {
-    int number = this->model()->output()->number();
-    if (index < 0 || index >= number)
-    {
-        return QPoint(0, 0);
-    }
-    int height = (number - 1) * 25;
-    int x = 75;
-    int y = - (height >> 1) + index * 25;
-    if (isHorizonFlip())
-    {
-        x = -x;
-    }
-    if (isVerticalFlip())
-    {
-        y = -y;
-    }
-    return QPoint(x, y);
+    return QPoint(this->_outputArrows->at(index)->pos().x() + this->_outputArrows->at(index)->end().x(),
+                  this->_outputArrows->at(index)->pos().y() + this->_outputArrows->at(index)->end().y());
 }
 
 QVector<ItemGOSignal*>* ItemGOOperator::input() const

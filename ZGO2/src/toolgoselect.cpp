@@ -51,6 +51,8 @@ ToolGOSelect::~ToolGOSelect()
  */
 void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     switch (this->_status)
     {
     case Status_Null:
@@ -96,6 +98,8 @@ void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     switch (this->_status)
     {
     case Status_Selecting:
@@ -135,6 +139,8 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     QList<QGraphicsItem *> items;
     float x, y, width, height;
     switch (this->_status)

@@ -345,5 +345,7 @@ void ToolboxGOMarkov::on_buttonOperator23_clicked()
 
 void ToolboxGOMarkov::on_buttonOperatorSplit_clicked()
 {
-
+    Message* message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_SPLIT;
+    this->sendMessage(message);
 }

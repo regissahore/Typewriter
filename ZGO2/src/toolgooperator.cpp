@@ -180,6 +180,8 @@ void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (this->_isActivated)
     {
         this->_GOOperator->setVisible(true);
@@ -197,6 +199,8 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (event->button() == Qt::LeftButton)
     {
         Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);

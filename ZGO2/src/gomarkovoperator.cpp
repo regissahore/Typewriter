@@ -388,7 +388,7 @@ void GOMarkovOperator::paintParameter(QPainter *painter)
 
 void GOMarkovOperator::paintMarkovParameter(QPainter *painter)
 {
-    int y = 30;
+    int y = 40;
     if (this->breakdownNum() > 0)
     {
         painter->drawText(-50, y, QObject::tr("Lambda 1: %1").arg(this->_markovStatus1->frequencyBreakdown().getValue(0)));

@@ -14,11 +14,14 @@ public:
     void setEnd(const QPoint &end);
     void setEnd(const int x, const int y);
     QPoint sceneEnd();
+    bool isShowArrow() const;
+    void setIsShowArrow(const bool value);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
 
 private:
     QPoint _end;
+    bool _isShowArrow;
 };
 
 #endif // ITEMARROW_H

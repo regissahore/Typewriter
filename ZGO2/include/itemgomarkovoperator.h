@@ -24,6 +24,7 @@ public:
     void move(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void setModelType(const int type);
+    void setModel(GOOperator *model);
     ItemGOMarkovOperator* copy();
     bool tryOpen(QDomElement &root);
 
@@ -35,6 +36,7 @@ protected:
     void paint(QPainter *painter);
     void paint9A(QPainter *painter);
     void paint22B(QPainter *painter);
+    void paintSplit(QPainter *painter);
     void updateArrowColor();
 };
 

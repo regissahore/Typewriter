@@ -103,6 +103,9 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     case GOMarkovOperatorFactory::Operator_Type_22B:
         this->paint22B(painter);
         break;
+    case GOMarkovOperatorFactory::Operator_Type_Split:
+        this->paintSplit(painter);
+        break;
     default:
         this->paint(painter);
         break;
@@ -385,10 +388,136 @@ void ItemGOMarkovOperator::paint22B(QPainter *painter)
     painter->setPen(this->_color);
 }
 
+void ItemGOMarkovOperator::paintSplit(QPainter *painter)
+{
+    painter->setPen(Qt::SolidLine);
+    painter->setPen(this->_color);
+    painter->setBrush(Qt::NoBrush);
+    painter->setPen(Qt::gray);
+    for (int i = 0; i < this->model()->input()->number(); ++i)
+    {
+        QPoint pos = this->getInputPosition(i);
+        QString text = "S";
+        if (pos.x() < 0)
+        {
+            painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                              Qt::AlignLeft | Qt::AlignTop,
+                              text);
+        }
+        else
+        {
+            painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                              Qt::AlignRight | Qt::AlignTop,
+                              text);
+        }
+    }
+    for (int i = 0; i < this->model()->output()->number(); ++i)
+    {
+        if (this->isShowOutput()->at(i))
+        {
+            QPoint pos = this->getOutputPosition(i);
+            QString text = QString("R%1").arg(i + 1);
+            if (pos.x() < 0)
+            {
+                painter->drawText(QRectF(pos.x() + 10, pos.y() - 20, 100, 100),
+                                  Qt::AlignLeft | Qt::AlignTop,
+                                  text);
+            }
+            else
+            {
+                painter->drawText(QRectF(pos.x() - 110, pos.y() - 20, 100, 100),
+                                  Qt::AlignRight | Qt::AlignTop,
+                                  text);
+            }
+        }
+    }
+    painter->setPen(this->_color);
+    painter->setBrush(this->_color);
+    int number = this->model()->output()->number();
+    int y = - (number - 1) * 25;
+    painter->drawLine(0, -y, 0, y);
+    painter->drawEllipse(-5, -5, 10, 10);
+}
+
 void ItemGOMarkovOperator::setModelType(const int type)
 {
     this->_model = GOMarkovOperatorFactory::produce(type);
     this->setModel(this->_model);
+}
+
+void ItemGOMarkovOperator::setModel(GOOperator *model)
+{
+    if (this->model()->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_Split)
+    {
+        this->_model = model;
+        this->_inputSignal->clear();
+        this->_subInputSignal->clear();
+        this->_outputSignal->clear();
+        for (int i = 0; i < this->_inputArrows->size(); ++i)
+        {
+            this->_inputArrows->at(i)->setParentItem(0L);
+            delete this->_inputArrows->at(i);
+        }
+        this->_inputArrows->clear();
+        for (int i = 0; i < this->_subInputArrows->size(); ++i)
+        {
+            this->_subInputArrows->at(i)->setParentItem(0L);
+            delete this->_subInputArrows->at(i);
+        }
+        this->_subInputArrows->clear();
+        for (int i = 0; i < this->_outputArrows->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setParentItem(0L);
+            delete this->_outputArrows->at(i);
+        }
+        this->_outputArrows->clear();
+        int number = this->model()->input()->number();
+        double startY = - (number - 1) * 12.5;
+        for (int i = 0; i < number; ++i)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            arrow->setIsShowArrow(false);
+            arrow->setColor(QColor(Qt::darkRed));
+            arrow->setPos(- 50, startY);
+            double angle = atan2(-startY, 75);
+            double dist = sqrt(startY * startY + 75 * 75);
+            double x = (dist - 25.0) * cos(angle);
+            double y = (dist - 25.0) * sin(angle);
+            arrow->setEnd(QPoint(x, y));
+            this->_inputArrows->push_back(arrow);
+            startY += 25.0;
+            this->_inputSignal->push_back(0L);
+        }
+        number = this->model()->output()->number();
+        startY = - (number - 1) * 25;
+        for (int i = 0; i < number; ++i)
+        {
+            ItemArrow *arrow = new ItemArrow(this);
+            arrow->setPos(0, startY);
+            arrow->setEnd(QPoint(50, 0));
+            this->_outputArrows->push_back(arrow);
+            startY += 50.0;
+            this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
+        }
+        this->_isShowOutput->clear();
+        for (int i = 0; i < this->model()->output()->number(); ++i)
+        {
+            this->_isShowOutput->push_back(true);
+        }
+        if (this->isHorizonFlip())
+        {
+            this->horizonFlip();
+        }
+        if (this->isVerticalFlip())
+        {
+            this->verticalFlip();
+        }
+        this->prepareGeometryChange();
+    }
+    else
+    {
+        this->ItemGOOperator::setModel(model);
+    }
 }
 
 ItemGOMarkovOperator* ItemGOMarkovOperator::copy()
@@ -500,6 +629,17 @@ void ItemGOMarkovOperator::updateArrowColor()
         for (int i = 0; i < this->_outputSignal->size(); ++i)
         {
             this->_outputArrows->at(i)->setColor(Qt::black);
+        }
+    }
+    for (int i = 0; i < this->_outputSignal->size(); ++i)
+    {
+        if (this->_outputSignal->at(i)->size() == 0)
+        {
+            this->_outputArrows->at(i)->setIsShowArrow(true);
+        }
+        else
+        {
+            this->_outputArrows->at(i)->setIsShowArrow(false);
         }
     }
 }

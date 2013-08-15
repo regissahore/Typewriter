@@ -19,14 +19,6 @@ GOMarkovOperator15B::~GOMarkovOperator15B()
     this->GOMarkovOperator::~GOMarkovOperator();
 }
 
-void GOMarkovOperator15B::initOutputMarkovStatus()
-{
-    for (int i = this->_outputStatus->size(); i < this->input()->number(); ++i)
-    {
-        this->_outputStatus->push_back(new GOMarkovStatus());
-    }
-}
-
 void GOMarkovOperator15B::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

@@ -291,7 +291,7 @@ bool GOMarkovOperator11::errorDetect(Messager *messager)
 
 void GOMarkovOperator11::paintParameter(QPainter *painter)
 {
-    int y = 30;
+    int y = 40;
     painter->drawText(-50, y, QObject::tr("K: %1").arg(this->K()));
     painter->drawText(-50, y + 20, QObject::tr("I: %1").arg(this->I()));
     painter->drawText(-50, y + 40, QObject::tr("J: %1").arg(this->J()));

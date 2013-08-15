@@ -50,6 +50,8 @@ void ToolGOText::activate(QGraphicsSceneMouseEvent *event)
 
 void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (this->_isActivated)
     {
         this->_item->setPos(event->scenePos());
@@ -62,6 +64,8 @@ void ToolGOText::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ToolGOText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (event->button() == Qt::LeftButton)
     {
         this->sceneGO()->viewGO()->editor()->setModified(true);
