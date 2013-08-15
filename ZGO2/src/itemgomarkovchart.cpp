@@ -89,6 +89,10 @@ void ItemGOMarkovChart::setP(QVector<DoubleVector> P)
     if (this->_maxP - this->_minP < 1e-3)
     {
         this->_maxP += this->_maxP;
+        if (this->_maxP > 1.0)
+        {
+            this->_maxP = 1.0;
+        }
         this->_minP = 0.0;
     }
     this->update();
@@ -119,6 +123,10 @@ void ItemGOMarkovChart::setQ(QVector<DoubleVector> Q)
     if (this->_maxQ - this->_minQ < 1e-3)
     {
         this->_maxQ += this->_maxQ;
+        if (this->_maxQ > 1.0)
+        {
+            this->_maxQ = 1.0;
+        }
         this->_minQ = 0.0;
     }
     this->update();

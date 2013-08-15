@@ -53,18 +53,8 @@ void GOMarkovOperator19::setDeltaNum(int value)
     this->_deltaNum = value;
 }
 
-void GOMarkovOperator19::calcOutputMarkovStatus(double time)
+void GOMarkovOperator19::calcOutputMarkovStatus(GOMarkovStatus prevStatus)
 {
-    GOMarkovStatus prevStatus;
-    prevStatus.setVectorLength(this->deltaNum());
-    for (int i = 0; i < this->deltaNum(); ++i)
-    {
-        this->calcTempOutputMarkovStatus(this->getPrevOperator(), time, this->ids()->at(i), this->delta()->at(i), 0);
-        prevStatus.setProbabilityNormal(i, this->getPrevMarkovStatus()->probabilityNormal().getValue(0));
-        prevStatus.setFrequencyBreakdown(i, this->getPrevMarkovStatus()->frequencyBreakdown().getValue(0));
-        prevStatus.setFrequencyRepair(i, this->getPrevMarkovStatus()->frequencyRepair().getValue(0));
-        this->calcTempOutputMarkovStatus(this->getPrevOperator(), time, "null", 1.0, 0);
-    }
     DoubleVector PS = prevStatus.probabilityNormal();
     DoubleVector lambdaS = prevStatus.frequencyBreakdown();
     DoubleVector muS = prevStatus.frequencyRepair();
@@ -92,29 +82,6 @@ void GOMarkovOperator19::calcOutputMarkovStatus(double time)
     this->markovOutputStatus()->at(1)->setProbabilityNormal(PR2);
     this->markovOutputStatus()->at(1)->setFrequencyBreakdown(lambdaR2);
     this->markovOutputStatus()->at(1)->setFrequencyRepair(muR2);
-}
-
-void GOMarkovOperator19::calcTempOutputMarkovStatus(GOMarkovOperator* op, double time, QString id, double delta, int index)
-{
-    QString idName = QString("%1").arg(op->id());
-    if (idName == id)
-    {
-        op->markovOutputStatus()->at(index)->setProbabilityNormal(op->markovOutputStatus()->at(index)->probabilityNormal() * delta);
-        op->markovOutputStatus()->at(index)->setFrequencyBreakdown(op->markovOutputStatus()->at(index)->frequencyBreakdown() * delta);
-        op->markovOutputStatus()->at(index)->setFrequencyRepair(op->markovOutputStatus()->at(index)->frequencyRepair() * delta);
-    }
-    else
-    {
-        for (int i = 0; i < op->input()->number(); ++i)
-        {
-            calcTempOutputMarkovStatus(op->getPrevOperator(i), time, id, delta, op->getPrevIndex(i));
-        }
-        for (int i = 0; i < op->subInput()->number(); ++i)
-        {
-            calcTempOutputMarkovStatus(op->getPrevSubOperator(i), time, id, delta, op->getPrevSubIndex(i));
-        }
-        op->calcOutputMarkovStatus(time);
-    }
 }
 
 void GOMarkovOperator19::paintParameter(QPainter *painter)

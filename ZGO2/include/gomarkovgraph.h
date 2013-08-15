@@ -11,6 +11,7 @@ class GOMarkovEquivalent;
 class GOMarkovCommonCause;
 class GOMarkovChartData;
 class GOMarkovOperator;
+class GOMarkovStatus;
 
 class GOMarkovGraph : public GOGraph
 {
@@ -23,6 +24,7 @@ public:
     void addCommonCause(GOMarkovCommonCause *commonCause);
     void calcAccumulativeProbability(double time);
     GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
+    GOMarkovStatus calcAccumulativeProbability(double time, QString id, double delta, GOMarkovOperator* stopOperator);
     bool saveAsHTML(const QString filePath);
     bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 

@@ -84,14 +84,14 @@ void ItemGOOperator::setModel(GOOperator *model)
         }
         this->_outputArrows->clear();
         int number = this->model()->output()->number();
-        double startY = - (number - 1) * 12.5;
+        double startY = - (number - 1) * 20.0;
         for (int i = 0; i < number; ++i)
         {
             ItemArrow *arrow = new ItemArrow(this);
             arrow->setPos(25.0, 0.0);
             arrow->setEnd(QPoint(50, startY));
             this->_outputArrows->push_back(arrow);
-            startY += 25.0;
+            startY += 40.0;
             this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
         }
     }
@@ -116,7 +116,7 @@ void ItemGOOperator::setModel(GOOperator *model)
         }
         this->_outputArrows->clear();
         int number = this->model()->input()->number();
-        double startY = - (number - 1) * 12.5;
+        double startY = - (number - 1) * 20.0;
         for (int i = 0; i < number; ++i)
         {
             ItemArrow *arrow = new ItemArrow(this);
@@ -128,11 +128,11 @@ void ItemGOOperator::setModel(GOOperator *model)
             double y = (dist - 25.0) * sin(angle);
             arrow->setEnd(QPoint(x, y));
             this->_inputArrows->push_back(arrow);
-            startY += 25.0;
+            startY += 40.0;
             this->_inputSignal->push_back(0L);
         }
         number = this->model()->output()->number();
-        startY = - (number - 1) * 12.5;
+        startY = - (number - 1) * 20.0;
         for (int i = 0; i < number; ++i)
         {
             ItemArrow *arrow = new ItemArrow(this);
@@ -143,7 +143,7 @@ void ItemGOOperator::setModel(GOOperator *model)
             double y = (dist - 25.0) * sin(angle);
             arrow->setEnd(QPoint(x, y));
             this->_outputArrows->push_back(arrow);
-            startY += 25.0;
+            startY += 40.0;
             this->_outputSignal->push_back(new QVector<ItemGOSignal*>());
         }
         if (this->model()->subInput()->number() > 0)

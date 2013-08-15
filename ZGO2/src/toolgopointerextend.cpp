@@ -70,8 +70,6 @@ void ToolGOPointerExtend::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ToolGOPointerExtend::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
-                               ((int)event->scenePos().y() / 10) * 10));
     switch (this->_status)
     {
     case Status_Null:
@@ -369,6 +367,8 @@ void ToolGOPointerExtend::mouseMoveStatusItemMoving(QGraphicsSceneMouseEvent *ev
 
 void ToolGOPointerExtend::mouseReleaseStatusItemMoving(QGraphicsSceneMouseEvent *event)
 {
+    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                               ((int)event->scenePos().y() / 10) * 10));
     if (this->_item)
     {
         ((ItemMoveable*)this->_item)->stopMove(event);

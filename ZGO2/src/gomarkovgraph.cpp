@@ -24,6 +24,7 @@
 #include "gopathset.h"
 #include "gopathsetset.h"
 #include "gopathsetsetset.h"
+#include "gomarkovoperator19.h"
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -70,25 +71,58 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     QVector<GOOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
-        QVector<GOGraph::Output> commonList;
-        if (GOMarkovOperatorFactory::isCommonPossible(list[i]->TypedItem::type()))
+        if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_19)
         {
-            commonList = this->getCommonSignalList(list[i]);
-        }
-        if (commonList.size() == 0)
-        {
-            ((GOMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
+            GOMarkovOperator19 *op = (GOMarkovOperator19*)list[i];
+            GOMarkovStatus prevStatus;
+            prevStatus.setVectorLength(op->deltaNum());
+            for (int i = 0; i < op->deltaNum(); ++i)
+            {
+                GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
+                prevStatus.setProbabilityNormal(i, status.probabilityNormal().getValue(0));
+                prevStatus.setFrequencyBreakdown(i, status.frequencyBreakdown().getValue(0));
+                prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
+            }
+            this->calcAccumulativeProbability(time, "null", 1.0, op);
+            op->calcOutputMarkovStatus(prevStatus);
         }
         else
         {
-            QVector<GOOperator*> commonOperator;
-            QVector<int> commonIndex;
-            for (int j = 0; j < commonList.size(); ++j)
+            QVector<GOGraph::Output> commonList;
+            if (GOMarkovOperatorFactory::isCommonPossible(list[i]->TypedItem::type()))
             {
-                commonOperator.push_back(commonList[j].op);
-                commonIndex.push_back(commonList[j].outputIndex);
+                commonList = this->getCommonSignalList(list[i]);
             }
-            ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], commonOperator, commonIndex, time);
+            if (commonList.size() == 0)
+            {
+                ((GOMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
+            }
+            else
+            {
+                QVector<GOOperator*> commonOperator;
+                QVector<int> commonIndex;
+                for (int j = 0; j < commonList.size(); ++j)
+                {
+                    commonOperator.push_back(commonList[j].op);
+                    commonIndex.push_back(commonList[j].outputIndex);
+                }
+                ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], commonOperator, commonIndex, time);
+            }
+        }
+        GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+        for (int i = 0; i < op->output()->number(); ++i)
+        {
+            for (int j = 0; j < op->markovOutputStatus()->at(i)->probabilityNormal().length(); ++j)
+            {
+                if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) > 1.0)
+                {
+                    op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 1.0);
+                }
+                else if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) < 0.0)
+                {
+                    op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 0.0);
+                }
+            }
         }
     }
     list.clear();
@@ -271,6 +305,89 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     message->paramString = QString("Analysis Completed. It takes %1 seconds. ").arg(time.elapsed() / 1000.0);
     this->sendMessage(message);
     return data;
+}
+
+GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString id, double delta, GOMarkovOperator* stopOperator)
+{
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
+    {
+        if (list[i] == stopOperator)
+        {
+            GOMarkovStatus *status = stopOperator->getPrevMarkovStatus();
+            GOMarkovStatus res;
+            res.setProbabilityNormal(status->probabilityNormal());
+            res.setFrequencyBreakdown(status->frequencyBreakdown());
+            res.setFrequencyRepair(status->frequencyRepair());
+            return res;
+        }
+        if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_19)
+        {
+            GOMarkovOperator19 *op = (GOMarkovOperator19*)list[i];
+            GOMarkovStatus prevStatus;
+            prevStatus.setVectorLength(op->deltaNum());
+            for (int i = 0; i < op->deltaNum(); ++i)
+            {
+                GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
+                prevStatus.setProbabilityNormal(i, status.probabilityNormal().getValue(0));
+                prevStatus.setFrequencyBreakdown(i, status.frequencyBreakdown().getValue(0));
+                prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
+            }
+            this->calcAccumulativeProbability(time, "null", 1.0, op);
+            op->calcOutputMarkovStatus(prevStatus);
+        }
+        else
+        {
+            QVector<GOGraph::Output> commonList;
+            if (GOMarkovOperatorFactory::isCommonPossible(list[i]->TypedItem::type()))
+            {
+                commonList = this->getCommonSignalList(list[i]);
+            }
+            if (commonList.size() == 0)
+            {
+                ((GOMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
+            }
+            else
+            {
+                QVector<GOOperator*> commonOperator;
+                QVector<int> commonIndex;
+                for (int j = 0; j < commonList.size(); ++j)
+                {
+                    commonOperator.push_back(commonList[j].op);
+                    commonIndex.push_back(commonList[j].outputIndex);
+                }
+                ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], commonOperator, commonIndex, time);
+            }
+            if (QString("%1").arg(list[i]->id()) == id)
+            {
+                GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+                for (int i = 0; i < list[i]->output()->number(); ++i)
+                {
+                    op->markovOutputStatus()->at(i)->setProbabilityNormal(op->markovOutputStatus()->at(i)->probabilityBreakdown() * delta);
+                    op->markovOutputStatus()->at(i)->setFrequencyBreakdown(op->markovOutputStatus()->at(i)->frequencyBreakdown() * delta);
+                    op->markovOutputStatus()->at(i)->setFrequencyRepair(op->markovOutputStatus()->at(i)->frequencyRepair() * delta);
+                }
+            }
+            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+            for (int i = 0; i < op->output()->number(); ++i)
+            {
+                for (int j = 0; j < op->markovOutputStatus()->at(i)->probabilityNormal().length(); ++j)
+                {
+                    if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) > 1.0)
+                    {
+                        op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 1.0);
+                    }
+                    else if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) < 0.0)
+                    {
+                        op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 0.0);
+                    }
+                }
+            }
+        }
+    }
+    list.clear();
+    GOMarkovStatus res;
+    return res;
 }
 
 bool GOMarkovGraph::isContainCycleDfs(QVector<bool> &visit,
