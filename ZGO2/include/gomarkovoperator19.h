@@ -17,7 +17,6 @@ public:
     void setDeltaNum(int value);
     void calcOutputMarkovStatus(double time);
     DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
-    bool errorDetect(Messager *messager);
     GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);

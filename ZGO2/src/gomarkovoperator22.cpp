@@ -46,13 +46,6 @@ bool GOMarkovOperator22::errorDetect(Messager *messager)
         return true;
     }
     GOMarkovOperator *op = this->getPrevSubOperator();
-    if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The sub-input should be a vector.").arg(this->id());
-        messager->sendMessage(message);
-        return true;
-    }
     if (this->output()->number() != op->markovOutputStatus()->size())
     {
         Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);

@@ -73,78 +73,36 @@ DoubleVector GOMarkovAnalysis::calcTempMarkovStatus(GOMarkovOperator *op, int in
     bool appeared = false;
     QVector<DoubleVector> inputValues;
     QVector<DoubleVector> subInputValues;
-    if (GOMarkovOperatorFactory::isVectorInput(op->TypedItem::type()))
+    for (int i = 0; i < op->input()->number(); ++i)
     {
-        GOSignal *signal = op->input()->signal()->at(0);
-        GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
-        for (int i = 0; i < prev->markovOutputStatus()->size(); ++i)
+        GOSignal *signal = op->input()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
+        if (value < 0.0)
         {
-            DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, i, commonOperator, commonIndex, normalValues, time);
-            if (value < 0.0)
-            {
-                inputValues.push_back(-value);
-            }
-            else
-            {
-                appeared = true;
-                inputValues.push_back(value);
-            }
+            inputValues.push_back(-value);
+        }
+        else
+        {
+            appeared = true;
+            inputValues.push_back(value);
         }
     }
-    else
+    for (int i = 0; i < op->subInput()->number(); ++i)
     {
-        for (int i = 0; i < op->input()->number(); ++i)
+        GOSignal *signal = op->subInput()->signal()->at(i);
+        GOOperator *prev = signal->next(op);
+        int prevIndex = prev->output()->getSignalIndex(signal);
+        DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
+        if (value < 0.0)
         {
-            GOSignal *signal = op->input()->signal()->at(i);
-            GOOperator *prev = signal->next(op);
-            int prevIndex = prev->output()->getSignalIndex(signal);
-            DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
-            if (value < 0.0)
-            {
-                inputValues.push_back(-value);
-            }
-            else
-            {
-                appeared = true;
-                inputValues.push_back(value);
-            }
+            subInputValues.push_back(-value);
         }
-    }
-    if (GOMarkovOperatorFactory::isVectorSubInput(op->TypedItem::type()))
-    {
-        GOSignal *signal = op->input()->signal()->at(0);
-        GOMarkovOperator *prev = (GOMarkovOperator*)signal->next(op);
-        for (int i = 0; i < prev->markovOutputStatus()->size(); ++i)
+        else
         {
-            DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, i, commonOperator, commonIndex, normalValues, time);
-            if (value < 0.0)
-            {
-                subInputValues.push_back(-value);
-            }
-            else
-            {
-                appeared = true;
-                subInputValues.push_back(value);
-            }
-        }
-    }
-    else
-    {
-        for (int i = 0; i < op->subInput()->number(); ++i)
-        {
-            GOSignal *signal = op->subInput()->signal()->at(i);
-            GOOperator *prev = signal->next(op);
-            int prevIndex = prev->output()->getSignalIndex(signal);
-            DoubleVector value = calcTempMarkovStatus((GOMarkovOperator*)prev, prevIndex, commonOperator, commonIndex, normalValues, time);
-            if (value < 0.0)
-            {
-                subInputValues.push_back(-value);
-            }
-            else
-            {
-                appeared = true;
-                subInputValues.push_back(value);
-            }
+            appeared = true;
+            subInputValues.push_back(value);
         }
     }
     if (appeared)

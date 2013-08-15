@@ -127,23 +127,6 @@ DoubleVector GOMarkovOperator19::calcTempOutputMarkovStatus(double time, QVector
     return PR2;
 }
 
-bool GOMarkovOperator19::errorDetect(Messager *messager)
-{
-    if (this->GOMarkovOperator::errorDetect(messager))
-    {
-        return true;
-    }
-    GOMarkovOperator *op = this->getPrevOperator();
-    if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The input should be a vector.").arg(this->id());
-        messager->sendMessage(message);
-        return true;
-    }
-    return false;
-}
-
 GOMarkovOperator* GOMarkovOperator19::copy()
 {
     GOMarkovOperator19 *op = (GOMarkovOperator19*)this->GOMarkovOperator::copy();

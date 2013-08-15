@@ -44,27 +44,3 @@ DoubleVector GOMarkovOperator12A::calcTempOutputMarkovStatus(double time, QVecto
     Q_UNUSED(subInput);
     return input[0].getValue(index);
 }
-
-bool GOMarkovOperator12A::errorDetect(Messager *messager)
-{
-    if (this->GOMarkovOperator::errorDetect(messager))
-    {
-        return true;
-    }
-    GOMarkovOperator *op = this->getPrevOperator();
-    if (!GOMarkovOperatorFactory::isVectorOutput(op->TypedItem::type()))
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The input should be a vector.").arg(this->id());
-        messager->sendMessage(message);
-        return true;
-    }
-    if (this->output()->number() != op->markovOutputStatus()->size())
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of output should matches the length of the input vector.").arg(this->id());
-        messager->sendMessage(message);
-        return true;
-    }
-    return false;
-}
