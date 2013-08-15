@@ -22,22 +22,21 @@ GOMarkovOperator22A::~GOMarkovOperator22A()
 void GOMarkovOperator22A::calcOutputMarkovStatus(double time)
 {
     GOMarkovStatus *status1 = this->getPrevMarkovStatus();
-    GOMarkovOperator *prevOperator = this->getPrevSubOperator();
+    GOMarkovStatus *status2 = this->getPrevSubMarkovStatus();
     DoubleVector PS1 = status1->probabilityNormal();
+    DoubleVector PS2 = status2->probabilityNormal();
     DoubleVector lambdaS1 = status1->frequencyBreakdown();
+    DoubleVector lambdaS2 = status2->frequencyBreakdown();
     DoubleVector PC1 = this->markovStatus()->probabilityNormal();
     DoubleVector lambdaC1 = this->markovStatus()->frequencyBreakdown();
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        GOMarkovStatus *status2 = prevOperator->markovOutputStatus()->at(i);
-        DoubleVector PS2 = status2->probabilityNormal();
-        DoubleVector lambdaS2 = status2->frequencyBreakdown();
         double lambda = this->lambda2()->at(i);
         double mu = this->mu2()->at(i);
         DoubleVector PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
-        DoubleVector PR = PS1 * PC1 * PS2 + PS1 * PC2 * PS2;
+        DoubleVector PR = PS1 * PC1 * PS2.getValue(i) + PS1 * PC2 * PS2.getValue(i);
         DoubleVector QR = 1.0 - PR;
-        DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC1 + lambda;
+        DoubleVector lambdaR = lambdaS1 + lambdaS2.getValue(i) + lambdaC1 + lambda;
         DoubleVector muR = lambdaR * PR / QR;
         this->markovOutputStatus()->at(i)->setProbabilityNormal(PR);
         this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
@@ -48,16 +47,15 @@ void GOMarkovOperator22A::calcOutputMarkovStatus(double time)
 void GOMarkovOperator22A::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
     GOMarkovStatus *status1 = this->getPrevMarkovStatus();
-    GOMarkovOperator *prevOperator = this->getPrevSubOperator();
+    GOMarkovStatus *status2 = this->getPrevSubMarkovStatus();
     DoubleVector lambdaS1 = status1->frequencyBreakdown();
+    DoubleVector lambdaS2 = status2->frequencyBreakdown();
     DoubleVector lambdaC1 = this->markovStatus()->frequencyBreakdown();
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        GOMarkovStatus *status2 = prevOperator->markovOutputStatus()->at(i);
-        DoubleVector lambdaS2 = status2->frequencyBreakdown();
         double lambda = this->lambda2()->at(i);
         DoubleVector QR = 1.0 - PR[i];
-        DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC1 + lambda;
+        DoubleVector lambdaR = lambdaS1 + lambdaS2.getValue(i) + lambdaC1 + lambda;
         DoubleVector muR = lambdaR * PR[i] / QR;
         this->markovOutputStatus()->at(i)->setProbabilityNormal(PR[i]);
         this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
@@ -69,10 +67,10 @@ DoubleVector GOMarkovOperator22A::calcTempOutputMarkovStatus(double time, QVecto
 {
     DoubleVector PS1 = input[0];
     DoubleVector PC1 = this->markovStatus()->probabilityNormal();
-    DoubleVector PS2 = subInput[index];
+    DoubleVector PS2 = subInput[0];
     double lambda = this->lambda2()->at(index);
     double mu = this->mu2()->at(index);
     DoubleVector PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
-    DoubleVector PR = PS1 * PC1 * PS2 + PS1 * PC2 * PS2;
+    DoubleVector PR = PS1 * PC1 * PS2.getValue(index) + PS1 * PC2 * PS2.getValue(index);
     return PR;
 }
