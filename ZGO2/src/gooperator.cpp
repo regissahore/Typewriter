@@ -11,6 +11,7 @@
 GOOperator::GOOperator()
 {
     this->setRealID(0);
+    this->setName("");
     this->_input = new GOInput();
     this->_subInput = new GOInput();
     this->_output = new GOOutput();

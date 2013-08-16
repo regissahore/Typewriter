@@ -816,7 +816,7 @@ bool GOGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
     {
         for (int i = 0; i < path.list().size(); ++i)
         {
-            out << QString("<h2>%1</h2>").arg(path.endList().at(i)->id()) <<endl;
+            out << QString("<h2>%1</h2>").arg(path.endList().at(i).op->id()) <<endl;
             out << "<table>" << endl;
             out << "<tr>" << endl;
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;

@@ -203,12 +203,11 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                                ((int)event->scenePos().y() / 10) * 10));
     if (event->button() == Qt::LeftButton)
     {
+        this->activate(event);
+        this->sceneGO()->viewGO()->editor()->setModified(true);
         Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GOOperator);
         this->sceneGO()->sendMessage(message);
-        this->setType(this->TypedItem::type());
-        this->activate(event);
-        this->sceneGO()->viewGO()->editor()->setModified(true);
     }
     else if (event->button() == Qt::RightButton)
     {

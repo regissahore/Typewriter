@@ -641,23 +641,33 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GOP
                 GOMarkovOperator *op = (GOMarkovOperator*)list[i];
                 op->calcOutputMarkovStatus(1e10);
             }
+            QVector<GOPathSetSetSet::End> ends;
+            QVector<double> probabilityList;
             for (int i = 0; i < endList.size(); ++i)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
-                bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (op->markovOutputStatus()->at(j)->probabilityNormal() > 1.0 - 1e-8)
+                    if (op->output()->signal()->at(j)->size() == 0)
                     {
-                        tempPath.setTotalProbablity(normals[op->realID()]->at(j).getValue(0));
-                        flag = true;
-                        break;
+                        for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityNormal().length(); ++k)
+                        {
+                            if (op->markovOutputStatus()->at(j)->probabilityNormal().getValue(k) > 1.0 - 1e-8)
+                            {
+                                GOPathSetSetSet::End end;
+                                end.op = op;
+                                end.vectorIndex = k;
+                                ends.push_back(end);
+                                probabilityList.push_back(normals[op->realID()]->at(j).getValue(k));
+                            }
+                        }
                     }
                 }
-                if (flag)
-                {
-                    path.add(endList[i], tempPath.copy());
-                }
+            }
+            for (int i = 0; i < ends.size(); ++i)
+            {
+                tempPath.setTotalProbablity(probabilityList[i]);
+                path.add(ends[i].op, tempPath.copy(), ends[i].vectorIndex);
             }
         }
         return;
@@ -731,23 +741,33 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GOPath
                 GOMarkovOperator *op = (GOMarkovOperator*)list[i];
                 op->calcOutputMarkovStatus(1e10);
             }
+            QVector<GOPathSetSetSet::End> ends;
+            QVector<double> probabilityList;
             for (int i = 0; i < endList.size(); ++i)
             {
                 GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
-                bool flag = false;
                 for (int j = 0; j < list[i]->output()->number(); ++j)
                 {
-                    if (op->markovOutputStatus()->at(j)->probabilityBreakdown() > 1.0 - 1e-8)
+                    if (op->output()->signal()->at(j)->size() == 0)
                     {
-                        tempPath.setTotalProbablity(fails[op->realID()]->at(j).getValue(0));
-                        flag = true;
-                        break;
+                        for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityBreakdown().length(); ++k)
+                        {
+                            if (op->markovOutputStatus()->at(j)->probabilityBreakdown().getValue(k) > 1.0 - 1e-8)
+                            {
+                                GOPathSetSetSet::End end;
+                                end.op = op;
+                                end.vectorIndex = k;
+                                ends.push_back(end);
+                                probabilityList.push_back(fails[op->realID()]->at(j).getValue(k));
+                            }
+                        }
                     }
                 }
-                if (flag)
-                {
-                    cut.add(endList[i], tempPath.copy());
-                }
+            }
+            for (int i = 0; i < ends.size(); ++i)
+            {
+                tempPath.setTotalProbablity(probabilityList[i]);
+                cut.add(ends[i].op, tempPath.copy(), ends[i].vectorIndex);
             }
         }
         return;
@@ -913,7 +933,7 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
     {
         for (int i = 0; i < path.list().size(); ++i)
         {
-            out << QString("<h2>%1</h2>").arg(path.endList().at(i)->id()) <<endl;
+            out << QObject::tr("<h2>Output: %1 Index: %2</h2>").arg(path.endList().at(i).op->id(), path.endList().at(i).vectorIndex) <<endl;
             out << "<table>" << endl;
             out << "<tr>" << endl;
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;

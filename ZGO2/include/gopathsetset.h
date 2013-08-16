@@ -1,7 +1,7 @@
 #ifndef GOPATHSETSET_H
 #define GOPATHSETSET_H
 /**
- * The set for GOPathSet.
+ * 路径的集合，针对路径的阶数和操作符的ID进行排序。
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QVector>
