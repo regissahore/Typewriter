@@ -112,22 +112,22 @@ double GOPathSet::toMarkovImportance() const
 
 QString GOPathSet::toProbabilityString() const
 {
-    return QString("%1").arg(this->toProbability());
+    return QString::number(this->toProbability(), 'f', 10);
 }
 
 QString GOPathSet::toMarkovProbabilityString() const
 {
-    return QString("%1").arg(this->toMarkovProbability());
+    return QString::number(this->toMarkovProbability(), 'f', 10);
 }
 
 QString GOPathSet::toImportanceString() const
 {
-    return QString("%1").arg(this->toImportance());
+    return QString::number(this->toImportance(), 'f', 10);
 }
 
 QString GOPathSet::toMarkovImportanceString() const
 {
-    return QString("%1").arg(this->toMarkovImportance());
+    return QString::number(this->toMarkovImportance(), 'f', 10);
 }
 
 QString GOPathSet::toNameString()

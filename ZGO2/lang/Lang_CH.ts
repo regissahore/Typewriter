@@ -722,27 +722,32 @@
 <context>
     <name>ParameterGOMarkovChart</name>
     <message>
-        <location filename="../src/parametergomarkovchart.cpp" line="23"/>
+        <location filename="../src/parametergomarkovchart.cpp" line="24"/>
         <source>Signal</source>
         <translation>信号</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovchart.cpp" line="36"/>
+        <location filename="../src/parametergomarkovchart.cpp" line="37"/>
+        <source>Vector Index</source>
+        <translation>向量索引</translation>
+    </message>
+    <message>
+        <location filename="../src/parametergomarkovchart.cpp" line="47"/>
         <source>Display P</source>
         <translation>显示可用度</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovchart.cpp" line="46"/>
+        <location filename="../src/parametergomarkovchart.cpp" line="57"/>
         <source>Display Q</source>
         <translation>显示不可用度</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovchart.cpp" line="56"/>
+        <location filename="../src/parametergomarkovchart.cpp" line="67"/>
         <source>Display Lambda</source>
         <translation>显示故障率</translation>
     </message>
     <message>
-        <location filename="../src/parametergomarkovchart.cpp" line="66"/>
+        <location filename="../src/parametergomarkovchart.cpp" line="77"/>
         <source>Display Mu</source>
         <translation>显示维修率</translation>
     </message>
@@ -1317,35 +1322,35 @@
     <message>
         <location filename="../src/gograph.cpp" line="690"/>
         <location filename="../src/gograph.cpp" line="796"/>
-        <location filename="../src/gomarkovgraph.cpp" line="852"/>
-        <location filename="../src/gomarkovgraph.cpp" line="963"/>
+        <location filename="../src/gomarkovgraph.cpp" line="724"/>
+        <location filename="../src/gomarkovgraph.cpp" line="835"/>
         <source>Can&apos;t open file </source>
         <translation>无法打开文件</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="721"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="187"/>
-        <location filename="../src/gomarkovgraph.cpp" line="883"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="217"/>
+        <location filename="../src/gomarkovgraph.cpp" line="755"/>
         <source>Analysis Result</source>
         <translation>分析结果</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="734"/>
-        <location filename="../src/gomarkovgraph.cpp" line="896"/>
+        <location filename="../src/gomarkovgraph.cpp" line="768"/>
         <source>Operator</source>
         <translation>操作符</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="735"/>
-        <location filename="../src/gomarkovgraph.cpp" line="897"/>
+        <location filename="../src/gomarkovgraph.cpp" line="769"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="741"/>
         <location filename="../src/gograph.cpp" line="756"/>
-        <location filename="../src/gomarkovgraph.cpp" line="903"/>
-        <location filename="../src/gomarkovgraph.cpp" line="926"/>
+        <location filename="../src/gomarkovgraph.cpp" line="775"/>
+        <location filename="../src/gomarkovgraph.cpp" line="798"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
@@ -1353,9 +1358,9 @@
         <location filename="../src/gograph.cpp" line="742"/>
         <location filename="../src/gograph.cpp" line="758"/>
         <location filename="../src/gograph.cpp" line="832"/>
-        <location filename="../src/gomarkovgraph.cpp" line="904"/>
-        <location filename="../src/gomarkovgraph.cpp" line="927"/>
-        <location filename="../src/gomarkovgraph.cpp" line="999"/>
+        <location filename="../src/gomarkovgraph.cpp" line="776"/>
+        <location filename="../src/gomarkovgraph.cpp" line="799"/>
+        <location filename="../src/gomarkovgraph.cpp" line="871"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
@@ -1366,37 +1371,37 @@
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="813"/>
-        <location filename="../src/gomarkovgraph.cpp" line="980"/>
+        <location filename="../src/gomarkovgraph.cpp" line="852"/>
         <source>Path or cut is not exist. </source>
         <translation>路集或割集不存在。</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="822"/>
-        <location filename="../src/gomarkovgraph.cpp" line="989"/>
+        <location filename="../src/gomarkovgraph.cpp" line="861"/>
         <source>No.</source>
         <translation>No.</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="823"/>
-        <location filename="../src/gomarkovgraph.cpp" line="990"/>
+        <location filename="../src/gomarkovgraph.cpp" line="862"/>
         <source>Order</source>
         <translation>阶数</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="824"/>
-        <location filename="../src/gomarkovgraph.cpp" line="991"/>
+        <location filename="../src/gomarkovgraph.cpp" line="863"/>
         <source>ID List</source>
         <translation>编号</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="825"/>
-        <location filename="../src/gomarkovgraph.cpp" line="992"/>
+        <location filename="../src/gomarkovgraph.cpp" line="864"/>
         <source>Name</source>
         <translation>名称</translation>
     </message>
     <message>
         <location filename="../src/gograph.cpp" line="834"/>
-        <location filename="../src/gomarkovgraph.cpp" line="1001"/>
+        <location filename="../src/gomarkovgraph.cpp" line="873"/>
         <source>Importance</source>
         <translation>重要度</translation>
     </message>
@@ -1406,32 +1411,32 @@
         <translation>文字</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="238"/>
+        <location filename="../src/toolgooperator.cpp" line="249"/>
         <source>Input Number</source>
         <translation>输入数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="239"/>
+        <location filename="../src/toolgooperator.cpp" line="250"/>
         <source>The number of input: </source>
         <translation>输入的数量：</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="263"/>
+        <location filename="../src/toolgooperator.cpp" line="277"/>
         <source>Output Number</source>
         <translation>输出数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="264"/>
+        <location filename="../src/toolgooperator.cpp" line="278"/>
         <source>The number of output: </source>
         <translation>输出的数量：</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="284"/>
+        <location filename="../src/toolgooperator.cpp" line="301"/>
         <source>Input and Output Number</source>
         <translation>输入和输出数量</translation>
     </message>
     <message>
-        <location filename="../src/toolgooperator.cpp" line="285"/>
+        <location filename="../src/toolgooperator.cpp" line="302"/>
         <source>The number of input and output: </source>
         <translation>输入和输出的数量:</translation>
     </message>
@@ -1456,21 +1461,26 @@
         <translation> : %1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="67"/>
+        <location filename="../src/gomarkovgraph.cpp" line="69"/>
         <source>Error: Graph </source>
         <translation>错误: GO图</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="914"/>
-        <location filename="../src/gomarkovgraph.cpp" line="933"/>
+        <location filename="../src/gomarkovgraph.cpp" line="786"/>
+        <location filename="../src/gomarkovgraph.cpp" line="805"/>
         <source>Failure Rate</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovgraph.cpp" line="918"/>
-        <location filename="../src/gomarkovgraph.cpp" line="938"/>
+        <location filename="../src/gomarkovgraph.cpp" line="790"/>
+        <location filename="../src/gomarkovgraph.cpp" line="810"/>
         <source>Repair Rate</source>
         <translation>维修率</translation>
+    </message>
+    <message>
+        <location filename="../src/gomarkovgraph.cpp" line="858"/>
+        <source>&lt;h2&gt;Operator: %1 Output: %2 Index: %3&lt;/h2&gt;</source>
+        <translation type="unfinished">&lt;h2&gt;操作符：%1  输出：%2  向量索引：%3&lt;/h2&gt;</translation>
     </message>
     <message>
         <location filename="../src/scenego.cpp" line="406"/>
@@ -1489,41 +1499,41 @@
         <translation>输入割集阶数：</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="191"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="237"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="324"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="346"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="368"/>
-        <location filename="../src/itemgomarkovchart.cpp" line="390"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="221"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="289"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="329"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="351"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="373"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="395"/>
         <source>Time</source>
         <translation>时间</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="192"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="222"/>
         <source>Property</source>
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="202"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="250"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="232"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="302"/>
         <source>Probability Normal</source>
         <translation>可用度</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="210"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="251"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="245"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="303"/>
         <source>Probability Breakdown</source>
         <translation>不可用度</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="218"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="252"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="258"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="304"/>
         <source>Frequency Breakdown</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovchartdata.cpp" line="226"/>
-        <location filename="../src/gomarkovchartdata.cpp" line="253"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="271"/>
+        <location filename="../src/gomarkovchartdata.cpp" line="305"/>
         <source>Frequency Repair</source>
         <translation>维修率</translation>
     </message>
@@ -1538,8 +1548,8 @@
         <translation>等效不存在。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="253"/>
-        <location filename="../src/gomarkovoperator.cpp" line="263"/>
+        <location filename="../src/gomarkovoperator.cpp" line="261"/>
+        <location filename="../src/gomarkovoperator.cpp" line="271"/>
         <location filename="../src/gomarkovoperator11.cpp" line="277"/>
         <location filename="../src/gomarkovoperator11.cpp" line="284"/>
         <location filename="../src/gomarkovoperator22.cpp" line="52"/>
@@ -1547,59 +1557,59 @@
         <translation>错误: 操作符</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="253"/>
+        <location filename="../src/gomarkovoperator.cpp" line="261"/>
         <source>-%1 does not have input at %2.</source>
         <translation>-%1 在%2没有输入。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="263"/>
+        <location filename="../src/gomarkovoperator.cpp" line="271"/>
         <source>-%1 does not have sub input at %2.</source>
         <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="408"/>
+        <location filename="../src/gomarkovoperator.cpp" line="416"/>
         <location filename="../src/gomarkovoperator19.cpp" line="92"/>
         <source>Lambda 1: %1</source>
         <translation>故障率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="409"/>
+        <location filename="../src/gomarkovoperator.cpp" line="417"/>
         <location filename="../src/gomarkovoperator19.cpp" line="93"/>
         <source>    Mu 1: %1</source>
         <translation>维修率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="414"/>
+        <location filename="../src/gomarkovoperator.cpp" line="422"/>
         <location filename="../src/gomarkovoperator19.cpp" line="98"/>
         <source>Lambda 2: %1</source>
         <translation>故障率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="415"/>
+        <location filename="../src/gomarkovoperator.cpp" line="423"/>
         <location filename="../src/gomarkovoperator19.cpp" line="99"/>
         <source>    Mu 2: %1</source>
         <translation>维修率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="420"/>
+        <location filename="../src/gomarkovoperator.cpp" line="428"/>
         <location filename="../src/gomarkovoperator19.cpp" line="104"/>
         <source>Lambda 3: %1</source>
         <translation>故障率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="421"/>
+        <location filename="../src/gomarkovoperator.cpp" line="429"/>
         <location filename="../src/gomarkovoperator19.cpp" line="105"/>
         <source>    Mu 3: %1</source>
         <translation>维修率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="426"/>
+        <location filename="../src/gomarkovoperator.cpp" line="434"/>
         <location filename="../src/gomarkovoperator19.cpp" line="110"/>
         <source>Lambda 4: %1</source>
         <translation>故障率4：%1</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator.cpp" line="427"/>
+        <location filename="../src/gomarkovoperator.cpp" line="435"/>
         <location filename="../src/gomarkovoperator19.cpp" line="111"/>
         <source>    Mu 4: %1</source>
         <translation>维修率4：%1</translation>
@@ -1652,22 +1662,22 @@
         <translation type="obsolete">-%1 辅助输入应该是一个向量。</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="250"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="255"/>
         <source>Normal Probability</source>
         <translation>可用度</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="266"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="271"/>
         <source>Failure Probability</source>
         <translation>不可用度</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="282"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="287"/>
         <source>Lambda</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/itemgomarkovchart.cpp" line="298"/>
+        <location filename="../src/itemgomarkovchart.cpp" line="303"/>
         <source>Mu</source>
         <translation>维修率</translation>
     </message>
@@ -1941,7 +1951,7 @@
         <translation>分割点</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="383"/>
+        <location filename="../form/toolboxgomarkov.ui" line="387"/>
         <source>Two State</source>
         <translation>两状态单元</translation>
     </message>
@@ -1950,7 +1960,7 @@
         <translation type="obsolete">两故障单元</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="434"/>
+        <location filename="../form/toolboxgomarkov.ui" line="438"/>
         <source>OR</source>
         <translation>或门</translation>
     </message>
@@ -1959,12 +1969,12 @@
         <translation type="obsolete">触发发生器</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="485"/>
+        <location filename="../form/toolboxgomarkov.ui" line="489"/>
         <source>Signal</source>
         <translation>单信号发生器</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="536"/>
+        <location filename="../form/toolboxgomarkov.ui" line="540"/>
         <source>Open</source>
         <translation>有条件而导通的元件</translation>
     </message>
@@ -1977,104 +1987,104 @@
         <translation type="obsolete">功能操作器</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="584"/>
+        <location filename="../form/toolboxgomarkov.ui" line="588"/>
         <source>Breakdown Feedback</source>
         <translation>有停工相关反馈操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="629"/>
+        <location filename="../form/toolboxgomarkov.ui" line="633"/>
         <source>No Breakdown Feedback</source>
         <translation>无停工相关反馈操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="670"/>
+        <location filename="../form/toolboxgomarkov.ui" line="674"/>
         <source>9B1</source>
         <translation>9B1</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="711"/>
+        <location filename="../form/toolboxgomarkov.ui" line="715"/>
         <source>9B2</source>
         <translation>9B2</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="759"/>
+        <location filename="../form/toolboxgomarkov.ui" line="763"/>
         <source>AND</source>
         <translation>与门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="810"/>
-        <location filename="../form/toolboxgomarkov.ui" line="854"/>
+        <location filename="../form/toolboxgomarkov.ui" line="814"/>
+        <location filename="../form/toolboxgomarkov.ui" line="858"/>
         <source>M Take K</source>
         <translation>M取K门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="892"/>
+        <location filename="../form/toolboxgomarkov.ui" line="900"/>
         <source>State Separation</source>
         <translation>状态分离器</translation>
     </message>
     <message utf8="true">
-        <location filename="../form/toolboxgomarkov.ui" line="937"/>
+        <location filename="../form/toolboxgomarkov.ui" line="945"/>
         <source>Multiplex Input and Output (×)</source>
         <translation>多路输入输出器 (“×”)</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="982"/>
+        <location filename="../form/toolboxgomarkov.ui" line="990"/>
         <source>Multiplex Input and Output (+)</source>
         <translation>多路输入输出器 (“+”)</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1027"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1035"/>
         <source>Corresponding Gate</source>
         <translation>对应门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1069"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1077"/>
         <source>Parallel Computing</source>
         <translation>整合门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1111"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1119"/>
         <source>Restore Open</source>
         <translation>要求恢复已导通元件</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1153"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1161"/>
         <source>Restore Close</source>
         <translation>要求恢复已关断元件</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1195"/>
-        <location filename="../form/toolboxgomarkov.ui" line="1237"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1203"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1245"/>
         <source>Backup Gate</source>
         <translation>备用门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1279"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1287"/>
         <source>Overpressure Protection</source>
         <translation>超压（流）保护门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1321"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1329"/>
         <source>NOT Gate</source>
         <translation>非门控制</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1363"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1371"/>
         <source>Overall Feedback</source>
         <translation>反馈计算门</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1405"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1413"/>
         <source>M Bits N Through</source>
         <translation>M位N通阀操作符</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1447"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1455"/>
         <source>M Bits N Through 2</source>
         <translation>M位N通阀操作符 2</translation>
     </message>
     <message>
-        <location filename="../form/toolboxgomarkov.ui" line="1489"/>
+        <location filename="../form/toolboxgomarkov.ui" line="1497"/>
         <source>Combination</source>
         <translation>工况组合器</translation>
     </message>
