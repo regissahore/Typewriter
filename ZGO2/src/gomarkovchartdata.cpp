@@ -202,7 +202,12 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Probability Normal") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << probabilities[j][i].toString(0) << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << probabilities[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -210,7 +215,12 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Probability Breakdown") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << (1.0 - probabilities[j][i]).toString(0) << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << (1.0 - probabilities[j][i]).toString(k) << " ";
+            }
+            out << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -218,7 +228,12 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Frequency Breakdown") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << lambdas[j][i].toString(0) << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << lambdas[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
         }
         out << "</tr>" << endl;
         out << "<tr>" << endl;
@@ -226,11 +241,18 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Frequency Repair") << "</td>" << endl;
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << mus[j][i].toString(0) << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << mus[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }
     out << "</table>" << endl;
+
+    out << "<br/><hr/><br/>" << endl;
 
     out << "<table>" << endl;
     out << "<tr style='text-align: center;'>" << endl;
@@ -259,10 +281,30 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << times[i] << "</td>";
         for (int j = 0; j < names.size(); ++j)
         {
-            out << "<td>" << probabilities[j][i].toString(0) << "</td>" << endl;
-            out << "<td>" << (1.0 - probabilities[j][i]).toString(0) << "</td>" << endl;
-            out << "<td>" << lambdas[j][i].toString(0) << "</td>" << endl;
-            out << "<td>" << mus[j][i].toString(0) << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << probabilities[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << lambdas[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << lambdas[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
+            out << "<td>";
+            for (int k = 0; k < probabilities[j][i].length(); ++k)
+            {
+                out << mus[j][i].toString(k) << " ";
+            }
+            out << "</td>" << endl;
         }
         out << "</tr>" << endl;
     }
