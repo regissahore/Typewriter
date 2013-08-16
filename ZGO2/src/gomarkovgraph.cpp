@@ -597,69 +597,30 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GOP
 {
     if (number == order)
     {
-        QVector<GOOperator*> endList;
         for (int i = 0; i < list.size(); ++i)
         {
+            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+            op->calcOutputMarkovStatus(1e10);
+        }
+        QVector<GOPathSetSetSet::End> ends;
+        QVector<double> probabilityList;
+        for (int i = 0; i < list.size(); ++i)
+        {
+            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
             for (int j = 0; j < list[i]->output()->number(); ++j)
             {
-                if (list[i]->output()->signal()->at(j)->size() == 0)
+                if (op->output()->signal()->at(j)->size() == 0)
                 {
-                    endList.push_back(list[i]);
-                    break;
-                }
-            }
-        }
-        bool flag = false;
-        if (endList.size() > path.endList().size())
-        {
-            flag = true;
-        }
-        else
-        {
-            for (int i = 0; i < path.list().size(); ++i)
-            {
-                bool contain = false;
-                for (int j = 0; j < path.list().at(i)->list().size(); ++j)
-                {
-                    if (tempPath.isContain(path.list().at(i)->list().at(j)))
+                    for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityNormal().length(); ++k)
                     {
-                        contain = true;
-                        break;
-                    }
-                }
-                if (!contain)
-                {
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        if (flag)
-        {
-            for (int i = 0; i < list.size(); ++i)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-                op->calcOutputMarkovStatus(1e10);
-            }
-            QVector<GOPathSetSetSet::End> ends;
-            QVector<double> probabilityList;
-            for (int i = 0; i < endList.size(); ++i)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
-                for (int j = 0; j < list[i]->output()->number(); ++j)
-                {
-                    if (op->output()->signal()->at(j)->size() == 0)
-                    {
-                        for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityNormal().length(); ++k)
+                        if (op->markovOutputStatus()->at(j)->probabilityNormal().getValue(k) > 1.0 - 1e-8)
                         {
-                            if (op->markovOutputStatus()->at(j)->probabilityNormal().getValue(k) > 1.0 - 1e-8)
-                            {
-                                GOPathSetSetSet::End end;
-                                end.op = op;
-                                end.vectorIndex = k;
-                                ends.push_back(end);
-                                probabilityList.push_back(normals[op->realID()]->at(j).getValue(k));
-                            }
+                            GOPathSetSetSet::End end;
+                            end.op = op;
+                            end.outputIndex = j;
+                            end.vectorIndex = k;
+                            ends.push_back(end);
+                            probabilityList.push_back(normals[op->realID()]->at(j).getValue(k));
                         }
                     }
                 }
@@ -667,7 +628,7 @@ void GOMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GOP
             for (int i = 0; i < ends.size(); ++i)
             {
                 tempPath.setTotalProbablity(probabilityList[i]);
-                path.add(ends[i].op, tempPath.copy(), ends[i].vectorIndex);
+                path.add(ends[i].op, tempPath.copy(), ends[i].outputIndex, ends[i].vectorIndex);
             }
         }
         return;
@@ -697,78 +658,39 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GOPath
 {
     if (number == order)
     {
-        QVector<GOOperator*> endList;
         for (int i = 0; i < list.size(); ++i)
         {
+            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+            op->calcOutputMarkovStatus(1e10);
+        }
+        QVector<GOPathSetSetSet::End> ends;
+        QVector<double> probabilityList;
+        for (int i = 0; i < list.size(); ++i)
+        {
+            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
             for (int j = 0; j < list[i]->output()->number(); ++j)
             {
-                if (list[i]->output()->signal()->at(j)->size() == 0)
+                if (op->output()->signal()->at(j)->size() == 0)
                 {
-                    endList.push_back(list[i]);
-                    break;
-                }
-            }
-        }
-        bool flag = false;
-        if (endList.size() > cut.endList().size())
-        {
-            flag = true;
-        }
-        else
-        {
-            for (int i = 0; i < cut.list().size(); ++i)
-            {
-                bool contain = false;
-                for (int j = 0; j < cut.list().at(i)->list().size(); ++j)
-                {
-                    if (tempPath.isContain(cut.list().at(i)->list().at(j)))
+                    for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityBreakdown().length(); ++k)
                     {
-                        contain = true;
-                        break;
-                    }
-                }
-                if (!contain)
-                {
-                    flag = true;
-                    break;
-                }
-            }
-        }
-        if (flag)
-        {
-            for (int i = 0; i < list.size(); ++i)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-                op->calcOutputMarkovStatus(1e10);
-            }
-            QVector<GOPathSetSetSet::End> ends;
-            QVector<double> probabilityList;
-            for (int i = 0; i < endList.size(); ++i)
-            {
-                GOMarkovOperator *op = (GOMarkovOperator*)endList[i];
-                for (int j = 0; j < list[i]->output()->number(); ++j)
-                {
-                    if (op->output()->signal()->at(j)->size() == 0)
-                    {
-                        for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityBreakdown().length(); ++k)
+                        if (op->markovOutputStatus()->at(j)->probabilityBreakdown().getValue(k) > 1.0 - 1e-8)
                         {
-                            if (op->markovOutputStatus()->at(j)->probabilityBreakdown().getValue(k) > 1.0 - 1e-8)
-                            {
-                                GOPathSetSetSet::End end;
-                                end.op = op;
-                                end.vectorIndex = k;
-                                ends.push_back(end);
-                                probabilityList.push_back(fails[op->realID()]->at(j).getValue(k));
-                            }
+                            GOPathSetSetSet::End end;
+                            end.op = op;
+                            end.outputIndex = j;
+                            end.vectorIndex = k;
+                            ends.push_back(end);
+                            probabilityList.push_back(fails[op->realID()]->at(j).getValue(k));
                         }
                     }
                 }
             }
-            for (int i = 0; i < ends.size(); ++i)
-            {
-                tempPath.setTotalProbablity(probabilityList[i]);
-                cut.add(ends[i].op, tempPath.copy(), ends[i].vectorIndex);
-            }
+        }
+        for (int i = 0; i < ends.size(); ++i)
+        {
+            tempPath.setTotalProbablity(probabilityList[i]);
+            cut.add(ends[i].op, tempPath.copy(), ends[i].outputIndex, ends[i].vectorIndex);
         }
         return;
     }
@@ -933,7 +855,7 @@ bool GOMarkovGraph::saveAsHTML(const QString filePath, GOPathSetSetSet path)
     {
         for (int i = 0; i < path.list().size(); ++i)
         {
-            out << QObject::tr("<h2>Output: %1 Index: %2</h2>").arg(path.endList().at(i).op->id(), path.endList().at(i).vectorIndex) <<endl;
+            out << QObject::tr("<h2>Operator: %1 Output: %2 Index: %3</h2>").arg(path.endList().at(i).op->id()).arg(path.endList().at(i).outputIndex + 1).arg(path.endList().at(i).vectorIndex + 1) <<endl;
             out << "<table>" << endl;
             out << "<tr>" << endl;
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;

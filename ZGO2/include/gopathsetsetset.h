@@ -16,6 +16,7 @@ public:
     struct End
     {
         GOOperator *op;
+        int outputIndex;
         int vectorIndex;
         friend bool operator ==(const End &a, const End &b);
         friend bool operator <(const End &a, const End &b);
@@ -24,7 +25,7 @@ public:
 
     GOPathSetSetSet();
     virtual ~GOPathSetSetSet();
-    void add(GOOperator *endOperator, GOPathSet* path, int vectorIndex = 0);
+    void add(GOOperator *endOperator, GOPathSet* path, int outputIndex = 0, int vectorIndex = 0);
     QVector<GOPathSetSet*> list() const;
     QVector<End> endList() const;
     void sort();

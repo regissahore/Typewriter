@@ -1,5 +1,6 @@
 #include "gopathsetsetset.h"
 #include "gopathsetset.h"
+#include "gopathset.h"
 #include "gooperator.h"
 
 GOPathSetSetSet::GOPathSetSetSet()
@@ -12,10 +13,11 @@ GOPathSetSetSet::~GOPathSetSetSet()
     this->_endList.clear();
 }
 
-void GOPathSetSetSet::add(GOOperator *endOperator, GOPathSet* path, int vectorIndex)
+void GOPathSetSetSet::add(GOOperator *endOperator, GOPathSet* path, int outputIndex, int vectorIndex)
 {
     End end;
     end.op = endOperator;
+    end.outputIndex = outputIndex;
     end.vectorIndex = vectorIndex;
     int index = -1;
     for (int i = 0; i < this->_endList.size(); ++i)
@@ -32,7 +34,19 @@ void GOPathSetSetSet::add(GOOperator *endOperator, GOPathSet* path, int vectorIn
         this->_endList.push_back(end);
         this->_list.push_back(new GOPathSetSet());
     }
-    this->_list[index]->add(path);
+    bool flag = true;
+    for (int i = 0; i < this->_list[index]->list().size(); ++i)
+    {
+        if (path->isContain(this->_list[index]->list().at(i)))
+        {
+            flag = false;
+            break;
+        }
+    }
+    if (flag)
+    {
+        this->_list[index]->add(path);
+    }
 }
 
 QVector<GOPathSetSet*> GOPathSetSetSet::list() const
@@ -71,14 +85,18 @@ void GOPathSetSetSet::sort()
 
 bool operator ==(const GOPathSetSetSet::End &a, const GOPathSetSetSet::End &b)
 {
-    return a.op == b.op && a.vectorIndex == b.vectorIndex;
+    return a.op == b.op && a.outputIndex == b.outputIndex && a.vectorIndex == b.vectorIndex;
 }
 
 bool operator <(const GOPathSetSetSet::End &a, const GOPathSetSetSet::End &b)
 {
     if (a.op->id() == b.op->id())
     {
-        return a.vectorIndex < b.vectorIndex;
+        if (a.outputIndex == b.outputIndex)
+        {
+            return a.vectorIndex < b.vectorIndex;
+        }
+        return a.outputIndex < b.outputIndex;
     }
     return a.op->id() < b.op->id();
 }
@@ -87,7 +105,11 @@ bool operator >(const GOPathSetSetSet::End &a, const GOPathSetSetSet::End &b)
 {
     if (a.op->id() == b.op->id())
     {
-        return a.vectorIndex > b.vectorIndex;
+        if (a.outputIndex == b.outputIndex)
+        {
+            return a.vectorIndex > b.vectorIndex;
+        }
+        return a.outputIndex > b.outputIndex;
     }
     return a.op->id() > b.op->id();
 }
