@@ -2,6 +2,7 @@
 #include <QFileInfo>
 #include <QDesktopServices>
 #include <QUrl>
+#include <QDate>
 #include "gomainwindow.h"
 #include "ui_gomainwindow.h"
 #include "dialogabout.h"
@@ -13,11 +14,16 @@ GOMainWindow::GOMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->_close = false;
-    this->setGeometry(100, 100, 800, 600);
+    this->setGeometry(100, 100, 1024, 768);
+    this->showMaximized();
     this->_messageController = new MessageController();
     this->initDock();
     this->initEditor();
     this->initToolBar();
+    if (QDate::currentDate().year() > 2013)
+    {
+        return;
+    }
     this->bindMessage(this->_messageController);
 }
 
