@@ -1,4 +1,5 @@
 #include <cstdio>
+#include <algorithm>
 #include <QString>
 #include <QObject>
 #include <QFile>
@@ -25,6 +26,7 @@
 #include "gopathsetset.h"
 #include "gopathsetsetset.h"
 #include "gomarkovoperator19.h"
+using namespace std;
 
 GOMarkovGraph::GOMarkovGraph() : GOGraph()
 {
@@ -157,18 +159,22 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         return 0L;
     }
     GOMarkovChartData *data = new GOMarkovChartData();
-    for (int i = 0; i < this->_operator.size(); ++i)
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
     {
-        GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
+        GOMarkovOperator *op = (GOMarkovOperator*)list[i];
         op->initOutputMarkovStatus();
-        if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
-        {
-            continue;
-        }
-        int outputNum = op->markovOutputStatus()->size();
+        int outputNum = op->output()->number();
         if (outputNum == 1)
         {
-            data->names.push_back(QString("%1").arg(this->_operator[i]->id()));
+            if (op->isGlobalFeedback())
+            {
+                data->names.push_back(QString("%1'").arg(op->id()));
+            }
+            else
+            {
+                data->names.push_back(QString("%1").arg(op->id()));
+            }
             data->probabilities.push_back(QVector<DoubleVector>());
             data->lambdas.push_back(QVector<DoubleVector>());
             data->mus.push_back(QVector<DoubleVector>());
@@ -177,7 +183,14 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         {
             for (int j = 0; j < outputNum; ++j)
             {
-                data->names.push_back(QString("%1 (%2)").arg(this->_operator[i]->id()).arg(j + 1));
+                if (op->isGlobalFeedback())
+                {
+                    data->names.push_back(QString("%1' (%2)").arg(op->id()).arg(j + 1));
+                }
+                else
+                {
+                    data->names.push_back(QString("%1 (%2)").arg(op->id()).arg(j + 1));
+                }
                 data->probabilities.push_back(QVector<DoubleVector>());
                 data->lambdas.push_back(QVector<DoubleVector>());
                 data->mus.push_back(QVector<DoubleVector>());
@@ -190,14 +203,14 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         data->times.push_back(time);
         // Record initial value of lamda.
         QVector<DoubleVector> lamdas;
-        for (int j = 0; j < this->_operator.size(); ++j)
+        for (int j = 0; j < list.size(); ++j)
         {
-            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
+            GOMarkovOperator *op = (GOMarkovOperator*)list[j];
             op->initMarkovStatus(time);
         }
-        for (int j = 0; j < this->_operator.size(); ++j)
+        for (int j = 0; j < list.size(); ++j)
         {
-            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
+            GOMarkovOperator *op = (GOMarkovOperator*)list[j];
             lamdas.push_back(op->markovStatus()->frequencyBreakdown());
         }
         // Calculate without common cause.
@@ -216,13 +229,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             delete data;
             return 0L;
         }
-        for (int j = 0, index = 0; j < this->_operator.size(); ++j)
+        for (int j = 0, index = 0; j < list.size(); ++j)
         {
-            GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[j];
-            if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
-            {
-                continue;
-            }
+            GOMarkovOperator* op = (GOMarkovOperator*)list[j];
             int outputNum = op->markovOutputStatus()->size();
             for (int k = 0; k < outputNum; ++k)
             {
@@ -241,14 +250,10 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 op->markovStatus()->setProbabilityBreakdown(1.0);
             }
             this->calcAccumulativeProbability(time);
-            for (int k = 0; k < this->_operator.size(); ++k)
+            for (int k = 0; k < list.size(); ++k)
             {
-                GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
-                {
-                    continue;
-                }
-                for (int l = 0; l < this->_operator[k]->output()->number(); ++l)
+                GOMarkovOperator* op = (GOMarkovOperator*)list[k];
+                for (int l = 0; l < list[k]->output()->number(); ++l)
                 {
                     r00.push_back(op->markovOutputStatus()->at(l)->probabilityNormal());
                 }
@@ -261,13 +266,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 op->markovStatus()->setProbabilityNormal(1.0);
             }
             this->calcAccumulativeProbability(time);
-            for (int k = 0; k < this->_operator.size(); ++k)
+            for (int k = 0; k < list.size(); ++k)
             {
-                GOMarkovOperator* op = (GOMarkovOperator*)this->_operator[k];
-                if (op->isGlobalFeedback() && op->TypedItem::type() != GOMarkovOperatorFactory::Operator_Type_21)
-                {
-                    continue;
-                }
+                GOMarkovOperator* op = (GOMarkovOperator*)list[k];
                 int outputNum = op->markovOutputStatus()->size();
                 for (int l = 0; l < outputNum; ++l)
                 {
@@ -286,9 +287,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             }
         }
         // Restore the lamda value.
-        for (int j = 0; j < this->_operator.size(); ++j)
+        for (int j = 0; j < list.size(); ++j)
         {
-            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
+            GOMarkovOperator *op = (GOMarkovOperator*)list[j];
             op->markovStatus()->setFrequencyBreakdown(lamdas[j]);
         }
     }
@@ -440,69 +441,6 @@ bool GOMarkovGraph::isContainCycleDfs(QVector<bool> &visit,
         }
     }
     return false;
-}
-
-QVector<GOOperator*> GOMarkovGraph::getTopologicalOrder()
-{
-    QVector<GOOperator*> topList;
-    QVector<bool> outside;
-    QVector<int> inputNumber;
-    for (int i = 0; i < this->_operator.size(); ++i)
-    {
-        outside.push_back(false);
-        int carry = 0;
-        GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
-        for (int j = 0; j < op->input()->number(); ++j)
-        {
-            if (op->getPrevOperator(j)->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_21)
-            {
-                ++carry;
-            }
-        }
-        for (int j = 0; j < op->subInput()->number(); ++j)
-        {
-            if (op->getPrevSubOperator(j)->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_21)
-            {
-                ++carry;
-            }
-        }
-        inputNumber.push_back(this->_operator[i]->input()->number() + this->_operator[i]->subInput()->number() - carry);
-    }
-    while (topList.size() != this->_operator.size())
-    {
-        for (int i = 0; i < this->_operator.size(); ++i)
-        {
-            if (inputNumber[i] == 0 && !outside[i])
-            {
-                topList.push_back(this->_operator[i]);
-                outside[i] = true;
-                for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
-                {
-                    for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
-                    {
-                        GOOperator *next = this->_operator[i]->output()->signal()->at(j)->at(k)->next(this->_operator[i]);
-                        bool appear = false;
-                        for (int l = 0; l < k; ++l)
-                        {
-                            GOOperator *history = this->_operator[i]->output()->signal()->at(j)->at(l)->next(this->_operator[i]);
-                            if (next == history)
-                            {
-                                appear = true;
-                                break;
-                            }
-                        }
-                        if (appear)
-                        {
-                            continue;
-                        }
-                        int index = this->_operatorPos[next];
-                        --inputNumber[index];
-                    }
-                }
-            }
-        }
-    }
-    return topList;
 }
 
 QVector< QVector<GOGraph::Output> > GOMarkovGraph::getAncestorList(GOOperator *op, int outputIndex, int signalIndex)
