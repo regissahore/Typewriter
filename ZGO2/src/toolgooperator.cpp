@@ -144,6 +144,10 @@ void ToolGOOperator::setType(const int type)
 
 void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
 {
+    if (this->_isActivated)
+    {
+        this->setType(this->TypedItem::type());
+    }
     this->_isActivated = true;
     this->_GOOperator->setPos(event->scenePos());
     switch (this->_GOOperator->model()->type())
@@ -180,16 +184,19 @@ void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
-                               ((int)event->scenePos().y() / 10) * 10));
-    if (this->_isActivated)
+    if (this->_GOOperator != 0L)
     {
-        this->_GOOperator->setVisible(true);
-        this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
-    }
-    else
-    {
-        this->activate(event);
+        event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                                   ((int)event->scenePos().y() / 10) * 10));
+        if (this->_isActivated)
+        {
+            this->_GOOperator->setVisible(true);
+            this->_GOOperator->setPos(event->scenePos().x(), event->scenePos().y());
+        }
+        else
+        {
+            this->activate(event);
+        }
     }
 }
 
@@ -199,21 +206,21 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
  */
 void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
-                               ((int)event->scenePos().y() / 10) * 10));
-    if (event->button() == Qt::LeftButton)
+    if (this->_GOOperator != 0L)
     {
-        this->activate(event);
-        this->sceneGO()->viewGO()->editor()->setModified(true);
-        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
-        message->setMessage(this->_GOOperator);
-        this->sceneGO()->sendMessage(message);
-    }
-    else if (event->button() == Qt::RightButton)
-    {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = this->_defaultToolType;
-        this->sceneGO()->sendMessage(message);
+        event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
+                                   ((int)event->scenePos().y() / 10) * 10));
+        if (event->button() == Qt::LeftButton)
+        {
+            this->sceneGO()->viewGO()->editor()->setModified(true);
+            this->activate(event);
+        }
+        else if (event->button() == Qt::RightButton)
+        {
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+            message->paramInt = this->_defaultToolType;
+            this->sceneGO()->sendMessage(message);
+        }
     }
 }
 
@@ -221,6 +228,11 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
     {
+        if (this->_GOOperator != 0L)
+        {
+            delete this->_GOOperator;
+            this->_GOOperator = 0L;
+        }
         Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
@@ -233,7 +245,7 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
  */
 bool ToolGOOperator::getInputNumber()
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    DialogIntegerInput *dialog = new DialogIntegerInput(this->sceneGO()->viewGO()->editor());
     dialog->setWindowTitle(QObject::tr("Input Number"));
     dialog->setText(QObject::tr("The number of input: "));
     dialog->integerInput()->setMinimum(1);
@@ -241,6 +253,9 @@ bool ToolGOOperator::getInputNumber()
     {
         this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(this->_GOOperator);
+        this->sceneGO()->sendMessage(message);
     }
     else
     {
@@ -258,7 +273,7 @@ bool ToolGOOperator::getInputNumber()
  */
 bool ToolGOOperator::getOutputNumber()
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    DialogIntegerInput *dialog = new DialogIntegerInput(this->sceneGO()->viewGO()->editor());
     dialog->setWindowTitle(QObject::tr("Output Number"));
     dialog->setText(QObject::tr("The number of output: "));
     dialog->integerInput()->setMinimum(1);
@@ -266,6 +281,9 @@ bool ToolGOOperator::getOutputNumber()
     {
         this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(this->_GOOperator);
+        this->sceneGO()->sendMessage(message);
     }
     else
     {
@@ -279,7 +297,7 @@ bool ToolGOOperator::getOutputNumber()
 
 bool ToolGOOperator::getDualNumber()
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    DialogIntegerInput *dialog = new DialogIntegerInput(this->sceneGO()->viewGO()->editor());
     dialog->setWindowTitle(QObject::tr("Input and Output Number"));
     dialog->setText(QObject::tr("The number of input and output: "));
     dialog->integerInput()->setMinimum(1);
@@ -288,6 +306,9 @@ bool ToolGOOperator::getDualNumber()
         this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
+        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        message->setMessage(this->_GOOperator);
+        this->sceneGO()->sendMessage(message);
     }
     else
     {

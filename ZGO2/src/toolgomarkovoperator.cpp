@@ -13,6 +13,10 @@ ToolGOMarkovOperator::ToolGOMarkovOperator(SceneGO *sceneGO) : ToolGOOperator(sc
 
 void ToolGOMarkovOperator::activate(QGraphicsSceneMouseEvent *event)
 {
+    if (this->_isActivated)
+    {
+        this->setType(this->TypedItem::type());
+    }
     this->_isActivated = true;
     this->_GOOperator->setPos(event->scenePos());
     switch (this->_GOOperator->model()->type())
