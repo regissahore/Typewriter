@@ -34,6 +34,8 @@ public:
     QPoint getInputPosition(int index);
     QPoint getSubInputPosition(int index = 0);
     QPoint getOutputPosition(int index);
+    QPoint getInputDeepPosition(int index);
+    QPoint getSubInputDeepPosition(int index = 0);
     QVector<ItemGOSignal*>* input() const;
     QVector<ItemGOSignal*>* subInput() const;
     QVector<QVector<ItemGOSignal*>*>* output() const;

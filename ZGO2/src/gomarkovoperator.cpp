@@ -97,6 +97,14 @@ QVector<GOMarkovStatus*>* GOMarkovOperator::markovOutputStatus() const
     return this->_outputStatus;
 }
 
+void GOMarkovOperator::initWithCurrentLambda(double time)
+{
+    DoubleVector lambda = this->markovStatus()->frequencyBreakdown();
+    DoubleVector mu = this->markovStatus()->frequencyRepair();
+    DoubleVector PC = mu / (lambda + mu) * (1.0 + lambda / mu * DoubleVector::Exp(- (lambda + mu) * time));
+    this->markovStatus()->setProbabilityNormal(PC);
+}
+
 void GOMarkovOperator::initMarkovStatus(double time, double c12)
 {
     if (1 == this->breakdownNum())

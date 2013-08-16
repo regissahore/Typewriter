@@ -186,8 +186,15 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     }
     for (int i = 0; i < count; ++i)
     {
+        double time = i * totalTime / (count - 1);
+        data->times.push_back(time);
         // Record initial value of lamda.
         QVector<DoubleVector> lamdas;
+        for (int j = 0; j < this->_operator.size(); ++j)
+        {
+            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
+            op->initMarkovStatus(time);
+        }
         for (int j = 0; j < this->_operator.size(); ++j)
         {
             GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
@@ -199,24 +206,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
             {
                 GOMarkovOperator *op = this->_commonCause[j]->operators()->at(k);
-                op->markovStatus()->setFrequencyBreakdown(op->markovStatus()->frequencyBreakdown() + this->_commonCause[j]->breakdownCommon());
+                op->markovStatus()->setFrequencyBreakdown(this->_commonCause[j]->breakdownIndividual());
+                op->initWithCurrentLambda(time);
             }
-        }
-        double time = i * totalTime / (count - 1);
-        data->times.push_back(time);
-        for (int j = 0; j < this->_operator.size(); ++j)
-        {
-            GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[j];
-            double c12 = 0.0;
-            for (int k = 0; k < this->_commonCause.size(); ++k)
-            {
-                if (this->_commonCause[k]->containOperator(op))
-                {
-                    c12 = this->_commonCause[k]->calcCommonCause(time);
-                    break;
-                }
-            }
-            op->initMarkovStatus(time, c12);
         }
         this->calcAccumulativeProbability(time);
         if (this->getErrorMessage() != "")

@@ -151,7 +151,7 @@ double GOMarkovCommonCause::calcCommonCause(double time) const
     for (int j = 0; j < this->operators()->size(); ++j)
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->operators()->at(j);
-        muSum += op->markovStatus1()->frequencyRepair().getValue(0);
+        muSum += op->markovStatus()->frequencyRepair().getValue(0);
     }
     double c = this->breakdownCommon();
     double p1 = c / (c + muSum);

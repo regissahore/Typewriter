@@ -92,6 +92,9 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     }
     if (this->isDrawName())
     {
+        QFont font;
+        font.setPixelSize(16);
+        painter->setFont(font);
         painter->drawText(-200, -230, 400, 200, Qt::AlignHCenter | Qt::AlignBottom, this->model()->name());
     }
     switch (this->model()->TypedItem::type())

@@ -428,6 +428,18 @@ QPoint ItemGOOperator::getOutputPosition(int index)
                   this->_outputArrows->at(index)->pos().y() + this->_outputArrows->at(index)->end().y());
 }
 
+QPoint ItemGOOperator::getInputDeepPosition(int index)
+{
+    return QPoint(this->_inputArrows->at(index)->pos().x() + this->_inputArrows->at(index)->end().x(),
+                  this->_inputArrows->at(index)->pos().y() + this->_inputArrows->at(index)->end().y());
+}
+
+QPoint ItemGOOperator::getSubInputDeepPosition(int index)
+{
+    return QPoint(this->_subInputArrows->at(index)->pos().x() + this->_subInputArrows->at(index)->end().x(),
+                  this->_subInputArrows->at(index)->pos().y() + this->_subInputArrows->at(index)->end().y());
+}
+
 QVector<ItemGOSignal*>* ItemGOOperator::input() const
 {
     return this->_inputSignal;

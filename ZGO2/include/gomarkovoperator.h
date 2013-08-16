@@ -29,6 +29,7 @@ public:
     void setBreakdownNum(const int value);
     bool isBreakdownCorrelate() const;
     void setBreakdownCorrelate(bool value);
+    void initWithCurrentLambda(double time);
     void initMarkovStatus(double time, double c12 = 0.0);
     virtual void calcOutputMarkovStatus(double time);
     virtual void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);
