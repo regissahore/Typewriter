@@ -38,8 +38,10 @@ public:
     int chartNum() const;
     int totalHeight() const;
     int displayIndex() const;
-    void setDisplayItem(int index);
-    void setDisplayItem(const QString name);
+    void setDisplayItem(int index, int vectorIndex = 0);
+    void setDisplayItem(const QString name, int vectorIndex = 0);
+    int displayVectorIndex() const;
+    void setDisplayVectorIndex(const int index);
 
 protected:
     QString _title;
@@ -65,6 +67,7 @@ protected:
     bool _isDisplayLambda;
     bool _isDisplayMu;
     int _displayIndex;
+    int _displayVectorIndex;
 };
 
 #endif // ITEMGOMARKOVCHART_H

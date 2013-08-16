@@ -1,4 +1,5 @@
 #include <QLabel>
+#include <QSpinBox>
 #include <QCheckBox>
 #include <QComboBox>
 #include "parametergomarkovchart.h"
@@ -29,7 +30,17 @@ void ParameterGOMarkovChart::bindItem(void *item)
         comboBox->addItem(chart->chartData()->names[i]);
     }
     this->connect(comboBox, SIGNAL(currentIndexChanged(QString)), this, SLOT(setDisplayItem(QString)));
-            this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, comboBox);
+    this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, comboBox);
+
+    this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+    label = new QLabel(this);
+    label->setText(tr("Vector Index"));
+    this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, label);
+    this->_spinVector = new QSpinBox(this);
+    this->_spinVector->setMinimum(1);
+    this->_spinVector->setMaximum(chart->chartData()->probabilities[chart->displayIndex()][0].length());
+    this->connect(this->_spinVector, SIGNAL(valueChanged(int)), this, SLOT(setDisplayVectorIndex(int)));
+    this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, this->_spinVector);
 
     this->_tableWidget->insertRow(this->_tableWidget->rowCount());
     label = new QLabel(this);
@@ -75,7 +86,18 @@ void ParameterGOMarkovChart::bindItem(void *item)
 void ParameterGOMarkovChart::setDisplayItem(QString name)
 {
     ItemGOMarkovChart *chart = (ItemGOMarkovChart*)this->_item;
-    chart->setDisplayItem(name);
+    chart->setDisplayItem(name, 0);
+    int index = chart->displayIndex();
+    DoubleVector vector = chart->chartData()->probabilities[index][0];
+    int length = vector.length();
+    this->_spinVector->setMinimum(1);
+    this->_spinVector->setMaximum(length);
+}
+
+void ParameterGOMarkovChart::setDisplayVectorIndex(int index)
+{
+    ItemGOMarkovChart *chart = (ItemGOMarkovChart*)this->_item;
+    chart->setDisplayVectorIndex(index - 1);
 }
 
 void ParameterGOMarkovChart::setDisplayP(bool value)

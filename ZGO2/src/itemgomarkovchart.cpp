@@ -36,6 +36,7 @@ ItemGOMarkovChart::ItemGOMarkovChart(QGraphicsItem *parent) : ItemDrawable(paren
     this->_maxP = 1.0;
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_CHART);
     this->_displayIndex = 0;
+    this->_displayVectorIndex = 0;
     this->setIsDisplayP(true);
     this->setIsDisplayQ(true);
     this->setIsDisplayLambda(true);
@@ -66,24 +67,25 @@ void ItemGOMarkovChart::setTime(QVector<double> time)
 
 void ItemGOMarkovChart::setP(QVector<DoubleVector> P)
 {
+    int vectorIndex = this->displayVectorIndex();
     this->_P.clear();
     this->_maxP = 0.0;
     this->_minP = 1.0;
-    this->_P.push_back(P[0]);
+    this->_P.push_back(P[0].getValue(vectorIndex));
     for (int i = 1; i < P.size(); ++i)
     {
-        if (isinf(P[i].getValue(0)) || isnan(P[i].getValue(0)))
+        if (isinf(P[i].getValue(vectorIndex)) || isnan(P[i].getValue(vectorIndex)))
         {
-            P[i] = 1.0;
+            P[i].setValue(vectorIndex, 1.0);
         }
-        this->_P.push_back(P[i]);
-        if (P[i] > this->_maxP)
+        this->_P.push_back(P[i].getValue(vectorIndex));
+        if (P[i].getValue(vectorIndex) > this->_maxP)
         {
-            this->_maxP = P[i];
+            this->_maxP = P[i].getValue(vectorIndex);
         }
-        if (P[i] < this->_minP)
+        if (P[i].getValue(vectorIndex) < this->_minP)
         {
-            this->_minP = P[i];
+            this->_minP = P[i].getValue(vectorIndex);
         }
     }
     if (this->_maxP - this->_minP < 1e-9)
@@ -100,24 +102,25 @@ void ItemGOMarkovChart::setP(QVector<DoubleVector> P)
 
 void ItemGOMarkovChart::setQ(QVector<DoubleVector> Q)
 {
+    int vectorIndex = this->displayVectorIndex();
     this->_Q.clear();
     this->_maxQ = 0.0;
     this->_minQ = 1.0;
-    this->_Q.push_back(Q[0]);
+    this->_Q.push_back(Q[0].getValue(vectorIndex));
     for (int i = 1; i < Q.size(); ++i)
     {
-        if (isinf(Q[i].getValue(0)) || isnan(Q[i].getValue(0)))
+        if (isinf(Q[i].getValue(vectorIndex)) || isnan(Q[i].getValue(vectorIndex)))
         {
-            Q[i] = 0.0;
+            Q[i].setValue(vectorIndex, 0.0);
         }
-        this->_Q.push_back(1.0 - Q[i]);
-        if (1.0 - Q[i] > this->_maxQ)
+        this->_Q.push_back(1.0 - Q[i].getValue(vectorIndex));
+        if ((1.0 - Q[i]).getValue(vectorIndex) > this->_maxQ)
         {
-            this->_maxQ = 1.0 - Q[i];
+            this->_maxQ = (1.0 - Q[i]).getValue(vectorIndex);
         }
-        if (1.0 - Q[i] < this->_minQ)
+        if ((1.0 - Q[i]).getValue(vectorIndex) < this->_minQ)
         {
-            this->_minQ = 1.0 - Q[i];
+            this->_minQ = (1.0 - Q[i]).getValue(vectorIndex);
         }
     }
     if (this->_maxQ - this->_minQ < 1e-9)
@@ -134,24 +137,25 @@ void ItemGOMarkovChart::setQ(QVector<DoubleVector> Q)
 
 void ItemGOMarkovChart::setLambda(QVector<DoubleVector> lambda)
 {
+    int vectorIndex = this->displayVectorIndex();
     this->_lambda.clear();
     this->_maxLambda = 0.0;
     this->_minLambda = 1e100;
-    this->_lambda.push_back(lambda[0]);
+    this->_lambda.push_back(lambda[0].getValue(vectorIndex));
     for (int i = 1; i < lambda.size(); ++i)
     {
-        if (isinf(lambda[i].getValue(0)) || isnan(lambda[i].getValue(0)))
+        if (isinf(lambda[i].getValue(vectorIndex)) || isnan(lambda[i].getValue(vectorIndex)))
         {
-            lambda[i] = 0.0;
+            lambda[i].setValue(vectorIndex, 0.0);
         }
-        this->_lambda.push_back(lambda[i]);
-        if (lambda[i] > this->_maxLambda)
+        this->_lambda.push_back(lambda[i].getValue(vectorIndex));
+        if (lambda[i].getValue(vectorIndex) > this->_maxLambda)
         {
-            this->_maxLambda = lambda[i];
+            this->_maxLambda = lambda[i].getValue(vectorIndex);
         }
-        if (lambda[i] < this->_minLambda)
+        if (lambda[i].getValue(vectorIndex) < this->_minLambda)
         {
-            this->_minLambda = lambda[i];
+            this->_minLambda = lambda[i].getValue(vectorIndex);
         }
     }
     if (this->_maxLambda - this->_minLambda < 1e-9)
@@ -164,24 +168,25 @@ void ItemGOMarkovChart::setLambda(QVector<DoubleVector> lambda)
 
 void ItemGOMarkovChart::setMu(QVector<DoubleVector> mu)
 {
+    int vectorIndex = this->displayVectorIndex();
     this->_mu.clear();
     this->_maxMu = 0.0;
     this->_minMu = 1e100;
-    this->_mu.push_back(mu[0]);
+    this->_mu.push_back(mu[0].getValue(vectorIndex));
     for (int i = 1; i < mu.size(); ++i)
     {
-        if (isinf(mu[i].getValue(0)) || isnan(mu[i].getValue(0)))
+        if (isinf(mu[i].getValue(vectorIndex)) || isnan(mu[i].getValue(vectorIndex)))
         {
-            mu[i] = 0.0;
+            mu[i].setValue(vectorIndex, 0.0);
         }
-        this->_mu.push_back(mu[i]);
-        if (mu[i] > this->_maxMu)
+        this->_mu.push_back(mu[i].getValue(vectorIndex));
+        if (mu[i].getValue(vectorIndex) > this->_maxMu)
         {
-            this->_maxMu = mu[i];
+            this->_maxMu = mu[i].getValue(vectorIndex);
         }
-        if (mu[i] < this->_minMu)
+        if (mu[i].getValue(vectorIndex) < this->_minMu)
         {
-            this->_minMu = mu[i];
+            this->_minMu = mu[i].getValue(vectorIndex);
         }
     }
     if (this->_maxMu - this->_minMu < 1e-9)
@@ -618,9 +623,10 @@ int ItemGOMarkovChart::displayIndex() const
     return this->_displayIndex;
 }
 
-void ItemGOMarkovChart::setDisplayItem(int index)
+void ItemGOMarkovChart::setDisplayItem(int index, int vectorIndex)
 {
-    this->_detailIndex = index;
+    this->_displayIndex = index;
+    this->_displayVectorIndex = vectorIndex;
     this->setTitle(this->chartData()->names[index]);
     this->setP(this->chartData()->probabilities[index]);
     this->setQ(this->chartData()->probabilities[index]);
@@ -628,14 +634,24 @@ void ItemGOMarkovChart::setDisplayItem(int index)
     this->setMu(this->chartData()->mus[index]);
 }
 
-void ItemGOMarkovChart::setDisplayItem(const QString name)
+void ItemGOMarkovChart::setDisplayItem(const QString name, int vectorIndex)
 {
     for (int i = 0; i < this->chartData()->names.size(); ++i)
     {
         if (this->chartData()->names[i] == name)
         {
-            this->setDisplayItem(i);
+            this->setDisplayItem(i, vectorIndex);
             break;
         }
     }
+}
+
+int ItemGOMarkovChart::displayVectorIndex() const
+{
+    return this->_displayVectorIndex;
+}
+
+void ItemGOMarkovChart::setDisplayVectorIndex(const int index)
+{
+    this->setDisplayItem(this->_displayIndex, index);
 }

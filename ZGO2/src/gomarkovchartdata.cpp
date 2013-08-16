@@ -47,7 +47,11 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->probabilities[i].size(); ++j)
         {
             QDomElement element = document.createElement("probability");
-            element.setAttribute("value", this->probabilities[i][j].toString(0));
+            element.setAttribute("length", this->probabilities[i][j].length());
+            for (int k = 0; k < probabilities[i][j].length(); ++k)
+            {
+                element.setAttribute(QString("value_%1").arg(k), this->probabilities[i][j].toString(k));
+            }
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -61,7 +65,11 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->lambdas[i].size(); ++j)
         {
             QDomElement element = document.createElement("lambdas");
-            element.setAttribute("value", this->lambdas[i][j].toString(0));
+            element.setAttribute("length", this->lambdas[i][j].length());
+            for (int k = 0; k < lambdas[i][j].length(); ++k)
+            {
+                element.setAttribute(QString("value_%1").arg(k), this->lambdas[i][j].toString(k));
+            }
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -75,7 +83,11 @@ bool GOMarkovChartData::save(QString fileName)
         for (int j = 0; j < this->mus[i].size(); ++j)
         {
             QDomElement element = document.createElement("mus");
-            element.setAttribute("value", this->mus[i][j].toString(0));
+            element.setAttribute("length", this->mus[i][j].length());
+            for (int k = 0; k < mus[i][j].length(); ++k)
+            {
+                element.setAttribute(QString("value_%1").arg(k), this->mus[i][j].toString(k));
+            }
             partElement.appendChild(element);
         }
         partRoot.appendChild(partElement);
@@ -139,7 +151,13 @@ bool GOMarkovChartData::tryOpen(QString fileName)
         this->probabilities.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
-            this->probabilities[this->probabilities.size() - 1].push_back(element2.attribute("value").toDouble());
+            DoubleVector vector;
+            vector.setLength(element2.attribute("length").toInt());
+            for (int i = 0; i < vector.length(); ++i)
+            {
+                vector.setValue(i, element2.attribute(QString("value_%1").arg(i)).toDouble());
+            }
+            this->probabilities[this->probabilities.size() - 1].push_back(vector);
         }
     }
 
@@ -149,7 +167,13 @@ bool GOMarkovChartData::tryOpen(QString fileName)
         this->lambdas.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
-            this->lambdas[this->lambdas.size() - 1].push_back(element2.attribute("value").toDouble());
+            DoubleVector vector;
+            vector.setLength(element2.attribute("length").toInt());
+            for (int i = 0; i < vector.length(); ++i)
+            {
+                vector.setValue(i, element2.attribute(QString("value_%1").arg(i)).toDouble());
+            }
+            this->lambdas[this->lambdas.size() - 1].push_back(vector);
         }
     }
 
@@ -159,7 +183,13 @@ bool GOMarkovChartData::tryOpen(QString fileName)
         this->mus.push_back(QVector<DoubleVector>());
         for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
-            this->mus[this->mus.size() - 1].push_back(element2.attribute("value").toDouble());
+            DoubleVector vector;
+            vector.setLength(element2.attribute("length").toInt());
+            for (int i = 0; i < vector.length(); ++i)
+            {
+                vector.setValue(i, element2.attribute(QString("value_%1").arg(i)).toDouble());
+            }
+            this->mus[this->mus.size() - 1].push_back(vector);
         }
     }
 
