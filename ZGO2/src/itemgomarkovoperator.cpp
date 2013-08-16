@@ -447,7 +447,7 @@ void ItemGOMarkovOperator::setModelType(const int type)
 
 void ItemGOMarkovOperator::setModel(GOOperator *model)
 {
-    if (this->model()->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_Split)
+    if (model->type() == GOMarkovOperatorFactory::Operator_Type_Split)
     {
         this->_model = model;
         this->_inputSignal->clear();
