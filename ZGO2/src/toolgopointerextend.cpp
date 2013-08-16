@@ -411,7 +411,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
             GOOperator *model = op->model();
             for (int j = 0; j < model->input()->number(); ++j)
             {
-                if (model->input()->signal()->at(j) != 0L)
+                if (op->input()->at(j) != 0L)
                 {
                     continue;
                 }
@@ -435,7 +435,7 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
             }
             for (int j = 0; j < model->subInput()->number(); ++j)
             {
-                if (model->subInput()->signal()->at(j) != 0L)
+                if (op->input()->at(j) != 0L)
                 {
                     continue;
                 }

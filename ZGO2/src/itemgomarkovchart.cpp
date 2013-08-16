@@ -86,7 +86,7 @@ void ItemGOMarkovChart::setP(QVector<DoubleVector> P)
             this->_minP = P[i];
         }
     }
-    if (this->_maxP - this->_minP < 1e-3)
+    if (this->_maxP - this->_minP < 1e-9)
     {
         this->_maxP += this->_maxP;
         if (this->_maxP > 1.0)
@@ -120,7 +120,7 @@ void ItemGOMarkovChart::setQ(QVector<DoubleVector> Q)
             this->_minQ = 1.0 - Q[i];
         }
     }
-    if (this->_maxQ - this->_minQ < 1e-3)
+    if (this->_maxQ - this->_minQ < 1e-9)
     {
         this->_maxQ += this->_maxQ;
         if (this->_maxQ > 1.0)
@@ -154,7 +154,7 @@ void ItemGOMarkovChart::setLambda(QVector<DoubleVector> lambda)
             this->_minLambda = lambda[i];
         }
     }
-    if (this->_maxLambda - this->_minLambda < 1e-3)
+    if (this->_maxLambda - this->_minLambda < 1e-9)
     {
         this->_maxLambda += this->_maxLambda;
         this->_minLambda  = 0.0;
@@ -184,7 +184,7 @@ void ItemGOMarkovChart::setMu(QVector<DoubleVector> mu)
             this->_minMu = mu[i];
         }
     }
-    if (this->_maxMu - this->_minMu < 1e-3)
+    if (this->_maxMu - this->_minMu < 1e-9)
     {
         this->_maxMu += this->_maxMu;
         this->_minMu = 0.0;
