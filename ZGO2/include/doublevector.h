@@ -20,6 +20,8 @@ public:
     void setValue(const int pos, const double value);
     void setAll(const double value);
 
+    QString toString(int index = 0);
+
     static DoubleVector One(int len);
     static DoubleVector Zero(int len);
     static DoubleVector Exp(const DoubleVector &a);

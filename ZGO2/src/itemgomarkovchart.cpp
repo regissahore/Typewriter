@@ -240,11 +240,11 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
-                          QString("%1").arg(this->_minP.getValue(0)));
+                          QString("%1").arg(this->_minP.toString(0)));
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
-                          QString("%1").arg(this->_maxP.getValue(0)));
+                          QString("%1").arg(this->_maxP.toString(0)));
         painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Normal Probability"));
@@ -256,11 +256,11 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
-                          QString("%1").arg(this->_minQ.getValue(0)));
+                          QString("%1").arg(this->_minQ.toString(0)));
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
-                          QString("%1").arg(this->_maxQ.getValue(0)));
+                          QString("%1").arg(this->_maxQ.toString(0)));
         painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Failure Probability"));
@@ -272,11 +272,11 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
-                          QString("%1").arg(this->_minLambda.getValue(0)));
+                          QString("%1").arg(this->_minLambda.toString(0)));
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
-                          QString("%1").arg(this->_maxLambda.getValue(0)));
+                          QString("%1").arg(this->_maxLambda.toString(0)));
         painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Lambda"));
@@ -288,11 +288,11 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_HEIGHT),
                           Qt::AlignRight | Qt::AlignBottom,
-                          QString("%1").arg(this->_minMu.getValue(0)));
+                          QString("%1").arg(this->_minMu.toString(0)));
         painter->drawText(QRectF(0, CHART_Y + shiftY,
                                  CHART_X - TEXT_MARGIN, CHART_Y),
                           Qt::AlignRight | Qt::AlignTop,
-                          QString("%1").arg(this->_maxMu.getValue(0)));
+                          QString("%1").arg(this->_maxMu.toString(0)));
         painter->drawText(QRectF(0, shiftY, CHART_X, CHART_Y - TEXT_MARGIN),
                           Qt::AlignRight | Qt::AlignBottom,
                           QObject::tr("Mu"));
@@ -406,7 +406,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
-                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_P[this->_detailIndex].getValue(0)));
+                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_P[this->_detailIndex].toString(0)));
                 shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayQ())
@@ -418,7 +418,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
-                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_Q[this->_detailIndex].getValue(0)));
+                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_Q[this->_detailIndex].toString(0)));
                 shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayLambda())
@@ -430,7 +430,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
-                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_lambda[this->_detailIndex].getValue(0)));
+                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_lambda[this->_detailIndex].toString(0)));
                 shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
             if (this->isDisplayMu())
@@ -442,7 +442,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                 painter->drawText(QRectF(x + TEXT_MARGIN, y - 300 - TEXT_MARGIN,
                                          300, 300),
                                   Qt::AlignLeft | Qt::AlignBottom,
-                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_mu[this->_detailIndex].getValue(0)));
+                                  QString("(%1, %2)").arg(this->_time[this->_detailIndex]).arg(this->_mu[this->_detailIndex].toString(0)));
                 shiftY += ITEM_HEIGHT + ITEM_SPACING;
             }
         }

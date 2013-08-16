@@ -1,5 +1,7 @@
+#include <cstdio>
 #include <algorithm>
 #include <qmath.h>
+#include <QString>
 #include "doublevector.h"
 using namespace std;
 
@@ -105,6 +107,11 @@ void DoubleVector::setAll(const double value)
     {
         this->setValue(i, value);
     }
+}
+
+QString DoubleVector::toString(int index)
+{
+    return QString::number(this->getValue(index), 'f', 10);
 }
 
 DoubleVector DoubleVector::One(int len)
