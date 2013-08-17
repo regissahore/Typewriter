@@ -1494,6 +1494,26 @@
         <translation>错误: GO图</translation>
     </message>
     <message>
+        <location filename="../src/gomarkovgraph.cpp" line="176"/>
+        <source>Operator %1&apos;</source>
+        <translation>操作符%1&apos;</translation>
+    </message>
+    <message>
+        <location filename="../src/gomarkovgraph.cpp" line="180"/>
+        <source>Operator %1</source>
+        <translation>操作符%1</translation>
+    </message>
+    <message>
+        <location filename="../src/gomarkovgraph.cpp" line="192"/>
+        <source>Operator %1&apos; R%2</source>
+        <translation>操作符%1&apos; R%2</translation>
+    </message>
+    <message>
+        <location filename="../src/gomarkovgraph.cpp" line="196"/>
+        <source>Operator %1 R%2</source>
+        <translation>操作符%1 R%2</translation>
+    </message>
+    <message>
         <location filename="../src/gomarkovgraph.cpp" line="302"/>
         <source>Analysis Completed. It takes %1 seconds.</source>
         <translation>计算结束，耗时%1秒。</translation>
@@ -1587,7 +1607,6 @@
         <location filename="../src/gomarkovoperator.cpp" line="269"/>
         <location filename="../src/gomarkovoperator11.cpp" line="276"/>
         <location filename="../src/gomarkovoperator11.cpp" line="281"/>
-        <location filename="../src/gomarkovoperator22.cpp" line="51"/>
         <source>Error: Operator </source>
         <translation>错误: 操作符</translation>
     </message>
@@ -1684,9 +1703,8 @@
         <translation type="obsolete">-%1 输入信号应该是一个向量。</translation>
     </message>
     <message>
-        <location filename="../src/gomarkovoperator22.cpp" line="51"/>
         <source>-%1 The number of output should matches the length of the input vector.</source>
-        <translation>-%1 输出的数量应该等于输入向量的长度。</translation>
+        <translation type="obsolete">-%1 输出的数量应该等于输入向量的长度。</translation>
     </message>
     <message>
         <source>-%1 The number of delta should matches the length of the input vector.</source>

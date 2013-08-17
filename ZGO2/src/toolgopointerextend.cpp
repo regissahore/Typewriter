@@ -16,6 +16,7 @@
 #include "messagefactory.h"
 #include "viewgo.h"
 #include "editorgo.h"
+#include "itemgomarkovoperator.h"
 
 ToolGOPointerExtend::ToolGOPointerExtend(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
@@ -429,13 +430,17 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->op->setSignal(this->_signal,
                                                             this->_signal->end()->type,
                                                             this->_signal->end()->index);
+                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                    {
+                        ((ItemGOMarkovOperator*)this->_signal->end()->op)->globalFeedbackExtend();
+                    }
                     found = true;
                     break;
                 }
             }
             for (int j = 0; j < model->subInput()->number(); ++j)
             {
-                if (op->input()->at(j) != 0L)
+                if (op->subInput()->at(j) != 0L)
                 {
                     continue;
                 }
@@ -452,6 +457,10 @@ void ToolGOPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->op->setSignal(this->_signal,
                                                             this->_signal->end()->type,
                                                             this->_signal->end()->index);
+                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+                    {
+                        ((ItemGOMarkovOperator*)this->_signal->end()->op)->globalFeedbackExtend();
+                    }
                     found = true;
                     break;
                 }

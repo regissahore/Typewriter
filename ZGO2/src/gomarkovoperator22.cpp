@@ -39,21 +39,6 @@ QVector<double>* GOMarkovOperator22::mu2() const
     return this->_mu2;
 }
 
-bool GOMarkovOperator22::errorDetect()
-{
-    if (this->GOMarkovOperator::errorDetect())
-    {
-        return true;
-    }
-    GOMarkovOperator *op = this->getPrevSubOperator();
-    if (this->output()->number() != op->markovOutputStatus()->size())
-    {
-        this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of output should matches the length of the input vector.").arg(this->id());
-        return true;
-    }
-    return false;
-}
-
 GOMarkovOperator* GOMarkovOperator22::copy()
 {
     GOMarkovOperator22 *op = (GOMarkovOperator22*)this->GOMarkovOperator::copy();

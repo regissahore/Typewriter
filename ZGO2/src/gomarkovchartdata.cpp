@@ -225,7 +225,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<th>" << names[i] << "</th>" << endl;
     }
     out << "</tr>" << endl;
-    for (int i = 1; i < times.size(); ++i)
+    for (int i = 0; i < times.size(); ++i)
     {
         out << "<tr>" << endl;
         out << "<td>" << times[i] << "</td>";
@@ -305,7 +305,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
         out << "<td>" << QObject::tr("Frequency Repair") << "</td>" << endl;
     }
     out << "</tr>" << endl;
-    for (int i = 1; i < times.size(); ++i)
+    for (int i = 0; i < times.size(); ++i)
     {
         out << "<tr>" << endl;
         out << "<td>" << times[i] << "</td>";

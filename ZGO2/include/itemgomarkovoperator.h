@@ -25,6 +25,7 @@ public:
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void setModelType(const int type);
     void setModel(GOOperator *model);
+    void globalFeedbackExtend();
     ItemGOMarkovOperator* copy();
     bool tryOpen(QDomElement &root);
 

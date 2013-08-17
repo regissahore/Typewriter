@@ -11,6 +11,7 @@
 #include "goinput.h"
 #include "gooutput.h"
 #include "itemarrow.h"
+#include "itemgosignal.h"
 
 ItemGOMarkovOperator::ItemGOMarkovOperator(QGraphicsItem *parent) : ItemGOOperator(parent)
 {
@@ -520,6 +521,39 @@ void ItemGOMarkovOperator::setModel(GOOperator *model)
     else
     {
         this->ItemGOOperator::setModel(model);
+    }
+}
+
+void ItemGOMarkovOperator::globalFeedbackExtend()
+{
+    if (((GOMarkovOperator*)this->model())->isGlobalFeedback())
+    {
+        for (int i = 0; i < this->input()->size(); ++i)
+        {
+            if (this->input()->at(i) != 0L)
+            {
+                this->input()->at(i)->model()->setIsGlobalFeedback(true);
+                this->input()->at(i)->update();
+                ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->input()->at(i)->start()->op;
+                GOMarkovOperator* op = (GOMarkovOperator*)item->model();
+                op->setIsGlobalFeedback(true);
+                item->globalFeedbackExtend();
+                item->update();
+            }
+        }
+        for (int i = 0; i < this->subInput()->size(); ++i)
+        {
+            if (this->subInput()->at(i) != 0L)
+            {
+                this->subInput()->at(i)->model()->setIsGlobalFeedback(true);
+                this->subInput()->at(i)->update();
+                ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->subInput()->at(i)->start()->op;
+                GOMarkovOperator* op = (GOMarkovOperator*)item->model();
+                op->setIsGlobalFeedback(true);
+                item->globalFeedbackExtend();
+                item->update();
+            }
+        }
     }
 }
 
