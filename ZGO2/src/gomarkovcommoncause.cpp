@@ -182,10 +182,10 @@ bool GOMarkovCommonCause::errorDetect()
 {
     if (this->_operators->size() > 0)
     {
-        double lambda1 = this->_operators->at(0)->markovStatus1()->frequencyBreakdown().getValue(0);
+        double lambda1 = this->_operators->at(0)->totalFrequencyBreakdown().getValue(0);
         for (int i = 1; i < this->_operators->size(); ++i)
         {
-            double lambda2 = this->_operators->at(i)->markovStatus1()->frequencyBreakdown().getValue(0);
+            double lambda2 = this->_operators->at(i)->totalFrequencyBreakdown().getValue(0);
             if (fabs(lambda1 - lambda2) > 1e-8)
             {
                 this->_error = QObject::tr("Error: Common Cause ") + QObject::tr("%1 %2 should have same breakdown frequency. ").arg(this->_operators->at(0)->id()).arg(this->_operators->at(i)->id());

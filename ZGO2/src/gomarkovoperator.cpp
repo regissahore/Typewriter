@@ -287,6 +287,24 @@ QString GOMarkovOperator::error() const
     return this->_error;
 }
 
+DoubleVector GOMarkovOperator::totalFrequencyBreakdown() const
+{
+    DoubleVector total = this->markovStatus1()->frequencyBreakdown();
+    if (this->breakdownNum() > 1)
+    {
+        total += this->markovStatus2()->frequencyBreakdown();
+    }
+    if (this->breakdownNum() > 2)
+    {
+        total += this->markovStatus3()->frequencyBreakdown();
+    }
+    if (this->breakdownNum() > 3)
+    {
+        total += this->markovStatus4()->frequencyBreakdown();
+    }
+    return total;
+}
+
 GOMarkovOperator* GOMarkovOperator::copy()
 {
     GOMarkovOperator *op = GOMarkovOperatorFactory::produce(this->TypedItem::type());

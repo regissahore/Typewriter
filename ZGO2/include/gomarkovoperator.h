@@ -46,6 +46,7 @@ public:
     void setIsGlobalFeedback(const bool value);
     virtual void paintParameter(QPainter *painter);
     QString error() const;
+    DoubleVector totalFrequencyBreakdown() const;
     virtual GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
