@@ -18,10 +18,27 @@
 #include "itemgomarkovcommoncause.h"
 #include "itemgomarkovcommoncause2.h"
 #include "gomarkovcommoncause.h"
+#include "dialogintegerinput.h"
+#include "gopathsetsetset.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
     this->selectTool(DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND);
+}
+
+void SceneGOMarkov::save(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("scene");
+    element.setAttribute("analysis_total_time", this->_analysisTotalTime);
+    element.setAttribute("analysis_count", this->_analysisCount);
+    element.setAttribute("analysis_cut_order", this->_analysisCutOrder);
+    QList<QGraphicsItem*> items = this->items();
+    root.appendChild(element);
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        item->save(document, element);
+    }
 }
 
 bool SceneGOMarkov::tryOpen(QDomElement &root)
@@ -30,6 +47,9 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     {
         return false;
     }
+    this->_analysisTotalTime = root.attribute("analysis_total_time", "10.0").toDouble();
+    this->_analysisCount = root.attribute("analysis_count", "101").toDouble();
+    this->_analysisCutOrder = root.attribute("analysis_cut_order", "1").toInt();
     bool flag = true;
     QList<ItemGOMarkovOperator*> operatorList;
     QList<ItemGOSignal*> signalList;
@@ -353,11 +373,15 @@ QList<ItemGOMarkovEquivalent*> SceneGOMarkov::getTopologyOrder(QList<ItemGOMarko
 void SceneGOMarkov::analysisProbability(const QString filePath)
 {
     DialogGOMarkovPeriod *dialog = new DialogGOMarkovPeriod();
+    dialog->setTotalTime(this->_analysisTotalTime);
+    dialog->setCount(this->_analysisCount);
     if (QDialog::Accepted == dialog->exec())
     {
         GOMarkovGraph *graph = (GOMarkovGraph*)this->generatorGOGraph();
         double totalTime = dialog->totalTime();
         int count = dialog->count();
+        this->_analysisTotalTime = totalTime;
+        this->_analysisCount = count;
         GOMarkovChartData *data = graph->calcAccumulativeProbability(totalTime, count);
         if (data != 0L)
         {
@@ -376,4 +400,32 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             delete data;
         }
     }
+}
+
+void SceneGOMarkov::analysisCut(const QString filePath)
+{
+    DialogIntegerInput *dialog = new DialogIntegerInput();
+    dialog->setWindowTitle(QObject::tr("Set order"));
+    dialog->setText(QObject::tr("Input cut order: "));
+    dialog->integerInput()->setMinimum(1);
+    dialog->integerInput()->setValue(this->_analysisCutOrder);
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        GOGraph *graph = this->generatorGOGraph();
+        this->_analysisCutOrder = dialog->integerInput()->value();
+        GOPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
+        if (graph->getErrorMessage() == "")
+        {
+            graph->saveAsHTML(filePath + ".cut.html", cut);
+            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            message->paramString = filePath + ".cut.html";
+            this->sendMessage(message);
+        }
+        else
+        {
+            QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
+        }
+        delete graph;
+    }
+    delete dialog;
 }

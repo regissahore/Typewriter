@@ -25,7 +25,7 @@ public:
     virtual GOGraph* generatorGOGraph();
     virtual void analysisProbability(const QString filePath);
     void analysisPath(const QString filePath);
-    void analysisCut(const QString filePath);
+    virtual void analysisCut(const QString filePath);
     void extendEdge(float x, float y);
     ViewGO* viewGO() const;
 

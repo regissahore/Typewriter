@@ -18,6 +18,8 @@ public:
     ~DialogGOMarkovPeriod();
     double totalTime() const;
     int count() const;
+    void setTotalTime(const double value);
+    void setCount(const int value);
     
 private slots:
     void on_confirmButton_clicked();

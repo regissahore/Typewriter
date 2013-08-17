@@ -24,6 +24,16 @@ int DialogGOMarkovPeriod::count() const
     return this->ui->loopSpinBox->value();
 }
 
+void DialogGOMarkovPeriod::setTotalTime(const double value)
+{
+    this->ui->totalSpinBox->setValue(value);
+}
+
+void DialogGOMarkovPeriod::setCount(const int value)
+{
+    this->ui->loopSpinBox->setValue(value);
+}
+
 void DialogGOMarkovPeriod::on_confirmButton_clicked()
 {
     this->accept();
