@@ -41,10 +41,11 @@ public:
     int getPrevSubIndex(int index = 0);
     GOMarkovStatus* getPrevMarkovStatus(int index = 0);
     GOMarkovStatus* getPrevSubMarkovStatus(int index = 0);
-    virtual bool errorDetect(Messager *messager);
+    virtual bool errorDetect();
     bool isGlobalFeedback() const;
     void setIsGlobalFeedback(const bool value);
     virtual void paintParameter(QPainter *painter);
+    QString error() const;
     virtual GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
@@ -61,6 +62,7 @@ protected:
     int _breakdownNum;
     bool _isBreakdownCorrelate; /** 是否和输入信号有停工相关。*/
     bool _isGlobalFeedback; /** 是否是整体反馈的成员。*/
+    QString _error;
     void paintMarkovParameter(QPainter *painter);
 };
 

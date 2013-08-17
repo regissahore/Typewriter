@@ -39,18 +39,16 @@ QVector<double>* GOMarkovOperator22::mu2() const
     return this->_mu2;
 }
 
-bool GOMarkovOperator22::errorDetect(Messager *messager)
+bool GOMarkovOperator22::errorDetect()
 {
-    if (this->GOMarkovOperator::errorDetect(messager))
+    if (this->GOMarkovOperator::errorDetect())
     {
         return true;
     }
     GOMarkovOperator *op = this->getPrevSubOperator();
     if (this->output()->number() != op->markovOutputStatus()->size())
     {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of output should matches the length of the input vector.").arg(this->id());
-        messager->sendMessage(message);
+        this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The number of output should matches the length of the input vector.").arg(this->id());
         return true;
     }
     return false;

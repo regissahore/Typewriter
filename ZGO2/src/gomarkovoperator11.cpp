@@ -261,9 +261,9 @@ DoubleVector GOMarkovOperator11::calcTempOutputMarkovStatus(double time, QVector
     return PR;
 }
 
-bool GOMarkovOperator11::errorDetect(Messager *messager)
+bool GOMarkovOperator11::errorDetect()
 {
-    if (this->GOMarkovOperator::errorDetect(messager))
+    if (this->GOMarkovOperator::errorDetect())
     {
         return true;
     }
@@ -273,16 +273,12 @@ bool GOMarkovOperator11::errorDetect(Messager *messager)
         GOMarkovStatus *status2 = this->getPrevOperator(i)->markovStatus1();
         if (fabs(status1->frequencyBreakdown().getValue(0) - status2->frequencyBreakdown().getValue(0)) > 1e-6)
         {
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same breakdown rate.").arg(this->id());
-            messager->sendMessage(message);
+            this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same breakdown rate.").arg(this->id());
             return true;
         }
         if (fabs(status1->frequencyRepair().getValue(0) - status2->frequencyRepair().getValue(0)) > 1e-6)
         {
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same repair rate.").arg(this->id());
-            messager->sendMessage(message);
+            this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 's input should have same repair rate.").arg(this->id());
             return true;
         }
     }

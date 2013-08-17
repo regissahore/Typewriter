@@ -28,6 +28,7 @@ GOMarkovOperator::GOMarkovOperator() : GOOperator()
     this->_rkBreakdown3 = new RungeKuttaBreakdown3();
     this->_rkBreakdown4 = new RungeKuttaBreakdown4();
     this->setIsGlobalFeedback(false);
+    this->_error = "";
 }
 
 GOMarkovOperator::~GOMarkovOperator()
@@ -249,7 +250,7 @@ void GOMarkovOperator::initOutputMarkovStatus()
     }
 }
 
-bool GOMarkovOperator::errorDetect(Messager *messager)
+bool GOMarkovOperator::errorDetect()
 {
     bool flag = false;
     for (int i = 0; i < this->input()->number(); ++i)
@@ -257,9 +258,7 @@ bool GOMarkovOperator::errorDetect(Messager *messager)
         if (this->input()->signal()->at(i) == 0)
         {
             flag = true;
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have input at %2.").arg(this->id()).arg(i + 1);
-            messager->sendMessage(message);
+            this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have input at %2.").arg(this->id()).arg(i + 1);
         }
     }
     for (int i = 0; i < this->subInput()->number(); ++i)
@@ -267,9 +266,7 @@ bool GOMarkovOperator::errorDetect(Messager *messager)
         if (this->subInput()->signal()->at(i) == 0)
         {
             flag = true;
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-            message->paramString = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have sub input at %2.").arg(this->id()).arg(i + 1);
-            messager->sendMessage(message);
+            this->_error = QObject::tr("Error: Operator ") + GOMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have sub input at %2.").arg(this->id()).arg(i + 1);
         }
     }
     return flag;
@@ -283,6 +280,11 @@ bool GOMarkovOperator::isGlobalFeedback() const
 void GOMarkovOperator::setIsGlobalFeedback(const bool value)
 {
     this->_isGlobalFeedback = value;
+}
+
+QString GOMarkovOperator::error() const
+{
+    return this->_error;
 }
 
 GOMarkovOperator* GOMarkovOperator::copy()

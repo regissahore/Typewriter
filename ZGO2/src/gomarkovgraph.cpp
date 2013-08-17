@@ -65,9 +65,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     this->_error = "";
     if (!this->checkCycleAndConnection())
     {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-        message->paramString = QObject::tr("Error: Graph ") + this->_error;
-        this->sendMessage(message);
+        this->_messages.append(MessageRecord(QObject::tr("Error: Graph ") + this->_error, MessageFactory::TYPE_OUTPUT_ERROR));
         return;
     }
     QVector<GOOperator*> list = this->getTopologicalOrder();
@@ -137,21 +135,27 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
  */
 GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
-    Message *message;
     QTime time;
     time.start();
-    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_CLEAR);
-    this->sendMessage(message);
-    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_TEXT);
-    message->paramString = "Start Analysising...";
-    this->sendMessage(message);
+    this->_messages.clear();
+    this->_messages.append(MessageRecord("", MessageFactory::TYPE_OUTPUT_CLEAR));
     bool isOperatorError = false;
     for (int i = 0; i < this->_operator.size(); ++i)
     {
         GOMarkovOperator *op = (GOMarkovOperator*)this->_operator[i];
-        if (op->errorDetect(this))
+        if (op->errorDetect())
         {
             isOperatorError = true;
+            this->_messages.append(MessageRecord(op->error(), MessageFactory::TYPE_OUTPUT_ERROR));
+        }
+    }
+    for (int i = 0; i < this->_commonCause.size(); ++i)
+    {
+        GOMarkovCommonCause *common = (GOMarkovCommonCause*)this->_commonCause[i];
+        if (common->errorDetect())
+        {
+            isOperatorError = true;
+            this->_messages.append(MessageRecord(common->error(), MessageFactory::TYPE_OUTPUT_ERROR));
         }
     }
     if (isOperatorError)
@@ -199,6 +203,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     }
     for (int i = 0; i < count; ++i)
     {
+        this->_currentCount = i;
         double time = i * totalTime / (count - 1);
         data->times.push_back(time);
         // Record initial value of lamda.
@@ -294,9 +299,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         }
     }
 
-    message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_CORRECT);
-    message->paramString = QString("Analysis Completed. It takes %1 seconds. ").arg(time.elapsed() / 1000.0);
-    this->sendMessage(message);
+    this->_messages.append(MessageRecord(QObject::tr("Analysis Completed. It takes %1 seconds.").arg(time.elapsed() / 1000.0), MessageFactory::TYPE_OUTPUT_CORRECT));
     return data;
 }
 
@@ -713,6 +716,11 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GOPath
     GOMarkovOperator* op = (GOMarkovOperator*)list[index];
     op->initMarkovStatus(1e10);
     this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
+}
+
+int GOMarkovGraph::currentCount() const
+{
+    return this->_currentCount;
 }
 
 bool GOMarkovGraph::saveAsHTML(const QString filePath)

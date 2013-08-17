@@ -18,6 +18,19 @@ class GOAnalysis;
 class GOGraph : public Messager
 {
 public:
+    struct MessageRecord
+    {
+        QString message;
+        int type;
+        MessageRecord()
+        {
+        }
+        MessageRecord(const QString &msg, const int type)
+        {
+            this->message = msg;
+            this->type = type;
+        }
+    };
     GOGraph();
     virtual ~GOGraph();
     void bindMessage(MessageController *controller);
@@ -30,6 +43,7 @@ public:
     virtual GOPathSetSetSet findPath(int order);
     virtual GOPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
+    QVector<GOGraph::MessageRecord> messages() const;
     virtual bool saveAsHTML(const QString filePath);
     virtual bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 
@@ -40,6 +54,7 @@ protected:
         int outputIndex; /** The output index of the operator. */
         int signalIndex;
     };
+    QVector<MessageRecord> _messages;
     QVector<int> _source;
     QVector<GOOperator*> _operator;
     QVector<GOSignal*> _signal;

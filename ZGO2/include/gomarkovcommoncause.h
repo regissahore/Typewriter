@@ -29,7 +29,8 @@ public:
     QVector<int>* idList() const;
     double calcCommonCause(double time) const;
     bool containOperator(GOMarkovOperator* op) const;
-    bool errorDetect(Messager *messager);
+    bool errorDetect();
+    QString error() const;
     GOMarkovCommonCause* copy() const;
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
@@ -42,6 +43,7 @@ protected:
     double _breakdownCommon;
     double _belta;
     double _gammaC;
+    QString _error;
 };
 
 #endif // GOMARKOVCOMMONCAUSE_H

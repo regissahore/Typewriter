@@ -183,7 +183,9 @@ HEADERS += \
     include/parametergomarkovcommoncause2.h \
     include/doublevector.h \
     include/gomarkovoperator11a.h \
-    include/gomarkovoperatorsplitpoint.h
+    include/gomarkovoperatorsplitpoint.h \
+    include/dialoggomarkovanalysisprocess.h \
+    include/gomarkovanalysisthread.h
 
 SOURCES += \
     src/main.cpp \
@@ -348,7 +350,9 @@ SOURCES += \
     src/parametergomarkovcommoncause2.cpp \
     src/doublevector.cpp \
     src/gomarkovoperator11a.cpp \
-    src/gomarkovoperatorsplitpoint.cpp
+    src/gomarkovoperatorsplitpoint.cpp \
+    src/dialoggomarkovanalysisprocess.cpp \
+    src/gomarkovanalysisthread.cpp
 
 RESOURCES += \
     resource.qrc
@@ -360,4 +364,5 @@ FORMS += \
     form/toolboxgo.ui \
     form/toolboxgomarkov.ui \
     form/dialogmatrixinput.ui \
-    form/outputconsole.ui
+    form/outputconsole.ui \
+    form/dialoggomarkovanalysisprocess.ui

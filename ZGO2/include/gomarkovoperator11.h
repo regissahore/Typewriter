@@ -22,7 +22,7 @@ public:
     void calcOutputMarkovStatus(double time);
     void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);
     DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
-    bool errorDetect(Messager *messager);
+    bool errorDetect();
     void paintParameter(QPainter *painter);
     GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);

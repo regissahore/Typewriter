@@ -72,6 +72,11 @@ QString GOGraph::getErrorMessage() const
     return this->_error;
 }
 
+QVector<GOGraph::MessageRecord> GOGraph::messages() const
+{
+    return this->_messages;
+}
+
 /**
  * Calculate the accumulative probability.
  */

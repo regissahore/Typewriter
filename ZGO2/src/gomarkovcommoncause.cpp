@@ -18,6 +18,7 @@ GOMarkovCommonCause::GOMarkovCommonCause() : DomItem()
     this->_gammaC = 1.0;
     this->_idList = new QVector<int>();
     this->_operators = new QVector<GOMarkovOperator*>();
+    this->_error = "";
 }
 
 GOMarkovCommonCause::~GOMarkovCommonCause()
@@ -78,6 +79,11 @@ double GOMarkovCommonCause::gammaC() const
 void GOMarkovCommonCause::setGammaC(double value)
 {
     this->_gammaC = value;
+}
+
+QString GOMarkovCommonCause::error() const
+{
+    return this->_error;
 }
 
 GOMarkovCommonCause* GOMarkovCommonCause::copy() const
@@ -172,7 +178,7 @@ bool GOMarkovCommonCause::containOperator(GOMarkovOperator* op) const
     return false;
 }
 
-bool GOMarkovCommonCause::errorDetect(Messager *messager)
+bool GOMarkovCommonCause::errorDetect()
 {
     if (this->_operators->size() > 0)
     {
@@ -182,9 +188,7 @@ bool GOMarkovCommonCause::errorDetect(Messager *messager)
             double lambda2 = this->_operators->at(i)->markovStatus1()->frequencyBreakdown().getValue(0);
             if (fabs(lambda1 - lambda2) > 1e-8)
             {
-                Message *message = MessageFactory::produce(MessageFactory::TYPE_OUTPUT_ERROR);
-                message->paramString = QObject::tr("Error: Common Cause ") + QObject::tr("%1 %2 should have same breakdown frequency. ").arg(this->_operators->at(0)->id()).arg(this->_operators->at(i)->id());
-                messager->sendMessage(message);
+                this->_error = QObject::tr("Error: Common Cause ") + QObject::tr("%1 %2 should have same breakdown frequency. ").arg(this->_operators->at(0)->id()).arg(this->_operators->at(i)->id());
                 return true;
             }
         }

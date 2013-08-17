@@ -20,9 +20,14 @@
 #include "gomarkovcommoncause.h"
 #include "dialogintegerinput.h"
 #include "gopathsetsetset.h"
+#include "dialoggomarkovanalysisprocess.h"
+#include "viewgomarkov.h"
 
 SceneGOMarkov::SceneGOMarkov(QObject *parent) : SceneGO(parent)
 {
+    this->_analysisTotalTime = 10.0;
+    this->_analysisCount = 101;
+    this->_analysisCutOrder = 1;
     this->selectTool(DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND);
 }
 
@@ -49,7 +54,7 @@ bool SceneGOMarkov::tryOpen(QDomElement &root)
     }
     this->_analysisTotalTime = root.attribute("analysis_total_time", "10.0").toDouble();
     this->_analysisCount = root.attribute("analysis_count", "101").toDouble();
-    this->_analysisCutOrder = root.attribute("analysis_cut_order", "1").toInt();
+    this->_analysisCutOrder = root.attribute("analysis_cut_order", "2").toInt();
     bool flag = true;
     QList<ItemGOMarkovOperator*> operatorList;
     QList<ItemGOSignal*> signalList;
@@ -382,24 +387,41 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
         int count = dialog->count();
         this->_analysisTotalTime = totalTime;
         this->_analysisCount = count;
-        GOMarkovChartData *data = graph->calcAccumulativeProbability(totalTime, count);
-        if (data != 0L)
+
+        DialogGOMarkovAnalysisProcess *processDialog = new DialogGOMarkovAnalysisProcess();
+        processDialog->setMarkovGraph(graph);
+        processDialog->setTotalTime(totalTime);
+        processDialog->setTotalCount(count);
+        if (QDialog::Accepted == processDialog->exec())
         {
-            if (data->save(filePath + ".goc"))
+            GOMarkovChartData *data = processDialog->analysisResult();
+            QVector<GOGraph::MessageRecord> messages = graph->messages();
+            for (int i = 0; i < messages.size(); ++i)
             {
-                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
-                message->paramString = filePath + ".goc";
+                Message *message = MessageFactory::produce(messages[i].type);
+                message->paramString = messages[i].message;
                 this->sendMessage(message);
             }
-            if (data->saveAsHTML(filePath + ".goc.html"))
+            if (data != 0L)
             {
-                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
-                message->paramString = filePath + ".goc.html";
-                this->sendMessage(message);
+                if (data->save(filePath + ".goc"))
+                {
+                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    message->paramString = filePath + ".goc";
+                    this->sendMessage(message);
+                }
+                if (data->saveAsHTML(filePath + ".goc.html"))
+                {
+                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    message->paramString = filePath + ".goc.html";
+                    this->sendMessage(message);
+                }
+                delete data;
             }
-            delete data;
         }
+        delete processDialog;
     }
+    delete dialog;
 }
 
 void SceneGOMarkov::analysisCut(const QString filePath)

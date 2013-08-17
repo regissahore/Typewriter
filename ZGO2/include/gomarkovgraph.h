@@ -25,10 +25,12 @@ public:
     void calcAccumulativeProbability(double time);
     GOMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
     GOMarkovStatus calcAccumulativeProbability(double time, QString id, double delta, GOMarkovOperator* stopOperator);
+    int currentCount() const;
     bool saveAsHTML(const QString filePath);
     bool saveAsHTML(const QString filePath, GOPathSetSetSet path);
 
 protected:
+    int _currentCount;
     QVector<GOMarkovEquivalent*> _equivalent;
     QVector<GOMarkovCommonCause*> _commonCause;
     virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
