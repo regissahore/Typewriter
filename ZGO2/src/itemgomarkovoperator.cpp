@@ -536,9 +536,12 @@ void ItemGOMarkovOperator::globalFeedbackExtend()
                 this->input()->at(i)->update();
                 ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->input()->at(i)->start()->op;
                 GOMarkovOperator* op = (GOMarkovOperator*)item->model();
-                op->setIsGlobalFeedback(true);
-                item->globalFeedbackExtend();
-                item->update();
+                if (!op->isGlobalFeedback())
+                {
+                    op->setIsGlobalFeedback(true);
+                    item->globalFeedbackExtend();
+                    item->update();
+                }
             }
         }
         for (int i = 0; i < this->subInput()->size(); ++i)
@@ -549,9 +552,12 @@ void ItemGOMarkovOperator::globalFeedbackExtend()
                 this->subInput()->at(i)->update();
                 ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->subInput()->at(i)->start()->op;
                 GOMarkovOperator* op = (GOMarkovOperator*)item->model();
-                op->setIsGlobalFeedback(true);
-                item->globalFeedbackExtend();
-                item->update();
+                if (!op->isGlobalFeedback())
+                {
+                    op->setIsGlobalFeedback(true);
+                    item->globalFeedbackExtend();
+                    item->update();
+                }
             }
         }
     }
