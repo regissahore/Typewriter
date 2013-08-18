@@ -213,6 +213,19 @@ QRectF ItemGOOperator::boundingRect() const
     return QRectF(-75, y, 150, height);
 }
 
+void ItemGOOperator::expandId(const int id)
+{
+    for (int i = 0; i < this->output()->size(); ++i)
+    {
+        for (int j = 0; j < this->output()->at(i)->size(); ++j)
+        {
+            this->output()->at(i)->at(j)->setId(id);
+            this->output()->at(i)->at(j)->model()->setId(id);
+            this->output()->at(i)->at(j)->update();
+        }
+    }
+}
+
 bool ItemGOOperator::isSelectable(float x, float y)
 {
     return x > this->pos().x() - 25 &&

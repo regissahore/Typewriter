@@ -6,6 +6,7 @@
 #include "definationgotype.h"
 #include "definationeditorselectiontype.h"
 #include "gosignalfactory.h"
+#include "gooutput.h"
 using namespace std;
 
 /**
@@ -266,6 +267,13 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     if (this->model()->isGlobalFeedback())
     {
         idName += "'";
+    }
+    if (this->start()->op != 0L)
+    {
+        if (this->start()->op->model()->output()->number() > 1)
+        {
+            idName += QString(" (%1)").arg(this->start()->index + 1);
+        }
     }
     if (this->isStraightLine())
     {

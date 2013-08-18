@@ -200,11 +200,11 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
         {
             if (op->isGlobalFeedback())
             {
-                data->names.push_back(QObject::tr("Operator %1'").arg(op->id()));
+                data->names.push_back(QObject::tr("Signal %1'").arg(op->id()));
             }
             else
             {
-                data->names.push_back(QObject::tr("Operator %1").arg(op->id()));
+                data->names.push_back(QObject::tr("Signal %1").arg(op->id()));
             }
             data->probabilities.push_back(QVector<DoubleVector>());
             data->lambdas.push_back(QVector<DoubleVector>());
@@ -216,11 +216,11 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             {
                 if (op->isGlobalFeedback())
                 {
-                    data->names.push_back(QObject::tr("Operator %1' R%2").arg(op->id()).arg(j + 1));
+                    data->names.push_back(QObject::tr("Signal %1' (%2)").arg(op->id()).arg(j + 1));
                 }
                 else
                 {
-                    data->names.push_back(QObject::tr("Operator %1 R%2").arg(op->id()).arg(j + 1));
+                    data->names.push_back(QObject::tr("Signal %1 (%2)").arg(op->id()).arg(j + 1));
                 }
                 data->probabilities.push_back(QVector<DoubleVector>());
                 data->lambdas.push_back(QVector<DoubleVector>());

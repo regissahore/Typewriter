@@ -137,6 +137,7 @@ void ParameterGOOperator::addOperatorParameter()
 void ParameterGOOperator::setItemID(int value)
 {
     ItemGOOperator *item = (ItemGOOperator*)this->_item;
+    item->expandId(value);
     item->model()->setId(value);
     item->update();
 }

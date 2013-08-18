@@ -21,6 +21,7 @@ public:
     GOOperator *model() const;
     virtual void setModel(GOOperator *model);
     QRectF boundingRect() const;
+    void expandId(const int id);
     bool isSelectable(float x, float y);
     bool isSelectable(float x, float y, float width, float height);
     bool isHorizonFlip() const;
