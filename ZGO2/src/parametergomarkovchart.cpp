@@ -24,7 +24,6 @@ void ParameterGOMarkovChart::bindItem(void *item)
     label->setText(tr("Signal"));
     this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, label);
     comboBox = new QComboBox(this);
-    comboBox->setEditable(true);
     for (int i = 0; i < chart->chartData()->names.size(); ++i)
     {
         comboBox->addItem(chart->chartData()->names[i]);

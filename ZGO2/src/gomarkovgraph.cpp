@@ -162,12 +162,39 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     {
         return 0L;
     }
-    GOMarkovChartData *data = new GOMarkovChartData();
-    QVector<GOOperator*> list = this->getTopologicalOrder();
-    for (int i = 0; i < list.size(); ++i)
+
+    // 获得排序后的操作符。
+    QVector<GOMarkovOperator*> sortedOperatorList;
+    for (int i = 0; i < this->_operator.size(); ++i)
     {
-        GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-        op->initOutputMarkovStatus();
+        sortedOperatorList.push_back((GOMarkovOperator*)this->_operator.at(i));
+    }
+    for (int i = 0; i < sortedOperatorList.size(); ++i)
+    {
+        for (int j = i + 1; j < sortedOperatorList.size(); ++j)
+        {
+            bool isBigger = false;
+            if (sortedOperatorList[i]->isGlobalFeedback() == sortedOperatorList[j]->isGlobalFeedback())
+            {
+                isBigger = sortedOperatorList[i]->id() > sortedOperatorList[j]->id();
+            }
+            else
+            {
+                isBigger = sortedOperatorList[i]->isGlobalFeedback() > sortedOperatorList[j]->isGlobalFeedback();
+            }
+            if (isBigger)
+            {
+                GOMarkovOperator *temp = sortedOperatorList[i];
+                sortedOperatorList[i] = sortedOperatorList[j];
+                sortedOperatorList[j] = temp;
+            }
+        }
+    }
+
+    GOMarkovChartData *data = new GOMarkovChartData();
+    for (int i = 0; i < sortedOperatorList.size(); ++i)
+    {
+        GOMarkovOperator *op = (GOMarkovOperator*)sortedOperatorList[i];
         int outputNum = op->output()->number();
         if (outputNum == 1)
         {
@@ -200,6 +227,13 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 data->mus.push_back(QVector<DoubleVector>());
             }
         }
+    }
+
+    QVector<GOOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GOMarkovOperator *op = (GOMarkovOperator*)list[i];
+        op->initOutputMarkovStatus();
     }
     for (int i = 0; i < count; ++i)
     {
@@ -234,9 +268,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
             delete data;
             return 0L;
         }
-        for (int j = 0, index = 0; j < list.size(); ++j)
+        for (int j = 0, index = 0; j < sortedOperatorList.size(); ++j)
         {
-            GOMarkovOperator* op = (GOMarkovOperator*)list[j];
+            GOMarkovOperator* op = (GOMarkovOperator*)sortedOperatorList[j];
             int outputNum = op->markovOutputStatus()->size();
             for (int k = 0; k < outputNum; ++k)
             {
@@ -255,10 +289,11 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 op->markovStatus()->setProbabilityBreakdown(1.0);
             }
             this->calcAccumulativeProbability(time);
-            for (int k = 0; k < list.size(); ++k)
+            for (int k = 0; k < sortedOperatorList.size(); ++k)
             {
-                GOMarkovOperator* op = (GOMarkovOperator*)list[k];
-                for (int l = 0; l < list[k]->output()->number(); ++l)
+                GOMarkovOperator* op = (GOMarkovOperator*)sortedOperatorList[k];
+                int outputNum = op->markovOutputStatus()->size();
+                for (int l = 0; l < outputNum; ++l)
                 {
                     r00.push_back(op->markovOutputStatus()->at(l)->probabilityNormal());
                 }
@@ -271,9 +306,9 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 op->markovStatus()->setProbabilityNormal(1.0);
             }
             this->calcAccumulativeProbability(time);
-            for (int k = 0; k < list.size(); ++k)
+            for (int k = 0; k < sortedOperatorList.size(); ++k)
             {
-                GOMarkovOperator* op = (GOMarkovOperator*)list[k];
+                GOMarkovOperator* op = (GOMarkovOperator*)sortedOperatorList[k];
                 int outputNum = op->markovOutputStatus()->size();
                 for (int l = 0; l < outputNum; ++l)
                 {
