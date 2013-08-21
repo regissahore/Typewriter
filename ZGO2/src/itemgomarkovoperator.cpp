@@ -102,6 +102,8 @@ void ItemGOMarkovOperator::paint(QPainter *painter, const QStyleOptionGraphicsIt
     {
     case GOMarkovOperatorFactory::Operator_Type_9A1:
     case GOMarkovOperatorFactory::Operator_Type_9A2:
+    case GOMarkovOperatorFactory::Operator_Type_9B1:
+    case GOMarkovOperatorFactory::Operator_Type_9B2:
         this->paint9A(painter);
         break;
     case GOMarkovOperatorFactory::Operator_Type_22B:

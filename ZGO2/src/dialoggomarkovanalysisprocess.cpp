@@ -42,7 +42,7 @@ int DialogGOMarkovAnalysisProcess::exec()
     this->_analysisThread->start();
 
     this->_timer = new QTimer();
-    this->_timer->setInterval(100);
+    this->_timer->setInterval(20);
     this->connect(this->_timer, SIGNAL(timeout()), this, SLOT(timeoutEvent()));
     this->_timer->start();
 

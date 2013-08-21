@@ -68,6 +68,7 @@ protected:
     bool _isDisplayMu;
     int _displayIndex;
     int _displayVectorIndex;
+    int _displayTime;
 };
 
 #endif // ITEMGOMARKOVCHART_H

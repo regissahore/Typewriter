@@ -97,6 +97,26 @@ void ItemGOMarkovChart::setP(QVector<DoubleVector> P)
         }
         this->_minP = 0.0;
     }
+    for (this->_displayTime = this->_time.size() - 1; this->_displayTime > 0; --this->_displayTime)
+    {
+        bool flag = false;
+        for (int i = 0 ; i < this->_P[this->_displayTime].length(); ++i)
+        {
+            if (fabs(this->_P[this->_displayTime].getValue(i) - this->_P[this->_displayTime - 1].getValue(i)) >  1e-9)
+            {
+                flag = true;
+            }
+        }
+        if (flag)
+        {
+            break;
+        }
+    }
+    this->_displayTime += 20;
+    if (this->_displayTime > this->_time.size())
+    {
+        this->_displayTime = this->_time.size();
+    }
     this->update();
 }
 
@@ -205,11 +225,11 @@ void ItemGOMarkovChart::setDetailIndex(float x, float y)
     {
         if (y >= 0 && y <= this->totalHeight())
         {
-            float xStep = 1.0f * CHART_WIDTH / this->_time.size();
+            float xStep = 1.0f * CHART_WIDTH / this->_displayTime;
             this->_detailIndex = floor((x - CHART_X) / xStep);
-            if (this->_detailIndex >= this->_time.size())
+            if (this->_detailIndex >= this->_displayTime)
             {
-                this->_detailIndex = this->_time.size() - 1;
+                this->_detailIndex = this->_displayTime - 1;
             }
             this->update();
         }
@@ -320,7 +340,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                                      CHART_WIDTH,
                                      ITEM_HEIGHT - CHART_HEIGHT),
                               Qt::AlignRight | Qt::AlignTop,
-                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+                              QString("%1").arg(this->_time.at(this->_displayTime - 1)));
             painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
                                      CHART_Y + CHART_HEIGHT + shiftY,
                                      ITEM_WIDTH - CHART_WIDTH - CHART_X,
@@ -342,7 +362,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                                      CHART_WIDTH,
                                      ITEM_HEIGHT - CHART_HEIGHT),
                               Qt::AlignRight | Qt::AlignTop,
-                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+                              QString("%1").arg(this->_time.at(this->_displayTime - 1)));
             painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
                                      CHART_Y + CHART_HEIGHT + shiftY,
                                      ITEM_WIDTH - CHART_WIDTH - CHART_X,
@@ -364,7 +384,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                                      CHART_WIDTH,
                                      ITEM_HEIGHT - CHART_HEIGHT),
                               Qt::AlignRight | Qt::AlignTop,
-                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+                              QString("%1").arg(this->_time.at(this->_displayTime - 1)));
             painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
                                      CHART_Y + CHART_HEIGHT + shiftY,
                                      ITEM_WIDTH - CHART_WIDTH - CHART_X,
@@ -386,7 +406,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
                                      CHART_WIDTH,
                                      ITEM_HEIGHT - CHART_HEIGHT),
                               Qt::AlignRight | Qt::AlignTop,
-                              QString("%1").arg(this->_time.at(this->_time.size() - 1)));
+                              QString("%1").arg(this->_time.at(this->_displayTime - 1)));
             painter->drawText(QRectF(CHART_X + CHART_WIDTH + TEXT_MARGIN,
                                      CHART_Y + CHART_HEIGHT + shiftY,
                                      ITEM_WIDTH - CHART_WIDTH - CHART_X,
@@ -398,13 +418,13 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
     }
     if (this->_time.size() == this->_P.size() && this->_time.size() > 0)
     {
-        if (this->_detailIndex > 0 && this->_detailIndex < this->_time.size())
+        if (this->_detailIndex > 0 && this->_detailIndex < this->_displayTime)
         {
             painter->setPen(Qt::darkGray);
             shiftY = 0;
             if (this->isDisplayP())
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxP.getValue(0) - this->_P[this->_detailIndex].getValue(0)) / (this->_maxP.getValue(0) - this->_minP.getValue(0)) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
                 painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
@@ -416,7 +436,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             if (this->isDisplayQ())
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxQ.getValue(0) - this->_Q[this->_detailIndex].getValue(0)) / (this->_maxQ.getValue(0) - this->_minQ.getValue(0)) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
                 painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
@@ -428,7 +448,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             if (this->isDisplayLambda())
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda.getValue(0) - this->_lambda[this->_detailIndex].getValue(0)) / (this->_maxLambda.getValue(0) - this->_minLambda.getValue(0)) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
                 painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
@@ -440,7 +460,7 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             }
             if (this->isDisplayMu())
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(this->_detailIndex) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxMu.getValue(0) - this->_mu[this->_detailIndex].getValue(0)) / (this->_maxMu.getValue(0) - this->_minMu.getValue(0)) + shiftY;
                 painter->drawLine(QPointF(CHART_X, y), QPointF(x, y));
                 painter->drawLine(QPointF(x, CHART_Y + CHART_HEIGHT + shiftY), QPointF(x, y));
@@ -461,9 +481,9 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             painter->setPen(pen);
             float lastX = 0.0f;
             float lastY = 0.0f;
-            for (int i = 1; i < this->_time.size(); ++i)
+            for (int i = 1; i < this->_displayTime; ++i)
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxP.getValue(0) - this->_P[i].getValue(0)) / (this->_maxP.getValue(0) - this->_minP.getValue(0)) + shiftY;
                 if (i > 1)
                 {
@@ -485,9 +505,9 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             painter->setPen(pen);
             float lastX = 0.0f;
             float lastY = 0.0f;
-            for (int i = 1; i < this->_time.size(); ++i)
+            for (int i = 1; i < this->_displayTime; ++i)
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxQ.getValue(0) - this->_Q[i].getValue(0)) / (this->_maxQ .getValue(0)- this->_minQ.getValue(0)) + shiftY;
                 if (i > 1)
                 {
@@ -509,9 +529,9 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             painter->setPen(pen);
             float lastX = 0.0f;
             float lastY = 0.0f;
-            for (int i = 1; i < this->_time.size(); ++i)
+            for (int i = 1; i < this->_displayTime; ++i)
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxLambda.getValue(0) - this->_lambda[i].getValue(0)) / (this->_maxLambda.getValue(0) - this->_minLambda.getValue(0)) + shiftY;
                 if (i > 1)
                 {
@@ -533,9 +553,9 @@ void ItemGOMarkovChart::paint(QPainter *painter, const QStyleOptionGraphicsItem 
             painter->setPen(pen);
             float lastX = 0.0f;
             float lastY = 0.0f;
-            for (int i = 1; i < this->_time.size(); ++i)
+            for (int i = 1; i < this->_displayTime; ++i)
             {
-                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_time.size() - 1);
+                float x = CHART_X + CHART_WIDTH * this->_time.at(i) / this->_time.at(this->_displayTime - 1);
                 float y = CHART_Y + CHART_HEIGHT * (this->_maxMu.getValue(0) - this->_mu[i].getValue(0)) / (this->_maxMu.getValue(0) - this->_minMu.getValue(0)) + shiftY;
                 if (i > 1)
                 {
