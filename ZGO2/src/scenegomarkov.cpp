@@ -447,7 +447,6 @@ void SceneGOMarkov::analysisCut(const QString filePath)
         {
             QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
-        delete graph;
     }
     delete dialog;
 }

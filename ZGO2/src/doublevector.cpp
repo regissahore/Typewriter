@@ -10,7 +10,7 @@ using namespace std;
  */
 DoubleVector::Head::Node::Node()
 {
-    this->id = -1;
+    this->id = 0;
     this->index = 1;
 }
 
@@ -51,6 +51,13 @@ DoubleVector::Head::Head()
 void DoubleVector::Head::addNode(int id, int index)
 {
     DoubleVector::Head::Node node(id, index);
+    for (int i = 0; i < this->list.size(); ++i)
+    {
+        if (this->list[i] == node)
+        {
+            return;
+        }
+    }
     this->list.push_back(node);
 }
 
@@ -103,10 +110,6 @@ DoubleVector::Head operator +(const DoubleVector::Head &a, const DoubleVector::H
     {
         DoubleVector::Head::Node node = *it;
         head.list.push_back(node);
-    }
-    if (nodeSet.size() > 1)
-    {
-        head.list.remove(0);
     }
     return head;
 }
@@ -251,16 +254,25 @@ void DoubleVector::setAll(const double value)
 
 QString DoubleVector::toString(int index)
 {
+    return QString::number(this->getValue(index), 'f', 10);
+}
+
+QString DoubleVector::toNameString(int index)
+{
     QString res = "";
     if (this->_head[index].list.size() > 0)
     {
+        res += "[";
         for (int i = 0; i < this->_head[index].list.size(); ++i)
         {
-            res += QString("%1(%2) ").arg(this->_head[index].list[i].id + 1).arg(this->_head[index].list[i].index);
+            if (i)
+            {
+                res += "_";
+            }
+            res += QString("%1[%2]").arg(this->_head[index].list[i].id).arg(this->_head[index].list[i].index + 1);
         }
-        res += ": ";
+        res += "] ";
     }
-    res += QString::number(this->getValue(index), 'f', 10);
     return res;
 }
 
@@ -288,7 +300,7 @@ DoubleVector DoubleVector::Exp(const DoubleVector &a)
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, exp(a.getValue(i)));
-        b._head.push_back(a._head[i]);
+        b._head[i] = a._head[i];
     }
     return b;
 }
@@ -301,7 +313,7 @@ DoubleVector DoubleVector::Sqrt(const DoubleVector &a)
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, sqrt(a.getValue(i)));
-        b._head.push_back(a._head[i]);
+        b._head[i] = a._head[i];
     }
     return b;
 }
@@ -402,6 +414,7 @@ DoubleVector operator -(const DoubleVector &a)
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, - a.getValue(i));
+        b._head[i] = a._head[i];
     }
     return b;
 }
@@ -438,39 +451,23 @@ bool operator >(const double a, const DoubleVector &b)
 
 DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
 {
-    set<DoubleVector::Head::Node> nodeSet;
+    set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
-        for (int j = 0; j < a._head[i].list.size(); ++j)
+        for (int j = 0; j < b._head.size(); ++j)
         {
-            nodeSet.insert(a._head[i].list[j]);
+            headSet.insert(a._head[i] + b._head[j]);
         }
     }
-    for (int i = 0; i < b._head.size(); ++i)
+    QVector<DoubleVector::Head> headList;
+    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
     {
-        for (int j = 0; j < b._head[i].list.size(); ++j)
-        {
-            nodeSet.insert(b._head[i].list[j]);
-        }
+        headList.push_back(*it);
     }
-    QVector<DoubleVector::Head::Node> nodeList;
-    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    DoubleVector c = DoubleVector::Zero(headList.size());
+    for (int i = 0; i < headList.size(); ++i)
     {
-        DoubleVector::Head::Node node = *it;
-        nodeList.push_back(node);
-    }
-    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
-    for (int i = 0; i < (1 << nodeList.size()); ++i)
-    {
-        DoubleVector::Head head;
-        for (int j = 0; j < nodeList.size(); ++j)
-        {
-            if (i & (1 << j))
-            {
-                head.addNode(nodeList[j].id, nodeList[j].index);
-            }
-        }
-        c._head[i] = head;
+        c._head[i] = headList[i];
     }
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -485,39 +482,23 @@ DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
 {
-    set<DoubleVector::Head::Node> nodeSet;
+    set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
-        for (int j = 0; j < a._head[i].list.size(); ++j)
+        for (int j = 0; j < b._head.size(); ++j)
         {
-            nodeSet.insert(a._head[i].list[j]);
+            headSet.insert(a._head[i] + b._head[j]);
         }
     }
-    for (int i = 0; i < b._head.size(); ++i)
+    QVector<DoubleVector::Head> headList;
+    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
     {
-        for (int j = 0; j < b._head[i].list.size(); ++j)
-        {
-            nodeSet.insert(b._head[i].list[j]);
-        }
+        headList.push_back(*it);
     }
-    QVector<DoubleVector::Head::Node> nodeList;
-    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    DoubleVector c = DoubleVector::Zero(headList.size());
+    for (int i = 0; i < headList.size(); ++i)
     {
-        DoubleVector::Head::Node node = *it;
-        nodeList.push_back(node);
-    }
-    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
-    for (int i = 0; i < (1 << nodeList.size()); ++i)
-    {
-        DoubleVector::Head head;
-        for (int j = 0; j < nodeList.size(); ++j)
-        {
-            if (i & (1 << j))
-            {
-                head.addNode(nodeList[j].id, nodeList[j].index);
-            }
-        }
-        c._head[i] = head;
+        c._head[i] = headList[i];
     }
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -532,39 +513,23 @@ DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
 {
-    set<DoubleVector::Head::Node> nodeSet;
+    set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
-        for (int j = 0; j < a._head[i].list.size(); ++j)
+        for (int j = 0; j < b._head.size(); ++j)
         {
-            nodeSet.insert(a._head[i].list[j]);
+            headSet.insert(a._head[i] + b._head[j]);
         }
     }
-    for (int i = 0; i < b._head.size(); ++i)
+    QVector<DoubleVector::Head> headList;
+    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
     {
-        for (int j = 0; j < b._head[i].list.size(); ++j)
-        {
-            nodeSet.insert(b._head[i].list[j]);
-        }
+        headList.push_back(*it);
     }
-    QVector<DoubleVector::Head::Node> nodeList;
-    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    DoubleVector c = DoubleVector::Zero(headList.size());
+    for (int i = 0; i < headList.size(); ++i)
     {
-        DoubleVector::Head::Node node = *it;
-        nodeList.push_back(node);
-    }
-    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
-    for (int i = 0; i < (1 << nodeList.size()); ++i)
-    {
-        DoubleVector::Head head;
-        for (int j = 0; j < nodeList.size(); ++j)
-        {
-            if (i & (1 << j))
-            {
-                head.addNode(nodeList[j].id, nodeList[j].index);
-            }
-        }
-        c._head[i] = head;
+        c._head[i] = headList[i];
     }
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -579,39 +544,23 @@ DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator /(const DoubleVector &a, const DoubleVector &b)
 {
-    set<DoubleVector::Head::Node> nodeSet;
+    set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
-        for (int j = 0; j < a._head[i].list.size(); ++j)
+        for (int j = 0; j < b._head.size(); ++j)
         {
-            nodeSet.insert(a._head[i].list[j]);
+            headSet.insert(a._head[i] + b._head[j]);
         }
     }
-    for (int i = 0; i < b._head.size(); ++i)
+    QVector<DoubleVector::Head> headList;
+    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
     {
-        for (int j = 0; j < b._head[i].list.size(); ++j)
-        {
-            nodeSet.insert(b._head[i].list[j]);
-        }
+        headList.push_back(*it);
     }
-    QVector<DoubleVector::Head::Node> nodeList;
-    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    DoubleVector c = DoubleVector::Zero(headList.size());
+    for (int i = 0; i < headList.size(); ++i)
     {
-        DoubleVector::Head::Node node = *it;
-        nodeList.push_back(node);
-    }
-    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
-    for (int i = 0; i < (1 << nodeList.size()); ++i)
-    {
-        DoubleVector::Head head;
-        for (int j = 0; j < nodeList.size(); ++j)
-        {
-            if (i & (1 << j))
-            {
-                head.addNode(nodeList[j].id, nodeList[j].index);
-            }
-        }
-        c._head[i] = head;
+        c._head[i] = headList[i];
     }
     for (int i = 0; i < a._head.size(); ++i)
     {

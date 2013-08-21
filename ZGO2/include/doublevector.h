@@ -53,7 +53,8 @@ public:
     void addHead(const int pos, const int id, const int index);
     void setAll(const double value);
 
-    QString toString(int index = 0);
+    QString toString(int index);
+    QString toNameString(int index);
 
     static DoubleVector One(int len);
     static DoubleVector Zero(int len);
