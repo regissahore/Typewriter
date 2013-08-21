@@ -17,7 +17,7 @@ public:
     void setIsUseDelta(const bool value);
     int deltaNum() const;
     void setDeltaNum(int value);
-    void calcOutputMarkovStatus(QVector<GOMarkovStatus> prevStatus);
+    void calcOutputMarkovStatus(QVector<GOMarkovStatus> prevStatus, double time);
     void paintParameter(QPainter *painter);
     void calcOutputMarkovStatus(double time);
     DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);

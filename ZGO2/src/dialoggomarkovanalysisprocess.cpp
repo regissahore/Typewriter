@@ -69,7 +69,7 @@ void DialogGOMarkovAnalysisProcess::finishedEvent()
 void DialogGOMarkovAnalysisProcess::timeoutEvent()
 {
     ++this->_timeCount;
-    int time = this->_timeCount / 10;
+    int time = this->_timeCount / 50;
     this->ui->lineEditTimePassed->setText("");
     if (time >= 3600)
     {

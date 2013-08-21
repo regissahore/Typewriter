@@ -95,13 +95,54 @@ void GOMarkovOperator12A::setDeltaNum(int value)
     }
 }
 
-void GOMarkovOperator12A::calcOutputMarkovStatus(QVector<GOMarkovStatus> prevStatus)
+double fun12a(double P, double lambda, double mu, double t)
 {
-    for (int i = 0; i < this->output()->number(); ++i)
+    return ( mu / (lambda + mu) ) * (1 + lambda / mu * exp( - (lambda + mu) * t ) ) - P;
+}
+
+double fun12a_(double lambda, double mu, double t)
+{
+    return (- mu / ( (lambda + mu) * (lambda + mu) ) ) * (1.0 + lambda / mu * exp( - (lambda + mu) * t ) ) +
+            ( mu / (lambda + mu) ) * ( ( 1.0 / mu ) * exp( - (lambda + mu) * t ) +
+                                       ( lambda / mu) * ( - t * exp( - (lambda + mu) * t ) ) );
+}
+
+double newton12a(double P, double mu, double t)
+{
+    double prev = 0.0;
+    while (true)
     {
-        this->markovOutputStatus()->at(i)->setProbabilityNormal(prevStatus[i].probabilityNormal());
-        this->markovOutputStatus()->at(i)->setFrequencyBreakdown(prevStatus[i].frequencyBreakdown());
-        this->markovOutputStatus()->at(i)->setFrequencyRepair(prevStatus[i].frequencyRepair());
+        double cur = prev - fun12a(P, prev, mu, t) / fun12a_(prev, mu, t);
+        if (isinf(cur) || isnan(cur))
+        {
+            return cur;
+        }
+        if (fabs(prev - cur) < 1e-10)
+        {
+            return prev;
+        }
+        prev = cur;
+    }
+}
+
+void GOMarkovOperator12A::calcOutputMarkovStatus(QVector<GOMarkovStatus> prevStatus, double time)
+{
+    if (prevStatus.size() > 0)
+    {
+        DoubleVector mu = prevStatus[0].frequencyRepair();
+        for (int i = 0; i < this->output()->number(); ++i)
+        {
+            DoubleVector PR = prevStatus[i].probabilityNormal();
+            DoubleVector muR = mu;
+            DoubleVector lambdaR = prevStatus[i].frequencyBreakdown();
+            for (int j = 0; j < prevStatus[i].frequencyBreakdown().length(); ++j)
+            {
+                lambdaR.setValue(j, newton12a(PR.getValue(j), muR.getValue(j), time));
+            }
+            this->markovOutputStatus()->at(i)->setProbabilityNormal(PR);
+            this->markovOutputStatus()->at(i)->setFrequencyBreakdown(lambdaR);
+            this->markovOutputStatus()->at(i)->setFrequencyRepair(muR);
+        }
     }
 }
 

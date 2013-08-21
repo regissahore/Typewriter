@@ -53,11 +53,45 @@ void GOMarkovOperator19::setDeltaNum(int value)
     this->_deltaNum = value;
 }
 
-void GOMarkovOperator19::calcOutputMarkovStatus(GOMarkovStatus prevStatus)
+double fun(double P, double lambda, double mu, double t)
+{
+    return ( mu / (lambda + mu) ) * (1 + lambda / mu * exp( - (lambda + mu) * t ) ) - P;
+}
+
+double fun_(double lambda, double mu, double t)
+{
+    return (- mu / ( (lambda + mu) * (lambda + mu) ) ) * (1.0 + lambda / mu * exp( - (lambda + mu) * t ) ) +
+            ( mu / (lambda + mu) ) * ( ( 1.0 / mu ) * exp( - (lambda + mu) * t ) +
+                                       ( lambda / mu) * ( - t * exp( - (lambda + mu) * t ) ) );
+}
+
+double newton(double P, double mu, double t)
+{
+    double prev = 0.0;
+    while (true)
+    {
+        double cur = prev - fun(P, prev, mu, t) / fun_(prev, mu, t);
+        if (isinf(cur) || isnan(cur))
+        {
+            return cur;
+        }
+        if (fabs(prev - cur) < 1e-10)
+        {
+            return prev;
+        }
+        prev = cur;
+    }
+}
+
+void GOMarkovOperator19::calcOutputMarkovStatus(GOMarkovStatus prevStatus, double time)
 {
     DoubleVector PS = prevStatus.probabilityNormal();
     DoubleVector lambdaS = prevStatus.frequencyBreakdown();
     DoubleVector muS = prevStatus.frequencyRepair();
+    for (int i = 0; i < lambdaS.length(); ++i)
+    {
+        lambdaS.setValue(i, newton(PS.getValue(i), muS.getValue(0), time));
+    }
     DoubleVector PR2(0.0);
     DoubleVector lambdaR2(0.0);
     DoubleVector muR2(0.0);

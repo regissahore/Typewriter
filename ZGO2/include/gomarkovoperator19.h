@@ -15,7 +15,7 @@ public:
     QVector<double>* delta() const;
     int deltaNum() const;
     void setDeltaNum(int value);
-    void calcOutputMarkovStatus(GOMarkovStatus prevStatus);
+    void calcOutputMarkovStatus(GOMarkovStatus prevStatus, double time);
     void paintParameter(QPainter *painter);
     GOMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);

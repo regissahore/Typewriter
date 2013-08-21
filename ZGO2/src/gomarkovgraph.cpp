@@ -85,7 +85,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
                 prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
             }
             this->calcAccumulativeProbability(time, "null", 1.0, op);
-            op->calcOutputMarkovStatus(prevStatus);
+            op->calcOutputMarkovStatus(prevStatus, time);
         }
         else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)
         {
@@ -100,7 +100,7 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
                 }
                 GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
                 prevStatus.push_front(status);
-                op->calcOutputMarkovStatus(prevStatus);
+                op->calcOutputMarkovStatus(prevStatus, time);
             }
             else
             {
@@ -386,7 +386,7 @@ GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString i
                 prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
             }
             this->calcAccumulativeProbability(time, "null", 1.0, op);
-            op->calcOutputMarkovStatus(prevStatus);
+            op->calcOutputMarkovStatus(prevStatus, time);
         }
         else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)
         {
@@ -401,7 +401,7 @@ GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString i
                 }
                 GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
                 prevStatus.push_front(status);
-                op->calcOutputMarkovStatus(prevStatus);
+                op->calcOutputMarkovStatus(prevStatus, time);
             }
             else
             {
