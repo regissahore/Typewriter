@@ -93,6 +93,7 @@ void DialogGOMarkovAnalysisProcess::timeoutEvent()
 
 void DialogGOMarkovAnalysisProcess::on_cancelButton_clicked()
 {
-    this->_analysisThread->terminate();
+    this->_analysisThread->quit();
+    while(!this->_analysisThread->isFinished());
     this->reject();
 }
