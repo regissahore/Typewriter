@@ -33,6 +33,10 @@ public:
     void setFrequencyRepair(const int pos, const double value);
     void setRepairTime(const int pos, const double value);
 
+    void addHeadProbabilityNormal(const int pos, const int id, const int index);
+    void addHeadFrequencyBreakdown(const int pos, const int id, const int index);
+    void addHeadFrequencyRepair(const int pos, const int id, const int index);
+
     void setVectorLength(const int len);
 
     GOMarkovStatus* copy() const;

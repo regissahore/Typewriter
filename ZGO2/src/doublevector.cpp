@@ -5,21 +5,130 @@
 #include "doublevector.h"
 using namespace std;
 
+/**
+ * 默认的头为0号操作符。
+ */
+DoubleVector::Head::Node::Node()
+{
+    this->id = -1;
+    this->index = 1;
+}
+
+DoubleVector::Head::Node::Node(int id, int index)
+{
+    this->id = id;
+    this->index = index;
+}
+
+bool operator ==(const DoubleVector::Head::Node &a, const DoubleVector::Head::Node &b)
+{
+    return a.id == b.id && a.index == b.index;
+}
+
+bool operator !=(const DoubleVector::Head::Node &a, const DoubleVector::Head::Node &b)
+{
+    return a.id != b.id || a.index != b.index;
+}
+
+bool operator <(const DoubleVector::Head::Node &a, const DoubleVector::Head::Node &b)
+{
+    if (a.id == b.id)
+    {
+        return a.index < b.index;
+    }
+    return a.id < b.id;
+}
+
+bool operator >(const DoubleVector::Head::Node &a, const DoubleVector::Head::Node &b)
+{
+    return b < a;
+}
+
+DoubleVector::Head::Head()
+{
+}
+
+void DoubleVector::Head::addNode(int id, int index)
+{
+    DoubleVector::Head::Node node(id, index);
+    this->list.push_back(node);
+}
+
+bool operator ==(const DoubleVector::Head &a, const DoubleVector::Head &b)
+{
+    if (a.list.size() != b.list.size())
+    {
+        return false;
+    }
+    for (int i = 0; i < a.list.size(); ++i)
+    {
+        if (a.list[i] != b.list[i])
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool operator <(const DoubleVector::Head &a, const DoubleVector::Head &b)
+{
+    int len = min(a.list.size(), b.list.size());
+    for (int i = 0; i < len; ++i)
+    {
+        if (a.list[i] < b.list[i])
+        {
+            return true;
+        }
+        else if (a.list[i] > b.list[i])
+        {
+            return false;
+        }
+    }
+    return a.list.size() == len && b.list.size() != len;
+}
+
+DoubleVector::Head operator +(const DoubleVector::Head &a, const DoubleVector::Head &b)
+{
+    set<DoubleVector::Head::Node> nodeSet;
+    for (int i = 0; i < a.list.size(); ++i)
+    {
+        nodeSet.insert(a.list[i]);
+    }
+    for (int i = 0; i < b.list.size(); ++i)
+    {
+        nodeSet.insert(b.list[i]);
+    }
+    DoubleVector::Head head;
+    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    {
+        DoubleVector::Head::Node node = *it;
+        head.list.push_back(node);
+    }
+    if (nodeSet.size() > 1)
+    {
+        head.list.remove(0);
+    }
+    return head;
+}
+
 DoubleVector::DoubleVector()
 {
     this->setIsVector(false);
     this->_values.push_back(0.0);
+    this->_head.push_back(DoubleVector::Head());
 }
 
 DoubleVector::DoubleVector(const double value)
 {
     this->setIsVector(false);
     this->_values.push_back(value);
+    this->_head.push_back(DoubleVector::Head());
 }
 
 DoubleVector::~DoubleVector()
 {
     this->_values.clear();
+    this->_head.clear();
 }
 
 int DoubleVector::length() const
@@ -38,6 +147,7 @@ void DoubleVector::setLength(const int len)
         for (int i = this->length(); i < len; ++i)
         {
             this->_values.push_back(0.0);
+            this->_head.push_back(DoubleVector::Head());
         }
     }
     else if (len < this->length())
@@ -51,6 +161,7 @@ void DoubleVector::setLength(const int len)
             for (int i = this->length(); i > len; --i)
             {
                 this->_values.pop_back();
+                this->_head.pop_back();
             }
         }
     }
@@ -101,6 +212,35 @@ void DoubleVector::setValue(const int pos, const double value)
     }
 }
 
+double DoubleVector::getValue(const Head head)
+{
+    for (int i = 0; i < this->_values.size(); ++i)
+    {
+        if (this->_head[i] == head)
+        {
+            return this->_values[i];
+        }
+    }
+    return 0.0;
+}
+
+void DoubleVector::setValue(const DoubleVector::Head head, const double value)
+{
+    for (int i = 0; i < this->_values.size(); ++i)
+    {
+        if (this->_head[i] == head)
+        {
+            this->_values[i] = value;
+            break;
+        }
+    }
+}
+
+void DoubleVector::addHead(const int pos, const int id, const int index)
+{
+    this->_head[pos].addNode(id, index);
+}
+
 void DoubleVector::setAll(const double value)
 {
     for (int i = 0; i < this->length(); ++i)
@@ -111,7 +251,17 @@ void DoubleVector::setAll(const double value)
 
 QString DoubleVector::toString(int index)
 {
-    return QString::number(this->getValue(index), 'f', 10);
+    QString res = "";
+    if (this->_head[index].list.size() > 0)
+    {
+        for (int i = 0; i < this->_head[index].list.size(); ++i)
+        {
+            res += QString("%1(%2) ").arg(this->_head[index].list[i].id + 1).arg(this->_head[index].list[i].index);
+        }
+        res += ": ";
+    }
+    res += QString::number(this->getValue(index), 'f', 10);
+    return res;
 }
 
 DoubleVector DoubleVector::One(int len)
@@ -138,6 +288,7 @@ DoubleVector DoubleVector::Exp(const DoubleVector &a)
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, exp(a.getValue(i)));
+        b._head.push_back(a._head[i]);
     }
     return b;
 }
@@ -150,6 +301,7 @@ DoubleVector DoubleVector::Sqrt(const DoubleVector &a)
     for (int i = 0; i < a.length(); ++i)
     {
         b.setValue(i, sqrt(a.getValue(i)));
+        b._head.push_back(a._head[i]);
     }
     return b;
 }
@@ -161,7 +313,8 @@ DoubleVector& DoubleVector::operator +=(const DoubleVector &a)
     this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, c.getValue(i));
+        this->_values[i] = c._values[i];
+        this->_head[i] = c._head[i];
     }
     return *this;
 }
@@ -173,7 +326,8 @@ DoubleVector& DoubleVector::operator -=(const DoubleVector &a)
     this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, c.getValue(i));
+        this->_values[i] = c._values[i];
+        this->_head[i] = c._head[i];
     }
     return *this;
 }
@@ -185,7 +339,8 @@ DoubleVector& DoubleVector::operator *=(const DoubleVector &a)
     this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, c.getValue(i));
+        this->_values[i] = c._values[i];
+        this->_head[i] = c._head[i];
     }
     return *this;
 }
@@ -197,7 +352,8 @@ DoubleVector& DoubleVector::operator /=(const DoubleVector &a)
     this->setLength(c.length());
     for (int i = 0; i < this->length(); ++i)
     {
-        this->setValue(i, c.getValue(i));
+        this->_values[i] = c._values[i];
+        this->_head[i] = c._head[i];
     }
     return *this;
 }
@@ -282,52 +438,188 @@ bool operator >(const double a, const DoubleVector &b)
 
 DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
 {
-    DoubleVector c;
-    int len = max(a.length(), b.length());
-    c.setIsVector(a.isVector() || b.isVector());
-    c.setLength(len);
-    for (int i = 0; i < len; ++i)
+    set<DoubleVector::Head::Node> nodeSet;
+    for (int i = 0; i < a._head.size(); ++i)
     {
-        c.setValue(i, a.getValue(i) + b.getValue(i));
+        for (int j = 0; j < a._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(a._head[i].list[j]);
+        }
+    }
+    for (int i = 0; i < b._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(b._head[i].list[j]);
+        }
+    }
+    QVector<DoubleVector::Head::Node> nodeList;
+    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    {
+        DoubleVector::Head::Node node = *it;
+        nodeList.push_back(node);
+    }
+    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
+    for (int i = 0; i < (1 << nodeList.size()); ++i)
+    {
+        DoubleVector::Head head;
+        for (int j = 0; j < nodeList.size(); ++j)
+        {
+            if (i & (1 << j))
+            {
+                head.addNode(nodeList[j].id, nodeList[j].index);
+            }
+        }
+        c._head[i] = head;
+    }
+    for (int i = 0; i < a._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head.size(); ++j)
+        {
+            DoubleVector::Head head = a._head[i] + b._head[j];
+            c.setValue(head, c.getValue(head) + (a.getValue(i) + b.getValue(j)));
+        }
     }
     return c;
 }
 
 DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
 {
-    DoubleVector c;
-    int len = max(a.length(), b.length());
-    c.setIsVector(a.isVector() || b.isVector());
-    c.setLength(len);
-    for (int i = 0; i < len; ++i)
+    set<DoubleVector::Head::Node> nodeSet;
+    for (int i = 0; i < a._head.size(); ++i)
     {
-        c.setValue(i, a.getValue(i) - b.getValue(i));
+        for (int j = 0; j < a._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(a._head[i].list[j]);
+        }
+    }
+    for (int i = 0; i < b._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(b._head[i].list[j]);
+        }
+    }
+    QVector<DoubleVector::Head::Node> nodeList;
+    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    {
+        DoubleVector::Head::Node node = *it;
+        nodeList.push_back(node);
+    }
+    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
+    for (int i = 0; i < (1 << nodeList.size()); ++i)
+    {
+        DoubleVector::Head head;
+        for (int j = 0; j < nodeList.size(); ++j)
+        {
+            if (i & (1 << j))
+            {
+                head.addNode(nodeList[j].id, nodeList[j].index);
+            }
+        }
+        c._head[i] = head;
+    }
+    for (int i = 0; i < a._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head.size(); ++j)
+        {
+            DoubleVector::Head head = a._head[i] + b._head[j];
+            c.setValue(head, c.getValue(head) + (a.getValue(i) - b.getValue(j)));
+        }
     }
     return c;
 }
 
 DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
 {
-    DoubleVector c;
-    int len = max(a.length(), b.length());
-    c.setIsVector(a.isVector() || b.isVector());
-    c.setLength(len);
-    for (int i = 0; i < len; ++i)
+    set<DoubleVector::Head::Node> nodeSet;
+    for (int i = 0; i < a._head.size(); ++i)
     {
-        c.setValue(i, a.getValue(i) * b.getValue(i));
+        for (int j = 0; j < a._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(a._head[i].list[j]);
+        }
+    }
+    for (int i = 0; i < b._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(b._head[i].list[j]);
+        }
+    }
+    QVector<DoubleVector::Head::Node> nodeList;
+    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    {
+        DoubleVector::Head::Node node = *it;
+        nodeList.push_back(node);
+    }
+    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
+    for (int i = 0; i < (1 << nodeList.size()); ++i)
+    {
+        DoubleVector::Head head;
+        for (int j = 0; j < nodeList.size(); ++j)
+        {
+            if (i & (1 << j))
+            {
+                head.addNode(nodeList[j].id, nodeList[j].index);
+            }
+        }
+        c._head[i] = head;
+    }
+    for (int i = 0; i < a._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head.size(); ++j)
+        {
+            DoubleVector::Head head = a._head[i] + b._head[j];
+            c.setValue(head, c.getValue(head) + (a.getValue(i) * b.getValue(j)));
+        }
     }
     return c;
 }
 
 DoubleVector operator /(const DoubleVector &a, const DoubleVector &b)
 {
-    DoubleVector c;
-    int len = max(a.length(), b.length());
-    c.setIsVector(a.isVector() || b.isVector());
-    c.setLength(len);
-    for (int i = 0; i < len; ++i)
+    set<DoubleVector::Head::Node> nodeSet;
+    for (int i = 0; i < a._head.size(); ++i)
     {
-        c.setValue(i, a.getValue(i) / b.getValue(i));
+        for (int j = 0; j < a._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(a._head[i].list[j]);
+        }
+    }
+    for (int i = 0; i < b._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head[i].list.size(); ++j)
+        {
+            nodeSet.insert(b._head[i].list[j]);
+        }
+    }
+    QVector<DoubleVector::Head::Node> nodeList;
+    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    {
+        DoubleVector::Head::Node node = *it;
+        nodeList.push_back(node);
+    }
+    DoubleVector c = DoubleVector::Zero((1 << nodeList.size()));
+    for (int i = 0; i < (1 << nodeList.size()); ++i)
+    {
+        DoubleVector::Head head;
+        for (int j = 0; j < nodeList.size(); ++j)
+        {
+            if (i & (1 << j))
+            {
+                head.addNode(nodeList[j].id, nodeList[j].index);
+            }
+        }
+        c._head[i] = head;
+    }
+    for (int i = 0; i < a._head.size(); ++i)
+    {
+        for (int j = 0; j < b._head.size(); ++j)
+        {
+            DoubleVector::Head head = a._head[i] + b._head[j];
+            c.setValue(head, c.getValue(head) + (a.getValue(i) / b.getValue(j)));
+        }
     }
     return c;
 }
@@ -340,6 +632,7 @@ DoubleVector operator +(const DoubleVector &a, const double b)
     for (int i = 0; i < a.length(); ++i)
     {
         c.setValue(i, a.getValue(i) + b);
+        c._head[i] = a._head[i];
     }
     return c;
 }
@@ -352,6 +645,7 @@ DoubleVector operator -(const DoubleVector &a, const double b)
     for (int i = 0; i < a.length(); ++i)
     {
         c.setValue(i, a.getValue(i) - b);
+        c._head[i] = a._head[i];
     }
     return c;
 }
@@ -364,6 +658,7 @@ DoubleVector operator *(const DoubleVector &a, const double b)
     for (int i = 0; i < a.length(); ++i)
     {
         c.setValue(i, a.getValue(i) * b);
+        c._head[i] = a._head[i];
     }
     return c;
 }
@@ -376,6 +671,7 @@ DoubleVector operator /(const DoubleVector &a, const double b)
     for (int i = 0; i < a.length(); ++i)
     {
         c.setValue(i, a.getValue(i) / b);
+        c._head[i] = a._head[i];
     }
     return c;
 }
@@ -388,6 +684,7 @@ DoubleVector operator +(const double a, const DoubleVector &b)
     for (int i = 0; i < b.length(); ++i)
     {
         c.setValue(i, a + b.getValue(i));
+        c._head[i] = b._head[i];
     }
     return c;
 }
@@ -400,6 +697,7 @@ DoubleVector operator -(const double a, const DoubleVector &b)
     for (int i = 0; i < b.length(); ++i)
     {
         c.setValue(i, a - b.getValue(i));
+        c._head[i] = b._head[i];
     }
     return c;
 }
@@ -412,6 +710,7 @@ DoubleVector operator *(const double a, const DoubleVector &b)
     for (int i = 0; i < b.length(); ++i)
     {
         c.setValue(i, a * b.getValue(i));
+        c._head[i] = b._head[i];
     }
     return c;
 }
@@ -424,6 +723,7 @@ DoubleVector operator /(const double a, const DoubleVector &b)
     for (int i = 0; i < b.length(); ++i)
     {
         c.setValue(i, a / b.getValue(i));
+        c._head[i] = b._head[i];
     }
     return c;
 }

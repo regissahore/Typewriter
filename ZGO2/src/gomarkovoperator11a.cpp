@@ -28,6 +28,9 @@ void GOMarkovOperator11A::calcOutputMarkovStatus(double time)
         this->markovOutputStatus()->at(0)->setProbabilityNormal(i, PR.getValue(0));
         this->markovOutputStatus()->at(0)->setFrequencyBreakdown(i, lambdaR.getValue(0));
         this->markovOutputStatus()->at(0)->setFrequencyRepair(i, muR.getValue(0));
+        this->markovOutputStatus()->at(0)->addHeadProbabilityNormal(i, this->id(), i);
+        this->markovOutputStatus()->at(0)->addHeadFrequencyBreakdown(i, this->id(), i);
+        this->markovOutputStatus()->at(0)->addHeadFrequencyRepair(i, this->id(), i);
     }
 }
 
@@ -41,6 +44,7 @@ DoubleVector GOMarkovOperator11A::calcTempOutputMarkovStatus(double time, QVecto
     for (int i = 0; i < input.size(); ++i)
     {
         PR.setValue(i, input[i].getValue(0));
+        PR.addHead(i, this->id(), i);
     }
     return PR;
 }

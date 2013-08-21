@@ -87,6 +87,21 @@ void GOMarkovStatus::setRepairTime(const int pos, const double value)
     this->_frequencyRepair.setValue(pos, 1.0 / value);
 }
 
+void GOMarkovStatus::addHeadProbabilityNormal(const int pos, const int id, const int index)
+{
+    this->_probabilityNormal.addHead(pos, id, index);
+}
+
+void GOMarkovStatus::addHeadFrequencyBreakdown(const int pos, const int id, const int index)
+{
+    this->_frequencyBreakdown.addHead(pos, id, index);
+}
+
+void GOMarkovStatus::addHeadFrequencyRepair(const int pos, const int id, const int index)
+{
+    this->_frequencyRepair.addHead(pos, id, index);
+}
+
 GOMarkovStatus* GOMarkovStatus::copy() const
 {
     GOMarkovStatus *status = new GOMarkovStatus();

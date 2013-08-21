@@ -4,11 +4,41 @@
  * 用于double型计算的向量。
  * @author ZHG <CyberZHG@gmail.com>
  */
+#include <map>
+#include <set>
 #include <QVector>
 
 class DoubleVector
 {
 public:
+    /**
+     * 记录向量信号的来源。
+     */
+    struct Head
+    {
+        /**
+         * 记录属于哪个节点的哪个输出。
+         */
+        struct Node
+        {
+            int id;
+            int index;
+            Node();
+            Node(int id, int index);
+            friend bool operator ==(const Node &a, const Node &b);
+            friend bool operator !=(const Node &a, const Node &b);
+            friend bool operator <(const Node &a, const Node &b);
+            friend bool operator >(const Node &a, const Node &b);
+        };
+
+        Head();
+        void addNode(int id, int index);
+        friend bool operator ==(const Head &a, const Head &b);
+        friend bool operator <(const Head &a, const Head &b);
+        friend Head operator +(const Head &a, const Head &b);
+        QVector<Node> list;
+    };
+
     DoubleVector();
     DoubleVector(const double value);
     virtual ~DoubleVector();
@@ -18,6 +48,9 @@ public:
     void setIsVector(const bool value);
     double getValue(const int pos) const;
     void setValue(const int pos, const double value);
+    double getValue(const Head head);
+    void setValue(const Head head, const double value);
+    void addHead(const int pos, const int id, const int index);
     void setAll(const double value);
 
     QString toString(int index = 0);
@@ -64,6 +97,7 @@ public:
 protected:
     bool _isVector;
     QVector<double> _values;
+    QVector<Head> _head;
 };
 
 #endif // DOUBLEVECTOR_H
