@@ -16,6 +16,7 @@
 #include "gomarkovoperatorfactory.h"
 #include "gomarkovoperator9.h"
 #include "gomarkovoperator11.h"
+#include "gomarkovoperator12a.h"
 #include "gomarkovoperator13.h"
 #include "gomarkovoperator18.h"
 #include "gomarkovoperator18a.h"
@@ -66,6 +67,8 @@ void ParameterGOMarkovOperator::bindItem(void *item)
         this->addMarkov11JParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_12A:
+        this->addMarkov12AUseDeltaParameter();
+        this->addMarkov12ADeltaParameter();
         break;
     case GOMarkovOperatorFactory::Operator_Type_13:
     case GOMarkovOperatorFactory::Operator_Type_13A:
@@ -986,4 +989,69 @@ void ParameterGOMarkovOperator::setItemMarkovShowOutput2(bool value)
     ItemGOOperator *item = (ItemGOOperator*)this->_item;
     (*item->isShowOutput())[1] = value;
     item->update();
+}
+
+void ParameterGOMarkovOperator::addMarkov12AUseDeltaParameter()
+{
+    if (0L != this->_item)
+    {
+        ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+        GOMarkovOperator12A *op = (GOMarkovOperator12A*)item->model();
+
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Use Delta"), this));
+        QCheckBox *checkBox = new QCheckBox(this);
+        checkBox->setChecked(op->isUseDelta());
+        this->connect(checkBox, SIGNAL(toggled(bool)), this, SLOT(setItemMarkov12AUseDelta(bool)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, checkBox);
+    }
+}
+
+void ParameterGOMarkovOperator::addMarkov12ADeltaParameter()
+{
+    if (0L != this->_item)
+    {
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta"), this));
+        QPushButton *button = new QPushButton(this);
+        button->setText(tr("Click to Edit..."));
+        this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov12ADelta()));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, button);
+    }
+}
+
+void ParameterGOMarkovOperator::setItemMarkov12AUseDelta(bool value)
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator12A *op = (GOMarkovOperator12A*)item->model();
+    op->setIsUseDelta(value);
+}
+
+void ParameterGOMarkovOperator::setItemMarkov12ADelta()
+{
+    ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
+    GOMarkovOperator12A *op = (GOMarkovOperator12A*)item->model();
+    DialogMatrixInput *dialog = new DialogMatrixInput(this);
+    dialog->setWindowTitle(tr("Operator 12A Delta"));
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Relevent Operator ID")));
+    dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("delta")));
+    dialog->table()->setRowCount(op->deltaNum());
+    dialog->table()->setColumnCount(2);
+    for (int i = 0; i < op->deltaNum(); ++i)
+    {
+        QLineEdit *lineEdit = new QLineEdit();
+        lineEdit->setAlignment(Qt::AlignHCenter);
+        lineEdit->setText(op->ids()->at(i));
+        dialog->table()->setCellWidget(i, 0, lineEdit);
+        dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
+    }
+    if (dialog->exec() == QDialog::Accepted)
+    {
+        for (int i = 0; i < op->deltaNum(); ++i)
+        {
+            (*op->ids())[i] = ((QLineEdit*)dialog->table()->cellWidget(i, 0))->text();
+            (*op->delta())[i] = dialog->table()->item(i, 1)->text().toDouble();
+        }
+    }
+    delete dialog;
 }

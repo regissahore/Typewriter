@@ -25,6 +25,7 @@
 #include "gopathset.h"
 #include "gopathsetset.h"
 #include "gopathsetsetset.h"
+#include "gomarkovoperator12a.h"
 #include "gomarkovoperator19.h"
 using namespace std;
 
@@ -85,6 +86,26 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
             }
             this->calcAccumulativeProbability(time, "null", 1.0, op);
             op->calcOutputMarkovStatus(prevStatus);
+        }
+        else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)
+        {
+            GOMarkovOperator12A *op = (GOMarkovOperator12A*)list[i];
+            if (op->isUseDelta())
+            {
+                QVector<GOMarkovStatus> prevStatus;
+                for (int i = 0; i < op->deltaNum(); ++i)
+                {
+                    GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
+                    prevStatus.push_back(status);
+                }
+                GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
+                prevStatus.push_front(status);
+                op->calcOutputMarkovStatus(prevStatus);
+            }
+            else
+            {
+                op->calcOutputMarkovStatus(time);
+            }
         }
         else
         {
@@ -366,6 +387,26 @@ GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString i
             }
             this->calcAccumulativeProbability(time, "null", 1.0, op);
             op->calcOutputMarkovStatus(prevStatus);
+        }
+        else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)
+        {
+            GOMarkovOperator12A *op = (GOMarkovOperator12A*)list[i];
+            if (op->isUseDelta())
+            {
+                QVector<GOMarkovStatus> prevStatus;
+                for (int i = 0; i < op->deltaNum(); ++i)
+                {
+                    GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
+                    prevStatus.push_back(status);
+                }
+                GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
+                prevStatus.push_front(status);
+                op->calcOutputMarkovStatus(prevStatus);
+            }
+            else
+            {
+                op->calcOutputMarkovStatus(time);
+            }
         }
         else
         {
