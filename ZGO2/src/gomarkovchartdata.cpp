@@ -235,7 +235,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << probabilities[j][i].toNameString(k) << probabilities[j][i].toString(k) << " ";
+                out << probabilities[j][i].toNameString(k) << probabilities[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
         }
@@ -248,7 +248,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << (1.0 - probabilities[j][i]).toNameString(k) << (1.0 - probabilities[j][i]).toString(k) << " ";
+                out << (1.0 - probabilities[j][i]).toNameString(k) << (1.0 - probabilities[j][i]).toString(k) << "<br/>";
             }
             out << "</td>" << endl;
         }
@@ -261,7 +261,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << lambdas[j][i].toNameString(k) << lambdas[j][i].toString(k) << " ";
+                out << lambdas[j][i].toNameString(k) << lambdas[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
         }
@@ -274,7 +274,7 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << mus[j][i].toNameString(k) << mus[j][i].toString(k) << " ";
+                out << mus[j][i].toNameString(k) << mus[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
         }
@@ -314,25 +314,25 @@ bool GOMarkovChartData::saveAsHTML(QString fileName)
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << probabilities[j][i].toNameString(k) << probabilities[j][i].toString(k) << " ";
+                out << probabilities[j][i].toNameString(k) << probabilities[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << (1.0 - probabilities[j][i]).toNameString(k) << (1.0 - probabilities[j][i]).toString(k) << " ";
+                out << (1.0 - probabilities[j][i]).toNameString(k) << (1.0 - probabilities[j][i]).toString(k) << "<br/>";
             }
             out << "</td>" << endl;
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << lambdas[j][i].toNameString(k) << lambdas[j][i].toString(k) << " ";
+                out << lambdas[j][i].toNameString(k) << lambdas[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
             out << "<td>";
             for (int k = 0; k < probabilities[j][i].length(); ++k)
             {
-                out << mus[j][i].toNameString(k) << mus[j][i].toString(k) << " ";
+                out << mus[j][i].toNameString(k) << mus[j][i].toString(k) << "<br/>";
             }
             out << "</td>" << endl;
         }

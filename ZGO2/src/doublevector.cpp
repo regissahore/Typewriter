@@ -451,6 +451,31 @@ bool operator >(const double a, const DoubleVector &b)
 
 DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
 {
+    bool flag = false;
+    if (a.length() == b.length())
+    {
+        flag = true;
+        for (int i = 0; i < a.length(); ++i)
+        {
+            if (!(a._head[i] == b._head[i]))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+
+    if (flag)
+    {
+        DoubleVector c = DoubleVector::Zero(a.length());
+        for (int i = 0; i < a.length(); ++i)
+        {
+            c.setValue(i, a.getValue(i) + b.getValue(i));
+            c._head[i] = a._head[i];
+        }
+        return c;
+    }
+
     set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -482,6 +507,31 @@ DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
 {
+    bool flag = false;
+    if (a.length() == b.length())
+    {
+        flag = true;
+        for (int i = 0; i < a.length(); ++i)
+        {
+            if (!(a._head[i] == b._head[i]))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+
+    if (flag)
+    {
+        DoubleVector c = DoubleVector::Zero(a.length());
+        for (int i = 0; i < a.length(); ++i)
+        {
+            c.setValue(i, a.getValue(i) - b.getValue(i));
+            c._head[i] = a._head[i];
+        }
+        return c;
+    }
+
     set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -513,6 +563,31 @@ DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
 {
+    bool flag = false;
+    if (a.length() == b.length())
+    {
+        flag = true;
+        for (int i = 0; i < a.length(); ++i)
+        {
+            if (!(a._head[i] == b._head[i]))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+
+    if (flag)
+    {
+        DoubleVector c = DoubleVector::Zero(a.length());
+        for (int i = 0; i < a.length(); ++i)
+        {
+            c.setValue(i, a.getValue(i) * b.getValue(i));
+            c._head[i] = a._head[i];
+        }
+        return c;
+    }
+
     set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
@@ -544,6 +619,31 @@ DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
 
 DoubleVector operator /(const DoubleVector &a, const DoubleVector &b)
 {
+    bool flag = false;
+    if (a.length() == b.length())
+    {
+        flag = true;
+        for (int i = 0; i < a.length(); ++i)
+        {
+            if (!(a._head[i] == b._head[i]))
+            {
+                flag = false;
+                break;
+            }
+        }
+    }
+
+    if (flag)
+    {
+        DoubleVector c = DoubleVector::Zero(a.length());
+        for (int i = 0; i < a.length(); ++i)
+        {
+            c.setValue(i, a.getValue(i) / b.getValue(i));
+            c._head[i] = a._head[i];
+        }
+        return c;
+    }
+
     set<DoubleVector::Head> headSet;
     for (int i = 0; i < a._head.size(); ++i)
     {
