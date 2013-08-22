@@ -65,23 +65,6 @@ void GOMarkovOperator13::save(QDomDocument &document, QDomElement &root)
     this->saveRelation(document, element);
 }
 
-void GOMarkovOperator13::saveRelation(QDomDocument &document, QDomElement &root)
-{
-    QDomElement element = document.createElement("relation");
-    for (int i = 0; i < this->_relation->size(); ++i)
-    {
-        QDomElement rowElement = document.createElement("row");
-        for (int j = 0; j < this->_relation->at(i).size(); ++j)
-        {
-            QDomElement dataElement = document.createElement("data");
-            dataElement.setAttribute("value", this->_relation->at(i).at(j));
-            rowElement.appendChild(dataElement);
-        }
-        element.appendChild(rowElement);
-    }
-    root.appendChild(element);
-}
-
 bool GOMarkovOperator13::tryOpen(QDomElement &root)
 {
     if (root.tagName() != "model")
@@ -143,6 +126,23 @@ bool GOMarkovOperator13::tryOpen(QDomElement &root)
     return true;
 }
 
+void GOMarkovOperator13::saveRelation(QDomDocument &document, QDomElement &root)
+{
+    QDomElement element = document.createElement("relation");
+    for (int i = 0; i < this->_relation->size(); ++i)
+    {
+        QDomElement rowElement = document.createElement("row");
+        for (int j = 0; j < this->_relation->at(i).size(); ++j)
+        {
+            QDomElement dataElement = document.createElement("data");
+            dataElement.setAttribute("value", this->_relation->at(i).at(j));
+            rowElement.appendChild(dataElement);
+        }
+        element.appendChild(rowElement);
+    }
+    root.appendChild(element);
+}
+
 bool GOMarkovOperator13::tryOpenRelation(QDomElement &root)
 {
     if (root.tagName() != "relation")
@@ -156,7 +156,7 @@ bool GOMarkovOperator13::tryOpenRelation(QDomElement &root)
         QDomElement dataElement = rowElement.firstChildElement();
         for (int j = 0; j < this->_relation->at(i).size(); ++j)
         {
-            (*this->_relation)[i][j] = dataElement.attribute("value").toDouble();
+            (*this->_relation)[i][j] = dataElement.attribute("value").toInt();
             dataElement = dataElement.nextSiblingElement();
         }
         rowElement = rowElement.nextSiblingElement();

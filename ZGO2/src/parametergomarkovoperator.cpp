@@ -702,7 +702,10 @@ void ParameterGOMarkovOperator::addMarkov13RelationParameter()
     {
         ItemGOMarkovOperator *item = (ItemGOMarkovOperator*)this->_item;
         GOMarkovOperator13 *op = (GOMarkovOperator13*)item->model();
-        op->initRelation();
+        if (op->relation()->size() == 0)
+        {
+            op->initRelation();
+        }
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Relation"), this));
         QPushButton *button = new QPushButton(this);
