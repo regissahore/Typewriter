@@ -78,15 +78,18 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
         {
             GOMarkovOperator19 *op = (GOMarkovOperator19*)list[i];
             GOMarkovStatus prevStatus;
-            prevStatus.setVectorLength(op->deltaNum());
+            prevStatus.setVectorLength(op->deltaNum() + 1);
             for (int i = 0; i < op->deltaNum(); ++i)
             {
                 GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
-                prevStatus.setProbabilityNormal(i, status.probabilityNormal().getValue(0));
-                prevStatus.setFrequencyBreakdown(i, status.frequencyBreakdown().getValue(0));
-                prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
+                prevStatus.setProbabilityNormal(i + 1, status.probabilityNormal().getValue(0));
+                prevStatus.setFrequencyBreakdown(i + 1, status.frequencyBreakdown().getValue(0));
+                prevStatus.setFrequencyRepair(i + 1, status.frequencyRepair().getValue(0));
             }
-            this->calcAccumulativeProbability(time, "null", 1.0, op);
+            GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
+            prevStatus.setProbabilityNormal(0, status.probabilityNormal().getValue(0));
+            prevStatus.setFrequencyBreakdown(0, status.frequencyBreakdown().getValue(0));
+            prevStatus.setFrequencyRepair(0, status.frequencyRepair().getValue(0));
             op->calcOutputMarkovStatus(prevStatus, time);
         }
         else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)
@@ -381,15 +384,18 @@ GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString i
         {
             GOMarkovOperator19 *op = (GOMarkovOperator19*)list[i];
             GOMarkovStatus prevStatus;
-            prevStatus.setVectorLength(op->deltaNum());
+            prevStatus.setVectorLength(op->deltaNum() + 1);
             for (int i = 0; i < op->deltaNum(); ++i)
             {
                 GOMarkovStatus status = this->calcAccumulativeProbability(time, op->ids()->at(i), op->delta()->at(i), op);
-                prevStatus.setProbabilityNormal(i, status.probabilityNormal().getValue(0));
-                prevStatus.setFrequencyBreakdown(i, status.frequencyBreakdown().getValue(0));
-                prevStatus.setFrequencyRepair(i, status.frequencyRepair().getValue(0));
+                prevStatus.setProbabilityNormal(i + 1, status.probabilityNormal().getValue(0));
+                prevStatus.setFrequencyBreakdown(i + 1, status.frequencyBreakdown().getValue(0));
+                prevStatus.setFrequencyRepair(i + 1, status.frequencyRepair().getValue(0));
             }
-            this->calcAccumulativeProbability(time, "null", 1.0, op);
+            GOMarkovStatus status = this->calcAccumulativeProbability(time, "null", 1.0, op);
+            prevStatus.setProbabilityNormal(0, status.probabilityNormal().getValue(0));
+            prevStatus.setFrequencyBreakdown(0, status.frequencyBreakdown().getValue(0));
+            prevStatus.setFrequencyRepair(0, status.frequencyRepair().getValue(0));
             op->calcOutputMarkovStatus(prevStatus, time);
         }
         else if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_12A)

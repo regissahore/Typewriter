@@ -97,7 +97,7 @@ void GOMarkovOperator19::calcOutputMarkovStatus(GOMarkovStatus prevStatus, doubl
     DoubleVector muR2(0.0);
     DoubleVector PC = this->markovStatus()->probabilityNormal();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
-    for (int i = 1; i < this->deltaNum(); ++i)
+    for (int i = 1; i <= this->deltaNum(); ++i)
     {
         PR2 += PS.getValue(i) * PC;
         lambdaR2 += (lambdaS.getValue(i) + lambdaC) * PS.getValue(i) * PC;
