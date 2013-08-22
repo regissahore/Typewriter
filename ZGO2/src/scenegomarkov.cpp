@@ -419,7 +419,7 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
                 delete data;
             }
         }
-        delete processDialog;
+        //delete processDialog;
     }
     delete dialog;
 }

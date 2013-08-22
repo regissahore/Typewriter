@@ -565,6 +565,20 @@ void ItemGOMarkovOperator::globalFeedbackExtend()
     }
 }
 
+QRectF ItemGOMarkovOperator::boundingRect() const
+{
+    if (this->model()->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_Split)
+    {
+        float height = (this->output()->size() - 1) * 50;
+        if (this->isHorizonFlip())
+        {
+            return QRectF(-100, - height * 0.5f, 125, height);
+        }
+        return QRectF(-25, - height * 0.5f, 125, height);
+    }
+    return ItemGOOperator::boundingRect();
+}
+
 ItemGOMarkovOperator* ItemGOMarkovOperator::copy()
 {
     ItemGOMarkovOperator* op = new ItemGOMarkovOperator();

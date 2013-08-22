@@ -29,7 +29,7 @@ double GOMarkovAnalysisThread::currentTime() const
 {
     if (this->graph() != 0L)
     {
-        return this->_totalTime / this->_totalCount * this->graph()->currentCount();
+        return this->_totalTime / this->_totalCount * this->graph()->timeProcess();
     }
     return 0.0;
 }
@@ -48,9 +48,24 @@ int GOMarkovAnalysisThread::currentCount() const
 {
     if (this->graph() != 0L)
     {
-        return this->graph()->currentCount();
+        return this->graph()->timeProcess();
     }
     return 0.0;
+}
+
+int GOMarkovAnalysisThread::operatorNum() const
+{
+    return this->graph()->totalOperatorNum();
+}
+
+int GOMarkovAnalysisThread::operatorProcess() const
+{
+    return this->graph()->operatorProcess();
+}
+
+QString GOMarkovAnalysisThread::currentOperatorName() const
+{
+    return this->graph()->currentOperatorName();
 }
 
 GOMarkovGraph* GOMarkovAnalysisThread::graph() const

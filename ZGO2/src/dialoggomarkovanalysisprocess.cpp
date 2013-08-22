@@ -26,6 +26,7 @@ DialogGOMarkovAnalysisProcess::~DialogGOMarkovAnalysisProcess()
 void DialogGOMarkovAnalysisProcess::setMarkovGraph(GOMarkovGraph *graph)
 {
     this->_graph = graph;
+    this->_operatorNum = graph->totalOperatorNum();
 }
 
 GOMarkovChartData* DialogGOMarkovAnalysisProcess::analysisResult() const
@@ -57,7 +58,6 @@ void DialogGOMarkovAnalysisProcess::setTotalTime(const double value)
 void DialogGOMarkovAnalysisProcess::setTotalCount(const int value)
 {
     this->_totalCount = value;
-    this->ui->progressBar->setMaximum(value);
 }
 
 void DialogGOMarkovAnalysisProcess::finishedEvent()
@@ -85,10 +85,16 @@ void DialogGOMarkovAnalysisProcess::timeoutEvent()
     QString currentTime = QString::number(this->_analysisThread->currentTime(), 'f', 2);
     this->ui->lineEditTimeProcess->setText(currentTime + " / " + totalTime);
 
+    this->ui->lineEditOperatorProcess->setText(QString("%1 / %2").arg(this->_analysisThread->operatorProcess() + 1).arg(this->_operatorNum));
+    this->ui->lineEditCurrentOperator->setText(this->_analysisThread->currentOperatorName());
+
     int currentCount = this->_analysisThread->currentCount();
     this->ui->lineEditCountProcess->setText(QString("%1 / %2").arg(currentCount).arg(this->_totalCount));
 
-    this->ui->progressBar->setValue(currentCount);
+    this->ui->progressBarOperator->setMaximum(this->_operatorNum);
+    this->ui->progressBarOperator->setValue(this->_analysisThread->operatorProcess() + 1);
+    this->ui->progressBar->setMaximum(this->_totalCount * this->_operatorNum);
+    this->ui->progressBar->setValue(this->_analysisThread->currentCount() * this->_operatorNum + this->_analysisThread->operatorProcess() + 1);
 }
 
 void DialogGOMarkovAnalysisProcess::on_cancelButton_clicked()

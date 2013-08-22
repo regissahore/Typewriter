@@ -32,6 +32,7 @@ protected:
     double _totalTime;
     int _totalCount;
     int _timeCount;
+    int _operatorNum;
     QTimer *_timer;
     GOMarkovAnalysisThread *_analysisThread;
 

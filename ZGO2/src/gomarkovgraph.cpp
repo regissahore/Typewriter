@@ -72,6 +72,8 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     QVector<GOOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
+        this->_operatorProcess = i;
+        this->_currentOperatorName = GOMarkovOperatorFactory::typeName(((GOMarkovOperator*)list[i])->TypedItem::type()) + QString("-%1").arg(((GOMarkovOperator*)list[i])->id());
         if (list[i]->TypedItem::type() == GOMarkovOperatorFactory::Operator_Type_19)
         {
             GOMarkovOperator19 *op = (GOMarkovOperator19*)list[i];
@@ -185,6 +187,8 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     }
 
     // 获得排序后的操作符。
+    this->_timeProcess = 0;
+    this->_operatorProcess = 0;
     QVector<GOMarkovOperator*> sortedOperatorList;
     for (int i = 0; i < this->_operator.size(); ++i)
     {
@@ -258,7 +262,7 @@ GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, 
     }
     for (int i = 0; i < count; ++i)
     {
-        this->_currentCount = i;
+        this->_timeProcess = i;
         double time = i * totalTime / (count - 1);
         data->times.push_back(time);
         // Record initial value of lamda.
@@ -794,9 +798,24 @@ void GOMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GOPath
     this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
 }
 
-int GOMarkovGraph::currentCount() const
+int GOMarkovGraph::timeProcess() const
 {
-    return this->_currentCount;
+    return this->_timeProcess;
+}
+
+int GOMarkovGraph::operatorProcess() const
+{
+    return this->_operatorProcess;
+}
+
+int GOMarkovGraph::totalOperatorNum() const
+{
+    return this->_operator.size();
+}
+
+QString GOMarkovGraph::currentOperatorName() const
+{
+    return this->_currentOperatorName;
 }
 
 bool GOMarkovGraph::saveAsHTML(const QString filePath)

@@ -187,7 +187,7 @@ QRectF ItemGOOperator::boundingRect() const
     {
         num = this->model()->output()->number();
     }
-    int height = (num - 1) * 25;
+    int height = (num - 1) * 40;
     if (height < 50)
     {
         height = 50;

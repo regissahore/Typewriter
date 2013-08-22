@@ -24,7 +24,9 @@ public:
     int totalCount() const;
     void setTotalCount(const int value);
     int currentCount() const;
-    void setCurrentCount(const int value);
+    int operatorNum() const;
+    int operatorProcess() const;
+    QString currentOperatorName() const;
     GOMarkovGraph* graph() const;
     void setGOMarkovGraph(GOMarkovGraph *graph);
     GOMarkovChartData* analysisResult() const;

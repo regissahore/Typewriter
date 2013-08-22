@@ -26,6 +26,7 @@ public:
     void setModelType(const int type);
     void setModel(GOOperator *model);
     void globalFeedbackExtend();
+    QRectF boundingRect() const;
     ItemGOMarkovOperator* copy();
     bool tryOpen(QDomElement &root);
 
