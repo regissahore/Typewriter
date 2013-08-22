@@ -36,7 +36,15 @@ void GOMarkovOperator22B::calcOutputMarkovStatus(double time)
     {
         double lambda = this->lambda2()->at(i);
         double mu = this->mu2()->at(i);
-        DoubleVector PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
+        DoubleVector PC2;
+        if (mu > 1e-8)
+        {
+            PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
+        }
+        else
+        {
+            PC2 = 0.0;
+        }
         DoubleVector PR = PS1 * PS3 * PC1 * PS2.getValue(i) + PS1 * PS3 * PC2 * PS2.getValue(i);
         DoubleVector QR = 1.0 - PR;
         DoubleVector lambdaR = lambdaS1 + lambdaS2.getValue(i) + lambdaS3 + lambdaC1 + lambda;
@@ -77,7 +85,15 @@ DoubleVector GOMarkovOperator22B::calcTempOutputMarkovStatus(double time, QVecto
     DoubleVector PC1 = this->markovStatus()->probabilityNormal();
     double lambda = this->lambda2()->at(index);
     double mu = this->mu2()->at(index);
-    DoubleVector PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
+    DoubleVector PC2;
+    if (mu > 1e-8)
+    {
+        PC2 = mu / (lambda + mu) * (1 + lambda / mu * exp(-(lambda + mu) * time));
+    }
+    else
+    {
+        PC2 = 0.0;
+    }
     DoubleVector PR = PS1 * PS3 * PC1 * PS2.getValue(index) + PS1 * PS3 * PC2 * PS2.getValue(index);
     return PR;
 }

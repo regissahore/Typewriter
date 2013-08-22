@@ -135,21 +135,6 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
                 ((GOMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GOMarkovOperator*)list[i], commonOperator, commonIndex, time);
             }
         }
-        GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-        for (int i = 0; i < op->output()->number(); ++i)
-        {
-            for (int j = 0; j < op->markovOutputStatus()->at(i)->probabilityNormal().length(); ++j)
-            {
-                if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) > 1.0)
-                {
-                    op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 1.0);
-                }
-                else if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) < 0.0)
-                {
-                    op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 0.0);
-                }
-            }
-        }
     }
     list.clear();
 }
@@ -448,21 +433,6 @@ GOMarkovStatus GOMarkovGraph::calcAccumulativeProbability(double time, QString i
                     op->markovOutputStatus()->at(i)->setProbabilityNormal(op->markovOutputStatus()->at(i)->probabilityBreakdown() * delta);
                     op->markovOutputStatus()->at(i)->setFrequencyBreakdown(op->markovOutputStatus()->at(i)->frequencyBreakdown() * delta);
                     op->markovOutputStatus()->at(i)->setFrequencyRepair(op->markovOutputStatus()->at(i)->frequencyRepair() * delta);
-                }
-            }
-            GOMarkovOperator *op = (GOMarkovOperator*)list[i];
-            for (int i = 0; i < op->output()->number(); ++i)
-            {
-                for (int j = 0; j < op->markovOutputStatus()->at(i)->probabilityNormal().length(); ++j)
-                {
-                    if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) > 1.0)
-                    {
-                        op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 1.0);
-                    }
-                    else if (op->markovOutputStatus()->at(i)->probabilityNormal().getValue(j) < 0.0)
-                    {
-                        op->markovOutputStatus()->at(i)->setProbabilityNormal(j, 0.0);
-                    }
                 }
             }
         }
