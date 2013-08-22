@@ -260,6 +260,10 @@ QString DoubleVector::toString(int index)
 QString DoubleVector::toNameString(int index)
 {
     QString res = "";
+    if (index < 0 || index >= this->_head.size())
+    {
+        return "";
+    }
     if (this->_head[index].list.size() > 0)
     {
         res += "[";
