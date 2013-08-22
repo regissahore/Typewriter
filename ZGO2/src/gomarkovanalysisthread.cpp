@@ -50,22 +50,34 @@ int GOMarkovAnalysisThread::currentCount() const
     {
         return this->graph()->timeProcess();
     }
-    return 0.0;
+    return 0;
 }
 
 int GOMarkovAnalysisThread::operatorNum() const
 {
-    return this->graph()->totalOperatorNum();
+    if (this->graph() != 0L)
+    {
+        return this->graph()->totalOperatorNum();
+    }
+    return 0;
 }
 
 int GOMarkovAnalysisThread::operatorProcess() const
 {
-    return this->graph()->operatorProcess();
+    if (this->graph() != 0L)
+    {
+        return this->graph()->operatorProcess();
+    }
+    return 0;
 }
 
 QString GOMarkovAnalysisThread::currentOperatorName() const
 {
-    return this->graph()->currentOperatorName();
+    if (this->graph() != 0L)
+    {
+        return this->graph()->currentOperatorName();
+    }
+    return "";
 }
 
 GOMarkovGraph* GOMarkovAnalysisThread::graph() const
