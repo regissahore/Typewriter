@@ -22,7 +22,7 @@ public:
     bool trySaveAll();
     bool tryCloseAll();
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
 
 protected:
     QTabWidget *_tabWidget; /** 用于维护多个编辑器。 */

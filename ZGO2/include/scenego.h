@@ -19,7 +19,7 @@ public:
     ~SceneGO();
     void selectTool(int type);
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     virtual GOGraph* generatorGOGraph();

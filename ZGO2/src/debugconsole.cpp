@@ -34,7 +34,7 @@ void DebugConsole::bindMessage(MessageController *controller)
  * 输出消息内容。
  * @return param message 消息。
  */
-void DebugConsole::messageEvent(Message *message)
+void DebugConsole::messageEvent(QSharedPointer<Message> message)
 {
     this->_textEdit->append(QObject::tr("[%1] ").arg(message->id()) + MessageFactory::getMessageTypeName(message->type()) + QObject::tr(" : %1 ").arg(message->paramInt) + message->paramString);
 }

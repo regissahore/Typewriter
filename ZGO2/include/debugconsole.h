@@ -15,7 +15,7 @@ class DebugConsole : public QWidget, public Messager
 public:
     explicit DebugConsole(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
 
 protected:
     QTextEdit *_textEdit;

@@ -188,7 +188,7 @@ void ItemGOFactory::deleteItems(QList<QGraphicsItem *> items)
  */
 void ItemGOFactory::sendSelectionMessage(Messager *messager, ItemDrawable *item)
 {
-    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(item);
     messager->sendMessage(message);
 }

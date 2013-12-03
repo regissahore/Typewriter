@@ -28,7 +28,7 @@ void ViewGO::bindMessage(MessageController *controller)
     this->_scene->bindMessage(controller);
 }
 
-void ViewGO::messageEvent(Message *message)
+void ViewGO::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
     {

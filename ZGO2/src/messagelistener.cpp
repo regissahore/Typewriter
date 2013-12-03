@@ -54,7 +54,7 @@ void MessageListener::addListenedMessage(int messageType)
  * 在监听事件发生时被调用，一般情况下子类都需要重载这个方法。
  * @param message 消息。
  */
-void MessageListener::messageEvent(Message *message)
+void MessageListener::messageEvent(QSharedPointer<Message> message)
 {
     Q_UNUSED(message);
 }

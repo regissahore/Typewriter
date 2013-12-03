@@ -3,9 +3,9 @@
 
 int MessageFactory::_autoID = 0;
 
-Message* MessageFactory::produce(int messageType)
+QSharedPointer<Message> MessageFactory::produce(int messageType)
 {
-    Message* message = new Message();
+    QSharedPointer<Message> message = QSharedPointer<Message>(new Message());
     message->setType(messageType);
     message->setId(_autoID++);
     return message;

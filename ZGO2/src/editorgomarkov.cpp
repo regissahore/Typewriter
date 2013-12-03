@@ -14,7 +14,7 @@ EditorGOMarkov::EditorGOMarkov(QWidget *parent) : EditorGO(parent)
 
 void EditorGOMarkov::activate()
 {
-    Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
     this->sendMessage(message);
 }

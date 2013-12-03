@@ -217,7 +217,7 @@ void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         }
         else if (event->button() == Qt::RightButton)
         {
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
             message->paramInt = this->_defaultToolType;
             this->sceneGO()->sendMessage(message);
         }
@@ -233,7 +233,7 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
             delete this->_GOOperator;
             this->_GOOperator = 0L;
         }
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
     }
@@ -253,13 +253,13 @@ bool ToolGOOperator::getInputNumber()
     {
         this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
-        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GOOperator);
         this->sceneGO()->sendMessage(message);
     }
     else
     {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
         return false;
@@ -281,13 +281,13 @@ bool ToolGOOperator::getOutputNumber()
     {
         this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
-        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GOOperator);
         this->sceneGO()->sendMessage(message);
     }
     else
     {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
         return false;
@@ -306,13 +306,13 @@ bool ToolGOOperator::getDualNumber()
         this->_GOOperator->model()->input()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->model()->output()->setNumber(dialog->integerInput()->value());
         this->_GOOperator->setModel(this->_GOOperator->model());
-        Message* message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GOOperator);
         this->sceneGO()->sendMessage(message);
     }
     else
     {
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGO()->sendMessage(message);
         return false;

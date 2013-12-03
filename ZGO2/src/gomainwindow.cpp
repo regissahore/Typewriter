@@ -20,10 +20,6 @@ GOMainWindow::GOMainWindow(QWidget *parent) :
     this->initDock();
     this->initEditor();
     this->initToolBar();
-    if (QDate::currentDate().year() > 2013)
-    {
-        return;
-    }
     this->bindMessage(this->_messageController);
 }
 
@@ -47,7 +43,7 @@ void GOMainWindow::bindMessage(MessageController *controller)
  * 消息事件。
  * @param message 消息。
  */
-void GOMainWindow::messageEvent(Message *message)
+void GOMainWindow::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
     {
@@ -143,14 +139,14 @@ void GOMainWindow::initToolBar()
 
 void GOMainWindow::on_actionNew_triggered()
 {
-    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO;
     this->sendMessage(message);
 }
 
 void GOMainWindow::on_actionNew_Markov_triggered()
 {
-    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO_MARKOV;
     this->sendMessage(message);
 }

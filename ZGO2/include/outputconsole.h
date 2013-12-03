@@ -19,7 +19,7 @@ public:
     explicit OutputConsole(QWidget *parent = 0);
     ~OutputConsole();
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
     
 private:
     Ui::OutputConsole *ui;

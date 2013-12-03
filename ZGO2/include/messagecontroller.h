@@ -18,7 +18,7 @@ class MessageController
 public:
     MessageController();
     virtual ~MessageController();
-    void send(Message *message);
+    void send(QSharedPointer<Message> message);
     void listen(int messageType, MessageListener *listener);
     void release(int messageType, MessageListener *listener);
 

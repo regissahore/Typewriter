@@ -45,7 +45,7 @@ public:
         TYPE_OUTPUT_ERROR,
         TYPE_END
     };
-    static Message* produce(int messageType);
+    static QSharedPointer<Message> produce(int messageType);
     static QList<int> getMessageTypeList();
     static QString getMessageTypeName(int messageType);
 

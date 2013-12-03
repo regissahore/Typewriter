@@ -5,6 +5,7 @@
  * @author ZHG <CyberZHG@gmail.com>
  */
 #include <QString>
+#include <QSharedPointer>
 #include "identifieditem.h"
 #include "typeditem.h"
 
@@ -14,7 +15,7 @@ public:
     int paramInt;
     QString paramString;
     Message();
-    ~Message();
+    virtual ~Message();
     void* message() const;
     void setMessage(void* message);
 

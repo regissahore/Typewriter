@@ -19,7 +19,7 @@ public:
     void releaseListener();
     void setMessageController(MessageController *messageController);
     void addListenedMessage(int messageType);
-    virtual void messageEvent(Message *message);
+    virtual void messageEvent(QSharedPointer<Message> message);
 
 protected:
     QVector<int> *_messageListened;

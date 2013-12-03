@@ -19,7 +19,7 @@ public:
     explicit ViewGO(QWidget *parent = 0);
     ~ViewGO();
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     EditorGO* editor() const;

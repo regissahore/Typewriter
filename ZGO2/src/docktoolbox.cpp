@@ -42,7 +42,7 @@ void DockToolbox::bindMessage(MessageController *controller)
  * 消息事件。
  * @param message 消息。
  */
-void DockToolbox::messageEvent(Message *message)
+void DockToolbox::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
     {

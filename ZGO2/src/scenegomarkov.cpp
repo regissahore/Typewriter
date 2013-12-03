@@ -398,7 +398,7 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             QVector<GOGraph::MessageRecord> messages = graph->messages();
             for (int i = 0; i < messages.size(); ++i)
             {
-                Message *message = MessageFactory::produce(messages[i].type);
+                QSharedPointer<Message> message = MessageFactory::produce(messages[i].type);
                 message->paramString = messages[i].message;
                 this->sendMessage(message);
             }
@@ -406,13 +406,13 @@ void SceneGOMarkov::analysisProbability(const QString filePath)
             {
                 if (data->save(filePath + ".goc"))
                 {
-                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                     message->paramString = filePath + ".goc";
                     this->sendMessage(message);
                 }
                 if (data->saveAsHTML(filePath + ".goc.html"))
                 {
-                    Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                     message->paramString = filePath + ".goc.html";
                     this->sendMessage(message);
                 }
@@ -439,7 +439,7 @@ void SceneGOMarkov::analysisCut(const QString filePath)
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }

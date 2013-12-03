@@ -12,7 +12,7 @@ class MessageCreator
 public:
     MessageCreator();
     void setMessageController(MessageController *messageController);
-    void sendMessage(Message *message);
+    void sendMessage(QSharedPointer<Message> message);
 
 protected:
     MessageController *_messageController;

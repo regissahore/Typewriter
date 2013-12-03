@@ -99,7 +99,7 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
             }
             else
             {
-                Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+                QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
                 message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
                 this->sceneGO()->sendMessage(message);
             }
@@ -111,13 +111,13 @@ void ToolGOMarkovCommonCause2::mouseReleaseEvent(QGraphicsSceneMouseEvent *event
         {
             this->_status = Status_Finished;
             this->sceneGO()->viewGO()->editor()->setModified(true);
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
             message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
             this->sceneGO()->sendMessage(message);
         }
         else if (event->button() == Qt::RightButton)
         {
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
             message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
             this->sceneGO()->sendMessage(message);
         }

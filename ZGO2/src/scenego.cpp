@@ -74,7 +74,7 @@ void SceneGO::bindMessage(MessageController *controller)
  * The message event.
  * @param message The detail of the message.
  */
-void SceneGO::messageEvent(Message *message)
+void SceneGO::messageEvent(QSharedPointer<Message> message)
 {
     QKeyEvent *event = 0L;
     switch (message->type())
@@ -389,7 +389,7 @@ void SceneGO::analysisProbability(const QString filePath)
     if (graph->getErrorMessage() == "")
     {
         graph->saveAsHTML(filePath + ".html");
-        Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
         message->paramString = filePath + ".html";
         this->sendMessage(message);
     }
@@ -414,7 +414,7 @@ void SceneGO::analysisPath(const QString filePath)
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", path);
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->sendMessage(message);
         }
@@ -440,7 +440,7 @@ void SceneGO::analysisCut(const QString filePath)
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }

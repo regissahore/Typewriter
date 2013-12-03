@@ -23,7 +23,7 @@ public:
     explicit GOMainWindow(QWidget *parent = 0);
     ~GOMainWindow();
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
 
 protected:
     void closeEvent(QCloseEvent *event);

@@ -186,7 +186,7 @@ bool ToolGOPointerExtend::mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEv
                 this->_status = Status_Signal_Adjusting;
                 this->_item = signal;
                 this->_item->setColor(QColor(Qt::darkBlue));
-                Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                 message->setMessage(this->_item);
                 this->sceneGO()->sendMessage(message);
                 this->graphicsView()->setCursor(Qt::SizeHorCursor);
@@ -226,7 +226,7 @@ bool ToolGOPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *eve
         {
             this->_item = (ItemDrawable*)item;
             this->_item->setColor(QColor(Qt::darkBlue));
-            Message *message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGO()->sendMessage(message);
             return true;

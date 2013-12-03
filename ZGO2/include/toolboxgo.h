@@ -18,7 +18,7 @@ public:
     explicit ToolboxGO(QWidget *parent = 0);
     virtual ~ToolboxGO();
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
     
 private slots:
     void on_buttonPointer_clicked();

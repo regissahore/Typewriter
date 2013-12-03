@@ -17,7 +17,7 @@ public:
     ~DockToolbox();
     QSize sizeHint() const;
     void bindMessage(MessageController *controller);
-    void messageEvent(Message *message);
+    void messageEvent(QSharedPointer<Message> message);
 
 protected:
     ToolboxAbstract *_toolbox;

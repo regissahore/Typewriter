@@ -28,7 +28,7 @@ MessageController::~MessageController()
  * 发送消息，函数结束时消息会被释放。
  * @param message 消息内容。
  */
-void MessageController::send(Message *message)
+void MessageController::send(QSharedPointer<Message> message)
 {
     QMap<int, int>::iterator it = this->_messages->find(message->type());
     if (it != this->_messages->end())
