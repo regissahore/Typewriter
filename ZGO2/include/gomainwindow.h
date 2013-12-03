@@ -38,36 +38,24 @@ private:
     DockParameter *_dockParameter; /** The parameter dock widget. */
     void initEditor();
     void initDock();
-    void initToolBar();
 
 private slots:
-    void on_actionNew_triggered();
-    void on_actionNew_Markov_triggered();
-    void on_actionOpen_O_triggered();
-    void on_actionClose_C_triggered();
-    void on_actionClose_All_triggered();
-    void on_actionSave_S_triggered();
-    void on_actionSave_As_triggered();
-    void on_actionSave_All_triggered();
-    void on_actionQuit_Q_triggered();
-    void on_actionAnalysis_Probability_triggered();
-    void on_actionFind_Path_triggered();
-    void on_actionFind_Cut_triggered();
-    void on_actionAbout_triggered();
-    void on_actionHelp_triggered();
-    void on_actionTool_DockWidget_toggled(bool value);
-    void on_actionParameter_DockWidget_toggled(bool value);
-    void on_actionMessage_DockWidget_toggled(bool value);
-    void on_actionFile_Toolbar_toggled(bool value);
-    void on_actionAnalysis_Toolbar_toggled(bool value);
-    void on_actionCopy_C_triggered();
-    void on_actionDelete_D_triggered();
-    void on_actionZoom_In_triggered();
-    void on_actionZoom_Out_triggered();
-    void on_actionSet_Global_Feedback_triggered();
-    void on_actionUnset_Global_Feedback_triggered();
-    void on_actionShow_Parameter_triggered();
-    void on_actionHide_Parameter_triggered();
+    void on_toolButtonNew_clicked();
+    void on_toolButtonMarkov_clicked();
+    void on_toolButtonOpen_clicked();
+    void on_toolButtonClose_clicked();
+    void on_toolButtonSave_clicked();
+    void on_toolButtonSaveAs_clicked();
+    void on_toolButtonSaveAll_clicked();
+    void on_toolButtonAnalysis_clicked();
+    void on_toolButtonPath_clicked();
+    void on_toolButtonCut_clicked();
+    void on_toolButtonCopy_clicked();
+    void on_toolButtonDelete_clicked();
+    void on_toolButtonZoomIn_clicked();
+    void on_toolButtonZoomOut_clicked();
+    void on_toolButtonFeedback_clicked();
+    void on_toolButtonUnlockFb_clicked();
 };
 
 #endif // GOMAINWINDOW_H
