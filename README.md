@@ -11,4 +11,6 @@
 * Javascript基础 + Chrome插件基础
 * WinAPI基础 + DirectX基础
 
-# 已完成
+# 备课完成
+
+# 授课完成
