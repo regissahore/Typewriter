@@ -1,0 +1,48 @@
+% !Mode:: "TeX:UTF-8"
+\documentclass[11pt, a4paper]{article}
+\usepackage{CJK}
+\usepackage[CJKbookmarks=true]{hyperref}
+\usepackage{graphicx}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\renewcommand{\algorithmicrequire}{\textbf{Input:}}
+\renewcommand{\algorithmicensure}{\textbf{Output:}}
+\begin{document}
+\begin{CJK}{UTF8}{song}
+\title{光教练大讲堂 - 软分割}
+\author{光教练}
+\maketitle
+\section{目的}
+\section{框架}
+\section{方法}
+\subsection{过分割}
+\subsubsection{建图}
+论文\cite{Bib_Segment}中提到的过分割算法是基于图结构的，通过不断将近似的区域合并最终得到分割的图像。一种建图方法为，图像中所有像素都是图的节点，每个像素与周围8个点连边，边权为特征向量的距离。另外一种方法的节点定义不变，但边为两个像素特征向量小于一个阈值时两个像素之间有边，不考虑像素在图像中的位置。
+\subsubsection{算法}
+\begin{algorithm}
+\caption{过分割算法}
+\label{alg:OverSeg}
+\begin{algorithmic}[1]
+\REQUIRE
+有$n$个节点和$m$条边的图$G=(V, E)$，边权为$\omega$。
+\ENSURE
+$r$个组件的分割$S=(C_1,...,C_r)$，每个集合$C$包含部分节点。
+\STATE 将边$E$按边权由小到大排序为$\pi=(o_1, ..., o_m)$。
+\STATE 初始化分割$S^0$，每个节点都属于自身的集合。
+\FOR {$q=1,...,m$}
+\STATE 如果$i$和$j$是边$o_q$连接的两个节点，如果$C_{i}^{q-1} \neq C_{j}^{q-1}$ 且边权$\omega(o_q)<MInt(C_i^{q-1}, C_j^{q-1})$，则将节点$i$和$j$合并到同一集合中。
+\ENDFOR
+\RETURN $S=S^m$
+\end{algorithmic}
+\end{algorithm}
+算法\ref{alg:OverSeg}中，$MInt(C_i^{q-1}, C_j^{q-1})$为一个集合的内部差异，$Int(C_i^{q-1}, C_j^{q-1})=min(Int(C_i)+\tau(C_i), Int(C_j)+\tau(C_j))$，其中$\tau(C)=k/|C|$，$|C|$为当前集合中点的数目。$\tau(C)$是一个阈值函数，为了防止点比较少时内部差异也小导致难以合并集合，$k$是一个常数，可以取值100。$Int(C)$初值可以取0，每次合并集合时，$Int(C)$更新为$max(Int(C_i), Int(C_j), \omega(o_q))$。
+\subsection{置信度传播}
+\subsection{软分割}
+\begin{thebibliography}{0}
+    \bibitem {Bib_Enhance} Wang B, Yu Y, Wong T T, et al. Data-driven image color theme enhancement[C]//ACM Transactions on Graphics (TOG). ACM, 2010, 29(6): 146.
+	\bibitem {Bib_AppProp} An X, Pellacini F. AppProp: all-pairs appearance-space edit propagation[C]//ACM Transactions on Graphics (TOG). ACM, 2008, 27(3): 40.
+	\bibitem {Bib_Segment} Felzenszwalb P F, Huttenlocher D P. Efficient graph-based image segmentation[J]. International Journal of Computer Vision, 2004, 59(2): 167-181.
+	\bibitem {Bib_BP} Yedidia J S, Freeman W T, Weiss Y. Understanding belief propagation and its generalizations[J]. Exploring artificial intelligence in the new millennium, 2003, 8: 236-239.
+\end{thebibliography}
+\end{CJK}
+\end{document}
