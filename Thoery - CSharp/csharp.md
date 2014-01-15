@@ -582,13 +582,172 @@ switch可以接字符串，每个case后必须有break。
 
 #### 一维数组
 
-
+    int[] array = new int[10];
 
 **注意**：数组中的元素并未初始化，如果非内置类型需要初始化。
 
 #### 高维数组
 
+    int[,] array1 = new int[10, 10];
+    int[][] array2 = new int[10][];
+
 ### 容器
+
+容器类需要添加引用：
+
+    using System.Collections;
+    using System.Collections.Generic;
+
+#### List
+
+    using System;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                List<string> array = new List<string>();
+                array.Add("what");
+                array.Add("the");
+                array.Add("the");
+                array.Remove("the");
+                array.RemoveAt(0);
+                foreach (var str in array)
+                {
+                    Console.WriteLine(str);
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### Array
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                ArrayList array = new ArrayList();
+                array.Add("what");
+                array.Add(1);
+                array.RemoveRange(0, 2);
+                foreach (var i in array)
+                {
+                    Console.WriteLine(i);
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### Dictionary
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Dictionary<int, string> dict = new Dictionary<int, string>();
+                dict[3] = "what";
+                dict.Add(5, "world");
+                dict.Remove(3);
+                foreach (var i in dict)
+                {
+                    Console.WriteLine(i.Key + " " + i.Value);
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### Queue
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Queue queue = new Queue();
+                queue.Enqueue(1);
+                queue.Enqueue("2");
+                while (queue.Count != 0)
+                {
+                    Console.WriteLine(queue.Peek());
+                    queue.Dequeue();
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### Stack
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Stack stack = new Stack();
+                stack.Push(1);
+                stack.Push("2");
+                while (stack.Count != 0)
+                {
+                    Console.WriteLine(stack.Peek());
+                    stack.Pop();
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### SortedList
+
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                SortedList<int, string> list = new SortedList<int, string>();
+                list.Add(5, "what");
+                list.Add(3, "the");
+                foreach (var i in list)
+                {
+                    Console.WriteLine(i.Key + " " + i.Value);
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
 
 ## 异常
 
