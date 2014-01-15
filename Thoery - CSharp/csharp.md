@@ -324,6 +324,10 @@
 
     List<string> strings = new List<string>();
 
+### 常量
+
+    const int i = 5;
+
 ### 传值和引用
 
 * 内置类型和结构体传值，其它传引用。
@@ -451,6 +455,126 @@
         }
     }
 
+## 逻辑与循环
+
+### 逻辑
+
+#### if
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                if (!false && (true || false))
+                {
+                    Console.WriteLine("Logic!");
+                }
+                else
+                {
+                    Console.WriteLine("Masaka!");
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### switch
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                string str = "div";
+                switch (str)
+                {
+                    case "div":
+                        Console.WriteLine("div");
+                        break;
+                    case "nav":
+                        Console.WriteLine("nav");
+                        break;
+                    default:
+                        Console.WriteLine("default");
+                        break;
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+switch可以接字符串，每个case后必须有break。
+
+### 循环
+
+#### for和foreach
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                int[] array = new int[10];
+                for (int i = 0; i < array.Length; ++i )
+                {
+                    array[i] = i;
+                }
+                foreach (int i in array)
+                {
+                    Console.Write(array[i]);
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### while
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                int[] array = new int[10];
+                int i = 0;
+                while (i < 10)
+                {
+                    array[i] = i;
+                    ++i;
+                }
+                do
+                {
+                    i -= 1;
+                    Console.Write(array[i]);
+                }
+                while (i > 0);
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### 跳出
+
+    goto
+    continue
+    break
 
 # 常用类
 
@@ -461,37 +585,24 @@ explicit
 switch
 base
 extern
-object
 operator
 throw
-break
 finally
 fixed
 try
-case
 params
 catch
-for
-foreach
 checked
-goto
 unchecked
-if
 readonly
 unsafe
-const
 implicit
-continue
-in
 virtual
 default
 sealed
 volatile
 delegate
 internal
-do
 sizeof
-while
 lock
 stackalloc
-else
