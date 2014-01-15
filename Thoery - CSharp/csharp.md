@@ -803,9 +803,61 @@ switch可以接字符串，每个case后必须有break。
         }
     }
 
-
-
 # 常用类
+
+## 文件的读写
+
+    using System;
+    using System.IO;
+    using System.Text;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                StreamWriter writer = new StreamWriter("text");
+                writer.WriteLine("test");
+                writer.Flush();
+                writer.Close();
+                StreamReader reader = new StreamReader("text");
+                Console.WriteLine(reader.ReadLine());
+                reader.Close();
+                Console.ReadLine();
+            }
+        }
+    }
+
+
+## 图像的读写
+
+控制台工程默认没有引用System.Drawing，需要自己手动添加。
+
+    using System;
+    using System.Drawing;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Bitmap bitmap = new Bitmap("test.jpg");
+                for (int i = 0; i < bitmap.Width; ++i)
+                {
+                    for (int j = 0; j < bitmap.Height; ++j)
+                    {
+                        Color color = bitmap.GetPixel(i, j);
+                        bitmap.SetPixel(i, j, Color.FromArgb(255 - color.R, 255 - color.G, 255 - color.B);
+                    }
+                }
+                bitmap.Save("test.jpg");
+                bitmap.Dispose();
+            }
+        }
+    }
+
 
 # 还未提到的关键字
 abstract
