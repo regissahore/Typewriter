@@ -7,10 +7,11 @@
 
 # 计划
 
-* C#基础 + 图像分割方法(GBIS, SLIC) + Markdown语法（附赠）
 * Javascript基础 + Chrome插件基础
 * WinAPI基础 + DirectX基础
 
 # 备课完成
+
+* C#基础 + 图像分割方法(GBIS, SLIC) + Markdown语法（附赠）
 
 # 授课完成
