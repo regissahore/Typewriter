@@ -1151,6 +1151,42 @@ switch可以接字符串，每个case后必须有break。
 
 # 常用类
 
+## 随机数
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                Random random = new Random();
+                Console.WriteLine(random.Next(100));
+                Console.WriteLine(random.NextDouble());
+                Console.ReadLine();
+            }
+        }
+    }
+
+## 日期与时间
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void Main(string[] args)
+            {
+                DateTime date = DateTime.Now;
+                Console.WriteLine(date.Year + "-" + date.Month + "-" + date.Day);
+                Console.WriteLine(date.Hour + ":" + date.Minute + ":" + date.Second);
+                Console.ReadLine();
+            }
+        }
+    }
+
 ## 文件的读写
 
     using System;
@@ -1200,6 +1236,45 @@ switch可以接字符串，每个case后必须有break。
                 }
                 bitmap.Save("test.jpg");
                 bitmap.Dispose();
+            }
+        }
+    }
+
+## 文件夹的遍历
+
+    using System;
+    using System.IO;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void print(string path)
+            {
+                DirectoryInfo dir = new DirectoryInfo(path);
+                Console.WriteLine(dir.FullName);
+                if (dir.Exists)
+                {
+                    DirectoryInfo[] dirInfo = dir.GetDirectories();
+                    foreach (var d in dirInfo)
+                    {
+                        if (d.Name[0] != '$' && d.Name[0] != '.')
+                        {
+                            print(d.FullName);
+                        }
+                    }
+                    FileInfo[] fileInfo = dir.GetFiles();
+                    foreach (var f in fileInfo)
+                    {
+                        print(f.FullName);
+                    }
+                }
+            }
+
+            static void Main(string[] args)
+            {
+                print("F:\\ZCoach");
+                Console.ReadLine();
             }
         }
     }
