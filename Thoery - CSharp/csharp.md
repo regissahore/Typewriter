@@ -576,22 +576,87 @@ switch可以接字符串，每个case后必须有break。
     continue
     break
 
+## 数组与容器
+
+### 数组
+
+#### 一维数组
+
+
+
+**注意**：数组中的元素并未初始化，如果非内置类型需要初始化。
+
+#### 高维数组
+
+### 容器
+
+## 异常
+
+### 处理异常
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                try
+                {
+                    Console.WriteLine("Try");
+                    int i = 0;
+                    int j = 5 / i;
+                }
+                catch(Exception e)
+                {
+                    Console.WriteLine("Catch " + e.ToString());
+                }
+                finally
+                {
+                    Console.WriteLine("Finally");
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+### 抛出异常
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                int i = 0;
+                if (i == 0)
+                {
+                    Exception e = new Exception();
+                    throw e;
+                }
+                Console.ReadLine();
+            }
+        }
+    }
+
+
+
 # 常用类
 
 # 还未提到的关键字
 abstract
 event
 explicit
-switch
 base
 extern
 operator
-throw
-finally
 fixed
-try
 params
-catch
 checked
 unchecked
 readonly
