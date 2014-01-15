@@ -190,6 +190,7 @@
         }
     }
 
+默认为private。
 结构体不能继承，所以不能用protected关键字。
 重写父类函数必须加上override关键字。
 
@@ -282,26 +283,190 @@
 
 枚举类型可以使用除了char外的任何整数。
 
+### 隐式类型
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                var i = "what";
+                Console.WriteLine(i);
+                Console.ReadLine();
+            }
+        }
+    }
+
+### 匿名类型
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+
+            static void Main(string[] args)
+            {
+                var i = new { u = 1, v = "c"};
+                Console.WriteLine(i.u);
+                Console.WriteLine(i.v);
+                Console.ReadLine();
+            }
+        }
+    }
+
+### 泛型类型
+
+    List<string> strings = new List<string>();
+
+### 传值和引用
+
+* 内置类型和结构体传值，其它传引用。
+* ref和out关键字传引用。
+
+#### 参数
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            struct Node
+            {
+                public int u;
+                public int v;
+            }
+
+            class CNode
+            {
+                public int u;
+                public int v;
+            }
+
+            static void function1(int a)
+            {
+                a = 1;
+            }
+
+            static void function2(string b)
+            {
+                b = "1";
+            }
+            static void function3(Node c)
+            {
+                c.u = c.v = 1;
+            }
+            static void function4(CNode d)
+            {
+                d.u = d.v = 1;
+            }
+            static void Main(string[] args)
+            {
+                int a = 0;
+                function1(a);
+                Console.WriteLine(a);
+                string b = "0";
+                function2(b);
+                Console.WriteLine(b);
+                Node c;
+                c.u = c.v = 0;
+                function3(c);
+                Console.WriteLine(c.u + " " + c.v);
+                CNode d = new CNode();
+                function4(d);
+                Console.WriteLine(d.u + " " + d.v);
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### 返回值
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            class Node
+            {
+                public class InsideNode
+                {
+                    public int u, v;
+                }
+                private InsideNode node = new InsideNode();
+
+                public InsideNode getInsideNode()
+                {
+                    return node;
+                }
+
+                public void writeLine()
+                {
+                    Console.WriteLine(node.u + " " + node.v);
+                }
+            }
+
+            static void Main(string[] args)
+            {
+                Node node = new Node();
+                Node.InsideNode inside = node.getInsideNode();
+                node.writeLine();
+                inside.u = inside.v = 1;
+                node.writeLine();
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### ref和out
+
+通常来说，ref需要在函数外初始化，out意味着在函数内初始化。
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void function(ref int i, out int j)
+            {
+                i = 3;
+                j = 4;
+            }
+
+            static void Main(string[] args)
+            {
+                int i = 0, j = 1;
+                function(ref i, out j);
+                Console.WriteLine(i + " " + j);
+                Console.ReadLine();
+            }
+        }
+    }
+
+
 # 常用类
 
 # 还未提到的关键字
 abstract
 event
-new
-struct
 explicit
 switch
 base
 extern
 object
-this
 operator
 throw
 break
 finally
-out
 fixed
-override
 try
 case
 params
@@ -316,24 +481,17 @@ readonly
 unsafe
 const
 implicit
-ref
 continue
 in
-return
-using
 virtual
 default
-interface
 sealed
 volatile
 delegate
 internal
-void
 do
 sizeof
 while
 lock
 stackalloc
 else
-static
-enum
