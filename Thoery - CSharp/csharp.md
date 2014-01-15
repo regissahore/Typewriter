@@ -836,6 +836,7 @@ switch可以接字符串，每个case后必须有break。
             {
                 public override void func()
                 {
+                    base.func();
                     Console.WriteLine("B");
                 }
             }
@@ -876,6 +877,13 @@ switch可以接字符串，每个case后必须有break。
             }
         }
     }
+
+#### sealed
+
+禁止继续继承。
+
+    class A {}
+    sealed class B : A {}
 
 ### 多态 Polymorphism
 
@@ -991,6 +999,133 @@ switch可以接字符串，每个case后必须有break。
         }
     }
 
+## 事件
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            public class A
+            {
+                public delegate void handler(object sender, string str);
+                public event handler aEvent;
+                public void raise()
+                {
+                    aEvent(this, "test");
+                }
+            }
+
+            static void write1(object sender, string str)
+            {
+                Console.WriteLine(str.ToLower());
+            }
+
+            static void write2(object sender, string str)
+            {
+                Console.WriteLine(str.ToUpper());
+            }
+
+            static void Main(string[] args)
+            {
+                A a = new A();
+                a.aEvent += new A.handler(write1);
+                a.aEvent += new A.handler(write2);
+                a.raise();
+                Console.ReadLine();
+            }
+        }
+    }
+
+
+## 其它关键字
+
+### extern
+
+定义外部实现的方法。
+
+    [DllImport("avifil32.dll")]
+    private static extern void AVIFileInit();
+
+### internal
+
+只有在同一程序集的文件中，内部类型或成员才是可访问的，常用于组件的开发。
+
+    public class BaseClass
+    {
+        internal static int x = 0;
+    }
+
+### unsafe
+
+不安全，涉及指针操作。
+
+### fixed
+
+禁止垃圾回收器重定位可移动的变量，只能出现在不安全的上下文中。
+
+    unsafe static void TestMethod()
+    {
+        Point pt = new Point();
+        fixed (int* p = &pt.x)
+        {
+            *p = 1;
+        }
+
+    }
+
+### params
+
+参数数目可变的函数。
+
+    public static void UseParams2(params object[] list)
+
+### checked
+
+* 表达式为常数时，直接编译时警告。
+* 表达式为非常数时，运行时抛出异常。
+
+    checked(a + b)
+
+### unchecked
+
+* 表达式为常数时，无编译警告。
+* 表达式为非常数时，无异常。
+
+    unchecked(a + b)
+
+### readonly
+
+变量只读。
+
+    public readonly int y = 5;
+
+### volatile
+
+可以由多个同时执行的线程修改。
+
+    public volatile int i;
+
+### sizeof
+
+用于获取值类型的字节大小，其它类型只能在unsafe中使用。
+
+### lock
+
+获取给定对象的互斥锁。
+
+    Object thisLock = new Object();
+    lock (thisLock)
+    {
+    }
+
+### stackalloc
+
+在不安全代码中，用于分配内存块。
+
+    int* fib = stackalloc int[100];
+
 # 代码风格
 
 ## 注释
@@ -1069,25 +1204,3 @@ switch可以接字符串，每个case后必须有break。
         }
     }
 
-
-# 还未提到的关键字
-event
-explicit
-base
-extern
-operator
-fixed
-params
-checked
-unchecked
-readonly
-unsafe
-implicit
-default
-sealed
-volatile
-delegate
-internal
-sizeof
-lock
-stackalloc
