@@ -803,6 +803,217 @@ switch可以接字符串，每个case后必须有break。
         }
     }
 
+## 面向对象
+
+### 封装 Encapsulation
+
+    namespace
+    using
+
+### 继承 Inheritance
+
+结构不支持继承，但可以实现接口。
+
+#### 抽象方法
+
+##### virtual
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            class A
+            {
+                public virtual void func()
+                {
+                    Console.WriteLine("A");
+                }
+            }
+
+            class B : A
+            {
+                public override void func()
+                {
+                    Console.WriteLine("B");
+                }
+            }
+            static void Main(string[] args)
+            {
+                B b = new B();
+                b.func();
+                Console.ReadLine();
+            }
+        }
+    }
+
+##### abstract
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            abstract class A
+            {
+                public abstract void func();
+            }
+
+            class B : A
+            {
+                public override void func()
+                {
+                    Console.WriteLine("B");
+                }
+            }
+            static void Main(string[] args)
+            {
+                B b = new B();
+                b.func();
+                Console.ReadLine();
+            }
+        }
+    }
+
+### 多态 Polymorphism
+
+#### operator
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            class Point
+            {
+                private int _u, _v;
+
+                public int U
+                {
+                    get{return this._u;}
+                    set{this._u = value;}
+                }
+
+                public int V
+                {
+                    get{return this._v;}
+                    set{this._v = value;}
+                }
+                public Point()
+                {
+                    U = 0;
+                    V = 0;
+                }
+
+
+                public Point(int u, int v)
+                {
+                    U = u;
+                    V = v;
+                }
+
+                public void output()
+                {
+                    Console.WriteLine(U + " " + V);
+                }
+
+                public static Point operator +(Point a, Point b)
+                {
+                    Point c = new Point();
+                    c.U = a.U + b.U;
+                    c.V = a.V + b.V;
+                    return c;
+                }
+            }
+            static void Main(string[] args)
+            {
+                Point a = new Point(3, 4);
+                Point b = new Point(5, 6);
+                Point c = a + b;
+                a.output();
+                b.output();
+                c.output();
+                Console.ReadLine();
+            }
+        }
+    }
+
+#### explicit
+
+利用等号赋值时，必须强制转换类型。
+
+    public static explicit operator Point(int a)
+    {
+        Point c = new Point();
+        c.U = a;
+        c.V = a;
+        return c;
+    }
+
+#### implicit
+
+利用等号赋值时，不须强制转换类型。
+
+    public static implicit operator Point(int a)
+    {
+        Point c = new Point();
+        c.U = a;
+        c.V = a;
+        return c;
+    }
+
+#### 函数重载
+
+    using System;
+
+    namespace Code
+    {
+        class Program
+        {
+            static void func(int x = 5)
+            {
+                Console.WriteLine(x);
+            }
+            static void func(string x)
+            {
+                Console.WriteLine(x);
+            }
+            static void Main(string[] args)
+            {
+                func();
+                func(1);
+                func("misaka");
+                Console.ReadLine();
+            }
+        }
+    }
+
+# 代码风格
+
+## 注释
+
+    /// <summary>
+    /// 加法运算。
+    /// </summary>
+    /// <param name="a">被加数</param>
+    /// <param name="b">加数</param>
+    /// <returns>和</returns>
+    int add(int a, int b)
+    {
+        return a + b;
+    }
+
+## 代码
+
+### 命名
+
+* 类名应该是名词
+* 接口名以I作为前缀
+* 异常以Exception作为前缀
+
 # 常用类
 
 ## 文件的读写
@@ -860,7 +1071,6 @@ switch可以接字符串，每个case后必须有break。
 
 
 # 还未提到的关键字
-abstract
 event
 explicit
 base
@@ -873,7 +1083,6 @@ unchecked
 readonly
 unsafe
 implicit
-virtual
 default
 sealed
 volatile
