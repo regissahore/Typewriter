@@ -1,0 +1,45 @@
+body {
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    font-size: 16px;
+}
+
+table {
+    border: 0;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table_line {
+    width: 50px;
+    text-align: right;
+    color: #999999;
+    background-color: #dddddd;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.table_code_odd {
+    text-align: left;
+    padding-left: 10px;
+    background-color: #f7f7f7;
+}
+
+.table_code_even {
+    text-align: left;
+    padding-left: 10px;
+    background-color: #eeeeee;
+}
+
+.code_keyword {
+    font-weight:bold;
+}
+
+.code_number {
+    color: #0086b3;
+}
+
+.code_string {
+    color: #dd1144;
+}
