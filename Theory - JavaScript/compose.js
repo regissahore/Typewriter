@@ -1,4 +1,10 @@
+/**
+ * 网页排版，标题的自动编号与高亮显示JavaScript脚本。
+ * @author ZHG <CyberZHG@gmail.com>
+ */
+
 keywords = ["break", "case", "catch", "continue", "default", "delete", "do", "else", "finally", "for", "function", "if", "in", "instanceof", "new", "return", "switch", "this", "throw", "try", "typeof", "var", "void", "while", "with", "abstract", "boolean", "byte", "char", "class", "const", "debugger", "double", "enum", "export", "extends", "final", "float", "goto", "implements", "import", "int", "interface", "long", "native", "package", "private", "protected", "public", "short", "static", "super", "synchronized", "throws", "transient", "volatile"];
+systems = ["document", "eval"];
 
 var header1Count = 0;
 var header2Count = 0;
@@ -34,38 +40,71 @@ function writeLine(obj) {
     document.write("<br/>");
 }
 
+function isDigit(str) {
+    return str >= '0' && str <= '9';
+}
+
+function isLower(str) {
+    return str >= 'a' && str <= 'z';
+}
+
+function isUpper(str) {
+    return str >= 'A' && str <= 'Z';
+}
+
+function isCharacter(str) {
+    return isLower(str) || isUpper(str);
+}
+
+function writeCharacter(script) {
+    for (var i = 0; i < script.length; ++i) {
+        if (script[i] == ' ') {
+            document.write("&nbsp;");
+        } else if (script[i] == '<') {
+            document.write("&lt;");
+        } else if (script[i] == '>') {
+            document.write("&gt;");
+        } else if (script[i] == '\t') {
+            document.write("&emsp;");
+        } else {
+            document.write(script[i]);
+        }
+    }
+}
+
 function writeScript(script) {
     var isNum = false;
     var isWord = false;
     var isString = false;
     var lastString = "";
     var stringStart = "";
+    var lastCh = '';
     for (var i = 0; i < script.length; ++i) {
         if (isString) {
             lastString += script[i];
             if (script[i] == stringStart) {
                 document.write("<span class = code_string>");
-                document.write(lastString);
+                writeCharacter(lastString);
                 document.write("</span>");
                 lastString = "";
                 isString = false;
             }
         } else if (isNum) {
-            if (script[i] == '.' || (script[i] >= '0' && script[i] <= '9') || (script[i] >= 'a' && script[i] <= 'f') || (script[i] >= 'A' && script[i] <= 'F')) {
+            if (script[i] == '.' || isDigit(script[i]) || (script[i] >= 'a' && script[i] <= 'f') || (script[i] >= 'A' && script[i] <= 'F')) {
                 lastString += script[i];
             } else {
                 document.write("<span class = code_number>");
-                document.write(lastString);
+                writeCharacter(lastString);
                 document.write("</span>");
                 lastString = "";
                 isNum = false;
                 --i;
             }
         } else if (isWord) {
-            if (script[i] >= 'a' && script[i] <= 'z') {
+            if (isLower(script[i])) {
                 lastString += script[i];
-            } else if ((script[i] >= 'A' && script[i] <= 'Z') || (script[i] >= '0' && script[i] <= '9') || script[i] == '_') {
-                document.write(lastString);
+            } else if (isUpper(script[i]) || isDigit(script[i]) || script[i] == '_') {
+                writeCharacter(lastString);
                 lastString = "";
                 isWord = false;
                 --i;
@@ -75,13 +114,22 @@ function writeScript(script) {
                     if (keywords[j] == lastString) {
                         flag = false;
                         document.write("<span class = code_keyword>");
-                        document.write(lastString);
+                        writeCharacter(lastString);
+                        document.write("</span>");
+                        break;
+                    }
+                }
+                for (var j = 0; j < systems.length; ++j) {
+                    if (systems[j] == lastString) {
+                        flag = false;
+                        document.write("<span class = code_system>");
+                        writeCharacter(lastString);
                         document.write("</span>");
                         break;
                     }
                 }
                 if (flag) {
-                    document.write(lastString);
+                    writeCharacter(lastString);
                 }
                 lastString = "";
                 isWord = false;
@@ -90,18 +138,19 @@ function writeScript(script) {
             }
         } else {
             lastString += script[i];
-            if (script[i] >= '0' && script[i] <= '9') {
+            if (!isCharacter(lastCh) && isDigit(script[i])) {
                 isNum = true;
-            } else if (script[i] >= 'a' && script[i] <= 'z') {
+            } else if (!isCharacter(lastCh) && script[i] >= 'a' && script[i] <= 'z') {
                 isWord = true;
             } else if (script[i] == '"' || script[i] == "'") {
                 isString = true;
                 stringStart = script[i];
             } else {
-                document.write(script[i]);
+                writeCharacter(script[i]);
                 lastString = "";
             }
         }
+        lastCh = script[i];
     }
     document.write("<br/>");
 }
@@ -127,18 +176,11 @@ function printScript(script) {
 function runScript(script) {
     document.write("<fieldset>");
     document.write("<legend>" + "运行结果" + "</legend>");
-    document.write("<table cellspacing = 0>");
+    var code = "";
     for (var i = 0; i < script.length; ++i) {
-        document.write("<tr><td class = table_line >" + (i + 1) + "</td>");
-        if (i % 2 == 0) {
-            document.write("<td class = table_code_even>");
-        } else {
-            document.write("<td class = table_code_odd>");
-        }
-        eval(script[i]);
-        document.write("</td></tr>");
+        code += script[i];
     }
-    document.write("</table>");
+    eval(code);
     document.write("</fieldset>");
 }
 
@@ -146,21 +188,5 @@ function showScript(script) {
     printScript(script);
     document.write("<br/>");
     runScript(script);
+    document.write("<br/>");
 }
-
-// 从这里正文开始
-
-header1("变量类型");
-header2("基本类型");
-list([
-    "基本类型有三种，分别为布尔、数字和字符串。",
-    "在JavaScript中不区分小数和整数。"
-]);
-showScript([
-    "var boolVariable = true;",
-    "var numberVariable = 1.23;",
-    "var stringVariable = \"string\" + boolVariable + numberVariable;",
-    "writeLine(boolVariable);",
-    "writeLine(numberVariable);",
-    "writeLine(stringVariable);"
-]);
