@@ -13,7 +13,7 @@ showScript([
     "document.write(stringVariable + '<br/>');"
 ]);
 header2("字符串");
-header3("声明");
+header3("字符串声明");
 list([
     "JavaScript支持用''或\"\"声明字符串。",
     "在一种引号间出现另外一种引号不需转义就可以正常使用。",
@@ -25,7 +25,7 @@ showScript([
     "document.write(str1 + '<br/>');",
     "document.write(str2 + '<br/>');"
 ]);
-header3("长度");
+header3("字符串长度");
 list([
     "JavaScript中，不同字符的长度均为1。"
 ]);
@@ -88,7 +88,7 @@ showScript([
     "document.write(str.link('https://github.com/CyberZHG/') + '<br/>');"
 ]);
 header2("数组");
-header3("初始化");
+header3("初始化数组");
 list([
     "可以用类和中括号两种方式初始化。",
 ]);
@@ -143,5 +143,68 @@ showScript([
     "document.write(array.join(' '));"
 ]);
 header2("对象");
+header3("创建对象");
+list([
+    "对象是一切的基础。"
+]);
+showScript([
+    "var object = new Object();",
+    "object.name = 'Professor Yang';",
+    "object.property = 'Hentai';"
+]);
+header3("遍历对象");
+list([
+    "遍历对象和数组一样可以用in。"
+]);
+showScript([
+    "var object = new Object();",
+    "object.name = 'Professor Yang';",
+    "object.property = 'Hentai';",
+    "for (key in object) {",
+    "    document.write(key + ': ' + object[key] + '<br/>');",
+    "}"
+]);
 header2("Json");
+list([
+    "数组与映射可以组合成任何数据类型。"
+]);
+showScript([
+    "var obj = {",
+    "    person: {",
+    "        name: 'Yang',",
+    "        degree: 'Professor',",
+    "        property: 'Hentai'",
+    "    },",
+    "    action: 'Watch movie',",
+    "    outcome: [",
+    "        'Eat',",
+    "        'Give to Coach'",
+    "    ]",
+    "};",
+    "for (var key in obj) {",
+    "    document.write(key + ': ' + obj[key] + '<br/>');",
+    "}"
+]);
 header2("Undefined和Null");
+list([
+    "未定义的变量不能直接使用。"
+]);
+showScript([
+    "try {",
+    "    var what = how;",
+    "} catch (err) {",
+    "    document.write(err + '<br/>');",
+    "}"
+]);
+header2("判断变量类型");
+list([
+    "用typeof判断变量的类型，返回值为字符串。"
+]);
+showScript([
+    "document.write(typeof(1.23) + '<br/>');",
+    "document.write(typeof(true) + '<br/>');",
+    "document.write(typeof('what') + '<br/>');",
+    "document.write(typeof([12, 34]) + '<br/>');",
+    "document.write(typeof({1: 2, 3: 4}) + '<br/>');",
+    "document.write(typeof(undefine) + '<br/>');"
+]);
