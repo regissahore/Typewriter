@@ -82,7 +82,7 @@ function writeScript(script) {
     for (var i = 0; i < script.length; ++i) {
         if (isString) {
             lastString += script[i];
-            if (script[i] == stringStart) {
+            if (lastCh != '\\' && script[i] == stringStart) {
                 document.write("<span class = code_string>");
                 writeCharacter(lastString);
                 document.write("</span>");

@@ -9,6 +9,10 @@ table {
     overflow-x: auto;
 }
 
+li {
+    padding-top: 5px;
+}
+
 .table_line {
     width: 50px;
     text-align: right;
