@@ -10,10 +10,20 @@ var header1Count = 0;
 var header2Count = 0;
 var header3Count = 0;
 function header1(title) {
+    if (header3Count > 0) {
+        document.write("</div>");
+        header3Count = 0;
+    }
+    if (header2Count > 0) {
+        document.write("</div>");
+        header2Count = 0;
+    }
+    if (header1Count > 0) {
+        document.write("</div>");
+    }
     ++header1Count;
-    header2Count = 0;
-    header3Count = 0;
-    document.write("<div name = " + header1Count + "&nbsp;" + title + " class = header1>");
+    document.write("<div id = '" + header1Count + " " + title + "' name = header1>");
+    document.write("<div class = header1>");
     document.write("<span class = header1_num>");
     document.write(header1Count + "&nbsp;");
     document.write("</span>");
@@ -24,18 +34,29 @@ function header1(title) {
 }
 
 function header2(title) {
+    if (header3Count > 0) {
+        document.write("</div>");
+        header3Count = 0;
+    }
+    if (header2Count > 0) {
+        document.write("</div>");
+    }
     ++header2Count;
-    header3Count = 0;
-    title = header1Count + "." + header2Count + "&nbsp;" + title;
-    document.write("<div name = " + title + " class = header2>");
+    title = header1Count + "." + header2Count + " " + title;
+    document.write("<div id = '" + title + "' name = header2>");
+    document.write("<div class = header2>");
     document.write(title);
     document.write("</div>");
 }
 
 function header3(title) {
+    if (header3Count > 0) {
+        document.write("</div>");
+    }
     ++header3Count;
-    title = header1Count + "." + header2Count + "." + header3Count + "&nbsp;" + title;
-    document.write("<div name = " + title + " class = header3>");
+    title = header1Count + "." + header2Count + "." + header3Count + " " + title;
+    document.write("<div id = '" + title + "' name = header3>");
+    document.write("<div class = header3>");
     document.write(title);
     document.write("</div>");
 }
@@ -203,3 +224,52 @@ function showScript(script) {
     runScript(script);
     document.write("<br/>");
 }
+
+function addIndexDiv() {
+    document.write("<div id = compose_index></div>");
+}
+
+function createIndexLink(name) {
+    var link = document.createElement('a');
+    link.href = "#" + name;
+    link.innerText = name;
+    return link;
+}
+
+function addIndex() {
+    var indexDiv = document.getElementById('compose_index');
+    var indexTitle = document.createElement('div');
+    indexTitle.className = 'index_title';
+    indexTitle.innerText = '目录';
+    indexDiv.appendChild(indexTitle);
+    var header1 = document.getElementsByName('header1');
+    var header2 = document.getElementsByName('header2');
+    var header3 = document.getElementsByName('header3');
+    for (var i = 0; i < header1.length; ++i) {
+        var header1Div = document.createElement('div');
+        header1Div.className = 'index_header1';
+        header1Div.appendChild(createIndexLink(header1[i].id));
+        indexDiv.appendChild(header1Div);
+        for (var j = 0; j < header2.length; ++j) {
+            if (header2[j].id.split('.')[0] != header1[i].id.split(' ')[0]) {
+                continue;
+            }
+            var header2Div = document.createElement('div');
+            header2Div.className = 'index_header2';
+            header2Div.appendChild(createIndexLink(header2[j].id));
+            header1Div.appendChild(header2Div);
+            for (var k = 0; k < header3.length; ++k) {
+                if (header3[k].id.split('.')[0] != header2[j].id.split('.')[0] ||
+                    header3[k].id.split('.')[1] != header2[j].id.split('.')[1].split(' ')[0]) {
+                    continue;
+                }
+                var header3Div = document.createElement('div');
+                header3Div.className = 'index_header3';
+                header3Div.appendChild(createIndexLink(header3[k].id));
+                header2Div.appendChild(header3Div);
+            }
+        }
+    }
+}
+
+addIndexDiv();
