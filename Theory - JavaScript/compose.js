@@ -13,18 +13,31 @@ function header1(title) {
     ++header1Count;
     header2Count = 0;
     header3Count = 0;
-    document.write("<h1>" + header1Count + "." + title + "</h1>");
+    document.write("<div name = " + header1Count + "&nbsp;" + title + " class = header1>");
+    document.write("<span class = header1_num>");
+    document.write(header1Count + "&nbsp;");
+    document.write("</span>");
+    document.write("<span class = header1_text>");
+    document.write(title);
+    document.write("</span>");
+    document.write("</div>");
 }
 
 function header2(title) {
     ++header2Count;
     header3Count = 0;
-    document.write("<h2>" + header1Count + "." + header2Count + " " + title + "</h2>");
+    title = header1Count + "." + header2Count + "&nbsp;" + title;
+    document.write("<div name = " + title + " class = header2>");
+    document.write(title);
+    document.write("</div>");
 }
 
 function header3(title) {
     ++header3Count;
-    document.write("<h3>" + header1Count + "." + header2Count + "." + header3Count + " " + title + "</h3>");
+    title = header1Count + "." + header2Count + "." + header3Count + "&nbsp;" + title;
+    document.write("<div name = " + title + " class = header3>");
+    document.write(title);
+    document.write("</div>");
 }
 
 function list(lists) {
@@ -156,7 +169,7 @@ function writeScript(script) {
 }
 
 function printScript(script) {
-    document.write("<fieldset>");
+    document.write("<fieldset class = code_field>");
     document.write("<legend>" + "代码" + "</legend>");
     document.write("<table cellspacing = 0>");
     for (var i = 0; i < script.length; ++i) {
@@ -174,7 +187,7 @@ function printScript(script) {
 }
 
 function runScript(script) {
-    document.write("<fieldset>");
+    document.write("<fieldset class = code_field>");
     document.write("<legend>" + "运行结果" + "</legend>");
     var code = "";
     for (var i = 0; i < script.length; ++i) {

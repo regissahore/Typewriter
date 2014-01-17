@@ -1,0 +1,104 @@
+body {
+    font-family: Consolas, "Liberation Mono", Courier, monospace;
+    font-size: 16px;
+}
+
+table {
+    border: 0;
+    width: 100%;
+}
+
+li {
+    padding-top: 5px;
+    color: rgb(100, 89, 186);
+    margin-left: 20px;
+}
+
+.header1 {
+    height: 50px;
+    font-size: 30px;
+    font-family: "Microsoft YaHei";
+    font-weight: normal;
+    line-height: 65px;
+    border-bottom: 2px solid rgb(23, 103, 171);
+}
+
+.header1_num {
+    display: inline-block;
+    width: 50px;
+    height: 100%;
+    color: #FFFFFF;
+    text-align: right;
+    background-color: rgb(23, 103, 171);
+}
+
+.header1_text {
+    color: rgb(23, 103, 171);
+    padding-left: 10px;
+}
+
+.header2 {
+    font-size: 24px;
+    font-family: "Microsoft YaHei";
+    font-weight: normal;
+    color: rgb(23, 103, 171);
+    border-left: 2px solid rgb(23, 103, 171);
+    margin-top: 20px;
+    padding-left: 10px;
+}
+
+.header3 {
+    font-size: 18px;
+    font-family: "Microsoft YaHei";
+    font-weight: normal;
+    margin-top: 20px;
+    margin-left: 20px;
+    color: rgb(23, 103, 171);
+}
+
+.table_line {
+    width: 50px;
+    text-align: right;
+    color: #999999;
+    background-color: #dddddd;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+}
+
+.table_code_odd {
+    text-align: left;
+    padding-left: 10px;
+    background-color: #f7f7f7;
+}
+
+.table_code_even {
+    text-align: left;
+    padding-left: 10px;
+    background-color: #eeeeee;
+}
+
+.code_keyword {
+    font-weight:bold;
+}
+
+.code_number {
+    color: #0086b3;
+}
+
+.code_system {
+    color: #0086b3;
+}
+
+.code_string {
+    color: #dd1144;
+}
+
+.code_field {
+    margin-left: 30px;
+}
+
+.code_field legend {
+    color: rgb(199, 86, 88);
+}
