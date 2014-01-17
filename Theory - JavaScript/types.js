@@ -89,6 +89,9 @@ showScript([
 ]);
 header2("数组");
 header3("初始化");
+list([
+    "可以用类和中括号两种方式初始化。",
+]);
 showScript([
     "var array1 = new Array();",
     "var array2 = new Array('test', true, 3);",
@@ -96,6 +99,48 @@ showScript([
     "for (var i = 0; i < array3.length; ++i) {",
     "    document.write(array3[i] + '<br/>');",
     "}"
+]);
+header3("遍历数组");
+list([
+    "JavaScript支持in的方式，但内容是下标。"
+]);
+showScript([
+    "var array = ['Yang', 'Jiao', 'Shou'];",
+    "for (var i = 0; i < array.length; ++i) {",
+    "    document.write(array[i] + '<br/>');",
+    "}",
+    "for (index in array) {",
+    "    document.write(array[index] + '<br/>');",
+    "}"
+]);
+header3("合并数组");
+list([
+    "concat合并数组，原数组的内容不发生改变。"
+]);
+showScript([
+    "var array1 = ['Professor', 'Yang'];",
+    "var array2 = ['is', 'hentai'];",
+    "document.write(array1.concat(array2) + '<br/>');",
+    "document.write(array1 + '<br/>');",
+    "document.write(array2 + '<br/>');"
+]);
+header3("数组排序");
+list([
+    "sort是对数组本身进行的操作，返回值为自身。",
+    "数字被当做字符串看待。"
+]);
+showScript([
+    "var array = ['Professor', 3, 2, 1, 'Yang', '1-1'];",
+    "document.write(array.sort() + '<br/>');",
+    "document.write(array);"
+]);
+header3("组成字符串");
+list([
+    "join可以插入同样的间隔组成字符串。"
+]);
+showScript([
+    "var array = ['Professor', 'Yang', 'is', 'hentai'];",
+    "document.write(array.join(' '));"
 ]);
 header2("对象");
 header2("Json");
