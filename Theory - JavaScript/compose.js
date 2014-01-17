@@ -110,11 +110,14 @@ function writeScript(script) {
     var isNum = false;
     var isWord = false;
     var isString = false;
+    var isComment = false;
     var lastString = "";
     var stringStart = "";
     var lastCh = '';
     for (var i = 0; i < script.length; ++i) {
-        if (isString) {
+        if (isComment) {
+            lastString += script[i];
+        } else if (isString) {
             lastString += script[i];
             if (lastCh != '\\' && script[i] == stringStart) {
                 document.write("<span class = code_string>");
@@ -179,12 +182,19 @@ function writeScript(script) {
             } else if (script[i] == '"' || script[i] == "'") {
                 isString = true;
                 stringStart = script[i];
+            } else if (script[i] == '/' && (i + 1 < script.length && script[i + 1] == '/' && i + 1 < script.length)) {
+                isComment = true;
             } else {
                 writeCharacter(script[i]);
                 lastString = "";
             }
         }
         lastCh = script[i];
+    }
+    if (isComment) {
+        document.write("<span class = code_comment>");
+        writeCharacter(lastString);
+        document.write("</span>");
     }
     document.write("<br/>");
 }
@@ -212,7 +222,7 @@ function runScript(script) {
     document.write("<legend>" + "运行结果" + "</legend>");
     var code = "";
     for (var i = 0; i < script.length; ++i) {
-        code += script[i];
+        code += script[i] + "\n";
     }
     eval(code);
     document.write("</fieldset>");

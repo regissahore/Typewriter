@@ -7,7 +7,6 @@
 
 # 候选课程
 
-* Javascript基础
 * Chrome插件基础
 * WinAPI基础
 * DirectX基础
@@ -18,6 +17,8 @@
 * Splay
 
 # 备课完成
+
+* Javascript基础
 
 # 授课完成
 

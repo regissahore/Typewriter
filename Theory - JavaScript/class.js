@@ -1,0 +1,48 @@
+header1("类");
+header2("利用函数与Json实现");
+list([
+    "JavaScript本身没有类的设计，但可以通过函数和Json来实现。",
+    "由于设计本身是没有public和private的概念的，可以通过命名区分。"
+]);
+showScript([
+    'function Car() {',
+    '    var car = {',
+    '        // 构造函数',
+    '        construct: function() {',
+    '            _data = 0;',
+    '            document.write("Car initialized." + "<br/>");',
+    '        },',
+    '        // 其它运行过程中的函数',
+    '        run: function() {',
+    '            ++_data;',
+    '            document.write("Running car. " + _data + "<br/>");',
+    '        },',
+    '        // 私有变量以下划线开始命名',
+    '        _data: 0',
+    '    };',
+    '    car.construct();',
+    '    return car;',
+    '}',
+    'var car = Car();',
+    'for (var i = 0; i < 10; ++i) {',
+    '    car.run();',
+    '}',
+    '// 继承的实现',
+    'function SpecialCar() {',
+    '    var car = Car();',
+    '    car.construct = function() {',
+    '        _data = 1000;',
+    '        document.write("Special car initialized.");',
+    '    };',
+    '    car.run = function() {',
+    '        _data += 10;',
+    '        document.write("Special car. " + _data + "<br/>");',
+    '    }',
+    '    car.construct();',
+    '    return car;',
+    '}',
+    'var special = SpecialCar();',
+    'for (var i = 0; i < 10; ++i) {',
+    '    special.run();',
+    '}'
+]);

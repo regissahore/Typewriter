@@ -95,6 +95,10 @@ li {
     color: #dd1144;
 }
 
+.code_comment {
+    color: #999988;
+}
+
 .code_field {
     margin-left: 30px;
     margin-top: 10px;
