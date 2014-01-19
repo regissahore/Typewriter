@@ -38,9 +38,11 @@ var treeMaxDepth = 0;
 var treeIsAnimation = false;
 var treeAnimation = 0;
 var treePosition = new Array();
+var treeLines = new Array();
 
 function drawScripts() {
     treeContext.textAlign = 'left';
+    treeContext.textBaseline = 'middle';
     var index = treeIndex;
     if (treeIsAnimation) {
         index = treeLastIndex + treeAnimation / TREE_ANIMATION * (treeIndex - treeLastIndex);
@@ -54,65 +56,115 @@ function drawScripts() {
         if (x < 10) {
             x = 10;
         }
+        var y = treeCanvas.height / 2 + (i - index) * 20;
         treeContext.globalAlpha = alpha;
         treeContext.fillStyle = '#000000';
         treeContext.font = "16px Consolas";
-        treeContext.fillText(treeScripts[i], x, 20 + 20 * i);
+        treeContext.fillText(treeScripts[i], x, y);
     }
     treeContext.globalAlpha = 1.0;
 }
 
 function drawLines() {
-    function drawLineRec(node) {
-        if (typeof(node) == "undefined") {
-            return;
+    treeContext.lineWidth = 2.0;
+    if (treeIsAnimation) {
+        treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
+        for (var i in treeLines[treeIndex]) {
+            if (typeof(treeLines[treeLastIndex][i]) == 'undefined') {
+                var x1 = treeLines[treeIndex][i].x1;
+                var y1 = treeLines[treeIndex][i].y1;
+                var x2 = treeLines[treeIndex][i].x2;
+                var y2 = treeLines[treeIndex][i].y2;
+                treeContext.moveTo(x1, y1);
+                treeContext.lineTo(x2, y2);
+                treeContext.stroke();
+            }
         }
-        if (typeof(node.left) != "undefined") {
-            treeContext.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
-            treeContext.lineTo(treePosition[treeIndex][node.left.id].x, treePosition[treeIndex][node.left.id].y);
-            treeContext.stroke();
-            drawLineRec(node.left);
+        treeContext.globalAlpha = (TREE_ANIMATION - treeAnimation) / TREE_ANIMATION;
+        for (var i in treeLines[treeLastIndex]) {
+            if (typeof(treeLines[treeIndex][i]) == 'undefined') {
+                var x1 = treeLines[treeLastIndex][i].x1;
+                var y1 = treeLines[treeLastIndex][i].y1;
+                var x2 = treeLines[treeLastIndex][i].x2;
+                var y2 = treeLines[treeLastIndex][i].y2;
+                treeContext.moveTo(x1, y1);
+                treeContext.lineTo(x2, y2);
+                treeContext.stroke();
+            }
         }
-        if (typeof(node.right) != "undefined") {
-            treeContext.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
-            treeContext.lineTo(treePosition[treeIndex][node.right.id].x, treePosition[treeIndex][node.right.id].y);
+        treeContext.globalAlpha = 1.0;
+        for (var i in treeLines[treeIndex]) {
+            if (typeof(treeLines[treeLastIndex][i]) != 'undefined') {
+                var sx1 = treeLines[treeLastIndex][i].x1;
+                var sy1 = treeLines[treeLastIndex][i].y1;
+                var sx2 = treeLines[treeLastIndex][i].x2;
+                var sy2 = treeLines[treeLastIndex][i].y2;
+                var ex1 = treeLines[treeIndex][i].x1;
+                var ey1 = treeLines[treeIndex][i].y1;
+                var ex2 = treeLines[treeIndex][i].x2;
+                var ey2 = treeLines[treeIndex][i].y2;
+                var x1 = sx1 + (ex1 - sx1) * treeAnimation / TREE_ANIMATION;
+                var y1 = sy1 + (ey1 - sy1) * treeAnimation / TREE_ANIMATION;
+                var x2 = sx2 + (ex2 - sx2) * treeAnimation / TREE_ANIMATION;
+                var y2 = sy2 + (ey2 - sy2) * treeAnimation / TREE_ANIMATION;
+                treeContext.moveTo(x1, y1);
+                treeContext.lineTo(x2, y2);
+                treeContext.stroke();
+            }
+        }
+    } else {
+        for (var i in treeLines[treeIndex]) {
+            var x1 = treeLines[treeIndex][i].x1;
+            var y1 = treeLines[treeIndex][i].y1;
+            var x2 = treeLines[treeIndex][i].x2;
+            var y2 = treeLines[treeIndex][i].y2;
+            treeContext.moveTo(x1, y1);
+            treeContext.lineTo(x2, y2);
             treeContext.stroke();
-            drawLineRec(node.right);
         }
     }
-    drawLineRec(treeList[treeIndex].head);
 }
 
 function drawNodes() {
-    function drawNodeRec(node) {
-        if (typeof(node) == 'undefined') {
-            return;
-        }
-        if (treeIsAnimation) {
-            if (typeof(treePosition[treeLastIndex][node.id]) == 'undefined') {
-                treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
+    if (treeIsAnimation) {
+        treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
+        for (var i in treePosition[treeIndex]) {
+            if (typeof(treePosition[treeLastIndex][i]) == 'undefined') {
+                var x = treePosition[treeIndex][i].x;
+                var y = treePosition[treeIndex][i].y;
+                var node = treePosition[treeIndex][i].node;
+                node.paint(treeContext, x, y);
             }
         }
-        node.paint(treeContext, treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
+        treeContext.globalAlpha = (TREE_ANIMATION - treeAnimation) / TREE_ANIMATION;
+        for (var i in treePosition[treeLastIndex]) {
+            if (typeof(treePosition[treeIndex][i]) == 'undefined') {
+                var x = treePosition[treeLastIndex][i].x;
+                var y = treePosition[treeLastIndex][i].y;
+                var node = treePosition[treeLastIndex][i].node;
+                node.paint(treeContext, x, y);
+            }
+        }
         treeContext.globalAlpha = 1.0;
-        drawNodeRec(node.left);
-        drawNodeRec(node.right);
-    }
-    drawNodeRec(treeList[treeIndex].head);
-    function drawLastNodeRec(node) {
-        if (typeof(node) == 'undefined') {
-            return;
+        for (var i in treePosition[treeIndex]) {
+            if (typeof(treePosition[treeLastIndex][i]) != 'undefined') {
+                var sx = treePosition[treeLastIndex][i].x;
+                var sy = treePosition[treeLastIndex][i].y;
+                var ex = treePosition[treeIndex][i].x;
+                var ey = treePosition[treeIndex][i].y;
+                var x = sx + (ex - sx) * treeAnimation / TREE_ANIMATION;
+                var y = sy + (ey - sy) * treeAnimation / TREE_ANIMATION;
+                var node = treePosition[treeIndex][i].node;
+                node.paint(treeContext, x, y);
+            }
         }
-        if (typeof(treePosition[treeIndex][node.id]) == 'undefined') {
-            treeContext.globalAlpha = (TREE_ANIMATION - treeAnimation) / TREE_ANIMATION;
-            node.paint(treeContext, treePosition[treeLastIndex][node.id].x, treePosition[treeLastIndex][node.id].y);
-            treeContext.globalAlpha = 1.0;
+    } else {
+        for (var i in treePosition[treeIndex]) {
+            var x = treePosition[treeIndex][i].x;
+            var y = treePosition[treeIndex][i].y;
+            var node = treePosition[treeIndex][i].node;
+            node.paint(treeContext, x, y);
         }
-        drawLastNodeRec(node.left);
-        drawLastNodeRec(node.right);
-    }
-    if (treeIsAnimation) {
-        drawLastNodeRec(treeList[treeLastIndex].head);
     }
 }
 
@@ -131,18 +183,28 @@ function paintTree() {
 
 function initTreePosition() {
     treePosition = new Array();
-    function initRec(head, width, x, y, res) {
+    treeLines = new Array();
+    TREE_MARGIN_Y = (treeCanvas.height - 100) / treeMaxDepth;
+    function initRec(head, width, x, y, pos, line) {
         if (typeof(head) == 'undefined') {
             return;
         }
-        pos[head.id] = {x: x, y: y};
-        initRec(head.left, width / 2, x - width / 2, y + TREE_MARGIN_Y, pos);
-        initRec(head.right, width / 2, x + width / 2, y + TREE_MARGIN_Y, pos);
+        pos[head.id] = {x: x, y: y, node: head};
+        if (typeof(head.left) != 'undefined') {
+            line[head.id + "-" + head.left.id] = {x1: x, y1: y, x2: x - width / 2, y2: y + TREE_MARGIN_Y};
+            initRec(head.left, width / 2, x - width / 2, y + TREE_MARGIN_Y, pos, line);
+        }
+        if (typeof(head.right) != 'undefined') {
+            line[head.id + "-" + head.right.id] = {x1: x, y1: y, x2: x + width / 2, y2: y + TREE_MARGIN_Y};
+            initRec(head.right, width / 2, x + width / 2, y + TREE_MARGIN_Y, pos, line);
+        }
     }
     for (var i = 0; i < treeList.length; ++i) {
         var pos = new Object();
-        initRec(treeList[i].head, TREE_MARGIN_X * treeMaxDepth, treeCanvas.width / 2, 50, pos);
+        var line = new Object();
+        initRec(treeList[i].head, (treeCanvas.width - 200) / 2, treeCanvas.width / 2, 50, pos, line);
         treePosition.push(pos);
+        treeLines.push(line);
     }
 }
 

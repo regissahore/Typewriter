@@ -93,5 +93,7 @@ var scripts = [
      "add 3",
      "add 9",
      "add 8",
-     "add 10"
+     "add 10",
+     "add 0",
+     "add 11"
 ];
