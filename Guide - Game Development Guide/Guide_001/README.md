@@ -19,3 +19,7 @@
 * 找到Guide - Game Development Guide\Guide_001文件夹，打开其中的文件。
 * 依次找到有__Guide + 编号__的注释，填入代码并尝试运行程序。
 * 当完成功能时可以__commit__到自己的工程里。
+
+# 提示
+
+* 可以使用[Notepad++](http://download.tuxfamily.org/notepadplus/6.5.3/npp.6.5.3.Installer.exe)编辑Python文件。
