@@ -9,8 +9,30 @@ function BasicTreeNode() {
         left: null,
         right: null,
         data: null,
-        clone: function() {},
-        paint: function(context, cx, cy) {},
+        clone: function() {
+            var newNode = BasicTreeNode();
+            newNode.id = this.id;
+            newNode.data = this.data;
+            if (typeof(this.left) != 'undefined') {
+                newNode.left = this.left.clone();
+            }
+            if (typeof(this.right) != 'undefined') {
+                newNode.right = this.right.clone();
+            }
+            return newNode;
+        },
+        paint: function(context, cx, cy) {
+            context.fillStyle = '#000000';
+            context.beginPath();
+            context.arc(cx, cy, 20, 0, Math.PI * 2, true);
+            context.closePath();
+            context.fill();
+            context.fillStyle = '#FFFFFF';
+            context.textAlign = 'center';
+            context.textBaseline = 'middle';
+            context.font = "18px Consolas";
+            context.fillText("" + this.data, cx, cy);
+        },
     };
     return treeNode;
 }
@@ -18,7 +40,13 @@ function BasicTreeNode() {
 function BasicTree() {
     var tree = {
         head: null,
-        clone: function() {},
+        clone: function() {
+            var newTree = BasicTree();
+            if (typeof(this.head) != 'undefined') {
+                newTree.head = this.head.clone();
+            }
+            return newTree;
+        },
         operate: function(type, data) {},
     };
     return tree;
@@ -235,7 +263,7 @@ function getMaxTreeNode() {
 }
 
 function setTreeScript(tree, scripts) {
-    treeScripts = ['Init'];
+    treeScripts = ['Empty'];
     treeScripts = treeScripts.concat(scripts);
     treeList = new Array();
     treeList.push(tree.clone());
