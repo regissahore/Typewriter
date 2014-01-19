@@ -5,7 +5,7 @@
 # 目标如下：
 # 通过'A'和'D'实现操作对象的左右移动。
 # 通过空格键实现操作对象的跳跃。
-# 对地表的碰撞检测。
+# 对所有背景的碰撞检测。
 import sys
 import pygame
 import pygame.draw
@@ -55,37 +55,38 @@ player = {}
 # 同时我们将设定主角当前的x方向速度和y方向速度都为0。
 def initPlayer():
     global player
-    player['x'] = 64
-    player['y'] = 384
-    player['speedX'] = 0
-    player['speedY'] = 0
+    # Guide 1
+    # 目标：初始化主角
    
 # 主角的绘制，为了方便区分要使用一个和背景色不同的颜色。
 # 可以参考背景的绘制方式。
 def drawPlayer(surface):
     global player
-    pygame.draw.rect(surface, (0, 255, 0), (player['x'], player['y'], UNIT_SIZE, UNIT_SIZE * 2))
+    # Guide 2
+    # 目标：绘制主角
     
 # 操纵主角水平移动，移动速度可以为0.2。
 def horizonMove():
     pressed = pygame.key.get_pressed()
     if pressed[K_a]:
         player['speedX'] = -0.2
-    elif pressed[K_d]:
-        player['speedX'] = 0.2
-    else:
-        player['speedX'] = 0
+    # Guide 3
+    # 目标：向右的移动速度
+    # Guide 4
+    # 目标：未知
         
 # 水平移动主角，将主角的左上角坐标加上运动速度即可。
 # 虽然通常不应该这么做。
 def playerMoveHorizon():
     global player
-    player['x'] += player['speedX']
+    # Guide 5
+    # 目标：水平移动主角
    
 # 垂直移动主角，将主角的左上角坐标加上运动速度即可。   
 def playerMoveVertical():
     global player
-    player['y'] += player['speedY']
+    # Guide 6
+    # 目标：垂直移动主角
 
 # 水平碰撞检测，可以参考绘制背景是枚举背景的方法。
 # 如果操控的矩形将要移动到的位置与所有背景矩形都没有交集，则认为可以移动，这时可以return False。
@@ -95,13 +96,8 @@ def playerMoveVertical():
 def hitDetectionHorizon():
     global player
     global background
-    tx = player['x'] + player['speedX']
-    ty = player['y']
-    pos = [{'x': tx, 'y': ty + UNIT_SIZE}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE}, {'x': tx, 'y': ty + UNIT_SIZE * 2}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE * 2}, {'x': tx, 'y': ty + UNIT_SIZE * 3 / 2}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE * 3 / 2}, {'x': tx + UNIT_SIZE / 2, 'y': ty + UNIT_SIZE}, {'x': tx + UNIT_SIZE / 2, 'y': ty + UNIT_SIZE * 2}]
-    for block in background:
-        for point in pos:
-            if point['x'] > block['x'] and point['x'] < block['x'] + UNIT_SIZE and point['y'] > block['y'] and point['y'] < block['y'] + UNIT_SIZE:
-                return True
+    # Guide 7
+    # 目标：水平方向碰撞检测
     return False
     
 # 垂直碰撞检测，可以参考绘制背景是枚举背景的方法。
@@ -112,27 +108,22 @@ def hitDetectionHorizon():
 def hitDetectionVertical():
     global player
     global background
-    tx = player['x']
-    ty = player['y'] + player['speedY']
-    pos = [{'x': tx, 'y': ty + UNIT_SIZE}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE}, {'x': tx, 'y': ty + UNIT_SIZE * 2}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE * 2}, {'x': tx, 'y': ty + UNIT_SIZE * 3 / 2}, {'x': tx + UNIT_SIZE, 'y': ty + UNIT_SIZE * 3 / 2}, {'x': tx + UNIT_SIZE / 2, 'y': ty + UNIT_SIZE}, {'x': tx + UNIT_SIZE / 2, 'y': ty + UNIT_SIZE * 2}]
-    for block in background:
-        for point in pos:
-            if point['x'] > block['x'] and point['x'] < block['x'] + UNIT_SIZE and point['y'] > block['y'] and point['y'] < block['y'] + UNIT_SIZE:
-                return True
-    return False
+    # Guide 8
+    # 目标：垂直方向碰撞检测
+    return True
     
 # 重力，主角每时每刻都在重力场的影响下，可以考虑加速度为0.03。
 # 注意限制最大速度。
 def gravity():
     global player
-    player['speedY'] += 0.03
-    if player['speedY'] > 0.3:
-        player['speedY'] = 0.3
+    # Guide 9
+    # 目标：添加重力
 
 # 跳跃，可以考虑将速度设为3。        
 def jump():
     global player
-    player['speedY'] = -3.0
+    # Guide 10
+    # 目标：跳跃
         
 # 游戏主循环
 def gameLoop():
