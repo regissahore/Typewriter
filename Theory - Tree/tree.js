@@ -26,9 +26,10 @@ function BasicTree() {
 
 var TREE_MARGIN_X = 100;
 var TREE_MARGIN_Y = 100;
-var TREE_ANIMATION = 5;
+var TREE_ANIMATION = 10;
 
 var treeCanvas = new Object();
+var treeContext = null;
 var treeList = new Array();
 var treeScripts = new Array();
 var treeIndex = 0;
@@ -39,8 +40,7 @@ var treeAnimation = 0;
 var treePosition = new Array();
 
 function drawScripts() {
-    var context = treeCanvas.getContext('2d');
-    context.textAlign = 'left';
+    treeContext.textAlign = 'left';
     var index = treeIndex;
     if (treeIsAnimation) {
         index = treeLastIndex + treeAnimation / TREE_ANIMATION * (treeIndex - treeLastIndex);
@@ -54,30 +54,29 @@ function drawScripts() {
         if (x < 10) {
             x = 10;
         }
-        context.globalAlpha = alpha;
-        context.fillStyle = '#000000';
-        context.font = "16px Consolas";
-        context.fillText(treeScripts[i], x, 20 + 20 * i);
+        treeContext.globalAlpha = alpha;
+        treeContext.fillStyle = '#000000';
+        treeContext.font = "16px Consolas";
+        treeContext.fillText(treeScripts[i], x, 20 + 20 * i);
     }
-    context.globalAlpha = 1.0;
+    treeContext.globalAlpha = 1.0;
 }
 
 function drawLines() {
-    var context = treeCanvas.getContext('2d');
     function drawLineRec(node) {
         if (typeof(node) == "undefined") {
             return;
         }
         if (typeof(node.left) != "undefined") {
-            context.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
-            context.lineTo(treePosition[treeIndex][node.left.id].x, treePosition[treeIndex][node.left.id].y);
-            context.stroke();
+            treeContext.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
+            treeContext.lineTo(treePosition[treeIndex][node.left.id].x, treePosition[treeIndex][node.left.id].y);
+            treeContext.stroke();
             drawLineRec(node.left);
         }
         if (typeof(node.right) != "undefined") {
-            context.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
-            context.lineTo(treePosition[treeIndex][node.right.id].x, treePosition[treeIndex][node.right.id].y);
-            context.stroke();
+            treeContext.moveTo(treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
+            treeContext.lineTo(treePosition[treeIndex][node.right.id].x, treePosition[treeIndex][node.right.id].y);
+            treeContext.stroke();
             drawLineRec(node.right);
         }
     }
@@ -85,27 +84,49 @@ function drawLines() {
 }
 
 function drawNodes() {
-    var context = treeCanvas.getContext('2d');
     function drawNodeRec(node) {
         if (typeof(node) == 'undefined') {
             return;
         }
-        node.paint(context, treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
+        if (treeIsAnimation) {
+            if (typeof(treePosition[treeLastIndex][node.id]) == 'undefined') {
+                treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
+            }
+        }
+        node.paint(treeContext, treePosition[treeIndex][node.id].x, treePosition[treeIndex][node.id].y);
+        treeContext.globalAlpha = 1.0;
         drawNodeRec(node.left);
         drawNodeRec(node.right);
     }
     drawNodeRec(treeList[treeIndex].head);
+    function drawLastNodeRec(node) {
+        if (typeof(node) == 'undefined') {
+            return;
+        }
+        if (typeof(treePosition[treeIndex][node.id]) == 'undefined') {
+            treeContext.globalAlpha = (TREE_ANIMATION - treeAnimation) / TREE_ANIMATION;
+            node.paint(treeContext, treePosition[treeLastIndex][node.id].x, treePosition[treeLastIndex][node.id].y);
+            treeContext.globalAlpha = 1.0;
+        }
+        drawLastNodeRec(node.left);
+        drawLastNodeRec(node.right);
+    }
+    if (treeIsAnimation) {
+        drawLastNodeRec(treeList[treeLastIndex].head);
+    }
 }
 
 function paintTree() {
-    var context = treeCanvas.getContext('2d');
-    context.clearRect(0, 0, treeCanvas.width, treeCanvas.height);
+    treeContext.clearRect(0, 0, treeCanvas.width, treeCanvas.height);
     if (++treeAnimation >= TREE_ANIMATION) {
         treeIsAnimation = false;
     }
     drawScripts();
     drawLines();
     drawNodes();
+    treeContext.beginPath();
+    treeContext.arc(0, 0, 0, 0, 0, true);
+    treeContext.closePath();
 }
 
 function initTreePosition() {
@@ -127,6 +148,7 @@ function initTreePosition() {
 
 function initTreeCanvas(canvasId) {
     treeCanvas = document.getElementById(canvasId);
+    treeContext = treeCanvas.getContext('2d');
     function resizeTreeCanvas() {
         treeCanvas.width = document.documentElement.clientWidth;
         treeCanvas.height = document.documentElement.clientHeight;

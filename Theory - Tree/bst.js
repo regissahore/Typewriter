@@ -84,9 +84,14 @@ function Tree() {
 
 var tree = new Tree();
 var scripts = [
-     "add 3",
+     "add 5",
      "add 4",
+     "add 7",
+     "add 6",
      "add 2",
      "add 1",
-     "add 5"
+     "add 3",
+     "add 9",
+     "add 8",
+     "add 10"
 ];
