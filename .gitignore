@@ -6,12 +6,12 @@ build-*
 *.user
 *.layout
 
-# Doxygen
-doxygen
-
 # Documents
 *.doc
 material
+example
+*.html
+*.goc
 
 # Language Files
 *.qm
@@ -19,6 +19,3 @@ material
 # Photoshop Files
 *.psd
 
-# GO Results
-*.html
-*.goc
