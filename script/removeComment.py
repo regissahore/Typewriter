@@ -28,4 +28,4 @@ def removeComment(rootDir):
                         isComment = False
             file.close()
             
-removeComment("ZGO2")
+removeComment("tm")
