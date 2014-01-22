@@ -1,9 +1,5 @@
 #ifndef DEBUGCONSOLE_H
 #define DEBUGCONSOLE_H
-/**
- * 程序调试用的控制台。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QWidget>
 #include <QTextEdit>
 #include <QGridLayout>

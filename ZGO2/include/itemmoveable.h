@@ -1,9 +1,5 @@
 #ifndef ITEMMOVEABLE_H
 #define ITEMMOVEABLE_H
-/**
- * The basic moveable graphics item.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QGraphicsSceneMouseEvent>
 #include "itemdrawable.h"
 

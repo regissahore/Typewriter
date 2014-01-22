@@ -1,9 +1,5 @@
 #ifndef DOCKTOOLBOX_H
 #define DOCKTOOLBOX_H
-/**
- * 工具悬停窗口。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QDockWidget>
 #include "messager.h"
 #include "messagefactory.h"

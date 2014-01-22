@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOMARKOVOPERATOR_H
 #define PARAMETERGOMARKOVOPERATOR_H
-/**
- * The parameter for GO operator in Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parametergooperator.h"
 
 class QSpinBox;

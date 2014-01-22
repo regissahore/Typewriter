@@ -36,17 +36,6 @@ void RungeKuttaMarkov18::setLambdaB1(const DoubleVector value)
     this->_lambdaB1 = value;
 }
 
-/**
- * Runge-Kutta法解微分方程组。
- * y' = f(t, y), y(t0) = y0
- * y(n + 1) = y(n) + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
- * k1 = f(tn, yn)
- * k2 = f(tn + h / 2, yn + h / 2 * k1)
- * k3 = f(tn + h / 2, yn + h / 2 + k2)
- * k4 = f(tn, yn + h * k3)
- * P0(0) = 1.0
- * P1(0) = P2(0) = P3(0) = 0.0
- */
 DoubleVector RungeKuttaMarkov18::calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     if (time < RK_STEP)
@@ -169,9 +158,6 @@ DoubleVector RungeKuttaMarkov18::calcNormalProbability(DoubleVector time, Double
     return this->_rk0;
 }
 
-/**
- * P0'(t) = μ1 * P1(t) + μ2 * P2(t) - (λ1 + λb1) * P0(t)
- */
 DoubleVector RungeKuttaMarkov18::func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
@@ -180,9 +166,6 @@ DoubleVector RungeKuttaMarkov18::func0(DoubleVector t, DoubleVector x0, DoubleVe
     return mu1 * x1 + mu2 * x2 - (lambda1 + lambdaB1()) * x0;
 }
 
-/**
- * P1'(t) = λ1 * P0(t) + μ2 * P3(t) - (μ1 + λ2) * P1(t)
- */
 DoubleVector RungeKuttaMarkov18::func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
@@ -190,9 +173,6 @@ DoubleVector RungeKuttaMarkov18::func1(DoubleVector t, DoubleVector x0, DoubleVe
     return lambda1 * x0 + mu2 * x3 - (mu1 + lambda2) * x1;
 }
 
-/**
- * P2'(t) = λb1 * P0(t) - μ1 * P3(t) - (μ1 + λ1) * P2(t)
- */
 DoubleVector RungeKuttaMarkov18::func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);
@@ -202,9 +182,6 @@ DoubleVector RungeKuttaMarkov18::func2(DoubleVector t, DoubleVector x0, DoubleVe
     return lambdaB1() * x0 - mu1 * x3 - (mu1 + lambda1) * x2;
 }
 
-/**
- * P3'(t) = λ2 * P1(t) - λ1 * P2(t) - (μ1 + μ2) * P3(t)
- */
 DoubleVector RungeKuttaMarkov18::func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector lambda1, DoubleVector lambda2, DoubleVector mu1, DoubleVector mu2)
 {
     Q_UNUSED(t);

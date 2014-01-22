@@ -1,9 +1,5 @@
 #ifndef GOMARKOVEQUIVALENTPARALLEL_H
 #define GOMARKOVEQUIVALENTPARALLEL_H
-/**
- * The parallel equivalent.
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 #include "gomarkovequivalent.h"
 

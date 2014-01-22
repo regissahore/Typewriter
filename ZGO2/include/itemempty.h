@@ -1,9 +1,5 @@
 #ifndef ITEMEMPTY_H
 #define ITEMEMPTY_H
-/**
- * An unvisiable item.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemdrawable.h"
 
 class ItemEmpty : public ItemDrawable

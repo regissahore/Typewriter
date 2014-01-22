@@ -18,10 +18,6 @@
 #include "viewgo.h"
 #include "editorgo.h"
 
-/**
- * Constructor.
- * @param sceneGO The SceneGO entity.
- */
 ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
@@ -32,9 +28,6 @@ ToolGOSelect::ToolGOSelect(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->graphicsView()->setCursor(Qt::ArrowCursor);
 }
 
-/**
- * Clear.
- */
 ToolGOSelect::~ToolGOSelect()
 {
     for (int i = 0; i < this->_items.size(); ++i)
@@ -45,10 +38,6 @@ ToolGOSelect::~ToolGOSelect()
     delete this->_selection;
 }
 
-/**
- * Mouse press event.
- * @param event Mouse event.
- */
 void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
@@ -92,10 +81,6 @@ void ToolGOSelect::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Mouse move event.
- * @param event Mouse event.
- */
 void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
@@ -133,10 +118,6 @@ void ToolGOSelect::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Mouse release event.
- * @param event Mouse event.
- */
 void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
@@ -205,10 +186,6 @@ void ToolGOSelect::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     items.clear();
 }
 
-/**
- * Key Release event.
- * @param event Key event.
- */
 void ToolGOSelect::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete)

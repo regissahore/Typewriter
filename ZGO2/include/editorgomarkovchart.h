@@ -1,9 +1,5 @@
 #ifndef EDITORGOMARKOVCHART_H
 #define EDITORGOMARKOVCHART_H
-/**
- * The editor to show the chart result of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "editorabstract.h"
 
 class ViewGOMarkovChart;

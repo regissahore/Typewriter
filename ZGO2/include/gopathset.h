@@ -1,9 +1,5 @@
 #ifndef GOPATHSET_H
 #define GOPATHSET_H
-/**
- * 记录一条基本的路径。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GOOperator;

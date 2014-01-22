@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR6_H
 #define GOMARKOVOPERATOR6_H
-/**
- * 有条件而导通的元器件。有停工相关模式。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator6 : public GOMarkovOperator

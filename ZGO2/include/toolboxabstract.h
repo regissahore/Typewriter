@@ -1,9 +1,5 @@
 #ifndef TOOLBOXABSTRACT_H
 #define TOOLBOXABSTRACT_H
-/**
- * 抽象的工具栏类型。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QWidget>
 #include "typeditem.h"
 #include "messager.h"

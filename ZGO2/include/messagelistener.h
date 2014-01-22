@@ -1,9 +1,5 @@
 #ifndef MESSAGELISTENER_H
 #define MESSAGELISTENER_H
-/**
- * 用于监听消息，如果想继承此类请直接引用MessageController.h文件。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include <QString>
 #include "message.h"

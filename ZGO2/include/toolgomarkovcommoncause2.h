@@ -1,9 +1,5 @@
 #ifndef TOOLGOMARKOVCOMMONCAUSE2_H
 #define TOOLGOMARKOVCOMMONCAUSE2_H
-/**
- * 添加共因失效的工具。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "toolgoabstract.h"
 

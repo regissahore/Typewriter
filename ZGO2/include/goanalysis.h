@@ -1,9 +1,5 @@
 #ifndef GOANALYSIS_H
 #define GOANALYSIS_H
-/**
- * Used for analysis the GO graph.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GOOperator;

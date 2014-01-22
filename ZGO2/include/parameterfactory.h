@@ -1,9 +1,5 @@
 #ifndef PARAMETERFACTORY_H
 #define PARAMETERFACTORY_H
-/**
- * A static parameter factory.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parameterabstract.h"
 
 class ParameterFactory

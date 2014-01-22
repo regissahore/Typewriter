@@ -23,35 +23,21 @@ DialogStringInput::DialogStringInput(QWidget *parent) : QDialog(parent)
     hBoxLayout->addWidget(cancelButton);
 }
 
-/**
- * Set the display text.
- * @param text The text to be displayed.
- */
 void DialogStringInput::setText(const QString text)
 {
     this->_textLabel->setText(text);
 }
 
-/**
- * Get the spinbox of integer input.
- * @return QSpinBox.
- */
 QLineEdit* DialogStringInput::stringInput() const
 {
     return this->_stringInput;
 }
 
-/**
- * The integer is confirmed.
- */
 void DialogStringInput::confirm()
 {
     this->accept();
 }
 
-/**
- * The input is canceled.
- */
 void DialogStringInput::cancel()
 {
     this->reject();

@@ -1,9 +1,5 @@
 #ifndef DOMITEM_H
 #define DOMITEM_H
-/**
- * The item which can read and generate DOM elements.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QDomDocument>
 #include <QDomElement>
 

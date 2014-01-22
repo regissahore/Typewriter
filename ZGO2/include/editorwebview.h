@@ -1,9 +1,5 @@
 #ifndef EDITORWEBVIEW_H
 #define EDITORWEBVIEW_H
-/**
- * A editor used to show web page.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "editorabstract.h"
 
 class QWebView;

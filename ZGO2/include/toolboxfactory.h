@@ -1,9 +1,5 @@
 #ifndef TOOLBOXFACTORY_H
 #define TOOLBOXFACTORY_H
-/**
- * 工具栏工厂类。
- * @author ZHG <CyberZHG@gmaill.com>
- */
 class ToolboxAbstract;
 
 class ToolboxFactory

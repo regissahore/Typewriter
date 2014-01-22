@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR13_H
 #define GOMARKOVOPERATOR13_H
-/**
- * 多路输入输出器。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "gomarkovoperator.h"
 

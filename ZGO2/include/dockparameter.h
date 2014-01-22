@@ -1,9 +1,5 @@
 #ifndef DOCKPARAMETER_H
 #define DOCKPARAMETER_H
-/**
- * The dock for setting the selection's parameter.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QDockWidget>
 #include "messager.h"
 

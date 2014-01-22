@@ -1,9 +1,5 @@
 #ifndef PARAMETERABSTRACT_H
 #define PARAMETERABSTRACT_H
-/**
- * The abstract parameter widget.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QWidget>
 #include <QTableWidget>
 #include "messager.h"

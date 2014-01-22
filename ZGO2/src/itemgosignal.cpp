@@ -9,10 +9,6 @@
 #include "gooutput.h"
 using namespace std;
 
-/**
- * Constructor.
- * @param parent The parent graphics item.
- */
 ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
 {
     this->_start = new SignalConnection();
@@ -25,9 +21,6 @@ ItemGOSignal::ItemGOSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->setIsBrokenLine(true);
 }
 
-/**
- * Destructor.
- */
 ItemGOSignal::~ItemGOSignal()
 {
     delete this->_model;
@@ -157,19 +150,11 @@ bool ItemGOSignal::isSelectable(float x, float y, float width, float height)
             bottom > thisBottom;
 }
 
-/**
- * Get the start structure.
- * @return Start structure.
- */
 ItemGOSignal::SignalConnection* ItemGOSignal::start()
 {
     return this->_start;
 }
 
-/**
- * Get the end structure.
- * @return End structure.
- */
 ItemGOSignal::SignalConnection* ItemGOSignal::end()
 {
     return this->_end;
@@ -180,11 +165,6 @@ QPointF ItemGOSignal::endPos() const
     return this->_endPos;
 }
 
-/**
- * Set the end position.
- * @param x X position.
- * @param y Y position.
- */
 void ItemGOSignal::setEndPosition(int x, int y)
 {
     this->_endPos.setX(x);
@@ -234,21 +214,11 @@ void ItemGOSignal::setCornerProportion(const float value)
     }
 }
 
-/**
- * Set the end position.
- * @param pos End position.
- */
 void ItemGOSignal::setEndPosition(QPointF pos)
 {
     this->setEndPosition((int)pos.x(), (int)pos.y());
 }
 
-/**
- * Paint a line.
- * @param painter The painter.
- * @param item The option.
- * @param widget The widget.
- */
 void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item);
@@ -298,9 +268,6 @@ void ItemGOSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     }
 }
 
-/**
- * Update the position.
- */
 void ItemGOSignal::updatePosition()
 {
     if (this->start()->op != 0L && this->end()->op != 0L)
@@ -334,9 +301,6 @@ void ItemGOSignal::updatePosition()
     }
 }
 
-/**
- * Remove the connection of the signal.
- */
 void ItemGOSignal::removeConnection()
 {
     if (this->_start->op != 0L)

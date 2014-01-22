@@ -5,9 +5,6 @@
 #include "doublevector.h"
 using namespace std;
 
-/**
- * 默认的头为0号操作符。
- */
 DoubleVector::Head::Node::Node()
 {
     this->id = 0;

@@ -14,12 +14,6 @@
 #include "toolgomarkovcommoncause.h"
 #include "toolgomarkovcommoncause2.h"
 
-/**
- * Produce a instantiated GO tool.
- * @param sceneGO The pointer to the SceneGO entity.
- * @param type The type of the tool. @see DefinationToolType
- * @return The instantiated tool, if the type of the tool is not exist, an empty pointer will be returned.
- */
 ToolGOAbstract* ToolGOFactory::produce(SceneGO *sceneGO, const int type)
 {
     ToolGOAbstract *tool = 0L;

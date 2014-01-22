@@ -1,9 +1,5 @@
 #ifndef VIEWGO_H
 #define VIEWGO_H
-/**
- * The view of the GO graph。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QGraphicsView>
 #include "graphicsview.h"
 #include "scenego.h"

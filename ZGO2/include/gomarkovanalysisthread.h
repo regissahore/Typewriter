@@ -1,9 +1,5 @@
 #ifndef GOMARKOVANALYSISTHREAD_H
 #define GOMARKOVANALYSISTHREAD_H
-/**
- * 用于Markov系统分析的线程。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QThread>
 
 class GOMarkovGraph;

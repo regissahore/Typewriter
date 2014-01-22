@@ -77,9 +77,6 @@ QVector<GOGraph::MessageRecord> GOGraph::messages() const
     return this->_messages;
 }
 
-/**
- * Calculate the accumulative probability.
- */
 void GOGraph::calcAccumulativeProbability()
 {
     this->_error = "";
@@ -114,11 +111,6 @@ void GOGraph::calcAccumulativeProbability()
     list.clear();
 }
 
-/**
- * Check if the graph contains cycle.
- * Check if the graph is connected.
- * @return Returns true if the graph does not contain error, otherwise false.
- */
 bool GOGraph::checkCycleAndConnection()
 {
     for (int i = 0; i < this->_operator.size(); ++i)
@@ -231,10 +223,6 @@ bool GOGraph::isContainCycleDfs(QVector<bool> &visit,
     return false;
 }
 
-/**
- * Get the topological order for analysis order.
- * @return The topological order.
- */
 QVector<GOOperator*> GOGraph::getTopologicalOrder()
 {
     QVector<GOOperator*> topList;
@@ -282,12 +270,6 @@ QVector<GOOperator*> GOGraph::getTopologicalOrder()
     return topList;
 }
 
-/**
- * Get the ancestor list, the parameter operator is in the frontest position.
- * @param op The operator.
- * @param index The index is the output index of the operator.
- * @return The vector of the path, which is a vector of struct CommonSignal.
- */
 QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int outputIndex, int signalIndex)
 {
     Output commonSignal;
@@ -346,11 +328,6 @@ QVector< QVector<GOGraph::Output> > GOGraph::getAncestorList(GOOperator *op, int
     return vector;
 }
 
-/**
- * Get all common signal list, which is actually a list of operators.
- * @param op
- * @return The vector of common signal.
- */
 QVector<GOGraph::Output> GOGraph::getCommonSignalList(GOOperator *op)
 {
     QVector< QVector<Output> > ancestorPath = this->getAncestorList(op, 0, 0);
@@ -681,11 +658,6 @@ void GOGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GOPathSetSetSet &c
     delete copy;
 }
 
-/**
- * Save the result to a HTML file.
- * @param path The file path.
- * @return Returns true if succeed, otherwise false.
- */
 bool GOGraph::saveAsHTML(const QString filePath)
 {
     this->_error = "";

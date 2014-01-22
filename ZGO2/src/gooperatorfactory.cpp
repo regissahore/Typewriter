@@ -4,10 +4,6 @@
 #include "gooutput.h"
 #include "gostatus.h"
 
-/**
- * Produce a GOOperator with auto increment ID.
- * @return Pointer to GOOperator.
- */
 GOOperator* GOOperatorFactory::produce(const int type)
 {
     GOOperator *op = new GOOperator();

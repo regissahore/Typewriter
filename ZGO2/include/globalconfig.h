@@ -1,9 +1,5 @@
 #ifndef GLOBALCONFIG_H
 #define GLOBALCONFIG_H
-/**
- * Global config singleton.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GlobalConfig

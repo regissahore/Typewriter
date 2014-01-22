@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOMARKOVCHART_H
 #define PARAMETERGOMARKOVCHART_H
-/**
- * The parameter for GO Markov Chart.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QObject>
 #include "parameterabstract.h"
 

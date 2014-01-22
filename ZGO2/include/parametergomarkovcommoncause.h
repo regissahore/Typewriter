@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOMARKOVCOMMONCAUSE_H
 #define PARAMETERGOMARKOVCOMMONCAUSE_H
-/**
- * The parameter for the common cause in GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parameterabstract.h"
 
 class QDoubleSpinBox;

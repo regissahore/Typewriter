@@ -1,9 +1,5 @@
 #ifndef IDENTIFIEDITEM_H
 #define IDENTIFIEDITEM_H
-/**
- * 有唯一ID标识的数据。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class IdentifiedItem
 {

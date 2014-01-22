@@ -1,10 +1,5 @@
 #ifndef MESSAGECONTROLLER_H
 #define MESSAGECONTROLLER_H
-/**
- * 消息的控制管理。
- * 消息产生器发送的消息被监听器收到之后会立即执行，注意时序关系。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QMap>
 #include <QVector>
 #include <QString>

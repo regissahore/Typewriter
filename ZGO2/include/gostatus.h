@@ -1,9 +1,5 @@
 #ifndef GOSTATUS_H
 #define GOSTATUS_H
-/**
- * The status of the GO operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include <QString>
 #include "domitem.h"

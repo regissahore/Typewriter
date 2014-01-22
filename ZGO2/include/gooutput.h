@@ -1,9 +1,5 @@
 #ifndef GOOUTPUT_H
 #define GOOUTPUT_H
-/**
- * The output model of go operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GOSignal;

@@ -49,10 +49,6 @@
 #include "gomarkovoperator29.h"
 #include "gomarkovoperatorsplitpoint.h"
 
-/**
- * Produce a GOOperator with auto increment ID.
- * @return Pointer to GOOperator.
- */
 GOMarkovOperator* GOMarkovOperatorFactory::produce(const int type)
 {
     GOMarkovOperator *op;

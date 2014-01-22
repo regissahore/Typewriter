@@ -1,11 +1,5 @@
 #ifndef ITEMGOFACTORY_H
 #define ITEMGOFACTORY_H
-/**
- * A GO item factory.
- * @see DefinationEditorSelectionType
- * The class is static and should not be instantiated.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QList>
 #include <QGraphicsItem>
 #include <QGraphicsSceneMouseEvent>

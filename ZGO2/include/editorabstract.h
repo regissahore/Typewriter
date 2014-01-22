@@ -1,9 +1,5 @@
 #ifndef EDITORABSTRACT_H
 #define EDITORABSTRACT_H
-/**
- * 编辑器的抽象实现。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QWidget>
 #include <QFileDialog>
 #include <QMessageBox>

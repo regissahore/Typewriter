@@ -1,9 +1,5 @@
 #ifndef GOMARKOVSTATUS_H
 #define GOMARKOVSTATUS_H
-/**
- * The status of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "domitem.h"
 #include "doublevector.h"
 

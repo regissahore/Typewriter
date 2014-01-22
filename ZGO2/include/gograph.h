@@ -1,9 +1,5 @@
 #ifndef GOGRAPH_H
 #define GOGRAPH_H
-/**
- * The GO graph.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QMap>
 #include <QVector>
 #include "messager.h"

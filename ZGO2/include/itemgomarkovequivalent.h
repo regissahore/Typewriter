@@ -1,9 +1,5 @@
 #ifndef ITEMGOMARKOVEQUIVALENT_H
 #define ITEMGOMARKOVEQUIVALENT_H
-/**
- * The quivalent of Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "itemmoveable.h"
 #include "identifieditem.h"

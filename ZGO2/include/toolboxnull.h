@@ -1,9 +1,5 @@
 #ifndef TOOLBOXNULL_H
 #define TOOLBOXNULL_H
-/**
- * 无内容的工具栏。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QLabel>
 #include <QGridLayout>
 #include "toolboxabstract.h"

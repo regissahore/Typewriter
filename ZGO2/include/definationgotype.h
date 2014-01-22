@@ -1,9 +1,5 @@
 #ifndef DEFINATIONGOTYPE_H
 #define DEFINATIONGOTYPE_H
-/**
- * Definations about GO.
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class DefinationGOType
 {

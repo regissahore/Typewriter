@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR23_H
 #define GOMARKOVOPERATOR23_H
-/**
- * 工况组合器。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator23 : public GOMarkovOperator

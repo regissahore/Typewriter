@@ -1,9 +1,5 @@
 #ifndef DOUBLEVECTOR_H
 #define DOUBLEVECTOR_H
-/**
- * 用于double型计算的向量。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <map>
 #include <set>
 #include <QVector>

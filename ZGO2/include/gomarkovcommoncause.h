@@ -1,9 +1,5 @@
 #ifndef GOMARKOVCOMMONCAUSE_H
 #define GOMARKOVCOMMONCAUSE_H
-/**
- * The common cause for GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "domitem.h"
 

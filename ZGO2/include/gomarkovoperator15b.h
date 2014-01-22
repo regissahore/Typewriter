@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR15B_H
 #define GOMARKOVOPERATOR15B_H
-/**
- * 工况并行运算。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator15B : public GOMarkovOperator

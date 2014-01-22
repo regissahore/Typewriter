@@ -1,9 +1,5 @@
 #ifndef DIALOGSTRINGINPUT_H
 #define DIALOGSTRINGINPUT_H
-/**
- * A dialog with a string input.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QLabel>
 #include <QDialog>
 #include <QLineEdit>

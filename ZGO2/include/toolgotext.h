@@ -1,9 +1,5 @@
 #ifndef TOOLGOTEXT_H
 #define TOOLGOTEXT_H
-/**
- * The text tool for GO graph.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "toolgoabstract.h"
 
 class ItemGOText;

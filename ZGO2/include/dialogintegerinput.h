@@ -1,9 +1,5 @@
 #ifndef DIALOGINTEGERINPUT_H
 #define DIALOGINTEGERINPUT_H
-/**
- * A dialog with an integer input.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QLabel>
 #include <QDialog>
 #include <QSpinBox>

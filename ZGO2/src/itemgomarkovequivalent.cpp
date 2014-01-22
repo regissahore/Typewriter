@@ -79,11 +79,6 @@ void ItemGOMarkovEquivalent::setFatherEquivalent(ItemGOMarkovEquivalent *equival
     this->_fatherEquivalent = equivalent;
 }
 
-/**
- * Get the series list, the input is considered to be correct.
- * @param items The list of ItemGOMarkovOperator.
- * @return The series list.
- */
 QList<ItemDrawable *> ItemGOMarkovEquivalent::getSeriesList(QList<QGraphicsItem*> &items)
 {
     QList<ItemDrawable*> list;

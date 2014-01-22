@@ -12,10 +12,6 @@ GOStatus::~GOStatus()
     this->_description.clear();
 }
 
-/**
- * The number indicates the error status.
- * @return The error status.
- */
 int GOStatus::number() const
 {
     return this->_probability.size();

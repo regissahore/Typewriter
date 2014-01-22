@@ -3,10 +3,6 @@
 #include "toolboxabstract.h"
 #include "editorfactory.h"
 
-/**
- * 构造函数。
- * @param parent 父窗体
- */
 DockToolbox::DockToolbox(QWidget *parent) : QDockWidget(parent), Messager()
 {
     this->setWindowTitle(tr("Toolbox"));
@@ -15,9 +11,6 @@ DockToolbox::DockToolbox(QWidget *parent) : QDockWidget(parent), Messager()
     this->setMinimumWidth(150);
 }
 
-/**
- * 析构函数。
- */
 DockToolbox::~DockToolbox()
 {
     this->clear();
@@ -28,20 +21,12 @@ QSize DockToolbox::sizeHint() const
     return QSize(200, 200);
 }
 
-/**
- * 绑定消息。
- * @param controller 控制器。
- */
 void DockToolbox::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
     controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
-/**
- * 消息事件。
- * @param message 消息。
- */
 void DockToolbox::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
@@ -88,9 +73,6 @@ void DockToolbox::setToolbox(int editorType)
     }
 }
 
-/**
- * 清除已有的工具。
- */
 void DockToolbox::clear()
 {
     if (this->_toolbox)

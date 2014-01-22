@@ -1,10 +1,5 @@
 #ifndef GOACCUMULATIVE_H
 #define GOACCUMULATIVE_H
-/**
- * The accumulative probability.
- * Bind to the outputs of the operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 #include <QVector>
 

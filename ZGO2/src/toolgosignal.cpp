@@ -7,10 +7,6 @@
 #include "goinput.h"
 #include "gooutput.h"
 
-/**
- * Constructor.
- * @param sceneGO The SceneGO entity.
- */
 ToolGOSignal::ToolGOSignal(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
@@ -18,18 +14,11 @@ ToolGOSignal::ToolGOSignal(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->_status = Status_Null;
 }
 
-/**
- * Destructor.
- */
 ToolGOSignal::~ToolGOSignal()
 {
     delete this->_tempSignal;
 }
 
-/**
- * Mouse press event.
- * @param event Mouse event.
- */
 void ToolGOSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     QList<QGraphicsItem*> items = this->graphicsScene()->items(QRectF(event->scenePos().x() - 2, event->scenePos().y() - 2, 4, 4));
@@ -83,10 +72,6 @@ void ToolGOSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Mouse move event.
- * @param event Mouse event.
- */
 void ToolGOSignal::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_status == Status_Adding)
@@ -131,10 +116,6 @@ void ToolGOSignal::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Mouse release event.
- * @param event Mouse event.
- */
 void ToolGOSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_status == Status_Adding)
@@ -212,12 +193,6 @@ void ToolGOSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Whether two points is close enough.
- * @param pos1 Point 1.
- * @param pos2 Point 2.
- * @return Returns true if two points are close, otherwise false.
- */
 bool ToolGOSignal::isAround(QPointF pos1, QPointF pos2)
 {
     return (pos1.x() - pos2.x()) * (pos1.x() - pos2.x()) +

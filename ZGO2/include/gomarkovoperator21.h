@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR21_H
 #define GOMARKOVOPERATOR21_H
-/**
- * 整体反馈。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator21 : public GOMarkovOperator

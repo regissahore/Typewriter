@@ -1,9 +1,5 @@
 #ifndef MESSAGEFACTORY_H
 #define MESSAGEFACTORY_H
-/**
- * The message factory.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QList>
 #include "message.h"
 

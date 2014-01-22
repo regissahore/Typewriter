@@ -1,9 +1,5 @@
 #ifndef DEFINATIONTOOLTYPE_H
 #define DEFINATIONTOOLTYPE_H
-/**
- * 工具类型的定义。
- * @author ZHG <CyberZHG@gmail.com>
- */
 class DefinationToolType
 {
 public:

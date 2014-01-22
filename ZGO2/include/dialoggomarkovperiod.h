@@ -1,9 +1,5 @@
 #ifndef DIALOGGOMARKOVPERIOD_H
 #define DIALOGGOMARKOVPERIOD_H
-/**
- * The dialog for setting the total time and loop time for GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QDialog>
 
 namespace Ui {

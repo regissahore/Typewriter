@@ -1,9 +1,5 @@
 #ifndef ITEMARROW_H
 #define ITEMARROW_H
-/**
- * 任意角度的箭头。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemdrawable.h"
 
 class ItemArrow : public ItemDrawable

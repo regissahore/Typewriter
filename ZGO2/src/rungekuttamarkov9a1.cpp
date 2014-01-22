@@ -21,17 +21,6 @@ double RungeKuttaMarkov9A1::rk2() const
     return this->_rk2;
 }
 
-/**
- * Runge-Kutta法解微分方程组。
- * y' = f(t, y), y(t0) = y0
- * y(n + 1) = y(n) + h / 6 * (k1 + 2 * k2 + 2 * k3 + k4)
- * k1 = f(tn, yn)
- * k2 = f(tn + h / 2, yn + h / 2 * k1)
- * k3 = f(tn + h / 2, yn + h / 2 + k2)
- * k4 = f(tn, yn + h * k3)
- * P0(0) = 1.0
- * P1(0) = P2(0) = 0.0
- */
 double RungeKuttaMarkov9A1::calcNormalProbability(double time, double lambda1, double lambda2, double mu1, double mu2)
 {
     if (time < RK_STEP)
@@ -101,27 +90,18 @@ double RungeKuttaMarkov9A1::calcNormalProbability(double time, double lambda1, d
     return this->_rk0;
 }
 
-/**
- * P0'(t) = - (λ1 + λ2) * P0(t) + μ1 * P1(t) + μ2 * P2(t)
- */
 double RungeKuttaMarkov9A1::func0(double t, double x0, double x1, double x2, double lambda1, double lambda2, double mu1, double mu2)
 {
     Q_UNUSED(t);
     return - (lambda1 + lambda2) * x0 + mu1 * x1 + mu2 * x2;
 }
 
-/**
- * P1'(t) = λ1 * P0(t) - μ1 * P1(t)
- */
 double RungeKuttaMarkov9A1::func1(double t, double x0, double x1, double lambda1, double mu1)
 {
     Q_UNUSED(t);
     return lambda1 * x0 - mu1 * x1;
 }
 
-/**
- * P2'(t) = λ2 * P0(t) - μ2 * P2(t)
- */
 double RungeKuttaMarkov9A1::func2(double t, double x0, double x2, double lambda2, double mu2)
 {
     Q_UNUSED(t);

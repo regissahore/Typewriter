@@ -1,9 +1,5 @@
 #ifndef EDITORFACTORY_H
 #define EDITORFACTORY_H
-/**
- * 用于生成相应的编辑器。
- * @author ZHG <CyberZHG@gmail.com>
- */
 class EditorAbstract;
 
 class EditorFactory

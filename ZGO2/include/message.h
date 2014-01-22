@@ -1,9 +1,5 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
-/**
- * The basic structrue of message.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QString>
 #include <QSharedPointer>
 #include "identifieditem.h"

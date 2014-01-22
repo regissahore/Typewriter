@@ -27,10 +27,6 @@ GOMainWindow::~GOMainWindow()
     delete ui;
 }
 
-/**
- * 绑定消息。
- * @param controller 消息控制器。
- */
 void GOMainWindow::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
@@ -38,10 +34,6 @@ void GOMainWindow::bindMessage(MessageController *controller)
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_OPEN));
 }
 
-/**
- * 消息事件。
- * @param message 消息。
- */
 void GOMainWindow::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
@@ -53,10 +45,6 @@ void GOMainWindow::messageEvent(QSharedPointer<Message> message)
     }
 }
 
-/**
- * 关闭事件。
- * @param event 关闭事件。
- */
 void GOMainWindow::closeEvent(QCloseEvent *event)
 {
     GlobalConfig::getInstance()->save();
@@ -74,9 +62,6 @@ void GOMainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
-/**
- * 初始化编辑器。
- */
 void GOMainWindow::initEditor()
 {
     this->_dockToolbox = new DockToolbox(this);
@@ -97,9 +82,6 @@ void GOMainWindow::initEditor()
     this->ui->widget->layout()->addWidget(this->_dockParameter);
 }
 
-/**
- * 初始化悬停窗口。
- */
 void GOMainWindow::initDock()
 {
     this->_dockMessage = new DockMessage(this);

@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR9A2_H
 #define GOMARKOVOPERATOR9A2_H
-/**
- * 无停工相关属性反馈操作符。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator9a.h"
 
 class GOMarkovOperator9A2 : public GOMarkovOperator9A

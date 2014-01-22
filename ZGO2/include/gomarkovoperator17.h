@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR17_H
 #define GOMARKOVOPERATOR17_H
-/**
- * 要求恢复已关断元件。有停工相关模式。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator17 : public GOMarkovOperator

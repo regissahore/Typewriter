@@ -1,10 +1,6 @@
 #include "graphicsview.h"
 #include "qmath.h"
 
-/**
- * Constructor.
- * @param parent The parent widget.
- */
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     this->setRenderHints(QPainter::Antialiasing);
@@ -17,10 +13,6 @@ GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
     this->setupMatrix();
 }
 
-/**
- * 鼠标滚轮的事件。
- * @return event 滚轮事件。
- */
 void GraphicsView::wheelEvent(QWheelEvent *event)
 {
     if (event->modifiers() & Qt::ControlModifier)
@@ -40,19 +32,11 @@ void GraphicsView::wheelEvent(QWheelEvent *event)
     }
 }
 
-/**
- * 获取当前缩放的数值。
- * @return 缩放的数值。
- */
 qreal GraphicsView::zoom() const
 {
     return this->_zoom;
 }
 
-/**
- * 设置当前缩放的数值，会触发视图的变换。
- * @param value 缩放的数值。
- */
 void GraphicsView::setZoom(qreal value)
 {
     if (this->_zoom != value)
@@ -62,9 +46,6 @@ void GraphicsView::setZoom(qreal value)
     }
 }
 
-/**
- * 设置视图变换矩阵。
- */
 void GraphicsView::setupMatrix()
 {
     qreal scale = qPow(qreal(2), (this->zoom() - 250) / qreal(50));
@@ -73,19 +54,11 @@ void GraphicsView::setupMatrix()
     this->setMatrix(matrix);
 }
 
-/**
- * 拉近视图。
- * @param level 变化的程度。
- */
 void GraphicsView::zoomIn(int level)
 {
     this->setZoom(this->zoom() + level);
 }
 
-/**
- * 拉远视图。
- * @param level 变化的程度。
- */
 void GraphicsView::zoomOut(int level)
 {
     this->setZoom(this->zoom() - level);

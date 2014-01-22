@@ -2,10 +2,6 @@
 #include "messagefactory.h"
 #include "editorgo.h"
 
-/**
- * 构造函数。
- * @param parent 父窗体。
- */
 ViewGO::ViewGO(QWidget *parent) : GraphicsView(parent)
 {
     this->_editor = (EditorGO*)parent;
@@ -18,10 +14,6 @@ ViewGO::~ViewGO()
     this->Messager::~Messager();
 }
 
-/**
- * Bind message listener to controller.
- * @param controller The message controller.
- */
 void ViewGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);

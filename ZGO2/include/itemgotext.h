@@ -1,9 +1,5 @@
 #ifndef ITEMGOTEXT_H
 #define ITEMGOTEXT_H
-/**
- * The moveable text item.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemmoveable.h"
 
 class ItemGOText : public ItemMoveable

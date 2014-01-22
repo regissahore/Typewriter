@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR19_H
 #define GOMARKOVOPERATOR19_H
-/**
- * 超压保护操作符。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator19 : public GOMarkovOperator

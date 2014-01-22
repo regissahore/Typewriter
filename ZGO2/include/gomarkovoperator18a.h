@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR18A_H
 #define GOMARKOVOPERATOR18A_H
-/**
- * 备用门。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator18A : public GOMarkovOperator

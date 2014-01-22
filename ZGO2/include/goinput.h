@@ -1,9 +1,5 @@
 #ifndef GOINPUT_H
 #define GOINPUT_H
-/**
- * The input model of go operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GOSignal;

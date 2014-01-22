@@ -1,9 +1,5 @@
 #ifndef TOOLGOMARKOVOPERATOR_H
 #define TOOLGOMARKOVOPERATOR_H
-/**
- * The tool for placing operator of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "toolgooperator.h"
 
 class ToolGOMarkovOperator : public ToolGOOperator

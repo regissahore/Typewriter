@@ -1,9 +1,5 @@
 #ifndef GOSIGNAL_H
 #define GOSIGNAL_H
-/**
- * The GO signal。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "identifieditem.h"
 
 class GOOperator;

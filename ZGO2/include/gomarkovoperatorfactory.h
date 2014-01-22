@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATORFACTORY_H
 #define GOMARKOVOPERATORFACTORY_H
-/**
- * A operator model factory of Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QString>
 
 class GOMarkovOperator;

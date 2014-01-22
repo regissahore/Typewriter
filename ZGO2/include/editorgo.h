@@ -1,9 +1,5 @@
 #ifndef EDITORGO_H
 #define EDITORGO_H
-/**
- * 基本的GO法编辑器。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QLabel>
 #include <QWidget>
 #include <QSplitter>

@@ -1,9 +1,5 @@
 #ifndef DOCKMESSAGE_H
 #define DOCKMESSAGE_H
-/**
- * 用于消息的输出的悬停窗口。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QTabWidget>
 #include <QDockWidget>
 #include <QGridLayout>

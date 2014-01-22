@@ -1,9 +1,5 @@
 #ifndef RUNGEKUTTAMARKOV9A1_H
 #define RUNGEKUTTAMARKOV9A1_H
-/**
- * Runge-Kutta法解9A1的方程。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QObject>
 
 class RungeKuttaMarkov9A1

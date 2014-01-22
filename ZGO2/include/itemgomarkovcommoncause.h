@@ -1,9 +1,5 @@
 #ifndef ITEMGOMARKOVCOMMONCAUSE_H
 #define ITEMGOMARKOVCOMMONCAUSE_H
-/**
- * The common cause of Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemmoveable.h"
 
 class ItemGOMarkovOperator;

@@ -4,11 +4,6 @@
 #include "toolboxgo.h"
 #include "toolboxgomarkov.h"
 
-/**
- * 生成对应的工具栏。
- * @param type 工具栏类型。
- * @return 工具栏。
- */
 ToolboxAbstract* ToolboxFactory::produce(const int type)
 {
     ToolboxAbstract *toolbox = 0L;

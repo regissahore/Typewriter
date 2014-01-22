@@ -1,9 +1,5 @@
 #ifndef GOPATHSETSETSET_H
 #define GOPATHSETSETSET_H
-/**
- * 路径的集合的集合，针对产生割集的输出进行排序。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 
 class GOPathSet;

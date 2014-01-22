@@ -1,9 +1,5 @@
 #ifndef GOOPERATORFACTORY_H
 #define GOOPERATORFACTORY_H
-/**
- * A GO Operator model factory.
- * @author ZHG <CyberZHG@gmail.com>
- */
 class GOOperator;
 
 class GOOperatorFactory

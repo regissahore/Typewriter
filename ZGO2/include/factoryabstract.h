@@ -1,9 +1,5 @@
 #ifndef FACTORYABSTRACT_H
 #define FACTORYABSTRACT_H
-/**
- * 一个有自动增长分配ID的工厂类。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class FactoryAbstract
 {

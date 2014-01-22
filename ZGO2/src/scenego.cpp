@@ -21,10 +21,6 @@
 #include "itemempty.h"
 #include "viewgo.h"
 
-/**
- * The constructor.
- * @parent The father object.
- */
 SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
 {
     this->_tool = 0L;
@@ -35,9 +31,6 @@ SceneGO::SceneGO(QObject *parent) : QGraphicsScene(parent), Messager()
     this->_viewGO = (ViewGO*)parent;
 }
 
-/**
- * Destructor.
- */
 SceneGO::~SceneGO()
 {
     this->Messager::~Messager();
@@ -61,19 +54,11 @@ SceneGO::~SceneGO()
     }
 }
 
-/**
- * Listen to tool selection message.
- * @param controller The message controller.
- */
 void SceneGO::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
 }
 
-/**
- * The message event.
- * @param message The detail of the message.
- */
 void SceneGO::messageEvent(QSharedPointer<Message> message)
 {
     QKeyEvent *event = 0L;
@@ -211,10 +196,6 @@ bool SceneGO::tryOpen(QDomElement &root)
     return flag;
 }
 
-/**
- * Select the type of the tool.
- * @param The type of tool. @see DefinationToolType
- */
 void SceneGO::selectTool(int type)
 {
     if (this->_tool)
@@ -235,10 +216,6 @@ void SceneGO::selectTool(int type)
     }
 }
 
-/**
- * Key press event.
- * @param event Key event.
- */
 void SceneGO::keyPressEvent(QKeyEvent *event)
 {
     if (this->_tool)
@@ -248,10 +225,6 @@ void SceneGO::keyPressEvent(QKeyEvent *event)
     this->QGraphicsScene::keyPressEvent(event);
 }
 
-/**
- * Key release event.
- * @param event Key event.
- */
 void SceneGO::keyReleaseEvent(QKeyEvent *event)
 {
     if (this->_tool)
@@ -261,10 +234,6 @@ void SceneGO::keyReleaseEvent(QKeyEvent *event)
     this->QGraphicsScene::keyReleaseEvent(event);
 }
 
-/**
- * Mouse double click event.
- * @param event Mouse event.
- */
 void SceneGO::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_tool)
@@ -274,10 +243,6 @@ void SceneGO::mouseDoubleClickEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseDoubleClickEvent(event);
 }
 
-/**
- * Mouse move event.
- * @param event Mouse event.
- */
 void SceneGO::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_tool)
@@ -287,10 +252,6 @@ void SceneGO::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseMoveEvent(event);
 }
 
-/**
- * Mouse press event.
- * @param event Mouse event.
- */
 void SceneGO::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_tool)
@@ -300,10 +261,6 @@ void SceneGO::mousePressEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mousePressEvent(event);
 }
 
-/**
- * Mouse release event.
- * @param event Mouse event.
- */
 void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_tool)
@@ -314,10 +271,6 @@ void SceneGO::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseReleaseEvent(event);
 }
 
-/**
- * Generate a GO graph based on the current scene.
- * @return The GO graph.
- */
 GOGraph* SceneGO::generatorGOGraph()
 {
     GOGraph *graph = new GOGraph();
@@ -379,9 +332,6 @@ GOGraph* SceneGO::generatorGOGraph()
     return graph;
 }
 
-/**
- * Analysis and generate results.
- */
 void SceneGO::analysisProbability(const QString filePath)
 {
     GOGraph *graph = this->generatorGOGraph();

@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR18_H
 #define GOMARKOVOPERATOR18_H
-/**
- * 备用门。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class RungeKuttaMarkov18;

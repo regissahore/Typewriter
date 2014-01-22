@@ -4,9 +4,6 @@
 
 //#define DEBUG
 
-/**
- * 初始化窗体。
- */
 DockMessage::DockMessage(QWidget *parent) : QDockWidget(parent), Messager()
 {
     this->setWindowTitle(tr("Message"));
@@ -25,10 +22,6 @@ DockMessage::DockMessage(QWidget *parent) : QDockWidget(parent), Messager()
     this->setWidget(tabWidget);
 }
 
-/**
- * 绑定消息。
- * @param controller 消息控制器。
- */
 void DockMessage::bindMessage(MessageController *controller)
 {
 #ifdef DEBUG

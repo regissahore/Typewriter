@@ -1,9 +1,5 @@
 #ifndef GOMARKOVEQUIVALENT_H
 #define GOMARKOVEQUIVALENT_H
-/**
- * The equivalent in the GO Markov Repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "identifieditem.h"
 #include "domitem.h"

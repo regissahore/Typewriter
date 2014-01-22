@@ -1,9 +1,5 @@
 #ifndef ITEMGOMARKOVCHART_H
 #define ITEMGOMARKOVCHART_H
-/**
- * The chart for displaying the result of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QList>
 #include "itemdrawable.h"
 #include "doublevector.h"

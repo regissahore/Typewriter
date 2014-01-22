@@ -1,10 +1,5 @@
 #ifndef TOOLGOSELECT_H
 #define TOOLGOSELECT_H
-/**
- * The select tool of GO graph.
- * Select multiple items.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "toolgoabstract.h"
 #include "itemselection.h"
 

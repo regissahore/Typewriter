@@ -1,9 +1,5 @@
 #ifndef TOOLGOSIGNAL_H
 #define TOOLGOSIGNAL_H
-/**
- * The signal tool of GO graph.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "toolgoabstract.h"
 
 class ItemGOSignal;

@@ -1,9 +1,5 @@
 #ifndef GOOPERATOR_H
 #define GOOPERATOR_H
-/**
- * The GO operator model.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "identifieditem.h"
 #include "typeditem.h"

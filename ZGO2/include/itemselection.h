@@ -1,9 +1,5 @@
 #ifndef ITEMSELECTION_H
 #define ITEMSELECTION_H
-/**
- * A rectangle whose border is dotted.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QPainter>
 #include "itemmoveable.h"
 

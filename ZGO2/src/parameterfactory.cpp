@@ -9,11 +9,6 @@
 #include "parametergomarkovcommoncause2.h"
 #include "parametergomarkovchart.h"
 
-/**
- * Produce a abstract parameter widget.
- * @param type @see DefinationEditorSelectionType
- * @return Returns empty parameter widget if the type does not exist.
- */
 ParameterAbstract* ParameterFactory::produce(int type)
 {
     ParameterAbstract* parameter = 0L;

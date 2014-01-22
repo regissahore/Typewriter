@@ -1,9 +1,5 @@
 #ifndef GOMARKOVANALYSIS_H
 #define GOMARKOVANALYSIS_H
-/**
- * The analysis for GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "goanalysis.h"
 #include "doublevector.h"
 

@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR22B_H
 #define GOMARKOVOPERATOR22B_H
-/**
- *
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator22.h"
 
 class GOMarkovOperator22B : public GOMarkovOperator22

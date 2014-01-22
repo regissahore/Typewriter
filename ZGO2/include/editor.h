@@ -1,10 +1,5 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-/**
- * 编辑器的总体，提供编辑器的管理。
- * 注意：编辑器应该最后加载。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include <QWidget>
 #include <QTabWidget>

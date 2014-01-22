@@ -10,10 +10,6 @@
 #include "viewgo.h"
 #include "editorgo.h"
 
-/**
- * Constructor. The protected variable _GOOperator should be initialized and added to the scene.
- * @param sceneGO The SceneGO entity.
- */
 ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
@@ -22,9 +18,6 @@ ToolGOOperator::ToolGOOperator(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
-/**
- * Delete the operator if the initial process is canceled.
- */
 ToolGOOperator::~ToolGOOperator()
 {
     if (this->_GOOperator != 0L)
@@ -178,10 +171,6 @@ void ToolGOOperator::activate(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Move the operator for a suitable position.
- * @param event Mouse event.
- */
 void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_GOOperator != 0L)
@@ -200,10 +189,6 @@ void ToolGOOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Put down the operator and set tool to pointer.
- * @param event Mouse event.
- */
 void ToolGOOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_GOOperator != 0L)
@@ -240,9 +225,6 @@ void ToolGOOperator::keyReleaseEvent(QKeyEvent *event)
 }
 
 
-/**
- * Get the input number of the GO model.
- */
 bool ToolGOOperator::getInputNumber()
 {
     DialogIntegerInput *dialog = new DialogIntegerInput(this->sceneGO()->viewGO()->editor());
@@ -268,9 +250,6 @@ bool ToolGOOperator::getInputNumber()
 }
 
 
-/**
- * Get the output number of the GO model.
- */
 bool ToolGOOperator::getOutputNumber()
 {
     DialogIntegerInput *dialog = new DialogIntegerInput(this->sceneGO()->viewGO()->editor());

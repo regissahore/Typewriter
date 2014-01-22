@@ -1,9 +1,5 @@
 #ifndef GOMAINWINDOW_H
 #define GOMAINWINDOW_H
-/**
- * 程序的主窗口。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QSettings>
 #include <QMainWindow>
 #include "messager.h"

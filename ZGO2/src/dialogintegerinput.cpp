@@ -1,9 +1,5 @@
 #include "dialogintegerinput.h"
 
-/**
- * Constructor.
- * @param parent The parent widget.
- */
 DialogIntegerInput::DialogIntegerInput(QWidget *parent) : QDialog(parent)
 {
     QVBoxLayout *vBoxLayout = new QVBoxLayout(this);
@@ -29,19 +25,11 @@ DialogIntegerInput::DialogIntegerInput(QWidget *parent) : QDialog(parent)
     hBoxLayout->addWidget(cancelButton);
 }
 
-/**
- * Set the display text.
- * @param text The text to be displayed.
- */
 void DialogIntegerInput::setText(const QString text)
 {
     this->_textLabel->setText(text);
 }
 
-/**
- * Get the spinbox of integer input.
- * @return QSpinBox.
- */
 QSpinBox* DialogIntegerInput::integerInput() const
 {
     return this->_integerInput;

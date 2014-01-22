@@ -1,9 +1,5 @@
 #ifndef RUNGEKUTTAMARKOV18_H
 #define RUNGEKUTTAMARKOV18_H
-/**
- * Runge-Kutta法解18的方程。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QObject>
 #include "doublevector.h"
 

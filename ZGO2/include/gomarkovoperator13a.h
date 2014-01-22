@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR13A_H
 #define GOMARKOVOPERATOR13A_H
-/**
- * 多路输入输出器"*"。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator13.h"
 
 class GOMarkovOperator13A : public GOMarkovOperator13

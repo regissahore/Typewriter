@@ -1,9 +1,5 @@
 #ifndef ITEMGOMARKOVCOMMONCAUSE2_H
 #define ITEMGOMARKOVCOMMONCAUSE2_H
-/**
- * Markov系统共因失效。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemmoveable.h"
 
 class GOMarkovCommonCause;

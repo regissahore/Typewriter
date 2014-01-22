@@ -1,9 +1,5 @@
 #ifndef SCENEGOMARKOVCHART_H
 #define SCENEGOMARKOVCHART_H
-/**
- * The scene to show the result chart of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QGraphicsScene>
 
 class ItemArrow;

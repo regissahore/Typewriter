@@ -1,37 +1,21 @@
 #include "itemarrow.h"
 
-/**
- * 构造函数。
- */
 ItemArrow::ItemArrow(QGraphicsItem *parent) : ItemDrawable(parent)
 {
     this->setIsShowArrow(true);
 }
 
-/**
- * 获得终止位置。
- * @return 终止位置。
- */
 const QPoint ItemArrow::end() const
 {
     return this->_end;
 }
 
-/**
- * 设置终止位置。
- * @param end 终止位置。
- */
 void ItemArrow::setEnd(const QPoint &end)
 {
     this->_end.setX(end.x());
     this->_end.setY(end.y());
 }
 
-/**
- * Set the end position of the arrow.
- * @param x x position.
- * @param y y position.
- */
 void ItemArrow::setEnd(const int x, const int y)
 {
     this->_end.setX(x);
@@ -40,10 +24,6 @@ void ItemArrow::setEnd(const int x, const int y)
     this->prepareGeometryChange();
 }
 
-/**
- * Get the end position in scene coordinate.
- * @return End position.
- */
 QPoint ItemArrow::sceneEnd()
 {
     return QPoint(this->pos().x() + this->end().x(),
@@ -65,12 +45,6 @@ QRectF ItemArrow::boundingRect() const
     return QRectF(0, 0, this->end().x(), this->end().y());
 }
 
-/**
- * 绘制箭头。
- * @param painter 画笔。
- * @param item 配置信息。
- * @param widget 绘制窗体。
- */
 void ItemArrow::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item);

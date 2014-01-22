@@ -1,9 +1,5 @@
 #ifndef ITEMGOOPERATOR_H
 #define ITEMGOOPERATOR_H
-/**
- * The basic moveable GO operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "itemmoveable.h"
 

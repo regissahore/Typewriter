@@ -5,10 +5,6 @@
 #include "messagefactory.h"
 #include "itemgofactory.h"
 
-/**
- * Set the graphics drag mode to pointer.
- * @param sceneGO The SceneGO entity.
- */
 ToolGOPointer::ToolGOPointer(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
 {
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
@@ -16,10 +12,6 @@ ToolGOPointer::ToolGOPointer(SceneGO *sceneGO) : ToolGOAbstract(sceneGO)
     this->setMoving(false);
 }
 
-/**
- * Select a item if there exist one.
- * @param Mouse event.
- */
 void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
     this->_item = 0L;
@@ -51,10 +43,6 @@ void ToolGOPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
 }
 
 
-/**
- * Move the item if one item is selected.
- * @param Mouse event.
- */
 void ToolGOPointer::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_moving)
@@ -63,10 +51,6 @@ void ToolGOPointer::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Stop moving if it is moving.
- * @param event Mouse event.
- */
 void ToolGOPointer::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
     if (this->_moving)
@@ -77,10 +61,6 @@ void ToolGOPointer::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * Set if the item is moving, it will set the cursor at the same time.
- * @param value The boolean value.
- */
 void ToolGOPointer::setMoving(bool value)
 {
     this->_moving = value;
@@ -94,10 +74,6 @@ void ToolGOPointer::setMoving(bool value)
     }
 }
 
-/**
- * Key release event.
- * @param event Key event.
- */
 void ToolGOPointer::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete)

@@ -1,9 +1,5 @@
 #ifndef GOMARKOVGRAPH_H
 #define GOMARKOVGRAPH_H
-/**
- * The GO graph model for GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gograph.h"
 #include "doublevector.h"
 

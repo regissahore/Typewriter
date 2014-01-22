@@ -10,10 +10,6 @@
 #include "gooutput.h"
 using namespace std;
 
-/**
- * Constructor.
- * @param parent The parent graphics item.
- */
 ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
 {
     this->_inputArrows = new QVector<ItemArrow*>();
@@ -31,9 +27,6 @@ ItemGOOperator::ItemGOOperator(QGraphicsItem *parent) : ItemMoveable(parent)
     this->setIsDrawName(false);
 }
 
-/**
- * Destructor.
- */
 ItemGOOperator::~ItemGOOperator()
 {
     this->_inputArrows->clear();
@@ -56,19 +49,11 @@ void ItemGOOperator::setModelType(const int type)
     this->setModel(this->_model);
 }
 
-/**
- * 获得GO操作符数据模型。
- * @return 数据模型。
- */
 GOOperator* ItemGOOperator::model() const
 {
     return this->_model;
 }
 
-/**
- * 设置GO操作符数据模型。
- * @param model 数据模型。
- */
 void ItemGOOperator::setModel(GOOperator *model)
 {
     this->_model = model;
@@ -172,10 +157,6 @@ void ItemGOOperator::setModel(GOOperator *model)
     this->prepareGeometryChange();
 }
 
-/**
- * 获得边界。
- * @return 边界。
- */
 QRectF ItemGOOperator::boundingRect() const
 {
     int num = 1;
@@ -344,10 +325,6 @@ void ItemGOOperator::verticalFlip()
     this->prepareGeometryChange();
 }
 
-/**
- * Start moving the item.
- * @param event Mouse event.
- */
 void ItemGOOperator::move(QGraphicsSceneMouseEvent *event)
 {
     this->ItemMoveable::move(event);
@@ -358,12 +335,6 @@ void ItemGOOperator::move(QGraphicsSceneMouseEvent *event)
     }
 }
 
-/**
- * 绘制图形。
- * @param painter 画笔。
- * @param item 配置。
- * @param widget 父窗体。
- */
 void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget)
 {
     Q_UNUSED(item);
@@ -411,30 +382,18 @@ void ItemGOOperator::paint(QPainter *painter, const QStyleOptionGraphicsItem *it
     }
 }
 
-/**
- * Get the input position.
- * @param index The input index.
- */
 QPoint ItemGOOperator::getInputPosition(int index)
 {
     return QPoint(this->_inputArrows->at(index)->pos().x(),
                   this->_inputArrows->at(index)->pos().y());
 }
 
-/**
- * Get the sub input position.
- * @param index The sub input index.
- */
 QPoint ItemGOOperator::getSubInputPosition(int index)
 {
     return QPoint(this->_subInputArrows->at(index)->pos().x(),
                   this->_subInputArrows->at(index)->pos().y());
 }
 
-/**
- * Get the output position.
- * @param index The output index.
- */
 QPoint ItemGOOperator::getOutputPosition(int index)
 {
     return QPoint(this->_outputArrows->at(index)->pos().x() + this->_outputArrows->at(index)->end().x(),
@@ -468,12 +427,6 @@ QVector<QVector<ItemGOSignal*>*>* ItemGOOperator::output() const
     return this->_outputSignal;
 }
 
-/**
- * Set the signal to one input or output.
- * @param signal The GO signal.
- * @param type The connection type. @see DefinationGOType
- * @param index The index of the connection.
- */
 void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
 {
     switch (type)
@@ -501,12 +454,6 @@ void ItemGOOperator::setSignal(ItemGOSignal *signal, int type, int index)
     }
 }
 
-/**
- * Remove the signal to one input or output.
- * @param signal The GO signal.
- * @param type The connection type. @see DefinationGOType
- * @param index The index of the connection.
- */
 void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
 {
     switch (type)
@@ -540,10 +487,6 @@ void ItemGOOperator::removeSignal(ItemGOSignal *signal, int type, int index)
     }
 }
 
-/**
- * Get all signals connected to the operator.
- * @return The vector of signal.
- */
 QList<ItemGOSignal *> ItemGOOperator::getConnectedSignals() const
 {
     QList<ItemGOSignal*> signal;

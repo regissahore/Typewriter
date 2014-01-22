@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR22A_H
 #define GOMARKOVOPERATOR22A_H
-/**
- * m位n通阀操作符。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator22.h"
 
 class GOMarkovOperator22A : public GOMarkovOperator22

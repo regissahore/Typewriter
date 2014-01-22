@@ -6,10 +6,6 @@
 #include "editorwebview.h"
 #include "editorgomarkovchart.h"
 
-/**
- * 生成编辑器的实例。
- * @return 编辑器，如果类别不存在返回空指针。
- */
 EditorAbstract *EditorFactory::produce(int type)
 {
     EditorAbstract *editor = 0L;

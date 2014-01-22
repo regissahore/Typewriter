@@ -1,9 +1,5 @@
 #ifndef RUNGEKUTTABREAKDOWN4_H
 #define RUNGEKUTTABREAKDOWN4_H
-/**
- * Runge-Kutta法解三故障模式的方程。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QObject>
 #include "doublevector.h"
 

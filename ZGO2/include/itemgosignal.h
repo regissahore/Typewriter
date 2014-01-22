@@ -1,10 +1,5 @@
 #ifndef ITEMGOSIGNAL_H
 #define ITEMGOSIGNAL_H
-/**
- * The signal of the GO graph.
- * The signal should be deleted before the deleting operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemdrawable.h"
 #include "domitem.h"
 #include "identifieditem.h"

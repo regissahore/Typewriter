@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR_H
 #define GOMARKOVOPERATOR_H
-/**
- * The operator model for GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "gooperator.h"
 #include "doublevector.h"

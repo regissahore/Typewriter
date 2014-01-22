@@ -1,9 +1,5 @@
 #ifndef GOMARKOVCHARTDATA_H
 #define GOMARKOVCHARTDATA_H
-/**
- * The record of markov analysis result.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "doublevector.h"
 

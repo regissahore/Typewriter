@@ -5,10 +5,6 @@
 #include "messagefactory.h"
 #include "definationtooltype.h"
 
-/**
- * 构造函数。
- * @param parent 父窗体。
- */
 EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
 {
     this->_view = new ViewGO(this);
@@ -21,10 +17,6 @@ EditorGO::EditorGO(QWidget *parent) : EditorAbstract(parent)
     this->_suffix = "go";
 }
 
-/**
- * Bind message.
- * @param controller The message controller.
- */
 void EditorGO::bindMessage(MessageController *controller)
 {
     this->EditorAbstract::bindMessage(controller);

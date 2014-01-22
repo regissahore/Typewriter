@@ -4,10 +4,6 @@
 #include "editorabstract.h"
 #include "globalconfig.h"
 
-/**
- * 构造函数。
- * @param parent 父窗体。
- */
 Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
 {
     // 初始化TabWidget。
@@ -29,10 +25,6 @@ Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
     this->_tabWidget->addTab(editor, editor->name());*/
 }
 
-/**
- * 尝试保存所有文件。
- * @return 如果成功返回true，否则返回false。
- */
 bool Editor::trySaveAll()
 {
     for (int i = 0; i < this->_editors->size(); ++i)
@@ -45,10 +37,6 @@ bool Editor::trySaveAll()
     return true;
 }
 
-/**
- * 尝试关闭所有文件。
- * @return 如果成功返回true，否则返回false。
- */
 bool Editor::tryCloseAll()
 {
     while (this->_tabWidget->count() > 0)
@@ -61,11 +49,6 @@ bool Editor::tryCloseAll()
     return true;
 }
 
-/**
- * 关闭指定的页面。
- * @param index 页面的索引。
- * @return 如果成功返回true，否则返回false。
- */
 bool Editor::tryCloseTab(int index)
 {
     if (this->_editors->size() > 0)
@@ -80,10 +63,6 @@ bool Editor::tryCloseTab(int index)
     return false;
 }
 
-/**
- * 编辑器变动事件。
- * @param index 编辑器的索引。
- */
 void Editor::currentChange(int index)
 {
     if (this->_editors->size() > 0)
@@ -111,10 +90,6 @@ void Editor::currentChange(int index)
     }
 }
 
-/**
- * 绑定消息。
- * @param controller 控制器。
- */
 void Editor::bindMessage(MessageController *controller)
 {
     this->Messager::bindMessage(controller);
@@ -143,10 +118,6 @@ void Editor::bindMessage(MessageController *controller)
     currentChange(this->_tabWidget->currentIndex());
 }
 
-/**
- * 消息事件。
- * @param message 消息内容。
- */
 void Editor::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
@@ -202,9 +173,6 @@ void Editor::messageEvent(QSharedPointer<Message> message)
     }
 }
 
-/**
- * Create a new GO tab.
- */
 void Editor::createNewTab(int type)
 {
     EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(type);
@@ -214,9 +182,6 @@ void Editor::createNewTab(int type)
     this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
 }
 
-/**
- * Try open a file the editor is able to edit.
- */
 void Editor::tryOpen()
 {
     QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), GlobalConfig::getInstance()->lastestPath(), tr("GO Files(*.go *.gom);;HTML Files(*.html);;GO Chart(*.goc)"));

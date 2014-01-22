@@ -1,9 +1,5 @@
 #ifndef GRAPHICSVIEW_H
 #define GRAPHICSVIEW_H
-/**
- * The basic graphics view。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QWheelEvent>
 #include <QGraphicsView>
 

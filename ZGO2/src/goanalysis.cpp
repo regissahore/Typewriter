@@ -142,14 +142,6 @@ void GOAnalysis::calcAccumulativeProbability(GOOperator *op, QVector<GOOperator 
     }
 }
 
-/**
- * Whether there is a common signal in the operator's prev path.
- * @param op The operator.
- * @param index The output index of the operator.
- * @param commonOperator The operators of the common signals.
- * @param commonIndex The indexes of the common signals.
- * @return Returns true if the common signal is appeared, otherwise false.
- */
 bool GOAnalysis::isCommonSignalAppeared(GOOperator *op, int index, QVector<GOOperator *> commonOperator, QVector<int> commonIndex)
 {
     for (int i = 0; i < commonOperator.size(); ++i)
@@ -182,16 +174,6 @@ bool GOAnalysis::isCommonSignalAppeared(GOOperator *op, int index, QVector<GOOpe
     return false;
 }
 
-/**
- * Calculate the temp accumulative probability.
- * @param op The operator.
- * @param index The output index of the operator.
- * @param commonOperator The operators of the common signals.
- * @param commonIndex The indexes of the common signals.
- * @param accValues The set accumulative probability value of the common signal.
- * @param accIndex The current calculating accumulative probability index.
- * @return The function returns the negetive calculated value when the common signal is not appeared in the operator's parent path, otherwise returns the calculated temp accumulative probability.
- */
 double GOAnalysis::calcTempAccumulative(GOOperator *op, int index, QVector<GOOperator *> &commonOperator, QVector<int> &commonIndex, QVector<double> &accValues, int accIndex)
 {
     for (int i = 0; i < commonOperator.size(); ++i)
@@ -574,14 +556,6 @@ double GOAnalysis::calcTempAccumulativeType4(GOOperator *op, QVector<double> inp
     return -1.0;
 }
 
-/**
- * The function should never be used theoretically.
- * @param op
- * @param inputValues
- * @param outputValues
- * @param accIndex
- * @return The temp accumulative probability.
- */
 double GOAnalysis::calcTempAccumulativeType5(GOOperator *op, QVector<double> inputValues, QVector<double> subInputValues, int accIndex)
 {
     Q_UNUSED(inputValues);

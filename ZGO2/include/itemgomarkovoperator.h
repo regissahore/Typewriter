@@ -1,9 +1,5 @@
 #ifndef ITEMGOMARKOVOPERATOR_H
 #define ITEMGOMARKOVOPERATOR_H
-/**
- * The GO operator Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "itemgooperator.h"
 
 class ItemGOMarkovEquivalent;

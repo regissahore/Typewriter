@@ -1,9 +1,5 @@
 #ifndef DIALOGGOPROBABILITY_H
 #define DIALOGGOPROBABILITY_H
-/**
- * The dialog for editing the probablities of GO operators.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QDialog>
 #include <QList>
 #include <QModelIndex>

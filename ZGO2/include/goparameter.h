@@ -1,9 +1,5 @@
 #ifndef GOPARAMETER_H
 #define GOPARAMETER_H
-/**
- * Save the extend parameters for GO operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include <QVector>
 #include "domitem.h"
 

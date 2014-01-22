@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOOPERATOR_H
 #define PARAMETERGOOPERATOR_H
-/**
- * The parameter editor for GO operator.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parameterabstract.h"
 
 class QPushButton;

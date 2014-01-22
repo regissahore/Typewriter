@@ -1,9 +1,5 @@
 #ifndef OUTPUTCONSOLE_H
 #define OUTPUTCONSOLE_H
-/**
- * 用于显示分析过程的输出。
- * @author ZHG <CyberZHG@gmail.com>
- **/
 #include <QWidget>
 #include "messager.h"
 

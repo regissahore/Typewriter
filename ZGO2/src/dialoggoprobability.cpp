@@ -85,10 +85,6 @@ QString DialogGOProbability::getCurrentProbabilityString(int index)
     return QString("[%1] %2 " + this->_probabilityEdit->text()).arg(index).arg(this->_probabilitySpin->value());
 }
 
-/**
- * The model must be set before exec the dialog.
- * @param model The GOOperator.
- */
 void DialogGOProbability::setModel(GOOperator *model)
 {
     this->_model = model;
@@ -107,10 +103,6 @@ void DialogGOProbability::setModel(GOOperator *model)
     }
 }
 
-/**
- * Set if the number of status is editable.
- * @param The value is true when the number of status is unfixed.
- */
 void DialogGOProbability::setIsFixedNumber(bool value)
 {
     if (value)

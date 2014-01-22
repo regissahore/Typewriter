@@ -1,9 +1,5 @@
 #ifndef DEFINATIONEDITORSELECTIONTYPE_H
 #define DEFINATIONEDITORSELECTIONTYPE_H
-/**
- * 对编辑器选择内容的定义。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class DefinationEditorSelectionType
 {

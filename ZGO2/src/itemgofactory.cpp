@@ -11,11 +11,6 @@
 #include "itemgomarkovcommoncause.h"
 #include "itemgomarkovcommoncause2.h"
 
-/**
- * Produce a GO operator.
- * @param type @see GOOperatorFactory
- * @return The GO operator.
- */
 ItemGOOperator* ItemGOFactory::produceOperator(int type)
 {
     ItemGOOperator *item = new ItemGOOperator();
@@ -24,20 +19,12 @@ ItemGOOperator* ItemGOFactory::produceOperator(int type)
     return item;
 }
 
-/**
- * Produce a GO signal.
- * @return The GO signal.
- */
 ItemGOSignal* ItemGOFactory::produceSignal()
 {
     ItemGOSignal *item = new ItemGOSignal();
     return item;
 }
 
-/**
- * Delete a drawable item.
- * @param item Drawable item.
- */
 void ItemGOFactory::deleteItem(ItemDrawable *item)
 {
     if (item == 0L)
@@ -100,10 +87,6 @@ void ItemGOFactory::deleteItem(ItemDrawable *item)
     delete item;
 }
 
-/**
- * Delete drawable items.
- * @param items Drawable items.
- */
 void ItemGOFactory::deleteItems(QList<ItemDrawable*> items)
 {
     QList<ItemGOSignal*> allSignal;
@@ -182,10 +165,6 @@ void ItemGOFactory::deleteItems(QList<QGraphicsItem *> items)
     ItemGOFactory::deleteItems(drawableItems);
 }
 
-/**
- * Send the item selection message.
- * @param item The item.
- */
 void ItemGOFactory::sendSelectionMessage(Messager *messager, ItemDrawable *item)
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);

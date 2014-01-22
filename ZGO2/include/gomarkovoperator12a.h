@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR12A_H
 #define GOMARKOVOPERATOR12A_H
-/**
- * 状态分离器。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator12A : public GOMarkovOperator

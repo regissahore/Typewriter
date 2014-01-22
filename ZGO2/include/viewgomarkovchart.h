@@ -1,9 +1,5 @@
 #ifndef VIEWGOMARKOVCHART_H
 #define VIEWGOMARKOVCHART_H
-/**
- * The view to show the result chart of GO Markov repairable system.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "graphicsview.h"
 
 class SceneGOMarkovChart;

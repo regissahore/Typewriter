@@ -1,10 +1,5 @@
 #ifndef TOOLGOPOINTEREXTEND_H
 #define TOOLGOPOINTEREXTEND_H
-/**
- * The extended pointer tool, it is able to move the scene, move the item,
- * and connect GO operators with signal.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "toolgoabstract.h"
 
 class ItemGOSignal;

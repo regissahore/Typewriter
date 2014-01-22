@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOSIGNAL_H
 #define PARAMETERGOSIGNAL_H
-/**
- * The parameter editor for GO signal.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parameterabstract.h"
 
 class ParameterGOSignal : public ParameterAbstract

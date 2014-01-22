@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR11_H
 #define GOMARKOVOPERATOR11_H
-/**
- * M取K门。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator11 : public GOMarkovOperator

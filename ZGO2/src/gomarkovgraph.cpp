@@ -139,11 +139,6 @@ void GOMarkovGraph::calcAccumulativeProbability(double time)
     list.clear();
 }
 
-/**
- * Calculate the accumulative probability with the probability changed with the time.
- * @param totalTime The total time of the calculation.
- * @param count The time the calculation does.
- */
 GOMarkovChartData *GOMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
     QTime time;

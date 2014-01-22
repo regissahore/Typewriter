@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR16_H
 #define GOMARKOVOPERATOR16_H
-/**
- * 要求回复已导通元件。有停工相关模式。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator16 : public GOMarkovOperator

@@ -1,9 +1,5 @@
 #ifndef TYPEDITEM_H
 #define TYPEDITEM_H
-/**
- * 有类型的数据。
- * @author ZHG <CyberZHG@gmail.com>
- */
 
 class TypedItem
 {

@@ -60,10 +60,6 @@ void GOAccumulative::setAccumulative(int index, double value)
     }
 }
 
-/**
- * Return a numeric copy of the accumulative probability.
- * @return The numeric copy.
- */
 GOAccumulative* GOAccumulative::copy() const
 {
     GOAccumulative* acc = new GOAccumulative();

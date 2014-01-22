@@ -1,9 +1,5 @@
 #ifndef PARAMETERGOTEXT_H
 #define PARAMETERGOTEXT_H
-/**
- * The parameter editor for GO text.
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "parameterabstract.h"
 
 class QLineEdit;

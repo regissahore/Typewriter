@@ -1,9 +1,5 @@
 #ifndef GOMARKOVOPERATOR10_H
 #define GOMARKOVOPERATOR10_H
-/**
- * 与门。有停工相关模式。
- * @author ZHG <CyberZHG@gmail.com>
- */
 #include "gomarkovoperator.h"
 
 class GOMarkovOperator10 : public GOMarkovOperator
