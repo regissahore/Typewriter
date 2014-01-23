@@ -95,6 +95,8 @@ function drawScripts() {
 
 function drawLines() {
     treeContext.lineWidth = 2.0;
+    treeContext.fillStyle = "rgba(0, 0, 0, 0)";
+    treeContext.strokeStyle = '#000000';
     if (treeIsAnimation) {
         treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
         for (var i in treeLines[treeIndex]) {
