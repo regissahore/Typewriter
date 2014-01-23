@@ -376,3 +376,5 @@ SOURCES += \
     src\view\ViewGo.cpp \
     src\view\ViewGoMarkov.cpp \
     src\view\ViewGoMarkovChart.cpp
+
+OTHER_FILES +=

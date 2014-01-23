@@ -14,7 +14,7 @@ GoMainWindow::GoMainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     this->_close = false;
-    this->setGeometry(100, 100, 1024, 768);
+    this->setGeometry(10, 10, 1024, 768);
     this->showMaximized();
     this->_messageController = new MessageController();
     this->initDock();

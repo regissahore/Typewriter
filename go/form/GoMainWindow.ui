@@ -28,13 +28,13 @@
      <number>0</number>
     </property>
     <property name="leftMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="topMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="rightMargin">
-     <number>0</number>
+     <number>1</number>
     </property>
     <property name="bottomMargin">
      <number>0</number>
@@ -50,8 +50,31 @@
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>120</height>
+        <height>130</height>
        </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QTabBar::tab { 
+    height: 35px; 
+    width: 100px;
+    font-size:  14px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+QTabBar::tab:selected {
+    border-left: 1px solid rgb(184, 201, 219);
+    border-right: 1px solid rgb(184, 201, 219);
+    border-top: 1px solid rgb(184, 201, 219);
+    background-color: rgb(250, 250, 250);
+}
+QTabWidget::pane {
+    border: 1px solid rgb(184, 201, 219);
+    position: absolute;
+    top: -0.1em;
+    background-color: rgb(255, 255, 255);
+}
+
+</string>
       </property>
       <property name="currentIndex">
        <number>0</number>
@@ -834,8 +857,6 @@
         <number>0</number>
        </property>
       </layout>
-      <zorder>tabWidget</zorder>
-      <zorder>tabWidget</zorder>
      </widget>
     </item>
    </layout>
