@@ -161,6 +161,24 @@ bool isIntersect(const Point &point ,const Segment &segment)
     return false;
 }
 
+bool inIntersect(const Segment &a, const Segment &b)
+{
+    return dblcmp(cross(a.u, a.v, b.u)) * dblcmp(cross(a.u, a.v, b.v)) <= 0 &&
+        dblcmp(cross(b.u, b.v, a.u)) * dblcmp(cross(b.u, b.v, a.v)) <= 0;
+}
+
+Point intersectPoint(const Segment &a, const Segment &b)
+{
+    double area1 = cross(b.u, b.v, a.u);
+    double area2 = cross(b.u, b.v, a.v);
+    double area = area1 + area2;
+    double scale = area1 / area;
+    Point c;
+    c.x = a.u.x + (b.u.x - a.u.x) * scale;
+    c.y = a.u.y + (b.u.y - a.u.y) * scale;
+    return c;
+}
+
 struct Triangle
 {
     Point a;

@@ -164,10 +164,21 @@ desc.push([
 "点到线段的距离要考虑垂线是否在线段上。"
 ]);
 
-show.push(function() {
-});
+show.push(function() {});
 
 code.push("#include <cmath> \n#include <cstdio> \n#include <cstring> \n#include <vector> \n#include <algorithm> \nusing namespace std; \nconst double EPS = 1e-8; \nconst double PI = acos(-1.0); \n \nint dblcmp(double x) \n{ \n    if (fabs(x) < EPS) \n    { \n        return 0; \n    } \n    return x > 0 ? 1 : -1; \n} \n \nstruct Point \n{ \n    double x, y; \n    inline double norm() const \n    { \n        return sqrt(x * x + y * y); \n    } \n}; \n \nPoint operator -(const Point &a, const Point &b) \n{ \n    Point c; \n    c.x = a.x - b.x; \n    c.y = a.y - b.y; \n    return c; \n} \n \nstruct Line \n{ \n    double a, b, c; \n}; \n \nstruct Segment \n{ \n    Point u, v; \n    Line line() const \n    { \n        Line line; \n        line.a = u.y - v.y; \n        line.b = v.x - u.x; \n        line.c = u.x * v.y - v.x * u.y; \n        return line; \n    } \n}; \n \ndouble dist(const Point &a, const Point &b) \n{ \n    return (a - b).norm(); \n} \n \ndouble dist(const Point &point, const Line &line) \n{ \n    return fabs(line.a * point.x + line.b * point.y + line.c) / sqrt(line.a * line.a + line.b * line.b); \n} \n \nbool isIntersect(const Point &point ,const Line &line) \n{ \n    return dblcmp(line.a * point.x + line.b * point.y + line.c) == 0; \n} \n \ndouble dist(const Point &point, const Segment &segment) \n{ \n    return max(min(dist(point, segment.u), dist(point, segment.v)), dist(point, segment.line())); \n} \n \nbool isIntersect(const Point &point ,const Segment &segment) \n{ \n    if (isIntersect(point, segment.line())) \n    { \n        if (dblcmp(segment.u.y - segment.v.y) == 0) \n        { \n            return point.x > min(segment.u.x, segment.v.x) && point.x < max(segment.u.x, segment.v.x); \n        } \n        return point.y > min(segment.u.y, segment.v.y) && point.y < max(segment.u.y, segment.v.y); \n    } \n    return false; \n} \n \nint main() \n{ \n    return 0; \n} \n");
+
+head.push("线段与线段的关系");
+
+desc.push([
+"线段是否相交由叉乘来判定，如果每一个线段的两个端点都处于另一个线段所处直线的两边，则可以认为线段相交。",
+"当一个线段的端点在另外一个线段上，如果认为这种情况也为相交，则这时的相交判定为严格相交。是否使用严格相交根据实际题目进行选择。",
+"线段的交点用面积的比值获得。"
+]);
+
+show.push(function() {});
+
+code.push("#include <cmath> \n#include <cstdio> \n#include <cstring> \n#include <vector> \n#include <algorithm> \nusing namespace std; \nconst double EPS = 1e-8; \nconst double PI = acos(-1.0); \n \nint dblcmp(double x) \n{ \n    if (fabs(x) < EPS) \n    { \n        return 0; \n    } \n    return x > 0 ? 1 : -1; \n} \n \nstruct Point \n{ \n    double x, y; \n    inline double norm() const \n    { \n        return sqrt(x * x + y * y); \n    } \n}; \n \nPoint operator +(const Point &a, const Point &b) \n{ \n    Point c; \n    c.x = a.x + b.x; \n    c.y = a.y + b.y; \n    return c; \n} \n \nPoint operator -(const Point &a, const Point &b) \n{ \n    Point c; \n    c.x = a.x - b.x; \n    c.y = a.y - b.y; \n    return c; \n} \n \ndouble operator *(const Point &a, const Point &b) \n{ \n    return a.x * b.x + a.y * b.y; \n} \n \ndouble operator ^(const Point &a, const Point &b) \n{ \n    return a.x * b.y - a.y * b.x; \n} \n \nbool operator ==(const Point &a, const Point &b) \n{ \n    return dblcmp(a.x - b.x) == 0 && dblcmp(a.y - b.y) == 0; \n} \n \ndouble dist(const Point &a, const Point &b) \n{ \n    return (a - b).norm(); \n} \n \ndouble cross(const Point &a, const Point &b, const Point &o) \n{ \n    return (a - o) ^ (b - o); \n} \n \nstruct Segment \n{ \n    Point u, v; \n}; \n \nbool inIntersect(const Segment &a, const Segment &b) \n{ \n    return dblcmp(cross(a.u, a.v, b.u)) * dblcmp(cross(a.u, a.v, b.v)) <= 0 && \n        dblcmp(cross(b.u, b.v, a.u)) * dblcmp(cross(b.u, b.v, a.v)) <= 0; \n} \n \nPoint intersectPoint(const Segment &a, const Segment &b) \n{ \n    double area1 = cross(b.u, b.v, a.u); \n    double area2 = cross(b.u, b.v, a.v); \n    double area = area1 + area2; \n    double scale = area1 / area; \n    Point c; \n    c.x = a.u.x + (b.u.x - a.u.x) * scale; \n    c.y = a.u.y + (b.u.y - a.u.y) * scale; \n    return c; \n} \n \nint main() \n{ \n    return 0; \n} \n");
 
 window.onload = function() {
     setContent(head, desc, show, code);
