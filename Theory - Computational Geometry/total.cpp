@@ -97,6 +97,16 @@ double angle(const Point &a, const Point &b, const Point &o)
 struct Line
 {
     double a, b, c;
+    Line()
+    {
+        a = b = c = 0.0;
+    }
+    Line(double a, double b, double c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
     inline void input()
     {
         scanf("%lf %lf %lf", &a, &b, &c);
@@ -117,9 +127,40 @@ bool isIntersect(const Point &point ,const Line &line)
     return dblcmp(line.a * point.x + line.b * point.y + line.c) == 0;
 }
 
+
+bool isParallel(const Line &a, const Line &b)
+{
+    return dblcmp(a.a * b.b - a.b * b.a) == 0;
+}
+
+bool isVertical(const Line &a, const Line &b)
+{
+    return dblcmp(a.a * b.b + a.b * b.a) == 0;
+}
+
+Point intersectPoint(const Line &a, const Line &b)
+{
+    double a1 = a.a, b1 = a.b, c1 = a.c;
+    double a2 = b.a, b2 = b.b, c2 = b.c;
+    Point c;
+    c.x = (b1 * c2 - b2 * c1) / (a1 * b2 - a2 * b1);
+    c.y = -(a1 * c2 - a2 * c1) / (a1 * b2 - a2 * b1);
+    return c;
+}
+
 struct Segment
 {
     Point u, v;
+    Segment()
+    {
+    }
+    Segment(double x1, double y1, double x2, double y2)
+    {
+        u.x = x1;
+        u.y = y1;
+        v.x = x2;
+        v.y = y2;
+    }
     inline void input()
     {
         u.input();
@@ -169,13 +210,13 @@ bool inIntersect(const Segment &a, const Segment &b)
 
 Point intersectPoint(const Segment &a, const Segment &b)
 {
-    double area1 = cross(b.u, b.v, a.u);
-    double area2 = cross(b.u, b.v, a.v);
+    double area1 = fabs(cross(b.u, b.v, a.u));
+    double area2 = fabs(cross(b.u, b.v, a.v));
     double area = area1 + area2;
     double scale = area1 / area;
     Point c;
-    c.x = a.u.x + (b.u.x - a.u.x) * scale;
-    c.y = a.u.y + (b.u.y - a.u.y) * scale;
+    c.x = a.u.x + (a.v.x - a.u.x) * scale;
+    c.y = a.u.y + (a.v.y - a.u.y) * scale;
     return c;
 }
 

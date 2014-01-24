@@ -23,6 +23,10 @@ struct Point
     {
         return sqrt(x * x + y * y);
     }
+    inline void output() const
+    {
+        printf("%.3lf %.3lf\n", x, y);
+    }
 };
 
 Point operator +(const Point &a, const Point &b)
@@ -69,6 +73,16 @@ double cross(const Point &a, const Point &b, const Point &o)
 struct Segment
 {
     Point u, v;
+    Segment()
+    {
+    }
+    Segment(double x1, double y1, double x2, double y2)
+    {
+        u.x = x1;
+        u.y = y1;
+        v.x = x2;
+        v.y = y2;
+    }
 };
 
 bool inIntersect(const Segment &a, const Segment &b)
@@ -79,17 +93,20 @@ bool inIntersect(const Segment &a, const Segment &b)
 
 Point intersectPoint(const Segment &a, const Segment &b)
 {
-    double area1 = cross(b.u, b.v, a.u);
-    double area2 = cross(b.u, b.v, a.v);
+    double area1 = fabs(cross(b.u, b.v, a.u));
+    double area2 = fabs(cross(b.u, b.v, a.v));
     double area = area1 + area2;
     double scale = area1 / area;
     Point c;
-    c.x = a.u.x + (b.u.x - a.u.x) * scale;
-    c.y = a.u.y + (b.u.y - a.u.y) * scale;
+    c.x = a.u.x + (a.v.x - a.u.x) * scale;
+    c.y = a.u.y + (a.v.y - a.u.y) * scale;
     return c;
 }
 
 int main()
 {
+    Segment segment1(-6, -8, 9, 7);
+    Segment segment2(-4, 5, 8, -7.4);
+    intersectPoint(segment1, segment2).output();
     return 0;
 }
