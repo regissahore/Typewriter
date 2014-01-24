@@ -402,29 +402,108 @@ double triangleArea(double la, double lb, double lc)
     return sqrt(p * (p - la) * (p - lb) * (p - lc));
 }
 
+struct Rectangle
+{
+    double x, y;
+    double w, h;
+    Rectangle()
+    {
+        x = y = w = h = 0.0;
+    }
+    Rectangle(double x, double y, double w, double h)
+    {
+        this->x = x;
+        this->y = y;
+        this->w = w;
+        this->h = h;
+    }
+    inline void input()
+    {
+        scanf("%lf%lf%lf%lf", &x, &y, &w, &h);
+    }
+    inline void output()
+    {
+        printf("%.3lf %.3lf %.3lf %.3lf", x, y, w, h);
+    }
+    double left() const
+    {
+        return x;
+    }
+    double right() const
+    {
+        return x + w;
+    }
+    double top() const
+    {
+        return y;
+    }
+    double bottom() const
+    {
+        return y + h;
+    }
+    Point leftTop() const
+    {
+        return Point(left(), top());
+    }
+    Point rightTop() const
+    {
+        return Point(right(), top());
+    }
+    Point leftBottom() const
+    {
+        return Point(left(), bottom());
+    }
+    Point rightBottom() const
+    {
+        return Point(right(), bottom());
+    }
+    Segment toSegment() const
+    {
+        return Segment(leftTop(), rightBottom());
+    }
+};
+
+struct Circle
+{
+    Point o;
+    double radius;
+    Circle()
+    {
+        radius = 0.0;
+    }
+    Circle(double x, double y, double radius)
+    {
+        o.x = x;
+        o.y = y;
+        this->radius = radius;
+    }
+    Circle(const Point &o, double radius)
+    {
+        this->o = o;
+        this->radius = radius;
+    }
+    inline void input()
+    {
+        o.input();
+        scanf("%lf", &radius);
+    }
+    inline void output()
+    {
+        printf("%.3lf %.3lf %.3lf\n", o.x, o.y, radius);
+    }
+};
+
+double dist(const Circle &a, const Circle &b)
+{
+    return dist(a.o, b.o);
+}
+
+struct Polygon
+{
+    vector<Point> vertex;
+};
+
 int main()
 {
-    Triangle triangle1(-8, 5, -4, 3, -5, 9);
-    triangle1.medianA().output();
-    triangle1.medianB().output();
-    triangle1.medianC().output();
-    triangle1.centroid().output();
-    Triangle triangle2(8, 5, 4, 3, 5, 9);
-    triangle2.altitudeA().output();
-    triangle2.altitudeB().output();
-    triangle2.altitudeC().output();
-    triangle2.orthoCenter().output();
-    Triangle triangle3(-8, -5, -4, -3, -5, -9);
-    triangle3.perpendicularBisectorA().output();
-    triangle3.perpendicularBisectorB().output();
-    triangle3.perpendicularBisectorC().output();
-    triangle3.circumCenter().output();
-    printf("%lf\n", triangle3.circumscribedCircleRadius());
-    Triangle triangle4(8, -5, 4, -3, 5, -9);
-    triangle4.angleBisectorA().output();
-    triangle4.angleBisectorB().output();
-    triangle4.angleBisectorC().output();
-    triangle4.inCircle().output();
-    printf("%lf\n", triangle4.inscribedCircleRaidus());
     return 0;
 }

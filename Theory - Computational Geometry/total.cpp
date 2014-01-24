@@ -406,17 +406,101 @@ struct Rectangle
 {
     double x, y;
     double w, h;
-};
-
-struct Polygon
-{
-    vector<Point> vertex;
+    Rectangle()
+    {
+        x = y = w = h = 0.0;
+    }
+    Rectangle(double x, double y, double w, double h)
+    {
+        this->x = x;
+        this->y = y;
+        this->w = w;
+        this->h = h;
+    }
+    inline void input()
+    {
+        scanf("%lf%lf%lf%lf", &x, &y, &w, &h);
+    }
+    inline void output()
+    {
+        printf("%.3lf %.3lf %.3lf %.3lf", x, y, w, h);
+    }
+    double left() const
+    {
+        return x;
+    }
+    double right() const
+    {
+        return x + w;
+    }
+    double top() const
+    {
+        return y;
+    }
+    double bottom() const
+    {
+        return y + h;
+    }
+    Point leftTop() const
+    {
+        return Point(left(), top());
+    }
+    Point rightTop() const
+    {
+        return Point(right(), top());
+    }
+    Point leftBottom() const
+    {
+        return Point(left(), bottom());
+    }
+    Point rightBottom() const
+    {
+        return Point(right(), bottom());
+    }
+    Segment toSegment() const
+    {
+        return Segment(leftTop(), rightBottom());
+    }
 };
 
 struct Circle
 {
-    double x, y;
+    Point o;
     double radius;
+    Circle()
+    {
+        radius = 0.0;
+    }
+    Circle(double x, double y, double radius)
+    {
+        o.x = x;
+        o.y = y;
+        this->radius = radius;
+    }
+    Circle(const Point &o, double radius)
+    {
+        this->o = o;
+        this->radius = radius;
+    }
+    inline void input()
+    {
+        o.input();
+        scanf("%lf", &radius);
+    }
+    inline void output()
+    {
+        printf("%.3lf %.3lf %.3lf\n", o.x, o.y, radius);
+    }
+};
+
+double dist(const Circle &a, const Circle &b)
+{
+    return dist(a.o, b.o);
+}
+
+struct Polygon
+{
+    vector<Point> vertex;
 };
 
 int main()
