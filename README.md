@@ -35,3 +35,7 @@
 ## 2014年01月17日
 
 * 2014年寒假大连二十四中教学数据
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CyberZHG/zcoach/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
