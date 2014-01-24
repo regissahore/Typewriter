@@ -147,11 +147,7 @@ function printScript(script) {
     res += "<table cellspacing = 0>";
     for (var i = 0; i < script.length; ++i) {
         res += "<tr><td class = table_line >" + (i + 1) + "</td>";
-        if (i % 2 == 0) {
-            res += "<td class = table_code_even>";
-        } else {
-            res += "<td class = table_code_odd>";
-        }
+        res += "<td class = table_code>";
         res += writeScript(script[i]);
         res += "</td></tr>";
     }

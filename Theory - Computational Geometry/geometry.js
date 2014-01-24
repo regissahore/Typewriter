@@ -255,7 +255,7 @@ function header(text) {
 function content(text) {
     var div = document.getElementById("div_desc");
     var conent = document.createElement("div");
-    conent.innerHTML = text + "<br/><br/>";
+    conent.innerHTML = "<ul><li>" + text + "</li></ul>";
     div.appendChild(conent);
 }
 
@@ -278,7 +278,7 @@ function prev() {
 }
 
 function next() {
-    if (slideIndex < slideTotal) {
+    if (slideIndex < slideTotal - 1) {
         ++slideIndex;
     }
     slide();
