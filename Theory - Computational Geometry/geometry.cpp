@@ -19,21 +19,29 @@ int dblcmp(double x)
 struct Point
 {
     double x, y;
+    inline double norm() const
+    {
+        return sqrt(x * x + y * y);
+    }
 };
+
+Point operator -(const Point &a, const Point &b)
+{
+    Point c;
+    c.x = a.x - b.x;
+    c.y = a.y - b.y;
+    return c;
+}
 
 struct Line
 {
     double a, b, c;
-    inline void output()
-    {
-        printf("%.3lf %.3lf %.3lf\n", a, b, c);
-    }
 };
 
 struct Segment
 {
     Point u, v;
-    Line line()
+    Line line() const
     {
         Line line;
         line.a = u.y - v.y;
@@ -43,23 +51,40 @@ struct Segment
     }
 };
 
+double dist(const Point &a, const Point &b)
+{
+    return (a - b).norm();
+}
+
+double dist(const Point &point, const Line &line)
+{
+    return fabs(line.a * point.x + line.b * point.y + line.c) / sqrt(line.a * line.a + line.b * line.b);
+}
+
+bool isIntersect(const Point &point ,const Line &line)
+{
+    return dblcmp(line.a * point.x + line.b * point.y + line.c) == 0;
+}
+
+double dist(const Point &point, const Segment &segment)
+{
+    return max(min(dist(point, segment.u), dist(point, segment.v)), dist(point, segment.line()));
+}
+
+bool isIntersect(const Point &point ,const Segment &segment)
+{
+    if (isIntersect(point, segment.line()))
+    {
+        if (dblcmp(segment.u.y - segment.v.y) == 0)
+        {
+            return point.x > min(segment.u.x, segment.v.x) && point.x < max(segment.u.x, segment.v.x);
+        }
+        return point.y > min(segment.u.y, segment.v.y) && point.y < max(segment.u.y, segment.v.y);
+    }
+    return false;
+}
+
 int main()
 {
-    Segment segment;
-    segment.u.x = 5.0;
-    segment.u.y = 4.0;
-    segment.v.x = 4.0;
-    segment.v.y = 5.0;
-    segment.line().output();
-    segment.u.x = -3.0;
-    segment.u.y = -4.0;
-    segment.v.x = -3.0;
-    segment.v.y = 4.0;
-    segment.line().output();
-    segment.u.x = -3.0;
-    segment.u.y = -4.0;
-    segment.v.x = 3.0;
-    segment.v.y = -4.0;
-    segment.line().output();
     return 0;
 }

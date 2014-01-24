@@ -33,11 +33,11 @@ struct Point
     {
         scanf("%lf%lf", &x, &y);
     }
-    inline void output()
+    inline void output() const
     {
         printf("%.3lf %.3lf\n", x, y);
     }
-    inline double norm()
+    inline double norm() const
     {
         return sqrt(x * x + y * y);
     }
@@ -101,11 +101,21 @@ struct Line
     {
         scanf("%lf %lf %lf", &a, &b, &c);
     }
-    inline void output()
+    inline void output() const
     {
         printf("%.3lf %.3lf %.3lf\n", a, b, c);
     }
 };
+
+double dist(const Point &point, const Line &line)
+{
+    return fabs(line.a * point.x + line.b * point.y + line.c) / sqrt(line.a * line.a + line.b * line.b);
+}
+
+bool isIntersect(const Point &point ,const Line &line)
+{
+    return dblcmp(line.a * point.x + line.b * point.y + line.c) == 0;
+}
 
 struct Segment
 {
@@ -115,11 +125,11 @@ struct Segment
         u.input();
         v.input();
     }
-    inline void output()
+    inline void output() const
     {
         printf("%.3lf %.3lf %.3lf %.3lf\n", u.x, u.y, v.x, v.y);
     }
-    Line line()
+    Line line() const
     {
         Line line;
         line.a = u.y - v.y;
@@ -127,11 +137,29 @@ struct Segment
         line.c = u.x * v.y - v.x * u.y;
         return line;
     }
-    double length()
+    double length() const
     {
         return dist(u, v);
     }
 };
+
+double dist(const Point &point, const Segment &segment)
+{
+    return max(min(dist(point, segment.u), dist(point, segment.v)), dist(point, segment.line()));
+}
+
+bool isIntersect(const Point &point ,const Segment &segment)
+{
+    if (isIntersect(point, segment.line()))
+    {
+        if (dblcmp(segment.u.y - segment.v.y) == 0)
+        {
+            return point.x > min(segment.u.x, segment.v.x) && point.x < max(segment.u.x, segment.v.x);
+        }
+        return point.y > min(segment.u.y, segment.v.y) && point.y < max(segment.u.y, segment.v.y);
+    }
+    return false;
+}
 
 struct Triangle
 {

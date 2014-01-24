@@ -4,6 +4,7 @@ var canvasLength = 800;
 var arrowLength = 15;
 var textShift = 2;
 
+var headList;
 var descList;
 var showList;
 var codeList;
@@ -144,12 +145,6 @@ function drawPoint(context, point) {
     context.fill();
 }
 
-function drawPoints(context, points) {
-    for (var point in points) {
-        drawPoint(context, point);
-    }
-}
-
 function drawSegment(context, segment) {
     context.beginPath();
     context.lineWidth = 2;
@@ -157,12 +152,6 @@ function drawSegment(context, segment) {
     context.moveTo(getPointX(segment.u), getPointY(segment.u));
     context.lineTo(getPointX(segment.v), getPointY(segment.v));
     context.stroke();
-}
-
-function drawSegments(context, segments) {
-    for (var segment in segments) {
-        drawSegment(context, segment);
-    }
 }
 
 function drawLine(context, line) {
@@ -190,12 +179,6 @@ function drawLine(context, line) {
     }
 }
 
-function drawLines(context, lines) {
-    for (var line in lines) {
-        drawLine(context, line);
-    }
-}
-
 function drawPolygon(context, polygon) {
     context.beginPath();
     context.lineWidth = 2;
@@ -207,22 +190,10 @@ function drawPolygon(context, polygon) {
     context.stroke();
 }
 
-function drawPolygons(context, polygons) {
-    for (var polygon in polygons) {
-        drawPolygon(context, polygon);
-    }
-}
-
 function drawRectangle(context, rectangle) {
     context.lineWidth = 2;
     context.strokeStyle = '#CF0000';
     context.strokeRect(getX(rectangle.x), getY(rectangle.y), rectangle.width / 20 * canvasLength, rectangle.height / 20 * canvasLength);
-}
-
-function drawRectangles(context, rectangles) {
-    for (var rectangle in rectangles) {
-        drawRectangle(context, rectangle);
-    }
 }
 
 function drawCircle(context, circle) {
@@ -237,12 +208,6 @@ function drawCircle(context, circle) {
     context.fill();
 }
 
-function drawCircles(context, circles) {
-    for (var circle in circles) {
-        drawCircle(context, circle);
-    }
-}
-
 function header(text) {
     var div = document.getElementById("div_desc");
     div.innerHTML = "";
@@ -254,24 +219,52 @@ function header(text) {
 
 function content(text) {
     var div = document.getElementById("div_desc");
-    var conent = document.createElement("div");
-    conent.innerHTML = "<ul><li>" + text + "</li></ul>";
-    div.appendChild(conent);
+    var content = document.createElement("div");
+    content.innerHTML = "<ul>";
+    for (var i = 0; i < text.length; ++i) {
+        content.innerHTML += "<li>" + text[i] + "</li>";
+    }
+    content.innerHTML += "</ul>"
+    div.appendChild(content);
 }
 
 function slide() {
-    descList[slideIndex]();
-    var canvas = document.getElementById("canvas_show");
-    canvas.width = canvasLength;
-    canvas.height = canvasLength;
-    var context = canvas.getContext('2d');
-    showList[slideIndex](context);
-    var div = document.getElementById("div_code");
-    div.innerHTML = printScript(codeList[slideIndex]) + "<br/><br/>";
+    if (slideIndex == -1) {
+        var div = document.getElementById("div_desc");
+        div.innerHTML = "";
+        var headerDiv = document.createElement("div");
+        headerDiv.className = "header";
+        headerDiv.innerText = "目录";
+        div.appendChild(headerDiv);
+        div = document.getElementById("div_code");
+        div.innerHTML = "<ul>";
+        for (var i = 0; i < descList.length; ++i) {
+            div.innerHTML += "<li><a href='#' onclick='jump(" + i + ");'>" + (i + 1) + ". " + headList[i] + "</li>";
+        }
+        div.innerHTML += "</ul>";
+        var canvas = document.getElementById("canvas_show");
+        canvas.width = 0;
+        canvas.height = 0;
+    } else {
+        header(headList[slideIndex]);
+        content(descList[slideIndex]);
+        var canvas = document.getElementById("canvas_show");
+        canvas.width = canvasLength;
+        canvas.height = canvasLength;
+        var context = canvas.getContext('2d');
+        showList[slideIndex](context);
+        var div = document.getElementById("div_code");
+        div.innerHTML = printScript(codeList[slideIndex]) + "<br/><br/>";
+    }
+}
+
+function jump(index) {
+    slideIndex = index;
+    slide();
 }
 
 function prev() {
-    if (slideIndex > 0) {
+    if (slideIndex > -1) {
         --slideIndex;
     }
     slide();
@@ -284,12 +277,13 @@ function next() {
     slide();
 }
 
-function setContent(desc, show, code) {
+function setContent(head, desc, show, code) {
+    headList = head;
     descList = desc;
     showList = show;
     codeList = code;
-    slideIndex = 0;
-    slideTotal = descList.length;
+    slideIndex = -1;
+    slideTotal = headList.length;
     slide();
 }
 
@@ -298,5 +292,7 @@ document.onkeyup = function(event) {
         prev();
     } else if (event.keyCode == 83) {
         next();
+    } else if (event.keyCode == 81) {
+        jump(-1);
     }
 }
