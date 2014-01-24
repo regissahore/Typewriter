@@ -95,7 +95,6 @@ function drawScripts() {
 
 function drawLines() {
     treeContext.lineWidth = 2.0;
-    treeContext.fillStyle = "rgba(0, 0, 0, 0)";
     treeContext.strokeStyle = '#000000';
     if (treeIsAnimation) {
         treeContext.globalAlpha = treeAnimation / TREE_ANIMATION;
@@ -105,6 +104,7 @@ function drawLines() {
                 var y1 = treeLines[treeIndex][i].y1;
                 var x2 = treeLines[treeIndex][i].x2;
                 var y2 = treeLines[treeIndex][i].y2;
+                treeContext.beginPath();
                 treeContext.moveTo(x1, y1);
                 treeContext.lineTo(x2, y2);
                 treeContext.stroke();
@@ -117,6 +117,7 @@ function drawLines() {
                 var y1 = treeLines[treeLastIndex][i].y1;
                 var x2 = treeLines[treeLastIndex][i].x2;
                 var y2 = treeLines[treeLastIndex][i].y2;
+                treeContext.beginPath();
                 treeContext.moveTo(x1, y1);
                 treeContext.lineTo(x2, y2);
                 treeContext.stroke();
@@ -137,6 +138,7 @@ function drawLines() {
                 var y1 = sy1 + (ey1 - sy1) * treeAnimation / TREE_ANIMATION;
                 var x2 = sx2 + (ex2 - sx2) * treeAnimation / TREE_ANIMATION;
                 var y2 = sy2 + (ey2 - sy2) * treeAnimation / TREE_ANIMATION;
+                treeContext.beginPath();
                 treeContext.moveTo(x1, y1);
                 treeContext.lineTo(x2, y2);
                 treeContext.stroke();
@@ -148,6 +150,7 @@ function drawLines() {
             var y1 = treeLines[treeIndex][i].y1;
             var x2 = treeLines[treeIndex][i].x2;
             var y2 = treeLines[treeIndex][i].y2;
+            treeContext.beginPath();
             treeContext.moveTo(x1, y1);
             treeContext.lineTo(x2, y2);
             treeContext.stroke();

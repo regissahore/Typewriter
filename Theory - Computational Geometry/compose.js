@@ -4,7 +4,7 @@
  */
 
 keywords = ["asm", "default", "float", "operator", "static_cast", "union", "auto", "delete", "for", "private", "struct", "unsigned", "bool", "do", "friend", "protected", "switch", "using", "break", "double", "goto", "public", "template", "virtual", "case", "dynamic_cast", "if", "register", "this", "void", "catch", "else", "inline", "reinterpret_cast", "throw", "volatile", "char", "enum", "int", "return", "true", "wchar_t", "class", "explicit", "long", "short", "try", "while", "const", "export", "mutable", "signed", "typedef", "const_cast", "extern", "namespace", "sizeof", "typeid", "continue", "false", "new", "static", "typename"];
-systems = ["Point", "Segment", "Line", "Rectangle", "Triangle", "Polygon"];
+systems = ["Point", "Segment", "Line", "Rectangle", "Triangle", "Polygon", "Circle"];
 
 function isDigit(str) {
     return str >= '0' && str <= '9';
@@ -42,6 +42,12 @@ function writeCharacter(script) {
 
 function writeScript(script) {
     var res = "";
+    if (script[0] == '#') {
+        res += "<span class = code_marco>";
+        res += writeCharacter(script);
+        res += "</span>";
+        return res;
+    }
     var isNum = false;
     var isWord = false;
     var isString = false;
@@ -73,9 +79,9 @@ function writeScript(script) {
                 --i;
             }
         } else if (isWord) {
-            if (isLower(script[i])) {
+            if (isCharacter(script[i])) {
                 lastString += script[i];
-            } else if (isUpper(script[i]) || isDigit(script[i]) || script[i] == '_') {
+            } else if (isDigit(script[i]) || script[i] == '_') {
                 res += writeCharacter(lastString);
                 lastString = "";
                 isWord = false;
@@ -112,7 +118,7 @@ function writeScript(script) {
             lastString += script[i];
             if (!isCharacter(lastCh) && isDigit(script[i])) {
                 isNum = true;
-            } else if (!isCharacter(lastCh) && script[i] >= 'a' && script[i] <= 'z') {
+            } else if (!isCharacter(lastCh) && isCharacter(script[i])) {
                 isWord = true;
             } else if (script[i] == '"' || script[i] == "'") {
                 isString = true;
