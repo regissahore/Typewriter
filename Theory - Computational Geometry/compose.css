@@ -28,40 +28,47 @@ li {
 .table_line {
     width: 50px;
     text-align: right;
-    color: #999999;
-    background-color: #dddddd;
+    color: rgb(129, 150, 154);
+    background-color: rgb(63, 75, 78);
     padding-right: 10px;
     padding-left: 10px;
-    padding-top: 3px;
-    padding-bottom: 3px;
+    padding-top: 1px;
+    padding-bottom: 1px;
 }
 
 .table_code_odd {
     text-align: left;
     padding-left: 10px;
-    background-color: #f7f7f7;
+    color: rgb(250, 250, 250);
+    background-color: rgb(41, 49, 52);
 }
 
 .table_code_even {
     text-align: left;
     padding-left: 10px;
-    background-color: #eeeeee;
+    color: rgb(250, 250, 250);
+    background-color: rgb(41, 49, 52);
 }
 
 .code_keyword {
     font-weight:bold;
+    color: rgb(147, 199, 99);
 }
 
 .code_number {
-    color: #0086b3;
+    color: rgb(255, 205, 34);
+}
+
+.code_marco {
+    color: rgb(160, 130, 189);
 }
 
 .code_system {
-    color: #0086b3;
+    color: rgb(250, 100, 109);
 }
 
 .code_string {
-    color: #dd1144;
+    color: rgb(255, 120, 38);
 }
 
 .code_comment {
