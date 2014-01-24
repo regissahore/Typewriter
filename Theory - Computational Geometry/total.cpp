@@ -37,9 +37,16 @@ struct Point
     {
         printf("%.3lf %.3lf\n", x, y);
     }
-    inline double norm() const
+    inline double length() const
     {
         return sqrt(x * x + y * y);
+    }
+    inline Point norm() const
+    {
+        Point norm;
+        norm.x = x / length();
+        norm.y = y / length();
+        return norm;
     }
 };
 
@@ -69,6 +76,22 @@ double operator ^(const Point &a, const Point &b)
     return a.x * b.y - a.y * b.x;
 }
 
+Point operator *(const Point &a, const double b)
+{
+    Point c;
+    c.x = a.x * b;
+    c.y = a.y * b;
+    return c;
+}
+
+Point operator /(const Point &a, const double b)
+{
+    Point c;
+    c.x = a.x / b;
+    c.y = a.y / b;
+    return c;
+}
+
 bool operator ==(const Point &a, const Point &b)
 {
     return dblcmp(a.x - b.x) == 0 && dblcmp(a.y - b.y) == 0;
@@ -76,7 +99,7 @@ bool operator ==(const Point &a, const Point &b)
 
 double dist(const Point &a, const Point &b)
 {
-    return (a - b).norm();
+    return (a - b).length();
 }
 
 double cross(const Point &a, const Point &b, const Point &o)
@@ -161,6 +184,11 @@ struct Segment
         v.x = x2;
         v.y = y2;
     }
+    Segment(const Point &u, const Point &v)
+    {
+        this->u = u;
+        this->v = v;
+    }
     inline void input()
     {
         u.input();
@@ -177,6 +205,14 @@ struct Segment
         line.b = v.x - u.x;
         line.c = u.x * v.y - v.x * u.y;
         return line;
+    }
+    Line perpendicularBisector() const
+    {
+        Segment bisector;
+        bisector.u = (u + v) * 0.5;
+        bisector.v.x = bisector.u.x + (u.y - v.y);
+        bisector.v.y = bisector.u.y - (u.x - v.x);
+        return bisector.line();
     }
     double length() const
     {
@@ -225,7 +261,146 @@ struct Triangle
     Point a;
     Point b;
     Point c;
+    Triangle()
+    {
+    }
+    Triangle(double x1, double y1, double x2, double y2, double x3, double y3)
+    {
+        a.x = x1;
+        a.y = y1;
+        b.x = x2;
+        b.y = y2;
+        c.x = x3;
+        c.y = y3;
+    }
+    Triangle(const Point &a, const Point &b, const Point &c)
+    {
+        this->a = a;
+        this->b = b;
+        this->c = c;
+    }
+    inline void input()
+    {
+        a.input();
+        b.input();
+        c.input();
+    }
+    inline void output() const
+    {
+        a.output();
+        b.output();
+        c.output();
+    }
+    double area() const
+    {
+        return fabs(cross(a, b, c)) * 0.5;
+    }
+    Line medianA() const
+    {
+        return Segment(a, (b + c) * 0.5).line();
+    }
+    Line medianB() const
+    {
+        return Segment(b, (a + c) * 0.5).line();
+    }
+    Line medianC() const
+    {
+        return Segment(c, (a + b) * 0.5).line();
+    }
+    Point centroid() const
+    {
+        return intersectPoint(medianA(), medianB());
+    }
+    Line altitudeA() const
+    {
+        Segment altitude;
+        altitude.u = a;
+        altitude.v.x = altitude.u.x + (b.y - c.y);
+        altitude.v.y = altitude.u.y - (b.x - c.x);
+        return altitude.line();
+    }
+    Line altitudeB() const
+    {
+        Segment altitude;
+        altitude.u = b;
+        altitude.v.x = altitude.u.x + (a.y - c.y);
+        altitude.v.y = altitude.u.y - (a.x - c.x);
+        return altitude.line();
+    }
+    Line altitudeC() const
+    {
+        Segment altitude;
+        altitude.u = c;
+        altitude.v.x = altitude.u.x + (a.y - b.y);
+        altitude.v.y = altitude.u.y - (a.x - b.x);
+        return altitude.line();
+    }
+    Point orthoCenter() const
+    {
+        return intersectPoint(altitudeA(), altitudeB());
+    }
+    Line perpendicularBisectorA() const
+    {
+        return Segment(b, c).perpendicularBisector();
+    }
+    Line perpendicularBisectorB() const
+    {
+        return Segment(a, c).perpendicularBisector();
+    }
+    Line perpendicularBisectorC() const
+    {
+        return Segment(a, b).perpendicularBisector();
+    }
+    Point circumCenter() const
+    {
+        return intersectPoint(perpendicularBisectorA(), perpendicularBisectorB());
+    }
+    double circumscribedCircleRadius() const
+    {
+        double la = (b - c).length();
+        double lb = (a - c).length();
+        double lc = (a - b).length();
+        return la * lb * lc / sqrt((la + lb + lc) * (lb + lc - la) * (la + lc - lb) * (la + lb - lc));
+    }
+    Line angleBisectorA() const
+    {
+        Segment bisector;
+        bisector.u = a;
+        bisector.v = bisector.u + ((b - a).norm() + (c - a).norm()) * 0.5;
+        return bisector.line();
+    }
+    Line angleBisectorB() const
+    {
+        Segment bisector;
+        bisector.u = b;
+        bisector.v = bisector.u + ((a - b).norm() + (c - b).norm()) * 0.5;
+        return bisector.line();
+    }
+    Line angleBisectorC() const
+    {
+        Segment bisector;
+        bisector.u = c;
+        bisector.v = bisector.u + ((a - c).norm() + (b - c).norm()) * 0.5;
+        return bisector.line();
+    }
+    Point inCircle() const
+    {
+        return intersectPoint(angleBisectorA(), angleBisectorB());
+    }
+    double inscribedCircleRaidus() const
+    {
+        double la = (b - c).length();
+        double lb = (a - c).length();
+        double lc = (a - b).length();
+        return sqrt((la + lb + lc) * (lb + lc - la) * (la + lc - lb) * (la + lb - lc)) / (la + lb + lc) * 0.5;
+    }
 };
+
+double triangleArea(double la, double lb, double lc)
+{
+    double p = (la + lb + lc) * 0.5;
+    return sqrt(p * (p - la) * (p - lb) * (p - lc));
+}
 
 struct Rectangle
 {

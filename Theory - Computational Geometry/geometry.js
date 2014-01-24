@@ -34,6 +34,15 @@ function Line() {
     return line;
 }
 
+function Triangle() {
+    var triangle = {
+        a: Point(),
+        b: Point(),
+        c: Point(),
+    };
+    return triangle;
+}
+
 function Rectangle() {
     var rectangle = {
         x: 0.0,
@@ -177,6 +186,17 @@ function drawLine(context, line) {
         }
         context.stroke();
     }
+}
+
+function drawTriangle(context, triangle) {
+    context.beginPath();
+    context.lineWidth = 2;
+    context.strokeStyle = '#FF7F00';
+    context.lineTo(getPointX(triangle.a), getPointY(triangle.a));
+    context.lineTo(getPointX(triangle.b), getPointY(triangle.b));
+    context.lineTo(getPointX(triangle.c), getPointY(triangle.c));
+    context.closePath();
+    context.stroke();
 }
 
 function drawPolygon(context, polygon) {
