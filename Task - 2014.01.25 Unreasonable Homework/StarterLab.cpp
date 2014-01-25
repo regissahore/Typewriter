@@ -19,7 +19,7 @@ using namespace std;
 #define TRUE 1
 #define FALSE 0
 
-struct ErrorLog
+class ErrorLog
 {
 public:
     bool openLog(char* fname)
@@ -48,7 +48,7 @@ private:
     int errorCount;
 };
 
-struct AirlineInfo
+class AirlineInfo
 {
 public:
     bool initInfo(char* ename)
@@ -125,7 +125,7 @@ public:
     {
         return seats;
     }
-    struct ErrorLog* getErrorLog()
+    class ErrorLog* getErrorLog()
     {
         return &errorLog;
     };
@@ -135,7 +135,7 @@ private:
     int totalRows;
     int* rows;
     int* seats;
-    struct ErrorLog errorLog;
+    class ErrorLog errorLog;
     bool findValue(FILE* fp, char* section, char* skey, char* svalue)
     {
         bool bfound = FALSE;
@@ -176,7 +176,7 @@ private:
     }
 };
 
-struct Passenger
+class Passenger
 {
 public:
     bool initPassenger(char* line )
@@ -250,7 +250,7 @@ private:
     int  flight;
 };
 
-struct Seat
+class Seat
 {
 public:
     bool initSeat()
@@ -258,7 +258,7 @@ public:
         passenger = NULL;
         return passenger == NULL;
     }
-    bool insertSeat(struct Passenger* p)
+    bool insertSeat(Passenger* p)
     {
         bool bsuccess = TRUE;
         if ( p != NULL )
@@ -295,22 +295,22 @@ public:
         return bvalue;
     }
 private:
-    struct Passenger* passenger;
+    Passenger* passenger;
 };
 
-struct Row
+class Row
 {
 public:
     bool initRow(int nrows)
     {
         int s = 0;
-        seats = (struct Seat*)malloc(sizeof(struct Seat)*nrows);
+        seats = (Seat*)malloc(sizeof(Seat)*nrows);
         nseats = nrows;
         for (s=0; s<nseats; s++)
             seats[s].insertSeat(NULL);
         return s > 0;
     }
-    bool insertRow(int maxSeats, struct Passenger* p)
+    bool insertRow(int maxSeats, Passenger* p)
     {
         bool bsuccess = FALSE;
         int seat = p->getSeatNo() - 'A';
@@ -334,23 +334,23 @@ public:
         return s > 0;
     }
 private:
-    struct Seat* seats;
+    Seat* seats;
     int nseats;
 };
 
-struct Section
+class Section
 {
 public:
     bool initSection(int nr, int ns)
     {
         int r = 0;
-        rows = (struct Row*) malloc(sizeof(struct Row)*nr);
+        rows = (Row*) malloc(sizeof(Row)*nr);
         nrows = nr;
         for (r=0; r<nr; r++)
             rows[r].initRow(ns);
         return r > 0;
     }
-    bool insertSection(int row, int maxSeats, struct Passenger* p)
+    bool insertSection(int row, int maxSeats, Passenger* p)
     {
         bool bsuccess = TRUE;
         Row* prow = &rows[row];
@@ -380,23 +380,23 @@ public:
         return r > 0;
     }
 private:
-    struct Row* rows;
+    Row* rows;
     int nrows;
 };
 
-struct Airline
+class Airline
 {
 public:
     bool initAirline()
     {
         int s = 0;
-        sections = (struct Section*) malloc(sizeof(struct Section)*info.getSections());
+        sections = (Section*) malloc(sizeof(Section)*info.getSections());
         nsections = info.getSections();
         for (s=0; s<info.getSections(); s++)
             sections[s].initSection(info.getRows()[s],info.getSeats()[s]);
         return sections != NULL;
     }
-    bool insertAirline(struct Passenger* p)
+    bool insertAirline(Passenger* p)
     {
         int index = 0;
         int rowTotal = 0;
@@ -428,7 +428,7 @@ public:
     }
     int readAirline(char* fn)
     {
-        struct Passenger* passenger = NULL;
+        Passenger* passenger = NULL;
         char line[SIZE];
         int count = 0;
         FILE* in = fopen( fn,"r" );
@@ -439,7 +439,7 @@ public:
                 if ( fgets( line, SIZE, in ) )
                 {
                     count++;
-                    passenger = (struct Passenger*) malloc(sizeof(struct Passenger));
+                    passenger = (Passenger*) malloc(sizeof(Passenger));
                     passenger->initPassenger(line);
                     if ( !insertAirline(passenger) )
                         info.getErrorLog()->writeLog(line);
@@ -483,13 +483,13 @@ public:
         info.releaseInfo();
         return s > 0;
     }
-    struct AirlineInfo* getInfo()
+    AirlineInfo* getInfo()
     {
         return &info;
     };
 private:
-    struct AirlineInfo info;
-    struct Section* sections;
+    AirlineInfo info;
+    Section* sections;
     int nsections;
 };
 
@@ -500,7 +500,7 @@ int main()
     char* flight = "[Flight 878]";
     char* csvfile = "Airline0.csv";
     // create, read and manipulate data
-    struct Airline jet;
+    Airline jet;
     jet.Configure( inifile, flight );
     if (jet.readAirline( csvfile) > 0 )
         jet.showAirline();
