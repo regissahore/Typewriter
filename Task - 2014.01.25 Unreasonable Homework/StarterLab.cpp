@@ -58,6 +58,10 @@ public:
     {
         initInfo(ename);
     }
+    ~AirlineInfo()
+    {
+        releaseInfo();
+    }
     bool initInfo(char* ename)
     {
         flight = INVALID;
@@ -193,6 +197,10 @@ public:
     {
         initPassenger(line);
     }
+    ~Passenger()
+    {
+        deletePassenger();
+    }
     bool initPassenger(char* line )
     {
         char tstring[SIZE];
@@ -269,6 +277,10 @@ public:
     {
         passenger = NULL;
     }
+    ~Seat()
+    {
+        releaseSeat();
+    }
     bool insertSeat(Passenger* p)
     {
         bool bsuccess = TRUE;
@@ -319,6 +331,10 @@ public:
     {
         initRow(nrows);
     }
+    ~Row()
+    {
+        releaseRow();
+    }
     bool initRow(int nrows)
     {
         int s = 0;
@@ -365,6 +381,10 @@ public:
     Section(int nr, int ns)
     {
         initSection(nr, ns);
+    }
+    ~Section()
+    {
+        releaseSection();
     }
     bool initSection(int nr, int ns)
     {
@@ -418,6 +438,10 @@ public:
     Airline(char* inifile,char* find)
     {
         Configure(inifile, find);
+    }
+    ~Airline()
+    {
+        Release();
     }
     bool Configure(char* inifile,char* find)
     {
