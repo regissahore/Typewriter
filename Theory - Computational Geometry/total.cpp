@@ -48,6 +48,14 @@ struct Point
         norm.y = y / length();
         return norm;
     }
+    bool operator <(const Point &point) const
+    {
+        if (y == point.y)
+        {
+            return x < point.x;
+        }
+        return y < point.y;
+    }
 };
 
 Point operator +(const Point &a, const Point &b)
@@ -501,7 +509,48 @@ double dist(const Circle &a, const Circle &b)
 struct Polygon
 {
     vector<Point> vertex;
+    inline void output()
+    {
+        for (size_t i = 0; i < vertex.size(); ++i)
+        {
+            vertex[i].output();
+        }
+    }
 };
+
+void graham(vector<Point> &points, Polygon &convex)
+{
+    convex.vertex.clear();
+    sort(points.begin(), points.end());
+    convex.vertex.push_back(points[0]);
+    convex.vertex.push_back(points[1]);
+    for (size_t i = 2; i < points.size(); ++i)
+    {
+        while (convex.vertex.size() >= 2)
+        {
+            if (dblcmp((points[i] - convex.vertex[convex.vertex.size() - 1]) ^ (convex.vertex[convex.vertex.size() - 1] - convex.vertex[convex.vertex.size() - 2])) <= 0)
+            {
+                break;
+            }
+            convex.vertex.pop_back();
+        }
+        convex.vertex.push_back(points[i]);
+    }
+    convex.vertex.push_back(points[points.size() - 2]);
+    int top = convex.vertex.size();
+    for (int i = points.size() - 3; i >= 0; --i)
+    {
+        while (convex.vertex.size() >= top)
+        {
+            if (dblcmp((points[i] - convex.vertex[convex.vertex.size() - 1]) ^ (convex.vertex[convex.vertex.size() - 1] - convex.vertex[convex.vertex.size() - 2])) <= 0)
+            {
+                break;
+            }
+            convex.vertex.pop_back();
+        }
+        convex.vertex.push_back(points[i]);
+    }
+}
 
 int main()
 {

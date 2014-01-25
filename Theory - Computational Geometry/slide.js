@@ -375,9 +375,144 @@ show.push(function() {});
 
 code.push("struct Circle \n{ \n    Point o; \n    double radius; \n    Circle() \n    { \n        radius = 0.0; \n    } \n    Circle(double x, double y, double radius) \n    { \n        o.x = x; \n        o.y = y; \n        this->radius = radius; \n    } \n    Circle(const Point &o, double radius) \n    { \n        this->o = o; \n        this->radius = radius; \n    } \n    inline void input() \n    { \n        o.input(); \n        scanf(\"%lf\", &radius); \n    } \n    inline void output() \n    { \n        printf(\"%.3lf %.3lf %.3lf\\n\", o.x, o.y, radius); \n    } \n}; \n \ndouble dist(const Circle &a, const Circle &b) \n{ \n    return dist(a.o, b.o); \n} \n");
 
-head.push("总结");
+head.push("Graham凸包");
+
+desc.push([
+"利用直角坐标排序，按横坐标由小到大排序，横坐标相等的情况下按纵坐标由小到大排序。",
+"每次添边，如果左转则压榨，否则出栈直至左转。",
+]);
+
+show.push(function(context) {
+    drawAxis(context);
+    var points = Array();
+    var point = Point();
+    var segment = Segment();
+    var polygon = Polygon();
+    point.x = 1;
+    point.y = 2;
+    points.push(point);
+    point = Point();
+    point.x = 4;
+    point.y = -4;
+    points.push(point);
+    point = Point();
+    point.x = -5;
+    point.y = 5;
+    points.push(point);
+    point = Point();
+    point.x = -3;
+    point.y = -8;
+    points.push(point);
+    point = Point();
+    point.x = -2;
+    point.y = -9;
+    points.push(point);
+    point = Point();
+    point.x = 8;
+    point.y = 2;
+    points.push(point);
+    point = Point();
+    point.x = -9;
+    point.y = -4;
+    points.push(point);
+    point = Point();
+    point.x = 6;
+    point.y = -6;
+    points.push(point);
+    point = Point();
+    point.x = 4;
+    point.y = -2;
+    points.push(point);
+    point = Point();
+    point.x = 7;
+    point.y = 7;
+    points.push(point);
+    point = Point();
+    point.x = -1;
+    point.y = 6;
+    points.push(point);
+    point = Point();
+    point.x = -2;
+    point.y = -9;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = 6;
+    point.y = -6;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = 8;
+    point.y = 2;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = 7;
+    point.y = 7;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = -1;
+    point.y = 6;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = -5;
+    point.y = 5;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = -9;
+    point.y = -4;
+    polygon.vertex.push(point);
+    point = Point();
+    point.x = -2;
+    point.y = -9;
+    polygon.vertex.push(point);
+    for (var i = 0; i < points.length; ++i) {
+        segment.u.x = -2;
+        segment.u.y = -9;
+        segment.v.x = points[i].x;
+        segment.v.y = points[i].y;
+        drawSegment(context, segment);
+    }
+    drawPolygon(context, polygon);
+    for (var i = 0; i < points.length; ++i) {
+        drawPoint(context, points[i]);
+    }
+});
+
+code.push("#include <cmath> \n#include <cstdio> \n#include <cstring> \n#include <stack> \n#include <vector> \n#include <algorithm> \nusing namespace std; \nconst double EPS = 1e-8; \nconst double PI = acos(-1.0); \n \nint dblcmp(double x) \n{ \n    if (fabs(x) < EPS) \n    { \n        return 0; \n    } \n    return x > 0 ? 1 : -1; \n} \n \nstruct Point \n{ \n    double x, y; \n    Point() \n    { \n        x = 0.0; \n        y = 0.0; \n    } \n    Point(double x, double y) \n    { \n        this->x = x; \n        this->y = y; \n    } \n    inline void input() \n    { \n        scanf(\"%lf%lf\", &x, &y); \n    } \n    inline void output() const \n    { \n        printf(\"%.3lf %.3lf\\n\", x, y); \n    } \n    bool operator <(const Point &point) const \n    { \n        if (y == point.y) \n        { \n            return x < point.x; \n        } \n        return y < point.y; \n    } \n}; \n \nPoint operator -(const Point &a, const Point &b) \n{ \n    Point c; \n    c.x = a.x - b.x; \n    c.y = a.y - b.y; \n    return c; \n} \n \ndouble operator *(const Point &a, const Point &b) \n{ \n    return a.x * b.x + a.y * b.y; \n} \n \ndouble operator ^(const Point &a, const Point &b) \n{ \n    return a.x * b.y - a.y * b.x; \n} \n \ndouble cross(const Point &a, const Point &b, const Point &o) \n{ \n    return (a - o) ^ (b - o); \n} \n \nstruct Polygon \n{ \n    vector<Point> vertex; \n    inline void output() \n    { \n        for (size_t i = 0; i < vertex.size(); ++i) \n        { \n            vertex[i].output(); \n        } \n    } \n}; \n \nvoid graham(vector<Point> &points, Polygon &convex) \n{ \n    convex.vertex.clear(); \n    sort(points.begin(), points.end()); \n    convex.vertex.push_back(points[0]); \n    convex.vertex.push_back(points[1]); \n    for (size_t i = 2; i < points.size(); ++i) \n    { \n        while (convex.vertex.size() >= 2) \n        { \n            if (dblcmp((points[i] - convex.vertex[convex.vertex.size() - 1]) ^ (convex.vertex[convex.vertex.size() - 1] - convex.vertex[convex.vertex.size() - 2])) <= 0) \n            { \n                break; \n            } \n            convex.vertex.pop_back(); \n        } \n        convex.vertex.push_back(points[i]); \n    } \n    convex.vertex.push_back(points[points.size() - 2]); \n    int top = convex.vertex.size(); \n    for (int i = points.size() - 3; i >= 0; --i) \n    { \n        while (convex.vertex.size() >= top) \n        { \n            if (dblcmp((points[i] - convex.vertex[convex.vertex.size() - 1]) ^ (convex.vertex[convex.vertex.size() - 1] - convex.vertex[convex.vertex.size() - 2])) <= 0) \n            { \n                break; \n            } \n            convex.vertex.pop_back(); \n        } \n        convex.vertex.push_back(points[i]); \n    } \n} \n \nint main() \n{ \n    vector<Point> points; \n    points.push_back(Point(1, 2)); \n    points.push_back(Point(4, -4)); \n    points.push_back(Point(-5, 5)); \n    points.push_back(Point(-3, -8)); \n    points.push_back(Point(-2, -9)); \n    points.push_back(Point(8, 2)); \n    points.push_back(Point(-9, -4)); \n    points.push_back(Point(6, -6)); \n    points.push_back(Point(4, -2)); \n    points.push_back(Point(7, 7)); \n    points.push_back(Point(-1, 6)); \n    Polygon polygon; \n    graham(points, polygon); \n    polygon.output(); \n    return 0; \n} \n");
+
+head.push("半平面交");
 
 desc.push([]);
+
+show.push(function(context) {});
+
+code.push("");
+
+head.push("旋转卡壳");
+
+desc.push([]);
+
+show.push(function(context) {});
+
+code.push("");
+
+head.push("Voronoi图");
+
+desc.push([]);
+
+show.push(function(context) {});
+
+code.push("");
+
+head.push("三角剖分");
+
+desc.push([]);
+
+show.push(function(context) {});
+
+code.push("");
+
+head.push("总结");
+
+desc.push(["计算几何"]);
 
 show.push(function(context) {
     var segment = Segment();
