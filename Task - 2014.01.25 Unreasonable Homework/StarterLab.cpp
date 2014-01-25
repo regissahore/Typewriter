@@ -51,6 +51,13 @@ private:
 class AirlineInfo
 {
 public:
+    AirlineInfo()
+    {
+    }
+    AirlineInfo(char *ename)
+    {
+        initInfo(ename);
+    }
     bool initInfo(char* ename)
     {
         flight = INVALID;
@@ -179,6 +186,13 @@ private:
 class Passenger
 {
 public:
+    Passenger()
+    {
+    }
+    Passenger(char* line)
+    {
+        initPassenger(line);
+    }
     bool initPassenger(char* line )
     {
         char tstring[SIZE];
@@ -197,7 +211,6 @@ public:
         flight = atoi(pt);
         return line != NULL;
     }
-
     bool deletePassenger()
     {
         bool bsuccess = FALSE;
@@ -215,7 +228,6 @@ public:
         }
         return bsuccess == TRUE;
     }
-
     char* toString()
     {
         static char gbuffer[SIZE];
@@ -253,10 +265,9 @@ private:
 class Seat
 {
 public:
-    bool initSeat()
+    Seat()
     {
         passenger = NULL;
-        return passenger == NULL;
     }
     bool insertSeat(Passenger* p)
     {
@@ -301,6 +312,13 @@ private:
 class Row
 {
 public:
+    Row()
+    {
+    }
+    Row(int nrows)
+    {
+        initRow(nrows);
+    }
     bool initRow(int nrows)
     {
         int s = 0;
@@ -341,6 +359,13 @@ private:
 class Section
 {
 public:
+    Section()
+    {
+    }
+    Section(int nr, int ns)
+    {
+        initSection(nr, ns);
+    }
     bool initSection(int nr, int ns)
     {
         int r = 0;
@@ -387,6 +412,20 @@ private:
 class Airline
 {
 public:
+    Airline()
+    {
+    }
+    Airline(char* inifile,char* find)
+    {
+        Configure(inifile, find);
+    }
+    bool Configure(char* inifile,char* find)
+    {
+        info.initInfo("ErrorLog.txt");
+        info.getProfileData(inifile,find);
+        initAirline();
+        return TRUE;  // need to return something
+    }
     bool initAirline()
     {
         int s = 0;
@@ -454,13 +493,6 @@ public:
         fclose(in);
         info.getErrorLog()->closeLog();
         return count;
-    }
-    bool Configure(char* inifile,char* find)
-    {
-        info.initInfo("ErrorLog.txt");
-        info.getProfileData(inifile,find);
-        initAirline();
-        return TRUE;  // need to return something
     }
     int showAirline()
     {
