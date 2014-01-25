@@ -60,7 +60,10 @@ public:
     }
     ~AirlineInfo()
     {
-        releaseInfo();
+        if (rows)
+            free(rows);
+        if (seats)
+            free(seats);
     }
     bool initInfo(char* ename)
     {
@@ -107,14 +110,6 @@ public:
     int GetErrorCount()
     {
         return errorLog.GetErrorCount();
-    }
-    bool releaseInfo()
-    {
-        if (rows)
-            free(rows);
-        if (seats)
-            free(seats);
-        return TRUE;
     }
     int getFlight()
     {
@@ -199,7 +194,19 @@ public:
     }
     ~Passenger()
     {
-        deletePassenger();
+        bool bsuccess = FALSE;
+        if ( plast )
+        {
+            free( plast );
+            plast = NULL;
+            bsuccess = TRUE;
+        }
+        if ( pfirst )
+        {
+            free( pfirst );
+            pfirst = NULL;
+            bsuccess = TRUE;
+        }
     }
     bool initPassenger(char* line )
     {
@@ -218,23 +225,6 @@ public:
         seatno = *ps;
         flight = atoi(pt);
         return line != NULL;
-    }
-    bool deletePassenger()
-    {
-        bool bsuccess = FALSE;
-        if ( plast )
-        {
-            free( plast );
-            plast = NULL;
-            bsuccess = TRUE;
-        }
-        if ( pfirst )
-        {
-            free( pfirst );
-            pfirst = NULL;
-            bsuccess = TRUE;
-        }
-        return bsuccess == TRUE;
     }
     char* toString()
     {
@@ -279,7 +269,14 @@ public:
     }
     ~Seat()
     {
-        releaseSeat();
+        bool bvalue = false;
+        if (passenger)
+        {
+            delete passenger;
+            free(passenger);
+            passenger = NULL;
+            bvalue = true;
+        }
     }
     bool insertSeat(Passenger* p)
     {
@@ -295,7 +292,6 @@ public:
             passenger = NULL;
         return bsuccess;
     }
-
     bool outputSeat(int row,int seat)
     {
         if (passenger)
@@ -303,19 +299,6 @@ public:
         else
             printf("Empty %d%c\n",row,seat+'A');
         return passenger != NULL;
-    }
-
-    bool releaseSeat()
-    {
-        bool bvalue = false;
-        if (passenger)
-        {
-            passenger->deletePassenger();
-            free(passenger);
-            passenger = NULL;
-            bvalue = true;
-        }
-        return bvalue;
     }
 private:
     Passenger* passenger;
@@ -333,7 +316,8 @@ public:
     }
     ~Row()
     {
-        releaseRow();
+        int s = 0;
+        delete[] seats;
     }
     bool initRow(int nrows)
     {
@@ -359,14 +343,6 @@ public:
             seats[s].outputSeat(row,s);
         return s > 0;
     }
-    bool releaseRow()
-    {
-        int s = 0;
-        for (s=0; s<nseats; s++)
-            seats[s].releaseSeat();
-        free(seats);
-        return s > 0;
-    }
 private:
     Seat* seats;
     int nseats;
@@ -384,7 +360,8 @@ public:
     }
     ~Section()
     {
-        releaseSection();
+        int r = 0;
+        delete[] rows;
     }
     bool initSection(int nr, int ns)
     {
@@ -401,7 +378,7 @@ public:
         Row* prow = &rows[row];
         if (!prow->insertRow(maxSeats,p))
         {
-            p->deletePassenger();
+            delete p;
             free(p);
             bsuccess = FALSE;
         }
@@ -414,14 +391,6 @@ public:
         {
             rows[r].outputRow(r+radjust);
         }
-        return r > 0;
-    }
-    bool releaseSection()
-    {
-        int r = 0;
-        for (r=0; r<nrows; r++)
-            rows[r].releaseRow();
-        free(rows);
         return r > 0;
     }
 private:
@@ -441,7 +410,7 @@ public:
     }
     ~Airline()
     {
-        Release();
+        delete[] sections;
     }
     bool Configure(char* inifile,char* find)
     {
@@ -484,8 +453,7 @@ public:
         }
         else
         {
-            p->deletePassenger();
-            free( p );
+            delete p;
         }
         return binserted;
     }
@@ -530,15 +498,6 @@ public:
         }
         return s;
     }
-    bool Release()
-    {
-        int s=0;
-        for (s=0; s<nsections; s++)
-            sections[s].releaseSection();
-        free(sections);
-        info.releaseInfo();
-        return s > 0;
-    }
     AirlineInfo* getInfo()
     {
         return &info;
@@ -560,7 +519,6 @@ int main()
     jet.Configure( inifile, flight );
     if (jet.readAirline( csvfile) > 0 )
         jet.showAirline();
-    jet.Release();
     // handle errors
     if ( jet.getInfo()->GetErrorCount() )
         printf("\nNumber of errors in data file:  %d.  See error log data file for details.\n", jet.getInfo()->GetErrorCount());
