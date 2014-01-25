@@ -61,9 +61,9 @@ public:
     ~AirlineInfo()
     {
         if (rows)
-            free(rows);
+            delete[] rows;
         if (seats)
-            free(seats);
+            delete[] seats;
     }
     bool initInfo(char* ename)
     {
@@ -87,8 +87,8 @@ public:
             if ( getProfileInt(fpini,psection,"sections",&value) )
             {
                 sections = value;
-                rows = (int*)malloc(sizeof(int)*value);
-                seats = (int*)malloc(sizeof(int)*value);
+                rows = new int[value];
+                seats = new int[value];
                 for (x=0; x<sections; x++)
                 {
                     sprintf(buffer,"section%d rows",x+1);
@@ -197,13 +197,13 @@ public:
         bool bsuccess = FALSE;
         if ( plast )
         {
-            free( plast );
+            delete[] plast;
             plast = NULL;
             bsuccess = TRUE;
         }
         if ( pfirst )
         {
-            free( pfirst );
+            delete[] pfirst;
             pfirst = NULL;
             bsuccess = TRUE;
         }
@@ -217,8 +217,8 @@ public:
         char* pr = strtok(NULL,",");
         char* ps = strtok(NULL,",");
         char* pt = strtok(NULL,",");
-        plast = (char *) malloc( strlen( pl )+1 );
-        pfirst = (char *) malloc( strlen( pf )+1 );
+        plast = new char[strlen(pl) + 1];
+        pfirst = new char[strlen(pf) + 1];
         strcpy( plast, pl );
         strcpy( pfirst, pf );
         row = atoi(pr);
@@ -273,7 +273,6 @@ public:
         if (passenger)
         {
             delete passenger;
-            free(passenger);
             passenger = NULL;
             bvalue = true;
         }
@@ -322,7 +321,7 @@ public:
     bool initRow(int nrows)
     {
         int s = 0;
-        seats = (Seat*)malloc(sizeof(Seat)*nrows);
+        seats = new Seat[nrows];
         nseats = nrows;
         for (s=0; s<nseats; s++)
             seats[s].insertSeat(NULL);
@@ -366,7 +365,7 @@ public:
     bool initSection(int nr, int ns)
     {
         int r = 0;
-        rows = (Row*) malloc(sizeof(Row)*nr);
+        rows = new Row[nr];
         nrows = nr;
         for (r=0; r<nr; r++)
             rows[r].initRow(ns);
@@ -379,7 +378,6 @@ public:
         if (!prow->insertRow(maxSeats,p))
         {
             delete p;
-            free(p);
             bsuccess = FALSE;
         }
         return bsuccess;
@@ -422,7 +420,7 @@ public:
     bool initAirline()
     {
         int s = 0;
-        sections = (Section*) malloc(sizeof(Section)*info.getSections());
+        sections = new Section[info.getSections()];
         nsections = info.getSections();
         for (s=0; s<info.getSections(); s++)
             sections[s].initSection(info.getRows()[s],info.getSeats()[s]);
@@ -470,8 +468,7 @@ public:
                 if ( fgets( line, SIZE, in ) )
                 {
                     count++;
-                    passenger = (Passenger*) malloc(sizeof(Passenger));
-                    passenger->initPassenger(line);
+                    passenger = new Passenger(line);
                     if ( !insertAirline(passenger) )
                         info.getErrorLog()->writeLog(line);
                 }
