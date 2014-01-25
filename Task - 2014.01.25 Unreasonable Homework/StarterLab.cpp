@@ -3,9 +3,10 @@
 
 //#include "stdafx.h"
 
-#include <cstdio> // c library
-#include <cstdlib> // c library
-#include <cstring> // c library
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
 #include "MemTracker.h"
 
 #pragma warning(disable:4996)
@@ -24,18 +25,18 @@ class ErrorLog
 public:
     bool openLog(char* fname)
     {
-        fperr = fopen(fname,"w");
+        fperr.open(fname);
         errorCount = 0;
         return fperr != NULL;
     }
     bool closeLog()
     {
-        fclose(fperr);
+        fperr.close();
         return true;
     }
     bool writeLog(char* errortxt)
     {
-        fputs(errortxt, fperr);
+        fperr << errortxt << endl;
         errorCount++;
         return true;
     }
@@ -44,7 +45,7 @@ public:
         return errorCount;
     }
 private:
-    FILE* fperr;
+    ofstream fperr;
     int errorCount;
 };
 
@@ -76,7 +77,7 @@ public:
     }
     bool getProfileData(char* inifile, char* psection)
     {
-        FILE* fpini = fopen(inifile,"r");
+        ifstream fpini(inifile);
         char buffer[SIZE];
         int value = INVALID;
         int x = 0;
@@ -104,8 +105,8 @@ public:
                 }
             }
         }
-        fclose( fpini );
-        return fpini != NULL;
+        fpini.close();
+        return TRUE;
     }
     int GetErrorCount()
     {
@@ -142,21 +143,19 @@ private:
     int* rows;
     int* seats;
     class ErrorLog errorLog;
-    bool findValue(FILE* fp, char* section, char* skey, char* svalue)
+    bool findValue(ifstream &fp, char* section, char* skey, char* svalue)
     {
         bool bfound = FALSE;
         char* ptr = NULL;
         char buffer[SIZE];
-        fgets(buffer,SIZE,fp);
+        fp.getline(buffer, SIZE);
         while (strstr(buffer,section) == NULL)
         {
-            if (!fgets(buffer,SIZE,fp))
-                break;
+            fp.getline(buffer, SIZE);
         }
         while (strstr(buffer,skey) == NULL)
         {
-            if (!fgets(buffer,SIZE,fp))
-                break;
+            fp.getline(buffer, SIZE);
         }
         if (strlen(buffer))
         {
@@ -165,11 +164,10 @@ private:
             strcpy(svalue,ptr);
             bfound = TRUE;
         }
-        rewind(fp);
+        fp.seekg(0);
         return bfound;
     }
-
-    bool getProfileInt(FILE* fpini, char* psection, char* pfield, int* value)
+    bool getProfileInt(ifstream &fpini, char* psection, char* pfield, int* value)
     {
         bool bfound = FALSE;
         char buffer[SIZE];
@@ -460,26 +458,16 @@ public:
         Passenger* passenger = NULL;
         char line[SIZE];
         int count = 0;
-        FILE* in = fopen( fn,"r" );
-        if ( in != NULL )
+        ifstream in(fn);
+        while ( !in.eof() )
         {
-            while ( !feof(in) )
-            {
-                if ( fgets( line, SIZE, in ) )
-                {
-                    count++;
-                    passenger = new Passenger(line);
-                    if ( !insertAirline(passenger) )
-                        info.getErrorLog()->writeLog(line);
-                }
-            }
+            in.getline(line, SIZE);
+            count++;
+            passenger = new Passenger(line);
+            if ( !insertAirline(passenger) )
+                info.getErrorLog()->writeLog(line);
         }
-        else
-        {
-            printf("Unable to open file %s\n",fn);
-            exit(0);
-        }
-        fclose(in);
+        in.close();
         info.getErrorLog()->closeLog();
         return count;
     }
