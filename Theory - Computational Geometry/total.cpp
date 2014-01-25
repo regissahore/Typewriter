@@ -516,6 +516,15 @@ struct Polygon
             vertex[i].output();
         }
     }
+    double area() const
+    {
+        double area = 0.0;
+        for (size_t i = 2; i < vertex.size(); ++i)
+        {
+            area += fabs(cross(vertex[i], vertex[i - 1], vertex[0]));
+        }
+        return area * 0.5;
+    }
 };
 
 void graham(vector<Point> &points, Polygon &convex)
@@ -550,6 +559,21 @@ void graham(vector<Point> &points, Polygon &convex)
         }
         convex.vertex.push_back(points[i]);
     }
+}
+
+double rotatingCalipers(vector<Point> &points)
+{
+    double ans = 0.0;
+    points.push_back(points[0]);
+    for (int i = 0, j = 1; i < points.size(); ++i)
+    {
+        while (fabs(cross(points[i], points[i + 1], points[j + 1])) > fabs(cross(points[i], points[i + 1], points[j])))
+        {
+            j = (j + 1) % (points.size() - 1);
+        }
+        ans = max(ans, max(dist(points[i], points[j]), dist(points[i + 1], points[j])));
+    }
+    return ans;
 }
 
 int main()
