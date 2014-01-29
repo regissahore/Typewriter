@@ -1,4 +1,4 @@
-(load "2.8.scm")
+(load "2.08.scm")
 (define (display-interval int)
     (newline)
     (display "[")
