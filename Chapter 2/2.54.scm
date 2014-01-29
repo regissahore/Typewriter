@@ -1,0 +1,7 @@
+(define (equal? x y)
+    (if (and (symbol? x) (symbol? y))
+        (eq? x y)
+        (cond ((and (null? x) (null? y)) #t)
+              ((or (null? x) (null? y)) #f)
+              ((equal? (car x) (car y)) (equal? (cdr x) (cdr y)))
+              (else #f))))
