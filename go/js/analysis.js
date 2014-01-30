@@ -263,7 +263,7 @@ function addOperatorList() {
             vectorIndex = selectIndex.selectedIndex;
             updateLineChart();
         }
-    }
+    };
     vectorIndex = 0;
     nameDiv.appendChild(selectIndex);
     
@@ -279,7 +279,7 @@ function addParameterList() {
     show.onclick = function() {
         lineChartConfig.showP = !lineChartConfig.showP;
         updateLineChart();
-    }
+    };
     configDiv.appendChild(show);
     var show = document.createElement("span");
     show.innerText = "可用度";
@@ -292,7 +292,7 @@ function addParameterList() {
     show.onclick = function() {
         lineChartConfig.showR = !lineChartConfig.showR;
         updateLineChart();
-    }
+    };
     configDiv.appendChild(show);
     var show = document.createElement("span");
     show.innerText = "不可用度";
@@ -305,7 +305,7 @@ function addParameterList() {
     show.onclick = function() {
         lineChartConfig.showLambda = !lineChartConfig.showLambda;
         updateLineChart();
-    }
+    };
     configDiv.appendChild(show);
     var show = document.createElement("span");
     show.innerText = "故障率";
@@ -318,7 +318,7 @@ function addParameterList() {
     show.onclick = function() {
         lineChartConfig.showMu = !lineChartConfig.showMu;
         updateLineChart();
-    }
+    };
     configDiv.appendChild(show);
     var show = document.createElement("span");
     show.innerText = "维修率";
@@ -342,7 +342,7 @@ function displayLineChart() {
     canvas.onmousemove = function(event) {
         getMousePos(event);
         updateLineChart();
-    }
+    };
     displayDiv.appendChild(canvas);
     window.onresize = function() {
         canvasWidth = document.documentElement.clientWidth * 0.9;
@@ -350,7 +350,7 @@ function displayLineChart() {
         canvas.width = canvasWidth;
         canvas.height = canvasHeight;
         updateLineChart();
-    }
+    };
     updateLineChart();
 }
 
@@ -374,4 +374,4 @@ function updateDisplayType(type) {
 
 window.onload = function() {
     displayLineChart();
-}
+};
