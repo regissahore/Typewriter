@@ -68,5 +68,32 @@ fieldset span {
 }
 
 .yellow_block {
-    color: rgb(170, 170, 0);
+    color: rgb(220, 119, 0);
+}
+
+#div_display {
+    font-family: 微软雅黑, Helvetica, Arial, sans-serif;
+}
+
+#div_display table {
+    border:1px solid #CCC;
+    border-collapse:collapse;
+}
+
+#div_display table tr:hover {
+    background-color: #dddddd;
+}
+
+#div_display table th {
+    width: 130px;
+    height: 25px;
+    border:1px solid #CCC;
+    background-color: #eeeeee;
+}
+
+#div_display table td {
+    width: 130px;
+    height: 25px;
+    text-align: center;
+    border:1px solid #CCC;
 }

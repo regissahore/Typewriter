@@ -5,12 +5,24 @@ var canvasHeight;
 var mouseX = 0;
 var mouseY = 0;
 
-var lineChartConfig = {
+var displayConfig = {
+    //displayType: "line_chart",
+    displayType: "table",
     showP: true,
     showR: true,
     showLambda: true,
     showMu: true,
+    isScienceNum: false,
+    tableType: "horizon",
 };
+
+function numToString(num) {
+    num = parseFloat(num.toFixed(10));
+    if (displayConfig.isScienceNum) {
+        return num.toExponential();
+    }
+    return num;
+}
 
 function getMousePos(event) {
     var canvas = document.getElementById("line_chart_canvas");
@@ -71,20 +83,20 @@ function updateLineChart() {
     context.textBaseline = 'top';
     context.fillText("时间", shiftX + chartWidth, shiftY + 10);
     context.beginPath();
-    if (lineChartConfig.showP) {
+    if (displayConfig.showP) {
         context.fillStyle = 'rgb(0, 139, 0)';
         context.fillText("可用度", shiftX - 10, shiftY - chartHeight);
-    } else if (lineChartConfig.showR) {
+    } else if (displayConfig.showR) {
         context.fillStyle = 'rgb(139, 0, 0)';
         context.fillText("不可用度", shiftX - 10, shiftY - chartHeight);
-    } else if (lineChartConfig.showLambda) {
+    } else if (displayConfig.showLambda) {
         context.fillStyle = 'rgb(0, 0, 139)';
         context.fillText("故障率", shiftX - 10, shiftY - chartHeight);
-    } else if (lineChartConfig.showMu) {
+    } else if (displayConfig.showMu) {
         context.fillStyle = 'rgb(170, 170, 0)';
         context.fillText("维修率", shiftX - 10, shiftY - chartHeight);
     }
-    if (lineChartConfig.showP) {
+    if (displayConfig.showP) {
         var minP = 1.0;
         var maxP = 0.0;
         for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
@@ -112,7 +124,7 @@ function updateLineChart() {
         }
         context.stroke();
     }
-    if (lineChartConfig.showR) {
+    if (displayConfig.showR) {
         var minP = 1.0;
         var maxP = 0.0;
         for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
@@ -140,7 +152,7 @@ function updateLineChart() {
         }
         context.stroke();
     }
-    if (lineChartConfig.showLambda) {
+    if (displayConfig.showLambda) {
         var minP = 1e100;
         var maxP = 0;
         for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
@@ -168,7 +180,7 @@ function updateLineChart() {
         }
         context.stroke();
     }
-    if (lineChartConfig.showMu) {
+    if (displayConfig.showMu) {
         var minP = 1e100;
         var maxP = 0;
         for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
@@ -190,7 +202,7 @@ function updateLineChart() {
             maxP *= 1.01;
         }
         context.beginPath();
-        context.strokeStyle = 'rgb(170, 170, 0)';
+        context.strokeStyle = 'rgb(220, 119, 0)';
         context.lineWidth = 2.0;
         for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
             var value = data.lambdas[index][vectorIndex][i] * (data.ps[index][vectorIndex][i]) / (1 - data.ps[index][vectorIndex][i]);
@@ -207,11 +219,11 @@ function updateLineChart() {
                 context.textAlign = 'left';
                 context.textBaseline = 'top';
                 context.font = "16px 微软雅黑";
-                context.fillText("时间：" + data.times[time].toFixed(10), 10, 0);
-                context.fillText("可用度：" + data.ps[index][vectorIndex][time].toFixed(10), 10, 20);
-                context.fillText("不可用度：" + (1.0 - data.ps[index][vectorIndex][time]).toFixed(10), 200, 20);
-                context.fillText("故障率：" + data.lambdas[index][vectorIndex][time].toFixed(10), 10, 40);
-                context.fillText("维修率：" + (data.lambdas[index][vectorIndex][time] * data.ps[index][vectorIndex][time] / (1.0 - data.ps[index][vectorIndex][time])).toFixed(10), 200, 40);
+                context.fillText("时间：" + numToString(data.times[time]), 10, 0);
+                context.fillText("可用度：" + numToString(data.ps[index][vectorIndex][time]), 10, 20);
+                context.fillText("不可用度：" + numToString(1.0 - data.ps[index][vectorIndex][time]), 200, 20);
+                context.fillText("故障率：" + numToString(data.lambdas[index][vectorIndex][time]), 10, 40);
+                context.fillText("维修率：" + numToString(data.lambdas[index][vectorIndex][time] * data.ps[index][vectorIndex][time] / (1.0 - data.ps[index][vectorIndex][time])), 200, 40);
             }
             context.beginPath();
             context.strokeStyle = '#000000';
@@ -275,10 +287,10 @@ function addParameterList() {
   
     var show = document.createElement("input");
     show.type = "checkbox";
-    show.checked = lineChartConfig.showP;
+    show.checked = displayConfig.showP;
     show.onclick = function() {
-        lineChartConfig.showP = !lineChartConfig.showP;
-        updateLineChart();
+        displayConfig.showP = !displayConfig.showP;
+        updateDisplay();
     };
     configDiv.appendChild(show);
     var show = document.createElement("span");
@@ -288,10 +300,10 @@ function addParameterList() {
     
     var show = document.createElement("input");
     show.type = "checkbox";
-    show.checked = lineChartConfig.showR;
+    show.checked = displayConfig.showR;
     show.onclick = function() {
-        lineChartConfig.showR = !lineChartConfig.showR;
-        updateLineChart();
+        displayConfig.showR = !displayConfig.showR;
+        updateDisplay();
     };
     configDiv.appendChild(show);
     var show = document.createElement("span");
@@ -301,10 +313,10 @@ function addParameterList() {
     
     var show = document.createElement("input");
     show.type = "checkbox";
-    show.checked = lineChartConfig.showLambda;
+    show.checked = displayConfig.showLambda;
     show.onclick = function() {
-        lineChartConfig.showLambda = !lineChartConfig.showLambda;
-        updateLineChart();
+        displayConfig.showLambda = !displayConfig.showLambda;
+        updateDisplay();
     };
     configDiv.appendChild(show);
     var show = document.createElement("span");
@@ -314,10 +326,10 @@ function addParameterList() {
     
     var show = document.createElement("input");
     show.type = "checkbox";
-    show.checked = lineChartConfig.showMu;
+    show.checked = displayConfig.showMu;
     show.onclick = function() {
-        lineChartConfig.showMu = !lineChartConfig.showMu;
-        updateLineChart();
+        displayConfig.showMu = !displayConfig.showMu;
+        updateDisplay();
     };
     configDiv.appendChild(show);
     var show = document.createElement("span");
@@ -354,15 +366,173 @@ function displayLineChart() {
     updateLineChart();
 }
 
+function addTableType() {
+    var configDiv = document.getElementById("div_config");
+    configDiv.innerHTML = "";
+    var nameDiv = document.createElement("div");
+    
+    var pIndex = document.createElement("span");
+    pIndex.innerText = "排列方式：";
+    nameDiv.appendChild(pIndex);
+    
+    var selectIndex = document.createElement("select");
+    if (displayConfig.tableType == "horizon") {
+        selectIndex.innerHTML += "<option value='horizon' selected='selected'>水平排列</option>";
+        selectIndex.innerHTML += "<option value='verticle'>竖直排列</option>";
+    } else {
+        selectIndex.innerHTML += "<option value='horizon'>水平排列</option>";
+        selectIndex.innerHTML += "<option value='verticle' selected='selected'>竖直排列</option>";
+    }
+    
+    selectIndex.onclick = function() {
+        if (displayConfig.tableType != selectIndex[selectIndex.selectedIndex].value) {
+            displayConfig.tableType = selectIndex[selectIndex.selectedIndex].value;
+            updateDisplay();
+        }
+    };
+    selectIndex.click();
+    vectorIndex = 0;
+    nameDiv.appendChild(selectIndex);
+    
+    configDiv.appendChild(nameDiv);
+}
+
 function displayTable() {
     var configDiv = document.getElementById("div_config");
     configDiv.innerHTML = "";
     var displayDiv = document.getElementById("div_display");
     displayDiv.innerHTML = "";
+    window.onresize = function() {};
+    addTableType();
+    addParameterList();
+    var showCount = displayConfig.showP + displayConfig.showR + displayConfig.showLambda + displayConfig.showMu;
+    if (showCount == 0) {
+        return;
+    }
+    var table = "";
+    if (displayConfig.tableType == 'horizon') {
+        table += "<table>";
+        table += "<tr>";
+        table += "<th>时间</th>";
+        for (var i = 0; i < data.names.length; ++i) {
+            table += "<th>" + data.names[i] + "</th>";
+            for (var j = 1; j < showCount; ++j) {
+                table += "<th></th>";
+            }
+        }
+        table += "</tr>";
+        table += "<tr>";
+        table += "<td></td>";
+        for (var i = 0; i < data.names.length; ++i) {
+            if (displayConfig.showP) {
+                table += "<td class='green_block'>可用度</td>";
+            }
+            if (displayConfig.showR) {
+                table += "<td class='red_block'>不可用度</td>";
+            }
+            if (displayConfig.showLambda) {
+                table += "<td class='blue_block'>故障率</td>";
+            }
+            if (displayConfig.showMu) {
+                table += "<td class='yellow_block'>维修率</td>";
+            }
+        }
+        table += "</tr>";
+        for (var i = 0; i < data.times.length; ++i) {
+            table += "<tr>";
+            table += "<td>" + numToString(data.times[i]) + "</td>";
+            for (var j = 0; j < data.names.length; ++j) {
+                if (displayConfig.showP) {
+                    table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
+                }
+                if (displayConfig.showR) {
+                    table += "<td>" + numToString(1.0 - data.ps[j][0][i]) + "</td>";
+                }
+                if (displayConfig.showLambda) {
+                    table += "<td>" + numToString(data.lambdas[j][0][i]) + "</td>";
+                }
+                if (displayConfig.showMu) {
+                    table += "<td>" + numToString(data.lambdas[j][0][i] * (data.ps[j][0][i]) / (1.0 - data.ps[j][0][i])) + "</td>";
+                }
+            }
+            table += "</tr>";
+        }
+        table += "</table>";
+    } else {
+        table += "<table>";
+        table += "<tr>";
+        table += "<th>时间</th>";
+        table += "<th>类型</th>";
+        for (var i = 0; i < data.names.length; ++i) {
+            table += "<th>" + data.names[i] + "</th>";
+        }
+        table += "</tr>";
+        for (var i = 0; i < data.times.length; ++i) {
+            var firstShow = true;
+            if (displayConfig.showP) {
+                table += "<tr>";
+                if (firstShow) {
+                    firstShow = false;
+                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                } else {
+                    table += "<td></td>";
+                }
+                table += "<td>可用度</td>";
+                for (var j = 0; j < data.names.length; ++j) {
+                    table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
+                }
+                table += "</tr>";
+            }
+            if (displayConfig.showR) {
+                table += "<tr>";
+                if (firstShow) {
+                    firstShow = false;
+                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                } else {
+                    table += "<td></td>";
+                }
+                table += "<td>不可用度</td>";
+                for (var j = 0; j < data.names.length; ++j) {
+                    table += "<td>" + numToString(1.0 - data.ps[j][0][i]) + "</td>";
+                }
+                table += "</tr>";
+            }
+            if (displayConfig.showLambda) {
+                table += "<tr>";
+                if (firstShow) {
+                    firstShow = false;
+                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                } else {
+                    table += "<td></td>";
+                }
+                table += "<td>故障率</td>";
+                for (var j = 0; j < data.names.length; ++j) {
+                    table += "<td>" + numToString(data.lambdas[j][0][i]) + "</td>";
+                }
+                table += "</tr>";
+            }
+            if (displayConfig.showMu) {
+                table += "<tr>";
+                if (firstShow) {
+                    firstShow = false;
+                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                } else {
+                    table += "<td></td>";
+                }
+                table += "<td>维修率</td>";
+                for (var j = 0; j < data.names.length; ++j) {
+                    table += "<td>" + numToString(data.lambdas[j][0][i] * (data.ps[j][0][i]) / (1.0 - data.ps[j][0][i])) + "</td>";
+                }
+                table += "</tr>";
+            }
+        }
+        table += "</table>";
+    }
+    displayDiv.innerHTML = table;
 }
 
-function updateDisplayType(type) {
-    switch (type.options[type.selectedIndex].value) {
+function updateDisplay() {
+    switch (displayConfig.displayType) {
     case "line-chart":
         displayLineChart();
         break;
@@ -372,6 +542,23 @@ function updateDisplayType(type) {
     }
 }
 
+function updateDisplayType(type) {
+    displayConfig.displayType = type.options[type.selectedIndex].value;
+    updateDisplay();
+}
+
+function updateNumberDisplayType(type) {
+    switch (type.options[type.selectedIndex].value) {
+    case "float":
+        displayConfig.isScienceNum = false;
+        break;
+    case "science":
+        displayConfig.isScienceNum = true;
+        break;
+    }
+    updateDisplay();
+}
+
 window.onload = function() {
-    displayLineChart();
+    updateDisplay();
 };
