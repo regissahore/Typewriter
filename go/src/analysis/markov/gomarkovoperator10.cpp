@@ -104,18 +104,34 @@ DoubleVector GoMarkovOperator10::calcTempOutputMarkovStatusNormal(QVector<Double
 
 void GoMarkovOperator10::calcOutputMarkovStatusCorrelate()
 {
+    DoubleVector G1 = 0.0;
+    DoubleVector G2 = 0.0;
     DoubleVector lambdaR = 0.0;
-    DoubleVector lmSum = 0.0;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GoMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
+        DoubleVector PSi = prevStatus->probabilityNormal();
+        DoubleVector QSi = prevStatus->probabilityBreakdown();
         DoubleVector lambdaSi = prevStatus->frequencyBreakdown();
-        DoubleVector muSi = prevStatus->frequencyRepair();
-        lambdaR += lambdaSi;
-        lmSum += lambdaSi / muSi;
+        DoubleVector temp = 1.0;
+        for (int j = 0; j < this->input()->number(); ++j)
+        {
+            if (i == j)
+            {
+                temp = temp * QSi;
+            }
+            else
+            {
+                temp = temp * this->getPrevMarkovStatus(j)->probabilityNormal();
+            }
+        }
+        G1 = G1 + PSi;
+        G2 = G2 + temp;
+        lambdaR = lambdaR + lambdaSi;
     }
-    DoubleVector muR = lambdaR / lmSum;
-    DoubleVector PR = 1 / (1 + lambdaR / muR);
+    DoubleVector PR = G1 / (G1 + G2);
+    DoubleVector QR = 1.0 - PR;
+    DoubleVector muR = lambdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
@@ -124,16 +140,14 @@ void GoMarkovOperator10::calcOutputMarkovStatusCorrelate()
 void GoMarkovOperator10::calcCommonOutputMarkovStatusCorrelate(DoubleVector PR)
 {
     DoubleVector lambdaR = 0.0;
-    DoubleVector lmSum = 0.0;
     for (int i = 0; i < this->input()->number(); ++i)
     {
         GoMarkovStatus *prevStatus = this->getPrevMarkovStatus(i);
         DoubleVector lambdaSi = prevStatus->frequencyBreakdown();
-        DoubleVector muSi = prevStatus->frequencyRepair();
-        lambdaR += lambdaSi;
-        lmSum += lambdaSi / muSi;
+        lambdaR = lambdaR + lambdaSi;
     }
-    DoubleVector muR = lambdaR / lmSum;
+    DoubleVector QR = 1.0 - PR;
+    DoubleVector muR = lambdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
