@@ -266,6 +266,11 @@ bool GoMarkovOperator::errorDetect()
             this->_error = QObject::tr("Error: Operator ") + GoMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 does not have sub input at %2.").arg(this->id()).arg(i + 1);
         }
     }
+    if (this->totalFrequencyBreakdown() > 1.0)
+    {
+        flag = true;
+        this->_error = QObject::tr("Error: ") + GoMarkovOperatorFactory::typeName(this->TypedItem::type()) + QObject::tr("-%1 The total frequency of breakdown is greater than 1.").arg(this->id());
+    }
     return flag;
 }
 
