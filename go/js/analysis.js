@@ -6,8 +6,7 @@ var mouseX = 0;
 var mouseY = 0;
 
 var displayConfig = {
-    //displayType: "line_chart",
-    displayType: "table",
+    displayType: "line_chart",
     showP: true,
     showR: true,
     showLambda: true,
@@ -357,6 +356,7 @@ function displayLineChart() {
         updateLineChart();
     };
     displayDiv.appendChild(canvas);
+    window.onscroll = function() {};
     window.onresize = function() {
         canvasWidth = document.documentElement.clientWidth * 0.9;
         canvasHeight = canvasWidth / 4 * 3;
@@ -424,6 +424,16 @@ function displayTable() {
     var displayDiv = document.getElementById("div_display");
     displayDiv.innerHTML = "";
     window.onresize = function() {};
+    window.onscroll = function() {
+        var spacing = document.getElementById("div_spacing");
+        var head = document.getElementById("div_head");
+        var rect = spacing.getBoundingClientRect();
+        if (rect.top < 0) {
+            head.className = "absoluteHead";
+        } else {
+            head.className = "relativeHead";
+        }
+    };
     addTableType();
     addParameterList();
     addNameList();
@@ -433,6 +443,13 @@ function displayTable() {
     }
     var table = "";
     if (displayConfig.tableType == 'horizon') {
+        table += "<div id='div_spacing'>";
+        table += "<table>";
+        for (var i = 0; i < 4; ++i) {
+            table += "<tr><td>-</td></tr>";
+        }
+        table += "</table>";
+        table += "<div id='div_head'>";
         table += "<table>";
         table += "<tr>";
         table += "<th>时间</th>";
@@ -467,6 +484,12 @@ function displayTable() {
         }
         table += "</tr>";
         for (var i = 0; i < data.times.length; ++i) {
+            if (2 == i) {
+                table += "</table>";
+                table += "</div>";
+                table += "</div>";
+                table += "<table>";
+            }
             table += "<tr>";
             table += "<td>" + numToString(data.times[i]) + "</td>";
             for (var j = 0; j < data.names.length; ++j) {
@@ -490,6 +513,13 @@ function displayTable() {
         }
         table += "</table>";
     } else {
+        table += "<div id='div_spacing'>";
+        table += "<table>";
+        for (var i = 0; i < 1 + showCount; ++i) {
+            table += "<tr><td>-</td></tr>";
+        }
+        table += "</table>";
+        table += "<div id='div_head'>";
         table += "<table>";
         table += "<tr>";
         table += "<th>时间</th>";
@@ -502,6 +532,12 @@ function displayTable() {
         }
         table += "</tr>";
         for (var i = 0; i < data.times.length; ++i) {
+            if (1 == i) {
+                table += "</table>";
+                table += "</div>";
+                table += "</div>";
+                table += "<table>";
+            }
             var firstShow = true;
             if (displayConfig.showP) {
                 table += "<tr>";
@@ -575,6 +611,7 @@ function displayTable() {
         table += "</table>";
     }
     displayDiv.innerHTML = table;
+    window.onscroll();
 }
 
 function updateDisplay() {

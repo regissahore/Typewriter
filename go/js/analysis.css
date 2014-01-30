@@ -87,7 +87,7 @@ fieldset span {
 #div_display table th {
     width: 130px;
     height: 25px;
-    border:1px solid #CCC;
+    border: 1px solid #CCC;
     background-color: #eeeeee;
 }
 
@@ -95,5 +95,26 @@ fieldset span {
     width: 130px;
     height: 25px;
     text-align: center;
-    border:1px solid #CCC;
+    border: 1px solid #CCC;
+    background-color: white;
+}
+
+#div_display .relativeHead {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+#div_display .absoluteHead {
+    position: fixed;
+    top: 0px;
+}
+
+#div_display .absoluteTail {
+    position: fixed;
+    bottom: 0px;
+}
+
+#div_spacing {
+    position: relative;
 }
