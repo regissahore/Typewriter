@@ -77,14 +77,12 @@ void GoMarkovOperator1::calcOutputMarkovStatusCorrelate()
     DoubleVector G2 = PS * QC + QS * PC;
     DoubleVector PR = G1 / (G1 + G2);
     DoubleVector lamdaS = prevStatus->frequencyBreakdown();
-    DoubleVector miuS = prevStatus->frequencyRepair();
     DoubleVector lamdaC = this->markovStatus()->frequencyBreakdown();
-    DoubleVector miuC = this->markovStatus()->frequencyRepair();
     DoubleVector lamdaR = lamdaS + lamdaC;
-    DoubleVector miuR = lamdaR / (lamdaS / miuS + lamdaC / miuC);
+    DoubleVector muR = lamdaR * PR / QR;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lamdaR);
-    this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
 DoubleVector GoMarkovOperator1::calcTempOutputMarkovStatusCorrelate(DoubleVector PS)
