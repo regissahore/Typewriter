@@ -105,7 +105,7 @@ def rename_in_file(rootDir):
 def generate_list(rootDir):
     global nameList
     for dir in os.listdir(rootDir):
-        path = os.path.join(rootDir, dir)
+        path = rootDir + "/" + dir
         if os.path.isdir(path):
             generate_list(path)
         else:
