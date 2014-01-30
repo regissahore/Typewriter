@@ -160,15 +160,17 @@ int main()
     breakdown.setLambda(0.1, 0.2, 0.3, 0.4);
     breakdown.setMu(0.4, 0.5, 0.6, 0.7);
     breakdown.setH(1);
-    for (int i = 1; i < 500; ++i)
+    for (int i = 1; i < 100; ++i)
     {
         breakdown.nextStep();
         printf("%d: ", i);
-        for (int j = 0; j < 4; ++j)
+        double sum = 0.0;
+        for (int j = 0; j < 5; ++j)
         {
+            sum += breakdown.getY(j);
             printf("%.10lf ", breakdown.getY(j));
         }
-        printf("\n");
+        printf("%.2lf\n", sum);
     }
     return 0;
 }

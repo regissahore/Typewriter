@@ -154,6 +154,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
             isOperatorError = true;
             this->_messages.append(MessageRecord(op->error(), MessageFactory::TYPE_OUTPUT_ERROR));
         }
+        op->setTimeInterval(totalTime / (count - 1));
     }
     for (int i = 0; i < this->_commonCause.size(); ++i)
     {

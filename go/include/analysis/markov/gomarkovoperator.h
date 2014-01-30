@@ -43,6 +43,7 @@ public:
     virtual void paintParameter(QPainter *painter);
     QString error() const;
     DoubleVector totalFrequencyBreakdown() const;
+    void setTimeInterval(double time);
     virtual GoMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);

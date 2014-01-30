@@ -1,287 +1,34 @@
 #include "RungeKuttaBreakdown4.h"
-const DoubleVector RK_STEP = 0.0001;
 
-RungeKuttaBreakdown4::RungeKuttaBreakdown4()
+RungeKuttaBreakdown4::RungeKuttaBreakdown4() : RungeKutta(5)
 {
-    this->_rkt = 0.0;
+    this->setY(0, 1.0);
 }
 
-DoubleVector RungeKuttaBreakdown4::rk0() const
+void RungeKuttaBreakdown4::setLambda(double l1, double l2, double l3, double l4)
 {
-    return this->_rk0;
+    lambda1 = l1;
+    lambda2 = l2;
+    lambda3 = l3;
+    lambda4 = l4;
 }
 
-DoubleVector RungeKuttaBreakdown4::rk1() const
+void RungeKuttaBreakdown4::setMu(double m1, double m2, double m3, double m4)
 {
-    return this->_rk1;
+    mu1 = m1;
+    mu2 = m2;
+    mu3 = m3;
+    mu4 = m4;
 }
 
-DoubleVector RungeKuttaBreakdown4::rk2() const
+QVector<double> RungeKuttaBreakdown4::F(double x, QVector<double> y)
 {
-    return this->_rk2;
-}
-
-DoubleVector RungeKuttaBreakdown4::rk3() const
-{
-    return this->_rk3;
-}
-
-DoubleVector RungeKuttaBreakdown4::rk4() const
-{
-    return this->_rk4;
-}
-
-DoubleVector RungeKuttaBreakdown4::calcNormalProbability(DoubleVector time, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    if (time < RK_STEP)
-    {
-        this->_rk0 = 1.0;
-        this->_rk1 = 0.0;
-        this->_rk2 = 0.0;
-        this->_rk3 = 0.0;
-        this->_rk4 = 0.0;
-        this->_rkt = 0.0;
-    }
-    while (this->_rkt < time)
-    {
-        DoubleVector k1[5], k2[5], k3[5], k4[5];
-        k1[0] = func0(this->_rkt,
-                      this->_rk0,
-                      this->_rk1,
-                      this->_rk2,
-                      this->_rk3,
-                      this->_rk4,
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k1[1] = func1(this->_rkt,
-                      this->_rk0,
-                      this->_rk1,
-                      this->_rk2,
-                      this->_rk3,
-                      this->_rk4,
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k1[2] = func2(this->_rkt,
-                      this->_rk0,
-                      this->_rk1,
-                      this->_rk2,
-                      this->_rk3,
-                      this->_rk4,
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k1[3] = func3(this->_rkt,
-                      this->_rk0,
-                      this->_rk1,
-                      this->_rk2,
-                      this->_rk3,
-                      this->_rk4,
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k1[4] = func4(this->_rkt,
-                      this->_rk0,
-                      this->_rk1,
-                      this->_rk2,
-                      this->_rk3,
-                      this->_rk4,
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-
-        k2[0] = func0(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k1[0],
-                      this->_rk1 + RK_STEP * 0.5 * k1[1],
-                      this->_rk2 + RK_STEP * 0.5 * k1[2],
-                      this->_rk3 + RK_STEP * 0.5 * k1[3],
-                      this->_rk4 + RK_STEP * 0.5 * k1[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k2[1] = func1(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k1[0],
-                      this->_rk1 + RK_STEP * 0.5 * k1[1],
-                      this->_rk2 + RK_STEP * 0.5 * k1[2],
-                      this->_rk3 + RK_STEP * 0.5 * k1[3],
-                      this->_rk4 + RK_STEP * 0.5 * k1[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k2[2] = func2(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k1[0],
-                      this->_rk1 + RK_STEP * 0.5 * k1[1],
-                      this->_rk2 + RK_STEP * 0.5 * k1[2],
-                      this->_rk3 + RK_STEP * 0.5 * k1[3],
-                      this->_rk4 + RK_STEP * 0.5 * k1[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k2[3] = func3(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k1[0],
-                      this->_rk1 + RK_STEP * 0.5 * k1[1],
-                      this->_rk2 + RK_STEP * 0.5 * k1[2],
-                      this->_rk3 + RK_STEP * 0.5 * k1[3],
-                      this->_rk4 + RK_STEP * 0.5 * k1[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k2[4] = func4(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k1[0],
-                      this->_rk1 + RK_STEP * 0.5 * k1[1],
-                      this->_rk2 + RK_STEP * 0.5 * k1[2],
-                      this->_rk3 + RK_STEP * 0.5 * k1[3],
-                      this->_rk4 + RK_STEP * 0.5 * k1[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-
-        k3[0] = func0(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k2[0],
-                      this->_rk1 + RK_STEP * 0.5 * k2[1],
-                      this->_rk2 + RK_STEP * 0.5 * k2[2],
-                      this->_rk3 + RK_STEP * 0.5 * k2[3],
-                      this->_rk4 + RK_STEP * 0.5 * k2[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k3[1] = func1(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k2[0],
-                      this->_rk1 + RK_STEP * 0.5 * k2[1],
-                      this->_rk2 + RK_STEP * 0.5 * k2[2],
-                      this->_rk3 + RK_STEP * 0.5 * k2[3],
-                      this->_rk4 + RK_STEP * 0.5 * k2[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k3[2] = func2(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k2[0],
-                      this->_rk1 + RK_STEP * 0.5 * k2[1],
-                      this->_rk2 + RK_STEP * 0.5 * k2[2],
-                      this->_rk3 + RK_STEP * 0.5 * k2[3],
-                      this->_rk4 + RK_STEP * 0.5 * k2[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k3[3] = func3(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k2[0],
-                      this->_rk1 + RK_STEP * 0.5 * k2[1],
-                      this->_rk2 + RK_STEP * 0.5 * k2[2],
-                      this->_rk3 + RK_STEP * 0.5 * k2[3],
-                      this->_rk4 + RK_STEP * 0.5 * k2[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k3[4] = func4(this->_rkt + RK_STEP * 0.5,
-                      this->_rk0 + RK_STEP * 0.5 * k2[0],
-                      this->_rk1 + RK_STEP * 0.5 * k2[1],
-                      this->_rk2 + RK_STEP * 0.5 * k2[2],
-                      this->_rk3 + RK_STEP * 0.5 * k2[3],
-                      this->_rk4 + RK_STEP * 0.5 * k2[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-
-        k4[0] = func0(this->_rkt,
-                      this->_rk0 + RK_STEP * k3[0],
-                      this->_rk1 + RK_STEP * k3[1],
-                      this->_rk2 + RK_STEP * k3[2],
-                      this->_rk3 + RK_STEP * k3[3],
-                      this->_rk4 + RK_STEP * k3[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k4[1] = func1(this->_rkt,
-                      this->_rk0 + RK_STEP * k3[0],
-                      this->_rk1 + RK_STEP * k3[1],
-                      this->_rk2 + RK_STEP * k3[2],
-                      this->_rk3 + RK_STEP * k3[3],
-                      this->_rk4 + RK_STEP * k3[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k4[2] = func2(this->_rkt,
-                      this->_rk0 + RK_STEP * k3[0],
-                      this->_rk1 + RK_STEP * k3[1],
-                      this->_rk2 + RK_STEP * k3[2],
-                      this->_rk3 + RK_STEP * k3[3],
-                      this->_rk4 + RK_STEP * k3[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k4[3] = func3(this->_rkt,
-                      this->_rk0 + RK_STEP * k3[0],
-                      this->_rk1 + RK_STEP * k3[1],
-                      this->_rk2 + RK_STEP * k3[2],
-                      this->_rk3 + RK_STEP * k3[3],
-                      this->_rk4 + RK_STEP * k3[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-        k4[4] = func4(this->_rkt,
-                      this->_rk0 + RK_STEP * k3[0],
-                      this->_rk1 + RK_STEP * k3[1],
-                      this->_rk2 + RK_STEP * k3[2],
-                      this->_rk3 + RK_STEP * k3[3],
-                      this->_rk4 + RK_STEP * k3[4],
-                      lambda1, lambda2, lambda3, lambda4,
-                      mu1, mu2, mu3, mu4);
-
-        this->_rk0 += RK_STEP / 6 * (k1[0] + 2 * k2[0] + 2 * k3[0] + k4[0]);;
-        this->_rk1 += RK_STEP / 6 * (k1[1] + 2 * k2[1] + 2 * k3[1] + k4[1]);
-        this->_rk2 += RK_STEP / 6 * (k1[2] + 2 * k2[2] + 2 * k3[2] + k4[2]);
-        this->_rk3 += RK_STEP / 6 * (k1[3] + 2 * k2[3] + 2 * k3[3] + k4[3]);
-        this->_rk4 += RK_STEP / 6 * (k1[4] + 2 * k2[4] + 2 * k3[4] + k4[4]);
-        this->_rkt += RK_STEP;
-    }
-    return this->_rk0;
-}
-
-DoubleVector RungeKuttaBreakdown4::func0(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    Q_UNUSED(t);
-    Q_UNUSED(x0);
-    return - (lambda1 + lambda2 + lambda3 + lambda4) + mu1 * x1 + mu2 * x2 + mu3 * x3 + mu4 * x4;
-}
-
-DoubleVector RungeKuttaBreakdown4::func1(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    Q_UNUSED(t);
-    Q_UNUSED(x2);
-    Q_UNUSED(x3);
-    Q_UNUSED(x4);
-    Q_UNUSED(lambda2);
-    Q_UNUSED(lambda3);
-    Q_UNUSED(lambda4);
-    Q_UNUSED(mu2);
-    Q_UNUSED(mu3);
-    Q_UNUSED(mu4);
-    return lambda1 * x0 - mu1 * x1;
-}
-
-DoubleVector RungeKuttaBreakdown4::func2(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    Q_UNUSED(t);
-    Q_UNUSED(x1);
-    Q_UNUSED(x3);
-    Q_UNUSED(x4);
-    Q_UNUSED(lambda1);
-    Q_UNUSED(lambda3);
-    Q_UNUSED(lambda4);
-    Q_UNUSED(mu1);
-    Q_UNUSED(mu3);
-    Q_UNUSED(mu4);
-    return lambda2 * x0 - mu2 * x2;
-}
-
-DoubleVector RungeKuttaBreakdown4::func3(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    Q_UNUSED(t);
-    Q_UNUSED(x1);
-    Q_UNUSED(x2);
-    Q_UNUSED(x4);
-    Q_UNUSED(lambda1);
-    Q_UNUSED(lambda2);
-    Q_UNUSED(lambda4);
-    Q_UNUSED(mu1);
-    Q_UNUSED(mu2);
-    Q_UNUSED(mu4);
-    return lambda3 * x0 - mu3 * x3;
-}
-
-DoubleVector RungeKuttaBreakdown4::func4(DoubleVector t, DoubleVector x0, DoubleVector x1, DoubleVector x2, DoubleVector x3, DoubleVector x4, DoubleVector lambda1, DoubleVector lambda2, DoubleVector lambda3, DoubleVector lambda4, DoubleVector mu1, DoubleVector mu2, DoubleVector mu3, DoubleVector mu4)
-{
-    Q_UNUSED(t);
-    Q_UNUSED(x1);
-    Q_UNUSED(x2);
-    Q_UNUSED(x3);
-    Q_UNUSED(lambda1);
-    Q_UNUSED(lambda2);
-    Q_UNUSED(lambda3);
-    Q_UNUSED(mu1);
-    Q_UNUSED(mu2);
-    Q_UNUSED(mu3);
-    return lambda4 * x0 - mu4 * x4;
+    Q_UNUSED(x);
+    QVector<double> z;
+    z.push_back(-(lambda1 + lambda2 + lambda3 + lambda4) * y[0] + mu1 * y[1] + mu2 * y[2] + mu3 * y[3] + mu4 * y[4]);
+    z.push_back(lambda1 * y[0] - mu1 * y[1]);
+    z.push_back(lambda2 * y[0] - mu2 * y[2]);
+    z.push_back(lambda3 * y[0] - mu3 * y[3]);
+    z.push_back(lambda4 * y[0] - mu4 * y[4]);
+    return z;
 }

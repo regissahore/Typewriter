@@ -207,7 +207,8 @@ HEADERS += \
     include/view/SceneGoMarkovChart.h \
     include/view/ViewGo.h \
     include/view/ViewGoMarkov.h \
-    include/view/ViewGoMarkovChart.h
+    include/view/ViewGoMarkovChart.h \
+    include/analysis/markov/RungeKutta.h
 
 SOURCES += \
     src/analysis/markov/DoubleVector.cpp \
@@ -374,4 +375,5 @@ SOURCES += \
     src/view/SceneGoMarkovChart.cpp \
     src/view/ViewGo.cpp \
     src/view/ViewGoMarkov.cpp \
-    src/view/ViewGoMarkovChart.cpp
+    src/view/ViewGoMarkovChart.cpp \
+    src/analysis/markov/RungeKutta.cpp
