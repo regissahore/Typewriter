@@ -14,6 +14,7 @@ var displayConfig = {
     showMu: true,
     isScienceNum: false,
     tableType: "horizon",
+    showName: Object(),
 };
 
 function numToString(num) {
@@ -397,6 +398,26 @@ function addTableType() {
     configDiv.appendChild(nameDiv);
 }
 
+function addNameList() {
+    var configDiv = document.getElementById("div_config");
+    var nameDiv = document.createElement("div");
+    for (var i = 0; i < data.names.length; ++i) {
+        var checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.checked = displayConfig.showName[data.names[i]];
+        checkbox.value = data.names[i];
+        checkbox.onchange = function() {
+            displayConfig.showName[checkbox.value] = checkbox.checked;
+            updateDisplay();
+        };
+        nameDiv.appendChild(checkbox);
+        var p = document.createElement("span");
+        p.innerText = data.names[i];
+        nameDiv.appendChild(p);
+    }
+    configDiv.appendChild(nameDiv);
+}
+
 function displayTable() {
     var configDiv = document.getElementById("div_config");
     configDiv.innerHTML = "";
@@ -405,6 +426,7 @@ function displayTable() {
     window.onresize = function() {};
     addTableType();
     addParameterList();
+    addNameList();
     var showCount = displayConfig.showP + displayConfig.showR + displayConfig.showLambda + displayConfig.showMu;
     if (showCount == 0) {
         return;
@@ -415,6 +437,9 @@ function displayTable() {
         table += "<tr>";
         table += "<th>时间</th>";
         for (var i = 0; i < data.names.length; ++i) {
+            if (!displayConfig.showName[data.names[i]]) {
+                continue;
+            }
             table += "<th>" + data.names[i] + "</th>";
             for (var j = 1; j < showCount; ++j) {
                 table += "<th></th>";
@@ -424,6 +449,9 @@ function displayTable() {
         table += "<tr>";
         table += "<td></td>";
         for (var i = 0; i < data.names.length; ++i) {
+            if (!displayConfig.showName[data.names[i]]) {
+                continue;
+            }
             if (displayConfig.showP) {
                 table += "<td class='green_block'>可用度</td>";
             }
@@ -442,6 +470,9 @@ function displayTable() {
             table += "<tr>";
             table += "<td>" + numToString(data.times[i]) + "</td>";
             for (var j = 0; j < data.names.length; ++j) {
+                if (!displayConfig.showName[data.names[j]]) {
+                    continue;
+                }
                 if (displayConfig.showP) {
                     table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
                 }
@@ -464,6 +495,9 @@ function displayTable() {
         table += "<th>时间</th>";
         table += "<th>类型</th>";
         for (var i = 0; i < data.names.length; ++i) {
+            if (!displayConfig.showName[data.names[i]]) {
+                continue;
+            }
             table += "<th>" + data.names[i] + "</th>";
         }
         table += "</tr>";
@@ -479,6 +513,9 @@ function displayTable() {
                 }
                 table += "<td>可用度</td>";
                 for (var j = 0; j < data.names.length; ++j) {
+                    if (!displayConfig.showName[data.names[j]]) {
+                        continue;
+                    }
                     table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
                 }
                 table += "</tr>";
@@ -493,6 +530,9 @@ function displayTable() {
                 }
                 table += "<td>不可用度</td>";
                 for (var j = 0; j < data.names.length; ++j) {
+                    if (!displayConfig.showName[data.names[j]]) {
+                        continue;
+                    }
                     table += "<td>" + numToString(1.0 - data.ps[j][0][i]) + "</td>";
                 }
                 table += "</tr>";
@@ -507,6 +547,9 @@ function displayTable() {
                 }
                 table += "<td>故障率</td>";
                 for (var j = 0; j < data.names.length; ++j) {
+                    if (!displayConfig.showName[data.names[j]]) {
+                        continue;
+                    }
                     table += "<td>" + numToString(data.lambdas[j][0][i]) + "</td>";
                 }
                 table += "</tr>";
@@ -521,6 +564,9 @@ function displayTable() {
                 }
                 table += "<td>维修率</td>";
                 for (var j = 0; j < data.names.length; ++j) {
+                    if (!displayConfig.showName[data.names[j]]) {
+                        continue;
+                    }
                     table += "<td>" + numToString(data.lambdas[j][0][i] * (data.ps[j][0][i]) / (1.0 - data.ps[j][0][i])) + "</td>";
                 }
                 table += "</tr>";
@@ -560,5 +606,8 @@ function updateNumberDisplayType(type) {
 }
 
 window.onload = function() {
+    for (var i = 0; i < data.names.length; ++i) {
+        displayConfig.showName[data.names[i]] = true;
+    }
     updateDisplay();
 };
