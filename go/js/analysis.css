@@ -85,14 +85,14 @@ fieldset span {
 }
 
 #div_display table th {
-    width: 130px;
+    min-width: 130px;
     height: 25px;
     border: 1px solid #CCC;
     background-color: #eeeeee;
 }
 
 #div_display table td {
-    width: 130px;
+    min-width: 130px;
     height: 25px;
     text-align: center;
     border: 1px solid #CCC;

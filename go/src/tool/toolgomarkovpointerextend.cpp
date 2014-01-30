@@ -29,8 +29,8 @@ bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT ||
-                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             continue;
         }
@@ -49,8 +49,8 @@ bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0 ; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT ||
-                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             continue;
         }
@@ -67,8 +67,8 @@ bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT ||
-                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT ||
+                item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             if (item->isSelectable(event->scenePos().x(), event->scenePos().y()))
             {
@@ -92,7 +92,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
         {
             if (this->_item != 0L)
             {
-                if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
                     ItemGoMarkovOperator *item = ((ItemGoMarkovOperator*)this->_item)->copy();
                     this->sceneGo()->addItem(item);
@@ -107,12 +107,12 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     for (int i = 0; i < items.size(); ++i)
                     {
                         ItemDrawable* item = (ItemDrawable*)items.at(i);
-                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                         {
                             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
                             visit[op->model()->id()] = true;
                         }
-                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
                         {
                             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
                             visit[eq->id()] = true;
@@ -135,12 +135,12 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     for (int i = 0; i < items.size(); ++i)
                     {
                         ItemDrawable* item = (ItemDrawable*)items.at(i);
-                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                         {
                             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
                             visit[op->model()->realID()] = true;
                         }
-                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+                        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
                         {
                             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
                             visit[eq->id()] = true;
@@ -161,7 +161,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     message->setMessage(this->_item);
                     this->sceneGo()->sendMessage(message);
                 }
-                else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_TEXT)
+                else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
                 {
                     ItemGoText *item = ((ItemGoText*)this->_item)->copy();
                     item->setX(((ItemGoText*)this->_item)->x() + 100);
@@ -181,7 +181,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
     {
         if (event->modifiers() & Qt::ControlModifier)
         {
-            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
             {
                 ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)this->_item;
                 if (event->modifiers() & Qt::ShiftModifier)
@@ -194,7 +194,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 }
                 op->update();
             }
-            else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+            else if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
             {
                 ItemGoSignal *signal = (ItemGoSignal*)this->_item;
                 if (event->modifiers() & Qt::ShiftModifier)
@@ -217,7 +217,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
     {
         if (event->modifiers() & Qt::ControlModifier)
         {
-            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+            if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
             {
                 ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
                 if (event->modifiers() & Qt::ShiftModifier)

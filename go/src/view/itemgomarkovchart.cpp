@@ -34,7 +34,7 @@ ItemGoMarkovChart::ItemGoMarkovChart(QGraphicsItem *parent) : ItemDrawable(paren
     this->_detailIndex = 0;
     this->_minP = 0.0;
     this->_maxP = 1.0;
-    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_CHART);
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_CHART);
     this->_displayIndex = 0;
     this->_displayVectorIndex = 0;
     this->setIsDisplayP(true);

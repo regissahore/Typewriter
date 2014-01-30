@@ -28,64 +28,64 @@ void ToolboxGo::messageEvent(QSharedPointer<Message> message)
     {
         switch(message->paramInt)
         {
-        case DefinationToolType::TOOL_TYPE_Go_POINTER_EXTEND:
+        case DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND:
             this->setSelectedTool(this->ui->buttonPointer);
             break;
         case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
             this->setSelectedTool(this->ui->buttonSelect);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_TEXT:
+        case DefinationToolType::TOOL_TYPE_GO_TEXT:
             this->setSelectedTool(this->ui->buttonText);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_1:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
             this->setSelectedTool(this->ui->buttonOperator1);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_2:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
             this->setSelectedTool(this->ui->buttonOperator2);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_3:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_3:
             this->setSelectedTool(this->ui->buttonOperator3);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_4:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_4:
             //this->setSelectedTool(this->ui->buttonOperator4);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_5:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_5:
             this->setSelectedTool(this->ui->buttonOperator5);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_6:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_6:
             this->setSelectedTool(this->ui->buttonOperator6);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_7:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_7:
             this->setSelectedTool(this->ui->buttonOperator7);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_8:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_8:
             //this->setSelectedTool(this->ui->buttonOperator8);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_9:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_9:
             this->setSelectedTool(this->ui->buttonOperator9);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_10:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_10:
             this->setSelectedTool(this->ui->buttonOperator10);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_11:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_11:
             this->setSelectedTool(this->ui->buttonOperator11);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_12:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_12:
             //this->setSelectedTool(this->ui->buttonOperator12);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_13:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_13:
            // this->setSelectedTool(this->ui->buttonOperator13);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_14:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_14:
             //this->setSelectedTool(this->ui->buttonOperator14);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_15:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_15:
             //this->setSelectedTool(this->ui->buttonOperator15);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_16:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
             //this->setSelectedTool(this->ui->buttonOperator16);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_OPERATOR_17:
+        case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
             //this->setSelectedTool(this->ui->buttonOperator17);
             break;
         }
@@ -95,7 +95,7 @@ void ToolboxGo::messageEvent(QSharedPointer<Message> message)
 void ToolboxGo::on_buttonPointer_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_POINTER_EXTEND;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
 }
 
@@ -109,69 +109,69 @@ void ToolboxGo::on_buttonSelect_clicked()
 void ToolboxGo::on_buttonText_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_TEXT;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_TEXT;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator1_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_1;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_1;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator2_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_2;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_2;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator3_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_3;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_3;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator5_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_5;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_5;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator6_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_6;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_6;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator7_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_7;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_7;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator9_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_9;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_9;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator10_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_10;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_10;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator11_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_OPERATOR_11;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_11;
     this->sendMessage(message);
 }

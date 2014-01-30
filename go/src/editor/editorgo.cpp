@@ -107,6 +107,6 @@ bool EditorGo::tryOpen(const QString path)
 void EditorGo::activate()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_Go_POINTER_EXTEND;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
 }

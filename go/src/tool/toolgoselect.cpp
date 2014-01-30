@@ -305,7 +305,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
             if (op->model()->realID() > maxId)
@@ -320,7 +320,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
             if (op->model()->realID() < minSelectedId)
@@ -335,7 +335,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
             ItemGoMarkovOperator *newOp = op->copy();
@@ -351,7 +351,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *signal = (ItemGoSignal*)item;
             ItemGoSignal *newSignal = signal->copy();
@@ -361,7 +361,7 @@ void ToolGoSelect::copy()
             for (int j = 0; j < newOps.size(); ++j)
             {
                 item = (ItemDrawable*)newOps.at(j);
-                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
                     ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
                     if (op->model()->realID() == newSignal->start()->id)
@@ -378,7 +378,7 @@ void ToolGoSelect::copy()
             for (int j = 0; j < newOps.size(); ++j)
             {
                 item = (ItemDrawable*)newOps.at(j);
-                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
                     ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
                     if (op->model()->realID() == newSignal->end()->id)
@@ -409,7 +409,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
             ItemGoMarkovCommonCause *newCommon = common->copy();
@@ -448,7 +448,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* op = (ItemGoMarkovOperator*)item;
             if (op->fatherCommonCause2() != 0L)
@@ -508,7 +508,7 @@ void ToolGoSelect::copy()
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_TEXT)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
         {
             ItemGoText *text = (ItemGoText*)item;
             ItemGoText *newText = text->copy();
@@ -556,14 +556,14 @@ void ToolGoSelect::setGlobalFeedback()
 {
     for (int i = 0; i < this->_items.size(); ++i)
     {
-        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_items[i];
             GoMarkovOperator *op = (GoMarkovOperator*)item->model();
             op->setIsGlobalFeedback(true);
             item->update();
         }
-        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *item = (ItemGoSignal*)this->_items[i];
             GoSignal *signal = item->model();
@@ -577,14 +577,14 @@ void ToolGoSelect::unsetGlobalFeedback()
 {
     for (int i = 0; i < this->_items.size(); ++i)
     {
-        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_items[i];
             GoMarkovOperator *op = (GoMarkovOperator*)item->model();
             op->setIsGlobalFeedback(false);
             item->update();
         }
-        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        else if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *item = (ItemGoSignal*)this->_items[i];
             GoSignal *signal = item->model();
@@ -598,7 +598,7 @@ void ToolGoSelect::setShowParameter()
 {
     for (int i = 0; i < this->_items.size(); ++i)
     {
-        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_items[i];
             item->setIsDrawParameter(true);
@@ -611,7 +611,7 @@ void ToolGoSelect::setHideParameter()
 {
     for (int i = 0; i < this->_items.size(); ++i)
     {
-        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)this->_items[i])->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_items[i];
             item->setIsDrawParameter(false);

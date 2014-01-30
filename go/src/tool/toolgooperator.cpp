@@ -15,7 +15,7 @@ ToolGoOperator::ToolGoOperator(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
     this->_isActivated = false;
     this->_GoOperator = 0L;
-    this->_defaultToolType = DefinationToolType::TOOL_TYPE_Go_POINTER_EXTEND;
+    this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
 ToolGoOperator::~ToolGoOperator()
@@ -32,55 +32,55 @@ void ToolGoOperator::setType(const int type)
     this->_GoOperator = new ItemGoOperator();
     switch (this->type())
     {
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_1:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_1:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_1);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_2:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_2:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_2);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_3:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_3:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_3);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_4:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_4:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_4);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_5:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_5:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_5);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_6:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_6:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_6);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_7:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_7:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_7);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_8:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_8:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_8);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_9:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_9:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_9);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_10:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_10:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_10);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_11:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_11:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_11);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_12:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_12:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_12);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_13:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_13:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_13);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_14:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_14:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_14);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_15:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_15:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_15);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_16:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_16:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_16);
         break;
-    case DefinationToolType::TOOL_TYPE_Go_OPERATOR_17:
+    case DefinationToolType::TOOL_TYPE_GO_OPERATOR_17:
         this->_GoOperator->setModelType(GoOperatorFactory::Operator_Type_17);
         break;
     }
@@ -94,7 +94,7 @@ void ToolGoOperator::setType(const int type)
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             visit[op->model()->id()] = true;
@@ -117,7 +117,7 @@ void ToolGoOperator::setType(const int type)
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             visit[op->model()->realID()] = true;

@@ -9,7 +9,7 @@ public:
     virtual void setType(const int type);
 
 private:
-    int _type; /** 操作符的类型。 */
+    int _type;
 };
 
 #endif // TYPEDITEM_H

@@ -15,7 +15,7 @@ ItemGoSignal::ItemGoSignal(QGraphicsItem *parent) : ItemDrawable(parent)
     this->_end = new SignalConnection();
     this->_start->op = 0L;
     this->_end->op = 0L;
-    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL);
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
     this->_model = GoSignalFactory::produce();
     this->setCornerProportion(0.5f);
     this->setIsBrokenLine(true);
@@ -274,25 +274,25 @@ void ItemGoSignal::updatePosition()
     {
         switch (this->start()->type)
         {
-        case DefinationGoType::Go_OPERATOR_INPUT:
+        case DefinationGoType::GO_OPERATOR_INPUT:
             this->setPos(this->start()->op->pos() + this->start()->op->getInputPosition(this->start()->index));
             break;
-        case DefinationGoType::Go_OPERATOR_SUBINPUT:
+        case DefinationGoType::GO_OPERATOR_SUBINPUT:
             this->setPos(this->start()->op->pos() + this->start()->op->getSubInputPosition(this->start()->index));
             break;
-        case DefinationGoType::Go_OPERATOR_OUTPUT:
+        case DefinationGoType::GO_OPERATOR_OUTPUT:
             this->setPos(this->start()->op->pos() + this->start()->op->getOutputPosition(this->start()->index));
             break;
         }
         switch (this->end()->type)
         {
-        case DefinationGoType::Go_OPERATOR_INPUT:
+        case DefinationGoType::GO_OPERATOR_INPUT:
             this->setEndPosition(this->end()->op->pos() + this->end()->op->getInputPosition(this->end()->index) - this->pos());
             break;
-        case DefinationGoType::Go_OPERATOR_SUBINPUT:
+        case DefinationGoType::GO_OPERATOR_SUBINPUT:
             this->setEndPosition(this->end()->op->pos() + this->end()->op->getSubInputPosition(this->end()->index) - this->pos());
             break;
-        case DefinationGoType::Go_OPERATOR_OUTPUT:
+        case DefinationGoType::GO_OPERATOR_OUTPUT:
             this->setEndPosition(this->end()->op->pos() + this->end()->op->getOutputPosition(this->end()->index) - this->pos());
             break;
         }

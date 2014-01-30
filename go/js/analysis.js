@@ -1,4 +1,4 @@
-var index = -1;
+var index = 0;
 var vectorIndex = 0;
 var canvasWidth;
 var canvasHeight;
@@ -6,7 +6,7 @@ var mouseX = 0;
 var mouseY = 0;
 
 var displayConfig = {
-    displayType: "line_chart",
+    displayType: "line-chart",
     showP: true,
     showR: true,
     showLambda: true,
@@ -245,6 +245,7 @@ function addOperatorList() {
     nameDiv.appendChild(pName);
     
     var selectName = document.createElement("select");
+    selectName.id = "select_name";
     for (var i = 0; i < data.names.length; ++i) {
         if ((-1 == index && 0 == i) || i == index) {
             selectName.innerHTML += "<option selected='selected'>" + data.names[i] + "</option>";
@@ -252,13 +253,14 @@ function addOperatorList() {
             selectName.innerHTML += "<option>" + data.names[i] + "</option>";
         }
     }
-    selectName.onclick = function() {
-        if (index != selectName.selectedIndex) {
-            index = selectName.selectedIndex;
+    selectName.onchange = function() {
+        var select = document.getElementById("select_name");
+        if (index != select.selectedIndex) {
+            index = select.selectedIndex;
             updateLineChart();
         }
+        return event.preventDefault();
     };
-    selectName.click();
     nameDiv.appendChild(selectName);
     
     var pIndex = document.createElement("span");
@@ -266,13 +268,15 @@ function addOperatorList() {
     nameDiv.appendChild(pIndex);
     
     var selectIndex = document.createElement("select");
+    selectIndex.id = "select_index";
     selectIndex.innerHTML += "<option selected='selected'>" + 1 + "</option>";
     for (var i = 1; i < data.ps[index].length; ++i) {
         selectIndex.innerHTML += "<option >" + (i + 1) + "</option>";
     }
-    selectIndex.onclick = function() {
-        if (vectorIndex != selectIndex.selectedIndex) {
-            vectorIndex = selectIndex.selectedIndex;
+    selectIndex.onchange = function() {
+        var index = document.getElementById("select_index");
+        if (vectorIndex != index.selectedIndex) {
+            vectorIndex = index.selectedIndex;
             updateLineChart();
         }
     };
@@ -405,9 +409,12 @@ function addNameList() {
         var checkbox = document.createElement("input");
         checkbox.type = "checkbox";
         checkbox.checked = displayConfig.showName[data.names[i]];
-        checkbox.value = data.names[i];
-        checkbox.onchange = function() {
-            displayConfig.showName[checkbox.value] = checkbox.checked;
+        checkbox.id = "checkbox_" + data.names[i];
+        checkbox.onchange = function(item) {
+            for (var j = 0; j < data.names.length; ++j) {
+                var checkbox = document.getElementById("checkbox_" + data.names[j]);
+                displayConfig.showName[data.names[j]] = checkbox.checked;
+            }
             updateDisplay();
         };
         nameDiv.appendChild(checkbox);

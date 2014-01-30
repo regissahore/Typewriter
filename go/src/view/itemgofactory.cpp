@@ -32,14 +32,14 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
         return;
     }
     int type = item->TypedItem::type();
-    if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+    if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
     {
         QList<ItemGoSignal*> signal = ((ItemGoOperator*)item)->getConnectedSignals();
         for (int i = 0; i < signal.size(); ++i)
         {
             deleteItem(signal[i]);
         }
-        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
             if (op->fatherEquivalent() != 0L)
@@ -56,11 +56,11 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
             }
         }
     }
-    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
     {
         ((ItemGoSignal*)item)->removeConnection();
     }
-    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
     {
         ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
         if (eq->fatherEquivalent() != 0L)
@@ -68,7 +68,7 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
             deleteItem(eq->fatherEquivalent());
         }
     }
-    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
     {
         ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
         for (int i = 0; i < common->operatorItems()->size(); ++i)
@@ -76,7 +76,7 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
             common->operatorItems()->at(i)->setFatherCommonCause(0L);
         }
     }
-    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE_2)
+    else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2)
     {
         ItemGoMarkovCommonCause2 *common = (ItemGoMarkovCommonCause2*)item;
         for (int i = 0; i < common->operatorItems()->size(); ++i)
@@ -94,7 +94,7 @@ void ItemGoFactory::deleteItems(QList<ItemDrawable*> items)
     for (int i = 0; i < items.size(); ++i)
     {
         int type = items[i]->TypedItem::type();
-        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             QList<ItemGoSignal*> signal = ((ItemGoOperator*)items[i])->getConnectedSignals();
             for (int j = 0; j < signal.size(); ++j)
@@ -102,20 +102,20 @@ void ItemGoFactory::deleteItems(QList<ItemDrawable*> items)
                 allSignal.push_back(signal[j]);
             }
         }
-        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             selectedSignal.push_back((ItemGoSignal*)items[i]);
             items[i] = 0L;
         }
-        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             items[i] = 0L;
         }
-        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             items[i] = 0L;
         }
-        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_TEXT)
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
         {
         }
         else

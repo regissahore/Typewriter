@@ -39,11 +39,11 @@ SceneGo::~SceneGo()
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
         int type = item->TypedItem::type();
-        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             delete (ItemGoOperator*)item;
         }
-        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             delete (ItemGoSignal*)item;
         }
@@ -279,7 +279,7 @@ GoGraph* SceneGo::generatorGoGraph()
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             for (int j = 0; j < op->model()->output()->number(); ++j)
@@ -293,33 +293,33 @@ GoGraph* SceneGo::generatorGoGraph()
         ItemDrawable *item = (ItemDrawable*)items[i];
         switch (item->TypedItem::type())
         {
-        case DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR:
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
             graph->addOperator(((ItemGoOperator*)item)->model());
             break;
-        case DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL:
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL:
             ((ItemGoSignal*)item)->model()->setU(((ItemGoSignal*)item)->start()->op->model());
             switch (((ItemGoSignal*)item)->start()->type)
             {
-            case DefinationGoType::Go_OPERATOR_INPUT:
+            case DefinationGoType::GO_OPERATOR_INPUT:
                 ((ItemGoSignal*)item)->start()->op->model()->input()->set(((ItemGoSignal*)item)->start()->index, ((ItemGoSignal*)item)->model());
                 break;
-            case DefinationGoType::Go_OPERATOR_SUBINPUT:
+            case DefinationGoType::GO_OPERATOR_SUBINPUT:
                 ((ItemGoSignal*)item)->start()->op->model()->subInput()->set(((ItemGoSignal*)item)->start()->index, ((ItemGoSignal*)item)->model());
                 break;
-            case DefinationGoType::Go_OPERATOR_OUTPUT:
+            case DefinationGoType::GO_OPERATOR_OUTPUT:
                 ((ItemGoSignal*)item)->start()->op->model()->output()->addSignal(((ItemGoSignal*)item)->start()->index, ((ItemGoSignal*)item)->model());
                 break;
             }
             ((ItemGoSignal*)item)->model()->setV(((ItemGoSignal*)item)->end()->op->model());
             switch (((ItemGoSignal*)item)->end()->type)
             {
-            case DefinationGoType::Go_OPERATOR_INPUT:
+            case DefinationGoType::GO_OPERATOR_INPUT:
                 ((ItemGoSignal*)item)->end()->op->model()->input()->set(((ItemGoSignal*)item)->end()->index, ((ItemGoSignal*)item)->model());
                 break;
-            case DefinationGoType::Go_OPERATOR_SUBINPUT:
+            case DefinationGoType::GO_OPERATOR_SUBINPUT:
                 ((ItemGoSignal*)item)->end()->op->model()->subInput()->set(((ItemGoSignal*)item)->end()->index, ((ItemGoSignal*)item)->model());
                 break;
-            case DefinationGoType::Go_OPERATOR_OUTPUT:
+            case DefinationGoType::GO_OPERATOR_OUTPUT:
                 ((ItemGoSignal*)item)->end()->op->model()->output()->addSignal(((ItemGoSignal*)item)->end()->index, ((ItemGoSignal*)item)->model());
                 break;
             }

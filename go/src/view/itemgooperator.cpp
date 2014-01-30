@@ -18,7 +18,7 @@ ItemGoOperator::ItemGoOperator(QGraphicsItem *parent) : ItemMoveable(parent)
     this->_inputSignal = new QVector<ItemGoSignal*>();
     this->_subInputSignal = new QVector<ItemGoSignal*>();
     this->_outputSignal = new QVector<QVector<ItemGoSignal*>*>();
-    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR);
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR);
     this->setIsHorizonFlip(false);
     this->setIsVerticalFlip(false);
     this->_isShowOutput = new QVector<bool>();
@@ -431,21 +431,21 @@ void ItemGoOperator::setSignal(ItemGoSignal *signal, int type, int index)
 {
     switch (type)
     {
-    case DefinationGoType::Go_OPERATOR_INPUT:
+    case DefinationGoType::GO_OPERATOR_INPUT:
         if (index >= 0 && index < this->model()->input()->number())
         {
             (*this->_inputSignal)[index] = signal;
             this->_inputArrows->at(index)->setColor(QColor(Qt::black));
         }
         break;
-    case DefinationGoType::Go_OPERATOR_SUBINPUT:
+    case DefinationGoType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
             (*this->_subInputSignal)[index] = signal;
             this->_subInputArrows->at(index)->setColor(QColor(Qt::black));
         }
         break;
-    case DefinationGoType::Go_OPERATOR_OUTPUT:
+    case DefinationGoType::GO_OPERATOR_OUTPUT:
         if (index >= 0 && index < this->model()->output()->number())
         {
             this->_outputSignal->at(index)->push_back(signal);
@@ -458,21 +458,21 @@ void ItemGoOperator::removeSignal(ItemGoSignal *signal, int type, int index)
 {
     switch (type)
     {
-    case DefinationGoType::Go_OPERATOR_INPUT:
+    case DefinationGoType::GO_OPERATOR_INPUT:
         if (index >= 0 && index < this->model()->input()->number())
         {
             (*this->_inputSignal)[index] = 0L;
             this->_inputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
-    case DefinationGoType::Go_OPERATOR_SUBINPUT:
+    case DefinationGoType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
             (*this->_subInputSignal)[index] = 0L;
             this->_subInputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
-    case DefinationGoType::Go_OPERATOR_OUTPUT:
+    case DefinationGoType::GO_OPERATOR_OUTPUT:
         if (index >= 0 && index < this->model()->output()->number())
         {
             for (int i = 0; i < this->_outputSignal->at(index)->size(); ++i)

@@ -14,7 +14,7 @@ ToolGoText::ToolGoText(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
     this->_isActivated = false;
     this->_item = 0L;
-    this->_defaultToolType = DefinationToolType::TOOL_TYPE_Go_POINTER_EXTEND;
+    this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
 ToolGoText::~ToolGoText()

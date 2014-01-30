@@ -6,23 +6,19 @@
 
 Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
 {
-    // 初始化TabWidget。
     this->_tabWidget = new QTabWidget(this);
     this->_tabWidget->setTabsClosable(true);
     this->connect(this->_tabWidget, SIGNAL(tabCloseRequested(int)), this, SLOT(tryCloseTab(int)));
     this->connect(this->_tabWidget, SIGNAL(currentChanged(int)), this, SLOT(currentChange(int)));
-    // 配置基本的布局。
+
     QVBoxLayout *layout = new QVBoxLayout();
     layout->addWidget(this->_tabWidget);
     layout->setMargin(0);
     layout->setSpacing(0);
     this->setLayout(layout);
-    // 初始化工厂类和编辑器的集合。
+
     this->_editors = new QVector<EditorAbstract*>();
     this->_factory = new EditorFactory();
-    /*EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WELCOME);
-    this->_editors->push_back(editor);
-    this->_tabWidget->addTab(editor, editor->name());*/
 }
 
 bool Editor::trySaveAll()
@@ -184,7 +180,7 @@ void Editor::createNewTab(int type)
 
 void Editor::tryOpen()
 {
-    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), GlobalConfig::getInstance()->lastestPath(), tr("Go Files(*.go *.gom);;HTML Files(*.html);;Go Chart(*.goc)"));
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Open File"), GlobalConfig::getInstance()->lastestPath(), tr("Go Files(*.go *.gom *.html)"));
     if (filePath != "")
     {
         GlobalConfig::getInstance()->setLastestPath(QFileInfo(filePath).absolutePath());
@@ -200,7 +196,7 @@ void Editor::tryOpen()
         }
         if (extension.compare(extension, ".go", Qt::CaseInsensitive) == 0)
         {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_Go);
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO);
             if (editor->tryOpen(filePath))
             {
                 editor->bindMessage(this->MessageCreator::_messageController);
@@ -212,7 +208,7 @@ void Editor::tryOpen()
         }
         else if (extension.compare(extension, ".gom", Qt::CaseInsensitive) == 0)
         {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_Go_MARKOV);
+            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV);
             if (editor->tryOpen(filePath))
             {
                 editor->bindMessage(this->MessageCreator::_messageController);
@@ -226,16 +222,6 @@ void Editor::tryOpen()
         {
             EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WEBVIEW);
             editor->setPath(filePath);
-            this->_editors->push_back(editor);
-            this->_tabWidget->addTab(editor, editor->name());
-            this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
-        }
-        else if (extension.compare(extension, ".goc", Qt::CaseInsensitive) == 0)
-        {
-            EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_Go_MARKOV_CHART);
-            editor->bindMessage(this->MessageCreator::_messageController);
-            editor->setPath(filePath);
-            editor->tryOpen(filePath);
             this->_editors->push_back(editor);
             this->_tabWidget->addTab(editor, editor->name());
             this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
@@ -262,21 +248,5 @@ void Editor::openExist(QString filePath)
         this->_editors->push_back(editor);
         this->_tabWidget->addTab(editor, editor->name());
         this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
-    }
-    else if (extension.compare(extension, ".goc", Qt::CaseInsensitive) == 0)
-    {
-        EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_Go_MARKOV_CHART);
-        editor->setPath(filePath);
-        if (editor->tryOpen(filePath))
-        {
-            editor->bindMessage(this->MessageCreator::_messageController);
-            this->_editors->push_back(editor);
-            this->_tabWidget->addTab(editor, editor->name());
-            this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
-        }
-        else
-        {
-            delete editor;
-        }
     }
 }

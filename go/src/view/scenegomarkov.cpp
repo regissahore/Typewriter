@@ -28,7 +28,7 @@ SceneGoMarkov::SceneGoMarkov(QObject *parent) : SceneGo(parent)
     this->_analysisTotalTime = 10.0;
     this->_analysisCount = 101;
     this->_analysisCutOrder = 1;
-    this->selectTool(DefinationToolType::TOOL_TYPE_Go_MARKOV_POINTER_EXTEND);
+    this->selectTool(DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND);
 }
 
 void SceneGoMarkov::save(QDomDocument &document, QDomElement &root)
@@ -176,7 +176,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
             if (eq->fatherEquivalent() == 0L)
@@ -186,17 +186,17 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
                 graph->addOperator(equivalentOperators.at(equivalentOperators.size() - 1)->model());
             }
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
             graph->addCommonCause(common->model());
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE_2)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2)
         {
             ItemGoMarkovCommonCause2 *common = (ItemGoMarkovCommonCause2*)item;
             graph->addCommonCause(common->model());
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
             if (op->fatherEquivalent() == 0L)
@@ -217,7 +217,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *itemSignal = (ItemGoSignal*)item;
             int u = itemSignal->start()->op->model()->realID();
@@ -282,7 +282,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
                 itemSignal->model()->setU(operatorU);
                 itemSignal->model()->setV(operatorV);
                 operatorU->output()->addSignal(itemSignal->start()->index, itemSignal->model());
-                if (itemSignal->end()->type == DefinationGoType::Go_OPERATOR_INPUT)
+                if (itemSignal->end()->type == DefinationGoType::GO_OPERATOR_INPUT)
                 {
                     operatorV->input()->set(itemSignal->end()->index, itemSignal->model());
                 }
@@ -298,7 +298,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
                 signal->setU(operatorU);
                 signal->setV(operatorV);
                 operatorU->output()->addSignal(itemSignal->start()->index, signal);
-                if (itemSignal->end()->type == DefinationGoType::Go_OPERATOR_INPUT)
+                if (itemSignal->end()->type == DefinationGoType::GO_OPERATOR_INPUT)
                 {
                     operatorV->input()->set(itemSignal->end()->index, signal);
                 }
@@ -404,12 +404,6 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
             }
             if (data != 0L)
             {
-                if (data->save(filePath + ".goc"))
-                {
-                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
-                    message->paramString = filePath + ".goc";
-                    this->sendMessage(message);
-                }
                 if (data->saveAsHTML(filePath + ".goc.html"))
                 {
                     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
@@ -419,7 +413,6 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
                 delete data;
             }
         }
-        //delete processDialog;
     }
     delete dialog;
 }

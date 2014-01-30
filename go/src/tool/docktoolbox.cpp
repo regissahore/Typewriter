@@ -42,11 +42,11 @@ void DockToolbox::setToolbox(int editorType)
     int type = ToolboxFactory::TOOLBOX_TYPE_NULL;
     switch (editorType)
     {
-    case EditorFactory::EDITOR_TYPE_Go:
-        type = ToolboxFactory::TOOLBOX_TYPE_Go;
+    case EditorFactory::EDITOR_TYPE_GO:
+        type = ToolboxFactory::TOOLBOX_TYPE_GO;
         break;
-    case EditorFactory::EDITOR_TYPE_Go_MARKOV:
-        type = ToolboxFactory::TOOLBOX_TYPE_Go_MARKOV;
+    case EditorFactory::EDITOR_TYPE_GO_MARKOV:
+        type = ToolboxFactory::TOOLBOX_TYPE_GO_MARKOV;
         break;
     }
     bool flag = false;

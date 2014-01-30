@@ -21,7 +21,7 @@ ItemGoMarkovEquivalent::ItemGoMarkovEquivalent(QGraphicsItem *parent) : ItemMove
     this->_items = new QVector<ItemDrawable*>();
     this->_model = 0L;
     this->_fatherEquivalent = 0L;
-    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT);
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT);
 }
 
 void ItemGoMarkovEquivalent::setId(const int id)
@@ -87,7 +87,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
     ItemDrawable *iterator = source;
     while (true)
     {
-        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* item = (ItemGoMarkovOperator*)iterator;
             ItemGoSignal *signal = item->input()->at(0);
@@ -97,7 +97,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
             }
             iterator = signal->start()->op;
         }
-        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent* item = (ItemGoMarkovEquivalent*)iterator;
             ItemGoSignal *signal = item->input()->at(0);
@@ -111,14 +111,14 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
         {
             break;
         }
-        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             if (((ItemGoMarkovOperator*)iterator)->fatherEquivalent() != 0L)
             {
                 iterator = ((ItemGoMarkovOperator*)iterator)->fatherEquivalent();
             }
         }
-        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             while (((ItemGoMarkovEquivalent*)iterator)->fatherEquivalent() != 0L)
             {
@@ -143,7 +143,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
     iterator = source;
     while (true)
     {
-        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)iterator;
             if (item->output()->at(0)->size() == 0)
@@ -152,7 +152,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
             }
             iterator = item->output()->at(0)->at(0)->end()->op;
         }
-        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *item = (ItemGoMarkovEquivalent*)iterator;
             if (item->output()->at(0)->size() == 0)
@@ -189,7 +189,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsIte
     ItemGoMarkovOperator *source = 0L;
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* item = (ItemGoMarkovOperator*)items.at(i);
             if (item->input()->size() > 1)
@@ -219,7 +219,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsIte
                 index = j;
                 break;
             }
-            if (temp->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+            if (temp->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
             {
                 ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)temp;
                 ItemGoMarkovEquivalent *father = op->fatherEquivalent();
@@ -274,7 +274,7 @@ bool ItemGoMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> items)
     int noOutputNumber = 0;
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)items.at(i);
             if (item->model()->TypedItem::type() != GoMarkovOperatorFactory::Operator_Type_1)
@@ -323,7 +323,7 @@ bool ItemGoMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
     int multiInputNum = 0;
     for (int i = 0; i < items.size(); ++i)
     {
-        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)items.at(i);
             if (item->input()->size() == 0)
@@ -393,12 +393,12 @@ void ItemGoMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
     for (int i = 0; i < list.size(); ++i)
     {
         ItemDrawable *item = list.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             this->_operatorItems->push_back((ItemGoMarkovOperator*)list.at(i));
             ((ItemGoMarkovOperator*)list.at(i))->setFatherEquivalent(this);
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             this->_equivalentItems->push_back((ItemGoMarkovEquivalent*)list.at(i));
             ((ItemGoMarkovEquivalent*)list.at(i))->setFatherEquivalent(this);
@@ -410,12 +410,12 @@ void ItemGoMarkovEquivalent::setSeriesEquivalent(QList<QGraphicsItem*> &items)
     this->_model->setId(this->id());
     for (int i = 0; i < list.size(); ++i)
     {
-        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)list.at(i);
             this->model()->operators()->push_back((GoMarkovOperator*)item->model());
         }
-        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *item = (ItemGoMarkovEquivalent*)list.at(i);
             this->model()->operators()->push_back(item->getEquivalentOperator());
@@ -432,12 +432,12 @@ void ItemGoMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem *> &items
     for (int i = 0; i < list.size(); ++i)
     {
         ItemDrawable *item = list.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             this->_operatorItems->push_back((ItemGoMarkovOperator*)list.at(i));
             ((ItemGoMarkovOperator*)list.at(i))->setFatherEquivalent(this);
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             this->_equivalentItems->push_back((ItemGoMarkovEquivalent*)list.at(i));
             ((ItemGoMarkovEquivalent*)list.at(i))->setFatherEquivalent(this);
@@ -449,12 +449,12 @@ void ItemGoMarkovEquivalent::setParallelEquivalent(QList<QGraphicsItem *> &items
     this->_model->setId(this->id());
     for (int i = 0; i < list.size(); ++i)
     {
-        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)list.at(i);
             this->model()->operators()->push_back((GoMarkovOperator*)item->model());
         }
-        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (list.at(i)->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *item = (ItemGoMarkovEquivalent*)list.at(i);
             this->model()->operators()->push_back(item->getEquivalentOperator());
@@ -482,11 +482,11 @@ QVector<ItemGoSignal*>* ItemGoMarkovEquivalent::input() const
     if (this->_items->size() > 0)
     {
         ItemDrawable *item = this->items()->at(0);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             return ((ItemGoMarkovOperator*)item)->input();
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             return ((ItemGoMarkovEquivalent*)item)->input();
         }
@@ -499,11 +499,11 @@ QVector<QVector<ItemGoSignal*>*>* ItemGoMarkovEquivalent::output() const
     if (this->_items->size() > 0)
     {
         ItemDrawable *item = this->items()->at(this->items()->size() - 1);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             return ((ItemGoMarkovOperator*)item)->output();
         }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT)
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             return ((ItemGoMarkovEquivalent*)item)->output();
         }
@@ -551,14 +551,14 @@ void ItemGoMarkovEquivalent::removeUnnecessaryItems(QList<QGraphicsItem*> &items
         ItemDrawable *item = (ItemDrawable*)items[i];
         switch (item->TypedItem::type())
         {
-        case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR:
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
             if (((ItemGoMarkovOperator*)item)->fatherEquivalent() != 0L)
             {
                 items.removeAt(i);
                 break;
             }
             break;
-        case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT:
+        case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
             if (((ItemGoMarkovEquivalent*)item)->fatherEquivalent() != 0L)
             {
                 items.removeAt(i);

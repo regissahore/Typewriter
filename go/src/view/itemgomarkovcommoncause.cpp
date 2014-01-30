@@ -6,7 +6,7 @@
 
 ItemGoMarkovCommonCause::ItemGoMarkovCommonCause(QGraphicsItem *parent) : ItemMoveable(parent)
 {
-    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE);
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE);
     this->_model = new GoMarkovCommonCause();
     this->_operatorItems = new QVector<ItemGoMarkovOperator*>();
 }

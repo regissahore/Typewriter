@@ -92,14 +92,14 @@ void GoMainWindow::initDock()
 void GoMainWindow::on_toolButtonNew_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
-    message->paramInt = EditorFactory::EDITOR_TYPE_Go;
+    message->paramInt = EditorFactory::EDITOR_TYPE_GO;
     this->sendMessage(message);
 }
 
 void GoMainWindow::on_toolButtonMarkov_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
-    message->paramInt = EditorFactory::EDITOR_TYPE_Go_MARKOV;
+    message->paramInt = EditorFactory::EDITOR_TYPE_GO_MARKOV;
     this->sendMessage(message);
 }
 

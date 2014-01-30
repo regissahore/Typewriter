@@ -141,7 +141,7 @@ bool ToolGoPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)items.at(i);
             GoOperator *model = op->model();
@@ -156,7 +156,7 @@ bool ToolGoPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
                     this->_signal->start()->id = op->model()->realID();
                     this->_signal->start()->op = op;
                     this->_signal->start()->index = j;
-                    this->_signal->start()->type = DefinationGoType::Go_OPERATOR_OUTPUT;
+                    this->_signal->start()->type = DefinationGoType::GO_OPERATOR_OUTPUT;
                     this->graphicsScene()->addItem(this->_signal);
                     this->_signal->setPos(op->pos() + op->getOutputPosition(j));
                     this->graphicsView()->setCursor(Qt::CrossCursor);
@@ -178,7 +178,7 @@ bool ToolGoPointerExtend::mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEv
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *signal = (ItemGoSignal*)items.at(i);
             if (signal->isCornerLineSelectable(event->scenePos().x(), event->scenePos().y()))
@@ -267,7 +267,7 @@ bool ToolGoPointerExtend::mouseMoveStatusNullSignal(QGraphicsSceneMouseEvent *ev
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)items.at(i);
             GoOperator *model = op->model();
@@ -290,7 +290,7 @@ bool ToolGoPointerExtend::mouseMoveStatusNullSignalAdjust(QGraphicsSceneMouseEve
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             ItemGoSignal *signal = (ItemGoSignal*)items.at(i);
             if (signal->isCornerLineSelectable(event->scenePos().x(), event->scenePos().y()))
@@ -406,7 +406,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
     for (int i = 0; i < items.size() && !found; ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR || item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             GoOperator *model = op->model();
@@ -421,7 +421,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->op = op;
                     this->_signal->end()->id = op->model()->realID();
                     this->_signal->end()->index = j;
-                    this->_signal->end()->type = DefinationGoType::Go_OPERATOR_INPUT;
+                    this->_signal->end()->type = DefinationGoType::GO_OPERATOR_INPUT;
                     QPointF end = op->pos() + op->getInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
                     this->_signal->start()->op->setSignal(this->_signal,
@@ -430,7 +430,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->op->setSignal(this->_signal,
                                                             this->_signal->end()->type,
                                                             this->_signal->end()->index);
-                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                     {
                         ((ItemGoMarkovOperator*)this->_signal->end()->op)->globalFeedbackExtend();
                     }
@@ -448,7 +448,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                 {
                     this->_signal->end()->op = op;
                     this->_signal->end()->index = j;
-                    this->_signal->end()->type = DefinationGoType::Go_OPERATOR_SUBINPUT;
+                    this->_signal->end()->type = DefinationGoType::GO_OPERATOR_SUBINPUT;
                     QPointF end = op->pos() + op->getSubInputPosition(j) - this->_signal->pos();
                     this->_signal->setEndPosition(end.x(), end.y());
                     this->_signal->start()->op->setSignal(this->_signal,
@@ -457,7 +457,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
                     this->_signal->end()->op->setSignal(this->_signal,
                                                             this->_signal->end()->type,
                                                             this->_signal->end()->index);
-                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+                    if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                     {
                         ((ItemGoMarkovOperator*)this->_signal->end()->op)->globalFeedbackExtend();
                     }

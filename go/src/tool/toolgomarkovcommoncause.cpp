@@ -74,7 +74,7 @@ void ToolGoMarkovCommonCause::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     else
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_Go_MARKOV_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
         this->sceneGo()->sendMessage(message);
     }
 }
@@ -84,7 +84,7 @@ void ToolGoMarkovCommonCause::keyReleaseEvent(QKeyEvent *event)
     if (event->key() == Qt::Key_Escape)
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-        message->paramInt = DefinationToolType::TOOL_TYPE_Go_MARKOV_POINTER_EXTEND;
+        message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
         this->sceneGo()->sendMessage(message);
     }
 }
@@ -96,7 +96,7 @@ void ToolGoMarkovCommonCause::addCommonCause()
     for (qint32 i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)this->_items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* markov = (ItemGoMarkovOperator*)item;
             if (markov->fatherCommonCause() || markov->fatherEquivalent())

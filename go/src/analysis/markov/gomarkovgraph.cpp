@@ -172,7 +172,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
 
     this->_timeProcess = 0;
     this->_operatorProcess = 0;
-    // 获得排序后的操作符。
+
     QVector<GoMarkovOperator*> sortedOperatorList;
     for (int i = 0; i < this->_operator.size(); ++i)
     {

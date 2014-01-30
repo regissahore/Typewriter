@@ -12,10 +12,10 @@ ToolboxAbstract* ToolboxFactory::produce(const int type)
     case TOOLBOX_TYPE_NULL:
         toolbox = new ToolboxNull();
         break;
-    case TOOLBOX_TYPE_Go:
+    case TOOLBOX_TYPE_GO:
         toolbox = new ToolboxGo();
         break;
-    case TOOLBOX_TYPE_Go_MARKOV:
+    case TOOLBOX_TYPE_GO_MARKOV:
         toolbox = new ToolboxGoMarkov();
         break;
     default:

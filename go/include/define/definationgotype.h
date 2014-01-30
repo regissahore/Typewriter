@@ -6,9 +6,9 @@ class DefinationGoType
 public:
     enum GoType
     {
-        Go_OPERATOR_INPUT,
-        Go_OPERATOR_SUBINPUT,
-        Go_OPERATOR_OUTPUT
+        GO_OPERATOR_INPUT,
+        GO_OPERATOR_SUBINPUT,
+        GO_OPERATOR_OUTPUT
     };
 };
 

@@ -9,7 +9,7 @@ public:
     virtual void setId(const int id);
 
 private:
-    int _id; /** 标识数值。 */
+    int _id;
 };
 
 #endif // IDENTIFIEDITEM_H

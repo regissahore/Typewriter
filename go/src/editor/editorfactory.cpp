@@ -14,16 +14,16 @@ EditorAbstract *EditorFactory::produce(int type)
     case EDITOR_TYPE_WELCOME:
         editor = new EditorWelcome();
         break;
-    case EDITOR_TYPE_Go:
+    case EDITOR_TYPE_GO:
         editor = new EditorGo();
         break;
-    case EDITOR_TYPE_Go_MARKOV:
+    case EDITOR_TYPE_GO_MARKOV:
         editor = new EditorGoMarkov();
         break;
     case EDITOR_TYPE_WEBVIEW:
         editor = new EditorWebView();
         break;
-    case EDITOR_TYPE_Go_MARKOV_CHART:
+    case EDITOR_TYPE_GO_MARKOV_CHART:
         editor = new EditorGoMarkovChart();
         break;
     }

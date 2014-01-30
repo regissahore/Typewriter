@@ -4,7 +4,7 @@
 
 ItemGoText::ItemGoText(QGraphicsItem *parent) : ItemMoveable(parent)
 {
-    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_TEXT);
+    this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT);
 }
 
 QString ItemGoText::text() const

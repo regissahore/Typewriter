@@ -15,7 +15,7 @@
 
 ItemGoMarkovOperator::ItemGoMarkovOperator(QGraphicsItem *parent) : ItemGoOperator(parent)
 {
-    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR);
+    this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR);
     this->_fatherEquivalent = 0L;
     this->_fatherCommonCause = 0L;
     this->_fatherCommonCause2 = 0L;

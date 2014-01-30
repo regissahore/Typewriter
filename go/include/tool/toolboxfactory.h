@@ -8,8 +8,8 @@ public:
     enum ToolboxType
     {
         TOOLBOX_TYPE_NULL,
-        TOOLBOX_TYPE_Go,
-        TOOLBOX_TYPE_Go_MARKOV
+        TOOLBOX_TYPE_GO,
+        TOOLBOX_TYPE_GO_MARKOV
     };
     static ToolboxAbstract* produce(const int type);
 };

@@ -14,28 +14,28 @@ ParameterAbstract* ParameterFactory::produce(int type)
     ParameterAbstract* parameter = 0L;
     switch (type)
     {
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
         parameter = new ParameterGoOperator();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_SIGNAL:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL:
         parameter = new ParameterGoSignal();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_TEXT:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT:
         parameter = new ParameterGoText();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_OPERATOR:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
         parameter = new ParameterGoMarkovOperator();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_EQUIVALENT:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
         parameter = new ParameterGoMarkovEquivalent();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE:
         parameter = new ParameterGoMarkovCommonCause();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_COMMON_CAUSE_2:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2:
         parameter = new ParameterGoMarkovCommonCause2();
         break;
-    case DefinationEditorSelectionType::EDITOR_SELECTION_Go_MARKOV_CHART:
+    case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_CHART:
         parameter = new ParameterGoMarkovChart();
         break;
     default:

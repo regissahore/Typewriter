@@ -25,7 +25,7 @@ void ToolGoSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             GoOperator *model = op->model();
@@ -36,7 +36,7 @@ void ToolGoSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
                     this->_status = Status_Adding;
                     this->_tempSignal->start()->op = op;
                     this->_tempSignal->start()->index = i;
-                    this->_tempSignal->start()->type = DefinationGoType::Go_OPERATOR_INPUT;
+                    this->_tempSignal->start()->type = DefinationGoType::GO_OPERATOR_INPUT;
                     this->graphicsScene()->addItem(this->_tempSignal);
                     this->_tempSignal->setPos(op->pos() + op->getInputPosition(i));
                     return;
@@ -49,7 +49,7 @@ void ToolGoSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
                     this->_status = Status_Adding;
                     this->_tempSignal->start()->op = op;
                     this->_tempSignal->start()->index = i;
-                    this->_tempSignal->start()->type = DefinationGoType::Go_OPERATOR_OUTPUT;
+                    this->_tempSignal->start()->type = DefinationGoType::GO_OPERATOR_OUTPUT;
                     this->graphicsScene()->addItem(this->_tempSignal);
                     this->_tempSignal->setPos(op->pos() + op->getOutputPosition(i));
                     return;
@@ -62,7 +62,7 @@ void ToolGoSignal::mousePressEvent(QGraphicsSceneMouseEvent *event)
                     this->_status = Status_Adding;
                     this->_tempSignal->start()->op = op;
                     this->_tempSignal->start()->index = i;
-                    this->_tempSignal->start()->type = DefinationGoType::Go_OPERATOR_SUBINPUT;
+                    this->_tempSignal->start()->type = DefinationGoType::GO_OPERATOR_SUBINPUT;
                     this->graphicsScene()->addItem(this->_tempSignal);
                     this->_tempSignal->setPos(op->pos() + op->getSubInputPosition(i));
                     return;
@@ -84,7 +84,7 @@ void ToolGoSignal::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
     for (int i = 0; i < items.size(); ++i)
     {
         ItemDrawable *item = (ItemDrawable*)items.at(i);
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
         {
             ItemGoOperator *op = (ItemGoOperator*)item;
             GoOperator *model = op->model();
@@ -125,7 +125,7 @@ void ToolGoSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         for (int i = 0; i < items.size(); ++i)
         {
             ItemDrawable *item = (ItemDrawable*)items.at(i);
-            if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_Go_OPERATOR)
+            if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR)
             {
                 ItemGoOperator *op = (ItemGoOperator*)item;
                 GoOperator *model = op->model();
@@ -135,7 +135,7 @@ void ToolGoSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                     {
                         this->_tempSignal->end()->op = op;
                         this->_tempSignal->end()->index = i;
-                        this->_tempSignal->end()->type = DefinationGoType::Go_OPERATOR_INPUT;
+                        this->_tempSignal->end()->type = DefinationGoType::GO_OPERATOR_INPUT;
                         QPointF end = op->pos() + op->getInputPosition(i) - this->_tempSignal->pos();
                         this->_tempSignal->setEndPosition(end.x(), end.y());
                         this->_tempSignal->start()->op->setSignal(this->_tempSignal,
@@ -154,7 +154,7 @@ void ToolGoSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                     {
                         this->_tempSignal->end()->op = op;
                         this->_tempSignal->end()->index = i;
-                        this->_tempSignal->end()->type = DefinationGoType::Go_OPERATOR_OUTPUT;
+                        this->_tempSignal->end()->type = DefinationGoType::GO_OPERATOR_OUTPUT;
                         QPointF end = op->pos() + op->getOutputPosition(i) - this->_tempSignal->pos();
                         this->_tempSignal->setEndPosition(end.x(), end.y());
                         this->_tempSignal->start()->op->setSignal(this->_tempSignal,
@@ -173,7 +173,7 @@ void ToolGoSignal::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
                     {
                         this->_tempSignal->end()->op = op;
                         this->_tempSignal->end()->index = i;
-                        this->_tempSignal->end()->type = DefinationGoType::Go_OPERATOR_SUBINPUT;
+                        this->_tempSignal->end()->type = DefinationGoType::GO_OPERATOR_SUBINPUT;
                         QPointF end = op->pos() + op->getSubInputPosition(i) - this->_tempSignal->pos();
                         this->_tempSignal->setEndPosition(end.x(), end.y());
                         this->_tempSignal->start()->op->setSignal(this->_tempSignal,
