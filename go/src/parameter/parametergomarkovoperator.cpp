@@ -247,7 +247,7 @@ void ParameterGoMarkovOperator::addMarkovStatus1Parameter()
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 0, new QLabel(tr("Failure Rate 1"), this));
         this->_spinBoxStatus1FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus1FrequencyBreakdown->setMinimum(0.0);
-        this->_spinBoxStatus1FrequencyBreakdown->setMaximum(1e100);
+        this->_spinBoxStatus1FrequencyBreakdown->setMaximum(1.0);
         this->_spinBoxStatus1FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus1FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus1FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
@@ -289,7 +289,7 @@ void ParameterGoMarkovOperator::addMarkovStatus2Parameter()
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 0, new QLabel(tr("Failure Rate 2"), this));
         this->_spinBoxStatus2FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus2FrequencyBreakdown->setMinimum(0.0);
-        this->_spinBoxStatus2FrequencyBreakdown->setMaximum(1e100);
+        this->_spinBoxStatus2FrequencyBreakdown->setMaximum(1.0);
         this->_spinBoxStatus2FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus2FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus2FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
@@ -331,7 +331,7 @@ void ParameterGoMarkovOperator::addMarkovStatus3Parameter()
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 0, new QLabel(tr("Failure Rate 3"), this));
         this->_spinBoxStatus3FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus3FrequencyBreakdown->setMinimum(0.0);
-        this->_spinBoxStatus3FrequencyBreakdown->setMaximum(1e100);
+        this->_spinBoxStatus3FrequencyBreakdown->setMaximum(1.0);
         this->_spinBoxStatus3FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus3FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus3FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
@@ -373,7 +373,7 @@ void ParameterGoMarkovOperator::addMarkovStatus4Parameter()
         this->_tableWidget->setCellWidget(this->_markovBreakdownNumPos, 0, new QLabel(tr("Failure Rate 4"), this));
         this->_spinBoxStatus4FrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBoxStatus4FrequencyBreakdown->setMinimum(0.0);
-        this->_spinBoxStatus4FrequencyBreakdown->setMaximum(1e100);
+        this->_spinBoxStatus4FrequencyBreakdown->setMaximum(1.0);
         this->_spinBoxStatus4FrequencyBreakdown->setDecimals(10);
         this->_spinBoxStatus4FrequencyBreakdown->setSingleStep(0.01);
         this->_spinBoxStatus4FrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
@@ -754,7 +754,7 @@ void ParameterGoMarkovOperator::addMarkov9FeedbackParameter()
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Failure Rate Feedback"), this));
         this->_spinBox9FeedbackFrequencyBreakdown = new QDoubleSpinBox(this);
         this->_spinBox9FeedbackFrequencyBreakdown->setMinimum(0.0);
-        this->_spinBox9FeedbackFrequencyBreakdown->setMaximum(1e100);
+        this->_spinBox9FeedbackFrequencyBreakdown->setMaximum(1.0);
         this->_spinBox9FeedbackFrequencyBreakdown->setDecimals(10);
         this->_spinBox9FeedbackFrequencyBreakdown->setSingleStep(0.01);
         this->_spinBox9FeedbackFrequencyBreakdown->setValue(status->frequencyBreakdown().getValue(0));
