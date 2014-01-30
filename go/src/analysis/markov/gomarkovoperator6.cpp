@@ -111,6 +111,7 @@ void GoMarkovOperator6::calcOutputMarkovStatusCorrelate()
     DoubleVector G1 = PS1 * PS2 * PC;
     DoubleVector G2 = QS1 * PS2 * PC + QS2 * PS1 * PC + QC * PS1 * PS2;
     DoubleVector PR = G1 / (G1 + G2);
+    DoubleVector QR = 1.0 - PR;
     DoubleVector lambdaS1 = prevStatus1->frequencyBreakdown();
     DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
@@ -130,9 +131,7 @@ void GoMarkovOperator6::calcCommonOutputMarkovStatusCorrelate(DoubleVector PR)
     DoubleVector lambdaS2 = prevStatus2->frequencyBreakdown();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector lambdaR = lambdaS1 + lambdaS2 + lambdaC;
-    DoubleVector muS1 = prevStatus1->frequencyRepair();
-    DoubleVector muS2 = prevStatus2->frequencyRepair();
-    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector QR = 1.0 - PR;
     DoubleVector muR = lambdaR * PR / QR;
     this->initOutputMarkovStatus();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);

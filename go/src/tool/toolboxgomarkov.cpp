@@ -70,9 +70,6 @@ void ToolboxGoMarkov::messageEvent(QSharedPointer<Message> message)
         case DefinationToolType::TOOL_TYPE_Go_MARKOV_OPERATOR_10:
             this->setSelectedTool(this->ui->buttonOperator10);
             break;
-        case DefinationToolType::TOOL_TYPE_Go_MARKOV_OPERATOR_11:
-            this->setSelectedTool(this->ui->buttonOperator11);
-            break;
         case DefinationToolType::TOOL_TYPE_Go_MARKOV_OPERATOR_11A:
             this->setSelectedTool(this->ui->buttonOperator11A);
             break;
