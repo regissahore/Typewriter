@@ -1,3 +1,4 @@
+#include <cmath>
 #include <vector>
 #include <cstdio>
 #include <cstring>
@@ -19,6 +20,7 @@ public:
         for (int i = 0; i < n; ++i)
         {
             y.push_back(0.0);
+            inf.push_back(0.0);
         }
         x = 0.0;
     }
@@ -54,6 +56,50 @@ public:
             x += h;
         }
     }
+    void calculateInfinity()
+    {
+        double startX = this->x;
+        vector<double> startY;
+        for (int i = 0; i < this->y.size(); ++i)
+        {
+            startY.push_back(this->y[i]);
+            inf[i] = this->y[i] + 1.0;
+        }
+        for (int i = 0; i < 10000000; ++i)
+        {
+            bool flag = true;
+            for (int j = 0; j < this->y.size(); ++j)
+            {
+                if (fabs(this->y[j] - inf[j]) > 1e-10)
+                {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                break;
+            }
+            for (int j = 0; j < this->y.size(); ++j)
+            {
+                inf[j] = this->y[j];
+            }
+            nextStep();
+        }
+        for (int i = 0; i < this->y.size(); ++i)
+        {
+            y[i] = startY[i];
+        }
+        this->x = startX;
+    }
+    double getInf(int index) const
+    {
+        return this->inf[index];
+    }
+    vector<double>& getInf()
+    {
+        return this->inf;
+    }
 protected:
     virtual vector<double> F(double x, vector<double> y)
     {
@@ -62,6 +108,7 @@ protected:
 private:
     double x;
     vector<double> y;
+    vector<double> inf;
     double h;
     vector<double> mul(double x, vector<double> y)
     {
@@ -160,6 +207,7 @@ int main()
     breakdown.setLambda(0.1, 0.2, 0.3, 0.4);
     breakdown.setMu(0.4, 0.5, 0.6, 0.7);
     breakdown.setH(1);
+    breakdown.calculateInfinity();
     for (int i = 1; i < 100; ++i)
     {
         breakdown.nextStep();
@@ -172,5 +220,10 @@ int main()
         }
         printf("%.2lf\n", sum);
     }
+    for (int i = 0; i < 5; ++i)
+    {
+        printf("%.10lf ", breakdown.getInf(i));
+    }
+    printf("\n");
     return 0;
 }

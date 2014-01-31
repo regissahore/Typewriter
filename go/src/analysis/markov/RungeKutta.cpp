@@ -1,3 +1,4 @@
+#include <cmath>
 #include "RungeKutta.h"
 
 RungeKutta::RungeKutta(int n)
@@ -5,6 +6,7 @@ RungeKutta::RungeKutta(int n)
     for (int i = 0; i < n; ++i)
     {
         y.push_back(0.0);
+        inf.push_back(0.0);
     }
     x = 0.0;
 }
@@ -75,4 +77,51 @@ QVector<double> RungeKutta::add(QVector<double> x, QVector<double> y)
         z.push_back(x[i] + y[i]);
     }
     return z;
+}
+
+void RungeKutta::calculateInfinity()
+{
+    double startX = this->x;
+    QVector<double> startY;
+    for (int i = 0; i < this->y.size(); ++i)
+    {
+        startY.push_back(this->y[i]);
+        inf[i] = this->y[i] + 1.0;
+    }
+    for (int i = 0; i < 10000000; ++i)
+    {
+        bool flag = true;
+        for (int j = 0; j < this->y.size(); ++j)
+        {
+            if (fabs(this->y[j] - inf[j]) > 1e-10)
+            {
+                flag = false;
+                break;
+            }
+        }
+        if (flag)
+        {
+            break;
+        }
+        for (int j = 0; j < this->y.size(); ++j)
+        {
+            inf[j] = this->y[j];
+        }
+        nextStep();
+    }
+    for (int i = 0; i < this->y.size(); ++i)
+    {
+        y[i] = startY[i];
+    }
+    this->x = startX;
+}
+
+double RungeKutta::getInf(int index) const
+{
+    return this->inf[index];
+}
+
+QVector<double>& RungeKutta::getInf()
+{
+    return this->inf;
 }
