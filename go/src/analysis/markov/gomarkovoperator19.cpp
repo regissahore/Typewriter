@@ -17,25 +17,15 @@ GoMarkovOperator19::GoMarkovOperator19() : GoMarkovOperator()
     this->input()->setNumber(1);
     this->subInput()->setNumber(0);
     this->output()->setNumber(2);
-    this->_deltaNum = 1;
-    this->_ids = new QVector<QString>();
+    this->_deltaNum = 2;
     this->_delta = new QVector<double>();
-    this->_ids->push_back("0");
-    this->_delta->push_back(0.0);
 }
 
 GoMarkovOperator19::~GoMarkovOperator19()
 {
     this->GoMarkovOperator::~GoMarkovOperator();
-    this->_ids->clear();
-    delete this->_ids;
     this->_delta->clear();
     delete this->_delta;
-}
-
-QVector<QString> *GoMarkovOperator19::ids() const
-{
-    return this->_ids;
 }
 
 QVector<double>* GoMarkovOperator19::delta() const
@@ -51,71 +41,84 @@ int GoMarkovOperator19::deltaNum() const
 void GoMarkovOperator19::setDeltaNum(int value)
 {
     this->_deltaNum = value;
-}
-
-double fun(double P, double lambda, double mu, double t)
-{
-    return ( mu / (lambda + mu) ) * (1 + lambda / mu * exp( - (lambda + mu) * t ) ) - P;
-}
-
-double fun_(double lambda, double mu, double t)
-{
-    return (- mu / ( (lambda + mu) * (lambda + mu) ) ) * (1.0 + lambda / mu * exp( - (lambda + mu) * t ) ) +
-            ( mu / (lambda + mu) ) * ( ( 1.0 / mu ) * exp( - (lambda + mu) * t ) +
-                                       ( lambda / mu) * ( - t * exp( - (lambda + mu) * t ) ) );
-}
-
-double newton(double P, double mu, double t)
-{
-    double prev = 0.0;
-    while (true)
+    while (this->delta()->size() < value - 2)
     {
-        double cur = prev - fun(P, prev, mu, t) / fun_(prev, mu, t);
-        if (isinf(cur) || isnan(cur))
-        {
-            return cur;
-        }
-        if (fabs(prev - cur) < 1e-10)
-        {
-            return prev;
-        }
-        prev = cur;
+        this->delta()->push_back(0.0);
     }
 }
 
-void GoMarkovOperator19::calcOutputMarkovStatus(GoMarkovStatus prevStatus, double time)
+void GoMarkovOperator19::calcOutputMarkovStatus(double time)
 {
-    DoubleVector PS = prevStatus.probabilityNormal();
-    DoubleVector lambdaS = prevStatus.frequencyBreakdown();
-    DoubleVector muS = prevStatus.frequencyRepair();
-    for (int i = 0; i < lambdaS.length(); ++i)
+    DoubleVector deltaSum = 0.0;
+    for (int i = 0; i < this->delta()->size(); ++i)
     {
-        lambdaS.setValue(i, newton(PS.getValue(i), muS.getValue(0), time));
+        deltaSum = deltaSum + this->delta()->at(i);
     }
-    DoubleVector PR2(0.0);
-    DoubleVector lambdaR2(0.0);
-    DoubleVector muR2(0.0);
-    DoubleVector PC = this->markovStatus()->probabilityNormal();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
-    for (int i = 1; i <= this->deltaNum(); ++i)
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    if (this->breakdownNum() == 1)
     {
-        PR2 += PS.getValue(i) * PC;
-        lambdaR2 += (lambdaS.getValue(i) + lambdaC) * PS.getValue(i) * PC;
-        muR2 += lambdaS.getValue(i) + lambdaC;
+        PC = muC / (muC + lambdaC) + lambdaC / (lambdaC + muC) * DoubleVector::Exp(- (lambdaC + muC) * time);
     }
-    DoubleVector PR1 = PS.getValue(0) + PR2;
-    DoubleVector lambdaR1 = lambdaS.getValue(0) * PS.getValue(0) + lambdaR2;
-    lambdaR1 /= PR1;
-    lambdaR2 /= PR2;
+    DoubleVector PS = this->getPrevMarkovStatus()->probabilityNormal();
+    DoubleVector lambdaS = this->getPrevMarkovStatus()->frequencyBreakdown();
+    DoubleVector PS1 = PS;
+    DoubleVector PSi = (1.0 - PS) * deltaSum;
+    DoubleVector PR1 = PS1 + PSi * PC;
+    DoubleVector QR1 = 1.0 - PR1;
+    DoubleVector lambdaR1 = lambdaS + lambdaC;
+    if (this->deltaNum() == 2)
+    {
+        lambdaR1 = lambdaS;
+    }
+    DoubleVector muR1 = lambdaR1 * PR1 / QR1;
+    DoubleVector PR2 = (PS1 + PSi) * PC;
+    if (this->deltaNum() == 2)
+    {
+        PR2 = PS1 * PC;
+    }
     DoubleVector QR2 = 1.0 - PR2;
-    muR2 = muR2 * PR2 / QR2;
-    DoubleVector muR1 = muS + muR2;
+    DoubleVector lambdaR2 = lambdaS + lambdaC;
+    DoubleVector muR2 = lambdaR2 * PR2 / QR2;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR1);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR1);
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR1);
     this->markovOutputStatus()->at(1)->setProbabilityNormal(PR2);
     this->markovOutputStatus()->at(1)->setFrequencyBreakdown(lambdaR2);
     this->markovOutputStatus()->at(1)->setFrequencyRepair(muR2);
+}
+
+DoubleVector GoMarkovOperator19::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
+{
+    Q_UNUSED(time);
+    Q_UNUSED(subInput);
+    DoubleVector deltaSum = 0.0;
+    for (int i = 0; i < this->delta()->size(); ++i)
+    {
+        deltaSum = deltaSum + this->delta()->at(i);
+    }
+    DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
+    DoubleVector muC = this->markovStatus()->frequencyRepair();
+    DoubleVector PC = this->markovStatus()->probabilityNormal();
+    if (this->breakdownNum() == 1)
+    {
+        PC = muC / (muC + lambdaC) + lambdaC / (lambdaC + muC) * DoubleVector::Exp(- (lambdaC + muC) * time);
+    }
+    DoubleVector PS = input[0];
+    DoubleVector PS1 = PS;
+    DoubleVector PSi = (1.0 - PS) * deltaSum;
+    DoubleVector PR1 = PS1 + PSi * PC;
+    DoubleVector PR2 = (PS1 + PSi) * PC;
+    if (this->deltaNum() == 2)
+    {
+        PR2 = PS1 * PC;
+    }
+    if (index == 0)
+    {
+        return PR1;
+    }
+    return PR2;
 }
 
 void GoMarkovOperator19::paintParameter(QPainter *painter)
@@ -145,12 +148,6 @@ void GoMarkovOperator19::paintParameter(QPainter *painter)
         painter->drawText(-50, y + 20, QObject::tr("    Mu 4: %1").arg(this->_markovStatus4->frequencyRepair().getValue(0)));
         y += 40;
     }
-    painter->drawText(-50, y, QObject::tr("Relvent"));
-    for (int i = 0; i < this->deltaNum(); ++i)
-    {
-        y += 20;
-        painter->drawText(-50, y, QString("%1: %2").arg(this->ids()->at(i)).arg(this->delta()->at(i)));
-    }
 }
 
 GoMarkovOperator* GoMarkovOperator19::copy()
@@ -159,7 +156,6 @@ GoMarkovOperator* GoMarkovOperator19::copy()
     op->setDeltaNum(this->deltaNum());
     for (int i = 0; i < this->deltaNum(); ++i)
     {
-        op->ids()->push_back(this->ids()->at(i));
         op->delta()->push_back(this->delta()->at(i));
     }
     return op;
@@ -187,10 +183,9 @@ void GoMarkovOperator19::save(QDomDocument &document, QDomElement &root)
     this->markovStatus3()->save(document, element);
     this->markovStatus4()->save(document, element);
     QDomElement subElement = document.createElement("markov2");
-    for (int i = 0; i < this->deltaNum(); ++i)
+    for (int i = 0; i < this->deltaNum() - 2; ++i)
     {
         QDomElement node = document.createElement("node");
-        node.setAttribute("a", this->ids()->at(i));
         node.setAttribute("delta", this->delta()->at(i));
         subElement.appendChild(node);
     }
@@ -253,11 +248,9 @@ bool GoMarkovOperator19::tryOpen(QDomElement &root)
     }
     element = element.nextSiblingElement();
     QDomElement node = element.firstChildElement();
-    this->ids()->clear();
     this->delta()->clear();
-    for (int i = 0; i < this->deltaNum(); ++i)
+    for (int i = 0; i < this->deltaNum() - 2; ++i)
     {
-        this->ids()->push_back(node.attribute("a"));
         this->delta()->push_back(node.attribute("delta").toDouble());
         node = node.nextSiblingElement();
     }

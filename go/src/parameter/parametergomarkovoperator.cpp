@@ -778,7 +778,7 @@ void ParameterGoMarkovOperator::addMarkov19DeltaNumParameter()
         GoMarkovOperator19 *model = (GoMarkovOperator19*)item->model();
 
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta Number"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Separate Status Number"), this));
         QSpinBox *spin = new QSpinBox(this);
         spin->setMinimum(1);
         spin->setMaximum(0x7fffffff);
@@ -793,9 +793,8 @@ void ParameterGoMarkovOperator::setItemMarkov19DeltaNum(int value)
     ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
     GoMarkovOperator19 *op = (GoMarkovOperator19*)item->model();
     op->setDeltaNum(value);
-    for (int i = op->delta()->size(); i < op->deltaNum(); ++i)
+    for (int i = op->delta()->size(); i < op->deltaNum() - 2; ++i)
     {
-        op->ids()->push_back("0");
         op->delta()->push_back(0.0);
     }
 }
@@ -806,18 +805,16 @@ void ParameterGoMarkovOperator::addMarkov19DeltaParameter()
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator19 *op = (GoMarkovOperator19*)item->model();
-        for (int i = op->ids()->size(); i < op->deltaNum(); ++i)
+        for (int i = op->delta()->size(); i < op->deltaNum() - 2; ++i)
         {
-            op->ids()->push_back("0");
             op->delta()->push_back(1.0);
         }
-        while (op->deltaNum() < op->ids()->size())
+        while (op->deltaNum() - 2 < op->delta()->size())
         {
-            op->ids()->pop_back();
             op->delta()->pop_back();
         }
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
-        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta"), this));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Separate Delta"), this));
         QPushButton *button = new QPushButton(this);
         button->setText(tr("Click to Edit..."));
         this->connect(button, SIGNAL(clicked()), this, SLOT(setItemMarkov19Delta()));
@@ -831,24 +828,18 @@ void ParameterGoMarkovOperator::setItemMarkov19Delta()
     GoMarkovOperator19 *op = (GoMarkovOperator19*)item->model();
     DialogMatrixInput *dialog = new DialogMatrixInput(this);
     dialog->setWindowTitle(tr("Operator 19 Delta"));
-    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("Relevent Operator ID")));
-    dialog->table()->setHorizontalHeaderItem(1, new QTableWidgetItem(tr("delta")));
-    dialog->table()->setRowCount(op->deltaNum());
-    dialog->table()->setColumnCount(2);
-    for (int i = 0; i < op->deltaNum(); ++i)
+    dialog->table()->setHorizontalHeaderItem(0, new QTableWidgetItem(tr("delta")));
+    dialog->table()->setRowCount(op->deltaNum() - 2);
+    dialog->table()->setColumnCount(1);
+    for (int i = 0; i < op->deltaNum() - 2; ++i)
     {
-        QLineEdit *lineEdit = new QLineEdit();
-        lineEdit->setAlignment(Qt::AlignHCenter);
-        lineEdit->setText(op->ids()->at(i));
-        dialog->table()->setCellWidget(i, 0, lineEdit);
-        dialog->table()->setItem(i, 1, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
+        dialog->table()->setItem(i, 0, new QTableWidgetItem(QString("%1").arg(op->delta()->at(i))));
     }
     if (dialog->exec() == QDialog::Accepted)
     {
-        for (int i = 0; i < op->deltaNum(); ++i)
+        for (int i = 0; i < op->deltaNum() - 2; ++i)
         {
-            (*op->ids())[i] = ((QLineEdit*)dialog->table()->cellWidget(i, 0))->text();
-            (*op->delta())[i] = dialog->table()->item(i, 1)->text().toDouble();
+            (*op->delta())[i] = dialog->table()->item(i, 0)->text().toDouble();
         }
     }
     delete dialog;

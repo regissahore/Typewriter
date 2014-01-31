@@ -21,6 +21,9 @@ GoMarkovOperator9::GoMarkovOperator9() : GoMarkovOperator()
     this->_feedbackStatus2 = new GoMarkovStatus();
     this->_feedbackStatus3 = new GoMarkovStatus();
     this->_feedbackStatus4 = new GoMarkovStatus();
+    this->_rkFeedback2 = new RungeKuttaBreakdown2();
+    this->_rkFeedback3 = new RungeKuttaBreakdown3();
+    this->_rkFeedback4 = new RungeKuttaBreakdown4();
 }
 
 GoMarkovOperator9::~GoMarkovOperator9()
@@ -216,7 +219,7 @@ void GoMarkovOperator9::initCalculation(double interval)
         DoubleVector mu1 = this->feedbackStatus1()->frequencyRepair();
         DoubleVector mu2 = this->feedbackStatus2()->frequencyRepair();
         this->_rkFeedback2->setX(0.0);
-        this->_rkFeedback2->setY(1, 1.0);
+        this->_rkFeedback2->setY(0, 1.0);
         this->_rkFeedback2->setLambda(lambda1.getValue(0), lambda2.getValue(0));
         this->_rkFeedback2->setMu(mu1.getValue(0), mu2.getValue(0));
         for (int i = 1; i < 3; ++i)
@@ -234,7 +237,7 @@ void GoMarkovOperator9::initCalculation(double interval)
         DoubleVector mu2 = this->feedbackStatus2()->frequencyRepair();
         DoubleVector mu3 = this->feedbackStatus3()->frequencyRepair();
         this->_rkFeedback3->setX(0.0);
-        this->_rkFeedback3->setY(1, 1.0);
+        this->_rkFeedback3->setY(0, 1.0);
         this->_rkFeedback3->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0));
         this->_rkFeedback3->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0));
         for (int i = 1; i < 4; ++i)
@@ -256,7 +259,7 @@ void GoMarkovOperator9::initCalculation(double interval)
         this->_rkFeedback4->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0), lambda4.getValue(0));
         this->_rkFeedback4->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0), mu4.getValue(0));
         this->_rkFeedback4->setX(0.0);
-        this->_rkFeedback4->setY(1, 1.0);
+        this->_rkFeedback4->setY(0, 1.0);
         for (int i = 1; i < 5; ++i)
         {
             this->_rkFeedback4->setY(i, 0.0);
