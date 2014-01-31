@@ -211,22 +211,22 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
             {
                 if (op->type() != GoMarkovOperatorFactory::Operator_Type_Split)
                 {
-                    data->names.push_back(QObject::tr("Signal %1'").arg(op->id()));
+                    data->names.push_back(QObject::tr("\\'PR%1").arg(op->id()));
                 }
                 else
                 {
-                    data->names.push_back(QObject::tr("Signal %1'").arg(op->getPrevOperator(0)->id()));
+                    data->names.push_back(QObject::tr("\\'PR%1").arg(op->getPrevOperator(0)->id()));
                 }
             }
             else
             {
                 if (op->type() != GoMarkovOperatorFactory::Operator_Type_Split)
                 {
-                    data->names.push_back(QObject::tr("Signal %1").arg(op->id()));
+                    data->names.push_back(QObject::tr("PR%1").arg(op->id()));
                 }
                 else
                 {
-                    data->names.push_back(QObject::tr("Signal %1").arg(op->getPrevOperator(0)->id()));
+                    data->names.push_back(QObject::tr("PR%1").arg(op->getPrevOperator(0)->id()));
                 }
             }
             data->probabilities.push_back(QVector<DoubleVector>());
@@ -241,22 +241,22 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
                 {
                     if (op->type() != GoMarkovOperatorFactory::Operator_Type_Split)
                     {
-                        data->names.push_back(QObject::tr("Signal %1' (%2)").arg(op->id()).arg(j + 1));
+                        data->names.push_back(QObject::tr("\\'PR%1(%2)").arg(op->id()).arg(j + 1));
                     }
                     else
                     {
-                        data->names.push_back(QObject::tr("Signal %1' (%2)").arg(op->getPrevOperator(0)->id()).arg(j + 1));
+                        data->names.push_back(QObject::tr("\\'PR%1(%2)").arg(op->getPrevOperator(0)->id()).arg(j + 1));
                     }
                 }
                 else
                 {
                     if (op->type() != GoMarkovOperatorFactory::Operator_Type_Split)
                     {
-                        data->names.push_back(QObject::tr("Signal %1 (%2)").arg(op->id()).arg(j + 1));
+                        data->names.push_back(QObject::tr("PR%1(%2)").arg(op->id()).arg(j + 1));
                     }
                     else
                     {
-                        data->names.push_back(QObject::tr("Signal %1 (%2)").arg(op->getPrevOperator(0)->id()).arg(j + 1));
+                        data->names.push_back(QObject::tr("PR%1(%2)").arg(op->getPrevOperator(0)->id()).arg(j + 1));
                     }
                 }
                 data->probabilities.push_back(QVector<DoubleVector>());

@@ -35,7 +35,6 @@ private slots:
     void on_buttonOperator9B1_clicked();
     void on_buttonOperator9B2_clicked();
     void on_buttonOperator10_clicked();
-    void on_buttonOperator11_clicked();
     void on_buttonOperator11A_clicked();
     void on_buttonOperator12A_clicked();
     void on_buttonOperator13A_clicked();

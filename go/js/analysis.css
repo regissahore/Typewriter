@@ -85,14 +85,14 @@ fieldset span {
 }
 
 #div_display table th {
-    min-width: 130px;
+    min-width: 150px;
     height: 25px;
     border: 1px solid #CCC;
     background-color: #eeeeee;
 }
 
 #div_display table td {
-    min-width: 130px;
+    min-width: 150px;
     height: 25px;
     text-align: center;
     border: 1px solid #CCC;
@@ -108,11 +108,7 @@ fieldset span {
 #div_display .absoluteHead {
     position: fixed;
     top: 0px;
-}
-
-#div_display .absoluteTail {
-    position: fixed;
-    bottom: 0px;
+    border-bottom: 2px solid rgb(127, 127, 127);
 }
 
 #div_spacing {

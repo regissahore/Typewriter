@@ -221,13 +221,6 @@ void ToolboxGoMarkov::on_buttonOperator10_clicked()
     this->sendMessage(message);
 }
 
-void ToolboxGoMarkov::on_buttonOperator11_clicked()
-{
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_11;
-    this->sendMessage(message);
-}
-
 void ToolboxGoMarkov::on_buttonOperator11A_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);

@@ -1,5 +1,4 @@
 var index = 0;
-var vectorIndex = 0;
 var canvasWidth;
 var canvasHeight;
 var mouseX = 0;
@@ -36,6 +35,13 @@ function getMousePos(event) {
     }
     mouseX = event.clientX - left + window.pageXOffset;
     mouseY = event.clientY - top + window.pageYOffset;
+}
+
+function getShowName(name) {
+    if (name[0] == "'") {
+        return name[1] + "'" + "<sub>" + name.substr(2) + "</sub>";
+    }
+    return name[0] + "<sub>" + name.substr(1) + "</sub>";
 }
 
 function updateLineChart() {
@@ -99,8 +105,8 @@ function updateLineChart() {
     if (displayConfig.showP) {
         var minP = 1.0;
         var maxP = 0.0;
-        for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
-            var value = data.ps[index][vectorIndex][i];
+        for (var i = 0; i < data.ps[index].length; ++i) {
+            var value = data.ps[index][i];
             if (value < minP) {
                 minP = value;
             }
@@ -117,9 +123,9 @@ function updateLineChart() {
         context.beginPath();
         context.strokeStyle = 'rgb(0, 139, 0)';
         context.lineWidth = 2.0;
-        for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
-            var value = data.ps[index][vectorIndex][i];
-            context.lineTo(shiftX + chartWidth * i / data.ps[index][vectorIndex].length,
+        for (var i = 0; i < data.ps[index].length; ++i) {
+            var value = data.ps[index][i];
+            context.lineTo(shiftX + chartWidth * i / data.ps[index].length,
                            shiftY - chartHeight * (value - minP) / (maxP - minP));
         }
         context.stroke();
@@ -127,8 +133,8 @@ function updateLineChart() {
     if (displayConfig.showR) {
         var minP = 1.0;
         var maxP = 0.0;
-        for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
-            var value = 1.0 - data.ps[index][vectorIndex][i];
+        for (var i = 0; i < data.ps[index].length; ++i) {
+            var value = 1.0 - data.ps[index][i];
             if (value < minP) {
                 minP = value;
             }
@@ -145,9 +151,9 @@ function updateLineChart() {
         context.beginPath();
         context.strokeStyle = 'rgb(139, 0, 0)';
         context.lineWidth = 2.0;
-        for (var i = 0; i < data.ps[index][vectorIndex].length; ++i) {
-            var value = 1.0 - data.ps[index][vectorIndex][i];
-            context.lineTo(shiftX + chartWidth * i / data.ps[index][vectorIndex].length,
+        for (var i = 0; i < data.ps[index].length; ++i) {
+            var value = 1.0 - data.ps[index][i];
+            context.lineTo(shiftX + chartWidth * i / data.ps[index].length,
                            shiftY - (value - minP) / (maxP - minP) * chartHeight);
         }
         context.stroke();
@@ -155,8 +161,8 @@ function updateLineChart() {
     if (displayConfig.showLambda) {
         var minP = 1e100;
         var maxP = 0;
-        for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
-            var value = data.lambdas[index][vectorIndex][i];
+        for (var i = 0; i < data.lambdas[index].length; ++i) {
+            var value = data.lambdas[index][i];
             if (value < minP) {
                 minP = value;
             }
@@ -173,9 +179,9 @@ function updateLineChart() {
         context.beginPath();
         context.strokeStyle = 'rgb(0, 0, 139)';
         context.lineWidth = 2.0;
-        for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
-            var value = data.lambdas[index][vectorIndex][i];
-            context.lineTo(shiftX + chartWidth * i / data.lambdas[index][vectorIndex].length,
+        for (var i = 0; i < data.lambdas[index].length; ++i) {
+            var value = data.lambdas[index][i];
+            context.lineTo(shiftX + chartWidth * i / data.lambdas[index].length,
                            shiftY - (value - minP) / (maxP - minP) * chartHeight);
         }
         context.stroke();
@@ -183,8 +189,8 @@ function updateLineChart() {
     if (displayConfig.showMu) {
         var minP = 1e100;
         var maxP = 0;
-        for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
-            var value = data.lambdas[index][vectorIndex][i] * (data.ps[index][vectorIndex][i]) / (1 - data.ps[index][vectorIndex][i]);
+        for (var i = 0; i < data.lambdas[index].length; ++i) {
+            var value = data.lambdas[index][i] * data.ps[index][i] / (1 - data.ps[index][i]);
             if (value > 1e100) {
                 continue;
             }
@@ -204,9 +210,9 @@ function updateLineChart() {
         context.beginPath();
         context.strokeStyle = 'rgb(220, 119, 0)';
         context.lineWidth = 2.0;
-        for (var i = 0; i < data.lambdas[index][vectorIndex].length; ++i) {
-            var value = data.lambdas[index][vectorIndex][i] * (data.ps[index][vectorIndex][i]) / (1 - data.ps[index][vectorIndex][i]);
-            context.lineTo(shiftX + chartWidth * i / data.lambdas[index][vectorIndex].length,
+        for (var i = 0; i < data.lambdas[index].length; ++i) {
+            var value = data.lambdas[index][i] * data.ps[index][i] / (1 - data.ps[index][i]);
+            context.lineTo(shiftX + chartWidth * i / data.lambdas[index].length,
                            shiftY - (value - minP) / (maxP - minP) * chartHeight);
         }
         context.stroke();
@@ -220,10 +226,10 @@ function updateLineChart() {
                 context.textBaseline = 'top';
                 context.font = "16px 微软雅黑";
                 context.fillText("时间：" + numToString(data.times[time]), 10, 0);
-                context.fillText("可用度：" + numToString(data.ps[index][vectorIndex][time]), 10, 20);
-                context.fillText("不可用度：" + numToString(1.0 - data.ps[index][vectorIndex][time]), 200, 20);
-                context.fillText("故障率：" + numToString(data.lambdas[index][vectorIndex][time]), 10, 40);
-                context.fillText("维修率：" + numToString(data.lambdas[index][vectorIndex][time] * data.ps[index][vectorIndex][time] / (1.0 - data.ps[index][vectorIndex][time])), 200, 40);
+                context.fillText("可用度：" + numToString(data.ps[index][time]), 10, 20);
+                context.fillText("不可用度：" + numToString(1.0 - data.ps[index][time]), 200, 20);
+                context.fillText("故障率：" + numToString(data.lambdas[index][time]), 10, 40);
+                context.fillText("维修率：" + numToString(data.lambdas[index][time] * data.ps[index][time] / (1.0 - data.ps[index][time])), 200, 40);
             }
             context.beginPath();
             context.strokeStyle = '#000000';
@@ -248,9 +254,9 @@ function addOperatorList() {
     selectName.id = "select_name";
     for (var i = 0; i < data.names.length; ++i) {
         if ((-1 == index && 0 == i) || i == index) {
-            selectName.innerHTML += "<option selected='selected'>" + data.names[i] + "</option>";
+            selectName.innerHTML += "<option selected='selected'>" + getShowName(data.names[i]) + "</option>";
         } else {
-            selectName.innerHTML += "<option>" + data.names[i] + "</option>";
+            selectName.innerHTML += "<option>" + getShowName(data.names[i]) + "</option>";
         }
     }
     selectName.onchange = function() {
@@ -262,26 +268,6 @@ function addOperatorList() {
         return event.preventDefault();
     };
     nameDiv.appendChild(selectName);
-    
-    var pIndex = document.createElement("span");
-    pIndex.innerText = "向量索引：";
-    nameDiv.appendChild(pIndex);
-    
-    var selectIndex = document.createElement("select");
-    selectIndex.id = "select_index";
-    selectIndex.innerHTML += "<option selected='selected'>" + 1 + "</option>";
-    for (var i = 1; i < data.ps[index].length; ++i) {
-        selectIndex.innerHTML += "<option >" + (i + 1) + "</option>";
-    }
-    selectIndex.onchange = function() {
-        var index = document.getElementById("select_index");
-        if (vectorIndex != index.selectedIndex) {
-            vectorIndex = index.selectedIndex;
-            updateLineChart();
-        }
-    };
-    vectorIndex = 0;
-    nameDiv.appendChild(selectIndex);
     
     configDiv.appendChild(nameDiv);
 }
@@ -396,7 +382,6 @@ function addTableType() {
         }
     };
     selectIndex.click();
-    vectorIndex = 0;
     nameDiv.appendChild(selectIndex);
     
     configDiv.appendChild(nameDiv);
@@ -419,7 +404,7 @@ function addNameList() {
         };
         nameDiv.appendChild(checkbox);
         var p = document.createElement("span");
-        p.innerText = data.names[i];
+        p.innerHTML = getShowName(data.names[i]);
         nameDiv.appendChild(p);
     }
     configDiv.appendChild(nameDiv);
@@ -437,8 +422,10 @@ function displayTable() {
         var rect = spacing.getBoundingClientRect();
         if (rect.top < 0) {
             head.className = "absoluteHead";
+            head.style.left = document.body.getBoundingClientRect().left;
         } else {
             head.className = "relativeHead";
+            head.style.left = 0;
         }
     };
     addTableType();
@@ -452,7 +439,7 @@ function displayTable() {
     if (displayConfig.tableType == 'horizon') {
         table += "<div id='div_spacing'>";
         table += "<table>";
-        for (var i = 0; i < 4; ++i) {
+        for (var i = 0; i < 2; ++i) {
             table += "<tr><td>-</td></tr>";
         }
         table += "</table>";
@@ -464,7 +451,7 @@ function displayTable() {
             if (!displayConfig.showName[data.names[i]]) {
                 continue;
             }
-            table += "<th>" + data.names[i] + "</th>";
+            table += "<th>" + getShowName(data.names[i]) + "</th>";
             for (var j = 1; j < showCount; ++j) {
                 table += "<th></th>";
             }
@@ -490,13 +477,11 @@ function displayTable() {
             }
         }
         table += "</tr>";
+        table += "</table>";
+        table += "</div>";
+        table += "</div>";
+        table += "<table>";
         for (var i = 0; i < data.times.length; ++i) {
-            if (2 == i) {
-                table += "</table>";
-                table += "</div>";
-                table += "</div>";
-                table += "<table>";
-            }
             table += "<tr>";
             table += "<td>" + numToString(data.times[i]) + "</td>";
             for (var j = 0; j < data.names.length; ++j) {
@@ -504,16 +489,16 @@ function displayTable() {
                     continue;
                 }
                 if (displayConfig.showP) {
-                    table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(data.ps[j][i]) + "</td>";
                 }
                 if (displayConfig.showR) {
-                    table += "<td>" + numToString(1.0 - data.ps[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(1.0 - data.ps[j][i]) + "</td>";
                 }
                 if (displayConfig.showLambda) {
-                    table += "<td>" + numToString(data.lambdas[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(data.lambdas[j][i]) + "</td>";
                 }
                 if (displayConfig.showMu) {
-                    table += "<td>" + numToString(data.lambdas[j][0][i] * (data.ps[j][0][i]) / (1.0 - data.ps[j][0][i])) + "</td>";
+                    table += "<td>" + numToString(data.lambdas[j][i] * data.ps[j][i] / (1.0 - data.ps[j][i])) + "</td>";
                 }
             }
             table += "</tr>";
@@ -522,9 +507,7 @@ function displayTable() {
     } else {
         table += "<div id='div_spacing'>";
         table += "<table>";
-        for (var i = 0; i < 1 + showCount; ++i) {
-            table += "<tr><td>-</td></tr>";
-        }
+        table += "<tr><td>-</td></tr>";
         table += "</table>";
         table += "<div id='div_head'>";
         table += "<table>";
@@ -535,16 +518,14 @@ function displayTable() {
             if (!displayConfig.showName[data.names[i]]) {
                 continue;
             }
-            table += "<th>" + data.names[i] + "</th>";
+            table += "<th>" + getShowName(data.names[i]) + "</th>";
         }
         table += "</tr>";
+        table += "</table>";
+        table += "</div>";
+        table += "</div>";
+        table += "<table>";
         for (var i = 0; i < data.times.length; ++i) {
-            if (1 == i) {
-                table += "</table>";
-                table += "</div>";
-                table += "</div>";
-                table += "<table>";
-            }
             var firstShow = true;
             if (displayConfig.showP) {
                 table += "<tr>";
@@ -559,7 +540,7 @@ function displayTable() {
                     if (!displayConfig.showName[data.names[j]]) {
                         continue;
                     }
-                    table += "<td>" + numToString(data.ps[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(data.ps[j][i]) + "</td>";
                 }
                 table += "</tr>";
             }
@@ -576,7 +557,7 @@ function displayTable() {
                     if (!displayConfig.showName[data.names[j]]) {
                         continue;
                     }
-                    table += "<td>" + numToString(1.0 - data.ps[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(1.0 - data.ps[j][i]) + "</td>";
                 }
                 table += "</tr>";
             }
@@ -593,7 +574,7 @@ function displayTable() {
                     if (!displayConfig.showName[data.names[j]]) {
                         continue;
                     }
-                    table += "<td>" + numToString(data.lambdas[j][0][i]) + "</td>";
+                    table += "<td>" + numToString(data.lambdas[j][i]) + "</td>";
                 }
                 table += "</tr>";
             }
@@ -610,7 +591,7 @@ function displayTable() {
                     if (!displayConfig.showName[data.names[j]]) {
                         continue;
                     }
-                    table += "<td>" + numToString(data.lambdas[j][0][i] * (data.ps[j][0][i]) / (1.0 - data.ps[j][0][i])) + "</td>";
+                    table += "<td>" + numToString(data.lambdas[j][i] * (data.ps[j][i]) / (1.0 - data.ps[j][i])) + "</td>";
                 }
                 table += "</tr>";
             }

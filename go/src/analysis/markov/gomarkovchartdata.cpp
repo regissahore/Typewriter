@@ -223,7 +223,21 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
         {
             out << ", ";
         }
-        out << "'" + this->names[i] + "'";
+        if (this->probabilities[i][0].length() == 1)
+        {
+            out << "'" + this->names[i] + "'";
+        }
+        else
+        {
+            for (int j = 0; j < this->probabilities[i][0].length(); ++j)
+            {
+                if (j)
+                {
+                    out << ", ";
+                }
+                out << "'" + this->names[i] + "-" + QString("(%1)").arg(j + 1) + "'";
+            }
+        }
     }
     out << "], times: [";
     for (int i = 0; i < this->times.size(); ++i)
@@ -241,7 +255,6 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
         {
             out << ", ";
         }
-        out << "[";
         for (int j = 0; j < this->probabilities[i][0].length(); ++j)
         {
             if (j)
@@ -259,7 +272,6 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
             }
             out << "]";
         }
-        out << "]";
     }
     out << "], lambdas: [";
     for (int i = 0; i < this->lambdas.size(); ++i)
@@ -268,7 +280,6 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
         {
             out << ", ";
         }
-        out << "[";
         for (int j = 0; j < this->lambdas[i][0].length(); ++j)
         {
             if (j)
@@ -286,7 +297,6 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
             }
             out << "]";
         }
-        out << "]";
     }
     out << "],";
     out << "};";

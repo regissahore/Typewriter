@@ -520,6 +520,62 @@ void ItemGoMarkovOperator::setModel(GoOperator *model)
         }
         this->prepareGeometryChange();
     }
+    else if (model->type() == GoMarkovOperatorFactory::Operator_Type_19)
+    {
+        this->_model = model;
+        this->_inputSignal->clear();
+        this->_subInputSignal->clear();
+        this->_outputSignal->clear();
+        for (int i = 0; i < this->_inputArrows->size(); ++i)
+        {
+            this->_inputArrows->at(i)->setParentItem(0L);
+            delete this->_inputArrows->at(i);
+        }
+        this->_inputArrows->clear();
+        for (int i = 0; i < this->_subInputArrows->size(); ++i)
+        {
+            this->_subInputArrows->at(i)->setParentItem(0L);
+            delete this->_subInputArrows->at(i);
+        }
+        this->_subInputArrows->clear();
+        for (int i = 0; i < this->_outputArrows->size(); ++i)
+        {
+            this->_outputArrows->at(i)->setParentItem(0L);
+            delete this->_outputArrows->at(i);
+        }
+        this->_outputArrows->clear();
+        ItemArrow *arrow = new ItemArrow(this);
+        arrow->setIsShowArrow(false);
+        arrow->setColor(QColor(Qt::darkRed));
+        arrow->setPos(-75, 0);
+        arrow->setEnd(QPoint(50, 0));
+        this->_inputArrows->push_back(arrow);
+        this->_inputSignal->push_back(0L);
+        arrow = new ItemArrow(this);
+        arrow->setPos(25, 0);
+        arrow->setEnd(QPoint(50, 0));
+        this->_outputArrows->push_back(arrow);
+        this->_outputSignal->push_back(new QVector<ItemGoSignal*>());
+        arrow = new ItemArrow(this);
+        arrow->setPos(0, 25);
+        arrow->setEnd(QPoint(0, 50));
+        this->_outputArrows->push_back(arrow);
+        this->_outputSignal->push_back(new QVector<ItemGoSignal*>());
+        this->_isShowOutput->clear();
+        for (int i = 0; i < this->model()->output()->number(); ++i)
+        {
+            this->_isShowOutput->push_back(true);
+        }
+        if (this->isHorizonFlip())
+        {
+            this->horizonFlip();
+        }
+        if (this->isVerticalFlip())
+        {
+            this->verticalFlip();
+        }
+        this->prepareGeometryChange();
+    }
     else
     {
         this->ItemGoOperator::setModel(model);
@@ -569,7 +625,7 @@ QRectF ItemGoMarkovOperator::boundingRect() const
 {
     if (this->model()->TypedItem::type() == GoMarkovOperatorFactory::Operator_Type_Split)
     {
-        float height = (this->output()->size() - 1) * 50;
+        float height = (this->output()->size() - 1) * 100;
         if (this->isHorizonFlip())
         {
             return QRectF(-100, - height * 0.5f, 125, height);
