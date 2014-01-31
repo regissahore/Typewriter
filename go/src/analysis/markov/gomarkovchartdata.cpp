@@ -268,7 +268,7 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
                 {
                     out << ", ";
                 }
-                out << this->probabilities[i][k].getValue(j);
+                out << this->probabilities[i][k].toString(j);
             }
             out << "]";
         }
@@ -293,7 +293,7 @@ bool GoMarkovChartData::saveAsHTML(QString fileName)
                 {
                     out << ", ";
                 }
-                out << this->lambdas[i][k].getValue(j);
+                out << this->lambdas[i][k].toString(j);
             }
             out << "]";
         }
