@@ -154,7 +154,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
             isOperatorError = true;
             this->_messages.append(MessageRecord(op->error(), MessageFactory::TYPE_OUTPUT_ERROR));
         }
-        op->setTimeInterval(totalTime / (count - 1));
+        op->initCalculation(totalTime / (count - 1));
     }
     for (int i = 0; i < this->_commonCause.size(); ++i)
     {
@@ -278,12 +278,13 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
         double time = i * totalTime / (count - 1);
         data->times.push_back(time);
         // Record initial value of lamda.
-        QVector<DoubleVector> lamdas;
         for (int j = 0; j < list.size(); ++j)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];
             op->initMarkovStatus(time);
+            op->prepareNextCalculation(i, time);
         }
+        QVector<DoubleVector> lamdas;
         for (int j = 0; j < list.size(); ++j)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];
@@ -368,6 +369,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];
             op->markovStatus()->setFrequencyBreakdown(lamdas[j]);
+            op->finishCalculation();
         }
     }
 

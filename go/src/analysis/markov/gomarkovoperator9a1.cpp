@@ -27,8 +27,8 @@ void GoMarkovOperator9A1::calcOutputMarkovStatus(double time)
     DoubleVector muS = status->frequencyRepair();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
-    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;
     DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC);
     DoubleVector PR = (muS * muE +
@@ -54,8 +54,8 @@ DoubleVector GoMarkovOperator9A1::calcTempOutputMarkovStatus(double time, QVecto
     DoubleVector muS = status->frequencyRepair();
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
-    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;
     DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC);
     DoubleVector PR = (muS * muE +

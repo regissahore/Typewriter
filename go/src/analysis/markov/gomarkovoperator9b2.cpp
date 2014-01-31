@@ -23,8 +23,8 @@ void GoMarkovOperator9B2::calcOutputMarkovStatus(double time)
     DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
-    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;
     DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
     DoubleVector PR = (muS * muE +
@@ -48,7 +48,7 @@ void GoMarkovOperator9B2::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
     DoubleVector lambdaS2 = status2->frequencyBreakdown();
     DoubleVector lambdaS = lambdaS1 + lambdaS2;
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
-    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
+    DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
     DoubleVector lambdaE = lambdaC + lambdaF;
     DoubleVector QR = 1.0 - PR[0];
     DoubleVector lambdaR = lambdaS + lambdaE;
@@ -73,8 +73,8 @@ DoubleVector GoMarkovOperator9B2::calcTempOutputMarkovStatus(double time, QVecto
     DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
-    DoubleVector lambdaF = this->markovFeedbackStatus()->frequencyBreakdown();
-    DoubleVector muF = this->markovFeedbackStatus()->frequencyRepair();
+    DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
+    DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;
     DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
     DoubleVector PR = (muS * muE +

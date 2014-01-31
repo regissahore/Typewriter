@@ -12,6 +12,7 @@
 #include "Messager.h"
 #include "MessageFactory.h"
 #include "GoMarkovOperatorFactory.h"
+#include "RungeKuttaBreakdown2.h"
 #include "RungeKuttaBreakdown3.h"
 #include "RungeKuttaBreakdown4.h"
 
@@ -120,34 +121,20 @@ void GoMarkovOperator::initMarkovStatus(double time, double c12)
     else if (2 == this->breakdownNum())
     {
         DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
-        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
         DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
-        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
-        DoubleVector s1 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) + DoubleVector::Sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
-        DoubleVector s2 = 0.5 * (-(lambda1 + lambda2 + mu1 + mu2) - DoubleVector::Sqrt((lambda1 - lambda2 + mu1 - mu2) * (lambda1 - lambda2 + mu1 - mu2) + 4 * lambda1 * lambda2));
-        DoubleVector PC = mu1 * mu2 / s1 / s2 +
-                (s1 * s1 + (mu1 + mu2) * s1 + mu1 * mu2) / (s1 * (s1 - s2)) * DoubleVector::Exp(s1 * time) +
-                (s2 * s2 + (mu1 + mu2) * s2 + mu1 * mu2) / (s2 * (s2 - s1)) * DoubleVector::Exp(s2 * time) +
-                c12;
-        DoubleVector QC = 1.0 - PC;
-        DoubleVector lambdaR = lambda1 + lambda2;
-        DoubleVector muR = lambdaR * PC / QC;
-        this->markovStatus()->setProbabilityNormal(PC);
-        this->markovStatus()->setFrequencyBreakdown(lambdaR);
-        this->markovStatus()->setFrequencyRepair(muR);
+        DoubleVector P0 = this->_rkBreakdown2->getY(0) + c12;
+        DoubleVector lambda = lambda1 + lambda2;
+        DoubleVector mu = lambda * P0 / (1.0 - P0);
+        this->markovStatus()->setProbabilityNormal(P0);
+        this->markovStatus()->setFrequencyBreakdown(lambda);
+        this->markovStatus()->setFrequencyRepair(mu);
     }
     else if (3 == this->breakdownNum())
     {
         DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
         DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
         DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
-        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
-        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
-        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
-        this->_rkBreakdown3->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0));
-        this->_rkBreakdown3->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0));
-        this->_rkBreakdown3->nextStep();
-        DoubleVector P0 = this->_rkBreakdown3->getY(0);
+        DoubleVector P0 = this->_rkBreakdown3->getY(0) + c12;
         DoubleVector lambda = lambda1 + lambda2 + lambda3;
         DoubleVector mu = lambda * P0 / (1.0 - P0);
         this->markovStatus()->setProbabilityNormal(P0);
@@ -160,14 +147,7 @@ void GoMarkovOperator::initMarkovStatus(double time, double c12)
         DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
         DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
         DoubleVector lambda4 = this->markovStatus4()->frequencyBreakdown();
-        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
-        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
-        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
-        DoubleVector mu4 = this->markovStatus4()->frequencyRepair();
-        this->_rkBreakdown4->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0), lambda4.getValue(0));
-        this->_rkBreakdown4->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0), mu4.getValue(0));
-        this->_rkBreakdown4->nextStep();
-        DoubleVector P0 = this->_rkBreakdown4->getY(0);
+        DoubleVector P0 = this->_rkBreakdown4->getY(0) + c12;
         DoubleVector lambda = lambda1 + lambda2 + lambda3 + lambda4;
         DoubleVector mu = lambda * P0 / (1.0 - P0);
         this->markovStatus()->setProbabilityNormal(P0);
@@ -307,10 +287,84 @@ DoubleVector GoMarkovOperator::totalFrequencyBreakdown() const
     return total;
 }
 
-void GoMarkovOperator::setTimeInterval(double time)
+void GoMarkovOperator::initCalculation(double interval)
 {
-    this->_rkBreakdown3->setH(time);
-    this->_rkBreakdown4->setH(time);
+    if (this->breakdownNum() == 2)
+    {
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        this->_rkBreakdown2->setX(0.0);
+        this->_rkBreakdown2->setY(1, 1.0);
+        this->_rkBreakdown2->setLambda(lambda1.getValue(0), lambda2.getValue(0));
+        this->_rkBreakdown2->setMu(mu1.getValue(0), mu2.getValue(0));
+        for (int i = 1; i < 3; ++i)
+        {
+            this->_rkBreakdown2->setY(i, 0.0);
+        }
+        this->_rkBreakdown2->setH(interval);
+    }
+    else if (this->breakdownNum() == 3)
+    {
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
+        this->_rkBreakdown3->setX(0.0);
+        this->_rkBreakdown3->setY(1, 1.0);
+        this->_rkBreakdown3->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0));
+        this->_rkBreakdown3->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0));
+        for (int i = 1; i < 4; ++i)
+        {
+            this->_rkBreakdown3->setY(i, 0.0);
+        }
+        this->_rkBreakdown3->setH(interval);
+    }
+    else if (this->breakdownNum() == 4)
+    {
+        DoubleVector lambda1 = this->markovStatus1()->frequencyBreakdown();
+        DoubleVector lambda2 = this->markovStatus2()->frequencyBreakdown();
+        DoubleVector lambda3 = this->markovStatus3()->frequencyBreakdown();
+        DoubleVector lambda4 = this->markovStatus4()->frequencyBreakdown();
+        DoubleVector mu1 = this->markovStatus1()->frequencyRepair();
+        DoubleVector mu2 = this->markovStatus2()->frequencyRepair();
+        DoubleVector mu3 = this->markovStatus3()->frequencyRepair();
+        DoubleVector mu4 = this->markovStatus4()->frequencyRepair();
+        this->_rkBreakdown4->setLambda(lambda1.getValue(0), lambda2.getValue(0), lambda3.getValue(0), lambda4.getValue(0));
+        this->_rkBreakdown4->setMu(mu1.getValue(0), mu2.getValue(0), mu3.getValue(0), mu4.getValue(0));
+        this->_rkBreakdown4->setX(0.0);
+        this->_rkBreakdown4->setY(1, 1.0);
+        for (int i = 1; i < 5; ++i)
+        {
+            this->_rkBreakdown4->setY(i, 0.0);
+        }
+        this->_rkBreakdown4->setH(interval);
+    }
+}
+
+void GoMarkovOperator::prepareNextCalculation(int count, double time)
+{
+    Q_UNUSED(count);
+    Q_UNUSED(time);
+    if (this->breakdownNum() == 2)
+    {
+        this->_rkBreakdown2->nextStep();
+    }
+    if (this->breakdownNum() == 3)
+    {
+        this->_rkBreakdown3->nextStep();
+    }
+    else if (this->breakdownNum() == 4)
+    {
+        this->_rkBreakdown4->nextStep();
+    }
+}
+
+void GoMarkovOperator::finishCalculation()
+{
 }
 
 GoMarkovOperator* GoMarkovOperator::copy()
