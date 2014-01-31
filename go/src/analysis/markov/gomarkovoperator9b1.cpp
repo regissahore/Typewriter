@@ -13,12 +13,6 @@ GoMarkovOperator9B1::~GoMarkovOperator9B1()
 
 void GoMarkovOperator9B1::calcOutputMarkovStatus(double time)
 {
-    GoMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    DoubleVector lambdaS1 = status1->frequencyBreakdown();
-    DoubleVector muS1 = status1->frequencyRepair();
-    GoMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    DoubleVector lambdaS2 = status2->frequencyBreakdown();
-    DoubleVector muS2 = status2->frequencyRepair();
     DoubleVector lambdaS = lambdaS1 + lambdaS2;
     DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
@@ -42,10 +36,6 @@ void GoMarkovOperator9B1::calcOutputMarkovStatus(double time)
 
 void GoMarkovOperator9B1::calcCommonOutputMarkovStatus(QVector<DoubleVector> PR)
 {
-    GoMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    DoubleVector lambdaS1 = status1->frequencyBreakdown();
-    GoMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    DoubleVector lambdaS2 = status2->frequencyBreakdown();
     DoubleVector lambdaS = lambdaS1 + lambdaS2;
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
@@ -63,12 +53,6 @@ DoubleVector GoMarkovOperator9B1::calcTempOutputMarkovStatus(double time, QVecto
     Q_UNUSED(input);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
-    GoMarkovStatus *status1 = this->getPrevMarkovStatus(0);
-    DoubleVector lambdaS1 = status1->frequencyBreakdown();
-    DoubleVector muS1 = status1->frequencyRepair();
-    GoMarkovStatus *status2 = this->getPrevMarkovStatus(1);
-    DoubleVector lambdaS2 = status2->frequencyBreakdown();
-    DoubleVector muS2 = status2->frequencyRepair();
     DoubleVector lambdaS = lambdaS1 + lambdaS2;
     DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();

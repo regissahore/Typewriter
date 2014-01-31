@@ -4,7 +4,6 @@
 GraphicsView::GraphicsView(QWidget *parent) : QGraphicsView(parent)
 {
     this->setRenderHints(QPainter::Antialiasing);
-    //this->setDragMode(QGraphicsView::RubberBandDrag);
     this->setDragMode(QGraphicsView::ScrollHandDrag);
     this->setOptimizationFlags(QGraphicsView::DontSavePainterState);
     this->setViewportUpdateMode(QGraphicsView::FullViewportUpdate);

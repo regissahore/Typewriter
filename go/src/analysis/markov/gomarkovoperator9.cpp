@@ -310,12 +310,29 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
         this->_rkFeedback4->nextStep();
     }
     this->_calculateCount = count;
-    DoubleVector lambdaS1 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
-    DoubleVector muS1 = this->getPrevMarkovStatus(0)->frequencyRepair();
-    this->_lambdaS1Sum = this->_lambdaS1Sum + lambdaS1;
-    this->_muS1Sum = this->_muS1Sum + muS1;
-    this->lambdaS1 = this->_lambdaS1Sum / count;
-    this->muS1 = this->_muS1Sum / count;
+    if (count > 0)
+    {
+        DoubleVector lambdaS1 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
+        DoubleVector muS1 = this->getPrevMarkovStatus(0)->frequencyRepair();
+        if (isinf(lambdaS1.getValue(0)) || isnan(lambdaS1.getValue(0)))
+        {
+            this->_lambdaS1Sum = this->_lambdaS1Sum + this->lambdaS1;
+        }
+        else
+        {
+            this->_lambdaS1Sum = this->_lambdaS1Sum + lambdaS1;
+            this->lambdaS1 = this->_lambdaS1Sum / count;
+        }
+        if (isinf(muS1.getValue(0)) || isnan(muS1.getValue(0)))
+        {
+            this->_muS1Sum = this->_muS1Sum + this->muS1;
+        }
+        else
+        {
+            this->_muS1Sum = this->_muS1Sum + muS1;
+            this->muS1 = this->_muS1Sum / count;
+        }
+    }
 }
 
 void GoMarkovOperator9::save(QDomDocument &document, QDomElement &root)

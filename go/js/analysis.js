@@ -3,6 +3,8 @@ var canvasWidth;
 var canvasHeight;
 var mouseX = 0;
 var mouseY = 0;
+var nan = NaN;
+var inf = 1 / 0;
 
 var displayConfig = {
     displayType: "line-chart",
