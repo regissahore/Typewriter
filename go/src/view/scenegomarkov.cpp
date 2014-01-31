@@ -429,7 +429,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
 
 void SceneGoMarkov::analysisCut(const QString filePath)
 {
-    QSharedPointer<DialogIntegerInput> dialog(new DialogIntegerInput());
+    DialogIntegerInput *dialog = new DialogIntegerInput();
     dialog->setWindowTitle(QObject::tr("Set order"));
     dialog->setText(QObject::tr("Input cut order: "));
     dialog->integerInput()->setMinimum(1);
