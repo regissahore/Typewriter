@@ -18,7 +18,7 @@ GoMarkovOperator22A::~GoMarkovOperator22A()
 {
     this->GoMarkovOperator::~GoMarkovOperator();
 }
-#include <cstdio>
+
 void GoMarkovOperator22A::calcOutputMarkovStatus(double time)
 {
     GoMarkovStatus *status1 = this->getPrevMarkovStatus();

@@ -34,6 +34,15 @@ GoMarkovOperator12A::~GoMarkovOperator12A()
     delete this->_delta;
 }
 
+void GoMarkovOperator12A::calcQualitativeProbability()
+{
+    DoubleVector IS = this->getPrevQualitativeStatus();
+    for (int i = 0; i < this->output()->number(); ++i)
+    {
+        this->_qualitativeOutput[i] = IS.getValue(i);
+    }
+}
+
 void GoMarkovOperator12A::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

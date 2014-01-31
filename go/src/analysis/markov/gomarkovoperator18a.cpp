@@ -20,6 +20,14 @@ GoMarkovOperator18A::~GoMarkovOperator18A()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator18A::calcQualitativeProbability()
+{
+    DoubleVector IS1 = this->getPrevQualitativeStatus(0);
+    DoubleVector IS2 = this->getPrevQualitativeStatus(1);
+    DoubleVector IR = IS1 * IS2;
+    this->_qualitativeOutput[0] = IR;
+}
+
 double GoMarkovOperator18A::backup() const
 {
     return this->_backup;

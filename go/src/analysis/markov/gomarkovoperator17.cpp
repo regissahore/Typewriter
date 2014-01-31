@@ -19,6 +19,17 @@ GoMarkovOperator17::~GoMarkovOperator17()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator17::calcQualitativeProbability()
+{
+    DoubleVector IS1 = this->getPrevQualitativeStatus();
+    DoubleVector IS2 = this->getPrevSubQualitativeStatus();
+    DoubleVector IC = this->qualitativeStatus();
+    DoubleVector IR1 = IC;
+    DoubleVector IR2 = IS1 * IS2 * IC;
+    this->_qualitativeOutput[0] = IR1;
+    this->_qualitativeOutput[1] = IR2;
+}
+
 void GoMarkovOperator17::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

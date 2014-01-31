@@ -12,6 +12,27 @@ GoMarkovOperator13B::~GoMarkovOperator13B()
     this->GoMarkovOperator13::~GoMarkovOperator13();
 }
 
+void GoMarkovOperator13B::calcQualitativeProbability()
+{
+    QVector<DoubleVector> IS;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        IS.push_back(this->getPrevQualitativeStatus(i));
+    }
+    for (int i = 0; i < this->output()->number(); ++i)
+    {
+        DoubleVector IR = 1.0;
+        for (int j = 0; j < this->input()->number(); ++j)
+        {
+            if (this->relation()->at(j).at(i))
+            {
+                IR = IR * (1.0 - IS[j]);
+            }
+        }
+        this->_qualitativeOutput[i] = 1.0 - IR;
+    }
+}
+
 void GoMarkovOperator13B::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

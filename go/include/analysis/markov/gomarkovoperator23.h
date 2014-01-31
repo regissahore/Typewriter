@@ -7,6 +7,7 @@ class GoMarkovOperator23 : public GoMarkovOperator
 public:
     GoMarkovOperator23();
     ~GoMarkovOperator23();
+    virtual void calcQualitativeProbability();
     QVector<double>* alpha() const;
     void calcOutputMarkovStatus(double time);
     void calcCommonOutputMarkovStatus(QVector<DoubleVector> PR);

@@ -7,6 +7,7 @@ class GoMarkovOperator5 : public GoMarkovOperator
 public:
     GoMarkovOperator5();
     ~GoMarkovOperator5();
+    virtual void calcQualitativeProbability();
     void calcOutputMarkovStatus(double time);
 };
 

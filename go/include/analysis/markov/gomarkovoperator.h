@@ -16,6 +16,14 @@ class GoMarkovOperator : public GoOperator
 public:
     GoMarkovOperator();
     virtual ~GoMarkovOperator();
+    DoubleVector qualitativeStatus();
+    QVector<DoubleVector>* qualitativeOutput();
+    void setQualitativeStatus(DoubleVector value);
+    void setQualitativeOutput(int index, DoubleVector value);
+    DoubleVector getPrevQualitativeStatus(int index = 0);
+    DoubleVector getPrevSubQualitativeStatus(int index = 0);
+    virtual void initQualitativeOutput();
+    virtual void calcQualitativeProbability();
     GoMarkovStatus* markovStatus() const;
     GoMarkovStatus* markovStatus1() const;
     GoMarkovStatus* markovStatus2() const;
@@ -52,6 +60,8 @@ public:
     bool tryOpen(QDomElement &root);
 
 protected:
+    DoubleVector _qualitativeStatus;
+    QVector<DoubleVector> _qualitativeOutput;
     QVector<GoMarkovStatus*> *_outputStatus;
     GoMarkovStatus *_markovStatus;
     GoMarkovStatus *_markovStatus1;

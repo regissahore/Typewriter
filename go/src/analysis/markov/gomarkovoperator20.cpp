@@ -19,6 +19,25 @@ GoMarkovOperator20::~GoMarkovOperator20()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator20::calcQualitativeProbability()
+{
+    DoubleVector IS1 = this->getPrevQualitativeStatus();
+    DoubleVector IS2 = this->getPrevSubQualitativeStatus();
+    DoubleVector IR = IS1 - IS2;
+    for (int i = 0; i < IR.length(); ++i)
+    {
+        if (IR.getValue(i) < 0.5)
+        {
+            IR.setValue(i, 0.0);
+        }
+        else
+        {
+            IR.setValue(i, 1.0);
+        }
+    }
+    this->_qualitativeOutput[0] = IR;
+}
+
 void GoMarkovOperator20::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

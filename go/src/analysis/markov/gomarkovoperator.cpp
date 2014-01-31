@@ -50,6 +50,68 @@ GoMarkovOperator::~GoMarkovOperator()
     delete this->_rkBreakdown4;
 }
 
+DoubleVector GoMarkovOperator::qualitativeStatus()
+{
+    return this->_qualitativeStatus;
+}
+
+QVector<DoubleVector> *GoMarkovOperator::qualitativeOutput()
+{
+    return &this->_qualitativeOutput;
+}
+
+void GoMarkovOperator::setQualitativeStatus(DoubleVector value)
+{
+    this->_qualitativeStatus = value;
+}
+
+void GoMarkovOperator::setQualitativeOutput(int index, DoubleVector value)
+{
+    this->_qualitativeOutput[index] = value;
+}
+
+DoubleVector GoMarkovOperator::getPrevQualitativeStatus(int index)
+{
+    GoSignal *signal = this->input()->signal()->at(index);
+    GoMarkovOperator *prev = (GoMarkovOperator*)signal->next(this);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    return prev->qualitativeOutput()->at(prevIndex);
+}
+
+DoubleVector GoMarkovOperator::getPrevSubQualitativeStatus(int index)
+{
+    GoSignal *signal = this->subInput()->signal()->at(index);
+    GoMarkovOperator *prev = (GoMarkovOperator*)signal->next(this);
+    int prevIndex = prev->output()->getSignalIndex(signal);
+    return prev->qualitativeOutput()->at(prevIndex);
+}
+
+void GoMarkovOperator::initQualitativeOutput()
+{
+    this->qualitativeOutput()->clear();
+    for (int i = 0; i < this->output()->number(); ++i)
+    {
+        this->qualitativeOutput()->push_back(0.0);
+    }
+}
+
+void GoMarkovOperator::calcQualitativeProbability()
+{
+    if (GoMarkovOperatorFactory::isLogical(this->type()))
+    {
+        DoubleVector IS = this->getPrevQualitativeStatus();
+        DoubleVector IR = IS;
+        this->_qualitativeOutput[0] = IR;
+    }
+    else
+    {
+        DoubleVector IS = this->getPrevQualitativeStatus();
+        DoubleVector IC = this->qualitativeStatus();
+        DoubleVector IR = IS * IC;
+        this->_qualitativeOutput[0] = IR;
+    }
+}
+
 int GoMarkovOperator::breakdownNum() const
 {
     return this->_breakdownNum;

@@ -7,6 +7,7 @@ class GoMarkovOperator9A : public GoMarkovOperator9
 public:
     GoMarkovOperator9A();
     virtual ~GoMarkovOperator9A();
+    virtual void calcQualitativeProbability();
 };
 
 #endif // GOMARKOVOPERATOR9A_H

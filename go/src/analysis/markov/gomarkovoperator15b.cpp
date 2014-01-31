@@ -19,6 +19,17 @@ GoMarkovOperator15B::~GoMarkovOperator15B()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator15B::calcQualitativeProbability()
+{
+    this->_qualitativeOutput[0].setLength(this->input()->number());
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        DoubleVector IS = this->getPrevQualitativeStatus(i);
+        this->_qualitativeOutput[0].setValue(i, IS.getValue(0));
+        this->_qualitativeOutput[0].addHead(i, this->id(), i);
+    }
+}
+
 void GoMarkovOperator15B::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

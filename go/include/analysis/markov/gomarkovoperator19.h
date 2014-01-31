@@ -7,6 +7,7 @@ class GoMarkovOperator19 : public GoMarkovOperator
 public:
     GoMarkovOperator19();
     ~GoMarkovOperator19();
+    virtual void calcQualitativeProbability();
     QVector<double>* delta() const;
     int deltaNum() const;
     void setDeltaNum(int value);

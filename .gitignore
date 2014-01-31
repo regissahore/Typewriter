@@ -1,6 +1,7 @@
 # Build Folders 
 ZGo-build-desktop*
 build-*
+release
 
 # Local Project Files
 *.user

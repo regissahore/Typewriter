@@ -9,6 +9,7 @@ class GoMarkovOperator18 : public GoMarkovOperator
 public:
     GoMarkovOperator18();
     ~GoMarkovOperator18();
+    virtual void calcQualitativeProbability();
     DoubleVector lambdaB1() const;
     void setLambdaB1(DoubleVector value);
     void calcOutputMarkovStatus(double time);

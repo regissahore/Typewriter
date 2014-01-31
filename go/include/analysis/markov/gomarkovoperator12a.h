@@ -7,6 +7,7 @@ class GoMarkovOperator12A : public GoMarkovOperator
 public:
     GoMarkovOperator12A();
     ~GoMarkovOperator12A();
+    virtual void calcQualitativeProbability();
     QVector<QString>* ids() const;
     QVector<double>* delta() const;
     bool isUseDelta() const;

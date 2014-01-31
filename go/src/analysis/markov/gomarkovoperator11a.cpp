@@ -15,6 +15,17 @@ GoMarkovOperator11A::~GoMarkovOperator11A()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator11A::calcQualitativeProbability()
+{
+    this->_qualitativeOutput[0].setLength(this->input()->number());
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        DoubleVector IS = this->getPrevQualitativeStatus(i);
+        this->_qualitativeOutput[0].setValue(i, IS.getValue(0));
+        this->_qualitativeOutput[0].addHead(i, this->id(), i);
+    }
+}
+
 void GoMarkovOperator11A::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

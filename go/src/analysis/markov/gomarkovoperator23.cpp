@@ -22,6 +22,17 @@ GoMarkovOperator23::~GoMarkovOperator23()
     delete this->_alpha;
 }
 
+void GoMarkovOperator23::calcQualitativeProbability()
+{
+    DoubleVector IR = 1.0;
+    for (int i = 0; i < this->input()->number(); ++i)
+    {
+        DoubleVector IS = this->getPrevQualitativeStatus(i);
+        IR = IR * IS;
+    }
+    this->_qualitativeOutput[0] = IR;
+}
+
 QVector<double>* GoMarkovOperator23::alpha() const
 {
     return this->_alpha;

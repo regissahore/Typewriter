@@ -586,6 +586,7 @@ GoPathSetSetSet GoMarkovGraph::findPath(int order)
     {
         GoMarkovOperator* op = (GoMarkovOperator*)list[i];
         op->initOutputMarkovStatus();
+        op->initQualitativeOutput();
     }
     for (int i = 1; i <= order; ++i)
     {
@@ -628,6 +629,7 @@ GoPathSetSetSet GoMarkovGraph::findCut(int order)
     {
         GoMarkovOperator* op = (GoMarkovOperator*)list[i];
         op->initOutputMarkovStatus();
+        op->initQualitativeOutput();
     }
     for (int i = 1; i <= order; ++i)
     {
@@ -648,7 +650,7 @@ void GoMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoP
         for (int i = 0; i < list.size(); ++i)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[i];
-            op->calcOutputMarkovStatus(1e10);
+            op->calcQualitativeProbability();
         }
         QVector<GoPathSetSetSet::End> ends;
         QVector<double> probabilityList;
@@ -659,9 +661,9 @@ void GoMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoP
             {
                 if (op->output()->signal()->at(j)->size() == 0)
                 {
-                    for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityNormal().length(); ++k)
+                    for (int k = 0; k < op->qualitativeOutput()->at(j).length(); ++k)
                     {
-                        if (op->markovOutputStatus()->at(j)->probabilityNormal().getValue(k) > 1.0 - 1e-8)
+                        if (op->qualitativeOutput()->at(j).getValue(k) > 0.5)
                         {
                             GoPathSetSetSet::End end;
                             end.op = op;
@@ -690,15 +692,14 @@ void GoMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoP
         if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
         {
             GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-            op->initMarkovStatus(1e10);
-            op->markovStatus()->setProbabilityNormal(1.0);
+            op->setQualitativeStatus(1.0);
             tempPath.add(list[index]);
             this->findPathDfs(normals, path, list, tempPath, index + 1, number + 1, order);
             tempPath.removeEnd();
         }
     }
     GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-    op->initMarkovStatus(1e10);
+    op->setQualitativeStatus(0.0);
     this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
 }
 
@@ -709,7 +710,7 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
         for (int i = 0; i < list.size(); ++i)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[i];
-            op->calcOutputMarkovStatus(1e10);
+            op->calcQualitativeProbability();
         }
         QVector<GoPathSetSetSet::End> ends;
         QVector<double> probabilityList;
@@ -720,9 +721,9 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
             {
                 if (op->output()->signal()->at(j)->size() == 0)
                 {
-                    for (int k = 0; k < op->markovOutputStatus()->at(j)->probabilityBreakdown().length(); ++k)
+                    for (int k = 0; k < op->qualitativeOutput()->at(j).length(); ++k)
                     {
-                        if (op->markovOutputStatus()->at(j)->probabilityBreakdown().getValue(k) > 1.0 - 1e-8)
+                        if (op->qualitativeOutput()->at(j).getValue(k) < 0.5)
                         {
                             GoPathSetSetSet::End end;
                             end.op = op;
@@ -751,15 +752,14 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
         if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
         {
             GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-            op->initMarkovStatus(1e10);
-            op->markovStatus()->setProbabilityBreakdown(1.0);
+            op->setQualitativeStatus(0.0);
             tempPath.add(list[index]);
             this->findCutDfs(fails, cut, list, tempPath, index + 1, number + 1, order);
             tempPath.removeEnd();
         }
     }
     GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-    op->initMarkovStatus(1e10);
+    op->setQualitativeStatus(1.0);
     this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
 }
 

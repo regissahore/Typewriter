@@ -23,6 +23,14 @@ GoMarkovOperator18::~GoMarkovOperator18()
     delete this->_rungeKutta;
 }
 
+void GoMarkovOperator18::calcQualitativeProbability()
+{
+    DoubleVector IS1 = this->getPrevQualitativeStatus(0);
+    DoubleVector IS2 = this->getPrevQualitativeStatus(1);
+    DoubleVector IR = 1.0 - (1.0 - IS1) * (1.0 - IS2);
+    this->_qualitativeOutput[0] = IR;
+}
+
 DoubleVector GoMarkovOperator18::lambdaB1() const
 {
     return this->_rungeKutta->lambdaB1();

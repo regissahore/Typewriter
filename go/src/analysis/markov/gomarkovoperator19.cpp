@@ -28,6 +28,16 @@ GoMarkovOperator19::~GoMarkovOperator19()
     delete this->_delta;
 }
 
+void GoMarkovOperator19::calcQualitativeProbability()
+{
+    DoubleVector IS = this->getPrevQualitativeStatus();
+    DoubleVector IC = this->getPrevSubQualitativeStatus();
+    DoubleVector IR1 = IS * IC;
+    DoubleVector IR2 = IS * IC;
+    this->_qualitativeOutput[0] = IR1;
+    this->_qualitativeOutput[1] = IR2;
+}
+
 QVector<double>* GoMarkovOperator19::delta() const
 {
     return this->_delta;

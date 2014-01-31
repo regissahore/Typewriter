@@ -1,3 +1,5 @@
+#include <QImage>
+#include <QPainter>
 #include <QMessageBox>
 #include "SceneGoMarkov.h"
 #include "ItemGoMarkovOperator.h"
@@ -411,6 +413,14 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
                     this->sendMessage(message);
                 }
                 delete data;
+                QImage image(this->width(), this->height(), QImage::Format_ARGB32);
+                QPainter painter(&image);
+                painter.setRenderHint(QPainter::Antialiasing, true);
+                painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+                painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
+                painter.setRenderHint(QPainter::TextAntialiasing, true);
+                this->render(&painter);
+                image.save(filePath + ".png");
             }
         }
     }
@@ -419,14 +429,14 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
 
 void SceneGoMarkov::analysisCut(const QString filePath)
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    QSharedPointer<DialogIntegerInput> dialog(new DialogIntegerInput());
     dialog->setWindowTitle(QObject::tr("Set order"));
     dialog->setText(QObject::tr("Input cut order: "));
     dialog->integerInput()->setMinimum(1);
     dialog->integerInput()->setValue(this->_analysisCutOrder);
     if (dialog->exec() == QDialog::Accepted)
     {
-        GoGraph *graph = this->generatorGoGraph();
+        QSharedPointer<GoGraph> graph(this->generatorGoGraph());
         this->_analysisCutOrder = dialog->integerInput()->value();
         GoPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
         if (graph->getErrorMessage() == "")
@@ -440,7 +450,5 @@ void SceneGoMarkov::analysisCut(const QString filePath)
         {
             QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
-        delete graph;
     }
-    delete dialog;
 }

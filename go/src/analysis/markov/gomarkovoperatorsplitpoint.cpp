@@ -23,6 +23,15 @@ GoMarkovOperatorSplitPoint::~GoMarkovOperatorSplitPoint()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperatorSplitPoint::calcQualitativeProbability()
+{
+    DoubleVector IS = this->getPrevQualitativeStatus();
+    for (int i = 0; i < this->output()->number(); ++i)
+    {
+        this->_qualitativeOutput[i] = IS.getValue(i);
+    }
+}
+
 void GoMarkovOperatorSplitPoint::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

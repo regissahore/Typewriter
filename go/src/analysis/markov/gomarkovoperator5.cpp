@@ -19,6 +19,12 @@ GoMarkovOperator5::~GoMarkovOperator5()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator5::calcQualitativeProbability()
+{
+    DoubleVector IC = this->qualitativeStatus();
+    this->_qualitativeOutput[0] = IC;
+}
+
 void GoMarkovOperator5::calcOutputMarkovStatus(double time)
 {
     Q_UNUSED(time);

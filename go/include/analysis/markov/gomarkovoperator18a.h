@@ -7,6 +7,7 @@ class GoMarkovOperator18A : public GoMarkovOperator
 public:
     GoMarkovOperator18A();
     ~GoMarkovOperator18A();
+    virtual void calcQualitativeProbability();
     double backup() const;
     void setBackup(double value);
     void calcOutputMarkovStatus(double time);

@@ -7,6 +7,7 @@ class GoMarkovOperator15A : public GoMarkovOperator
 public:
     GoMarkovOperator15A();
     ~GoMarkovOperator15A();
+    virtual void calcQualitativeProbability();
     void calcOutputMarkovStatus(double time);
     DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
 };

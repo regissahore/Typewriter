@@ -16,3 +16,11 @@ GoMarkovOperator9A::~GoMarkovOperator9A()
 {
     this->GoMarkovOperator::~GoMarkovOperator();
 }
+
+void GoMarkovOperator9A::calcQualitativeProbability()
+{
+    DoubleVector IS = this->getPrevQualitativeStatus();
+    DoubleVector IC = this->qualitativeStatus();
+    DoubleVector IR = IS * IC;
+    this->_qualitativeOutput[0] = IR;
+}
