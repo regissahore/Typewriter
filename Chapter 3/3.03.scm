@@ -1,4 +1,4 @@
-(load "3.03.scm")
+(load "3.02.scm")
 (define (make-account balance password)
   (define (withdraw amount)
     (if (>= balance amount)
