@@ -1,0 +1,12 @@
+(load "2.33.scm")
+(define (enumerate-interval s t)
+    (if (> s t)
+        (list)
+        (append (list s) (enumerate-interval (+ s 1) t))))
+(define (unique-pairs n)
+    (accumulate append
+                (list)
+                (map (lambda (i)
+                        (map (lambda (j) (list i j))
+                             (enumerate-interval 1 (- i 1))))
+                     (enumerate-interval 1 n))))
