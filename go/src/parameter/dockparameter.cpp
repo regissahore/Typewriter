@@ -4,6 +4,7 @@
 #include "MessageFactory.h"
 #include "ItemDrawable.h"
 #include "ParameterFactory.h"
+using namespace std;
 
 DockParameter::DockParameter(QWidget *parent) : QDockWidget(parent), Messager()
 {
@@ -25,7 +26,7 @@ void DockParameter::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
-void DockParameter::messageEvent(QSharedPointer<Message> message)
+void DockParameter::messageEvent(shared_ptr<Message> message)
 {
     switch (message->type())
     {

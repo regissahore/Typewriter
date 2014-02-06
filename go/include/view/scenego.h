@@ -1,6 +1,7 @@
 #ifndef SCENEGO_H
 #define SCENEGO_H
 
+#include <memory>
 #include <QGraphicsScene>
 #include "DomItem.h"
 #include "Messager.h"
@@ -19,7 +20,7 @@ public:
     ~SceneGo();
     void selectTool(int type);
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     virtual GoGraph* generatorGoGraph();

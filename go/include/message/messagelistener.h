@@ -1,5 +1,6 @@
 #ifndef MESSAGELISTENER_H
 #define MESSAGELISTENER_H
+#include <memory>
 #include <QVector>
 #include <QString>
 #include "Message.h"
@@ -15,7 +16,7 @@ public:
     void releaseListener();
     void setMessageController(MessageController *messageController);
     void addListenedMessage(int messageType);
-    virtual void messageEvent(QSharedPointer<Message> message);
+    virtual void messageEvent(std::shared_ptr<Message> message);
 
 protected:
     QVector<int> *_messageListened;

@@ -2,6 +2,7 @@
 #include "MessageFactory.h"
 #include "ToolboxAbstract.h"
 #include "EditorFactory.h"
+using namespace std;
 
 DockToolbox::DockToolbox(QWidget *parent) : QDockWidget(parent), Messager()
 {
@@ -27,7 +28,7 @@ void DockToolbox::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
-void DockToolbox::messageEvent(QSharedPointer<Message> message)
+void DockToolbox::messageEvent(shared_ptr<Message> message)
 {
     switch (message->type())
     {

@@ -1,5 +1,6 @@
 #ifndef DOCKTOOLBOX_H
 #define DOCKTOOLBOX_H
+#include <memory>
 #include <QDockWidget>
 #include "Messager.h"
 #include "MessageFactory.h"
@@ -13,7 +14,7 @@ public:
     ~DockToolbox();
     QSize sizeHint() const;
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
 
 protected:
     ToolboxAbstract *_toolbox;

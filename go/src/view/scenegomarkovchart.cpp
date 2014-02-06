@@ -6,6 +6,7 @@
 #include "ItemArrow.h"
 #include "MessageController.h"
 #include "MessageFactory.h"
+using namespace std;
 
 SceneGoMarkovChart::SceneGoMarkovChart(QObject *parent) : QGraphicsScene(parent)
 {
@@ -24,7 +25,7 @@ SceneGoMarkovChart::~SceneGoMarkovChart()
 
 void SceneGoMarkovChart::activate(MessageController *controller)
 {
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(this->_chartItem);
     controller->send(message);
 }

@@ -8,6 +8,7 @@
 #include "EditorAbstract.h"
 #include "ViewGo.h"
 #include "GoOperatorFactory.h"
+using namespace std;
 
 class EditorGo : public EditorAbstract
 {
@@ -15,7 +16,7 @@ class EditorGo : public EditorAbstract
 public:
     explicit EditorGo(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(shared_ptr<Message> message);
     bool save();
     bool tryOpen(const QString path);
     void activate();

@@ -20,6 +20,7 @@
 #include "DialogIntegerInput.h"
 #include "ItemEmpty.h"
 #include "ViewGo.h"
+using namespace std;
 
 SceneGo::SceneGo(QObject *parent) : QGraphicsScene(parent), Messager()
 {
@@ -59,7 +60,7 @@ void SceneGo::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
 }
 
-void SceneGo::messageEvent(QSharedPointer<Message> message)
+void SceneGo::messageEvent(shared_ptr<Message> message)
 {
     QKeyEvent *event = nullptr;
     switch (message->type())
@@ -339,7 +340,7 @@ void SceneGo::analysisProbability(const QString filePath)
     if (graph->getErrorMessage() == "")
     {
         graph->saveAsHTML(filePath + ".html");
-        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
         message->paramString = filePath + ".html";
         this->sendMessage(message);
     }
@@ -364,7 +365,7 @@ void SceneGo::analysisPath(const QString filePath)
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", path);
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->sendMessage(message);
         }
@@ -390,7 +391,7 @@ void SceneGo::analysisCut(const QString filePath)
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }

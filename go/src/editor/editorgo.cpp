@@ -23,7 +23,7 @@ void EditorGo::bindMessage(MessageController *controller)
     this->_view->bindMessage(controller);
 }
 
-void EditorGo::messageEvent(QSharedPointer<Message> message)
+void EditorGo::messageEvent(shared_ptr<Message> message)
 {
     switch (message->type())
     {
@@ -106,7 +106,7 @@ bool EditorGo::tryOpen(const QString path)
 
 void EditorGo::activate()
 {
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
 }

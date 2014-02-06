@@ -10,6 +10,7 @@
 #include "DefinationEditorSelectionType.h"
 #include "ItemGoMarkovCommonCause.h"
 #include "ItemGoMarkovCommonCause2.h"
+using namespace std;
 
 ItemGoOperator* ItemGoFactory::produceOperator(int type)
 {
@@ -167,7 +168,7 @@ void ItemGoFactory::deleteItems(QList<QGraphicsItem *> items)
 
 void ItemGoFactory::sendSelectionMessage(Messager *messager, ItemDrawable *item)
 {
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(item);
     messager->sendMessage(message);
 }

@@ -58,7 +58,7 @@ bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
         {
             this->_item = (ItemDrawable*)item;
             this->_item->setColor(QColor(Qt::darkBlue));
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGo()->sendMessage(message);
             return true;
@@ -74,7 +74,7 @@ bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEven
             {
                 this->_item = (ItemDrawable*)item;
                 this->_item->setColor(QColor(Qt::darkBlue));
-                QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                 message->setMessage(this->_item);
                 this->sceneGo()->sendMessage(message);
                 return true;
@@ -157,7 +157,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
 
                     this->_item = item;
                     this->_item->setColor(QColor(Qt::darkBlue));
-                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                     message->setMessage(this->_item);
                     this->sceneGo()->sendMessage(message);
                 }
@@ -169,7 +169,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                     this->sceneGo()->addItem(item);
                     this->_item->setColor(Qt::black);
                     this->_item = item;
-                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+                    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
                     message->setMessage(this->_item);
                     this->sceneGo()->sendMessage(message);
                 }
@@ -208,7 +208,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 signal->update();
             }
             this->sceneGo()->viewGo()->editor()->setModified(true);
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGo()->sendMessage(message);
         }
@@ -231,7 +231,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
                 item->update();
             }
             this->sceneGo()->viewGo()->editor()->setModified(true);
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
             message->setMessage(this->_item);
             this->sceneGo()->sendMessage(message);
         }

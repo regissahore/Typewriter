@@ -3,6 +3,7 @@
 #include "ToolboxNull.h"
 #include "ToolboxGo.h"
 #include "ToolboxGoMarkov.h"
+using namespace std;
 
 ToolboxAbstract* ToolboxFactory::produce(const int type)
 {

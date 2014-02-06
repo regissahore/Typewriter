@@ -1,5 +1,6 @@
 #ifndef GOMAINWINDOW_H
 #define GOMAINWINDOW_H
+#include <memory>
 #include <QSettings>
 #include <QMainWindow>
 #include "Messager.h"
@@ -19,7 +20,7 @@ public:
     explicit GoMainWindow(QWidget *parent = 0);
     ~GoMainWindow();
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
 
 protected:
     void closeEvent(QCloseEvent *event);

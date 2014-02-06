@@ -3,6 +3,7 @@
 #include "MessageFactory.h"
 #include "EditorAbstract.h"
 #include "GlobalConfig.h"
+using namespace std;
 
 Editor::Editor(QWidget *parent) : QWidget(parent), Messager()
 {
@@ -63,7 +64,7 @@ void Editor::currentChange(int index)
 {
     if (this->_editors->size() > 0)
     {
-        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
+        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = (*this->_editors)[index]->type();
         this->sendMessage(message);
         for (int i = 0; i < this->_editors->size(); ++i)
@@ -80,7 +81,7 @@ void Editor::currentChange(int index)
     }
     else
     {
-        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
+        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = EditorFactory::EDITOR_TYPE_NULL;
         this->sendMessage(message);
     }
@@ -114,7 +115,7 @@ void Editor::bindMessage(MessageController *controller)
     currentChange(this->_tabWidget->currentIndex());
 }
 
-void Editor::messageEvent(QSharedPointer<Message> message)
+void Editor::messageEvent(shared_ptr<Message> message)
 {
     switch (message->type())
     {

@@ -1,5 +1,6 @@
 #ifndef DOCKPARAMETER_H
 #define DOCKPARAMETER_H
+#include <memory>
 #include <QDockWidget>
 #include "Messager.h"
 
@@ -14,7 +15,7 @@ public:
     DockParameter(QWidget *parent = 0);
     ~DockParameter();
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
 
 private:
     ParameterAbstract *_parameter;

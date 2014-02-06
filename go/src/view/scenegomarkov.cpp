@@ -24,6 +24,7 @@
 #include "GoPathSetSetSet.h"
 #include "DialogGoMarkovAnalysisProcess.h"
 #include "ViewGoMarkov.h"
+using namespace std;
 
 SceneGoMarkov::SceneGoMarkov(QObject *parent) : SceneGo(parent)
 {
@@ -400,7 +401,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
             QVector<GoGraph::MessageRecord> messages = graph->messages();
             for (int i = 0; i < messages.size(); ++i)
             {
-                QSharedPointer<Message> message = MessageFactory::produce(messages[i].type);
+                shared_ptr<Message> message = MessageFactory::produce(messages[i].type);
                 message->paramString = messages[i].message;
                 this->sendMessage(message);
             }
@@ -408,7 +409,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
             {
                 if (data->saveAsHTML(filePath + ".goc.html"))
                 {
-                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                     message->paramString = filePath + ".goc.html";
                     this->sendMessage(message);
                 }
@@ -436,13 +437,13 @@ void SceneGoMarkov::analysisCut(const QString filePath)
     dialog->integerInput()->setValue(this->_analysisCutOrder);
     if (dialog->exec() == QDialog::Accepted)
     {
-        QSharedPointer<GoGraph> graph(this->generatorGoGraph());
+        shared_ptr<GoGraph> graph(this->generatorGoGraph());
         this->_analysisCutOrder = dialog->integerInput()->value();
         GoPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }

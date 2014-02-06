@@ -7,6 +7,7 @@
 #include "ui_gomainwindow.h"
 #include "DialogAbout.h"
 #include "GlobalConfig.h"
+using namespace std;
 
 GoMainWindow::GoMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,7 +35,7 @@ void GoMainWindow::bindMessage(MessageController *controller)
     this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_OPEN));
 }
 
-void GoMainWindow::messageEvent(QSharedPointer<Message> message)
+void GoMainWindow::messageEvent(shared_ptr<Message> message)
 {
     switch (message->type())
     {
@@ -91,14 +92,14 @@ void GoMainWindow::initDock()
 
 void GoMainWindow::on_toolButtonNew_clicked()
 {
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO;
     this->sendMessage(message);
 }
 
 void GoMainWindow::on_toolButtonMarkov_clicked()
 {
-    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
+    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO_MARKOV;
     this->sendMessage(message);
 }

@@ -1,4 +1,5 @@
 #include "MessageListener.h"
+using namespace std;
 
 MessageListener::MessageListener()
 {
@@ -33,7 +34,7 @@ void MessageListener::addListenedMessage(int messageType)
     this->_messageListened->push_back(messageType);
 }
 
-void MessageListener::messageEvent(QSharedPointer<Message> message)
+void MessageListener::messageEvent(shared_ptr<Message> message)
 {
     Q_UNUSED(message);
 }

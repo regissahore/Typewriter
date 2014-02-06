@@ -1,6 +1,6 @@
 #ifndef TOOLBOXGOMARKOV_H
 #define TOOLBOXGOMARKOV_H
-
+#include <memory>
 #include <QWidget>
 #include "ToolboxAbstract.h"
 
@@ -18,7 +18,7 @@ public:
     explicit ToolboxGoMarkov(QWidget *parent = 0);
     virtual ~ToolboxGoMarkov();
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
     
 private slots:
     void on_buttonPointer_clicked();

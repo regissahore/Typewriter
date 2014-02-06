@@ -1,5 +1,6 @@
 #ifndef OUTPUTCONSOLE_H
 #define OUTPUTCONSOLE_H
+#include <memory>
 #include <QWidget>
 #include "Messager.h"
 
@@ -15,7 +16,7 @@ public:
     explicit OutputConsole(QWidget *parent = 0);
     ~OutputConsole();
     void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void messageEvent(std::shared_ptr<Message> message);
     
 private:
     Ui::OutputConsole *ui;

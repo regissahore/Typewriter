@@ -1,4 +1,5 @@
 #include "MessageCreator.h"
+using namespace std;
 
 MessageCreator::MessageCreator()
 {
@@ -10,7 +11,7 @@ void MessageCreator::setMessageController(MessageController *messageController)
     this->_messageController = messageController;
 }
 
-void MessageCreator::sendMessage(QSharedPointer<Message> message)
+void MessageCreator::sendMessage(shared_ptr<Message> message)
 {
     if (this->_messageController != nullptr && message != nullptr)
     {

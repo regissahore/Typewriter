@@ -1,7 +1,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
 #include <QString>
-#include <QSharedPointer>
 #include "IdentifiedItem.h"
 #include "TypedItem.h"
 

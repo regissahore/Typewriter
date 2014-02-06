@@ -1,6 +1,7 @@
 #include "MessageController.h"
 #include "MessageCreator.h"
 #include "MessageListener.h"
+using namespace std;
 
 MessageController::MessageController()
 {
@@ -18,7 +19,7 @@ MessageController::~MessageController()
     this->_listeners->clear();
 }
 
-void MessageController::send(QSharedPointer<Message> message)
+void MessageController::send(shared_ptr<Message> message)
 {
     QMap<int, int>::iterator it = this->_messages->find(message->type());
     if (it != this->_messages->end())
