@@ -1,6 +1,7 @@
 #include <QObject>
 #include <QPainter>
 #include <qmath.h>
+#include <algorithm>
 #include "GoMarkovOperator12a.h"
 #include "GoInput.h"
 #include "GoOutput.h"
@@ -11,6 +12,7 @@
 #include "Messager.h"
 #include "MessageFactory.h"
 #include "GoMarkovOperatorFactory.h"
+using namespace std;
 
 GoMarkovOperator12A::GoMarkovOperator12A() : GoMarkovOperator()
 {

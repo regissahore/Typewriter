@@ -9,14 +9,14 @@ class GoMarkovOperator18 : public GoMarkovOperator
 public:
     GoMarkovOperator18();
     ~GoMarkovOperator18();
-    virtual void calcQualitativeProbability();
+    virtual void calcQualitativeProbability() override;
     DoubleVector lambdaB1() const;
     void setLambdaB1(DoubleVector value);
-    void calcOutputMarkovStatus(double time);
-    DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index);
-    GoMarkovOperator* copy();
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
+    virtual void calcOutputMarkovStatus(double time) override;
+    virtual DoubleVector calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index) override;
+    virtual GoMarkovOperator* copy() override;
+    virtual void save(QDomDocument &document, QDomElement &root) override;
+    virtual bool tryOpen(QDomElement &root) override;
 
 protected:
     RungeKuttaMarkov18 *_rungeKutta;

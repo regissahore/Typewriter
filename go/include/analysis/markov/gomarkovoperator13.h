@@ -12,9 +12,9 @@ public:
     QVector<QVector<int> >* relation();
     void saveRelation(QDomDocument &document, QDomElement &root);
     bool tryOpenRelation(QDomElement &root);
-    GoMarkovOperator* copy();
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
+    virtual GoMarkovOperator* copy() override;
+    virtual void save(QDomDocument &document, QDomElement &root) override;
+    virtual bool tryOpen(QDomElement &root) override;
 
 protected:
     QVector<QVector<int> > *_relation;

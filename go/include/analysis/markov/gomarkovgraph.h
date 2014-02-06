@@ -34,12 +34,12 @@ protected:
     QString _currentOperatorName;
     QVector<GoMarkovEquivalent*> _equivalent;
     QVector<GoMarkovCommonCause*> _commonCause;
-    virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
-    virtual QVector<QVector<Output> > getAncestorList(GoOperator *op, int outputIndex, int signalIndex);
-    virtual GoPathSetSetSet findPath(int order);
-    virtual GoPathSetSetSet findCut(int order);
-    virtual void findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order);
-    virtual void findCutDfs(QMap<int, QVector<DoubleVector>* > &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order);
+    virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u) override;
+    virtual QVector<QVector<Output> > getAncestorList(GoOperator *op, int outputIndex, int signalIndex) override;
+    virtual GoPathSetSetSet findPath(int order) override;
+    virtual GoPathSetSetSet findCut(int order) override;
+    void findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order);
+    void findCutDfs(QMap<int, QVector<DoubleVector>* > &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOMARKOVGRAPH_H
