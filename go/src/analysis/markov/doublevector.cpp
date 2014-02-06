@@ -103,9 +103,9 @@ DoubleVector::Head operator +(const DoubleVector::Head &a, const DoubleVector::H
         nodeSet.insert(b.list[i]);
     }
     DoubleVector::Head head;
-    for (set<DoubleVector::Head::Node>::iterator it = nodeSet.begin(); it != nodeSet.end(); ++it)
+    for (auto it = nodeSet.begin(); it != nodeSet.end(); ++it)
     {
-        DoubleVector::Head::Node node = *it;
+        auto node = *it;
         head.list.push_back(node);
     }
     return head;
@@ -486,7 +486,7 @@ DoubleVector operator +(const DoubleVector &a, const DoubleVector &b)
         }
     }
     QVector<DoubleVector::Head> headList;
-    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
+    for (auto it = headSet.begin(); it != headSet.end(); ++it)
     {
         headList.push_back(*it);
     }
@@ -542,7 +542,7 @@ DoubleVector operator -(const DoubleVector &a, const DoubleVector &b)
         }
     }
     QVector<DoubleVector::Head> headList;
-    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
+    for (auto it = headSet.begin(); it != headSet.end(); ++it)
     {
         headList.push_back(*it);
     }
@@ -598,7 +598,7 @@ DoubleVector operator *(const DoubleVector &a, const DoubleVector &b)
         }
     }
     QVector<DoubleVector::Head> headList;
-    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
+    for (auto it = headSet.begin(); it != headSet.end(); ++it)
     {
         headList.push_back(*it);
     }
@@ -654,7 +654,7 @@ DoubleVector operator /(const DoubleVector &a, const DoubleVector &b)
         }
     }
     QVector<DoubleVector::Head> headList;
-    for (set<DoubleVector::Head>::iterator it = headSet.begin(); it != headSet.end(); ++it)
+    for (auto it = headSet.begin(); it != headSet.end(); ++it)
     {
         headList.push_back(*it);
     }

@@ -139,7 +139,7 @@ bool GlobalConfig::tryOpen()
     this->setIsShowDockMessage(root.attribute("dock_message", "1").toInt());
     this->setLastestPath(root.attribute("lastest_path", "."));
     QDomElement pathElement = root.firstChildElement();
-    for (QDomElement pathNode = pathElement.firstChildElement(); !pathNode.isNull(); pathNode = pathNode.nextSiblingElement())
+    for (auto pathNode = pathElement.firstChildElement(); !pathNode.isNull(); pathNode = pathNode.nextSiblingElement())
     {
         this->lastestFile()->push_back(pathNode.attribute("path"));
     }

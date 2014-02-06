@@ -128,27 +128,27 @@ bool GoMarkovChartData::tryOpen(QString fileName)
         return false;
     }
 
-    QDomElement partRoot = root.firstChildElement();
+    auto partRoot = root.firstChildElement();
     if (document.isNull())
     {
         return false;
     }
-    for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->names.push_back(element.attribute("value"));
     }
 
     partRoot = partRoot.nextSiblingElement();
-    for (QDomElement element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = partRoot.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->times.push_back(element.attribute("value").toDouble());
     }
 
     partRoot = partRoot.nextSiblingElement();
-    for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
+    for (auto element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
         this->probabilities.push_back(QVector<DoubleVector>());
-        for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
+        for (auto element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             DoubleVector vector;
             vector.setLength(element2.attribute("length").toInt());
@@ -161,10 +161,10 @@ bool GoMarkovChartData::tryOpen(QString fileName)
     }
 
     partRoot = partRoot.nextSiblingElement();
-    for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
+    for (auto element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
         this->lambdas.push_back(QVector<DoubleVector>());
-        for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
+        for (auto element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             DoubleVector vector;
             vector.setLength(element2.attribute("length").toInt());
@@ -177,10 +177,10 @@ bool GoMarkovChartData::tryOpen(QString fileName)
     }
 
     partRoot = partRoot.nextSiblingElement();
-    for (QDomElement element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
+    for (auto element1 = partRoot.firstChildElement(); !element1.isNull(); element1 = element1.nextSiblingElement())
     {
         this->mus.push_back(QVector<DoubleVector>());
-        for (QDomElement element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
+        for (auto element2 = element1.firstChildElement(); !element2.isNull(); element2 = element2.nextSiblingElement())
         {
             DoubleVector vector;
             vector.setLength(element2.attribute("length").toInt());

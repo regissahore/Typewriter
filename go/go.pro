@@ -16,6 +16,8 @@ TEMPLATE = app
 
 RC_FILE = resource.rc
 
+QMAKE_CXXFLAGS += -std=c++0x
+
 INCLUDEPATH += ./include
 INCLUDEPATH += ./include/analysis
 INCLUDEPATH += ./include/analysis/origin

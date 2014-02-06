@@ -62,7 +62,7 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
     QList<ItemGoSignal*> signalList;
     QList<ItemGoMarkovEquivalent*> equivalentList;
     QList<ItemGoMarkovCommonCause2*> commoncauseList;
-    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
         {

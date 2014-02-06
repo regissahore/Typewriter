@@ -94,7 +94,7 @@ bool GoStatus::tryOpen(QDomElement &root)
     }
     this->_probability.clear();
     this->_description.clear();
-    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->_probability.push_back(element.attribute("probability").toDouble());
         this->_description.push_back(element.attribute("description"));

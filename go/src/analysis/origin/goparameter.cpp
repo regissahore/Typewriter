@@ -75,7 +75,7 @@ bool GoParameter::tryOpen(QDomElement &root)
             return false;
         }
         this->_parameter.clear();
-        for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+        for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
         {
             this->_parameter.push_back(element.attribute("value").toDouble());
         }

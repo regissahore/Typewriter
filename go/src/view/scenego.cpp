@@ -130,7 +130,7 @@ bool SceneGo::tryOpen(QDomElement &root)
     bool flag = true;
     QList<ItemGoOperator*> operatorList;
     QList<ItemGoSignal*> signalList;
-    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
         {

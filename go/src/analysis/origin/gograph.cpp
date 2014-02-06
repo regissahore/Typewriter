@@ -398,7 +398,7 @@ GoPathSetSetSet GoGraph::findPath(int order)
     {
         this->findPathDfs(normals, path, list, tempPath, 0, 0, i);
     }
-    for (QMap<int, QVector<double>* >::iterator it = normals.begin(); it != normals.end(); ++it)
+    for (auto it = normals.begin(); it != normals.end(); ++it)
     {
         delete it.value();
     }
@@ -541,7 +541,7 @@ GoPathSetSetSet GoGraph::findCut(int order)
     {
         this->findCutDfs(fails, path, list, tempPath, 0, 0, i);
     }
-    for (QMap<int, QVector<double>* >::iterator it = fails.begin(); it != fails.end(); ++it)
+    for (auto it = fails.begin(); it != fails.end(); ++it)
     {
         delete it.value();
     }

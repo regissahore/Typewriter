@@ -134,7 +134,7 @@ bool GoMarkovCommonCause::tryOpen(QDomElement &root)
     this->_belta = root.attribute("belta").toDouble();
     this->setGammaC(root.attribute("gammac").toDouble());
     this->_idList->clear();
-    for (QDomElement element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
+    for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         this->_idList->push_back(element.attribute("id").toInt());
     }
