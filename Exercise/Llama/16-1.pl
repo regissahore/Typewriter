@@ -1,0 +1,2 @@
+chdir '/';
+exec 'ls', '-l';
