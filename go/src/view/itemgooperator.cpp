@@ -32,7 +32,7 @@ ItemGoOperator::~ItemGoOperator()
     this->_inputArrows->clear();
     this->_subInputArrows->clear();
     this->_outputArrows->clear();
-    this->setParentItem(0L);
+    this->setParentItem(nullptr);
     this->_inputSignal->clear();
     this->_subInputSignal->clear();
     for (int i = 0; i < this->_outputSignal->size(); ++i)
@@ -64,7 +64,7 @@ void ItemGoOperator::setModel(GoOperator *model)
     {
         for (int i = 0; i < this->_outputArrows->size(); ++i)
         {
-            this->_outputArrows->at(i)->setParentItem(0L);
+            this->_outputArrows->at(i)->setParentItem(nullptr);
             delete this->_outputArrows->at(i);
         }
         this->_outputArrows->clear();
@@ -84,19 +84,19 @@ void ItemGoOperator::setModel(GoOperator *model)
     {
         for (int i = 0; i < this->_inputArrows->size(); ++i)
         {
-            this->_inputArrows->at(i)->setParentItem(0L);
+            this->_inputArrows->at(i)->setParentItem(nullptr);
             delete this->_inputArrows->at(i);
         }
         this->_inputArrows->clear();
         for (int i = 0; i < this->_subInputArrows->size(); ++i)
         {
-            this->_subInputArrows->at(i)->setParentItem(0L);
+            this->_subInputArrows->at(i)->setParentItem(nullptr);
             delete this->_subInputArrows->at(i);
         }
         this->_subInputArrows->clear();
         for (int i = 0; i < this->_outputArrows->size(); ++i)
         {
-            this->_outputArrows->at(i)->setParentItem(0L);
+            this->_outputArrows->at(i)->setParentItem(nullptr);
             delete this->_outputArrows->at(i);
         }
         this->_outputArrows->clear();
@@ -114,7 +114,7 @@ void ItemGoOperator::setModel(GoOperator *model)
             arrow->setEnd(QPoint(x, y));
             this->_inputArrows->push_back(arrow);
             startY += 40.0;
-            this->_inputSignal->push_back(0L);
+            this->_inputSignal->push_back(nullptr);
         }
         number = this->model()->output()->number();
         startY = - (number - 1) * 20.0;
@@ -138,7 +138,7 @@ void ItemGoOperator::setModel(GoOperator *model)
             arrow->setPos(0, -75);
             arrow->setEnd(QPoint(0, 50));
             this->_subInputArrows->push_back(arrow);
-            this->_subInputSignal->push_back(0L);
+            this->_subInputSignal->push_back(nullptr);
         }
     }
     this->_isShowOutput->clear();
@@ -461,14 +461,14 @@ void ItemGoOperator::removeSignal(ItemGoSignal *signal, int type, int index)
     case DefinationGoType::GO_OPERATOR_INPUT:
         if (index >= 0 && index < this->model()->input()->number())
         {
-            (*this->_inputSignal)[index] = 0L;
+            (*this->_inputSignal)[index] = nullptr;
             this->_inputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
     case DefinationGoType::GO_OPERATOR_SUBINPUT:
         if (index >= 0 && index < this->model()->subInput()->number())
         {
-            (*this->_subInputSignal)[index] = 0L;
+            (*this->_subInputSignal)[index] = nullptr;
             this->_subInputArrows->at(index)->setColor(QColor(Qt::darkRed));
         }
         break;
@@ -492,14 +492,14 @@ QList<ItemGoSignal *> ItemGoOperator::getConnectedSignals() const
     QList<ItemGoSignal*> signal;
     for (int i = 0; i < this->_inputSignal->size(); ++i)
     {
-        if (this->_inputSignal->at(i) != 0L)
+        if (this->_inputSignal->at(i) != nullptr)
         {
             signal.push_back(this->_inputSignal->at(i));
         }
     }
     for (int i = 0; i < this->_subInputSignal->size(); ++i)
     {
-        if (this->_subInputSignal->at(i) != 0L)
+        if (this->_subInputSignal->at(i) != nullptr)
         {
             signal.push_back(this->_subInputSignal->at(i));
         }

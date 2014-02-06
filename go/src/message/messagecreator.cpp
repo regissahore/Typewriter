@@ -2,7 +2,7 @@
 
 MessageCreator::MessageCreator()
 {
-    this->_messageController = 0L;
+    this->_messageController = nullptr;
 }
 
 void MessageCreator::setMessageController(MessageController *messageController)
@@ -12,7 +12,7 @@ void MessageCreator::setMessageController(MessageController *messageController)
 
 void MessageCreator::sendMessage(QSharedPointer<Message> message)
 {
-    if (this->_messageController != 0L && message != 0L)
+    if (this->_messageController != nullptr && message != nullptr)
     {
         this->_messageController->send(message);
     }

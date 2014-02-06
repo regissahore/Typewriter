@@ -101,7 +101,7 @@ ItemGoMarkovCommonCause* ItemGoMarkovCommonCause::copy()
     common->_model = this->model()->copy();
     for (int i = 0; i < this->_operatorItems->size(); ++i)
     {
-        common->_operatorItems->push_back(0L);
+        common->_operatorItems->push_back(nullptr);
     }
     return common;
 }

@@ -8,7 +8,7 @@
 
 EditorAbstract *EditorFactory::produce(int type)
 {
-    EditorAbstract *editor = 0L;
+    EditorAbstract *editor = nullptr;
     switch(type)
     {
     case EDITOR_TYPE_WELCOME:
@@ -27,7 +27,7 @@ EditorAbstract *EditorFactory::produce(int type)
         editor = new EditorGoMarkovChart();
         break;
     }
-    if (editor != 0L)
+    if (editor != nullptr)
     {
         editor->setType(type);
     }

@@ -13,13 +13,13 @@ ToolGoText::ToolGoText(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
 {
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
     this->_isActivated = false;
-    this->_item = 0L;
+    this->_item = nullptr;
     this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
 ToolGoText::~ToolGoText()
 {
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         delete this->_item;
     }
@@ -41,7 +41,7 @@ void ToolGoText::activate(QGraphicsSceneMouseEvent *event)
     else
     {
         delete this->_item;
-        this->_item = 0L;
+        this->_item = nullptr;
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGo()->sendMessage(message);

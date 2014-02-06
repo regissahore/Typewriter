@@ -144,7 +144,7 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
                 signalList[i]->end()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->end()->type, signalList[i]->end()->index);
             }
-            if (signalList[i]->start()->op != 0L && signalList[i]->end()->op != 0L)
+            if (signalList[i]->start()->op != nullptr && signalList[i]->end()->op != nullptr)
             {
                 break;
             }
@@ -181,7 +181,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
-            if (eq->fatherEquivalent() == 0L)
+            if (eq->fatherEquivalent() == nullptr)
             {
                 equivalentOperators.push_back(eq->getEquivalentOperatorItem());
                 operators.push_back(equivalentOperators.at(equivalentOperators.size() - 1));
@@ -201,7 +201,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
-            if (op->fatherEquivalent() == 0L)
+            if (op->fatherEquivalent() == nullptr)
             {
                 graph->addOperator(((ItemGoMarkovOperator*)item)->model());
             }
@@ -226,13 +226,13 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
             int v = itemSignal->end()->op->model()->realID();
             bool insideU = false;
             bool insideV = false;
-            GoMarkovOperator *operatorU = 0L;
-            GoMarkovOperator *operatorV = 0L;
+            GoMarkovOperator *operatorU = nullptr;
+            GoMarkovOperator *operatorV = nullptr;
             for (int j = 0; j < operators.size(); ++j)
             {
                 if (operators[j]->model()->realID() == u)
                 {
-                    if (operators[j]->fatherEquivalent() != 0L)
+                    if (operators[j]->fatherEquivalent() != nullptr)
                     {
                         insideU = true;
                         u = operators[j]->rootEquivalent()->id();
@@ -252,7 +252,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
                 }
                 if (operators[j]->model()->realID() == v)
                 {
-                    if (operators[j]->fatherEquivalent() != 0L)
+                    if (operators[j]->fatherEquivalent() != nullptr)
                     {
                         insideV = true;
                         v = operators[j]->rootEquivalent()->id();
@@ -275,7 +275,7 @@ GoGraph* SceneGoMarkov::generatorGoGraph()
             {
                 continue;
             }
-            if (operatorU == 0L || operatorV == 0L)
+            if (operatorU == nullptr || operatorV == nullptr)
             {
                 continue;
             }
@@ -338,7 +338,7 @@ QList<ItemGoMarkovEquivalent*> SceneGoMarkov::getTopologyOrder(QList<ItemGoMarko
     for (int i = 0; i < equivalents.size(); ++i)
     {
         ItemGoMarkovEquivalent *equivalent = equivalents[i]->fatherEquivalent();
-        if (equivalent != 0L)
+        if (equivalent != nullptr)
         {
             for (int j = 0; j < equivalents.size(); ++j)
             {
@@ -360,7 +360,7 @@ QList<ItemGoMarkovEquivalent*> SceneGoMarkov::getTopologyOrder(QList<ItemGoMarko
     for (int i = 0; i < order.size(); ++i)
     {
         ItemGoMarkovEquivalent *equivalent = order[i]->fatherEquivalent();
-        if (equivalent != 0L)
+        if (equivalent != nullptr)
         {
             for (int j = 0; j < equivalents.size(); ++j)
             {
@@ -404,7 +404,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
                 message->paramString = messages[i].message;
                 this->sendMessage(message);
             }
-            if (data != 0L)
+            if (data != nullptr)
             {
                 if (data->saveAsHTML(filePath + ".goc.html"))
                 {

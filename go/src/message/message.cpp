@@ -3,7 +3,7 @@
 
 Message::Message()
 {
-    this->_message = 0L;
+    this->_message = nullptr;
     this->paramInt = 0;
     this->paramString = "";
 }

@@ -8,7 +8,7 @@ class ItemGoMarkovOperator;
 class ItemGoMarkovCommonCause2 : public ItemMoveable
 {
 public:
-    ItemGoMarkovCommonCause2(QGraphicsItem *parent = 0L);
+    ItemGoMarkovCommonCause2(QGraphicsItem *parent = nullptr);
     virtual ~ItemGoMarkovCommonCause2();
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);

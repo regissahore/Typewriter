@@ -123,7 +123,7 @@ void ParameterGoMarkovOperator::bindItem(void *item)
 
 void ParameterGoMarkovOperator::addTypeParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -135,7 +135,7 @@ void ParameterGoMarkovOperator::addTypeParameter()
 void ParameterGoMarkovOperator::addOperatorParameter()
 {
     this->ParameterGoOperator::addOperatorParameter();
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -170,7 +170,7 @@ void ParameterGoMarkovOperator::setItemMarkovShowParameter(bool value)
 
 void ParameterGoMarkovOperator::addMarkovBreakdownCorrelateParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator *model = (GoMarkovOperator*)item->model();
@@ -186,7 +186,7 @@ void ParameterGoMarkovOperator::addMarkovBreakdownCorrelateParameter()
 
 void ParameterGoMarkovOperator::addMarkovBreakdownNumParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator *model = (GoMarkovOperator*)item->model();
@@ -216,7 +216,7 @@ void ParameterGoMarkovOperator::addMarkovBreakdownNumParameter()
 
 void ParameterGoMarkovOperator::addMarkovStatus1Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator*)item->model())->markovStatus1();
@@ -258,7 +258,7 @@ void ParameterGoMarkovOperator::addMarkovStatus1Parameter()
 
 void ParameterGoMarkovOperator::addMarkovStatus2Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator*)item->model())->markovStatus2();
@@ -300,7 +300,7 @@ void ParameterGoMarkovOperator::addMarkovStatus2Parameter()
 
 void ParameterGoMarkovOperator::addMarkovStatus3Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator*)item->model())->markovStatus3();
@@ -342,7 +342,7 @@ void ParameterGoMarkovOperator::addMarkovStatus3Parameter()
 
 void ParameterGoMarkovOperator::addMarkovStatus4Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator*)item->model())->markovStatus4();
@@ -513,7 +513,7 @@ void ParameterGoMarkovOperator::setItemMarkovRepairTime4()
 
 void ParameterGoMarkovOperator::addMarkov11KParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator11 *op = (GoMarkovOperator11*)item->model();
@@ -531,7 +531,7 @@ void ParameterGoMarkovOperator::addMarkov11KParameter()
 
 void ParameterGoMarkovOperator::addMarkov11IParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator11 *op = (GoMarkovOperator11*)item->model();
@@ -548,7 +548,7 @@ void ParameterGoMarkovOperator::addMarkov11IParameter()
 
 void ParameterGoMarkovOperator::addMarkov11LParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator11 *op = (GoMarkovOperator11*)item->model();
@@ -565,7 +565,7 @@ void ParameterGoMarkovOperator::addMarkov11LParameter()
 
 void ParameterGoMarkovOperator::addMarkov11JParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator11 *op = (GoMarkovOperator11*)item->model();
@@ -610,7 +610,7 @@ void ParameterGoMarkovOperator::setItemMarkov11J(int value)
 
 void ParameterGoMarkovOperator::addMarkov22Markov2Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator22 *op = (GoMarkovOperator22*)item->model();
@@ -656,7 +656,7 @@ void ParameterGoMarkovOperator::setItemMarkov22Markov2()
 
 void ParameterGoMarkovOperator::addMarkov23AlphaParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator23 *op = (GoMarkovOperator23*)item->model();
@@ -698,7 +698,7 @@ void ParameterGoMarkovOperator::setItemMarkov23Alpha()
 
 void ParameterGoMarkovOperator::addMarkov13RelationParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator13 *op = (GoMarkovOperator13*)item->model();
@@ -745,7 +745,7 @@ void ParameterGoMarkovOperator::setItemMarkov13Relation()
 
 void ParameterGoMarkovOperator::addMarkov18ABackupParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator18A *model = (GoMarkovOperator18A*)item->model();
@@ -772,7 +772,7 @@ void ParameterGoMarkovOperator::setItemMarkov18ABackup(double value)
 
 void ParameterGoMarkovOperator::addMarkov19DeltaNumParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator19 *model = (GoMarkovOperator19*)item->model();
@@ -801,7 +801,7 @@ void ParameterGoMarkovOperator::setItemMarkov19DeltaNum(int value)
 
 void ParameterGoMarkovOperator::addMarkov19DeltaParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator19 *op = (GoMarkovOperator19*)item->model();
@@ -847,7 +847,7 @@ void ParameterGoMarkovOperator::setItemMarkov19Delta()
 
 void ParameterGoMarkovOperator::addMarkov18LambdaB1Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator18 *model = (GoMarkovOperator18*)item->model();
@@ -874,7 +874,7 @@ void ParameterGoMarkovOperator::setItemMarkov18LambdaB1(double value)
 
 void ParameterGoMarkovOperator::addMarkovShowOutput1Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         QCheckBox *checkBox;
@@ -890,7 +890,7 @@ void ParameterGoMarkovOperator::addMarkovShowOutput1Parameter()
 
 void ParameterGoMarkovOperator::addMarkovShowOutput2Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         QCheckBox *checkBox;
@@ -920,7 +920,7 @@ void ParameterGoMarkovOperator::setItemMarkovShowOutput2(bool value)
 
 void ParameterGoMarkovOperator::addMarkov12AUseDeltaParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator12A *op = (GoMarkovOperator12A*)item->model();
@@ -936,7 +936,7 @@ void ParameterGoMarkovOperator::addMarkov12AUseDeltaParameter()
 
 void ParameterGoMarkovOperator::addMarkov12ADeltaParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Delta"), this));
@@ -985,7 +985,7 @@ void ParameterGoMarkovOperator::setItemMarkov12ADelta()
 
 void ParameterGoMarkovOperator::addMarkov9FeedbackNumParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovOperator9 *model = (GoMarkovOperator9*)item->model();
@@ -1015,7 +1015,7 @@ void ParameterGoMarkovOperator::addMarkov9FeedbackNumParameter()
 
 void ParameterGoMarkovOperator::addMarkov9Feedback1Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator9*)item->model())->feedbackStatus1();
@@ -1057,7 +1057,7 @@ void ParameterGoMarkovOperator::addMarkov9Feedback1Parameter()
 
 void ParameterGoMarkovOperator::addMarkov9Feedback2Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator9*)item->model())->feedbackStatus2();
@@ -1099,7 +1099,7 @@ void ParameterGoMarkovOperator::addMarkov9Feedback2Parameter()
 
 void ParameterGoMarkovOperator::addMarkov9Feedback3Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator9*)item->model())->feedbackStatus3();
@@ -1141,7 +1141,7 @@ void ParameterGoMarkovOperator::addMarkov9Feedback3Parameter()
 
 void ParameterGoMarkovOperator::addMarkov9Feedback4Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
         GoMarkovStatus *status = ((GoMarkovOperator9*)item->model())->feedbackStatus4();

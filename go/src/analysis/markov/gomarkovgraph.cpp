@@ -148,7 +148,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
     }
     if (isOperatorError)
     {
-        return 0L;
+        return nullptr;
     }
 
     this->_timeProcess = 0;
@@ -285,7 +285,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
         if (this->getErrorMessage() != "")
         {
             delete data;
-            return 0L;
+            return nullptr;
         }
         for (int j = 0, index = 0; j < sortedOperatorList.size(); ++j)
         {

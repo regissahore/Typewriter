@@ -23,7 +23,7 @@
 
 SceneGo::SceneGo(QObject *parent) : QGraphicsScene(parent), Messager()
 {
-    this->_tool = 0L;
+    this->_tool = nullptr;
     this->_emptyTopLeft = new ItemEmpty();
     this->_emptyBottomRight = new ItemEmpty();
     this->addItem(this->_emptyTopLeft);
@@ -61,7 +61,7 @@ void SceneGo::bindMessage(MessageController *controller)
 
 void SceneGo::messageEvent(QSharedPointer<Message> message)
 {
-    QKeyEvent *event = 0L;
+    QKeyEvent *event = nullptr;
     switch (message->type())
     {
     case MessageFactory::TYPE_TOOL_SELECTION:
@@ -103,7 +103,7 @@ void SceneGo::messageEvent(QSharedPointer<Message> message)
     default:
         break;
     }
-    if (event != 0L)
+    if (event != nullptr)
     {
         delete event;
     }
@@ -184,7 +184,7 @@ bool SceneGo::tryOpen(QDomElement &root)
                 signalList[i]->end()->op = operatorList[j];
                 operatorList[j]->setSignal(signalList[i], signalList[i]->end()->type, signalList[i]->end()->index);
             }
-            if (signalList[i]->start()->op != 0L && signalList[i]->end()->op != 0L)
+            if (signalList[i]->start()->op != nullptr && signalList[i]->end()->op != nullptr)
             {
                 break;
             }
@@ -203,7 +203,7 @@ void SceneGo::selectTool(int type)
         if (this->_tool->type() != type)
         {
             ToolGoAbstract *newTool = ToolGoFactory::produce(this, type);
-            if (newTool != 0L)
+            if (newTool != nullptr)
             {
                 delete this->_tool;
                 this->_tool = newTool;

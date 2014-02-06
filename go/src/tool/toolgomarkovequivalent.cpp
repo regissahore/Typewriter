@@ -126,7 +126,7 @@ void ToolGoMarkovEquivalent::addEquivalent()
     {
         equivalent->setParallelEquivalent(this->_items);
     }
-    if (equivalent->model() == 0L)
+    if (equivalent->model() == nullptr)
     {
         QMessageBox::information(0, QObject::tr("Error"), QObject::tr("No equivalent is valid."));
         delete equivalent;

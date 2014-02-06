@@ -33,7 +33,7 @@ void DockParameter::messageEvent(QSharedPointer<Message> message)
         this->changeParameter((ItemDrawable*)message->message());
         break;
     case MessageFactory::TYPE_EDITOR_TYPE:
-        this->changeParameter(0L);
+        this->changeParameter(nullptr);
         break;
     default:
         break;
@@ -44,7 +44,7 @@ void DockParameter::changeParameter(ItemDrawable* item)
 {
     delete this->_parameter;
     int type;
-    if (item == 0L)
+    if (item == nullptr)
     {
         type = -1;
     }

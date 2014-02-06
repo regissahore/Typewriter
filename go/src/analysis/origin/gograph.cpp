@@ -117,7 +117,7 @@ bool GoGraph::checkCycleAndConnection()
     {
         for (int j = 0; j < this->_operator.at(i)->input()->number(); ++j)
         {
-            if (this->_operator.at(i)->input()->signal()->at(j) == 0L)
+            if (this->_operator.at(i)->input()->signal()->at(j) == nullptr)
             {
                 this->_error = QObject::tr("The input of the operator is null. ");
                 return false;
@@ -125,7 +125,7 @@ bool GoGraph::checkCycleAndConnection()
         }
         for (int j = 0; j < this->_operator.at(i)->subInput()->number(); ++j)
         {
-            if (this->_operator.at(i)->subInput()->signal()->at(j) == 0L)
+            if (this->_operator.at(i)->subInput()->signal()->at(j) == nullptr)
             {
                 this->_error = QObject::tr("The sub input of the operator is null. ");
                 return false;

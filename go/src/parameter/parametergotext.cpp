@@ -16,7 +16,7 @@ void ParameterGoText::bindItem(void *item)
 
 void ParameterGoText::addTextParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoText *item = (ItemGoText*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());

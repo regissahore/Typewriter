@@ -3,8 +3,8 @@
 
 GoSignal::GoSignal()
 {
-    this->_u = 0L;
-    this->_v = 0L;
+    this->_u = nullptr;
+    this->_v = nullptr;
     this->setIsGlobalFeedback(false);
 }
 

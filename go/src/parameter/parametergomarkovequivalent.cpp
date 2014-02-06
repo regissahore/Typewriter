@@ -11,7 +11,7 @@ ParameterGoMarkovEquivalent::ParameterGoMarkovEquivalent(QWidget *parent) : Para
 void ParameterGoMarkovEquivalent::bindItem(void *item)
 {
     this->_item = item;
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovEquivalent *item = (ItemGoMarkovEquivalent*)this->_item;
 

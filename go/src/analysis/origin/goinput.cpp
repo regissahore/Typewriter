@@ -24,7 +24,7 @@ void GoInput::setNumber(int num)
         num = num - this->number();
         while (num--)
         {
-            this->add(0L);
+            this->add(nullptr);
         }
     }
     else if (this->number() > num)

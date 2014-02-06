@@ -7,7 +7,7 @@ DockToolbox::DockToolbox(QWidget *parent) : QDockWidget(parent), Messager()
 {
     this->setWindowTitle(tr("Toolbox"));
     this->setFeatures(QDockWidget::AllDockWidgetFeatures);
-    this->_toolbox = 0L;
+    this->_toolbox = nullptr;
     this->setMinimumWidth(150);
 }
 
@@ -78,6 +78,6 @@ void DockToolbox::clear()
     if (this->_toolbox)
     {
         delete this->_toolbox;
-        this->_toolbox = 0L;
+        this->_toolbox = nullptr;
     }
 }

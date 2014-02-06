@@ -11,7 +11,7 @@ ParameterGoMarkovCommonCause2::ParameterGoMarkovCommonCause2(QWidget *parent) : 
 void ParameterGoMarkovCommonCause2::bindItem(void *item)
 {
     this->_item = item;
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoMarkovCommonCause2 *item = (ItemGoMarkovCommonCause2*)this->_item;
         QDoubleSpinBox *spin;

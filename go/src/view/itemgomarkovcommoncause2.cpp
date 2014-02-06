@@ -89,7 +89,7 @@ ItemGoMarkovCommonCause2* ItemGoMarkovCommonCause2::copy()
     common->_model = this->model()->copy();
     for (int i = 0; i < this->_operatorItems->size(); ++i)
     {
-        common->_operatorItems->push_back(0L);
+        common->_operatorItems->push_back(nullptr);
     }
     common->setX(this->scenePos().x() + 100);
     common->setY(this->scenePos().y() + 100);

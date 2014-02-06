@@ -14,13 +14,13 @@ ToolGoOperator::ToolGoOperator(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
 {
     this->graphicsView()->setCursor(Qt::SizeAllCursor);
     this->_isActivated = false;
-    this->_GoOperator = 0L;
+    this->_GoOperator = nullptr;
     this->_defaultToolType = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
 }
 
 ToolGoOperator::~ToolGoOperator()
 {
-    if (this->_GoOperator != 0L)
+    if (this->_GoOperator != nullptr)
     {
         delete this->_GoOperator;
     }
@@ -173,7 +173,7 @@ void ToolGoOperator::activate(QGraphicsSceneMouseEvent *event)
 
 void ToolGoOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_GoOperator != 0L)
+    if (this->_GoOperator != nullptr)
     {
         event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
                                    ((int)event->scenePos().y() / 10) * 10));
@@ -191,7 +191,7 @@ void ToolGoOperator::mouseMoveEvent(QGraphicsSceneMouseEvent *event)
 
 void ToolGoOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_GoOperator != 0L)
+    if (this->_GoOperator != nullptr)
     {
         event->setScenePos(QPointF(((int)event->scenePos().x() / 10) * 10,
                                    ((int)event->scenePos().y() / 10) * 10));
@@ -213,10 +213,10 @@ void ToolGoOperator::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
     {
-        if (this->_GoOperator != 0L)
+        if (this->_GoOperator != nullptr)
         {
             delete this->_GoOperator;
-            this->_GoOperator = 0L;
+            this->_GoOperator = nullptr;
         }
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;

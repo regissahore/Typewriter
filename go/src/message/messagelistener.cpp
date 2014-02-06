@@ -3,7 +3,7 @@
 MessageListener::MessageListener()
 {
     this->_messageListened = new QVector<int>();
-    this->_messageController = 0L;
+    this->_messageController = nullptr;
 }
 
 MessageListener::~MessageListener()

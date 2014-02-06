@@ -451,7 +451,7 @@ void ToolGoSelect::copy()
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* op = (ItemGoMarkovOperator*)item;
-            if (op->fatherCommonCause2() != 0L)
+            if (op->fatherCommonCause2() != nullptr)
             {
                 bool flag = true;
                 for (int j = 0; j < fatherCommons.size(); ++j)

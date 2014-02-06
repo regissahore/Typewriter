@@ -27,7 +27,7 @@ void OutputConsole::bindMessage(MessageController *controller)
 
 void OutputConsole::messageEvent(QSharedPointer<Message> message)
 {
-    QLabel *label = 0L;
+    QLabel *label = nullptr;
     switch (message->type())
     {
     case MessageFactory::TYPE_OUTPUT_CLEAR:

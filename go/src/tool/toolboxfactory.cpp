@@ -6,7 +6,7 @@
 
 ToolboxAbstract* ToolboxFactory::produce(const int type)
 {
-    ToolboxAbstract *toolbox = 0L;
+    ToolboxAbstract *toolbox = nullptr;
     switch (type)
     {
     case TOOLBOX_TYPE_NULL:
@@ -21,7 +21,7 @@ ToolboxAbstract* ToolboxFactory::produce(const int type)
     default:
         break;
     }
-    if (toolbox != 0L)
+    if (toolbox != nullptr)
     {
         toolbox->setType(type);
     }

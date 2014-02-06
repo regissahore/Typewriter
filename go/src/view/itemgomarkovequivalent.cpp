@@ -19,15 +19,15 @@ ItemGoMarkovEquivalent::ItemGoMarkovEquivalent(QGraphicsItem *parent) : ItemMove
     this->_operatorItems = new QVector<ItemGoMarkovOperator*>();
     this->_equivalentItems = new QVector<ItemGoMarkovEquivalent*>();
     this->_items = new QVector<ItemDrawable*>();
-    this->_model = 0L;
-    this->_fatherEquivalent = 0L;
+    this->_model = nullptr;
+    this->_fatherEquivalent = nullptr;
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT);
 }
 
 void ItemGoMarkovEquivalent::setId(const int id)
 {
     this->IdentifiedItem::setId(id);
-    if (this->_model != 0L)
+    if (this->_model != nullptr)
     {
         this->_model->setId(id);
     }
@@ -37,19 +37,19 @@ ItemGoMarkovEquivalent::~ItemGoMarkovEquivalent()
 {
     for (int i = 0; i < this->_operatorItems->size(); ++i)
     {
-        this->_operatorItems->at(i)->setFatherEquivalent(0L);
+        this->_operatorItems->at(i)->setFatherEquivalent(nullptr);
     }
     this->_operatorItems->clear();
     delete this->_operatorItems;
     for (int i = 0; i < this->_equivalentItems->size(); ++i)
     {
-        this->_equivalentItems->at(i)->setFatherEquivalent(0L);
+        this->_equivalentItems->at(i)->setFatherEquivalent(nullptr);
     }
     this->_equivalentItems->clear();
     delete this->_equivalentItems;
     this->_items->clear();
     delete this->_items;
-    if (this->model() != 0L)
+    if (this->model() != nullptr)
     {
         delete this->_model;
     }
@@ -62,16 +62,16 @@ ItemGoMarkovEquivalent* ItemGoMarkovEquivalent::fatherEquivalent() const
 
 ItemGoMarkovEquivalent* ItemGoMarkovEquivalent::rootEquivalent() const
 {
-    if (this->fatherEquivalent() != 0L)
+    if (this->fatherEquivalent() != nullptr)
     {
         ItemGoMarkovEquivalent *eq = this->fatherEquivalent();
-        while (eq->fatherEquivalent() != 0L)
+        while (eq->fatherEquivalent() != nullptr)
         {
             eq = eq->fatherEquivalent();
         }
         return eq;
     }
-    return 0L;
+    return nullptr;
 }
 
 void ItemGoMarkovEquivalent::setFatherEquivalent(ItemGoMarkovEquivalent *equivalent)
@@ -91,7 +91,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
         {
             ItemGoMarkovOperator* item = (ItemGoMarkovOperator*)iterator;
             ItemGoSignal *signal = item->input()->at(0);
-            if (signal == 0L)
+            if (signal == nullptr)
             {
                 break;
             }
@@ -101,7 +101,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
         {
             ItemGoMarkovEquivalent* item = (ItemGoMarkovEquivalent*)iterator;
             ItemGoSignal *signal = item->input()->at(0);
-            if (signal == 0L)
+            if (signal == nullptr)
             {
                 break;
             }
@@ -113,14 +113,14 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
         }
         if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            if (((ItemGoMarkovOperator*)iterator)->fatherEquivalent() != 0L)
+            if (((ItemGoMarkovOperator*)iterator)->fatherEquivalent() != nullptr)
             {
                 iterator = ((ItemGoMarkovOperator*)iterator)->fatherEquivalent();
             }
         }
         if (iterator->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            while (((ItemGoMarkovEquivalent*)iterator)->fatherEquivalent() != 0L)
+            while (((ItemGoMarkovEquivalent*)iterator)->fatherEquivalent() != nullptr)
             {
                 iterator = ((ItemGoMarkovEquivalent*)iterator)->fatherEquivalent();
             }
@@ -186,7 +186,7 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getSeriesList(QList<QGraphicsItem*
 QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsItem*> &items)
 {
     QList<ItemDrawable*> list;
-    ItemGoMarkovOperator *source = 0L;
+    ItemGoMarkovOperator *source = nullptr;
     for (int i = 0; i < items.size(); ++i)
     {
         if (((ItemDrawable*)items.at(i))->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
@@ -199,13 +199,13 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsIte
             }
         }
     }
-    if (source == 0L)
+    if (source == nullptr)
     {
         return list;
     }
     for (int i = 0; i < source->input()->size(); ++i)
     {
-        list.push_back(0L);
+        list.push_back(nullptr);
     }
     list.push_back(source);
     for (int i = 0; i < source->input()->size(); ++i)
@@ -223,8 +223,8 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsIte
             {
                 ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)temp;
                 ItemGoMarkovEquivalent *father = op->fatherEquivalent();
-                ItemGoMarkovEquivalent *child = 0L;
-                while (father != 0L)
+                ItemGoMarkovEquivalent *child = nullptr;
+                while (father != nullptr)
                 {
                     child = father;
                     father = father->fatherEquivalent();
@@ -239,8 +239,8 @@ QList<ItemDrawable *> ItemGoMarkovEquivalent::getParallelList(QList<QGraphicsIte
             {
                 ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)temp;
                 ItemGoMarkovEquivalent *father = eq->fatherEquivalent();
-                ItemGoMarkovEquivalent *child = 0L;
-                while (father != 0L)
+                ItemGoMarkovEquivalent *child = nullptr;
+                while (father != nullptr)
                 {
                     child = father;
                     father = father->fatherEquivalent();
@@ -293,7 +293,7 @@ bool ItemGoMarkovEquivalent::isSeriesEquivalentable(QList<QGraphicsItem*> items)
             {
                 return false;
             }
-            if (item->input()->at(0) == 0L)
+            if (item->input()->at(0) == nullptr)
             {
                 return false;
             }
@@ -346,7 +346,7 @@ bool ItemGoMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
                 }
                 for (int j = 0; j < item->input()->size(); ++j)
                 {
-                    if (item->input()->at(j) == 0L)
+                    if (item->input()->at(j) == nullptr)
                     {
                         return false;
                     }
@@ -363,7 +363,7 @@ bool ItemGoMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
                     return false;
                 }
             }
-            if (item->input()->at(0) == 0L)
+            if (item->input()->at(0) == nullptr)
             {
                 return false;
             }
@@ -376,7 +376,7 @@ bool ItemGoMarkovEquivalent::isParallelEquivalentable(QList<QGraphicsItem*> item
     }
     for (int i = 0; i < list.size(); ++i)
     {
-        if (list.at(i) == 0L)
+        if (list.at(i) == nullptr)
         {
             return false;
         }
@@ -491,7 +491,7 @@ QVector<ItemGoSignal*>* ItemGoMarkovEquivalent::input() const
             return ((ItemGoMarkovEquivalent*)item)->input();
         }
     }
-    return 0L;
+    return nullptr;
 }
 
 QVector<QVector<ItemGoSignal*>*>* ItemGoMarkovEquivalent::output() const
@@ -508,7 +508,7 @@ QVector<QVector<ItemGoSignal*>*>* ItemGoMarkovEquivalent::output() const
             return ((ItemGoMarkovEquivalent*)item)->output();
         }
     }
-    return 0L;
+    return nullptr;
 }
 
 GoMarkovEquivalent* ItemGoMarkovEquivalent::model() const
@@ -536,7 +536,7 @@ ItemGoMarkovOperator *ItemGoMarkovEquivalent::getEquivalentOperatorItem()
 void ItemGoMarkovEquivalent::move(QGraphicsSceneMouseEvent *event)
 {
     this->ItemMoveable::move(event);
-    if (this->fatherEquivalent() != 0L)
+    if (this->fatherEquivalent() != nullptr)
     {
         this->fatherEquivalent()->updateBoundary();
     }
@@ -552,14 +552,14 @@ void ItemGoMarkovEquivalent::removeUnnecessaryItems(QList<QGraphicsItem*> &items
         switch (item->TypedItem::type())
         {
         case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR:
-            if (((ItemGoMarkovOperator*)item)->fatherEquivalent() != 0L)
+            if (((ItemGoMarkovOperator*)item)->fatherEquivalent() != nullptr)
             {
                 items.removeAt(i);
                 break;
             }
             break;
         case DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT:
-            if (((ItemGoMarkovEquivalent*)item)->fatherEquivalent() != 0L)
+            if (((ItemGoMarkovEquivalent*)item)->fatherEquivalent() != nullptr)
             {
                 items.removeAt(i);
             }
@@ -642,7 +642,7 @@ void ItemGoMarkovEquivalent::updateBoundary()
     this->_end.setX(width);
     this->_end.setY(height);
     this->prepareGeometryChange();
-    if (this->fatherEquivalent() != 0L)
+    if (this->fatherEquivalent() != nullptr)
     {
         this->fatherEquivalent()->updateBoundary();
     }
@@ -656,7 +656,7 @@ ItemGoMarkovEquivalent* ItemGoMarkovEquivalent::copy() const
 
 void ItemGoMarkovEquivalent::save(QDomDocument &document, QDomElement &root)
 {
-    if (this->model() == 0L)
+    if (this->model() == nullptr)
     {
         return;
     }
@@ -692,7 +692,7 @@ bool ItemGoMarkovEquivalent::tryOpen(QDomElement &root)
     {
         this->_model = new GoMarkovEquivalentParallel();
     }
-    if (this->_model == 0L)
+    if (this->_model == nullptr)
     {
         return false;
     }
@@ -709,7 +709,7 @@ bool ItemGoMarkovEquivalent::tryOpen(QDomElement &root)
 
 void ItemGoMarkovEquivalent::bindOperators(QList<ItemGoMarkovOperator*> &operatorList, QList<ItemGoMarkovEquivalent*> &equivalentList)
 {
-    if (this->model() != 0L)
+    if (this->model() != nullptr)
     {
         this->operatorItems()->clear();
         this->equivalentItems()->clear();

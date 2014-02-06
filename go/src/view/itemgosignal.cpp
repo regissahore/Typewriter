@@ -13,8 +13,8 @@ ItemGoSignal::ItemGoSignal(QGraphicsItem *parent) : ItemDrawable(parent)
 {
     this->_start = new SignalConnection();
     this->_end = new SignalConnection();
-    this->_start->op = 0L;
-    this->_end->op = 0L;
+    this->_start->op = nullptr;
+    this->_end->op = nullptr;
     this->setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL);
     this->_model = GoSignalFactory::produce();
     this->setCornerProportion(0.5f);
@@ -238,7 +238,7 @@ void ItemGoSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
     {
         idName += "'";
     }
-    if (this->start()->op != 0L)
+    if (this->start()->op != nullptr)
     {
         if (this->start()->op->model()->output()->number() > 1)
         {
@@ -270,7 +270,7 @@ void ItemGoSignal::paint(QPainter *painter, const QStyleOptionGraphicsItem *item
 
 void ItemGoSignal::updatePosition()
 {
-    if (this->start()->op != 0L && this->end()->op != 0L)
+    if (this->start()->op != nullptr && this->end()->op != nullptr)
     {
         switch (this->start()->type)
         {
@@ -303,11 +303,11 @@ void ItemGoSignal::updatePosition()
 
 void ItemGoSignal::removeConnection()
 {
-    if (this->_start->op != 0L)
+    if (this->_start->op != nullptr)
     {
         this->start()->op->removeSignal(this, this->start()->type, this->start()->index);
     }
-    if (this->_end->op != 0L)
+    if (this->_end->op != nullptr)
     {
         this->end()->op->removeSignal(this, this->end()->type, this->end()->index);
     }
@@ -331,7 +331,7 @@ ItemGoSignal* ItemGoSignal::copy() const
 
 void ItemGoSignal::save(QDomDocument &document, QDomElement &root)
 {
-    if (this->_start->op != 0L && this->_end->op != 0L)
+    if (this->_start->op != nullptr && this->_end->op != nullptr)
     {
         QDomElement signalRoot = document.createElement("signal");
         signalRoot.setAttribute("id", this->model()->id());

@@ -15,7 +15,7 @@
 DialogGoProbability::DialogGoProbability(QWidget *parent) : QDialog(parent)
 {
     this->_currentIndex = -1;
-    this->_model = 0L;
+    this->_model = nullptr;
 
     this->setWindowTitle(tr("Edit Status Probability"));
     this->setGeometry(this->x(), this->y(), 450, 240);

@@ -18,7 +18,7 @@ void ParameterGoSignal::bindItem(void *item)
 
 void ParameterGoSignal::addIDParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoSignal *item = (ItemGoSignal*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -41,7 +41,7 @@ void ParameterGoSignal::setItemID(int value)
 
 void ParameterGoSignal::addSignalParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         this->addIDParameter();
 

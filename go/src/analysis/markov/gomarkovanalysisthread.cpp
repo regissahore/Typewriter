@@ -3,13 +3,13 @@
 
 GoMarkovAnalysisThread::GoMarkovAnalysisThread()
 {
-    this->_graph = 0L;
-    this->_chart = 0L;
+    this->_graph = nullptr;
+    this->_chart = nullptr;
 }
 
 void GoMarkovAnalysisThread::run()
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         this->_chart = this->graph()->calcAccumulativeProbability(this->totalTime(), this->totalCount());
     }
@@ -27,7 +27,7 @@ void GoMarkovAnalysisThread::setTotalTime(const double value)
 
 double GoMarkovAnalysisThread::currentTime() const
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         return this->_totalTime / this->_totalCount * this->graph()->timeProcess();
     }
@@ -46,7 +46,7 @@ void GoMarkovAnalysisThread::setTotalCount(const int value)
 
 int GoMarkovAnalysisThread::currentCount() const
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         return this->graph()->timeProcess();
     }
@@ -55,7 +55,7 @@ int GoMarkovAnalysisThread::currentCount() const
 
 int GoMarkovAnalysisThread::operatorNum() const
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         return this->graph()->totalOperatorNum();
     }
@@ -64,7 +64,7 @@ int GoMarkovAnalysisThread::operatorNum() const
 
 int GoMarkovAnalysisThread::operatorProcess() const
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         return this->graph()->operatorProcess();
     }
@@ -73,7 +73,7 @@ int GoMarkovAnalysisThread::operatorProcess() const
 
 QString GoMarkovAnalysisThread::currentOperatorName() const
 {
-    if (this->graph() != 0L)
+    if (this->graph() != nullptr)
     {
         return this->graph()->currentOperatorName();
     }

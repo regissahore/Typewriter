@@ -21,7 +21,7 @@ ToolGoMarkovPointerExtend::ToolGoMarkovPointerExtend(SceneGo *sceneGo) : ToolGoP
 
 bool ToolGoMarkovPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(Qt::black);
     }
@@ -90,7 +90,7 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
     {
         if (event->modifiers() & Qt::ControlModifier)
         {
-            if (this->_item != 0L)
+            if (this->_item != nullptr)
             {
                 if (this->_item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
                 {
@@ -238,10 +238,10 @@ void ToolGoMarkovPointerExtend::keyReleaseEvent(QKeyEvent *event)
     }
     else if (event->key() == Qt::Key_Delete)
     {
-        if (this->_item != 0L)
+        if (this->_item != nullptr)
         {
             ItemGoFactory::deleteItem(this->_item);
-            this->_item = 0L;
+            this->_item = nullptr;
             this->sceneGo()->viewGo()->editor()->setModified(true);
         }
     }

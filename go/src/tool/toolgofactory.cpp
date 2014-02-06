@@ -16,7 +16,7 @@
 
 ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
 {
-    ToolGoAbstract *tool = 0L;
+    ToolGoAbstract *tool = nullptr;
     switch (type)
     {
     case DefinationToolType::TOOL_TYPE_COMMON_MOVE:
@@ -122,7 +122,7 @@ ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
         tool = new ToolGoMarkovText(sceneGo);
         break;
     }
-    if (tool != 0L)
+    if (tool != nullptr)
     {
         tool->setType(type);
     }

@@ -9,7 +9,7 @@
 
 ParameterAbstract::ParameterAbstract(QWidget *parent) : QWidget(parent), Messager()
 {
-    this->_item = 0L;
+    this->_item = nullptr;
 
     QVBoxLayout *layout = new QVBoxLayout(this);
     layout->setMargin(0);
@@ -45,7 +45,7 @@ void ParameterAbstract::bindMessage(MessageController *controller)
 
 void ParameterAbstract::addPositionParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemDrawable *item = (ItemDrawable*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -83,7 +83,7 @@ void ParameterAbstract::setItemPosY(double value)
 
 void ParameterAbstract::addIDParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         IdentifiedItem *item = (IdentifiedItem*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -105,7 +105,7 @@ void ParameterAbstract::setItemID(int value)
 
 void ParameterAbstract::addTypeParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         TypedItem *item = (TypedItem*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());

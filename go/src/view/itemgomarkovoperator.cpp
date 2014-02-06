@@ -16,9 +16,9 @@
 ItemGoMarkovOperator::ItemGoMarkovOperator(QGraphicsItem *parent) : ItemGoOperator(parent)
 {
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR);
-    this->_fatherEquivalent = 0L;
-    this->_fatherCommonCause = 0L;
-    this->_fatherCommonCause2 = 0L;
+    this->_fatherEquivalent = nullptr;
+    this->_fatherCommonCause = nullptr;
+    this->_fatherCommonCause2 = nullptr;
 }
 
 ItemGoMarkovEquivalent* ItemGoMarkovOperator::fatherEquivalent() const
@@ -28,16 +28,16 @@ ItemGoMarkovEquivalent* ItemGoMarkovOperator::fatherEquivalent() const
 
 ItemGoMarkovEquivalent* ItemGoMarkovOperator::rootEquivalent() const
 {
-    if (this->fatherEquivalent() != 0L)
+    if (this->fatherEquivalent() != nullptr)
     {
         ItemGoMarkovEquivalent *eq = this->fatherEquivalent();
-        while (eq->fatherEquivalent() != 0L)
+        while (eq->fatherEquivalent() != nullptr)
         {
             eq = eq->fatherEquivalent();
         }
         return eq;
     }
-    return 0L;
+    return nullptr;
 }
 
 void ItemGoMarkovOperator::setFatherEquivalent(ItemGoMarkovEquivalent* equivalent)
@@ -68,11 +68,11 @@ void ItemGoMarkovOperator::setFatherCommonCause2(ItemGoMarkovCommonCause2* commo
 void ItemGoMarkovOperator::move(QGraphicsSceneMouseEvent *event)
 {
     this->ItemGoOperator::move(event);
-    if (this->fatherEquivalent() != 0L)
+    if (this->fatherEquivalent() != nullptr)
     {
         this->fatherEquivalent()->updateBoundary();
     }
-    if (this->fatherCommonCause() != 0L)
+    if (this->fatherCommonCause() != nullptr)
     {
         this->fatherCommonCause()->updateBoundary();
     }
@@ -461,19 +461,19 @@ void ItemGoMarkovOperator::setModel(GoOperator *model)
         this->_outputSignal->clear();
         for (int i = 0; i < this->_inputArrows->size(); ++i)
         {
-            this->_inputArrows->at(i)->setParentItem(0L);
+            this->_inputArrows->at(i)->setParentItem(nullptr);
             delete this->_inputArrows->at(i);
         }
         this->_inputArrows->clear();
         for (int i = 0; i < this->_subInputArrows->size(); ++i)
         {
-            this->_subInputArrows->at(i)->setParentItem(0L);
+            this->_subInputArrows->at(i)->setParentItem(nullptr);
             delete this->_subInputArrows->at(i);
         }
         this->_subInputArrows->clear();
         for (int i = 0; i < this->_outputArrows->size(); ++i)
         {
-            this->_outputArrows->at(i)->setParentItem(0L);
+            this->_outputArrows->at(i)->setParentItem(nullptr);
             delete this->_outputArrows->at(i);
         }
         this->_outputArrows->clear();
@@ -492,7 +492,7 @@ void ItemGoMarkovOperator::setModel(GoOperator *model)
             arrow->setEnd(QPoint(x, y));
             this->_inputArrows->push_back(arrow);
             startY += 25.0;
-            this->_inputSignal->push_back(0L);
+            this->_inputSignal->push_back(nullptr);
         }
         number = this->model()->output()->number();
         startY = - (number - 1) * 25;
@@ -528,19 +528,19 @@ void ItemGoMarkovOperator::setModel(GoOperator *model)
         this->_outputSignal->clear();
         for (int i = 0; i < this->_inputArrows->size(); ++i)
         {
-            this->_inputArrows->at(i)->setParentItem(0L);
+            this->_inputArrows->at(i)->setParentItem(nullptr);
             delete this->_inputArrows->at(i);
         }
         this->_inputArrows->clear();
         for (int i = 0; i < this->_subInputArrows->size(); ++i)
         {
-            this->_subInputArrows->at(i)->setParentItem(0L);
+            this->_subInputArrows->at(i)->setParentItem(nullptr);
             delete this->_subInputArrows->at(i);
         }
         this->_subInputArrows->clear();
         for (int i = 0; i < this->_outputArrows->size(); ++i)
         {
-            this->_outputArrows->at(i)->setParentItem(0L);
+            this->_outputArrows->at(i)->setParentItem(nullptr);
             delete this->_outputArrows->at(i);
         }
         this->_outputArrows->clear();
@@ -550,7 +550,7 @@ void ItemGoMarkovOperator::setModel(GoOperator *model)
         arrow->setPos(-75, 0);
         arrow->setEnd(QPoint(50, 0));
         this->_inputArrows->push_back(arrow);
-        this->_inputSignal->push_back(0L);
+        this->_inputSignal->push_back(nullptr);
         arrow = new ItemArrow(this);
         arrow->setPos(25, 0);
         arrow->setEnd(QPoint(50, 0));
@@ -588,7 +588,7 @@ void ItemGoMarkovOperator::globalFeedbackExtend()
     {
         for (int i = 0; i < this->input()->size(); ++i)
         {
-            if (this->input()->at(i) != 0L)
+            if (this->input()->at(i) != nullptr)
             {
                 this->input()->at(i)->model()->setIsGlobalFeedback(true);
                 this->input()->at(i)->update();
@@ -604,7 +604,7 @@ void ItemGoMarkovOperator::globalFeedbackExtend()
         }
         for (int i = 0; i < this->subInput()->size(); ++i)
         {
-            if (this->subInput()->at(i) != 0L)
+            if (this->subInput()->at(i) != nullptr)
             {
                 this->subInput()->at(i)->model()->setIsGlobalFeedback(true);
                 this->subInput()->at(i)->update();
@@ -692,7 +692,7 @@ void ItemGoMarkovOperator::updateArrowColor()
     {
         for (int i = 0; i < this->_inputSignal->size(); ++i)
         {
-            if (this->_inputSignal->at(i) == 0L)
+            if (this->_inputSignal->at(i) == nullptr)
             {
                 this->_inputArrows->at(i)->setColor(QColor(127, 0, 0, 127));
             }
@@ -703,7 +703,7 @@ void ItemGoMarkovOperator::updateArrowColor()
         }
         for (int i = 0; i < this->_subInputSignal->size(); ++i)
         {
-            if (this->_subInputSignal->at(i) == 0L)
+            if (this->_subInputSignal->at(i) == nullptr)
             {
                 this->_subInputArrows->at(i)->setColor(QColor(127, 0, 0, 127));
             }
@@ -721,7 +721,7 @@ void ItemGoMarkovOperator::updateArrowColor()
     {
         for (int i = 0; i < this->_inputSignal->size(); ++i)
         {
-            if (this->_inputSignal->at(i) == 0L)
+            if (this->_inputSignal->at(i) == nullptr)
             {
                 this->_inputArrows->at(i)->setColor(Qt::darkRed);
             }
@@ -732,7 +732,7 @@ void ItemGoMarkovOperator::updateArrowColor()
         }
         for (int i = 0; i < this->_subInputSignal->size(); ++i)
         {
-            if (this->_subInputSignal->at(i) == 0L)
+            if (this->_subInputSignal->at(i) == nullptr)
             {
                 this->_subInputArrows->at(i)->setColor(Qt::darkRed);
             }

@@ -18,14 +18,14 @@ ToolGoMarkovCommonCause2::ToolGoMarkovCommonCause2(SceneGo *sceneGo) : ToolGoAbs
 {
     this->_status = Status_Selecting;
     this->_operatorList = new QVector<ItemGoMarkovOperator*>();
-    this->_commonItem = 0L;
+    this->_commonItem = nullptr;
 }
 
 ToolGoMarkovCommonCause2::~ToolGoMarkovCommonCause2()
 {
     if (this->_status != Status_Finished)
     {
-        if (this->_commonItem != 0L)
+        if (this->_commonItem != nullptr)
         {
             ItemGoFactory::deleteItem(this->_commonItem);
         }
@@ -131,7 +131,7 @@ QVector<ItemGoMarkovOperator*>* ToolGoMarkovCommonCause2::operatorList() const
 
 void ToolGoMarkovCommonCause2::addOperator(ItemGoMarkovOperator* op)
 {
-    if (op->fatherCommonCause2() != 0L)
+    if (op->fatherCommonCause2() != nullptr)
     {
         return;
     }

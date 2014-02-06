@@ -8,13 +8,13 @@
 ToolGoPointer::ToolGoPointer(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
 {
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
-    this->_item = 0L;
+    this->_item = nullptr;
     this->setMoving(false);
 }
 
 void ToolGoPointer::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    this->_item = 0L;
+    this->_item = nullptr;
     QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos());
     setMoving(false);
     for (int i = 0; i < items.size(); ++i)
@@ -78,10 +78,10 @@ void ToolGoPointer::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Delete)
     {
-        if (this->_item != 0L)
+        if (this->_item != nullptr)
         {
             ItemGoFactory::deleteItem(this->_item);
-            this->_item = 0L;
+            this->_item = nullptr;
         }
     }
 }

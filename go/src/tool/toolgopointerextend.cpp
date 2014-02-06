@@ -20,8 +20,8 @@
 
 ToolGoPointerExtend::ToolGoPointerExtend(SceneGo *sceneGo) : ToolGoAbstract(sceneGo)
 {
-    this->_item = 0L;
-    this->_signal = 0L;
+    this->_item = nullptr;
+    this->_signal = nullptr;
     this->_status = Status_Null;
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
     this->graphicsView()->setCursor(Qt::ArrowCursor);
@@ -30,7 +30,7 @@ ToolGoPointerExtend::ToolGoPointerExtend(SceneGo *sceneGo) : ToolGoAbstract(scen
 ToolGoPointerExtend::~ToolGoPointerExtend()
 {
     this->ToolGoAbstract::~ToolGoAbstract();
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(QColor(Qt::black));
     }
@@ -100,10 +100,10 @@ void ToolGoPointerExtend::keyReleaseEvent(QKeyEvent *event)
     case Status_Null:
         if (event->key() == Qt::Key_Delete)
         {
-            if (this->_item != 0L)
+            if (this->_item != nullptr)
             {
                 ItemGoFactory::deleteItem(this->_item);
-                this->_item = 0L;
+                this->_item = nullptr;
             }
         }
         this->sceneGo()->viewGo()->editor()->setModified(true);
@@ -170,7 +170,7 @@ bool ToolGoPointerExtend::mousePressStatusNullSignal(QGraphicsSceneMouseEvent *e
 
 bool ToolGoPointerExtend::mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(QColor(Qt::black));
     }
@@ -199,7 +199,7 @@ bool ToolGoPointerExtend::mousePressStatusNullSignalAdjust(QGraphicsSceneMouseEv
 
 bool ToolGoPointerExtend::mousePressStatusNullItem(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(Qt::black);
     }
@@ -337,11 +337,11 @@ bool ToolGoPointerExtend::mouseMoveStatusNullScene(QGraphicsSceneMouseEvent *eve
 
 void ToolGoPointerExtend::mouseReleaseStatusNull(QGraphicsSceneMouseEvent *event)
 {
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(QColor(Qt::black));
     }
-    this->_item = 0L;
+    this->_item = nullptr;
     QList<QGraphicsItem*> items = this->graphicsScene()->items(event->scenePos());
     for (int i = 0; i < items.size(); ++i)
     {
@@ -384,11 +384,11 @@ void ToolGoPointerExtend::mouseReleaseStatusSceneMoving(QGraphicsSceneMouseEvent
 {
     Q_UNUSED(event);
     this->_status = Status_Null;
-    if (this->_item != 0L)
+    if (this->_item != nullptr)
     {
         this->_item->setColor(QColor(Qt::black));
     }
-    this->_item = 0L;
+    this->_item = nullptr;
     ItemGoFactory::sendSelectionMessage(this->sceneGo(), this->_item);
     this->graphicsView()->setDragMode(QGraphicsView::NoDrag);
 }
@@ -412,7 +412,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
             GoOperator *model = op->model();
             for (int j = 0; j < model->input()->number(); ++j)
             {
-                if (op->input()->at(j) != 0L)
+                if (op->input()->at(j) != nullptr)
                 {
                     continue;
                 }
@@ -440,7 +440,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
             }
             for (int j = 0; j < model->subInput()->number(); ++j)
             {
-                if (op->subInput()->at(j) != 0L)
+                if (op->subInput()->at(j) != nullptr)
                 {
                     continue;
                 }
@@ -476,7 +476,7 @@ void ToolGoPointerExtend::mouseReleaseStatusSignalConnecting(QGraphicsSceneMouse
         ItemGoFactory::sendSelectionMessage(this->sceneGo(), this->_signal);
         this->sceneGo()->viewGo()->editor()->setModified(true);
     }
-    this->_signal = 0L;
+    this->_signal = nullptr;
     this->graphicsView()->setCursor(Qt::ArrowCursor);
     this->_status = Status_Null;
 }

@@ -27,7 +27,7 @@ ItemGoSignal* ItemGoFactory::produceSignal()
 
 void ItemGoFactory::deleteItem(ItemDrawable *item)
 {
-    if (item == 0L)
+    if (item == nullptr)
     {
         return;
     }
@@ -42,15 +42,15 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
         if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
-            if (op->fatherEquivalent() != 0L)
+            if (op->fatherEquivalent() != nullptr)
             {
                 deleteItem(op->fatherEquivalent());
             }
-            if (op->fatherCommonCause() != 0L)
+            if (op->fatherCommonCause() != nullptr)
             {
                 deleteItem(op->fatherCommonCause());
             }
-            if (op->fatherCommonCause2() != 0L)
+            if (op->fatherCommonCause2() != nullptr)
             {
                 deleteItem(op->fatherCommonCause2());
             }
@@ -63,7 +63,7 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
     else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
     {
         ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
-        if (eq->fatherEquivalent() != 0L)
+        if (eq->fatherEquivalent() != nullptr)
         {
             deleteItem(eq->fatherEquivalent());
         }
@@ -73,7 +73,7 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
         ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
         for (int i = 0; i < common->operatorItems()->size(); ++i)
         {
-            common->operatorItems()->at(i)->setFatherCommonCause(0L);
+            common->operatorItems()->at(i)->setFatherCommonCause(nullptr);
         }
     }
     else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2)
@@ -81,7 +81,7 @@ void ItemGoFactory::deleteItem(ItemDrawable *item)
         ItemGoMarkovCommonCause2 *common = (ItemGoMarkovCommonCause2*)item;
         for (int i = 0; i < common->operatorItems()->size(); ++i)
         {
-            common->operatorItems()->at(i)->setFatherCommonCause2(0L);
+            common->operatorItems()->at(i)->setFatherCommonCause2(nullptr);
         }
     }
     delete item;
@@ -105,22 +105,22 @@ void ItemGoFactory::deleteItems(QList<ItemDrawable*> items)
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
             selectedSignal.push_back((ItemGoSignal*)items[i]);
-            items[i] = 0L;
+            items[i] = nullptr;
         }
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            items[i] = 0L;
+            items[i] = nullptr;
         }
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
-            items[i] = 0L;
+            items[i] = nullptr;
         }
         else if (type == DefinationEditorSelectionType::EDITOR_SELECTION_GO_TEXT)
         {
         }
         else
         {
-            items[i] = 0L;
+            items[i] = nullptr;
         }
     }
     qSort(allSignal.begin(), allSignal.end());

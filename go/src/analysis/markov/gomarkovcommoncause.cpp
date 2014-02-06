@@ -95,7 +95,7 @@ GoMarkovCommonCause* GoMarkovCommonCause::copy() const
     }
     for (int i = 0; i < this->_operators->size(); ++i)
     {
-        common->_operators->push_back(0L);
+        common->_operators->push_back(nullptr);
     }
     common->_breakdownTotal = this->_breakdownTotal;
     common->_breakdownIndividual = this->_breakdownIndividual;

@@ -17,7 +17,7 @@
 
 ParameterGoOperator::ParameterGoOperator(QWidget *parent) : ParameterAbstract(parent)
 {
-    this->_spinBoxProbability0 = 0L;
+    this->_spinBoxProbability0 = nullptr;
 }
 
 void ParameterGoOperator::bindItem(void *item)
@@ -69,7 +69,7 @@ void ParameterGoOperator::bindItem(void *item)
 
 void ParameterGoOperator::addIDParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -85,7 +85,7 @@ void ParameterGoOperator::addIDParameter()
 
 void ParameterGoOperator::addTypeParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -96,7 +96,7 @@ void ParameterGoOperator::addTypeParameter()
 
 void ParameterGoOperator::addNameParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -110,7 +110,7 @@ void ParameterGoOperator::addNameParameter()
 
 void ParameterGoOperator::addIsDrawNameParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -124,7 +124,7 @@ void ParameterGoOperator::addIsDrawNameParameter()
 
 void ParameterGoOperator::addOperatorParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         this->addFlipParameter();
         this->addIDParameter();
@@ -158,7 +158,7 @@ void ParameterGoOperator::setItemIsDrawName(bool value)
 
 void ParameterGoOperator::addFlipParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         QCheckBox *checkBox;
@@ -195,7 +195,7 @@ void ParameterGoOperator::setItemVerticalFlip(bool value)
 
 void ParameterGoOperator::addProbability0Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -219,7 +219,7 @@ void ParameterGoOperator::setItemProbability0(double value)
 
 void ParameterGoOperator::addProbability12Parameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
@@ -260,7 +260,7 @@ void ParameterGoOperator::setItemProbability2(double value)
 
 void ParameterGoOperator::addProbabilityMultipleParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         this->_tableWidget->insertRow(this->_tableWidget->rowCount());
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Probabilities"), this));
@@ -299,7 +299,7 @@ void ParameterGoOperator::setItemMultipleProbability()
 
 void ParameterGoOperator::addOperator9XYParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         if (item->model()->parameter()->number() == 0)
@@ -343,7 +343,7 @@ void ParameterGoOperator::setItem9Y(int value)
 
 void ParameterGoOperator::addOperator11KParameter()
 {
-    if (0L != this->_item)
+    if (nullptr != this->_item)
     {
         ItemGoOperator *item = (ItemGoOperator*)this->_item;
         if (item->model()->parameter()->number() == 0)

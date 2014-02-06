@@ -11,7 +11,7 @@
 
 ParameterAbstract* ParameterFactory::produce(int type)
 {
-    ParameterAbstract* parameter = 0L;
+    ParameterAbstract* parameter = nullptr;
     switch (type)
     {
     case DefinationEditorSelectionType::EDITOR_SELECTION_GO_OPERATOR:
@@ -41,7 +41,7 @@ ParameterAbstract* ParameterFactory::produce(int type)
     default:
         break;
     }
-    if (parameter == 0L)
+    if (parameter == nullptr)
     {
         parameter = new ParameterAbstract();
     }

@@ -3,7 +3,7 @@
 
 ToolboxAbstract::ToolboxAbstract(QWidget *parent) : QWidget(parent)
 {
-    this->_selectedTool = 0L;
+    this->_selectedTool = nullptr;
 }
 
 ToolboxAbstract::~ToolboxAbstract()
@@ -13,7 +13,7 @@ ToolboxAbstract::~ToolboxAbstract()
 
 void ToolboxAbstract::setSelectedTool(QPushButton *tool)
 {
-    if (this->_selectedTool != 0L)
+    if (this->_selectedTool != nullptr)
     {
         this->_selectedTool->setEnabled(true);
     }
