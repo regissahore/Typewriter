@@ -1,5 +1,6 @@
 #ifndef GOMARKOVGRAPH_H
 #define GOMARKOVGRAPH_H
+#include <memory>
 #include "GoGraph.h"
 #include "DoubleVector.h"
 
@@ -19,12 +20,14 @@ public:
     QVector<GoMarkovCommonCause*> getCommonCause() const;
     void addCommonCause(GoMarkovCommonCause *commonCause);
     void calcAccumulativeProbability(double time);
-    GoMarkovChartData* calcAccumulativeProbability(double totalTime, int count);
+    std::shared_ptr<GoMarkovChartData> calcAccumulativeProbability(double totalTime, int count);
     GoMarkovStatus calcAccumulativeProbability(double time, QString id, double delta, GoMarkovOperator* stopOperator);
     int timeProcess() const;
     int operatorProcess() const;
     int totalOperatorNum() const;
     QString currentOperatorName() const;
+    virtual GoPathSetSetSet findPath(int order) override;
+    virtual GoPathSetSetSet findCut(int order) override;
     bool saveAsHTML(const QString filePath);
     bool saveAsHTML(const QString filePath, GoPathSetSetSet path);
 
@@ -36,8 +39,6 @@ protected:
     QVector<GoMarkovCommonCause*> _commonCause;
     virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u) override;
     virtual QVector<QVector<Output> > getAncestorList(GoOperator *op, int outputIndex, int signalIndex) override;
-    virtual GoPathSetSetSet findPath(int order) override;
-    virtual GoPathSetSetSet findCut(int order) override;
     void findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order);
     void findCutDfs(QMap<int, QVector<DoubleVector>* > &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order);
 };

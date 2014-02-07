@@ -272,9 +272,9 @@ void SceneGo::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseReleaseEvent(event);
 }
 
-GoGraph* SceneGo::generatorGoGraph()
+shared_ptr<GoGraph> SceneGo::generatorGoGraph()
 {
-    GoGraph *graph = new GoGraph();
+    shared_ptr<GoGraph> graph(new GoGraph());
     graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
@@ -335,7 +335,7 @@ GoGraph* SceneGo::generatorGoGraph()
 
 void SceneGo::analysisProbability(const QString filePath)
 {
-    GoGraph *graph = this->generatorGoGraph();
+    shared_ptr<GoGraph> graph = this->generatorGoGraph();
     graph->calcAccumulativeProbability();
     if (graph->getErrorMessage() == "")
     {
@@ -347,19 +347,18 @@ void SceneGo::analysisProbability(const QString filePath)
     else
     {
         QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
-    }
-    delete graph;
+    }\
 }
 
 void SceneGo::analysisPath(const QString filePath)
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
     dialog->setWindowTitle(QObject::tr("Set order"));
     dialog->setText(QObject::tr("Input path order: "));
     dialog->integerInput()->setMinimum(1);
     if (dialog->exec() == QDialog::Accepted)
     {
-        GoGraph *graph = this->generatorGoGraph();
+        shared_ptr<GoGraph> graph = this->generatorGoGraph();
         GoPathSetSetSet path = graph->findPath(dialog->integerInput()->value());
         path = graph->findPath(dialog->integerInput()->value());
         if (graph->getErrorMessage() == "")
@@ -373,20 +372,18 @@ void SceneGo::analysisPath(const QString filePath)
         {
             QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
-        delete graph;
     }
-    delete dialog;
 }
 
 void SceneGo::analysisCut(const QString filePath)
 {
-    DialogIntegerInput *dialog = new DialogIntegerInput();
+    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
     dialog->setWindowTitle(QObject::tr("Set order"));
     dialog->setText(QObject::tr("Input cut order: "));
     dialog->integerInput()->setMinimum(1);
     if (dialog->exec() == QDialog::Accepted)
     {
-        GoGraph *graph = this->generatorGoGraph();
+        shared_ptr<GoGraph> graph = this->generatorGoGraph();
         GoPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
@@ -399,9 +396,7 @@ void SceneGo::analysisCut(const QString filePath)
         {
             QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
         }
-        delete graph;
     }
-    delete dialog;
 }
 
 void SceneGo::extendEdge(float x, float y)

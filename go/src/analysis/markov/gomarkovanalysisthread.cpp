@@ -1,5 +1,6 @@
 #include "GoMarkovAnalysisThread.h"
 #include "GoMarkovGraph.h"
+using namespace std;
 
 GoMarkovAnalysisThread::GoMarkovAnalysisThread()
 {
@@ -80,17 +81,17 @@ QString GoMarkovAnalysisThread::currentOperatorName() const
     return "";
 }
 
-GoMarkovGraph* GoMarkovAnalysisThread::graph() const
+shared_ptr<GoMarkovGraph> GoMarkovAnalysisThread::graph() const
 {
     return this->_graph;
 }
 
-void GoMarkovAnalysisThread::setGoMarkovGraph(GoMarkovGraph *graph)
+void GoMarkovAnalysisThread::setGoMarkovGraph(shared_ptr<GoMarkovGraph> graph)
 {
     this->_graph = graph;
 }
 
-GoMarkovChartData* GoMarkovAnalysisThread::analysisResult() const
+shared_ptr<GoMarkovChartData> GoMarkovAnalysisThread::analysisResult() const
 {
     return this->_chart;
 }

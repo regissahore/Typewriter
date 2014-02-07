@@ -1,6 +1,6 @@
 #ifndef DIALOGGOMARKOVANALYSISPROCESS_H
 #define DIALOGGOMARKOVANALYSISPROCESS_H
-
+#include <memory>
 #include <QDialog>
 
 class QTimer;
@@ -20,21 +20,21 @@ class DialogGoMarkovAnalysisProcess : public QDialog
 public:
     explicit DialogGoMarkovAnalysisProcess(QWidget *parent = 0);
     ~DialogGoMarkovAnalysisProcess();
-    void setMarkovGraph(GoMarkovGraph *graph);
+    void setMarkovGraph(std::shared_ptr<GoMarkovGraph> graph);
     void setTotalTime(const double value);
     void setTotalCount(const int value);
-    GoMarkovChartData* analysisResult() const;
+    std::shared_ptr<GoMarkovChartData> analysisResult() const;
     int exec();
 
 protected:
-    GoMarkovGraph *_graph;
-    GoMarkovChartData *_chart;
+    std::shared_ptr<GoMarkovGraph> _graph;
+    std::shared_ptr<GoMarkovChartData> _chart;
     double _totalTime;
     int _totalCount;
     int _timeCount;
     int _operatorNum;
-    QTimer *_timer;
-    GoMarkovAnalysisThread *_analysisThread;
+    std::shared_ptr<QTimer> _timer;
+    std::shared_ptr<GoMarkovAnalysisThread> _analysisThread;
 
 protected slots:
     void finishedEvent();

@@ -1,6 +1,5 @@
 #ifndef SCENEGO_H
 #define SCENEGO_H
-
 #include <memory>
 #include <QGraphicsScene>
 #include "DomItem.h"
@@ -21,14 +20,14 @@ public:
     void selectTool(int type);
     void bindMessage(MessageController *controller);
     void messageEvent(std::shared_ptr<Message> message);
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
-    virtual GoGraph* generatorGoGraph();
+    std::shared_ptr<GoGraph> generatorGoGraph();
     virtual void analysisProbability(const QString filePath);
-    void analysisPath(const QString filePath);
+    virtual void analysisPath(const QString filePath);
     virtual void analysisCut(const QString filePath);
     void extendEdge(float x, float y);
     ViewGo* viewGo() const;
+    void save(QDomDocument &document, QDomElement &root) override;
+    bool tryOpen(QDomElement &root) override;
 
 protected:
     ToolGoAbstract *_tool;

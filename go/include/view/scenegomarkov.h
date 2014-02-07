@@ -1,7 +1,9 @@
 #ifndef SCENEGOMARKOV_H
 #define SCENEGOMARKOV_H
+#include <memory>
 #include "SceneGo.h"
 
+class GoMarkovGraph;
 class ItemGoMarkovEquivalent;
 
 class SceneGoMarkov : public SceneGo
@@ -9,12 +11,13 @@ class SceneGoMarkov : public SceneGo
     Q_OBJECT
 public:
     SceneGoMarkov(QObject *parent = 0);
-    GoGraph* generatorGoGraph();
+    std::shared_ptr<GoMarkovGraph> generatorGoMarkovGraph();
     QList<ItemGoMarkovEquivalent *> getTopologyOrder(QList<ItemGoMarkovEquivalent *> equivalents);
-    void analysisProbability(const QString filePath);
-    void analysisCut(const QString filePath);
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
+    virtual void analysisProbability(const QString filePath) override;
+    virtual void analysisCut(const QString filePath) override;
+    virtual void analysisPath(const QString filePath) override;
+    void save(QDomDocument &document, QDomElement &root) override;
+    bool tryOpen(QDomElement &root) override;
 
 protected:
     double _analysisTotalTime;

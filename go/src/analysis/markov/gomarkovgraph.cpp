@@ -120,7 +120,7 @@ void GoMarkovGraph::calcAccumulativeProbability(double time)
     list.clear();
 }
 
-GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
+std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
     QTime time;
     time.start();
@@ -181,7 +181,7 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
         }
     }
 
-    GoMarkovChartData *data = new GoMarkovChartData();
+    shared_ptr<GoMarkovChartData> data(new GoMarkovChartData());
     for (int i = 0; i < sortedOperatorList.size(); ++i)
     {
         GoMarkovOperator *op = (GoMarkovOperator*)sortedOperatorList[i];
@@ -284,7 +284,6 @@ GoMarkovChartData *GoMarkovGraph::calcAccumulativeProbability(double totalTime, 
         this->calcAccumulativeProbability(time);
         if (this->getErrorMessage() != "")
         {
-            delete data;
             return nullptr;
         }
         for (int j = 0, index = 0; j < sortedOperatorList.size(); ++j)

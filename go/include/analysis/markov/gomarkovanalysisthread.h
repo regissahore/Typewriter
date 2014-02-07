@@ -1,5 +1,6 @@
 #ifndef GOMARKOVANALYSISTHREAD_H
 #define GOMARKOVANALYSISTHREAD_H
+#include <memory>
 #include <QThread>
 
 class GoMarkovGraph;
@@ -23,15 +24,15 @@ public:
     int operatorNum() const;
     int operatorProcess() const;
     QString currentOperatorName() const;
-    GoMarkovGraph* graph() const;
-    void setGoMarkovGraph(GoMarkovGraph *graph);
-    GoMarkovChartData* analysisResult() const;
+    std::shared_ptr<GoMarkovGraph> graph() const;
+    void setGoMarkovGraph(std::shared_ptr<GoMarkovGraph> graph);
+    std::shared_ptr<GoMarkovChartData> analysisResult() const;
 
 protected:
     double _totalTime;
     int _totalCount;
-    GoMarkovGraph *_graph;
-    GoMarkovChartData *_chart;
+    std::shared_ptr<GoMarkovGraph> _graph;
+    std::shared_ptr<GoMarkovChartData> _chart;
 };
 
 #endif // GOMARKOVANALYSISTHREAD_H
