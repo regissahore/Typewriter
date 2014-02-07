@@ -74,7 +74,7 @@ void ItemGoMarkovChart::setP(QVector<DoubleVector> P)
     this->_P.push_back(P[0].getValue(vectorIndex));
     for (int i = 1; i < P.size(); ++i)
     {
-        if (isinf(P[i].getValue(vectorIndex)) || isnan(P[i].getValue(vectorIndex)))
+        if (std::isinf(P[i].getValue(vectorIndex)) || std::isnan(P[i].getValue(vectorIndex)))
         {
             P[i].setValue(vectorIndex, 1.0);
         }
@@ -129,7 +129,7 @@ void ItemGoMarkovChart::setQ(QVector<DoubleVector> Q)
     this->_Q.push_back(Q[0].getValue(vectorIndex));
     for (int i = 1; i < Q.size(); ++i)
     {
-        if (isinf(Q[i].getValue(vectorIndex)) || isnan(Q[i].getValue(vectorIndex)))
+        if (std::isinf(Q[i].getValue(vectorIndex)) || std::isnan(Q[i].getValue(vectorIndex)))
         {
             Q[i].setValue(vectorIndex, 0.0);
         }
@@ -164,7 +164,7 @@ void ItemGoMarkovChart::setLambda(QVector<DoubleVector> lambda)
     this->_lambda.push_back(lambda[0].getValue(vectorIndex));
     for (int i = 1; i < lambda.size(); ++i)
     {
-        if (isinf(lambda[i].getValue(vectorIndex)) || isnan(lambda[i].getValue(vectorIndex)))
+        if (std::isinf(lambda[i].getValue(vectorIndex)) || std::isnan(lambda[i].getValue(vectorIndex)))
         {
             lambda[i].setValue(vectorIndex, 0.0);
         }
@@ -195,7 +195,7 @@ void ItemGoMarkovChart::setMu(QVector<DoubleVector> mu)
     this->_mu.push_back(mu[0].getValue(vectorIndex));
     for (int i = 1; i < mu.size(); ++i)
     {
-        if (isinf(mu[i].getValue(vectorIndex)) || isnan(mu[i].getValue(vectorIndex)))
+        if (std::isinf(mu[i].getValue(vectorIndex)) || std::isnan(mu[i].getValue(vectorIndex)))
         {
             mu[i].setValue(vectorIndex, 0.0);
         }
