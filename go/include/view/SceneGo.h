@@ -1,6 +1,6 @@
 #ifndef SCENEGO_H
 #define SCENEGO_H
-#include <memory>
+#include <QSharedPointer>
 #include <QGraphicsScene>
 #include "DomItem.h"
 #include "Messager.h"
@@ -19,8 +19,8 @@ public:
     ~SceneGo();
     void selectTool(int type);
     void bindMessage(MessageController *controller);
-    void messageEvent(std::shared_ptr<Message> message);
-    std::shared_ptr<GoGraph> generatorGoGraph();
+    void messageEvent(QSharedPointer<Message> message);
+    QSharedPointer<GoGraph> generatorGoGraph();
     virtual void analysisProbability(const QString filePath);
     virtual void analysisPath(const QString filePath);
     virtual void analysisCut(const QString filePath);

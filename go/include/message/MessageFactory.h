@@ -1,6 +1,6 @@
 #ifndef MESSAGEFACTORY_H
 #define MESSAGEFACTORY_H
-#include <memory>
+#include <QSharedPointer>
 #include <QList>
 #include "Message.h"
 
@@ -42,7 +42,7 @@ public:
         TYPE_OUTPUT_ERROR,
         TYPE_END
     };
-    static std::shared_ptr<Message> produce(int messageType);
+    static QSharedPointer<Message> produce(int messageType);
     static QList<int> getMessageTypeList();
     static QString getMessageTypeName(int messageType);
 

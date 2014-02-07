@@ -64,7 +64,7 @@ void Editor::currentChange(int index)
 {
     if (this->_editors->size() > 0)
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = (*this->_editors)[index]->type();
         this->sendMessage(message);
         for (int i = 0; i < this->_editors->size(); ++i)
@@ -81,7 +81,7 @@ void Editor::currentChange(int index)
     }
     else
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = EditorFactory::EDITOR_TYPE_NULL;
         this->sendMessage(message);
     }
@@ -114,7 +114,7 @@ void Editor::bindMessage(MessageController *controller)
     currentChange(this->_tabWidget->currentIndex());
 }
 
-void Editor::messageEvent(shared_ptr<Message> message)
+void Editor::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
     {

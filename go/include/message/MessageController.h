@@ -1,6 +1,6 @@
 #ifndef MESSAGECONTROLLER_H
 #define MESSAGECONTROLLER_H
-#include <memory>
+#include <QSharedPointer>
 #include <QMap>
 #include <QVector>
 #include <QString>
@@ -14,7 +14,7 @@ class MessageController
 public:
     MessageController();
     virtual ~MessageController();
-    void send(std::shared_ptr<Message> message);
+    void send(QSharedPointer<Message> message);
     void listen(int messageType, MessageListener *listener);
     void release(int messageType, MessageListener *listener);
 

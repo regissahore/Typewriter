@@ -1,6 +1,6 @@
 #ifndef TOOLBOXGO_H
 #define TOOLBOXGO_H
-#include <memory>
+#include <QSharedPointer>
 #include <QWidget>
 #include "ToolboxAbstract.h"
 
@@ -18,7 +18,7 @@ public:
     explicit ToolboxGo(QWidget *parent = 0);
     virtual ~ToolboxGo();
     void bindMessage(MessageController *controller);
-    void messageEvent(std::shared_ptr<Message> message);
+    void messageEvent(QSharedPointer<Message> message);
     
 private slots:
     void on_buttonPointer_clicked();

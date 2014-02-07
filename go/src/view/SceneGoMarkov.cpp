@@ -168,9 +168,9 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
     return flag;
 }
 
-std::shared_ptr<GoMarkovGraph> SceneGoMarkov::generatorGoMarkovGraph()
+QSharedPointer<GoMarkovGraph> SceneGoMarkov::generatorGoMarkovGraph()
 {
-    shared_ptr<GoMarkovGraph>graph(new GoMarkovGraph());
+    QSharedPointer<GoMarkovGraph>graph(new GoMarkovGraph());
     graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     QVector<ItemGoMarkovOperator*> operators;
@@ -380,47 +380,39 @@ QList<ItemGoMarkovEquivalent*> SceneGoMarkov::getTopologyOrder(QList<ItemGoMarko
 
 void SceneGoMarkov::analysisProbability(const QString filePath)
 {
-    shared_ptr<DialogGoMarkovPeriod> dialog(new DialogGoMarkovPeriod());
-    dialog->setTotalTime(this->_analysisTotalTime);
-    dialog->setCount(this->_analysisCount);
-    if (QDialog::Accepted == dialog->exec())
+    DialogGoMarkovPeriod dialog;
+    dialog.setTotalTime(this->_analysisTotalTime);
+    dialog.setCount(this->_analysisCount);
+    if (QDialog::Accepted == dialog.exec())
     {
-        shared_ptr<GoMarkovGraph> graph = this->generatorGoMarkovGraph();
-        double totalTime = dialog->totalTime();
-        int count = dialog->count();
+        QSharedPointer<GoMarkovGraph> graph = this->generatorGoMarkovGraph();
+        double totalTime = dialog.totalTime();
+        int count = dialog.count();
         this->_analysisTotalTime = totalTime;
         this->_analysisCount = count;
 
-        shared_ptr<DialogGoMarkovAnalysisProcess>processDialog(new DialogGoMarkovAnalysisProcess());
-        processDialog->setMarkovGraph(graph);
-        processDialog->setTotalTime(totalTime);
-        processDialog->setTotalCount(count);
-        if (QDialog::Accepted == processDialog->exec())
+        DialogGoMarkovAnalysisProcess processDialog;
+        processDialog.setMarkovGraph(graph);
+        processDialog.setTotalTime(totalTime);
+        processDialog.setTotalCount(count);
+        if (QDialog::Accepted == processDialog.exec())
         {
-            shared_ptr<GoMarkovChartData> data = processDialog->analysisResult();
+            QSharedPointer<GoMarkovChartData> data = processDialog.analysisResult();
             QVector<GoGraph::MessageRecord> messages = graph->messages();
             for (int i = 0; i < messages.size(); ++i)
             {
-                shared_ptr<Message> message = MessageFactory::produce(messages[i].type);
+                QSharedPointer<Message> message = MessageFactory::produce(messages[i].type);
                 message->paramString = messages[i].message;
                 this->sendMessage(message);
             }
-            if (data != nullptr)
+            if (!data.isNull())
             {
                 if (data->saveAsHTML(filePath + ".goc.html"))
                 {
-                    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+                    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                     message->paramString = filePath + ".goc.html";
                     this->sendMessage(message);
                 }
-                QImage image(this->width(), this->height(), QImage::Format_ARGB32);
-                QPainter painter(&image);
-                painter.setRenderHint(QPainter::Antialiasing, true);
-                painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
-                painter.setRenderHint(QPainter::SmoothPixmapTransform, true);
-                painter.setRenderHint(QPainter::TextAntialiasing, true);
-                this->render(&painter);
-                image.save(filePath + ".png");
             }
         }
     }
@@ -428,20 +420,20 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
 
 void SceneGoMarkov::analysisCut(const QString filePath)
 {
-    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
-    dialog->setWindowTitle(QObject::tr("Set order"));
-    dialog->setText(QObject::tr("Input cut order: "));
-    dialog->integerInput()->setMinimum(1);
-    dialog->integerInput()->setValue(this->_analysisCutOrder);
-    if (dialog->exec() == QDialog::Accepted)
+    DialogIntegerInput dialog;
+    dialog.setWindowTitle(QObject::tr("Set order"));
+    dialog.setText(QObject::tr("Input cut order: "));
+    dialog.integerInput()->setMinimum(1);
+    dialog.integerInput()->setValue(this->_analysisCutOrder);
+    if (dialog.exec() == QDialog::Accepted)
     {
-        shared_ptr<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
-        this->_analysisCutOrder = dialog->integerInput()->value();
-        GoPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
+        QSharedPointer<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
+        this->_analysisCutOrder = dialog.integerInput()->value();
+        GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }
@@ -454,20 +446,20 @@ void SceneGoMarkov::analysisCut(const QString filePath)
 
 void SceneGoMarkov::analysisPath(const QString filePath)
 {
-    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
-    dialog->setWindowTitle(QObject::tr("Set order"));
-    dialog->setText(QObject::tr("Input path order: "));
-    dialog->integerInput()->setMinimum(1);
-    dialog->integerInput()->setValue(this->_analysisCutOrder);
-    if (dialog->exec() == QDialog::Accepted)
+    DialogIntegerInput dialog;
+    dialog.setWindowTitle(QObject::tr("Set order"));
+    dialog.setText(QObject::tr("Input path order: "));
+    dialog.integerInput()->setMinimum(1);
+    dialog.integerInput()->setValue(this->_analysisCutOrder);
+    if (dialog.exec() == QDialog::Accepted)
     {
-        shared_ptr<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
-        this->_analysisCutOrder = dialog->integerInput()->value();
-        GoPathSetSetSet cut = graph->findPath(dialog->integerInput()->value());
+        QSharedPointer<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
+        this->_analysisCutOrder = dialog.integerInput()->value();
+        GoPathSetSetSet cut = graph->findPath(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", cut);
-            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->sendMessage(message);
         }

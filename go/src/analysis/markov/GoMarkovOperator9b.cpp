@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <qmath.h>
 #include "GoMarkovOperator9b.h"
 #include "GoInput.h"
@@ -6,6 +7,7 @@
 #include "GoSignal.h"
 #include "GoParameter.h"
 #include "GoMarkovStatus.h"
+using namespace std;
 
 GoMarkovOperator9B::GoMarkovOperator9B() : GoMarkovOperator9()
 {
@@ -42,7 +44,7 @@ void GoMarkovOperator9B::prepareNextCalculation(int count, double time)
     {
         DoubleVector lambdaS2 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
         DoubleVector muS2 = this->getPrevMarkovStatus(0)->frequencyRepair();
-        if (isinf(lambdaS2.getValue(0)) || isnan(lambdaS2.getValue(0)))
+        if (std::isinf(lambdaS2.getValue(0)) || std::isnan(lambdaS2.getValue(0)))
         {
             this->_lambdaS2Sum = this->_lambdaS2Sum + this->lambdaS2;
         }
@@ -51,7 +53,7 @@ void GoMarkovOperator9B::prepareNextCalculation(int count, double time)
             this->_lambdaS2Sum = this->_lambdaS2Sum + lambdaS2;
             this->lambdaS2 = this->_lambdaS2Sum / count;
         }
-        if (isinf(muS2.getValue(0)) || isnan(muS2.getValue(0)))
+        if (std::isinf(muS2.getValue(0)) || std::isnan(muS2.getValue(0)))
         {
             this->_muS2Sum = this->_muS2Sum + this->muS2;
         }

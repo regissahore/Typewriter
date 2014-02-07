@@ -4,9 +4,9 @@ using namespace std;
 
 int MessageFactory::_autoID = 0;
 
-shared_ptr<Message> MessageFactory::produce(int messageType)
+QSharedPointer<Message> MessageFactory::produce(int messageType)
 {
-    shared_ptr<Message> message = shared_ptr<Message>(new Message());
+    QSharedPointer<Message> message = QSharedPointer<Message>(new Message());
     message->setType(messageType);
     message->setId(_autoID++);
     return message;

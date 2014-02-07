@@ -28,7 +28,7 @@ void DockToolbox::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
 }
 
-void DockToolbox::messageEvent(shared_ptr<Message> message)
+void DockToolbox::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
     {

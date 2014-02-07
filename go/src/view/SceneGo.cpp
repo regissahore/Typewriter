@@ -60,7 +60,7 @@ void SceneGo::bindMessage(MessageController *controller)
     this->Messager::bindMessage(controller);
 }
 
-void SceneGo::messageEvent(shared_ptr<Message> message)
+void SceneGo::messageEvent(QSharedPointer<Message> message)
 {
     QKeyEvent *event = nullptr;
     switch (message->type())
@@ -272,9 +272,9 @@ void SceneGo::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseReleaseEvent(event);
 }
 
-shared_ptr<GoGraph> SceneGo::generatorGoGraph()
+QSharedPointer<GoGraph> SceneGo::generatorGoGraph()
 {
-    shared_ptr<GoGraph> graph(new GoGraph());
+    QSharedPointer<GoGraph> graph(new GoGraph());
     graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
@@ -335,36 +335,35 @@ shared_ptr<GoGraph> SceneGo::generatorGoGraph()
 
 void SceneGo::analysisProbability(const QString filePath)
 {
-    shared_ptr<GoGraph> graph = this->generatorGoGraph();
+    QSharedPointer<GoGraph> graph = this->generatorGoGraph();
     graph->calcAccumulativeProbability();
     if (graph->getErrorMessage() == "")
     {
         graph->saveAsHTML(filePath + ".html");
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
         message->paramString = filePath + ".html";
         this->sendMessage(message);
     }
     else
     {
         QMessageBox::information(0, tr("Error"), graph->getErrorMessage());
-    }\
+    }
 }
 
 void SceneGo::analysisPath(const QString filePath)
 {
-    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
-    dialog->setWindowTitle(QObject::tr("Set order"));
-    dialog->setText(QObject::tr("Input path order: "));
-    dialog->integerInput()->setMinimum(1);
-    if (dialog->exec() == QDialog::Accepted)
+    DialogIntegerInput dialog;
+    dialog.setWindowTitle(QObject::tr("Set order"));
+    dialog.setText(QObject::tr("Input path order: "));
+    dialog.integerInput()->setMinimum(1);
+    if (dialog.exec() == QDialog::Accepted)
     {
-        shared_ptr<GoGraph> graph = this->generatorGoGraph();
-        GoPathSetSetSet path = graph->findPath(dialog->integerInput()->value());
-        path = graph->findPath(dialog->integerInput()->value());
+        QSharedPointer<GoGraph> graph = this->generatorGoGraph();
+        GoPathSetSetSet path = graph->findPath(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", path);
-            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->sendMessage(message);
         }
@@ -377,18 +376,18 @@ void SceneGo::analysisPath(const QString filePath)
 
 void SceneGo::analysisCut(const QString filePath)
 {
-    shared_ptr<DialogIntegerInput> dialog(new DialogIntegerInput());
-    dialog->setWindowTitle(QObject::tr("Set order"));
-    dialog->setText(QObject::tr("Input cut order: "));
-    dialog->integerInput()->setMinimum(1);
-    if (dialog->exec() == QDialog::Accepted)
+    DialogIntegerInput dialog;
+    dialog.setWindowTitle(QObject::tr("Set order"));
+    dialog.setText(QObject::tr("Input cut order: "));
+    dialog.integerInput()->setMinimum(1);
+    if (dialog.exec() == QDialog::Accepted)
     {
-        shared_ptr<GoGraph> graph = this->generatorGoGraph();
-        GoPathSetSetSet cut = graph->findCut(dialog->integerInput()->value());
+        QSharedPointer<GoGraph> graph = this->generatorGoGraph();
+        GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
-            shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+            QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
             this->sendMessage(message);
         }

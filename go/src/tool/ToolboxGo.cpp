@@ -23,7 +23,7 @@ void ToolboxGo::bindMessage(MessageController *controller)
     controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
 }
 
-void ToolboxGo::messageEvent(shared_ptr<Message> message)
+void ToolboxGo::messageEvent(QSharedPointer<Message> message)
 {
     if (message->type() == MessageFactory::TYPE_TOOL_SELECTION)
     {
@@ -95,84 +95,84 @@ void ToolboxGo::messageEvent(shared_ptr<Message> message)
 
 void ToolboxGo::on_buttonPointer_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonSelect_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_COMMON_SELECT;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonText_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_TEXT;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator1_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_1;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator2_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_2;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator3_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_3;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator5_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_5;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator6_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_6;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator7_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_7;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator9_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_9;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator10_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_10;
     this->sendMessage(message);
 }
 
 void ToolboxGo::on_buttonOperator11_clicked()
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_OPERATOR_11;
     this->sendMessage(message);
 }

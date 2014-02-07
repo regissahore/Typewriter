@@ -1,6 +1,6 @@
 #ifndef VIEWGO_H
 #define VIEWGO_H
-#include <memory>
+#include <QSharedPointer>
 #include <QGraphicsView>
 #include "GraphicsView.h"
 #include "SceneGo.h"
@@ -16,7 +16,7 @@ public:
     explicit ViewGo(QWidget *parent = 0);
     ~ViewGo();
     void bindMessage(MessageController *controller);
-    void messageEvent(std::shared_ptr<Message> message);
+    void messageEvent(QSharedPointer<Message> message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     EditorGo* editor() const;

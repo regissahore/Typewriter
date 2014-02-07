@@ -73,7 +73,7 @@ void ToolGoMarkovCommonCause::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     }
     else
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
         this->sceneGo()->sendMessage(message);
     }
@@ -83,7 +83,7 @@ void ToolGoMarkovCommonCause::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_POINTER_EXTEND;
         this->sceneGo()->sendMessage(message);
     }
@@ -124,7 +124,7 @@ void ToolGoMarkovCommonCause::addCommonCause()
         common->updateBoundary();
         this->graphicsScene()->addItem(common);
         this->sceneGo()->viewGo()->editor()->setModified(true);
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(common);
         this->sceneGo()->sendMessage(message);
     }

@@ -1,6 +1,6 @@
 #ifndef SCENEGOMARKOV_H
 #define SCENEGOMARKOV_H
-#include <memory>
+#include <QSharedPointer>
 #include "SceneGo.h"
 
 class GoMarkovGraph;
@@ -11,7 +11,7 @@ class SceneGoMarkov : public SceneGo
     Q_OBJECT
 public:
     SceneGoMarkov(QObject *parent = 0);
-    std::shared_ptr<GoMarkovGraph> generatorGoMarkovGraph();
+    QSharedPointer<GoMarkovGraph> generatorGoMarkovGraph();
     QList<ItemGoMarkovEquivalent *> getTopologyOrder(QList<ItemGoMarkovEquivalent *> equivalents);
     virtual void analysisProbability(const QString filePath) override;
     virtual void analysisCut(const QString filePath) override;

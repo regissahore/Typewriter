@@ -11,7 +11,7 @@ void MessageCreator::setMessageController(MessageController *messageController)
     this->_messageController = messageController;
 }
 
-void MessageCreator::sendMessage(shared_ptr<Message> message)
+void MessageCreator::sendMessage(QSharedPointer<Message> message)
 {
     if (this->_messageController != nullptr && message != nullptr)
     {

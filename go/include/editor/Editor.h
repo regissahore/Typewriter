@@ -1,6 +1,6 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-#include <memory>
+#include <QSharedPointer>
 #include <QVector>
 #include <QWidget>
 #include <QTabWidget>
@@ -18,7 +18,7 @@ public:
     bool trySaveAll();
     bool tryCloseAll();
     void bindMessage(MessageController *controller);
-    void messageEvent(std::shared_ptr<Message> message);
+    void messageEvent(QSharedPointer<Message> message);
 
 protected:
     QTabWidget *_tabWidget;

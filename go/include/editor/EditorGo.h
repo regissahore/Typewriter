@@ -16,7 +16,7 @@ class EditorGo : public EditorAbstract
 public:
     explicit EditorGo(QWidget *parent = 0);
     void bindMessage(MessageController *controller);
-    void messageEvent(shared_ptr<Message> message);
+    void messageEvent(QSharedPointer<Message> message);
     bool save();
     bool tryOpen(const QString path);
     void activate();

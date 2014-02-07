@@ -1,6 +1,6 @@
 #ifndef GOMARKOVGRAPH_H
 #define GOMARKOVGRAPH_H
-#include <memory>
+#include <QSharedPointer>
 #include "GoGraph.h"
 #include "DoubleVector.h"
 
@@ -20,7 +20,7 @@ public:
     QVector<GoMarkovCommonCause*> getCommonCause() const;
     void addCommonCause(GoMarkovCommonCause *commonCause);
     void calcAccumulativeProbability(double time);
-    std::shared_ptr<GoMarkovChartData> calcAccumulativeProbability(double totalTime, int count);
+    QSharedPointer<GoMarkovChartData> calcAccumulativeProbability(double totalTime, int count);
     GoMarkovStatus calcAccumulativeProbability(double time, QString id, double delta, GoMarkovOperator* stopOperator);
     int timeProcess() const;
     int operatorProcess() const;

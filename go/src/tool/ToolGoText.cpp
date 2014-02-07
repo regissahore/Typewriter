@@ -42,7 +42,7 @@ void ToolGoText::activate(QGraphicsSceneMouseEvent *event)
     {
         delete this->_item;
         this->_item = nullptr;
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGo()->sendMessage(message);
     }
@@ -69,14 +69,14 @@ void ToolGoText::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     if (event->button() == Qt::LeftButton)
     {
         this->sceneGo()->viewGo()->editor()->setModified(true);
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_item);
         this->sceneGo()->sendMessage(message);
         this->activate(event);
     }
     else if (event->button() == Qt::RightButton)
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGo()->sendMessage(message);
     }
@@ -86,7 +86,7 @@ void ToolGoText::keyReleaseEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Escape)
     {
-        shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
+        QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
         this->sceneGo()->sendMessage(message);
     }

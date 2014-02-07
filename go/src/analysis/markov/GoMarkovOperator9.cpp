@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <qmath.h>
 #include "GoMarkovOperator9.h"
 #include "GoInput.h"
@@ -9,6 +10,7 @@
 #include "RungeKuttaBreakdown2.h"
 #include "RungeKuttaBreakdown3.h"
 #include "RungeKuttaBreakdown4.h"
+using namespace std;
 
 GoMarkovOperator9::GoMarkovOperator9() : GoMarkovOperator()
 {
@@ -317,7 +319,7 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
     {
         DoubleVector lambdaS1 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
         DoubleVector muS1 = this->getPrevMarkovStatus(0)->frequencyRepair();
-        if (isinf(lambdaS1.getValue(0)) || isnan(lambdaS1.getValue(0)))
+        if (std::isinf(lambdaS1.getValue(0)) || std::isnan(lambdaS1.getValue(0)))
         {
             this->_lambdaS1Sum = this->_lambdaS1Sum + this->lambdaS1;
         }
@@ -326,7 +328,7 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
             this->_lambdaS1Sum = this->_lambdaS1Sum + lambdaS1;
             this->lambdaS1 = this->_lambdaS1Sum / count;
         }
-        if (isinf(muS1.getValue(0)) || isnan(muS1.getValue(0)))
+        if (std::isinf(muS1.getValue(0)) || std::isnan(muS1.getValue(0)))
         {
             this->_muS1Sum = this->_muS1Sum + this->muS1;
         }

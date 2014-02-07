@@ -19,7 +19,7 @@ MessageController::~MessageController()
     this->_listeners->clear();
 }
 
-void MessageController::send(shared_ptr<Message> message)
+void MessageController::send(QSharedPointer<Message> message)
 {
     QMap<int, int>::iterator it = this->_messages->find(message->type());
     if (it != this->_messages->end())

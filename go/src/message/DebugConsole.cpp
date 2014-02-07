@@ -24,7 +24,7 @@ void DebugConsole::bindMessage(MessageController *controller)
     messageTypes.clear();
 }
 
-void DebugConsole::messageEvent(shared_ptr<Message> message)
+void DebugConsole::messageEvent(QSharedPointer<Message> message)
 {
     this->_textEdit->append(QObject::tr("[%1] ").arg(message->id()) + MessageFactory::getMessageTypeName(message->type()) + QObject::tr(" : %1 ").arg(message->paramInt) + message->paramString);
 }

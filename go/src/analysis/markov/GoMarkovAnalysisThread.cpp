@@ -4,13 +4,11 @@ using namespace std;
 
 GoMarkovAnalysisThread::GoMarkovAnalysisThread()
 {
-    this->_graph = nullptr;
-    this->_chart = nullptr;
 }
 
 void GoMarkovAnalysisThread::run()
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         this->_chart = this->graph()->calcAccumulativeProbability(this->totalTime(), this->totalCount());
     }
@@ -28,7 +26,7 @@ void GoMarkovAnalysisThread::setTotalTime(const double value)
 
 double GoMarkovAnalysisThread::currentTime() const
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         return this->_totalTime / this->_totalCount * this->graph()->timeProcess();
     }
@@ -47,7 +45,7 @@ void GoMarkovAnalysisThread::setTotalCount(const int value)
 
 int GoMarkovAnalysisThread::currentCount() const
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         return this->graph()->timeProcess();
     }
@@ -56,7 +54,7 @@ int GoMarkovAnalysisThread::currentCount() const
 
 int GoMarkovAnalysisThread::operatorNum() const
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         return this->graph()->totalOperatorNum();
     }
@@ -65,7 +63,7 @@ int GoMarkovAnalysisThread::operatorNum() const
 
 int GoMarkovAnalysisThread::operatorProcess() const
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         return this->graph()->operatorProcess();
     }
@@ -74,24 +72,24 @@ int GoMarkovAnalysisThread::operatorProcess() const
 
 QString GoMarkovAnalysisThread::currentOperatorName() const
 {
-    if (this->graph() != nullptr)
+    if (!this->graph().isNull())
     {
         return this->graph()->currentOperatorName();
     }
     return "";
 }
 
-shared_ptr<GoMarkovGraph> GoMarkovAnalysisThread::graph() const
+QSharedPointer<GoMarkovGraph> GoMarkovAnalysisThread::graph() const
 {
     return this->_graph;
 }
 
-void GoMarkovAnalysisThread::setGoMarkovGraph(shared_ptr<GoMarkovGraph> graph)
+void GoMarkovAnalysisThread::setGoMarkovGraph(QSharedPointer<GoMarkovGraph> graph)
 {
     this->_graph = graph;
 }
 
-shared_ptr<GoMarkovChartData> GoMarkovAnalysisThread::analysisResult() const
+QSharedPointer<GoMarkovChartData> GoMarkovAnalysisThread::analysisResult() const
 {
     return this->_chart;
 }

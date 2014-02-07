@@ -25,7 +25,7 @@ SceneGoMarkovChart::~SceneGoMarkovChart()
 
 void SceneGoMarkovChart::activate(MessageController *controller)
 {
-    shared_ptr<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
+    QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(this->_chartItem);
     controller->send(message);
 }

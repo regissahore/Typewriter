@@ -120,7 +120,7 @@ void GoMarkovGraph::calcAccumulativeProbability(double time)
     list.clear();
 }
 
-std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
+QSharedPointer<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(double totalTime, int count)
 {
     QTime time;
     time.start();
@@ -148,7 +148,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
     }
     if (isOperatorError)
     {
-        return nullptr;
+        return QSharedPointer<GoMarkovChartData>();
     }
 
     this->_timeProcess = 0;
@@ -181,7 +181,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
         }
     }
 
-    shared_ptr<GoMarkovChartData> data(new GoMarkovChartData());
+    QSharedPointer<GoMarkovChartData> data(new GoMarkovChartData());
     for (int i = 0; i < sortedOperatorList.size(); ++i)
     {
         GoMarkovOperator *op = (GoMarkovOperator*)sortedOperatorList[i];
@@ -258,7 +258,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
         this->_timeProcess = i;
         double time = i * totalTime / (count - 1);
         data->times.push_back(time);
-        // Record initial value of lamda.
+
         for (int j = 0; j < list.size(); ++j)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];
@@ -271,7 +271,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];
             lamdas.push_back(op->markovStatus()->frequencyBreakdown());
         }
-        // Calculate without common cause.
+
         for (int j = 0; j < this->_commonCause.size(); ++j)
         {
             for (int k = 0; k < this->_commonCause[j]->operators()->size(); ++k)
@@ -284,7 +284,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
         this->calcAccumulativeProbability(time);
         if (this->getErrorMessage() != "")
         {
-            return nullptr;
+            return QSharedPointer<GoMarkovChartData>();
         }
         for (int j = 0, index = 0; j < sortedOperatorList.size(); ++j)
         {
@@ -297,7 +297,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
                 data->mus[index++].push_back(op->markovOutputStatus()->at(k)->frequencyRepair());
             }
         }
-        // Fixed the error caused by common cause.
+
         for (int j = 0; j < this->_commonCause.size(); ++j)
         {
             QVector<DoubleVector> r00;
@@ -344,7 +344,7 @@ std::shared_ptr<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(do
                 }
             }
         }
-        // Restore the lamda value.
+
         for (int j = 0; j < list.size(); ++j)
         {
             GoMarkovOperator *op = (GoMarkovOperator*)list[j];

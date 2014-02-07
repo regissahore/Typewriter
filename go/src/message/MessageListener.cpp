@@ -34,7 +34,7 @@ void MessageListener::addListenedMessage(int messageType)
     this->_messageListened->push_back(messageType);
 }
 
-void MessageListener::messageEvent(shared_ptr<Message> message)
+void MessageListener::messageEvent(QSharedPointer<Message> message)
 {
     Q_UNUSED(message);
 }

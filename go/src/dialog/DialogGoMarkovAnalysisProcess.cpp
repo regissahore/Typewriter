@@ -12,8 +12,8 @@ DialogGoMarkovAnalysisProcess::DialogGoMarkovAnalysisProcess(QWidget *parent) :
 {
     ui->setupUi(this);
     this->_timeCount = 0;
-    this->_graph = 0;
-    this->_analysisThread = shared_ptr<GoMarkovAnalysisThread>(new GoMarkovAnalysisThread());
+    this->_timer = nullptr;
+    this->_analysisThread = new GoMarkovAnalysisThread();
 }
 
 DialogGoMarkovAnalysisProcess::~DialogGoMarkovAnalysisProcess()
@@ -22,13 +22,13 @@ DialogGoMarkovAnalysisProcess::~DialogGoMarkovAnalysisProcess()
     this->_timer->stop();
 }
 
-void DialogGoMarkovAnalysisProcess::setMarkovGraph(shared_ptr<GoMarkovGraph> graph)
+void DialogGoMarkovAnalysisProcess::setMarkovGraph(QSharedPointer<GoMarkovGraph> graph)
 {
     this->_graph = graph;
     this->_operatorNum = graph->totalOperatorNum();
 }
 
-shared_ptr<GoMarkovChartData> DialogGoMarkovAnalysisProcess::analysisResult() const
+QSharedPointer<GoMarkovChartData> DialogGoMarkovAnalysisProcess::analysisResult() const
 {
     return this->_chart;
 }
@@ -38,12 +38,12 @@ int DialogGoMarkovAnalysisProcess::exec()
     this->_analysisThread->setGoMarkovGraph(this->_graph);
     this->_analysisThread->setTotalTime(this->_totalTime);
     this->_analysisThread->setTotalCount(this->_totalCount);
-    this->connect(this->_analysisThread.get(), SIGNAL(finished()), this, SLOT(finishedEvent()));
+    this->connect(this->_analysisThread, SIGNAL(finished()), this, SLOT(finishedEvent()));
     this->_analysisThread->start();
 
-    this->_timer = shared_ptr<QTimer>(new QTimer());
+    this->_timer = new QTimer();
     this->_timer->setInterval(20);
-    this->connect(this->_timer.get(), SIGNAL(timeout()), this, SLOT(timeoutEvent()));
+    this->connect(this->_timer, SIGNAL(timeout()), this, SLOT(timeoutEvent()));
     this->_timer->start();
 
     return this->QDialog::exec();
