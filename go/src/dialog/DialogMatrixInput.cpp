@@ -1,5 +1,5 @@
 #include "DialogMatrixInput.h"
-#include "ui_dialogmatrixinput.h"
+#include "ui_DialogMatrixInput.h"
 
 DialogMatrixInput::DialogMatrixInput(QWidget *parent) :
     QDialog(parent),

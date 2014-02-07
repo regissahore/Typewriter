@@ -124,7 +124,7 @@ double newton12a(double P, double mu, double t)
     while (true)
     {
         double cur = prev - fun12a(P, prev, mu, t) / fun12a_(prev, mu, t);
-        if (isinf(cur) || isnan(cur))
+        if (std::isinf(cur) || std::isnan(cur))
         {
             return cur;
         }

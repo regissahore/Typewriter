@@ -1,6 +1,6 @@
 #include <QPushButton>
 #include "ToolboxGo.h"
-#include "ui_toolboxgo.h"
+#include "ui_ToolboxGo.h"
 #include "MessageFactory.h"
 #include "DefinationToolType.h"
 using namespace std;

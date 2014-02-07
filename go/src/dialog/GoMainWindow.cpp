@@ -4,7 +4,7 @@
 #include <QUrl>
 #include <QDate>
 #include "GoMainWindow.h"
-#include "ui_gomainwindow.h"
+#include "ui_GoMainWindow.h"
 #include "DialogAbout.h"
 #include "GlobalConfig.h"
 using namespace std;

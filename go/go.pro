@@ -184,7 +184,7 @@ HEADERS += \
     include/tool/ToolGoMove.h \
     include/tool/ToolGoOperator.h \
     include/tool/ToolGoPointer.h \
-    include/tool/toolgopointerextend.h \
+    include/tool/ToolGoPointerExtend.h \
     include/tool/ToolGoSelect.h \
     include/tool/ToolGoSignal.h \
     include/tool/ToolGoText.h \

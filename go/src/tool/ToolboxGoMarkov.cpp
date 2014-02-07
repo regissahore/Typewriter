@@ -1,6 +1,6 @@
 #include <QPushButton>
 #include "ToolboxGoMarkov.h"
-#include "ui_toolboxgomarkov.h"
+#include "ui_ToolboxGoMarkov.h"
 #include "MessageFactory.h"
 #include "DefinationToolType.h"
 using namespace std;

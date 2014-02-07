@@ -1,6 +1,6 @@
 #include <QLabel>
 #include "OutputConsole.h"
-#include "ui_outputconsole.h"
+#include "ui_OutputConsole.h"
 #include "MessageFactory.h"
 using namespace std;
 

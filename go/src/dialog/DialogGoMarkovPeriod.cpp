@@ -1,6 +1,6 @@
 #include <qmath.h>
 #include "DialogGoMarkovPeriod.h"
-#include "ui_dialoggomarkovperiod.h"
+#include "ui_DialogGoMarkovPeriod.h"
 
 DialogGoMarkovPeriod::DialogGoMarkovPeriod(QWidget *parent) :
     QDialog(parent),

@@ -1,6 +1,6 @@
 #include <QTimer>
 #include "DialogGoMarkovAnalysisProcess.h"
-#include "ui_dialoggomarkovanalysisprocess.h"
+#include "ui_DialogGoMarkovAnalysisProcess.h"
 #include "GoMarkovGraph.h"
 #include "GoMarkovChartData.h"
 #include "GoMarkovAnalysisThread.h"
