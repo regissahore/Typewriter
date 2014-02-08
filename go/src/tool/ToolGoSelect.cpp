@@ -8,7 +8,6 @@
 #include "GoMarkovOperator.h"
 #include "SceneGo.h"
 #include "ItemGoMarkovCommonCause.h"
-#include "ItemGoMarkovCommonCause2.h"
 #include "ItemGoMarkovEquivalent.h"
 #include "GoMarkovCommonCause.h"
 #include "GoMarkovEquivalent.h"
@@ -404,59 +403,20 @@ void ToolGoSelect::copy()
             }
         }
     }
-    //复制共因失效1。
-    QVector<ItemGoMarkovCommonCause*> newCommons;
-    for (int i = 0; i < this->_items.size(); ++i)
-    {
-        ItemDrawable* item = (ItemDrawable*)this->_items[i];
-        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
-        {
-            ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
-            ItemGoMarkovCommonCause *newCommon = common->copy();
-            for (int j = 0; j < newCommon->model()->idList()->size(); ++j)
-            {
-                (*newCommon->model()->idList())[j] += increaseId;
-            }
-            int find = 0;
-            for (int j = 0; j < newOps.size(); ++j)
-            {
-                for (int k = 0; k < newCommon->model()->idList()->size(); ++k)
-                {
-                    if (newOps[j]->model()->realID() == newCommon->model()->idList()->at(k))
-                    {
-                        (*newCommon->operatorItems())[k] = newOps[j];
-                        (*newCommon->model()->operators())[k] = (GoMarkovOperator*)newOps[j]->model();
-                        ++find;
-                        break;
-                    }
-                }
-            }
-            if (find == newCommon->model()->idList()->size())
-            {
-                for (int j = 0; j < newCommon->operatorItems()->size(); ++j)
-                {
-                    newCommon->operatorItems()->at(j)->setFatherCommonCause(newCommon);
-                }
-                newCommons.push_back(newCommon);
-                this->sceneGo()->addItem(newCommon);
-                newCommon->updateBoundary();
-            }
-        }
-    }
     //复制共因失效2。
-    QVector<ItemGoMarkovCommonCause2*> fatherCommons;
+    QVector<ItemGoMarkovCommonCause*> fatherCommons;
     for (int i = 0; i < this->_items.size(); ++i)
     {
         ItemDrawable* item = (ItemDrawable*)this->_items[i];
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator* op = (ItemGoMarkovOperator*)item;
-            if (op->fatherCommonCause2() != nullptr)
+            if (op->fatherCommonCause() != nullptr)
             {
                 bool flag = true;
                 for (int j = 0; j < fatherCommons.size(); ++j)
                 {
-                    if (fatherCommons[j] == op->fatherCommonCause2())
+                    if (fatherCommons[j] == op->fatherCommonCause())
                     {
                         flag = false;
                         break;
@@ -464,16 +424,16 @@ void ToolGoSelect::copy()
                 }
                 if (flag)
                 {
-                    fatherCommons.push_back(op->fatherCommonCause2());
+                    fatherCommons.push_back(op->fatherCommonCause());
                 }
             }
         }
     }
-    QVector<ItemGoMarkovCommonCause2*> newCommons2;
+    QVector<ItemGoMarkovCommonCause*> newCommons2;
     for (int i = 0; i < fatherCommons.size(); ++i)
     {
-        ItemGoMarkovCommonCause2 *common = fatherCommons[i];
-        ItemGoMarkovCommonCause2 *newCommon = common->copy();
+        ItemGoMarkovCommonCause *common = fatherCommons[i];
+        ItemGoMarkovCommonCause *newCommon = common->copy();
         for (int j = 0; j < newCommon->model()->idList()->size(); ++j)
         {
             (*newCommon->model()->idList())[j] += increaseId;
@@ -496,7 +456,7 @@ void ToolGoSelect::copy()
         {
             for (int j = 0; j < newCommon->operatorItems()->size(); ++j)
             {
-                newCommon->operatorItems()->at(j)->setFatherCommonCause2(newCommon);
+                newCommon->operatorItems()->at(j)->setFatherCommonCause(newCommon);
             }
             newCommons2.push_back(newCommon);
             this->sceneGo()->addItem(newCommon);
@@ -533,10 +493,6 @@ void ToolGoSelect::copy()
     for (int i = 0; i < newSignals.size(); ++i)
     {
         this->_items.push_back(newSignals[i]);
-    }
-    for (int i = 0; i < newCommons.size(); ++i)
-    {
-        this->_items.push_back(newCommons[i]);
     }
     for (int i = 0; i < newCommons2.size(); ++i)
     {

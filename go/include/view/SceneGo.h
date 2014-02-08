@@ -20,7 +20,7 @@ public:
     void selectTool(int type);
     void bindMessage(MessageController *controller);
     void messageEvent(QSharedPointer<Message> message);
-    QSharedPointer<GoGraph> generatorGoGraph();
+    QSharedPointer<GoGraph> generateGoGraph();
     virtual void analysisProbability(const QString filePath);
     virtual void analysisPath(const QString filePath);
     virtual void analysisCut(const QString filePath);

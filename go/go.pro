@@ -161,7 +161,6 @@ HEADERS += \
     include/parameter/ParameterFactory.h \
     include/parameter/ParameterGoMarkovChart.h \
     include/parameter/ParameterGoMarkovCommonCause.h \
-    include/parameter/ParameterGoMarkovCommonCause2.h \
     include/parameter/ParameterGoMarkovEquivalent.h \
     include/parameter/ParameterGoMarkovOperator.h \
     include/parameter/ParameterGoOperator.h \
@@ -176,7 +175,6 @@ HEADERS += \
     include/tool/ToolGoAbstract.h \
     include/tool/ToolGoFactory.h \
     include/tool/ToolGoMarkovCommonCause.h \
-    include/tool/ToolGoMarkovCommonCause2.h \
     include/tool/ToolGoMarkovEquivalent.h \
     include/tool/ToolGoMarkovOperator.h \
     include/tool/ToolGoMarkovPointerExtend.h \
@@ -196,7 +194,6 @@ HEADERS += \
     include/view/ItemGoFactory.h \
     include/view/ItemGoMarkovChart.h \
     include/view/ItemGoMarkovCommonCause.h \
-    include/view/ItemGoMarkovCommonCause2.h \
     include/view/ItemGoMarkovEquivalent.h \
     include/view/ItemGoMarkovOperator.h \
     include/view/ItemGoOperator.h \
@@ -330,7 +327,6 @@ SOURCES += \
     src/parameter/ParameterFactory.cpp \
     src/parameter/ParameterGoMarkovChart.cpp \
     src/parameter/ParameterGoMarkovCommonCause.cpp \
-    src/parameter/ParameterGoMarkovCommonCause2.cpp \
     src/parameter/ParameterGoMarkovEquivalent.cpp \
     src/parameter/ParameterGoMarkovOperator.cpp \
     src/parameter/ParameterGoOperator.cpp \
@@ -345,7 +341,6 @@ SOURCES += \
     src/tool/ToolGoAbstract.cpp \
     src/tool/ToolGoFactory.cpp \
     src/tool/ToolGoMarkovCommonCause.cpp \
-    src/tool/ToolGoMarkovCommonCause2.cpp \
     src/tool/ToolGoMarkovEquivalent.cpp \
     src/tool/ToolGoMarkovOperator.cpp \
     src/tool/ToolGoMarkovPointerExtend.cpp \
@@ -365,7 +360,6 @@ SOURCES += \
     src/view/ItemGoFactory.cpp \
     src/view/ItemGoMarkovChart.cpp \
     src/view/ItemGoMarkovCommonCause.cpp \
-    src/view/ItemGoMarkovCommonCause2.cpp \
     src/view/ItemGoMarkovEquivalent.cpp \
     src/view/ItemGoMarkovOperator.cpp \
     src/view/ItemGoOperator.cpp \

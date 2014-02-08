@@ -5,7 +5,6 @@
 #include "GoMarkovOperator.h"
 #include "ItemGoMarkovEquivalent.h"
 #include "ItemGoMarkovCommonCause.h"
-#include "ItemGoMarkovCommonCause2.h"
 #include "GoMarkovOperator9a.h"
 #include "GoMarkovOperator13.h"
 #include "GoInput.h"
@@ -18,7 +17,6 @@ ItemGoMarkovOperator::ItemGoMarkovOperator(QGraphicsItem *parent) : ItemGoOperat
     this->TypedItem::setType(DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR);
     this->_fatherEquivalent = nullptr;
     this->_fatherCommonCause = nullptr;
-    this->_fatherCommonCause2 = nullptr;
 }
 
 ItemGoMarkovEquivalent* ItemGoMarkovOperator::fatherEquivalent() const
@@ -55,26 +53,12 @@ void ItemGoMarkovOperator::setFatherCommonCause(ItemGoMarkovCommonCause* commonC
     this->_fatherCommonCause = commonCause;
 }
 
-ItemGoMarkovCommonCause2* ItemGoMarkovOperator::fatherCommonCause2() const
-{
-    return this->_fatherCommonCause2;
-}
-
-void ItemGoMarkovOperator::setFatherCommonCause2(ItemGoMarkovCommonCause2* commonCause)
-{
-    this->_fatherCommonCause2 = commonCause;
-}
-
 void ItemGoMarkovOperator::move(QGraphicsSceneMouseEvent *event)
 {
     this->ItemGoOperator::move(event);
     if (this->fatherEquivalent() != nullptr)
     {
         this->fatherEquivalent()->updateBoundary();
-    }
-    if (this->fatherCommonCause() != nullptr)
-    {
-        this->fatherCommonCause()->updateBoundary();
     }
 }
 

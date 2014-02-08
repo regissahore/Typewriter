@@ -11,7 +11,7 @@ class SceneGoMarkov : public SceneGo
     Q_OBJECT
 public:
     SceneGoMarkov(QObject *parent = 0);
-    QSharedPointer<GoMarkovGraph> generatorGoMarkovGraph();
+    QSharedPointer<GoMarkovGraph> generateGoMarkovGraph();
     QList<ItemGoMarkovEquivalent *> getTopologyOrder(QList<ItemGoMarkovEquivalent *> equivalents);
     virtual void analysisProbability(const QString filePath) override;
     virtual void analysisCut(const QString filePath) override;

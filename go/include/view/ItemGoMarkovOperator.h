@@ -4,7 +4,6 @@
 
 class ItemGoMarkovEquivalent;
 class ItemGoMarkovCommonCause;
-class ItemGoMarkovCommonCause2;
 
 class ItemGoMarkovOperator : public ItemGoOperator
 {
@@ -15,8 +14,6 @@ public:
     void setFatherEquivalent(ItemGoMarkovEquivalent* equivalent);
     ItemGoMarkovCommonCause* fatherCommonCause() const;
     void setFatherCommonCause(ItemGoMarkovCommonCause* commonCause);
-    ItemGoMarkovCommonCause2* fatherCommonCause2() const;
-    void setFatherCommonCause2(ItemGoMarkovCommonCause2* commonCause);
     void move(QGraphicsSceneMouseEvent *event);
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *item, QWidget *widget);
     void setModelType(const int type);
@@ -29,7 +26,6 @@ public:
 protected:
     ItemGoMarkovEquivalent *_fatherEquivalent;
     ItemGoMarkovCommonCause *_fatherCommonCause;
-    ItemGoMarkovCommonCause2 *_fatherCommonCause2;
     bool isSource() const;
     void paint(QPainter *painter);
     void paint9A(QPainter *painter);

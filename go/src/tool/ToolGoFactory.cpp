@@ -12,7 +12,6 @@
 #include "ToolGoMarkovPointerExtend.h"
 #include "ToolGoMarkovText.h"
 #include "ToolGoMarkovCommonCause.h"
-#include "ToolGoMarkovCommonCause2.h"
 
 ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
 {
@@ -114,9 +113,6 @@ ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE:
         tool = new ToolGoMarkovCommonCause(sceneGo);
-        break;
-    case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2:
-        tool = new ToolGoMarkovCommonCause2(sceneGo);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_TEXT:
         tool = new ToolGoMarkovText(sceneGo);

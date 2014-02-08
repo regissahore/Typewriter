@@ -41,7 +41,7 @@ void ToolboxGoMarkov::messageEvent(QSharedPointer<Message> message)
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
             this->setSelectedTool(this->ui->buttonEquivalent);
             break;
-        case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2:
+        case DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE:
             this->setSelectedTool(this->ui->buttonCommonCause);
             break;
         case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_1:
@@ -154,7 +154,7 @@ void ToolboxGoMarkov::on_buttonEquivalent_clicked()
 void ToolboxGoMarkov::on_buttonCommonCause_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
-    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2;
+    message->paramInt = DefinationToolType::TOOL_TYPE_GO_MARKOV_COMMON_CAUSE;
     this->sendMessage(message);
 }
 

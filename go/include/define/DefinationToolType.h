@@ -5,11 +5,11 @@ class DefinationToolType
 public:
     enum ToolType
     {
-        TOOL_TYPE_COMMON_NULL,          /** 没有工具。 */
-        TOOL_TYPE_COMMON_POINTER,       /** 单选工具。 */
-        TOOL_TYPE_COMMON_SELECT,        /** 多选工具。 */
-        TOOL_TYPE_COMMON_MOVE,          /** 移动工具。 */
-        TOOL_TYPE_COMMON_ZOOM,          /** 缩放工具。 */
+        TOOL_TYPE_COMMON_NULL,
+        TOOL_TYPE_COMMON_POINTER,
+        TOOL_TYPE_COMMON_SELECT,
+        TOOL_TYPE_COMMON_MOVE,
+        TOOL_TYPE_COMMON_ZOOM,
 
         TOOL_TYPE_GO_POINTER_EXTEND,
 
@@ -81,8 +81,7 @@ public:
         TOOL_TYPE_GO_MARKOV_OPERATOR_29,
         TOOL_TYPE_GO_MARKOV_OPERATOR_SPLIT,
         TOOL_TYPE_GO_MARKOV_EQUIVALENT,
-        TOOL_TYPE_GO_MARKOV_COMMON_CAUSE,
-        TOOL_TYPE_GO_MARKOV_COMMON_CAUSE_2
+        TOOL_TYPE_GO_MARKOV_COMMON_CAUSE
     };
 };
 

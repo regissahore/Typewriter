@@ -18,7 +18,6 @@
 #include "GoMarkovChartData.h"
 #include "GoMarkovEquivalent.h"
 #include "ItemGoMarkovCommonCause.h"
-#include "ItemGoMarkovCommonCause2.h"
 #include "GoMarkovCommonCause.h"
 #include "DialogIntegerInput.h"
 #include "GoPathSetSetSet.h"
@@ -62,7 +61,7 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
     QList<ItemGoMarkovOperator*> operatorList;
     QList<ItemGoSignal*> signalList;
     QList<ItemGoMarkovEquivalent*> equivalentList;
-    QList<ItemGoMarkovCommonCause2*> commoncauseList;
+    QList<ItemGoMarkovCommonCause*> commoncauseList;
     for (auto element = root.firstChildElement(); !element.isNull(); element = element.nextSiblingElement())
     {
         if (element.tagName() == "operator")
@@ -118,7 +117,7 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
         }
         else if (element.tagName() == "commoncause")
         {
-            ItemGoMarkovCommonCause2 *item = new ItemGoMarkovCommonCause2();
+            ItemGoMarkovCommonCause *item = new ItemGoMarkovCommonCause();
             this->addItem(item);
             if (item->tryOpen(element))
             {
@@ -168,7 +167,7 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
     return flag;
 }
 
-QSharedPointer<GoMarkovGraph> SceneGoMarkov::generatorGoMarkovGraph()
+QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovGraph()
 {
     QSharedPointer<GoMarkovGraph>graph(new GoMarkovGraph());
     graph->bindMessage(this->MessageListener::_messageController);
@@ -192,11 +191,6 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generatorGoMarkovGraph()
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE)
         {
             ItemGoMarkovCommonCause *common = (ItemGoMarkovCommonCause*)item;
-            graph->addCommonCause(common->model());
-        }
-        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_COMMON_CAUSE_2)
-        {
-            ItemGoMarkovCommonCause2 *common = (ItemGoMarkovCommonCause2*)item;
             graph->addCommonCause(common->model());
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
@@ -385,7 +379,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
     dialog.setCount(this->_analysisCount);
     if (QDialog::Accepted == dialog.exec())
     {
-        QSharedPointer<GoMarkovGraph> graph = this->generatorGoMarkovGraph();
+        QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovGraph();
         double totalTime = dialog.totalTime();
         int count = dialog.count();
         this->_analysisTotalTime = totalTime;
@@ -427,7 +421,7 @@ void SceneGoMarkov::analysisCut(const QString filePath)
     dialog.integerInput()->setValue(this->_analysisCutOrder);
     if (dialog.exec() == QDialog::Accepted)
     {
-        QSharedPointer<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
+        QSharedPointer<GoMarkovGraph> graph(this->generateGoMarkovGraph());
         this->_analysisCutOrder = dialog.integerInput()->value();
         GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
@@ -453,7 +447,7 @@ void SceneGoMarkov::analysisPath(const QString filePath)
     dialog.integerInput()->setValue(this->_analysisCutOrder);
     if (dialog.exec() == QDialog::Accepted)
     {
-        QSharedPointer<GoMarkovGraph> graph(this->generatorGoMarkovGraph());
+        QSharedPointer<GoMarkovGraph> graph(this->generateGoMarkovGraph());
         this->_analysisCutOrder = dialog.integerInput()->value();
         GoPathSetSetSet cut = graph->findPath(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")

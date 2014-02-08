@@ -272,7 +272,7 @@ void SceneGo::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
     this->QGraphicsScene::mouseReleaseEvent(event);
 }
 
-QSharedPointer<GoGraph> SceneGo::generatorGoGraph()
+QSharedPointer<GoGraph> SceneGo::generateGoGraph()
 {
     QSharedPointer<GoGraph> graph(new GoGraph());
     graph->bindMessage(this->MessageListener::_messageController);
@@ -335,7 +335,7 @@ QSharedPointer<GoGraph> SceneGo::generatorGoGraph()
 
 void SceneGo::analysisProbability(const QString filePath)
 {
-    QSharedPointer<GoGraph> graph = this->generatorGoGraph();
+    QSharedPointer<GoGraph> graph = this->generateGoGraph();
     graph->calcAccumulativeProbability();
     if (graph->getErrorMessage() == "")
     {
@@ -358,7 +358,7 @@ void SceneGo::analysisPath(const QString filePath)
     dialog.integerInput()->setMinimum(1);
     if (dialog.exec() == QDialog::Accepted)
     {
-        QSharedPointer<GoGraph> graph = this->generatorGoGraph();
+        QSharedPointer<GoGraph> graph = this->generateGoGraph();
         GoPathSetSetSet path = graph->findPath(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
@@ -382,7 +382,7 @@ void SceneGo::analysisCut(const QString filePath)
     dialog.integerInput()->setMinimum(1);
     if (dialog.exec() == QDialog::Accepted)
     {
-        QSharedPointer<GoGraph> graph = this->generatorGoGraph();
+        QSharedPointer<GoGraph> graph = this->generateGoGraph();
         GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
         if (graph->getErrorMessage() == "")
         {
