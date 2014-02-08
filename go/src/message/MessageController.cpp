@@ -1,65 +1,53 @@
+#include "Messager.h"
 #include "MessageController.h"
-#include "MessageCreator.h"
-#include "MessageListener.h"
 using namespace std;
+
+MessageController* MessageController::_instance = nullptr;
 
 MessageController::MessageController()
 {
-    this->_messages = new QMap<int, int>();
-    this->_listeners = new QVector< QVector<MessageListener*> >();
 }
 
 MessageController::~MessageController()
 {
-    this->_messages->clear();
-    for(int i = 0; i < this->_listeners->size(); ++i)
+}
+
+MessageController* MessageController::instance()
+{
+    if (nullptr == _instance)
     {
-        (*this->_listeners)[i].clear();
+        _instance = new MessageController();
     }
-    this->_listeners->clear();
+    return _instance;
 }
 
 void MessageController::send(QSharedPointer<Message> message)
 {
-    QMap<int, int>::iterator it = this->_messages->find(message->type());
-    if (it != this->_messages->end())
+    auto listeners = this->_listeners.find(message->type());
+    if (listeners != this->_listeners.end())
     {
-        int index = it.value();
-        QVector<MessageListener*> listeners = (*this->_listeners)[index];
-        for (int i = 0; i < listeners.size(); ++i)
+        for (auto i = listeners.value().begin(); i != listeners.value().end(); ++i)
         {
-            listeners[i]->messageEvent(message);
+            (*i)->messageEvent(message);
         }
     }
 }
 
-void MessageController::listen(int messageType, MessageListener *listener)
+void MessageController::listen(int messageType, Messager *listener)
 {
-    if (this->_messages->find(messageType) == this->_messages->end())
-    {
-        (*this->_messages)[messageType] = this->_listeners->size();
-        this->_listeners->push_back(QVector<MessageListener*>());
-    }
-    listener->addListenedMessage(messageType);
-    int index = (*this->_messages)[messageType];
-    (*this->_listeners)[index].push_back(listener);
-    listener->setMessageController(this);
+    this->_listeners[messageType].push_back(listener);
 }
 
-void MessageController::release(int messageType, MessageListener *listener)
+void MessageController::release(Messager *listener)
 {
-    QMap<int, int>::iterator it = this->_messages->find(messageType);
-    if (it != this->_messages->end())
+    for (auto i = this->_listeners.begin(); i != this->_listeners.end(); ++i)
     {
-        int index = it.value();
-        QVector<MessageListener*> *listeners = &((*this->_listeners)[index]);
-        for (int i = listeners->size() - 1; i >= 0; --i)
+        for (int j = i.value().size() - 1; j >= 0; --j)
         {
-            if ((*listeners)[i] == listener)
+            if (i.value()[j] == listener)
             {
-                (*this->_listeners)[index].remove(i);
+                i.value().remove(j);
             }
         }
     }
 }
-

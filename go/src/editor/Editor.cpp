@@ -66,7 +66,7 @@ void Editor::currentChange(int index)
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = (*this->_editors)[index]->type();
-        this->sendMessage(message);
+        this->send(message);
         for (int i = 0; i < this->_editors->size(); ++i)
         {
             if (i == index)
@@ -83,34 +83,33 @@ void Editor::currentChange(int index)
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_TYPE);
         message->paramInt = EditorFactory::EDITOR_TYPE_NULL;
-        this->sendMessage(message);
+        this->send(message);
     }
 }
 
-void Editor::bindMessage(MessageController *controller)
+void Editor::bindMessage()
 {
-    this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_NEW, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_OPEN, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_OPEN_EXIST, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_CLOSE, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_CLOSEALL, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_SAVE, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_SAVEAS, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_SAVEALL, this);
-    controller->listen(MessageFactory::TYPE_TOOL_SELECTION, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_COPY, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_DELETE, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ZOOM_IN, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_ZOOM_OUT, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_SHOW_PARAMETER, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_HIDE_PARAMETER, this);
+    this->listen(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE);
+    this->listen(MessageFactory::TYPE_EDITOR_NEW);
+    this->listen(MessageFactory::TYPE_EDITOR_OPEN);
+    this->listen(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
+    this->listen(MessageFactory::TYPE_EDITOR_CLOSE);
+    this->listen(MessageFactory::TYPE_EDITOR_CLOSEALL);
+    this->listen(MessageFactory::TYPE_EDITOR_SAVE);
+    this->listen(MessageFactory::TYPE_EDITOR_SAVEAS);
+    this->listen(MessageFactory::TYPE_EDITOR_SAVEALL);
+    this->listen(MessageFactory::TYPE_TOOL_SELECTION);
+    this->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY);
+    this->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH);
+    this->listen(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT);
+    this->listen(MessageFactory::TYPE_EDITOR_COPY);
+    this->listen(MessageFactory::TYPE_EDITOR_DELETE);
+    this->listen(MessageFactory::TYPE_EDITOR_ZOOM_IN);
+    this->listen(MessageFactory::TYPE_EDITOR_ZOOM_OUT);
+    this->listen(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK);
+    this->listen(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK);
+    this->listen(MessageFactory::TYPE_EDITOR_SHOW_PARAMETER);
+    this->listen(MessageFactory::TYPE_EDITOR_HIDE_PARAMETER);
     currentChange(this->_tabWidget->currentIndex());
 }
 
@@ -121,7 +120,7 @@ void Editor::messageEvent(QSharedPointer<Message> message)
     case MessageFactory::TYPE_MAINWINDOW_TRYCLOSE:
         if (this->tryCloseAll())
         {
-            this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_CLOSE));
+            this->send(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_CLOSE));
         }
         break;
     case MessageFactory::TYPE_EDITOR_NEW:
@@ -172,7 +171,6 @@ void Editor::messageEvent(QSharedPointer<Message> message)
 void Editor::createNewTab(int type)
 {
     EditorAbstract *editor = (EditorAbstract*)this->_factory->produce(type);
-    editor->bindMessage(this->MessageCreator::_messageController);
     this->_editors->push_back(editor);
     this->_tabWidget->addTab(editor, editor->name());
     this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);
@@ -199,7 +197,6 @@ void Editor::tryOpen()
             EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO);
             if (editor->tryOpen(filePath))
             {
-                editor->bindMessage(this->MessageCreator::_messageController);
                 editor->setPath(filePath);
                 this->_editors->push_back(editor);
                 this->_tabWidget->addTab(editor, editor->name());
@@ -211,7 +208,6 @@ void Editor::tryOpen()
             EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_GO_MARKOV);
             if (editor->tryOpen(filePath))
             {
-                editor->bindMessage(this->MessageCreator::_messageController);
                 editor->setPath(filePath);
                 this->_editors->push_back(editor);
                 this->_tabWidget->addTab(editor, editor->name());
@@ -244,7 +240,6 @@ void Editor::openExist(QString filePath)
     {
         EditorAbstract* editor = (EditorAbstract*)this->_factory->produce(EditorFactory::EDITOR_TYPE_WEBVIEW);
         editor->setPath(filePath);
-        editor->bindMessage(this->MessageCreator::_messageController);
         this->_editors->push_back(editor);
         this->_tabWidget->addTab(editor, editor->name());
         this->_tabWidget->setCurrentIndex(this->_editors->size() - 1);

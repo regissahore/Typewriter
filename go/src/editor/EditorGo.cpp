@@ -17,12 +17,6 @@ EditorGo::EditorGo(QWidget *parent) : EditorAbstract(parent)
     this->_suffix = "go";
 }
 
-void EditorGo::bindMessage(MessageController *controller)
-{
-    this->EditorAbstract::bindMessage(controller);
-    this->_view->bindMessage(controller);
-}
-
 void EditorGo::messageEvent(QSharedPointer<Message> message)
 {
     switch (message->type())
@@ -108,5 +102,5 @@ void EditorGo::activate()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
     message->paramInt = DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND;
-    this->sendMessage(message);
+    this->send(message);
 }

@@ -6,21 +6,21 @@
 #include <QString>
 #include "Message.h"
 
-class MessageCreator;
-class MessageListener;
+class Messager;
 
 class MessageController
 {
 public:
-    MessageController();
+    static MessageController* instance();
     virtual ~MessageController();
     void send(QSharedPointer<Message> message);
-    void listen(int messageType, MessageListener *listener);
-    void release(int messageType, MessageListener *listener);
+    void listen(int messageType, Messager *listener);
+    void release(Messager *listener);
 
 protected:
-    QMap<int, int> *_messages; /** 储存已经注册的消息，数值为listeners的索引。 */
-    QVector< QVector<MessageListener*> > *_listeners; /** 储存消息监听器。 */
+    QMap<int, QVector<Messager*> > _listeners;
+    MessageController();
+    static MessageController* _instance;
 };
 
 #endif // MESSAGECONTROLLER_H

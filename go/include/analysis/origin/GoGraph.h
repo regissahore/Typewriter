@@ -29,7 +29,6 @@ public:
     };
     GoGraph();
     virtual ~GoGraph();
-    void bindMessage(MessageController *controller);
     QVector<int> getSource() const;
     QVector<GoOperator*> getOperator() const;
     QVector<GoSignal*> getSignal() const;
@@ -40,14 +39,14 @@ public:
     virtual GoPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
     QVector<GoGraph::MessageRecord> messages() const;
-    virtual bool saveAsHTML(const QString filePath);
+    bool saveAsHTML(const QString filePath);
     virtual bool saveAsHTML(const QString filePath, GoPathSetSetSet path);
 
 protected:
     struct Output
     {
         GoOperator *op;
-        int outputIndex; /** The output index of the operator. */
+        int outputIndex;
         int signalIndex;
     };
     QVector<MessageRecord> _messages;

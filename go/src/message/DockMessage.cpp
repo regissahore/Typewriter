@@ -15,7 +15,7 @@ DockMessage::DockMessage(QWidget *parent) : QDockWidget(parent), Messager()
     this->setWidget(tabWidget);
 }
 
-void DockMessage::bindMessage(MessageController *controller)
+void DockMessage::bindMessage()
 {
-    this->_outputConsole->bindMessage(controller);
+    this->_outputConsole->bindMessage();
 }

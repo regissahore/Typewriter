@@ -17,7 +17,7 @@ class ToolboxGo : public ToolboxAbstract
 public:
     explicit ToolboxGo(QWidget *parent = 0);
     virtual ~ToolboxGo();
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
     
 private slots:

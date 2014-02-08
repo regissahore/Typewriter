@@ -14,7 +14,7 @@ EditorAbstract::EditorAbstract(QWidget *parent) : QWidget(parent)
 
 EditorAbstract::~EditorAbstract()
 {
-    this->MessageListener::~MessageListener();
+    this->Messager::~Messager();
 }
 
 QString EditorAbstract::path() const
@@ -128,11 +128,6 @@ void EditorAbstract::setModified(bool value)
         emit modifyChanged(this->id());
     }
     this->_modified = value;
-}
-
-void EditorAbstract::bindMessage(MessageController *controller)
-{
-    this->Messager::bindMessage(controller);
 }
 
 void EditorAbstract::activate()

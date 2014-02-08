@@ -22,10 +22,9 @@ QSize DockToolbox::sizeHint() const
     return QSize(200, 200);
 }
 
-void DockToolbox::bindMessage(MessageController *controller)
+void DockToolbox::bindMessage()
 {
-    this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
+    this->listen(MessageFactory::TYPE_EDITOR_TYPE);
 }
 
 void DockToolbox::messageEvent(QSharedPointer<Message> message)
@@ -55,12 +54,12 @@ void DockToolbox::setToolbox(int editorType)
     {
         if (this->_toolbox->type() != type)
         {
-            flag = true; // 已经有工具但类别不同。
+            flag = true;
         }
     }
     else
     {
-        flag = true; // 没有工具。
+        flag = true;
     }
     if (flag)
     {
@@ -68,7 +67,6 @@ void DockToolbox::setToolbox(int editorType)
         this->_toolbox = ToolboxFactory::produce(type);
         if (this->_toolbox)
         {
-            this->_toolbox->bindMessage(this->MessageCreator::_messageController);
             this->setWidget(this->_toolbox);
         }
     }

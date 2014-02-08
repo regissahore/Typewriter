@@ -15,7 +15,7 @@ class OutputConsole : public QWidget, public Messager
 public:
     explicit OutputConsole(QWidget *parent = 0);
     ~OutputConsole();
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
     
 private:

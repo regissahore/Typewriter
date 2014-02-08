@@ -21,19 +21,19 @@ GoMainWindow::GoMainWindow(QWidget *parent) :
     this->showMaximized();
     this->initDock();
     this->initEditor();
-    this->bindMessage(&this->_messageController);
+    this->bindMessage();
 }
 
 GoMainWindow::~GoMainWindow()
 {
+    this->Messager::~Messager();
     delete ui;
 }
 
-void GoMainWindow::bindMessage(MessageController *controller)
+void GoMainWindow::bindMessage()
 {
-    this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_MAINWINDOW_CLOSE, this);
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_OPEN));
+    this->listen(MessageFactory::TYPE_MAINWINDOW_CLOSE);
+    this->send(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_OPEN));
 }
 
 void GoMainWindow::messageEvent(QSharedPointer<Message> message)
@@ -56,7 +56,7 @@ void GoMainWindow::closeEvent(QCloseEvent *event)
     }
     else
     {
-        this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE));
+        this->send(MessageFactory::produce(MessageFactory::TYPE_MAINWINDOW_TRYCLOSE));
         if (!this->_close)
         {
             event->ignore();
@@ -66,15 +66,15 @@ void GoMainWindow::closeEvent(QCloseEvent *event)
 
 void GoMainWindow::initEditor()
 {
-    this->_dockToolbox.bindMessage(&this->_messageController);
+    this->_dockToolbox.bindMessage();
     this->_dockToolbox.setMaximumWidth(200);
     this->_dockToolbox.setFeatures(0);
     this->ui->widget->layout()->addWidget(&this->_dockToolbox);
 
-    this->_editor.bindMessage(&this->_messageController);
+    this->_editor.bindMessage();
     this->ui->widget->layout()->addWidget(&this->_editor);
 
-    this->_dockParameter.bindMessage(&this->_messageController);
+    this->_dockParameter.bindMessage();
     this->_dockParameter.setMaximumWidth(250);
     this->_dockParameter.setFeatures(0);
     this->_dockParameter.setFloating(false);
@@ -83,7 +83,7 @@ void GoMainWindow::initEditor()
 
 void GoMainWindow::initDock()
 {
-    this->_dockMessage.bindMessage(&this->_messageController);
+    this->_dockMessage.bindMessage();
     this->addDockWidget(Qt::BottomDockWidgetArea, &this->_dockMessage);
 }
 
@@ -91,82 +91,82 @@ void GoMainWindow::on_toolButtonNew_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO;
-    this->sendMessage(message);
+    this->send(message);
 }
 
 void GoMainWindow::on_toolButtonMarkov_clicked()
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_NEW);
     message->paramInt = EditorFactory::EDITOR_TYPE_GO_MARKOV;
-    this->sendMessage(message);
+    this->send(message);
 }
 
 void GoMainWindow::on_toolButtonOpen_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN));
 }
 
 void GoMainWindow::on_toolButtonClose_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_CLOSE));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_CLOSE));
 }
 
 void GoMainWindow::on_toolButtonSave_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVE));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVE));
 }
 
 void GoMainWindow::on_toolButtonSaveAs_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVEAS));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVEAS));
 }
 
 void GoMainWindow::on_toolButtonSaveAll_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVEALL));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SAVEALL));
 }
 
 void GoMainWindow::on_toolButtonAnalysis_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PROBABILITY));
 }
 
 void GoMainWindow::on_toolButtonPath_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_PATH));
 }
 
 void GoMainWindow::on_toolButtonCut_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ANALYSIS_CUT));
 }
 
 void GoMainWindow::on_toolButtonCopy_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_COPY));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_COPY));
 }
 
 void GoMainWindow::on_toolButtonDelete_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_DELETE));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_DELETE));
 }
 
 void GoMainWindow::on_toolButtonZoomIn_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_IN));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_IN));
 }
 
 void GoMainWindow::on_toolButtonZoomOut_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_OUT));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_ZOOM_OUT));
 }
 
 void GoMainWindow::on_toolButtonFeedback_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_SET_GLOBAL_FEEDBACK));
 }
 
 void GoMainWindow::on_toolButtonUnlockFb_clicked()
 {
-    this->sendMessage(MessageFactory::produce(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK));
+    this->send(MessageFactory::produce(MessageFactory::TYPE_EDITOR_UNSET_GLOBAL_FEEDBBACK));
 }

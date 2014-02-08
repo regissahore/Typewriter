@@ -14,7 +14,7 @@ class DockParameter : public QDockWidget, public Messager
 public:
     DockParameter(QWidget *parent = 0);
     ~DockParameter();
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
 
 private:

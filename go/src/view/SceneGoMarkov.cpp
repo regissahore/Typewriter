@@ -170,7 +170,6 @@ bool SceneGoMarkov::tryOpen(QDomElement &root)
 QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovGraph()
 {
     QSharedPointer<GoMarkovGraph>graph(new GoMarkovGraph());
-    graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     QVector<ItemGoMarkovOperator*> operators;
     QVector<ItemGoMarkovOperator*> equivalentOperators;
@@ -397,7 +396,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
             {
                 QSharedPointer<Message> message = MessageFactory::produce(messages[i].type);
                 message->paramString = messages[i].message;
-                this->sendMessage(message);
+                this->send(message);
             }
             if (!data.isNull())
             {
@@ -405,7 +404,7 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
                 {
                     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
                     message->paramString = filePath + ".goc.html";
-                    this->sendMessage(message);
+                    this->send(message);
                 }
             }
         }
@@ -429,7 +428,7 @@ void SceneGoMarkov::analysisCut(const QString filePath)
             graph->saveAsHTML(filePath + ".cut.html", cut);
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
-            this->sendMessage(message);
+            this->send(message);
         }
         else
         {
@@ -455,7 +454,7 @@ void SceneGoMarkov::analysisPath(const QString filePath)
             graph->saveAsHTML(filePath + ".path.html", cut);
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
-            this->sendMessage(message);
+            this->send(message);
         }
         else
         {

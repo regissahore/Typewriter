@@ -157,6 +157,6 @@ void ItemGoFactory::sendSelectionMessage(Messager *messager, ItemDrawable *item)
 {
     QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
     message->setMessage(item);
-    messager->sendMessage(message);
+    messager->send(message);
 }
 

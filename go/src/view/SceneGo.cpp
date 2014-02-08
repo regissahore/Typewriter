@@ -55,11 +55,6 @@ SceneGo::~SceneGo()
     }
 }
 
-void SceneGo::bindMessage(MessageController *controller)
-{
-    this->Messager::bindMessage(controller);
-}
-
 void SceneGo::messageEvent(QSharedPointer<Message> message)
 {
     QKeyEvent *event = nullptr;
@@ -275,7 +270,6 @@ void SceneGo::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
 QSharedPointer<GoGraph> SceneGo::generateGoGraph()
 {
     QSharedPointer<GoGraph> graph(new GoGraph());
-    graph->bindMessage(this->MessageListener::_messageController);
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
     {
@@ -342,7 +336,7 @@ void SceneGo::analysisProbability(const QString filePath)
         graph->saveAsHTML(filePath + ".html");
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
         message->paramString = filePath + ".html";
-        this->sendMessage(message);
+        this->send(message);
     }
     else
     {
@@ -365,7 +359,7 @@ void SceneGo::analysisPath(const QString filePath)
             graph->saveAsHTML(filePath + ".path.html", path);
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
-            this->sendMessage(message);
+            this->send(message);
         }
         else
         {
@@ -389,7 +383,7 @@ void SceneGo::analysisCut(const QString filePath)
             graph->saveAsHTML(filePath + ".cut.html", cut);
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".cut.html";
-            this->sendMessage(message);
+            this->send(message);
         }
         else
         {

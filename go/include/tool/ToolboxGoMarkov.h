@@ -17,7 +17,7 @@ class ToolboxGoMarkov : public ToolboxAbstract
 public:
     explicit ToolboxGoMarkov(QWidget *parent = 0);
     virtual ~ToolboxGoMarkov();
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
     
 private slots:

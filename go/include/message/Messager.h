@@ -2,15 +2,15 @@
 #define MESSAGER_H
 
 #include "MessageController.h"
-#include "MessageCreator.h"
-#include "MessageListener.h"
 
-class Messager : public MessageCreator, public MessageListener
+class Messager
 {
 public:
     Messager();
     virtual ~Messager();
-    virtual void bindMessage(MessageController *controller);
+    void send(QSharedPointer<Message> message);
+    void listen(int messageType);
+    virtual void messageEvent(QSharedPointer<Message> message);
 };
 
 #endif // MESSAGER_H

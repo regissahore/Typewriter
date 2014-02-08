@@ -18,7 +18,6 @@ public:
     explicit SceneGo(QObject *parent = 0);
     ~SceneGo();
     void selectTool(int type);
-    void bindMessage(MessageController *controller);
     void messageEvent(QSharedPointer<Message> message);
     QSharedPointer<GoGraph> generateGoGraph();
     virtual void analysisProbability(const QString filePath);

@@ -43,8 +43,6 @@ public:
         TYPE_END
     };
     static QSharedPointer<Message> produce(int messageType);
-    static QList<int> getMessageTypeList();
-    static QString getMessageTypeName(int messageType);
 
 private:
     static int _autoID;

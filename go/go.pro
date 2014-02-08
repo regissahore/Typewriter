@@ -139,21 +139,17 @@ HEADERS += \
     include/editor/EditorFactory.h \
     include/editor/EditorGo.h \
     include/editor/EditorGoMarkov.h \
-    include/editor/EditorGoMarkovChart.h \
     include/editor/EditorWebview.h \
     include/editor/EditorWelcome.h \
     include/message/DockMessage.h \
     include/message/Message.h \
     include/message/MessageController.h \
-    include/message/MessageCreator.h \
     include/message/MessageFactory.h \
-    include/message/MessageListener.h \
     include/message/Messager.h \
     include/message/OutputConsole.h \
     include/parameter/DockParameter.h \
     include/parameter/ParameterAbstract.h \
     include/parameter/ParameterFactory.h \
-    include/parameter/ParameterGoMarkovChart.h \
     include/parameter/ParameterGoMarkovCommonCause.h \
     include/parameter/ParameterGoMarkovEquivalent.h \
     include/parameter/ParameterGoMarkovOperator.h \
@@ -182,7 +178,6 @@ HEADERS += \
     include/view/ItemDrawable.h \
     include/view/ItemEmpty.h \
     include/view/ItemGoFactory.h \
-    include/view/ItemGoMarkovChart.h \
     include/view/ItemGoMarkovCommonCause.h \
     include/view/ItemGoMarkovEquivalent.h \
     include/view/ItemGoMarkovOperator.h \
@@ -193,10 +188,8 @@ HEADERS += \
     include/view/ItemSelection.h \
     include/view/SceneGo.h \
     include/view/SceneGoMarkov.h \
-    include/view/SceneGoMarkovChart.h \
     include/view/ViewGo.h \
     include/view/ViewGoMarkov.h \
-    include/view/ViewGoMarkovChart.h \
     include/analysis/markov/RungeKutta.h \
     include/analysis/markov/RungeKuttaBreakdown2.h
 
@@ -289,22 +282,18 @@ SOURCES += \
     src/editor/EditorFactory.cpp \
     src/editor/EditorGo.cpp \
     src/editor/EditorGoMarkov.cpp \
-    src/editor/EditorGoMarkovChart.cpp \
     src/editor/EditorWebview.cpp \
     src/editor/EditorWelcome.cpp \
     src/main.cpp \
     src/message/DockMessage.cpp \
     src/message/Message.cpp \
     src/message/MessageController.cpp \
-    src/message/MessageCreator.cpp \
     src/message/MessageFactory.cpp \
-    src/message/MessageListener.cpp \
     src/message/Messager.cpp \
     src/message/OutputConsole.cpp \
     src/parameter/DockParameter.cpp \
     src/parameter/ParameterAbstract.cpp \
     src/parameter/ParameterFactory.cpp \
-    src/parameter/ParameterGoMarkovChart.cpp \
     src/parameter/ParameterGoMarkovCommonCause.cpp \
     src/parameter/ParameterGoMarkovEquivalent.cpp \
     src/parameter/ParameterGoMarkovOperator.cpp \
@@ -333,7 +322,6 @@ SOURCES += \
     src/view/ItemDrawable.cpp \
     src/view/ItemEmpty.cpp \
     src/view/ItemGoFactory.cpp \
-    src/view/ItemGoMarkovChart.cpp \
     src/view/ItemGoMarkovCommonCause.cpp \
     src/view/ItemGoMarkovEquivalent.cpp \
     src/view/ItemGoMarkovOperator.cpp \
@@ -344,9 +332,7 @@ SOURCES += \
     src/view/ItemSelection.cpp \
     src/view/SceneGo.cpp \
     src/view/SceneGoMarkov.cpp \
-    src/view/SceneGoMarkovChart.cpp \
     src/view/ViewGo.cpp \
     src/view/ViewGoMarkov.cpp \
-    src/view/ViewGoMarkovChart.cpp \
     src/analysis/markov/RungeKutta.cpp \
     src/analysis/markov/RungeKuttaBreakdown2.cpp

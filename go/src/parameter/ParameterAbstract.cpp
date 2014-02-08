@@ -38,11 +38,6 @@ void ParameterAbstract::bindItem(void *item)
     this->_item = item;
 }
 
-void ParameterAbstract::bindMessage(MessageController *controller)
-{
-    this->Messager::bindMessage(controller);
-}
-
 void ParameterAbstract::addPositionParameter()
 {
     if (nullptr != this->_item)

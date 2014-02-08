@@ -17,13 +17,13 @@ OutputConsole::~OutputConsole()
     this->Messager::~Messager();
 }
 
-void OutputConsole::bindMessage(MessageController *controller)
+void OutputConsole::bindMessage()
 {
-    controller->listen(MessageFactory::TYPE_OUTPUT_CLEAR, this);
-    controller->listen(MessageFactory::TYPE_OUTPUT_TEXT, this);
-    controller->listen(MessageFactory::TYPE_OUTPUT_SAMELINE_TEXT, this);
-    controller->listen(MessageFactory::TYPE_OUTPUT_CORRECT, this);
-    controller->listen(MessageFactory::TYPE_OUTPUT_ERROR, this);
+    this->listen(MessageFactory::TYPE_OUTPUT_CLEAR);
+    this->listen(MessageFactory::TYPE_OUTPUT_TEXT);
+    this->listen(MessageFactory::TYPE_OUTPUT_SAMELINE_TEXT);
+    this->listen(MessageFactory::TYPE_OUTPUT_CORRECT);
+    this->listen(MessageFactory::TYPE_OUTPUT_ERROR);
 }
 
 void OutputConsole::messageEvent(QSharedPointer<Message> message)

@@ -15,14 +15,13 @@ class ViewGo : public GraphicsView, public Messager, public DomItem
 public:
     explicit ViewGo(QWidget *parent = 0);
     ~ViewGo();
-    void bindMessage(MessageController *controller);
     void messageEvent(QSharedPointer<Message> message);
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
     EditorGo* editor() const;
     
 protected:
-    SceneGo *_scene; /** Go法的场景。 */
+    SceneGo *_scene;
     EditorGo *_editor;
 };
 

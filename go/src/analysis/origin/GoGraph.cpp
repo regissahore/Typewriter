@@ -31,11 +31,6 @@ GoGraph::~GoGraph()
     this->Messager::~Messager();
 }
 
-void GoGraph::bindMessage(MessageController *controller)
-{
-    this->MessageCreator::setMessageController(controller);
-}
-
 QVector<int> GoGraph::getSource() const
 {
     return this->_source;

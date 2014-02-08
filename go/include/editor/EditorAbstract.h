@@ -20,13 +20,12 @@ public:
     virtual bool trySaveAs();
     virtual bool tryClose();
     virtual bool tryOpen(const QString path);
-    void bindMessage(MessageController *controller);
     virtual void activate();
     virtual void inactivate();
     void setModified(bool value);
 
 protected:
-    QString _filter; /** 用于文件保存的类型。 */
+    QString _filter;
     QString _suffix;
     virtual bool save();
 

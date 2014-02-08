@@ -15,7 +15,7 @@ public:
     void setMessage(void* message);
 
 protected:
-    void* _message; /** The content of the message. */
+    void* _message;
 };
 
 #endif // MESSAGE_H

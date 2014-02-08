@@ -19,7 +19,7 @@ class GoMainWindow : public QMainWindow, public Messager
 public:
     explicit GoMainWindow(QWidget *parent = 0);
     ~GoMainWindow();
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
 
 protected:
@@ -28,7 +28,6 @@ protected:
 private:
     Ui::GoMainWindow *ui;
     bool _close;
-    MessageController _messageController;
     Editor _editor;
     DockMessage _dockMessage;
     DockParameter _dockParameter;

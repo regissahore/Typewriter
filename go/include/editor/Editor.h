@@ -17,8 +17,8 @@ public:
     explicit Editor(QWidget *parent = 0);
     bool trySaveAll();
     bool tryCloseAll();
-    void bindMessage(MessageController *controller);
-    void messageEvent(QSharedPointer<Message> message);
+    void bindMessage();
+    void messageEvent(QSharedPointer<Message> message) override;
 
 protected:
     QTabWidget *_tabWidget;

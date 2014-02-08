@@ -204,7 +204,7 @@ void ToolGoOperator::mouseReleaseEvent(QGraphicsSceneMouseEvent *event)
         {
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
             message->paramInt = this->_defaultToolType;
-            this->sceneGo()->sendMessage(message);
+            this->sceneGo()->send(message);
         }
     }
 }
@@ -220,7 +220,7 @@ void ToolGoOperator::keyReleaseEvent(QKeyEvent *event)
         }
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
     }
 }
 
@@ -237,13 +237,13 @@ bool ToolGoOperator::getInputNumber()
         this->_GoOperator->setModel(this->_GoOperator->model());
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GoOperator);
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
     }
     else
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
         return false;
     }
     return true;
@@ -262,13 +262,13 @@ bool ToolGoOperator::getOutputNumber()
         this->_GoOperator->setModel(this->_GoOperator->model());
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GoOperator);
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
     }
     else
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
         return false;
     }
     return true;
@@ -287,13 +287,13 @@ bool ToolGoOperator::getDualNumber()
         this->_GoOperator->setModel(this->_GoOperator->model());
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_SELECTION);
         message->setMessage(this->_GoOperator);
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
     }
     else
     {
         QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_TOOL_SELECTION);
         message->paramInt = this->_defaultToolType;
-        this->sceneGo()->sendMessage(message);
+        this->sceneGo()->send(message);
         return false;
     }
     return true;

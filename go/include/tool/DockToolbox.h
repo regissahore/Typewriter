@@ -13,7 +13,7 @@ public:
     explicit DockToolbox(QWidget *parent = 0);
     ~DockToolbox();
     QSize sizeHint() const;
-    void bindMessage(MessageController *controller);
+    void bindMessage();
     void messageEvent(QSharedPointer<Message> message);
 
 protected:

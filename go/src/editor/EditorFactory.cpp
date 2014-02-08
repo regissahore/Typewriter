@@ -4,7 +4,6 @@
 #include "EditorGo.h"
 #include "EditorGoMarkov.h"
 #include "EditorWebview.h"
-#include "EditorGoMarkovChart.h"
 
 EditorAbstract *EditorFactory::produce(int type)
 {
@@ -22,9 +21,6 @@ EditorAbstract *EditorFactory::produce(int type)
         break;
     case EDITOR_TYPE_WEBVIEW:
         editor = new EditorWebView();
-        break;
-    case EDITOR_TYPE_GO_MARKOV_CHART:
-        editor = new EditorGoMarkovChart();
         break;
     }
     if (editor != nullptr)

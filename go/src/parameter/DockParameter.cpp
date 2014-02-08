@@ -16,14 +16,13 @@ DockParameter::DockParameter(QWidget *parent) : QDockWidget(parent), Messager()
 
 DockParameter::~DockParameter()
 {
-    this->MessageListener::~MessageListener();
+    this->Messager::~Messager();
 }
 
-void DockParameter::bindMessage(MessageController *controller)
+void DockParameter::bindMessage()
 {
-    this->Messager::bindMessage(controller);
-    controller->listen(MessageFactory::TYPE_EDITOR_SELECTION, this);
-    controller->listen(MessageFactory::TYPE_EDITOR_TYPE, this);
+    this->listen(MessageFactory::TYPE_EDITOR_SELECTION);
+    this->listen(MessageFactory::TYPE_EDITOR_TYPE);
 }
 
 void DockParameter::messageEvent(QSharedPointer<Message> message)
@@ -55,6 +54,5 @@ void DockParameter::changeParameter(ItemDrawable* item)
     }
     this->_parameter = ParameterFactory::produce(type);
     this->_parameter->bindItem(item);
-    this->_parameter->bindMessage(this->MessageCreator::_messageController);
     this->setWidget(this->_parameter);
 }

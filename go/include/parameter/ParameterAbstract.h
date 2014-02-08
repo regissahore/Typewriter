@@ -14,7 +14,6 @@ public:
     ParameterAbstract(QWidget *parent = 0);
     ~ParameterAbstract();
     virtual void bindItem(void* item);
-    void bindMessage(MessageController *controller);
 
 protected:
     QTableWidget *_tableWidget;

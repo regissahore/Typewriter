@@ -1,16 +1,28 @@
 #include "Messager.h"
 
-Messager::Messager() : MessageCreator(), MessageListener()
+Messager::Messager()
 {
 }
 
 Messager::~Messager()
 {
-    this->MessageListener::~MessageListener();
+    MessageController::instance()->release(this);
 }
 
-void Messager::bindMessage(MessageController *controller)
+void Messager::send(QSharedPointer<Message> message)
 {
-    this->MessageCreator::setMessageController(controller);
-    this->MessageListener::setMessageController(controller);
+    if (!message.isNull())
+    {
+        MessageController::instance()->send(message);
+    }
+}
+
+void Messager::listen(int messageType)
+{
+    MessageController::instance()->listen(messageType, this);
+}
+
+void Messager::messageEvent(QSharedPointer<Message> message)
+{
+    Q_UNUSED(message);
 }
