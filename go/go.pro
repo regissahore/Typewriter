@@ -179,7 +179,6 @@ HEADERS += \
     include/tool/ToolGoMarkovOperator.h \
     include/tool/ToolGoMarkovPointerExtend.h \
     include/tool/ToolGoMarkovText.h \
-    include/tool/ToolGoMove.h \
     include/tool/ToolGoOperator.h \
     include/tool/ToolGoPointerExtend.h \
     include/tool/ToolGoSelect.h \
@@ -340,7 +339,6 @@ SOURCES += \
     src/tool/ToolGoMarkovOperator.cpp \
     src/tool/ToolGoMarkovPointerExtend.cpp \
     src/tool/ToolGoMarkovText.cpp \
-    src/tool/ToolGoMove.cpp \
     src/tool/ToolGoOperator.cpp \
     src/tool/ToolGoPointerExtend.cpp \
     src/tool/ToolGoSelect.cpp \
