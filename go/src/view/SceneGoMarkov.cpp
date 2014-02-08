@@ -23,6 +23,7 @@
 #include "GoPathSetSetSet.h"
 #include "DialogGoMarkovAnalysisProcess.h"
 #include "ViewGoMarkov.h"
+#include "GoMarkovOperatorFactory.h"
 using namespace std;
 
 SceneGoMarkov::SceneGoMarkov(QObject *parent) : SceneGo(parent)
@@ -362,11 +363,111 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleGraph()
     return graph;
 }
 
-QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleSubGraph(ItemGoOperator *last)
+QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleSubGraph(ItemGoMarkovOperator *last)
 {
-    Q_UNUSED(last);
     QSharedPointer<GoMarkovGraph> graph(new GoMarkovGraph());
+    QList<QGraphicsItem*> items = this->items();
+    QVector<ItemGoSignal*> signalItems;
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
+        {
+            signalItems.push_back((ItemGoSignal*)item);
+        }
+        else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
+            op->model()->input()->clear();
+            op->model()->subInput()->clear();
+            for (int j = 0; j < op->model()->output()->number(); ++j)
+            {
+                op->model()->output()->signal()->at(j)->clear();
+            }
+        }
+    }
+    QVector<ItemGoMarkovOperator*> operators;
+    operators.push_back(last);
+    for (int i = 0; i < operators.size(); ++i)
+    {
+        graph->addOperator(operators[i]->model());
+        for (int j = 0; j < signalItems.size(); ++j)
+        {
+            if (signalItems[j]->end()->op == operators[i])
+            {
+                ItemGoSignal* siItem = signalItems[j];
+                GoSignal* signal = siItem->model();
+                ItemGoMarkovOperator* uOpItem = (ItemGoMarkovOperator*)siItem->start()->op;
+                ItemGoMarkovOperator* vOpItem = (ItemGoMarkovOperator*)siItem->end()->op;
+                int uIndex = siItem->start()->index;
+                int vIndex = siItem->end()->index;
+                int vType = siItem->end()->type;
+                uOpItem->model()->output()->addSignal(uIndex, signal);
+                if (vType == DefinationGoType::GO_OPERATOR_INPUT)
+                {
+                    vOpItem->model()->input()->set(vIndex, signal);
+                }
+                else
+                {
+                    vOpItem->model()->subInput()->set(vIndex, signal);
+                }
+                signal->setU(uOpItem->model());
+                signal->setV(vOpItem->model());
+                bool flag = true;
+                for (int k = 0; k < operators.size(); ++k)
+                {
+                    if (operators[k] == uOpItem)
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag)
+                {
+                    operators.push_back(uOpItem);
+                }
+            }
+        }
+    }
     return graph;
+}
+
+void SceneGoMarkov::initGlobalFeedbackCut()
+{
+    QList<QGraphicsItem*> items = this->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGoMarkovOperator* opItem = (ItemGoMarkovOperator*)item;
+            if (opItem->model()->type() == GoMarkovOperatorFactory::Operator_Type_21)
+            {
+                QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
+                // GoPathSetSetSet cut = graph->findCut(1000);
+                graph->print();
+            }
+        }
+    }
+}
+
+void SceneGoMarkov::initGlobalFeedbackPath()
+{
+    QList<QGraphicsItem*> items = this->items();
+    for (int i = 0; i < items.size(); ++i)
+    {
+        ItemDrawable *item = (ItemDrawable*)items[i];
+        if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
+        {
+            ItemGoMarkovOperator* opItem = (ItemGoMarkovOperator*)item;
+            if (opItem->model()->type() == GoMarkovOperatorFactory::Operator_Type_21)
+            {
+                QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
+                // GoPathSetSetSet path = graph->findPath(1000);
+                graph->print();
+            }
+        }
+    }
 }
 
 QList<ItemGoMarkovEquivalent*> SceneGoMarkov::getTopologyOrder(QList<ItemGoMarkovEquivalent*> equivalents)
@@ -481,6 +582,7 @@ void SceneGoMarkov::analysisCut(const QString filePath)
     dialog.integerInput()->setValue(this->_analysisCutOrder);
     if (dialog.exec() == QDialog::Accepted)
     {
+        this->initGlobalFeedbackCut();
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
         this->_analysisCutOrder = dialog.integerInput()->value();
         GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
@@ -507,6 +609,7 @@ void SceneGoMarkov::analysisPath(const QString filePath)
     dialog.integerInput()->setValue(this->_analysisCutOrder);
     if (dialog.exec() == QDialog::Accepted)
     {
+        this->initGlobalFeedbackPath();
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
         this->_analysisCutOrder = dialog.integerInput()->value();
         GoPathSetSetSet cut = graph->findPath(dialog.integerInput()->value());
