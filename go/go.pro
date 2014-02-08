@@ -181,7 +181,6 @@ HEADERS += \
     include/tool/ToolGoMarkovText.h \
     include/tool/ToolGoMove.h \
     include/tool/ToolGoOperator.h \
-    include/tool/ToolGoPointer.h \
     include/tool/ToolGoPointerExtend.h \
     include/tool/ToolGoSelect.h \
     include/tool/ToolGoSignal.h \
@@ -287,10 +286,6 @@ SOURCES += \
     src/analysis/origin/GoSignal.cpp \
     src/analysis/origin/GoSignalFactory.cpp \
     src/analysis/origin/GoStatus.cpp \
-    src/define/DefinationEditorSelectionType.cpp \
-    src/define/DefinationGoType.cpp \
-    src/define/DefinationToolType.cpp \
-    src/define/DomItem.cpp \
     src/define/FactoryAbstract.cpp \
     src/define/GlobalConfig.cpp \
     src/define/IdentifiedItem.cpp \
@@ -347,7 +342,6 @@ SOURCES += \
     src/tool/ToolGoMarkovText.cpp \
     src/tool/ToolGoMove.cpp \
     src/tool/ToolGoOperator.cpp \
-    src/tool/ToolGoPointer.cpp \
     src/tool/ToolGoPointerExtend.cpp \
     src/tool/ToolGoSelect.cpp \
     src/tool/ToolGoSignal.cpp \

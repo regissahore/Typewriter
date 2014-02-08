@@ -1,11 +1,7 @@
 #include "ToolGoFactory.h"
-#include "ToolGoPointer.h"
-#include "ToolGoMove.h"
-#include "ToolGoZoom.h"
 #include "ToolGoSelect.h"
 #include "ToolGoText.h"
 #include "ToolGoOperator.h"
-#include "ToolGoSignal.h"
 #include "ToolGoPointerExtend.h"
 #include "ToolGoMarkovOperator.h"
 #include "ToolGoMarkovEquivalent.h"
@@ -18,17 +14,8 @@ ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
     ToolGoAbstract *tool = nullptr;
     switch (type)
     {
-    case DefinationToolType::TOOL_TYPE_COMMON_MOVE:
-        tool = new ToolGoMove(sceneGo);
-        break;
-    case DefinationToolType::TOOL_TYPE_COMMON_POINTER:
-        tool = new ToolGoPointer(sceneGo);
-        break;
     case DefinationToolType::TOOL_TYPE_COMMON_SELECT:
         tool = new ToolGoSelect(sceneGo);
-        break;
-    case DefinationToolType::TOOL_TYPE_COMMON_ZOOM:
-        tool = new ToolGoZoom(sceneGo);
         break;
     case DefinationToolType::TOOL_TYPE_GO_POINTER_EXTEND:
         tool = new ToolGoPointerExtend(sceneGo);
@@ -104,9 +91,6 @@ ToolGoAbstract* ToolGoFactory::produce(SceneGo *sceneGo, const int type)
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_29:
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_OPERATOR_SPLIT:
         tool = new ToolGoMarkovOperator(sceneGo);
-        break;
-    case DefinationToolType::TOOL_TYPE_GO_SIGNAL:
-        tool = new ToolGoSignal(sceneGo);
         break;
     case DefinationToolType::TOOL_TYPE_GO_MARKOV_EQUIVALENT:
         tool = new ToolGoMarkovEquivalent(sceneGo);
