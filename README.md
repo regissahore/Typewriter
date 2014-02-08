@@ -39,6 +39,10 @@
 
 * 2014年寒假大连二十四中教学数据
 
+## 2014年01月25日
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/CyberZHG/zcoach/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+* 某个关系链的C++作业
 
+## 2014年02月08日
+
+* 数模数据采集
