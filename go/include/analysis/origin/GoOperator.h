@@ -34,7 +34,7 @@ protected:
     GoInput *_input;
     GoInput *_subInput;
     GoOutput *_output;
-    GoStatus  *_status;
+    GoStatus *_status;
     QVector<GoAccumulative*> *_accumulatives;
     GoParameter *_parameter;
     QString _name;

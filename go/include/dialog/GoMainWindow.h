@@ -27,12 +27,12 @@ protected:
 
 private:
     Ui::GoMainWindow *ui;
-    bool _close; /** 当该值为true时才能关闭程序。 */
-    MessageController *_messageController; /** 程序唯一的实例化的消息控制器。 */
-    Editor *_editor; /** Go法的编辑器。 */
-    DockMessage *_dockMessage; /** 消息悬停窗口。 */
-    DockToolbox *_dockToolbox; /** 工具箱悬停窗口。 */
-    DockParameter *_dockParameter; /** The parameter dock widget. */
+    bool _close;
+    MessageController _messageController;
+    Editor _editor;
+    DockMessage _dockMessage;
+    DockParameter _dockParameter;
+    DockToolbox _dockToolbox;
     void initEditor();
     void initDock();
 

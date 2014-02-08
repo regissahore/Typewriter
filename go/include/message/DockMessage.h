@@ -5,7 +5,6 @@
 #include <QGridLayout>
 #include "Messager.h"
 
-class DebugConsole;
 class OutputConsole;
 
 class DockMessage : public QDockWidget, public Messager
@@ -16,7 +15,6 @@ public:
     void bindMessage(MessageController *controller);
 
 protected:
-    DebugConsole *_debugConsole;
     OutputConsole *_outputConsole;
 };
 

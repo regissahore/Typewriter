@@ -1,13 +1,13 @@
 #include <QVector>
 #include <qmath.h>
 #include "GoMarkovAnalysis.h"
-#include "GoOperator.h"
 #include "GoSignal.h"
 #include "GoInput.h"
 #include "GoOutput.h"
 #include "GoMarkovOperator.h"
 #include "GoMarkovStatus.h"
 #include "GoAccumulative.h"
+#include "GoOperator.h"
 #include "GoMarkovOperatorFactory.h"
 
 GoMarkovAnalysis::GoMarkovAnalysis() : GoAnalysis()

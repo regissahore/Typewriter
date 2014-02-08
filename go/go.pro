@@ -142,7 +142,6 @@ HEADERS += \
     include/editor/EditorGoMarkovChart.h \
     include/editor/EditorWebview.h \
     include/editor/EditorWelcome.h \
-    include/message/DebugConsole.h \
     include/message/DockMessage.h \
     include/message/Message.h \
     include/message/MessageController.h \
@@ -294,7 +293,6 @@ SOURCES += \
     src/editor/EditorWebview.cpp \
     src/editor/EditorWelcome.cpp \
     src/main.cpp \
-    src/message/DebugConsole.cpp \
     src/message/DockMessage.cpp \
     src/message/Message.cpp \
     src/message/MessageController.cpp \

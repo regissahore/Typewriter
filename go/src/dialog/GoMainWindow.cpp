@@ -11,16 +11,17 @@ using namespace std;
 
 GoMainWindow::GoMainWindow(QWidget *parent) :
     QMainWindow(parent),
-    ui(new Ui::GoMainWindow)
+    ui(new Ui::GoMainWindow),
+    _editor(this),
+    _dockMessage(this), _dockParameter(this), _dockToolbox(this)
 {
     ui->setupUi(this);
     this->_close = false;
     this->setGeometry(10, 10, 1024, 768);
     this->showMaximized();
-    this->_messageController = new MessageController();
     this->initDock();
     this->initEditor();
-    this->bindMessage(this->_messageController);
+    this->bindMessage(&this->_messageController);
 }
 
 GoMainWindow::~GoMainWindow()
@@ -65,29 +66,25 @@ void GoMainWindow::closeEvent(QCloseEvent *event)
 
 void GoMainWindow::initEditor()
 {
-    this->_dockToolbox = new DockToolbox(this);
-    this->_dockToolbox->bindMessage(this->_messageController);
-    this->_dockToolbox->setMaximumWidth(200);
-    this->_dockToolbox->setFeatures(0);
-    this->ui->widget->layout()->addWidget(this->_dockToolbox);
+    this->_dockToolbox.bindMessage(&this->_messageController);
+    this->_dockToolbox.setMaximumWidth(200);
+    this->_dockToolbox.setFeatures(0);
+    this->ui->widget->layout()->addWidget(&this->_dockToolbox);
 
-    this->_editor = new Editor(this);
-    this->ui->widget->layout()->addWidget(this->_editor);
-    this->_editor->bindMessage(this->_messageController);
+    this->_editor.bindMessage(&this->_messageController);
+    this->ui->widget->layout()->addWidget(&this->_editor);
 
-    this->_dockParameter = new DockParameter(this);
-    this->_dockParameter->bindMessage(this->_messageController);
-    this->_dockParameter->setMaximumWidth(250);
-    this->_dockParameter->setFeatures(0);
-    this->_dockParameter->setFloating(false);
-    this->ui->widget->layout()->addWidget(this->_dockParameter);
+    this->_dockParameter.bindMessage(&this->_messageController);
+    this->_dockParameter.setMaximumWidth(250);
+    this->_dockParameter.setFeatures(0);
+    this->_dockParameter.setFloating(false);
+    this->ui->widget->layout()->addWidget(&this->_dockParameter);
 }
 
 void GoMainWindow::initDock()
 {
-    this->_dockMessage = new DockMessage(this);
-    this->_dockMessage->bindMessage(this->_messageController);
-    this->addDockWidget(Qt::BottomDockWidgetArea, this->_dockMessage);
+    this->_dockMessage.bindMessage(&this->_messageController);
+    this->addDockWidget(Qt::BottomDockWidgetArea, &this->_dockMessage);
 }
 
 void GoMainWindow::on_toolButtonNew_clicked()

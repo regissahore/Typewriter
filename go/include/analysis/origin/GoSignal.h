@@ -18,8 +18,8 @@ public:
     void setIsGlobalFeedback(const bool value);
 
 protected:
-    GoOperator* _u; /** One ID of the connected operator. */
-    GoOperator* _v; /** The other ID of the connected operator. */
+    GoOperator* _u;
+    GoOperator* _v;
     bool _isGlobalFeedback;
 };
 
