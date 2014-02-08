@@ -47,12 +47,6 @@ public:
         Operator_Type_22A = 34,
         Operator_Type_22B = 35,
         Operator_Type_23 = 36,
-        Operator_Type_24 = 37,
-        Operator_Type_25 = 38,
-        Operator_Type_26 = 39,
-        Operator_Type_27 = 40,
-        Operator_Type_28 = 41,
-        Operator_Type_29 = 42,
         Operator_Type_Split = 44,
         Operator_Total = 45
     };

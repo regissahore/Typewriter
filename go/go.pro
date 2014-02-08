@@ -17,6 +17,7 @@ TEMPLATE = app
 RC_FILE = resource.rc
 
 QMAKE_CXXFLAGS += -std=c++0x
+QMAKE_LFLAGS = -static
 
 INCLUDEPATH += ./include
 INCLUDEPATH += ./include/analysis
@@ -81,12 +82,6 @@ HEADERS += \
     include/analysis/markov/GoMarkovOperator22a.h \
     include/analysis/markov/GoMarkovOperator22b.h \
     include/analysis/markov/GoMarkovOperator23.h \
-    include/analysis/markov/GoMarkovOperator24.h \
-    include/analysis/markov/GoMarkovOperator25.h \
-    include/analysis/markov/GoMarkovOperator26.h \
-    include/analysis/markov/GoMarkovOperator27.h \
-    include/analysis/markov/GoMarkovOperator28.h \
-    include/analysis/markov/GoMarkovOperator29.h \
     include/analysis/markov/GoMarkovOperator3.h \
     include/analysis/markov/GoMarkovOperator4.h \
     include/analysis/markov/GoMarkovOperator5.h \
@@ -242,12 +237,6 @@ SOURCES += \
     src/analysis/markov/GoMarkovOperator22a.cpp \
     src/analysis/markov/GoMarkovOperator22b.cpp \
     src/analysis/markov/GoMarkovOperator23.cpp \
-    src/analysis/markov/GoMarkovOperator24.cpp \
-    src/analysis/markov/GoMarkovOperator25.cpp \
-    src/analysis/markov/GoMarkovOperator26.cpp \
-    src/analysis/markov/GoMarkovOperator27.cpp \
-    src/analysis/markov/GoMarkovOperator28.cpp \
-    src/analysis/markov/GoMarkovOperator29.cpp \
     src/analysis/markov/GoMarkovOperator3.cpp \
     src/analysis/markov/GoMarkovOperator4.cpp \
     src/analysis/markov/GoMarkovOperator5.cpp \

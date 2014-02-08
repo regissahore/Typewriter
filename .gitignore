@@ -5,6 +5,7 @@ release
 
 # Local Project Files
 *.user
+*.user.*
 *.layout
 
 # Documents

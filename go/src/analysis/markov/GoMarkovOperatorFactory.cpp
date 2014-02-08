@@ -41,12 +41,6 @@
 #include "GoMarkovOperator22a.h"
 #include "GoMarkovOperator22b.h"
 #include "GoMarkovOperator23.h"
-#include "GoMarkovOperator24.h"
-#include "GoMarkovOperator25.h"
-#include "GoMarkovOperator26.h"
-#include "GoMarkovOperator27.h"
-#include "GoMarkovOperator28.h"
-#include "GoMarkovOperator29.h"
 #include "GoMarkovOperatorSplitPoint.h"
 
 GoMarkovOperator* GoMarkovOperatorFactory::produce(const int type)
@@ -168,24 +162,6 @@ GoMarkovOperator* GoMarkovOperatorFactory::produce(const int type)
     case Operator_Type_23:
         op = new GoMarkovOperator23();
         break;
-    case Operator_Type_24:
-        op = new GoMarkovOperator24();
-        break;
-    case Operator_Type_25:
-        op = new GoMarkovOperator25();
-        break;
-    case Operator_Type_26:
-        op = new GoMarkovOperator26();
-        break;
-    case Operator_Type_27:
-        op = new GoMarkovOperator27();
-        break;
-    case Operator_Type_28:
-        op = new GoMarkovOperator28();
-        break;
-    case Operator_Type_29:
-        op = new GoMarkovOperator29();
-        break;
     case Operator_Type_Split:
         op = new GoMarkovOperatorSplitPoint();
         break;
@@ -274,18 +250,6 @@ QString GoMarkovOperatorFactory::typeName(const int type)
         return "22B";
     case Operator_Type_23:
         return "23";
-    case Operator_Type_24:
-        return "24";
-    case Operator_Type_25:
-        return "25";
-    case Operator_Type_26:
-        return "26";
-    case Operator_Type_27:
-        return "27";
-    case Operator_Type_28:
-        return "28";
-    case Operator_Type_29:
-        return "29";
     case Operator_Type_Split:
         return "Split";
     }
