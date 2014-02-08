@@ -182,7 +182,6 @@ HEADERS += \
     include/tool/ToolGoOperator.h \
     include/tool/ToolGoPointerExtend.h \
     include/tool/ToolGoSelect.h \
-    include/tool/ToolGoSignal.h \
     include/tool/ToolGoText.h \
     include/tool/ToolGoZoom.h \
     include/view/GraphicsView.h \
@@ -342,7 +341,6 @@ SOURCES += \
     src/tool/ToolGoOperator.cpp \
     src/tool/ToolGoPointerExtend.cpp \
     src/tool/ToolGoSelect.cpp \
-    src/tool/ToolGoSignal.cpp \
     src/tool/ToolGoText.cpp \
     src/tool/ToolGoZoom.cpp \
     src/view/GraphicsView.cpp \
