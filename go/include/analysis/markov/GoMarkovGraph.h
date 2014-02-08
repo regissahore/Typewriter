@@ -28,6 +28,7 @@ public:
     QString currentOperatorName() const;
     virtual GoPathSetSetSet findPath(int order) override;
     virtual GoPathSetSetSet findCut(int order) override;
+    void printQualitativeOutput() const;
     bool saveAsHTML(const QString filePath, GoPathSetSetSet path);
 
 protected:

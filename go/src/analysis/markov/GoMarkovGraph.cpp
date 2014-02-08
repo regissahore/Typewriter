@@ -586,6 +586,7 @@ GoPathSetSetSet GoMarkovGraph::findPath(int order)
         GoMarkovOperator* op = (GoMarkovOperator*)list[i];
         op->initOutputMarkovStatus();
         op->initQualitativeOutput();
+        op->setQualitativeStatus(0.0);
     }
     for (int i = 1; i <= order; ++i)
     {
@@ -629,6 +630,7 @@ GoPathSetSetSet GoMarkovGraph::findCut(int order)
         GoMarkovOperator* op = (GoMarkovOperator*)list[i];
         op->initOutputMarkovStatus();
         op->initQualitativeOutput();
+        op->setQualitativeStatus(1.0);
     }
     for (int i = 1; i <= order; ++i)
     {
@@ -694,11 +696,10 @@ void GoMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoP
             op->setQualitativeStatus(1.0);
             tempPath.add(list[index]);
             this->findPathDfs(normals, path, list, tempPath, index + 1, number + 1, order);
+            op->setQualitativeStatus(0.0);
             tempPath.removeEnd();
         }
     }
-    GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-    op->setQualitativeStatus(0.0);
     this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
 }
 
@@ -754,11 +755,10 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
             op->setQualitativeStatus(0.0);
             tempPath.add(list[index]);
             this->findCutDfs(fails, cut, list, tempPath, index + 1, number + 1, order);
+            op->setQualitativeStatus(1.0);
             tempPath.removeEnd();
         }
     }
-    GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-    op->setQualitativeStatus(1.0);
     this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
 }
 
@@ -780,6 +780,34 @@ int GoMarkovGraph::totalOperatorNum() const
 QString GoMarkovGraph::currentOperatorName() const
 {
     return this->_currentOperatorName;
+}
+
+void GoMarkovGraph::printQualitativeOutput() const
+{
+    FILE *file = fopen("qualitative.log", "a");
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        GoMarkovOperator* op = (GoMarkovOperator*)this->_operator[i];
+        fprintf(file, "%d-%d %d: ", op->id(), op->type(), op->realID());
+        if (GoMarkovOperatorFactory::isLogical(op->type()))
+        {
+            fprintf(file, "LOGIC ");
+        }
+        else
+        {
+            fprintf(file, "%lf ", op->qualitativeStatus().getValue(0));
+        }
+        for (int j = 0; j < op->output()->number(); ++j)
+        {
+            fprintf(file, "%lf\n", op->qualitativeOutput()->at(j).getValue(0));
+        }
+    }
+    for (int i = 0; i < 80; ++i)
+    {
+        fprintf(file, "=");
+    }
+    fprintf(file, "\n");
+    fclose(file);
 }
 
 bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)

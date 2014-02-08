@@ -448,6 +448,13 @@ void ItemGoOperator::setSignal(ItemGoSignal *signal, int type, int index)
     case DefinationGoType::GO_OPERATOR_OUTPUT:
         if (index >= 0 && index < this->model()->output()->number())
         {
+            for (int i = 0; i < this->_outputSignal->at(index)->size(); ++i)
+            {
+                if (this->_outputSignal->at(index)->at(i) == signal)
+                {
+                    return;
+                }
+            }
             this->_outputSignal->at(index)->push_back(signal);
         }
         break;

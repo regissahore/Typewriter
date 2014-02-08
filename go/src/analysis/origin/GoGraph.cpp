@@ -2,6 +2,7 @@
 #include <QFile>
 #include <QMap>
 #include <QTextStream>
+#include <cstdio>
 #include "GoGraph.h"
 #include "GoOperator.h"
 #include "GoSignal.h"
@@ -26,7 +27,6 @@ GoGraph::~GoGraph()
 {
     this->_source.clear();
     this->_operator.clear();
-    this->_signal.clear();
     this->_operatorPos.clear();
     this->Messager::~Messager();
 }
@@ -41,11 +41,6 @@ QVector<GoOperator*> GoGraph::getOperator() const
     return this->_operator;
 }
 
-QVector<GoSignal*> GoGraph::getSignal() const
-{
-    return this->_signal;
-}
-
 void GoGraph::addOperator(GoOperator *op)
 {
     if (op->type() == GoOperatorFactory::Operator_Type_4 ||
@@ -55,11 +50,6 @@ void GoGraph::addOperator(GoOperator *op)
     }
     this->_operatorPos[op] = this->_operator.size();
     this->_operator.push_back(op);
-}
-
-void GoGraph::addSignal(GoSignal *signal)
-{
-    this->_signal.push_back(signal);
 }
 
 QString GoGraph::getErrorMessage() const
@@ -651,6 +641,35 @@ void GoGraph::findCutDfs(QMap<int, QVector<double> *> &fails, GoPathSetSetSet &c
         list[index]->status()->setProbability(i, copy->probability(i));
     }
     delete copy;
+}
+
+void GoGraph::print() const
+{
+    FILE *file = fopen("graph.log", "a");
+    fprintf(file, "Operators: \n");
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        fprintf(file, "%d ID: %d Type: %d Real ID: %d Num: %d %d %d\n", i, this->_operator[i]->id(), this->_operator[i]->type(), this->_operator[i]->realID(), this->_operator[i]->input()->number(), this->_operator[i]->subInput()->number(), this->_operator[i]->output()->number());
+    }
+    fprintf(file, "Signals: \n");
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        fprintf(file, "Operator %d-%d  %d\n", this->_operator[i]->id(), this->_operator[i]->type(), this->_operator[i]->realID());
+        for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
+        {
+            for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
+            {
+                GoSignal *signal = this->_operator[i]->output()->signal()->at(j)->at(k);
+                fprintf(file, "\t%d (%d-%d) - (%d-%d)  %d - %d\n", signal->id(), signal->u()->id(), signal->u()->type(), signal->v()->id(), signal->v()->type(), signal->u()->realID(), signal->v()->realID());
+            }
+        }
+    }
+    for (int i = 0; i < 80; ++i)
+    {
+        fprintf(file, "=");
+    }
+    fprintf(file, "\n");
+    fclose(file);
 }
 
 bool GoGraph::saveAsHTML(const QString filePath)

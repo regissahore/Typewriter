@@ -14,6 +14,7 @@ public:
     void add(GoSignal* signal);
     void set(int index, GoSignal* signal);
     void remove(int index);
+    void clear();
     QVector<GoSignal*>* signal() const;
     int getSignalIndex(GoSignal* signal) const;
 

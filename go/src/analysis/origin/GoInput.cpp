@@ -55,6 +55,14 @@ void GoInput::remove(int index)
     this->_signal->remove(index);
 }
 
+void GoInput::clear()
+{
+    for (int i = 0; i < this->signal()->size(); ++i)
+    {
+        this->set(i, nullptr);
+    }
+}
+
 QVector<GoSignal*>* GoInput::signal() const
 {
     return this->_signal;

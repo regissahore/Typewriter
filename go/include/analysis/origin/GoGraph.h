@@ -31,14 +31,13 @@ public:
     virtual ~GoGraph();
     QVector<int> getSource() const;
     QVector<GoOperator*> getOperator() const;
-    QVector<GoSignal*> getSignal() const;
     void addOperator(GoOperator *op);
-    void addSignal(GoSignal *signal);
     virtual void calcAccumulativeProbability();
     virtual GoPathSetSetSet findPath(int order);
     virtual GoPathSetSetSet findCut(int order);
     QString getErrorMessage() const;
     QVector<GoGraph::MessageRecord> messages() const;
+    void print() const;
     bool saveAsHTML(const QString filePath);
     virtual bool saveAsHTML(const QString filePath, GoPathSetSetSet path);
 
@@ -52,7 +51,6 @@ protected:
     QVector<MessageRecord> _messages;
     QVector<int> _source;
     QVector<GoOperator*> _operator;
-    QVector<GoSignal*> _signal;
     QMap<GoOperator*, int> _operatorPos;
     QString _error;
     GoAnalysis *_analysis;

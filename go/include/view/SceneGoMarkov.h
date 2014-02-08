@@ -4,6 +4,7 @@
 #include "SceneGo.h"
 
 class GoMarkovGraph;
+class ItemGoOperator;
 class ItemGoMarkovEquivalent;
 
 class SceneGoMarkov : public SceneGo
@@ -12,6 +13,8 @@ class SceneGoMarkov : public SceneGo
 public:
     SceneGoMarkov(QObject *parent = 0);
     QSharedPointer<GoMarkovGraph> generateGoMarkovGraph();
+    QSharedPointer<GoMarkovGraph> generateGoMarkovSimpleGraph();
+    QSharedPointer<GoMarkovGraph> generateGoMarkovSimpleSubGraph(ItemGoOperator *last);
     QList<ItemGoMarkovEquivalent *> getTopologyOrder(QList<ItemGoMarkovEquivalent *> equivalents);
     virtual void analysisProbability(const QString filePath) override;
     virtual void analysisCut(const QString filePath) override;

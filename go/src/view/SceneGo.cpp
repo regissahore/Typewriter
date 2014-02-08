@@ -318,7 +318,6 @@ QSharedPointer<GoGraph> SceneGo::generateGoGraph()
                 ((ItemGoSignal*)item)->end()->op->model()->output()->addSignal(((ItemGoSignal*)item)->end()->index, ((ItemGoSignal*)item)->model());
                 break;
             }
-            graph->addSignal(((ItemGoSignal*)item)->model());
             break;
         default:
             break;
