@@ -43,7 +43,8 @@ FORMS += \
     form/ToolboxGoMarkov.ui \
     form/DialogMatrixInput.ui \
     form/OutputConsole.ui \
-    form/DialogGoMarkovAnalysisProcess.ui
+    form/DialogGoMarkovAnalysisProcess.ui \
+    form/DialogGoMarkovCut.ui
 
 HEADERS += \
     include/analysis/markov/DoubleVector.h \
@@ -186,7 +187,8 @@ HEADERS += \
     include/view/ViewGo.h \
     include/view/ViewGoMarkov.h \
     include/analysis/markov/RungeKutta.h \
-    include/analysis/markov/RungeKuttaBreakdown2.h
+    include/analysis/markov/RungeKuttaBreakdown2.h \
+    include/dialog/DialogGoMarkovCut.h
 
 SOURCES += \
     src/analysis/markov/DoubleVector.cpp \
@@ -326,4 +328,5 @@ SOURCES += \
     src/view/ViewGo.cpp \
     src/view/ViewGoMarkov.cpp \
     src/analysis/markov/RungeKutta.cpp \
-    src/analysis/markov/RungeKuttaBreakdown2.cpp
+    src/analysis/markov/RungeKuttaBreakdown2.cpp \
+    src/dialog/DialogGoMarkovCut.cpp

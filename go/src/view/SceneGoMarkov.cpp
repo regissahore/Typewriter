@@ -26,6 +26,7 @@
 #include "ViewGoMarkov.h"
 #include "GoMarkovOperatorFactory.h"
 #include "GoMarkovOperator21.h"
+#include "DialogGoMarkovCut.h"
 using namespace std;
 
 SceneGoMarkov::SceneGoMarkov(QObject *parent) : SceneGo(parent)
@@ -588,17 +589,13 @@ void SceneGoMarkov::analysisProbability(const QString filePath)
 
 void SceneGoMarkov::analysisCut(const QString filePath)
 {
-    DialogIntegerInput dialog;
-    dialog.setWindowTitle(QObject::tr("Set order"));
-    dialog.setText(QObject::tr("Input cut order: "));
-    dialog.integerInput()->setMinimum(1);
-    dialog.integerInput()->setValue(this->_analysisCutOrder);
+    DialogGoMarkovCut dialog;
     if (dialog.exec() == QDialog::Accepted)
     {
         this->initGlobalFeedbackCut();
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
-        this->_analysisCutOrder = dialog.integerInput()->value();
-        GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
+        this->_analysisCutOrder = dialog.order();
+        GoPathSetSetSet cut = graph->findCut(dialog.order());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
@@ -615,17 +612,15 @@ void SceneGoMarkov::analysisCut(const QString filePath)
 
 void SceneGoMarkov::analysisPath(const QString filePath)
 {
-    DialogIntegerInput dialog;
-    dialog.setWindowTitle(QObject::tr("Set order"));
-    dialog.setText(QObject::tr("Input path order: "));
-    dialog.integerInput()->setMinimum(1);
-    dialog.integerInput()->setValue(this->_analysisCutOrder);
+    DialogGoMarkovCut dialog;
     if (dialog.exec() == QDialog::Accepted)
     {
         this->initGlobalFeedbackPath();
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
-        this->_analysisCutOrder = dialog.integerInput()->value();
-        GoPathSetSetSet cut = graph->findPath(dialog.integerInput()->value());
+        this->_analysisCutOrder = dialog.order();
+        GoPathSetSetSet cut = graph->findPath(dialog.order());
+        cut.setCount(dialog.count());
+        cut.setInterval(dialog.interval());
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", cut);
