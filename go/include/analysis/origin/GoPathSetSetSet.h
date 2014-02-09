@@ -1,10 +1,12 @@
 #ifndef GOPATHSETSETSET_H
 #define GOPATHSETSETSET_H
 #include <QVector>
+#include <QSet>
 
 class GoPathSet;
 class GoPathSetSet;
 class GoOperator;
+class GoMarkovOperator;
 
 class GoPathSetSetSet
 {
@@ -27,10 +29,18 @@ public:
     void sort();
     double totalMarkovProbability(GoOperator *op) const;
     double totalMarkovProbability(int index) const;
+    void setInterval(double interval);
+    void setCount(int count);
+    void initCalculation();
+    void prepareNextCalculation(int count);
+    void finishCalculation();
 
 protected:
+    QSet<GoOperator*> _operators;
     QVector<GoPathSetSet*> _list;
     QVector<End> _endList;
+    double _interval;
+    int _count;
 };
 
 #endif // GOPATHSETSETSET_H

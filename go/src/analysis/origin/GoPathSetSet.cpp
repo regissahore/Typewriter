@@ -1,5 +1,6 @@
 #include <cstdio>
 #include <QString>
+#include "GoOperator.h"
 #include "GoPathSetSet.h"
 #include "GoPathSet.h"
 
@@ -63,4 +64,18 @@ double GoPathSetSet::totalMarkovProbability() const
         res += this->_list[i]->toMarkovProbability();
     }
     return res;
+}
+
+QSet<GoOperator*> GoPathSetSet::operatorSet() const
+{
+    QSet<GoOperator*> set;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        QSet<GoOperator*> subSet = this->_list[i]->operatorSet();
+        for (auto j = subSet.begin(); j != subSet.end(); ++j)
+        {
+            set.insert(*j);
+        }
+    }
+    return set;
 }

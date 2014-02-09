@@ -1,6 +1,7 @@
 #ifndef GOPATHSET_H
 #define GOPATHSET_H
 #include <QVector>
+#include <QSet>
 
 class GoOperator;
 
@@ -30,6 +31,7 @@ public:
     bool isContain(GoPathSet *set);
     double totalProbablity() const;
     void setTotalProbablity(const double value);
+    QSet<GoOperator*> operatorSet() const;
 
 protected:
     QVector<GoOperator*> _list;

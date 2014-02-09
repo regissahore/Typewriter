@@ -1,7 +1,9 @@
 #ifndef GOPATHSETSET_H
 #define GOPATHSETSET_H
 #include <QVector>
+#include <QSet>
 
+class GoOperator;
 class GoPathSet;
 
 class GoPathSetSet
@@ -13,6 +15,7 @@ public:
     QVector<GoPathSet*> list() const;
     void sort();
     double totalMarkovProbability() const;
+    QSet<GoOperator*> operatorSet() const;
 
 protected:
     QVector<GoPathSet*> _list;

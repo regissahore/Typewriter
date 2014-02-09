@@ -3,9 +3,11 @@
 #include "GoPathSetSet.h"
 #include "GoPathSet.h"
 #include "GoOperator.h"
+#include "GoMarkovOperator.h"
 
 GoPathSetSetSet::GoPathSetSetSet()
 {
+    this->_count = 0;
 }
 
 GoPathSetSetSet::~GoPathSetSetSet()
@@ -134,4 +136,47 @@ bool operator >(const GoPathSetSetSet::End &a, const GoPathSetSetSet::End &b)
         return a.outputIndex > b.outputIndex;
     }
     return a.op->id() > b.op->id();
+}
+
+void GoPathSetSetSet::setInterval(double interval)
+{
+    this->_interval = interval;
+}
+
+void GoPathSetSetSet::setCount(int count)
+{
+    this->_count = count;
+}
+
+void GoPathSetSetSet::initCalculation()
+{
+    this->_operators.clear();
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        QSet<GoOperator*> set = this->_list[i]->operatorSet();
+        for (auto j = set.begin(); j != set.end(); ++j)
+        {
+            this->_operators.insert(*j);
+        }
+    }
+    for (auto i = this->_operators.begin(); i != this->_operators.end(); ++i)
+    {
+        ((GoMarkovOperator*)(*i))->initCalculation(this->_interval);
+    }
+}
+
+void GoPathSetSetSet::prepareNextCalculation(int count)
+{
+    for (auto i = this->_operators.begin(); i != this->_operators.end(); ++i)
+    {
+        ((GoMarkovOperator*)(*i))->prepareNextCalculation(count, count * this->_interval);
+    }
+}
+
+void GoPathSetSetSet::finishCalculation()
+{
+    for (auto i = this->_operators.begin(); i != this->_operators.end(); ++i)
+    {
+        ((GoMarkovOperator*)(*i))->finishCalculation();
+    }
 }

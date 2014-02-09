@@ -39,7 +39,6 @@ RESOURCES += \
 FORMS += \
     form/DialogGoMarkovPeriod.ui \
     form/GoMainWindow.ui \
-    form/DialogAbout.ui \
     form/ToolboxGo.ui \
     form/ToolboxGoMarkov.ui \
     form/DialogMatrixInput.ui \
@@ -101,7 +100,6 @@ HEADERS += \
     include/analysis/markov/RungeKuttaBreakdown3.h \
     include/analysis/markov/RungeKuttaBreakdown4.h \
     include/analysis/markov/RungeKuttaMarkov18.h \
-    include/analysis/markov/RungeKuttaMarkov9a1.h \
     include/analysis/origin/GoAccumulative.h \
     include/analysis/origin/GoAnalysis.h \
     include/analysis/origin/GoCutSet.h \
@@ -121,12 +119,10 @@ HEADERS += \
     include/define/DefinationGoType.h \
     include/define/DefinationToolType.h \
     include/define/DomItem.h \
-    include/define/FactoryAbstract.h \
     include/define/GlobalConfig.h \
     include/define/IdentifiedItem.h \
     include/define/NamedItem.h \
     include/define/TypedItem.h \
-    include/dialog/DialogAbout.h \
     include/dialog/DialogGoMarkovAnalysisProcess.h \
     include/dialog/DialogGoMarkovPeriod.h \
     include/dialog/DialogGoProbability.h \
@@ -140,7 +136,6 @@ HEADERS += \
     include/editor/EditorGo.h \
     include/editor/EditorGoMarkov.h \
     include/editor/EditorWebview.h \
-    include/editor/EditorWelcome.h \
     include/message/DockMessage.h \
     include/message/Message.h \
     include/message/MessageController.h \
@@ -248,7 +243,6 @@ SOURCES += \
     src/analysis/markov/RungeKuttaBreakdown3.cpp \
     src/analysis/markov/RungeKuttaBreakdown4.cpp \
     src/analysis/markov/RungeKuttaMarkov18.cpp \
-    src/analysis/markov/RungeKuttaMarkov9a1.cpp \
     src/analysis/origin/GoAccumulative.cpp \
     src/analysis/origin/GoAnalysis.cpp \
     src/analysis/origin/GoCutSet.cpp \
@@ -264,12 +258,10 @@ SOURCES += \
     src/analysis/origin/GoSignal.cpp \
     src/analysis/origin/GoSignalFactory.cpp \
     src/analysis/origin/GoStatus.cpp \
-    src/define/FactoryAbstract.cpp \
     src/define/GlobalConfig.cpp \
     src/define/IdentifiedItem.cpp \
     src/define/NamedItem.cpp \
     src/define/TypedItem.cpp \
-    src/dialog/DialogAbout.cpp \
     src/dialog/DialogGoMarkovAnalysisProcess.cpp \
     src/dialog/DialogGoMarkovPeriod.cpp \
     src/dialog/DialogGoProbability.cpp \
@@ -283,7 +275,6 @@ SOURCES += \
     src/editor/EditorGo.cpp \
     src/editor/EditorGoMarkov.cpp \
     src/editor/EditorWebview.cpp \
-    src/editor/EditorWelcome.cpp \
     src/main.cpp \
     src/message/DockMessage.cpp \
     src/message/Message.cpp \

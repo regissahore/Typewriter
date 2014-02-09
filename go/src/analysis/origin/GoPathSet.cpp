@@ -220,3 +220,13 @@ void GoPathSet::setTotalProbablity(const double value)
 {
     this->_totalProbability = value;
 }
+
+QSet<GoOperator*> GoPathSet::operatorSet() const
+{
+    QSet<GoOperator*> set;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        set.insert(this->_list[i]);
+    }
+    return set;
+}
