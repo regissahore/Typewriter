@@ -3,7 +3,12 @@
 #include "GoStatus.h"
 #include "GoOperator.h"
 #include "GoMarkovOperator.h"
+#include "GoMarkovOperator21.h"
 #include "GoMarkovStatus.h"
+#include "GoMarkovOperatorFactory.h"
+#include "RungeKuttaBreakdown2.h"
+#include "RungeKuttaBreakdown3.h"
+#include "RungeKuttaBreakdown4.h"
 
 GoCutSet::GoCutSet() : GoPathSet()
 {
@@ -16,7 +21,7 @@ GoCutSet* GoCutSet::copy()
     {
         cut->add(this->_list[i]);
     }
-    cut->setTotalProbablity(this->totalProbablity());
+    cut->setTotalProbablity(this->_totalProbability);
     return cut;
 }
 
@@ -36,8 +41,30 @@ double GoCutSet::toMarkovProbability() const
     for (int i = 0; i < this->_list.size(); ++i)
     {
         GoMarkovOperator* op = (GoMarkovOperator*)this->_list[i];
-        op->initMarkovStatus(1e10);
-        value = value * op->markovStatus()->probabilityBreakdown();
+        if (op->type() == GoMarkovOperatorFactory::Operator_Type_21)
+        {
+            GoMarkovOperator21* op21 = (GoMarkovOperator21*)op;
+            value = value * op21->cutProbability();
+        }
+        else
+        {
+            if (op->breakdownNum() == 1)
+            {
+                value = value * op->markovStatus()->probabilityBreakdown();
+            }
+            else if (op->breakdownNum() == 2)
+            {
+                value = value * (1.0 - op->rkBreakdown2()->getInf(0));
+            }
+            else if (op->breakdownNum() == 3)
+            {
+                value = value * (1.0 - op->rkBreakdown3()->getInf(0));
+            }
+            else if (op->breakdownNum() == 4)
+            {
+                value = value * (1.0 - op->rkBreakdown4()->getInf(0));
+            }
+        }
     }
     return value.getValue(0);
 }

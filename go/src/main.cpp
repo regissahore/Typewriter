@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <QDir>
 #include <QFont>
 #include <QString>
@@ -20,6 +21,8 @@ void bindFont(QApplication &application)
 
 int main(int argc, char *argv[])
 {
+    freopen("stdout.log", "a", stdout);
+    freopen("stderr.log", "a", stderr);
     QApplication application(argc, argv);
     QTranslator translator;
     translator.load("lang/Lang_CH.qm");

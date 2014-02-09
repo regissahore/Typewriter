@@ -430,6 +430,38 @@ void GoMarkovOperator::finishCalculation()
 {
 }
 
+void GoMarkovOperator::initInfinityMarkovStatus()
+{
+    this->initMarkovStatus(1e10);
+    if (this->breakdownNum() == 2)
+    {
+        this->_rkBreakdown2->calculateInfinity();
+    }
+    else if (this->breakdownNum() == 3)
+    {
+        this->_rkBreakdown3->calculateInfinity();
+    }
+    else if (this->breakdownNum() == 4)
+    {
+        this->_rkBreakdown4->calculateInfinity();
+    }
+}
+
+RungeKuttaBreakdown2* GoMarkovOperator::rkBreakdown2() const
+{
+    return this->_rkBreakdown2;
+}
+
+RungeKuttaBreakdown3* GoMarkovOperator::rkBreakdown3() const
+{
+    return this->_rkBreakdown3;
+}
+
+RungeKuttaBreakdown4* GoMarkovOperator::rkBreakdown4() const
+{
+    return this->_rkBreakdown4;
+}
+
 GoMarkovOperator* GoMarkovOperator::copy()
 {
     GoMarkovOperator *op = GoMarkovOperatorFactory::produce(this->TypedItem::type());

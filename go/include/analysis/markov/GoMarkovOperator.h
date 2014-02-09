@@ -55,6 +55,10 @@ public:
     virtual void initCalculation(double interval);
     virtual void prepareNextCalculation(int count, double time);
     virtual void finishCalculation();
+    void initInfinityMarkovStatus();
+    RungeKuttaBreakdown2* rkBreakdown2() const;
+    RungeKuttaBreakdown3* rkBreakdown3() const;
+    RungeKuttaBreakdown4* rkBreakdown4() const;
     virtual GoMarkovOperator* copy();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);

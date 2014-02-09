@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <QString>
 #include "GoPathSetSet.h"
 #include "GoPathSet.h"
@@ -52,4 +53,14 @@ void GoPathSetSet::sort()
             }
         }
     }
+}
+
+double GoPathSetSet::totalMarkovProbability() const
+{
+    double res = 0.0;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        res += this->_list[i]->toMarkovProbability();
+    }
+    return res;
 }

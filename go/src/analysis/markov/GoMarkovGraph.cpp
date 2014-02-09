@@ -68,11 +68,11 @@ void GoMarkovGraph::calcAccumulativeProbability(double time)
         this->_messages.append(MessageRecord(QObject::tr("Error: Graph ") + this->_error, MessageFactory::TYPE_OUTPUT_ERROR));
         return;
     }
-    QVector<GoOperator*> list = this->getTopologicalOrder();
+    QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
         this->_operatorProcess = i;
-        this->_currentOperatorName = GoMarkovOperatorFactory::typeName(((GoMarkovOperator*)list[i])->TypedItem::type()) + QString("-%1").arg(((GoMarkovOperator*)list[i])->id());
+        this->_currentOperatorName = GoMarkovOperatorFactory::typeName((list[i])->TypedItem::type()) + QString("-%1").arg((list[i])->id());
         if (list[i]->TypedItem::type() == GoMarkovOperatorFactory::Operator_Type_12A)
         {
             GoMarkovOperator12A *op = (GoMarkovOperator12A*)list[i];
@@ -102,7 +102,7 @@ void GoMarkovGraph::calcAccumulativeProbability(double time)
             }
             if (commonList.size() == 0)
             {
-                ((GoMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
+                list[i]->calcOutputMarkovStatus(time);
             }
             else
             {
@@ -113,7 +113,7 @@ void GoMarkovGraph::calcAccumulativeProbability(double time)
                     commonOperator.push_back(commonList[j].op);
                     commonIndex.push_back(commonList[j].outputIndex);
                 }
-                ((GoMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GoMarkovOperator*)list[i], commonOperator, commonIndex, time);
+                ((GoMarkovAnalysis*)this->_analysis)->calcMarkovStatus(list[i], commonOperator, commonIndex, time);
             }
         }
     }
@@ -247,7 +247,7 @@ QSharedPointer<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(dou
         }
     }
 
-    QVector<GoOperator*> list = this->getTopologicalOrder();
+    QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
         GoMarkovOperator *op = (GoMarkovOperator*)list[i];
@@ -261,14 +261,14 @@ QSharedPointer<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(dou
 
         for (int j = 0; j < list.size(); ++j)
         {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[j];
+            GoMarkovOperator *op = list[j];
             op->initMarkovStatus(time);
             op->prepareNextCalculation(i, time);
         }
         QVector<DoubleVector> lamdas;
         for (int j = 0; j < list.size(); ++j)
         {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[j];
+            GoMarkovOperator *op = list[j];
             lamdas.push_back(op->markovStatus()->frequencyBreakdown());
         }
 
@@ -359,7 +359,7 @@ QSharedPointer<GoMarkovChartData> GoMarkovGraph::calcAccumulativeProbability(dou
 
 GoMarkovStatus GoMarkovGraph::calcAccumulativeProbability(double time, QString id, double delta, GoMarkovOperator* stopOperator)
 {
-    QVector<GoOperator*> list = this->getTopologicalOrder();
+    QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
         if (list[i] == stopOperator)
@@ -400,7 +400,7 @@ GoMarkovStatus GoMarkovGraph::calcAccumulativeProbability(double time, QString i
             }
             if (commonList.size() == 0)
             {
-                ((GoMarkovOperator*)list[i])->calcOutputMarkovStatus(time);
+                list[i]->calcOutputMarkovStatus(time);
             }
             else
             {
@@ -411,11 +411,11 @@ GoMarkovStatus GoMarkovGraph::calcAccumulativeProbability(double time, QString i
                     commonOperator.push_back(commonList[j].op);
                     commonIndex.push_back(commonList[j].outputIndex);
                 }
-                ((GoMarkovAnalysis*)this->_analysis)->calcMarkovStatus((GoMarkovOperator*)list[i], commonOperator, commonIndex, time);
+                ((GoMarkovAnalysis*)this->_analysis)->calcMarkovStatus(list[i], commonOperator, commonIndex, time);
             }
             if (QString("%1").arg(list[i]->id()) == id)
             {
-                GoMarkovOperator *op = (GoMarkovOperator*)list[i];
+                GoMarkovOperator *op = list[i];
                 for (int i = 0; i < list[i]->output()->number(); ++i)
                 {
                     op->markovOutputStatus()->at(i)->setProbabilityNormal(op->markovOutputStatus()->at(i)->probabilityBreakdown() * delta);
@@ -428,6 +428,60 @@ GoMarkovStatus GoMarkovGraph::calcAccumulativeProbability(double time, QString i
     list.clear();
     GoMarkovStatus res;
     return res;
+}
+
+QVector<GoMarkovOperator*> GoMarkovGraph::getTopologicalOrder()
+{
+    QVector<GoMarkovOperator*> topList;
+    QVector<bool> outside;
+    QVector<int> inputNumber;
+    for (int i = 0; i < this->_operator.size(); ++i)
+    {
+        outside.push_back(false);
+        if (this->_operator[i]->type() == GoMarkovOperatorFactory::Operator_Type_21)
+        {
+            inputNumber.push_back(0);
+        }
+        else
+        {
+            inputNumber.push_back(this->_operator[i]->input()->number() + this->_operator[i]->subInput()->number());
+        }
+    }
+    while (topList.size() != this->_operator.size())
+    {
+        for (int i = 0; i < this->_operator.size(); ++i)
+        {
+            if (inputNumber[i] == 0 && !outside[i])
+            {
+                topList.push_back((GoMarkovOperator*)this->_operator[i]);
+                outside[i] = true;
+                for (int j = 0; j < this->_operator[i]->output()->number(); ++j)
+                {
+                    for (int k = 0; k < this->_operator[i]->output()->signal()->at(j)->size(); ++k)
+                    {
+                        GoOperator *next = this->_operator[i]->output()->signal()->at(j)->at(k)->next(this->_operator[i]);
+                        bool appear = false;
+                        for (int l = 0; l < k; ++l)
+                        {
+                            GoOperator *history = this->_operator[i]->output()->signal()->at(j)->at(l)->next(this->_operator[i]);
+                            if (next == history)
+                            {
+                                appear = true;
+                                break;
+                            }
+                        }
+                        if (appear)
+                        {
+                            continue;
+                        }
+                        int index = this->_operatorPos[next];
+                        --inputNumber[index];
+                    }
+                }
+            }
+        }
+    }
+    return topList;
 }
 
 bool GoMarkovGraph::isContainCycleDfs(QVector<bool> &visit,
@@ -556,167 +610,41 @@ QVector< QVector<GoGraph::Output> > GoMarkovGraph::getAncestorList(GoOperator *o
     return vector;
 }
 
-GoPathSetSetSet GoMarkovGraph::findPath(int order)
-{
-    GoPathSetSetSet path;
-    this->calcAccumulativeProbability(1e10, 2);
-    if (this->_error != "")
-    {
-        return path;
-    }
-    QVector<GoOperator*> list = this->getTopologicalOrder();
-    QMap<int, QVector<DoubleVector>* > normals;
-    for (int i = 0; i < list.size(); ++i)
-    {
-        GoMarkovOperator* op = (GoMarkovOperator*)list[i];
-        QVector<DoubleVector> *normal = new QVector<DoubleVector>();
-        for (int i = 0; i < op->output()->number(); ++i)
-        {
-            normal->push_back(op->markovOutputStatus()->at(i)->probabilityNormal());
-        }
-        normals[op->realID()] = normal;
-    }
-    GoPathSet tempPath;
-    if (order > list.size())
-    {
-        order = list.size();
-    }
-    for (int i = 0; i < list.size(); ++i)
-    {
-        GoMarkovOperator* op = (GoMarkovOperator*)list[i];
-        op->initOutputMarkovStatus();
-        op->initQualitativeOutput();
-        op->setQualitativeStatus(0.0);
-    }
-    for (int i = 1; i <= order; ++i)
-    {
-        this->findPathDfs(normals, path, list, tempPath, 0, 0, i);
-    }
-    for (auto it = normals.begin(); it != normals.end(); ++it)
-    {
-        delete it.value();
-    }
-    normals.clear();
-    return path;
-}
-
 GoPathSetSetSet GoMarkovGraph::findCut(int order)
 {
-    GoPathSetSetSet path;
-    this->calcAccumulativeProbability(1e10, 2);
-    if (this->_error != "")
-    {
-        return path;
-    }
-    QVector<GoOperator*> list = this->getTopologicalOrder();
-    QMap<int, QVector<DoubleVector>* > fails;
+    GoPathSetSetSet cut;
+    int maxOrder = 0;
+    QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
     {
-        GoMarkovOperator* op = (GoMarkovOperator*)list[i];
-        QVector<DoubleVector> *fail = new QVector<DoubleVector>();
-        for (int i = 0; i < op->output()->number(); ++i)
-        {
-            fail->push_back(op->markovOutputStatus()->at(i)->probabilityBreakdown());
-        }
-        fails[op->realID()] = fail;
-    }
-    GoCutSet tempPath;
-    if (order > list.size())
-    {
-        order = list.size();
-    }
-    for (int i = 0; i < list.size(); ++i)
-    {
-        GoMarkovOperator* op = (GoMarkovOperator*)list[i];
+        GoMarkovOperator* op = list[i];
+        op->initInfinityMarkovStatus();
         op->initOutputMarkovStatus();
         op->initQualitativeOutput();
         op->setQualitativeStatus(1.0);
+        maxOrder += !GoMarkovOperatorFactory::isLogical(op->type());
     }
+    order = min(order, maxOrder);
+    this->calcAccumulativeProbability(1e10);
+    GoCutSet tempPath;
     for (int i = 1; i <= order; ++i)
     {
-        this->findCutDfs(fails, path, list, tempPath, 0, 0, i);
+        this->findCutDfs(cut, list, tempPath, 0, 0, i);
     }
-    for (auto it = fails.begin(); it != fails.end(); ++it)
-    {
-        delete it.value();
-    }
-    fails.clear();
-    return path;
+    return cut;
 }
 
-void GoMarkovGraph::findPathDfs(QMap<int, QVector<DoubleVector> *> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order)
+void GoMarkovGraph::findCutDfs(GoPathSetSetSet &cut, QVector<GoMarkovOperator *> &list, GoCutSet &tempPath, int index, int number, int order)
 {
     if (number == order)
     {
         for (int i = 0; i < list.size(); ++i)
         {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[i];
-            op->calcQualitativeProbability();
+            list[i]->calcQualitativeProbability();
         }
-        QVector<GoPathSetSetSet::End> ends;
-        QVector<double> probabilityList;
         for (int i = 0; i < list.size(); ++i)
         {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[i];
-            for (int j = 0; j < list[i]->output()->number(); ++j)
-            {
-                if (op->output()->signal()->at(j)->size() == 0)
-                {
-                    for (int k = 0; k < op->qualitativeOutput()->at(j).length(); ++k)
-                    {
-                        if (op->qualitativeOutput()->at(j).getValue(k) > 0.5)
-                        {
-                            GoPathSetSetSet::End end;
-                            end.op = op;
-                            end.outputIndex = j;
-                            end.vectorIndex = k;
-                            ends.push_back(end);
-                            probabilityList.push_back(normals[op->realID()]->at(j).getValue(k));
-                        }
-                    }
-                }
-            }
-            for (int i = 0; i < ends.size(); ++i)
-            {
-                tempPath.setTotalProbablity(probabilityList[i]);
-                path.add(ends[i].op, tempPath.copy(), ends[i].outputIndex, ends[i].vectorIndex);
-            }
-        }
-        return;
-    }
-    if (number > order || index >= list.size())
-    {
-        return;
-    }
-    if (!((GoMarkovOperator*)list[index])->isGlobalFeedback())
-    {
-        if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
-        {
-            GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-            op->setQualitativeStatus(1.0);
-            tempPath.add(list[index]);
-            this->findPathDfs(normals, path, list, tempPath, index + 1, number + 1, order);
-            op->setQualitativeStatus(0.0);
-            tempPath.removeEnd();
-        }
-    }
-    this->findPathDfs(normals, path, list, tempPath, index + 1, number, order);
-}
-
-void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order)
-{
-    if (number == order)
-    {
-        for (int i = 0; i < list.size(); ++i)
-        {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[i];
-            op->calcQualitativeProbability();
-        }
-        QVector<GoPathSetSetSet::End> ends;
-        QVector<double> probabilityList;
-        for (int i = 0; i < list.size(); ++i)
-        {
-            GoMarkovOperator *op = (GoMarkovOperator*)list[i];
+            GoMarkovOperator *op = list[i];
             for (int j = 0; j < list[i]->output()->number(); ++j)
             {
                 if (op->output()->signal()->at(j)->size() == 0)
@@ -725,21 +653,12 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
                     {
                         if (op->qualitativeOutput()->at(j).getValue(k) < 0.5)
                         {
-                            GoPathSetSetSet::End end;
-                            end.op = op;
-                            end.outputIndex = j;
-                            end.vectorIndex = k;
-                            ends.push_back(end);
-                            probabilityList.push_back(fails[op->realID()]->at(j).getValue(k));
+                            tempPath.setTotalProbablity(op->markovOutputStatus()->at(j)->frequencyBreakdown().getValue(k));
+                            cut.add(op, tempPath.copy(), j, k);
                         }
                     }
                 }
             }
-        }
-        for (int i = 0; i < ends.size(); ++i)
-        {
-            tempPath.setTotalProbablity(probabilityList[i]);
-            cut.add(ends[i].op, tempPath.copy(), ends[i].outputIndex, ends[i].vectorIndex);
         }
         return;
     }
@@ -747,19 +666,84 @@ void GoMarkovGraph::findCutDfs(QMap<int, QVector<DoubleVector> *> &fails, GoPath
     {
         return;
     }
-    if (!((GoMarkovOperator*)list[index])->isGlobalFeedback())
+    if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
     {
-        if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
+        GoMarkovOperator* op = list[index];
+        op->setQualitativeStatus(0.0);
+        tempPath.add(op);
+        this->findCutDfs(cut, list, tempPath, index + 1, number + 1, order);
+        op->setQualitativeStatus(1.0);
+        tempPath.removeEnd();
+    }
+    this->findCutDfs(cut, list, tempPath, index + 1, number, order);
+}
+
+GoPathSetSetSet GoMarkovGraph::findPath(int order)
+{
+    GoPathSetSetSet path;
+    int maxOrder = 0;
+    QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
+    for (int i = 0; i < list.size(); ++i)
+    {
+        GoMarkovOperator* op = list[i];
+        op->initInfinityMarkovStatus();
+        op->initOutputMarkovStatus();
+        op->initQualitativeOutput();
+        op->setQualitativeStatus(0.0);
+        maxOrder += !GoMarkovOperatorFactory::isLogical(op->type());
+    }
+    order = min(order, maxOrder);
+    this->calcAccumulativeProbability(1e10);
+    GoCutSet tempPath;
+    for (int i = 1; i <= order; ++i)
+    {
+        this->findPathDfs(path, list, tempPath, 0, 0, i);
+    }
+    return path;
+}
+
+void GoMarkovGraph::findPathDfs(GoPathSetSetSet &path, QVector<GoMarkovOperator*> &list, GoPathSet &tempPath, int index, int number, int order)
+{
+    if (number == order)
+    {
+        for (int i = 0; i < list.size(); ++i)
         {
-            GoMarkovOperator* op = (GoMarkovOperator*)list[index];
-            op->setQualitativeStatus(0.0);
-            tempPath.add(list[index]);
-            this->findCutDfs(fails, cut, list, tempPath, index + 1, number + 1, order);
-            op->setQualitativeStatus(1.0);
-            tempPath.removeEnd();
+            list[i]->calcQualitativeProbability();
+        }
+        this->printQualitativeOutput();
+        for (int i = 0; i < list.size(); ++i)
+        {
+            GoMarkovOperator *op = list[i];
+            for (int j = 0; j < list[i]->output()->number(); ++j)
+            {
+                if (op->output()->signal()->at(j)->size() == 0)
+                {
+                    for (int k = 0; k < op->qualitativeOutput()->at(j).length(); ++k)
+                    {
+                        if (op->qualitativeOutput()->at(j).getValue(k) > 0.5)
+                        {
+                            tempPath.setTotalProbablity(op->markovOutputStatus()->at(j)->frequencyBreakdown().getValue(k));
+                            path.add(op, tempPath.copy(), j, k);
+                        }
+                    }
+                }
+            }
         }
     }
-    this->findCutDfs(fails, cut, list, tempPath, index + 1, number, order);
+    if (number > order || index >= list.size())
+    {
+        return;
+    }
+    if (!GoMarkovOperatorFactory::isLogical(list[index]->type()))
+    {
+        GoMarkovOperator* op = list[index];
+        op->setQualitativeStatus(1.0);
+        tempPath.add(op);
+        this->findPathDfs(path, list, tempPath, index + 1, number + 1, order);
+        op->setQualitativeStatus(0.0);
+        tempPath.removeEnd();
+    }
+    this->findPathDfs(path, list, tempPath, index + 1, number, order);
 }
 
 int GoMarkovGraph::timeProcess() const
@@ -864,7 +848,7 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toNameString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toMarkovProbabilityString() + "</td>" << endl;
-                out << "<td>" + path.list().at(i)->list().at(j)->toMarkovImportanceString() + "</td>" << endl;
+                out << "<td>" + QString::number(path.list().at(i)->list().at(j)->toMarkovProbability() / path.totalMarkovProbability(i), 'f', 10) + "</td>" << endl;
                 out << "</tr>" << endl;
             }
             out << "</table>" << endl;

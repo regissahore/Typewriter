@@ -56,12 +56,14 @@ protected:
     GoAnalysis *_analysis;
     bool checkCycleAndConnection();
     virtual bool isContainCycleDfs(QVector<bool> &visit, QVector<int> &dfn, QVector<int> &low, QVector<int> &stack, int &timeStamp, int u);
-    virtual QVector<GoOperator*> getTopologicalOrder();
     virtual QVector<QVector<Output> > getAncestorList(GoOperator *op, int outputIndex, int signalIndex);
     QVector<Output> getCommonSignalList(GoOperator *op);
     QVector<GoOperator*> getEndList();
-    virtual void findPathDfs(QMap<int, QVector<double>*> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order);
-    virtual void findCutDfs(QMap<int, QVector<double> *> &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order);
+
+private:
+    QVector<GoOperator*> getTopologicalOrder();
+    void findPathDfs(QMap<int, QVector<double>*> &normals, GoPathSetSetSet &path, QVector<GoOperator*> &list, GoPathSet &tempPath, int index, int number, int order);
+    void findCutDfs(QMap<int, QVector<double> *> &fails, GoPathSetSetSet &cut, QVector<GoOperator*> &list, GoCutSet &tempPath, int index, int number, int order);
 };
 
 #endif // GOGRAPH_H

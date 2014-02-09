@@ -25,6 +25,8 @@ public:
     QVector<GoPathSetSet*> list() const;
     QVector<End> endList() const;
     void sort();
+    double totalMarkovProbability(GoOperator *op) const;
+    double totalMarkovProbability(int index) const;
 
 protected:
     QVector<GoPathSetSet*> _list;

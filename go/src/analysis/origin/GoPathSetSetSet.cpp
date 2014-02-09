@@ -1,3 +1,4 @@
+#include <cstdio>
 #include "GoPathSetSetSet.h"
 #include "GoPathSetSet.h"
 #include "GoPathSet.h"
@@ -81,6 +82,27 @@ void GoPathSetSetSet::sort()
             }
         }
     }
+}
+
+double GoPathSetSetSet::totalMarkovProbability(GoOperator *op) const
+{
+    for (int i = 0; i < this->_endList.size(); ++i)
+    {
+        if (this->_endList.at(i).op->realID() == op->realID())
+        {
+            return this->_list[i]->totalMarkovProbability();
+        }
+    }
+    return 0.0;
+}
+
+double GoPathSetSetSet::totalMarkovProbability(int index) const
+{
+    if (index >= 0 && index < this->_list.size())
+    {
+        return this->_list[index]->totalMarkovProbability();
+    }
+    return 0.0;
 }
 
 bool operator ==(const GoPathSetSetSet::End &a, const GoPathSetSetSet::End &b)

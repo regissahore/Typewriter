@@ -16,6 +16,8 @@
 #include "GoPathSet.h"
 #include "GoPathSetSet.h"
 #include "GoPathSetSetSet.h"
+#include "GoMarkovOperator.h"
+#include "GoMarkovOperatorFactory.h"
 
 GoGraph::GoGraph() : Messager()
 {
@@ -142,7 +144,7 @@ bool GoGraph::checkCycleAndConnection()
     }
     for (int i = 0; i < this->_operator.size(); ++i)
     {
-        if (dfn[i] == -1)
+        if (dfn[i] == -1 && this->_operator[i]->type() != GoMarkovOperatorFactory::Operator_Type_21)
         {
             this->_error = QObject::tr("The Go graph is not connected. ");
             return false;

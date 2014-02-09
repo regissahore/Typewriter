@@ -1,3 +1,4 @@
+#include <cstdio>
 #include <QImage>
 #include <QPainter>
 #include <QMessageBox>
@@ -24,6 +25,7 @@
 #include "DialogGoMarkovAnalysisProcess.h"
 #include "ViewGoMarkov.h"
 #include "GoMarkovOperatorFactory.h"
+#include "GoMarkovOperator21.h"
 using namespace std;
 
 SceneGoMarkov::SceneGoMarkov(QObject *parent) : SceneGo(parent)
@@ -336,7 +338,10 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleGraph()
         {
             ItemGoMarkovOperator* opItem = (ItemGoMarkovOperator*)item;
             GoMarkovOperator* op = (GoMarkovOperator*)opItem->model();
-            graph->addOperator(op);
+            if (!op->isGlobalFeedback() || op->type() == GoMarkovOperatorFactory::Operator_Type_21)
+            {
+                graph->addOperator(op);
+            }
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_SIGNAL)
         {
@@ -390,7 +395,10 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleSubGraph(Item
     operators.push_back(last);
     for (int i = 0; i < operators.size(); ++i)
     {
-        graph->addOperator(operators[i]->model());
+        if (i)
+        {
+            graph->addOperator(operators[i]->model());
+        }
         for (int j = 0; j < signalItems.size(); ++j)
         {
             if (signalItems[j]->end()->op == operators[i])
@@ -399,20 +407,23 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleSubGraph(Item
                 GoSignal* signal = siItem->model();
                 ItemGoMarkovOperator* uOpItem = (ItemGoMarkovOperator*)siItem->start()->op;
                 ItemGoMarkovOperator* vOpItem = (ItemGoMarkovOperator*)siItem->end()->op;
-                int uIndex = siItem->start()->index;
-                int vIndex = siItem->end()->index;
-                int vType = siItem->end()->type;
-                uOpItem->model()->output()->addSignal(uIndex, signal);
-                if (vType == DefinationGoType::GO_OPERATOR_INPUT)
+                if (i)
                 {
-                    vOpItem->model()->input()->set(vIndex, signal);
+                    int uIndex = siItem->start()->index;
+                    int vIndex = siItem->end()->index;
+                    int vType = siItem->end()->type;
+                    uOpItem->model()->output()->addSignal(uIndex, signal);
+                    if (vType == DefinationGoType::GO_OPERATOR_INPUT)
+                    {
+                        vOpItem->model()->input()->set(vIndex, signal);
+                    }
+                    else
+                    {
+                        vOpItem->model()->subInput()->set(vIndex, signal);
+                    }
+                    signal->setU(uOpItem->model());
+                    signal->setV(vOpItem->model());
                 }
-                else
-                {
-                    vOpItem->model()->subInput()->set(vIndex, signal);
-                }
-                signal->setU(uOpItem->model());
-                signal->setV(vOpItem->model());
                 bool flag = true;
                 for (int k = 0; k < operators.size(); ++k)
                 {
@@ -444,8 +455,9 @@ void SceneGoMarkov::initGlobalFeedbackCut()
             if (opItem->model()->type() == GoMarkovOperatorFactory::Operator_Type_21)
             {
                 QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
-                // GoPathSetSetSet cut = graph->findCut(1000);
-                graph->print();
+                GoPathSetSetSet cut = graph->findCut(graph->getOperator().size());
+                GoMarkovOperator21* op21 = (GoMarkovOperator21*)opItem->model();
+                op21->setCutProbability(cut.totalMarkovProbability(0));
             }
         }
     }
@@ -463,8 +475,9 @@ void SceneGoMarkov::initGlobalFeedbackPath()
             if (opItem->model()->type() == GoMarkovOperatorFactory::Operator_Type_21)
             {
                 QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
-                // GoPathSetSetSet path = graph->findPath(1000);
-                graph->print();
+                GoPathSetSetSet path = graph->findPath(graph->getOperator().size());
+                GoMarkovOperator21* op21 = (GoMarkovOperator21*)opItem->model();
+                op21->setPathProbability(path.totalMarkovProbability(0));
             }
         }
     }

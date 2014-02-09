@@ -12,6 +12,7 @@ public:
     void add(GoPathSet* path);
     QVector<GoPathSet*> list() const;
     void sort();
+    double totalMarkovProbability() const;
 
 protected:
     QVector<GoPathSet*> _list;

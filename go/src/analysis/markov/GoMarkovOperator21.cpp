@@ -33,10 +33,36 @@ void GoMarkovOperator21::calcOutputMarkovStatus(double time)
     this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }
 
+void GoMarkovOperator21::calcQualitativeProbability()
+{
+    DoubleVector IC = this->qualitativeStatus();
+    this->_qualitativeOutput[0] = IC;
+}
+
 DoubleVector GoMarkovOperator21::calcTempOutputMarkovStatus(double time, QVector<DoubleVector> input, QVector<DoubleVector> subInput, int index)
 {
     Q_UNUSED(time);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
     return input[0];
+}
+
+double GoMarkovOperator21::pathProbability() const
+{
+    return this->_pathProbability;
+}
+
+double GoMarkovOperator21::cutProbability() const
+{
+    return this->_cutProbability;
+}
+
+void GoMarkovOperator21::setPathProbability(double value)
+{
+    this->_pathProbability = value;
+}
+
+void GoMarkovOperator21::setCutProbability(double value)
+{
+    this->_cutProbability = value;
 }
