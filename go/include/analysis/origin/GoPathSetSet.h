@@ -12,7 +12,7 @@ public:
     GoPathSetSet();
     virtual ~GoPathSetSet();
     void add(GoPathSet* path);
-    QVector<GoPathSet*> list() const;
+    QVector<GoPathSet*>& list();
     void sort();
     double totalMarkovProbability() const;
     QSet<GoOperator*> operatorSet() const;

@@ -13,12 +13,13 @@ public:
     int order() const;
     void add(GoOperator *op);
     void removeEnd();
-    QVector<GoOperator*> list() const;
+    QVector<GoOperator*>& list();
     void sort();
     QString toIdString();
     QString toCompareString();
     virtual double toProbability() const;
     virtual double toMarkovProbability() const;
+    virtual double currentMarkovProbability() const;
     double toImportance() const;
     double toMarkovImportance() const;
     QString toProbabilityString() const;

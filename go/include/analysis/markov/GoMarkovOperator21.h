@@ -14,10 +14,12 @@ public:
     double cutProbability() const;
     void setPathProbability(double value);
     void setCutProbability(double value);
+    QVector<double>& savedProbabilites();
 
 protected:
     double _pathProbability;
     double _cutProbability;
+    QVector<double> _savedProbabilities;
 };
 
 #endif // GOMARKOVOPERATOR1_H

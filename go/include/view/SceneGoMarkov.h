@@ -15,8 +15,8 @@ public:
     QSharedPointer<GoMarkovGraph> generateGoMarkovGraph();
     QSharedPointer<GoMarkovGraph> generateGoMarkovSimpleGraph();
     QSharedPointer<GoMarkovGraph> generateGoMarkovSimpleSubGraph(ItemGoMarkovOperator *last);
-    void initGlobalFeedbackCut();
-    void initGlobalFeedbackPath();
+    void initGlobalFeedbackCut(double interval, int count);
+    void initGlobalFeedbackPath(double interval, int count);
     QList<ItemGoMarkovEquivalent *> getTopologyOrder(QList<ItemGoMarkovEquivalent *> equivalents);
     virtual void analysisProbability(const QString filePath) override;
     virtual void analysisCut(const QString filePath) override;

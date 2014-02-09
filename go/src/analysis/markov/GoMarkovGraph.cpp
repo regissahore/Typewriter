@@ -839,6 +839,11 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
             }
             out << "<th>" + QObject::tr("Importance") + "</th>" << endl;
+            for (int j = 0; j < path.count(); ++j)
+            {
+                out << "<th>" + QObject::tr("Probability %1").arg(j * path.interval()) + "</th>" << endl;
+                out << "<th>" + QObject::tr("Importance %1").arg(j * path.interval()) + "</th>" << endl;
+            }
             out << "</tr>" << endl;
             for (int j = 0; j < path.list().at(i)->list().size(); ++j)
             {
@@ -849,6 +854,11 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + path.list().at(i)->list().at(j)->toNameString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toMarkovProbabilityString() + "</td>" << endl;
                 out << "<td>" + QString::number(path.list().at(i)->list().at(j)->toMarkovProbability() / path.totalMarkovProbability(i), 'f', 10) + "</td>" << endl;
+                for (int k = 0; k < path.count(); ++k)
+                {
+                    out << "<td>" + QString::number(path.getProbability(k, path.list()[i]->list()[j]), 'f', 10) + "</td>" << endl;
+                    out << "<td>" + QString::number(path.getImportance(k, path.list()[i]->list()[j], path.endList()[i].op), 'f', 10) + "</td>" << endl;
+                }
                 out << "</tr>" << endl;
             }
             out << "</table>" << endl;

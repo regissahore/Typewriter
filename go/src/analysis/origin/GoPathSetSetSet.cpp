@@ -3,17 +3,31 @@
 #include "GoPathSetSet.h"
 #include "GoPathSet.h"
 #include "GoOperator.h"
+#include "GoMarkovStatus.h"
 #include "GoMarkovOperator.h"
+#include "GoMarkovOperator21.h"
+#include "GoMarkovOperatorFactory.h"
 
 GoPathSetSetSet::GoPathSetSetSet()
 {
     this->_count = 0;
+    this->_isCut = true;
 }
 
 GoPathSetSetSet::~GoPathSetSetSet()
 {
     this->_list.clear();
     this->_endList.clear();
+}
+
+void GoPathSetSetSet::setIsCut(bool value)
+{
+    this->_isCut = value;
+}
+
+bool GoPathSetSetSet::isCut() const
+{
+    return this->_isCut;
 }
 
 void GoPathSetSetSet::add(GoOperator *endOperator, GoPathSet* path, int outputIndex, int vectorIndex)
@@ -52,7 +66,7 @@ void GoPathSetSetSet::add(GoOperator *endOperator, GoPathSet* path, int outputIn
     }
 }
 
-QVector<GoPathSetSet*> GoPathSetSetSet::list() const
+QVector<GoPathSetSet *>& GoPathSetSetSet::list()
 {
     return this->_list;
 }
@@ -95,7 +109,7 @@ double GoPathSetSetSet::totalMarkovProbability(GoOperator *op) const
             return this->_list[i]->totalMarkovProbability();
         }
     }
-    return 0.0;
+    return 10.0;
 }
 
 double GoPathSetSetSet::totalMarkovProbability(int index) const
@@ -105,6 +119,28 @@ double GoPathSetSetSet::totalMarkovProbability(int index) const
         return this->_list[index]->totalMarkovProbability();
     }
     return 0.0;
+}
+
+double GoPathSetSetSet::totalMarkovProbability(int index, int count)
+{
+    double res = 0.0;
+    for (int j = 0; j < this->list()[index]->list().size(); ++j)
+    {
+        double temp = 1.0;
+        for (int k = 0; k < this->list()[index]->list()[j]->list().size(); ++k)
+        {
+            if (this->isCut())
+            {
+                temp *= 1.0 - this->_probabilities[this->list()[index]->list()[j]->list()[k]][count];
+            }
+            else
+            {
+                temp *= this->_probabilities[this->list()[index]->list()[j]->list()[k]][count];
+            }
+        }
+        res += temp;
+    }
+    return res;
 }
 
 bool operator ==(const GoPathSetSetSet::End &a, const GoPathSetSetSet::End &b)
@@ -143,9 +179,19 @@ void GoPathSetSetSet::setInterval(double interval)
     this->_interval = interval;
 }
 
+double GoPathSetSetSet::interval() const
+{
+    return this->_interval;
+}
+
 void GoPathSetSetSet::setCount(int count)
 {
     this->_count = count;
+}
+
+int GoPathSetSetSet::count() const
+{
+    return this->_count;
 }
 
 void GoPathSetSetSet::initCalculation()
@@ -178,5 +224,73 @@ void GoPathSetSetSet::finishCalculation()
     for (auto i = this->_operators.begin(); i != this->_operators.end(); ++i)
     {
         ((GoMarkovOperator*)(*i))->finishCalculation();
+        ((GoMarkovOperator*)(*i))->initInfinityMarkovStatus();
     }
+}
+
+void GoPathSetSetSet::calcWithTime()
+{
+    if (this->count() == 0)
+    {
+        return;
+    }
+    this->_probabilities.clear();
+    this->initCalculation();
+    for (int i = 0; i < this->_count; ++i)
+    {
+        for (auto j = this->_operators.begin(); j != this->_operators.end(); ++j)
+        {
+            ((GoMarkovOperator*)(*j))->initMarkovStatus(i * this->_interval);
+            if (((GoMarkovOperator*)(*j))->type() == GoMarkovOperatorFactory::Operator_Type_21)
+            {
+                this->_probabilities[*j].push_back(((GoMarkovOperator21*)(*j))->savedProbabilites()[i]);
+            }
+            else
+            {
+                this->_probabilities[*j].push_back(((GoMarkovOperator*)(*j))->markovStatus()->probabilityNormal().getValue(0));
+            }
+        }
+        this->prepareNextCalculation(i);
+    }
+    this->finishCalculation();
+}
+
+double GoPathSetSetSet::getProbability(int count, GoPathSet *path)
+{
+    double res = 1.0;
+    for (int i = 0; i < path->list().size(); ++i)
+    {
+        if (this->isCut())
+        {
+            res = res * (1.0 - this->_probabilities[path->list()[i]][count]);
+        }
+        else
+        {
+            res = res * this->_probabilities[path->list()[i]][count];
+        }
+    }
+    return res;
+}
+
+double GoPathSetSetSet::getImportance(int count, GoPathSet *path, GoOperator* end)
+{
+    double probability = this->getProbability(count, path);
+    double total = 0.0;
+    for (int i = 0; i < this->_endList.size(); ++i)
+    {
+        if (this->_endList[i].op == end)
+        {
+            for (int j = 0; j < this->_list[i]->list().size(); ++j)
+            {
+                total += this->getProbability(count, this->_list[i]->list()[j]);
+            }
+            break;
+        }
+    }
+    return probability / total;
+}
+
+QMap<GoOperator*, QVector<double>>& GoPathSetSetSet::probabilities()
+{
+    return this->_probabilities;
 }

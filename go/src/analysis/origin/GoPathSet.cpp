@@ -34,7 +34,7 @@ void GoPathSet::removeEnd()
     this->_list.pop_back();
 }
 
-QVector<GoOperator*> GoPathSet::list() const
+QVector<GoOperator *> &GoPathSet::list()
 {
     return this->_list;
 }
@@ -94,6 +94,40 @@ double GoPathSet::toProbability() const
 }
 
 double GoPathSet::toMarkovProbability() const
+{
+    DoubleVector value = 1.0;
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        GoMarkovOperator* op = (GoMarkovOperator*)this->_list[i];
+        if (op->type() == GoMarkovOperatorFactory::Operator_Type_21)
+        {
+            GoMarkovOperator21* op21 = (GoMarkovOperator21*)op;
+            value = value * op21->pathProbability();
+        }
+        else
+        {
+            if (op->breakdownNum() == 1)
+            {
+                value = value * op->markovStatus()->probabilityNormal();
+            }
+            else if (op->breakdownNum() == 2)
+            {
+                value = value * op->rkBreakdown2()->getInf(0);
+            }
+            else if (op->breakdownNum() == 3)
+            {
+                value = value * op->rkBreakdown3()->getInf(0);
+            }
+            else if (op->breakdownNum() == 4)
+            {
+                value = value * op->rkBreakdown4()->getInf(0);
+            }
+        }
+    }
+    return value.getValue(0);
+}
+
+double GoPathSet::currentMarkovProbability() const
 {
     DoubleVector value = 1.0;
     for (int i = 0; i < this->_list.size(); ++i)

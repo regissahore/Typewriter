@@ -66,3 +66,8 @@ void GoMarkovOperator21::setCutProbability(double value)
 {
     this->_cutProbability = value;
 }
+
+QVector<double>& GoMarkovOperator21::savedProbabilites()
+{
+    return this->_savedProbabilities;
+}

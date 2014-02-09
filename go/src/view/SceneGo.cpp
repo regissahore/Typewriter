@@ -353,6 +353,7 @@ void SceneGo::analysisPath(const QString filePath)
     {
         QSharedPointer<GoGraph> graph = this->generateGoGraph();
         GoPathSetSetSet path = graph->findPath(dialog.integerInput()->value());
+        path.setIsCut(false);
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".path.html", path);
@@ -377,6 +378,7 @@ void SceneGo::analysisCut(const QString filePath)
     {
         QSharedPointer<GoGraph> graph = this->generateGoGraph();
         GoPathSetSetSet cut = graph->findCut(dialog.integerInput()->value());
+        cut.setIsCut(true);
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);

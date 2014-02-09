@@ -444,7 +444,7 @@ QSharedPointer<GoMarkovGraph> SceneGoMarkov::generateGoMarkovSimpleSubGraph(Item
     return graph;
 }
 
-void SceneGoMarkov::initGlobalFeedbackCut()
+void SceneGoMarkov::initGlobalFeedbackCut(double interval, int count)
 {
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
@@ -457,14 +457,23 @@ void SceneGoMarkov::initGlobalFeedbackCut()
             {
                 QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
                 GoPathSetSetSet cut = graph->findCut(graph->getOperator().size());
-                GoMarkovOperator21* op21 = (GoMarkovOperator21*)opItem->model();
+                cut.setIsCut(true);
+                cut.setInterval(interval);
+                cut.setCount(count);
+                cut.calcWithTime();
+                GoMarkovOperator21* op21 = (GoMarkovOperator21*)opItem->model();\
                 op21->setCutProbability(cut.totalMarkovProbability(0));
+                op21->savedProbabilites().clear();
+                for (int i = 0; i < count; ++i)
+                {
+                    op21->savedProbabilites().push_back(cut.totalMarkovProbability(0, i));
+                }
             }
         }
     }
 }
 
-void SceneGoMarkov::initGlobalFeedbackPath()
+void SceneGoMarkov::initGlobalFeedbackPath(double interval, int count)
 {
     QList<QGraphicsItem*> items = this->items();
     for (int i = 0; i < items.size(); ++i)
@@ -477,8 +486,17 @@ void SceneGoMarkov::initGlobalFeedbackPath()
             {
                 QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleSubGraph(opItem);
                 GoPathSetSetSet path = graph->findPath(graph->getOperator().size());
+                path.setIsCut(false);
+                path.setInterval(interval);
+                path.setCount(count);
+                path.calcWithTime();
                 GoMarkovOperator21* op21 = (GoMarkovOperator21*)opItem->model();
-                op21->setPathProbability(path.totalMarkovProbability(0));
+                op21->setCutProbability(path.totalMarkovProbability(0));
+                op21->savedProbabilites().clear();
+                for (int i = 0; i < count; ++i)
+                {
+                    op21->savedProbabilites().push_back(path.totalMarkovProbability(0, i));
+                }
             }
         }
     }
@@ -592,10 +610,14 @@ void SceneGoMarkov::analysisCut(const QString filePath)
     DialogGoMarkovCut dialog;
     if (dialog.exec() == QDialog::Accepted)
     {
-        this->initGlobalFeedbackCut();
+        this->initGlobalFeedbackCut(dialog.interval(), dialog.count());
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
         this->_analysisCutOrder = dialog.order();
         GoPathSetSetSet cut = graph->findCut(dialog.order());
+        cut.setIsCut(true);
+        cut.setInterval(dialog.interval());
+        cut.setCount(dialog.count());
+        cut.calcWithTime();
         if (graph->getErrorMessage() == "")
         {
             graph->saveAsHTML(filePath + ".cut.html", cut);
@@ -615,15 +637,17 @@ void SceneGoMarkov::analysisPath(const QString filePath)
     DialogGoMarkovCut dialog;
     if (dialog.exec() == QDialog::Accepted)
     {
-        this->initGlobalFeedbackPath();
+        this->initGlobalFeedbackPath(dialog.interval(), dialog.count());
         QSharedPointer<GoMarkovGraph> graph = this->generateGoMarkovSimpleGraph();
         this->_analysisCutOrder = dialog.order();
-        GoPathSetSetSet cut = graph->findPath(dialog.order());
-        cut.setCount(dialog.count());
-        cut.setInterval(dialog.interval());
+        GoPathSetSetSet path = graph->findPath(dialog.order());
+        path.setIsCut(false);
+        path.setInterval(dialog.interval());
+        path.setCount(dialog.count());
+        path.calcWithTime();
         if (graph->getErrorMessage() == "")
         {
-            graph->saveAsHTML(filePath + ".path.html", cut);
+            graph->saveAsHTML(filePath + ".path.html", path);
             QSharedPointer<Message> message = MessageFactory::produce(MessageFactory::TYPE_EDITOR_OPEN_EXIST);
             message->paramString = filePath + ".path.html";
             this->send(message);

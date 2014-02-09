@@ -22,7 +22,7 @@ void GoPathSetSet::add(GoPathSet* path)
     this->_list.push_back(path);
 }
 
-QVector<GoPathSet*> GoPathSetSet::list() const
+QVector<GoPathSet*>& GoPathSetSet::list()
 {
     return this->_list;
 }
