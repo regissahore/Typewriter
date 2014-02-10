@@ -1,7 +1,6 @@
 #coding=utf-8
 import os
 import codecs
-from pinyin import PinYin
 
 file = open("list.html", "r")
 lines = file.readlines()
@@ -38,6 +37,8 @@ def getPinyin(name):
             res += ":"
         elif ch == u"·":
             res += "."
+        elif ch == u"•":
+            res += "."
         elif ch == u"Ⅰ":
             res += "1"
         elif ch == u"Ⅱ":
@@ -58,7 +59,17 @@ def getPinyin(name):
             res += ")"
         elif ch == "~":
             res += "-"
-        else:
+        elif ch == u"，":
+            res += ","
+        elif ch == u"！":
+            res += "!"
+        elif ch == u"？":
+            res += "?"
+        elif ch >= 'a' and ch <= 'z':
+            res += ch
+        elif ch >= 'A' and ch <= 'Z':
+            res += ch
+        elif ch >= '0' and ch <= '9':
             res += ch
     return res
 
@@ -79,18 +90,18 @@ for line in lines:
     movieDict[info[0][:-1]] = getPinyin(info[0][:-1])
     stars = info[3].split("/")
     for star in stars:
-        if len(star) == 0:
+        if len(star) <= 1:
             continue
         if star[-1] == "\n":
             star = star[:-1]
         nameDict[star] = getPinyin(star)
         
-file = codecs.open("movie.dict", "w", "utf-8")
+file = open("movie.dict", "w", "utf-8")
 for (key, value) in movieDict.items():
     file.write(key + "~" + value + "\n")
 file.close()
 
-file = codecs.open("name.dict", "w", "utf-8")
+file = open("name.dict", "w", "utf-8")
 for (key, value) in nameDict.items():
     file.write(key + "~" + value + "\n")
 file.close()

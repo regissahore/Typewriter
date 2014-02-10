@@ -11,6 +11,8 @@ patternScore = re.compile('<strong class="ll rating_num" property="v:average">(.
 patternVotes = re.compile('<span property="v:votes">(.*?)</span>')
 patternStar = re.compile('rel="v:starring">(.*?)</a>')
 
+nameList = []
+
 for line in lines:
     url = line[:-1]
     id = url[32:-1]
@@ -24,6 +26,12 @@ for line in lines:
     res = re.search(patternName, html)
     if res != None:
         name = res.group(1).split(" ")[0]
+        if name in nameList:
+            file = codecs.open(file_name, "w", "utf-8")
+            file.close()
+            continue
+        else:
+            nameList.append(name)
         file.write(name + "\n")
     res = re.search(patternScore, html)
     if res != None:

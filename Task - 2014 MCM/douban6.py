@@ -36,13 +36,14 @@ for line in lines:
     struct = {}
     struct["name"] = movieDict[info[0]]
     struct["score"] = info[1]
+    if len(info[2]) == 0:
+        print(info[2])
     struct["votes"] = info[2]
     struct["star"] = []
     for star in info[3].split("/"):
-        if len(star) > 0:
+        if len(star) > 1:
             struct["star"].append(nameDict[star])
     infos.append(struct)
-    
 file = codecs.open("movie.data", "w", "utf-8")
 file.write(str(len(infos)) + "\n")
 for info in infos:
