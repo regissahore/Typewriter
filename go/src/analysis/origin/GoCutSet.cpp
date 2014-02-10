@@ -68,8 +68,3 @@ double GoCutSet::toMarkovProbability() const
     }
     return value.getValue(0);
 }
-
-QString GoCutSet::getProbabilityName() const
-{
-    return QObject::tr("Cut Failure Probablity");
-}

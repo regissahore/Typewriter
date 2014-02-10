@@ -191,25 +191,6 @@ QString GoPathSet::toMarkovImportanceString() const
     return QString::number(this->toMarkovImportance(), 'f', 10);
 }
 
-QString GoPathSet::toNameString()
-{
-    QString res;
-    for (int i = 0; i < this->_list.size(); ++i)
-    {
-        if (i)
-        {
-            res += " ";
-        }
-        res += this->_list[i]->name();
-    }
-    return res;
-}
-
-QString GoPathSet::getProbabilityName() const
-{
-    return QObject::tr("Path Success Probablity");
-}
-
 GoPathSet* GoPathSet::copy()
 {
     GoPathSet *path = new GoPathSet();

@@ -26,8 +26,6 @@ public:
     QString toMarkovProbabilityString() const;
     QString toImportanceString() const;
     QString toMarkovImportanceString() const;
-    QString toNameString();
-    virtual QString getProbabilityName() const;
     virtual GoPathSet* copy();
     bool isContain(GoPathSet *set);
     double totalProbablity() const;

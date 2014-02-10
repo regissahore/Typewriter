@@ -810,7 +810,7 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
     out << "<head>" << endl;
     out << "<title>" + file.fileName() + "</title>" << endl;
     out << "<meta charset = UTF-8>" << endl;
-    out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
+    out << "<style>body{width:100%}table,td{margin:0 auto;border:1px solid #CCC;border-collapse:collapse;font:small/1.5 'Tahoma','Bitstream Vera Sans',Verdana,Helvetica,sans-serif;min-width: 100px;}table{border:none;border:1px solid #CCC;}thead th,tbody th{color:#666;padding:5px 10px;border-left:1px solid #CCC;}tbody th{background:#fafafb;border-top:1px solid #CCC;text-align:left;}tbody tr td{padding:5px 10px;color:#666;}tbody tr:hover td{color:#454545;}tfoot td,tfoot th{border-left:none;border-top:1px solid #CCC;padding:4px;color:#666;}caption{text-align:left;font-size:120%;padding:10px 0;color:#666;}table a:link{color:#666;}table a:visited{color:#666;}table a:hover{color:#003366;text-decoration:none;}table a:active{color:#003366;}</style>" << endl;
     out << "</head>" << endl;
     out << "<body>" << endl;
     out << "<input type = hidden value = ZHG/>";
@@ -827,21 +827,35 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
             out << "<table>" << endl;
             out << "<tr>" << endl;
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;
-            out << "<th>" + QObject::tr("Order") + "</th>" << endl;
-            out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
-            out << "<th>" + QObject::tr("Name") + "</th>" << endl;
-            if (path.list().at(i)->list().size() > 0)
+            if (path.isCut())
             {
-                out << "<th>" + path.list().at(i)->list().at(0)->getProbabilityName() + "</th>" << endl;
+                out << "<th>" + QObject::tr("Cut Property") + "</th>" << endl;
             }
             else
             {
-                out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+                out << "<th>" + QObject::tr("Path Property") + "</th>" << endl;
             }
-            out << "<th>" + QObject::tr("Importance") + "</th>" << endl;
+            if (path.isCut())
+            {
+                out << "<th>" + QObject::tr("Cut Member") + "</th>" << endl;
+                out << "<th>" + QObject::tr("Stable Breakdown Probability") + "</th>" << endl;
+            }
+            else
+            {
+                out << "<th>" + QObject::tr("Path Member") + "</th>" << endl;
+                out << "<th>" + QObject::tr("Stable Normal Probability") + "</th>" << endl;
+            }
+            out << "<th>" + QObject::tr("Stable Importance") + "</th>" << endl;
             for (int j = 0; j < path.count(); ++j)
             {
-                out << "<th>" + QObject::tr("Probability %1").arg(j * path.interval()) + "</th>" << endl;
+                if (path.isCut())
+                {
+                    out << "<th>" + QObject::tr("Breakdown Probability %1").arg(j * path.interval()) + "</th>" << endl;
+                }
+                else
+                {
+                    out << "<th>" + QObject::tr("Normal Probability %1").arg(j * path.interval()) + "</th>" << endl;
+                }
                 out << "<th>" + QObject::tr("Importance %1").arg(j * path.interval()) + "</th>" << endl;
             }
             out << "</tr>" << endl;
@@ -851,7 +865,6 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
-                out << "<td>" + path.list().at(i)->list().at(j)->toNameString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toMarkovProbabilityString() + "</td>" << endl;
                 out << "<td>" + QString::number(path.list().at(i)->list().at(j)->toMarkovProbability() / path.totalMarkovProbability(i), 'f', 10) + "</td>" << endl;
                 for (int k = 0; k < path.count(); ++k)

@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="zh_CN">
+<TS version="2.1" language="zh_CN">
 <context>
     <name>DialogAbout</name>
     <message>
-        <location filename="../form/DialogAbout.ui" line="78"/>
         <source>About</source>
-        <translation>关于</translation>
+        <translation type="vanished">关于</translation>
     </message>
     <message>
-        <location filename="../form/DialogAbout.ui" line="109"/>
         <source>ZGO Team 2013</source>
-        <translation>ZGO Team 2013</translation>
+        <translation type="vanished">ZGO Team 2013</translation>
     </message>
     <message>
-        <location filename="../form/DialogAbout.ui" line="125"/>
         <source>All Rights Reseved</source>
-        <translation>All Rights Reserved</translation>
+        <translation type="vanished">All Rights Reserved</translation>
     </message>
 </context>
 <context>
@@ -146,6 +143,39 @@
     </message>
     <message>
         <location filename="../form/DialogGoMarkovAnalysisProcess.ui" line="162"/>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+</context>
+<context>
+    <name>DialogGoMarkovCut</name>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="14"/>
+        <source>Order and Interval</source>
+        <translation>阶数与时间</translation>
+    </message>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="28"/>
+        <source>Order: </source>
+        <translation>阶数：</translation>
+    </message>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="82"/>
+        <source>Count: </source>
+        <translation>分析次数：</translation>
+    </message>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="98"/>
+        <source>Interval: </source>
+        <translation>时间间隔：</translation>
+    </message>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="166"/>
+        <source>Confirm</source>
+        <translation>确认</translation>
+    </message>
+    <message>
+        <location filename="../form/DialogGoMarkovCut.ui" line="182"/>
         <source>Cancel</source>
         <translation>取消</translation>
     </message>
@@ -283,17 +313,16 @@
 <context>
     <name>DockMessage</name>
     <message>
-        <location filename="../src/message/DockMessage.cpp" line="9"/>
+        <location filename="../src/message/DockMessage.cpp" line="6"/>
         <source>Message</source>
         <translation>消息</translation>
     </message>
     <message>
-        <location filename="../src/message/DockMessage.cpp" line="15"/>
         <source>Debug</source>
-        <translation>调试</translation>
+        <translation type="vanished">调试</translation>
     </message>
     <message>
-        <location filename="../src/message/DockMessage.cpp" line="20"/>
+        <location filename="../src/message/DockMessage.cpp" line="13"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
@@ -301,7 +330,7 @@
 <context>
     <name>DockParameter</name>
     <message>
-        <location filename="../src/parameter/DockParameter.cpp" line="10"/>
+        <location filename="../src/parameter/DockParameter.cpp" line="11"/>
         <source>Parameter</source>
         <translation>参数</translation>
     </message>
@@ -309,7 +338,7 @@
 <context>
     <name>DockToolbox</name>
     <message>
-        <location filename="../src/tool/DockToolbox.cpp" line="8"/>
+        <location filename="../src/tool/DockToolbox.cpp" line="9"/>
         <source>Toolbox</source>
         <translation>工具箱</translation>
     </message>
@@ -317,12 +346,12 @@
 <context>
     <name>Editor</name>
     <message>
-        <location filename="../src/editor/Editor.cpp" line="183"/>
+        <location filename="../src/editor/Editor.cpp" line="181"/>
         <source>Open File</source>
         <translation>打开文件</translation>
     </message>
     <message>
-        <location filename="../src/editor/Editor.cpp" line="183"/>
+        <location filename="../src/editor/Editor.cpp" line="181"/>
         <source>Go Files(*.go *.gom *.html)</source>
         <translation>GO文件(*.go *.gom *.html)</translation>
     </message>
@@ -413,26 +442,26 @@
         <translation>GO文件</translation>
     </message>
     <message>
+        <location filename="../src/editor/EditorGo.cpp" line="66"/>
         <location filename="../src/editor/EditorGo.cpp" line="72"/>
-        <location filename="../src/editor/EditorGo.cpp" line="78"/>
-        <location filename="../src/editor/EditorGo.cpp" line="85"/>
+        <location filename="../src/editor/EditorGo.cpp" line="79"/>
+        <location filename="../src/editor/EditorGo.cpp" line="84"/>
         <location filename="../src/editor/EditorGo.cpp" line="90"/>
-        <location filename="../src/editor/EditorGo.cpp" line="96"/>
-        <location filename="../src/editor/EditorGo.cpp" line="101"/>
+        <location filename="../src/editor/EditorGo.cpp" line="95"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/editor/EditorGo.cpp" line="72"/>
+        <location filename="../src/editor/EditorGo.cpp" line="66"/>
         <source>Can not read file.</source>
         <translation>无法读取文件。</translation>
     </message>
     <message>
-        <location filename="../src/editor/EditorGo.cpp" line="78"/>
-        <location filename="../src/editor/EditorGo.cpp" line="85"/>
+        <location filename="../src/editor/EditorGo.cpp" line="72"/>
+        <location filename="../src/editor/EditorGo.cpp" line="79"/>
+        <location filename="../src/editor/EditorGo.cpp" line="84"/>
         <location filename="../src/editor/EditorGo.cpp" line="90"/>
-        <location filename="../src/editor/EditorGo.cpp" line="96"/>
-        <location filename="../src/editor/EditorGo.cpp" line="101"/>
+        <location filename="../src/editor/EditorGo.cpp" line="95"/>
         <source>The file content is broken. </source>
         <translation>文件内容已损坏。</translation>
     </message>
@@ -448,9 +477,8 @@
 <context>
     <name>EditorGoMarkovChart</name>
     <message>
-        <location filename="../src/editor/EditorGoMarkovChart.cpp" line="13"/>
         <source>Go Chart Files(*.goc)</source>
-        <translation>GO图表文件(*.goc)</translation>
+        <translation type="vanished">GO图表文件(*.goc)</translation>
     </message>
 </context>
 <context>
@@ -479,9 +507,8 @@
 <context>
     <name>EditorWelcome</name>
     <message>
-        <location filename="../src/editor/EditorWelcome.cpp" line="6"/>
         <source>Welcome</source>
-        <translation>欢迎</translation>
+        <translation type="vanished">欢迎</translation>
     </message>
 </context>
 <context>
@@ -970,22 +997,22 @@
         <translation>值</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterAbstract.cpp" line="52"/>
+        <location filename="../src/parameter/ParameterAbstract.cpp" line="47"/>
         <source>X Position</source>
         <translation>X位置</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterAbstract.cpp" line="61"/>
+        <location filename="../src/parameter/ParameterAbstract.cpp" line="56"/>
         <source>Y Position</source>
         <translation>Y位置</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterAbstract.cpp" line="90"/>
+        <location filename="../src/parameter/ParameterAbstract.cpp" line="85"/>
         <source>ID</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterAbstract.cpp" line="112"/>
+        <location filename="../src/parameter/ParameterAbstract.cpp" line="107"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
@@ -1389,34 +1416,28 @@
 <context>
     <name>ParameterGoMarkovChart</name>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="24"/>
         <source>Signal</source>
-        <translation>信号流</translation>
+        <translation type="vanished">信号流</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="36"/>
         <source>Vector Index</source>
-        <translation>向量索引</translation>
+        <translation type="vanished">向量索引</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="46"/>
         <source>Display P</source>
-        <translation>显示可用度</translation>
+        <translation type="vanished">显示可用度</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="56"/>
         <source>Display Q</source>
-        <translation>显示不可用度</translation>
+        <translation type="vanished">显示不可用度</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="66"/>
         <source>Display Lambda</source>
-        <translation>显示故障率</translation>
+        <translation type="vanished">显示故障率</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovChart.cpp" line="76"/>
         <source>Display Mu</source>
-        <translation>显示维修率</translation>
+        <translation type="vanished">显示维修率</translation>
     </message>
 </context>
 <context>
@@ -1450,29 +1471,24 @@
 <context>
     <name>ParameterGoMarkovCommonCause2</name>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovCommonCause2.cpp" line="20"/>
         <source>Breakdown Total</source>
-        <translation>整体故障率</translation>
+        <translation type="vanished">整体故障率</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovCommonCause2.cpp" line="32"/>
         <source>Breakdown Individual</source>
-        <translation>独立故障率</translation>
+        <translation type="vanished">独立故障率</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovCommonCause2.cpp" line="44"/>
         <source>Breakdown Common</source>
-        <translation>共因失效率 c</translation>
+        <translation type="vanished">共因失效率 c</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovCommonCause2.cpp" line="56"/>
         <source>Belta</source>
-        <translation>Belta</translation>
+        <translation type="vanished">Belta</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovCommonCause2.cpp" line="68"/>
         <source>Gamma C</source>
-        <translation>γc</translation>
+        <translation type="vanished">γc</translation>
     </message>
 </context>
 <context>
@@ -1909,127 +1925,106 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="29"/>
         <source>TYPE_DEBUG</source>
-        <translation>类型_调试</translation>
+        <translation type="vanished">类型_调试</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="31"/>
         <source>TYPE_MAINWINDOW_OPEN</source>
-        <translation>类型_主窗口_加载完成</translation>
+        <translation type="vanished">类型_主窗口_加载完成</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="33"/>
         <source>TYPE_EDITOR_OPEN_EXIST</source>
-        <translation>类型_编辑器_打开已有文件</translation>
+        <translation type="vanished">类型_编辑器_打开已有文件</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="35"/>
         <source>TYPE_MAINWINDOW_TRYCLOSE</source>
-        <translation>类型_主窗口_尝试关闭</translation>
+        <translation type="vanished">类型_主窗口_尝试关闭</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="37"/>
         <source>TYPE_MAINWINDOW_CLOSE</source>
-        <translation>类型_主窗口_关闭</translation>
+        <translation type="vanished">类型_主窗口_关闭</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="39"/>
         <source>TYPE_EDITOR_TYPE</source>
-        <translation>类型_编辑器_类型</translation>
+        <translation type="vanished">类型_编辑器_类型</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="41"/>
         <source>TYPE_EDITOR_SELECTION</source>
-        <translation>类型_编辑器_选择</translation>
+        <translation type="vanished">类型_编辑器_选择</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="43"/>
         <source>TYPE_EDITOR_NEW</source>
-        <translation>类型_编辑器_新建</translation>
+        <translation type="vanished">类型_编辑器_新建</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="45"/>
         <source>TYPE_EDITOR_CLOSE</source>
-        <translation>类型_编辑器_关闭</translation>
+        <translation type="vanished">类型_编辑器_关闭</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="47"/>
         <source>TYPE_EDITOR_CLOSEALL</source>
-        <translation>类型_编辑器_关闭所有</translation>
+        <translation type="vanished">类型_编辑器_关闭所有</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="49"/>
         <source>TYPE_EDITOR_SAVE</source>
-        <translation>类型_编辑器_保存</translation>
+        <translation type="vanished">类型_编辑器_保存</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="51"/>
         <source>TYPE_EDITOR_SAVEALL</source>
-        <translation>类型_编辑器_保存所有</translation>
+        <translation type="vanished">类型_编辑器_保存所有</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="53"/>
         <source>TYPE_EDITOR_SAVEAS</source>
-        <translation>类型_编辑器_另存为</translation>
+        <translation type="vanished">类型_编辑器_另存为</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="55"/>
         <source>TYPE_EDITOR_ANALYSIS</source>
-        <translation>类型_编辑器_分析</translation>
+        <translation type="vanished">类型_编辑器_分析</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="57"/>
         <source>TYPE_TOOL_SELECTION</source>
-        <translation>类型_工具_选择</translation>
+        <translation type="vanished">类型_工具_选择</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="59"/>
         <source>TYPE_OUTPUT_CLEAR</source>
-        <translation>类型_输出_清空</translation>
+        <translation type="vanished">类型_输出_清空</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="61"/>
         <source>TYPE_OUTPUT_TEXT</source>
-        <translation>类型_输出_文本</translation>
+        <translation type="vanished">类型_输出_文本</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="63"/>
         <source>TYPE_OUTPUT_SAMELINE_TEXT</source>
-        <translation>类型_输出_同行_文本</translation>
+        <translation type="vanished">类型_输出_同行_文本</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="65"/>
         <source>TYPE_OUTPUT_CORRECT</source>
-        <translation>类型_输出_正确</translation>
+        <translation type="vanished">类型_输出_正确</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="67"/>
         <source>TYPE_OUTPUT_ERROR</source>
-        <translation>类型_输出_错误</translation>
+        <translation type="vanished">类型_输出_错误</translation>
     </message>
     <message>
-        <location filename="../src/message/MessageFactory.cpp" line="69"/>
         <source>TYPE_UNDEFINED</source>
-        <translation>类型_未定义</translation>
+        <translation type="vanished">类型_未定义</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="122"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="109"/>
         <source>The input of the operator is null. </source>
         <translation>存在操作符的输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="130"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="117"/>
         <source>The sub input of the operator is null. </source>
         <translation>存在操作符的辅输入为空。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="153"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="140"/>
         <source>The Go graph contains cycle. </source>
         <translation>GO图中存在环。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="162"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="149"/>
         <source>The Go graph is not connected. </source>
         <translation>GO图不连通。</translation>
     </message>
@@ -2066,89 +2061,133 @@
         <translation>PR%1(%2)</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="792"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="903"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="667"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="773"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="803"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="683"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="789"/>
         <source>Can&apos;t open file </source>
         <translation>无法打开文件</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="823"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="698"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="832"/>
+        <source>Cut Property</source>
+        <translation>割集属性</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="836"/>
+        <source>Path Property</source>
+        <translation>路集属性</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="840"/>
+        <source>Cut Member</source>
+        <translation>割集成员</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="841"/>
+        <source>Stable Breakdown Probability</source>
+        <translation>稳态不可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="845"/>
+        <source>Path Member</source>
+        <translation>路集成员</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="846"/>
+        <source>Stable Normal Probability</source>
+        <translation>稳态可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="848"/>
+        <source>Stable Importance</source>
+        <translation>稳态重要度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="853"/>
+        <source>Breakdown Probability %1</source>
+        <translation>时刻%1不可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="857"/>
+        <source>Normal Probability %1</source>
+        <translation>时刻%1可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="714"/>
         <source>Analysis Result</source>
         <translation>分析结果</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="836"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="711"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="727"/>
         <source>Operator</source>
         <translation>操作符</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="837"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="712"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="728"/>
         <source>Output</source>
         <translation>输出</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="843"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="866"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="718"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="733"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="734"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="749"/>
         <source>Status</source>
         <translation>状态</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="844"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="867"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="939"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="719"/>
         <location filename="../src/analysis/origin/GoGraph.cpp" line="735"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="809"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="751"/>
         <source>Probability</source>
         <translation>概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="734"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="750"/>
         <source>Accumulative</source>
         <translation>累积概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="920"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="790"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="820"/>
+        <source>Breakdown Probability</source>
+        <translation>不可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="820"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="806"/>
         <source>Path or cut is not exist. </source>
         <translation>路集或割集不存在。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="929"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="799"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="829"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="815"/>
         <source>No.</source>
         <translation>No.</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="930"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="800"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="816"/>
         <source>Order</source>
         <translation>阶数</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="931"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="801"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="817"/>
         <source>ID List</source>
         <translation>编号</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="932"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="802"/>
         <source>Name</source>
-        <translation>名称</translation>
+        <translation type="vanished">名称</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="941"/>
-        <location filename="../src/analysis/origin/GoGraph.cpp" line="811"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="826"/>
         <source>Importance</source>
         <translation>重要度</translation>
+    </message>
+    <message>
+        <source>Probability %1</source>
+        <translation type="vanished">时刻%1不可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="859"/>
+        <source>Importance %1</source>
+        <translation>时刻%1重要度</translation>
     </message>
     <message>
         <location filename="../src/view/ItemGoText.cpp" line="113"/>
@@ -2196,14 +2235,12 @@
         <translation>输入文字：</translation>
     </message>
     <message>
-        <location filename="../src/message/DebugConsole.cpp" line="28"/>
         <source>[%1] </source>
-        <translation>[%1]</translation>
+        <translation type="vanished">[%1]</translation>
     </message>
     <message>
-        <location filename="../src/message/DebugConsole.cpp" line="28"/>
         <source> : %1 </source>
-        <translation> : %1</translation>
+        <translation type="vanished"> : %1</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="68"/>
@@ -2243,52 +2280,42 @@
         <translation type="obsolete">信号流 %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="357"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="356"/>
         <source>Analysis Completed. It takes %1 seconds.</source>
         <translation>计算结束，耗时%1秒。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="854"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="873"/>
         <source>Failure Rate</source>
-        <translation>故障率</translation>
+        <translation type="vanished">故障率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="858"/>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="878"/>
         <source>Repair Rate</source>
-        <translation>维修率</translation>
+        <translation type="vanished">维修率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="926"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="826"/>
         <source>&lt;h2&gt;Operator: %1 Output: %2 Index: %3&lt;/h2&gt;</source>
         <translation>&lt;h2&gt;操作符：%1  输出：%2  向量索引：%3&lt;/h2&gt;</translation>
     </message>
     <message>
-        <location filename="../src/view/SceneGo.cpp" line="356"/>
-        <location filename="../src/view/SceneGo.cpp" line="383"/>
-        <location filename="../src/view/SceneGoMarkov.cpp" line="423"/>
+        <location filename="../src/view/SceneGo.cpp" line="349"/>
+        <location filename="../src/view/SceneGo.cpp" line="374"/>
         <source>Set order</source>
         <translation>设置阶数</translation>
     </message>
     <message>
-        <location filename="../src/view/SceneGo.cpp" line="357"/>
+        <location filename="../src/view/SceneGo.cpp" line="350"/>
         <source>Input path order: </source>
         <translation>输入路集阶数：</translation>
     </message>
     <message>
-        <location filename="../src/view/SceneGo.cpp" line="384"/>
-        <location filename="../src/view/SceneGoMarkov.cpp" line="424"/>
+        <location filename="../src/view/SceneGo.cpp" line="375"/>
         <source>Input cut order: </source>
         <translation>输入割集阶数：</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="349"/>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="371"/>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="393"/>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="415"/>
         <source>Time</source>
-        <translation>时间</translation>
+        <translation type="vanished">时间</translation>
     </message>
     <message>
         <source>Property</source>
@@ -2321,78 +2348,78 @@
         <translation>等效不存在。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="239"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="247"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="301"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="309"/>
         <location filename="../src/analysis/markov/GoMarkovOperator11.cpp" line="276"/>
         <location filename="../src/analysis/markov/GoMarkovOperator11.cpp" line="281"/>
         <source>Error: Operator </source>
         <translation>错误: 操作符</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="239"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="301"/>
         <source>-%1 does not have input at %2.</source>
         <translation>-%1 在%2没有输入。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="247"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="309"/>
         <source>-%1 does not have sub input at %2.</source>
         <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="253"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="315"/>
         <source>Error: </source>
         <translation>错误：</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="253"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="315"/>
         <source>-%1 The total frequency of breakdown is greater than 1.</source>
         <translation>-%1 损坏率之和大于1。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="499"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="129"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="593"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="139"/>
         <source>Lambda 1: %1</source>
         <translation>故障率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="500"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="130"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="594"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="140"/>
         <source>    Mu 1: %1</source>
         <translation>维修率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="505"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="135"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="599"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="145"/>
         <source>Lambda 2: %1</source>
         <translation>故障率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="506"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="136"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="600"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="146"/>
         <source>    Mu 2: %1</source>
         <translation>维修率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="511"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="141"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="605"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="151"/>
         <source>Lambda 3: %1</source>
         <translation>故障率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="512"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="142"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="606"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="152"/>
         <source>    Mu 3: %1</source>
         <translation>维修率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="517"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="147"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="611"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="157"/>
         <source>Lambda 4: %1</source>
         <translation>故障率4：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="518"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="148"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="612"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="158"/>
         <source>    Mu 4: %1</source>
         <translation>维修率4：%1</translation>
     </message>
@@ -2443,24 +2470,21 @@
         <translation type="obsolete">-%1 辅助输入应该是一个向量。</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="275"/>
+        <location filename="../src/analysis/origin/GoGraph.cpp" line="824"/>
         <source>Normal Probability</source>
         <translation>可用度</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="291"/>
         <source>Failure Probability</source>
-        <translation>不可用度</translation>
+        <translation type="vanished">不可用度</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="307"/>
         <source>Lambda</source>
-        <translation>故障率</translation>
+        <translation type="vanished">故障率</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovChart.cpp" line="323"/>
         <source>Mu</source>
-        <translation>维修率</translation>
+        <translation type="vanished">维修率</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovCommonCause.cpp" line="191"/>
@@ -2477,62 +2501,60 @@
         <translation type="obsolete">应该具有相同的故障率。</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="39"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="39"/>
         <source>Total Breakdown: %1</source>
         <translation>整体故障率：%1</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="40"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="40"/>
         <source>Individual Breakdown: %1</source>
         <translation>独立失效率：%1</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="41"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="41"/>
         <source>Common Breakdown: %1</source>
         <translation>共因失效率：%1</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="42"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="42"/>
         <source>Belta: %1</source>
         <translation>Belta：%1</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="43"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="43"/>
         <source>Gamma C: %1</source>
         <translation>γc：%1</translation>
     </message>
     <message>
-        <location filename="../src/view/ItemGoMarkovCommonCause2.cpp" line="44"/>
+        <location filename="../src/view/ItemGoMarkovCommonCause.cpp" line="44"/>
         <source>Operators: </source>
         <translation>操作符：</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoCutSet.cpp" line="47"/>
         <source>Cut Failure Probablity</source>
-        <translation>割集失效概率</translation>
+        <translation type="vanished">割集失效概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/origin/GoPathSet.cpp" line="149"/>
         <source>Path Success Probablity</source>
-        <translation>路集成功概率</translation>
+        <translation type="vanished">路集成功概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator12a.cpp" line="154"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator12a.cpp" line="165"/>
         <source>Relvent</source>
         <translation>关联</translation>
     </message>
     <message>
-        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="76"/>
+        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="75"/>
         <source>%1 Hour </source>
         <translation>%1时</translation>
     </message>
     <message>
-        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="80"/>
+        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="79"/>
         <source>%1 Minute </source>
         <translation>%1分</translation>
     </message>
     <message>
-        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="82"/>
+        <location filename="../src/dialog/DialogGoMarkovAnalysisProcess.cpp" line="81"/>
         <source>%1 Second</source>
         <translation>%1秒</translation>
     </message>
@@ -2565,9 +2587,9 @@
 <context>
     <name>SceneGo</name>
     <message>
-        <location filename="../src/view/SceneGo.cpp" line="348"/>
-        <location filename="../src/view/SceneGo.cpp" line="373"/>
-        <location filename="../src/view/SceneGo.cpp" line="399"/>
+        <location filename="../src/view/SceneGo.cpp" line="342"/>
+        <location filename="../src/view/SceneGo.cpp" line="366"/>
+        <location filename="../src/view/SceneGo.cpp" line="391"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -2575,7 +2597,8 @@
 <context>
     <name>SceneGoMarkov</name>
     <message>
-        <location filename="../src/view/SceneGoMarkov.cpp" line="441"/>
+        <location filename="../src/view/SceneGoMarkov.cpp" line="630"/>
+        <location filename="../src/view/SceneGoMarkov.cpp" line="657"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
@@ -2801,7 +2824,7 @@
         <source>State Separation</source>
         <translation type="obsolete">状态分离器</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Multiplex Input and Output (×)</source>
         <translation type="obsolete">多路输入输出器 (“×”)</translation>
     </message>
@@ -3014,7 +3037,7 @@
         <source>State Separation</source>
         <translation>状态分离器</translation>
     </message>
-    <message utf8="true">
+    <message>
         <location filename="../form/ToolboxGoMarkov.ui" line="894"/>
         <source>Multiplex Input and Output (×)</source>
         <translation>多路输入输出器 (“×”)</translation>

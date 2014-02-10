@@ -9,7 +9,6 @@ public:
     GoCutSet *copy();
     double toProbability() const;
     double toMarkovProbability() const;
-    QString getProbabilityName() const;
 };
 
 #endif // GOCUTSET_H

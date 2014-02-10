@@ -815,14 +815,13 @@ bool GoGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;
             out << "<th>" + QObject::tr("Order") + "</th>" << endl;
             out << "<th>" + QObject::tr("ID List") + "</th>" << endl;
-            out << "<th>" + QObject::tr("Name") + "</th>" << endl;
-            if (path.list().at(i)->list().size() > 0)
+            if (path.isCut())
             {
-                out << "<th>" + path.list().at(i)->list().at(0)->getProbabilityName() + "</th>" << endl;
+                out << "<th>" + QObject::tr("Breakdown Probability") + "</th>" << endl;
             }
             else
             {
-                out << "<th>" + QObject::tr("Probability") + "</th>" << endl;
+                out << "<th>" + QObject::tr("Normal Probability") + "</th>" << endl;
             }
             out << "<th>" + QObject::tr("Importance") + "</th>" << endl;
             out << "</tr>" << endl;
@@ -832,7 +831,6 @@ bool GoGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
-                out << "<td>" + path.list().at(i)->list().at(j)->toNameString() + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toProbabilityString() + "</td>" << endl;
                 out << "<td></td>" << endl;
                 out << "</tr>" << endl;
