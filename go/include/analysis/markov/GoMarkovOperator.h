@@ -60,8 +60,8 @@ public:
     RungeKuttaBreakdown3* rkBreakdown3() const;
     RungeKuttaBreakdown4* rkBreakdown4() const;
     virtual GoMarkovOperator* copy();
-    void save(QDomDocument &document, QDomElement &root);
-    bool tryOpen(QDomElement &root);
+    virtual void save(QDomDocument &document, QDomElement &root) override;
+    virtual bool tryOpen(QDomElement &root) override;
 
 protected:
     DoubleVector _qualitativeStatus;

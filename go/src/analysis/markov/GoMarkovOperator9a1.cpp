@@ -6,7 +6,6 @@
 #include "GoSignal.h"
 #include "GoParameter.h"
 #include "GoMarkovStatus.h"
-#include "RungeKuttaMarkov9a1.h"
 
 GoMarkovOperator9A1::GoMarkovOperator9A1() : GoMarkovOperator9A()
 {

@@ -1512,228 +1512,233 @@
 <context>
     <name>ParameterGoMarkovOperator</name>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="130"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="133"/>
         <source>Type</source>
         <translation>类型</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="142"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="145"/>
         <source>Global Feedback</source>
         <translation>整体反馈</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="149"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="152"/>
         <source>Show Parameter</source>
         <translation>显示参数</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="196"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="199"/>
         <source>Breakdown Status Number</source>
         <translation>故障数</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="179"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="182"/>
         <source>Breakdown Correlate</source>
         <translation>停工相关</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="225"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="228"/>
         <source>Repair Time 1</source>
         <translation>维修时间 1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="236"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="239"/>
         <source>Repair Rate 1</source>
         <translation>维修率 1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="247"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="250"/>
         <source>Failure Rate 1</source>
         <translation>故障率 1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="267"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="270"/>
         <source>Repair Time 2</source>
         <translation>维修时间 2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="278"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="281"/>
         <source>Repair Rate 2</source>
         <translation>维修率 2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="289"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="292"/>
         <source>Failure Rate 2</source>
         <translation>故障率 2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="309"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="312"/>
         <source>Repair Time 3</source>
         <translation>维修时间 3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="320"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="323"/>
         <source>Repair Rate 3</source>
         <translation>维修率 3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="331"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="334"/>
         <source>Failure Rate 3</source>
         <translation>故障率 3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="351"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="354"/>
         <source>Repair Time 4</source>
         <translation>维修时间 4</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="362"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="365"/>
         <source>Repair Rate 4</source>
         <translation>维修率 4</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="373"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="376"/>
         <source>Failure Rate 4</source>
         <translation>故障率 4</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="522"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="525"/>
         <source>K</source>
         <translation>K</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="540"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="543"/>
         <source>I</source>
         <translation>停工故障数I</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="557"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="560"/>
         <source>L</source>
         <translation>维修工数L</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="574"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="577"/>
         <source>J</source>
         <translation>备用指示J</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="623"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="626"/>
         <source>Markov 2</source>
         <translation>马尔科夫2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="625"/>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="670"/>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="712"/>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="819"/>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="944"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="628"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="673"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="715"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="822"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="947"/>
         <source>Click to Edit...</source>
         <translation>点击编辑...</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="636"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="639"/>
         <source>Operator 22 Markov Status 2</source>
         <translation>操作符22状态2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="637"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="640"/>
         <source>lambda</source>
         <translation>故障率</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="638"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="641"/>
         <source>mu</source>
         <translation>维修率</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="668"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="671"/>
         <source>Alpha</source>
         <translation>Alpha</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="681"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="684"/>
         <source>Operator 23 Alpha</source>
         <translation>操作符23 Alpha</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="682"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="685"/>
         <source>alpha</source>
         <translation>alpha</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="710"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="713"/>
         <source>Relation</source>
         <translation>关系</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="723"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="726"/>
         <source>Operator 13 Relation</source>
         <translation>操作符13 关系</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="995"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="998"/>
         <source>Feedback Status Number</source>
         <translation>反馈故障数</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1024"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1027"/>
         <source>Feedback Repair Time 1</source>
         <translation>反馈维修时间1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1035"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1038"/>
         <source>Feedback Repair Rate 1</source>
         <translation>反馈维修率1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1046"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1049"/>
         <source>Feedback Failure Rate 1</source>
         <translation>反馈故障率1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1066"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1069"/>
         <source>Feedback Repair Time 2</source>
         <translation>反馈维修时间2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1077"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1080"/>
         <source>Feedback Repair Rate 2</source>
         <translation>反馈维修率2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1088"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1091"/>
         <source>Feedback Failure Rate 2</source>
         <translation>反馈故障率2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1108"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1111"/>
         <source>Feedback Repair Time 3</source>
         <translation>反馈维修时间3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1119"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1122"/>
         <source>Feedback Repair Rate 3</source>
         <translation>反馈维修率3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1130"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1133"/>
         <source>Feedback Failure Rate 3</source>
         <translation>反馈故障率3</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1150"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1153"/>
         <source>Feedback Repair Time 4</source>
         <translation>反馈维修时间4</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1161"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1164"/>
         <source>Feedback Repair Rate 4</source>
         <translation>反馈维修率4</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1172"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1175"/>
         <source>Feedback Failure Rate 4</source>
         <translation>反馈故障率4</translation>
+    </message>
+    <message>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="1315"/>
+        <source>Stop work number:</source>
+        <translation>停工数I</translation>
     </message>
     <message>
         <source>Failure Rate Feedback</source>
@@ -1748,7 +1753,7 @@
         <translation type="obsolete">反馈维修时间</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="754"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="757"/>
         <source>Backup Probability</source>
         <translation>备用概率</translation>
     </message>
@@ -1757,58 +1762,58 @@
         <translation type="obsolete">Delta数量</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="942"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="945"/>
         <source>Delta</source>
         <translation>Delta</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="830"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="833"/>
         <source>Operator 19 Delta</source>
         <translation>操作符19 Delta</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="963"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="966"/>
         <source>Relevent Operator ID</source>
         <translation>关联操作符ID</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="831"/>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="964"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="834"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="967"/>
         <source>delta</source>
         <translation>delta</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="781"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="784"/>
         <source>Separate Status Number</source>
         <translation>需分离状态个数</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="817"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="820"/>
         <source>Separate Delta</source>
         <translation>分离系数δ</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="856"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="859"/>
         <source>Lambda b1</source>
         <translation>λb1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="883"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="886"/>
         <source>Show R1</source>
         <translation>显示R1</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="899"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="902"/>
         <source>Show R2</source>
         <translation>显示R2</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="929"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="932"/>
         <source>Use Delta</source>
         <translation>关联操作符</translation>
     </message>
     <message>
-        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="962"/>
+        <location filename="../src/parameter/ParameterGoMarkovOperator.cpp" line="965"/>
         <source>Operator 12A Delta</source>
         <translation>操作符12A Delta</translation>
     </message>

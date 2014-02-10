@@ -72,6 +72,7 @@ protected:
     void addMarkov23AlphaParameter();
     void addMarkovShowOutput1Parameter();
     void addMarkovShowOutput2Parameter();
+    void addMarkov2StopWorkNumParameter();
 
 protected slots:
     void setItemMarkovGlobalFeedback(bool value);
@@ -118,6 +119,7 @@ protected slots:
     void setItemMarkov23Alpha();
     void setItemMarkovShowOutput1(bool value);
     void setItemMarkovShowOutput2(bool value);
+    void setItemMarkov2StopWorkNum(int value);
 };
 
 #endif // PARAMETERGOMARKOVOPERATOR_H

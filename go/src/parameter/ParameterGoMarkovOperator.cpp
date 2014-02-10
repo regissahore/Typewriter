@@ -14,6 +14,7 @@
 #include "MessageFactory.h"
 #include "GoParameter.h"
 #include "GoMarkovOperatorFactory.h"
+#include "GoMarkovOperator2.h"
 #include "GoMarkovOperator9.h"
 #include "GoMarkovOperator11.h"
 #include "GoMarkovOperator12a.h"
@@ -42,6 +43,8 @@ void ParameterGoMarkovOperator::bindItem(void *item)
         this->addMarkovBreakdownCorrelateParameter();
         break;
     case GoMarkovOperatorFactory::Operator_Type_2:
+        // this->addMarkovBreakdownCorrelateParameter();
+        // this->addMarkov2StopWorkNumParameter();
         break;
     case GoMarkovOperatorFactory::Operator_Type_5:
         this->addMarkovBreakdownNumParameter();
@@ -1301,4 +1304,27 @@ void ParameterGoMarkovOperator::setItemMarkov9RepairTime4()
     GoMarkovOperator9 *model = (GoMarkovOperator9*)item->model();
     model->feedbackStatus4()->setFrequencyRepair(1.0 / value);
     this->_spinBoxFeedback4FrequencyRepair->setValue(model->feedbackStatus4()->frequencyRepair().getValue(0));
+}
+
+void ParameterGoMarkovOperator::addMarkov2StopWorkNumParameter()
+{
+    if (nullptr != this->_item)
+    {
+        ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
+        this->_tableWidget->insertRow(this->_tableWidget->rowCount());
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 0, new QLabel(tr("Stop work number:"), this));
+        QSpinBox *spinBox = new QSpinBox(this);
+        spinBox->setMinimum(1);
+        spinBox->setMaximum(item->model()->input()->number());
+        spinBox->setValue(((GoMarkovOperator2*)item->model())->stopWorkNum());
+        this->connect(spinBox, SIGNAL(valueChanged(int)), this, SLOT(setItemMarkov2StopWorkNum(int)));
+        this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spinBox);
+    }
+}
+
+void ParameterGoMarkovOperator::setItemMarkov2StopWorkNum(int value)
+{
+    ItemGoMarkovOperator *item = (ItemGoMarkovOperator*)this->_item;
+    GoMarkovOperator2 *model = (GoMarkovOperator2*)item->model();
+    model->setStopWorkNum(value);
 }
