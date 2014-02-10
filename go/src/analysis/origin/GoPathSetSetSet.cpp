@@ -140,6 +140,10 @@ double GoPathSetSetSet::totalMarkovProbability(int index, int count)
         }
         res += temp;
     }
+    if (this->isCut())
+    {
+        res = 1.0 - res;
+    }
     return res;
 }
 
