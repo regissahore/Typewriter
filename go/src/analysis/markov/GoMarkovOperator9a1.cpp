@@ -21,6 +21,7 @@ GoMarkovOperator9A1::~GoMarkovOperator9A1()
 
 void GoMarkovOperator9A1::calcOutputMarkovStatus(double time)
 {
+    this->prepareSum();
     DoubleVector lambdaS = lambdaS1;
     DoubleVector muS = muS1;
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
@@ -47,6 +48,7 @@ DoubleVector GoMarkovOperator9A1::calcTempOutputMarkovStatus(double time, QVecto
     Q_UNUSED(input);
     Q_UNUSED(subInput);
     Q_UNUSED(index);
+    this->prepareSum();
     DoubleVector lambdaS = lambdaS1;
     DoubleVector muS = muS1;
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();

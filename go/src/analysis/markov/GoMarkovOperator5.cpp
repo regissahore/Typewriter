@@ -30,8 +30,8 @@ void GoMarkovOperator5::calcOutputMarkovStatus(double time)
     Q_UNUSED(time);
     DoubleVector PR = this->_markovStatus->probabilityNormal();
     DoubleVector lambdaR = this->_markovStatus->frequencyBreakdown();
-    DoubleVector miuR = this->_markovStatus->frequencyRepair();
+    DoubleVector muR = this->_markovStatus->frequencyRepair();
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
-    this->markovOutputStatus()->at(0)->setFrequencyRepair(miuR);
+    this->markovOutputStatus()->at(0)->setFrequencyRepair(muR);
 }

@@ -297,6 +297,8 @@ void GoMarkovOperator9::initCalculation(double interval)
 
     this->_lambdaS1Sum = 0.0;
     this->_muS1Sum = 0.0;
+    this->_sumCount1 = 0;
+    this->_currentCount = 0;
 }
 
 void GoMarkovOperator9::prepareNextCalculation(int count, double time)
@@ -314,8 +316,12 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
     {
         this->_rkFeedback4->nextStep();
     }
-    this->_calculateCount = count;
-    if (count > 0)
+    this->_currentCount = count;
+}
+
+void GoMarkovOperator9::prepareSum()
+{
+    if (this->_currentCount > this->_sumCount1)
     {
         DoubleVector lambdaS1 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
         DoubleVector muS1 = this->getPrevMarkovStatus(0)->frequencyRepair();
@@ -326,7 +332,7 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
         else
         {
             this->_lambdaS1Sum = this->_lambdaS1Sum + lambdaS1;
-            this->lambdaS1 = this->_lambdaS1Sum / count;
+            this->lambdaS1 = this->_lambdaS1Sum / this->_currentCount;
         }
         if (std::isinf(muS1.getValue(0)) || std::isnan(muS1.getValue(0)))
         {
@@ -335,8 +341,15 @@ void GoMarkovOperator9::prepareNextCalculation(int count, double time)
         else
         {
             this->_muS1Sum = this->_muS1Sum + muS1;
-            this->muS1 = this->_muS1Sum / count;
+            this->muS1 = this->_muS1Sum / this->_currentCount;
         }
+        ++this->_sumCount1;
+        FILE *file = fopen("test.txt", "a");
+        fprintf(file, "\n\n9A Count %d\n", this->_currentCount);
+        fprintf(file, "\tS1: %lf %lf\n", lambdaS1.getValue(0), muS1.getValue(0));
+        fprintf(file, "\tSum: %lf %lf\n", _lambdaS1Sum.getValue(0), _muS1Sum.getValue(0));
+        fprintf(file, "\tAvr: %lf %lf\n", this->lambdaS1.getValue(0), this->muS1.getValue(0));
+        fclose(file);
     }
 }
 

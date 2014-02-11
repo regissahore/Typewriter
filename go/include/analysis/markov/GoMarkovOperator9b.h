@@ -9,12 +9,13 @@ public:
     ~GoMarkovOperator9B();
     virtual void calcQualitativeProbability();
     virtual void initCalculation(double interval);
-    virtual void prepareNextCalculation(int count, double time);
+    virtual void prepareSum() override;
 protected:
     DoubleVector _lambdaS2Sum;
     DoubleVector _muS2Sum;
     DoubleVector lambdaS2;
     DoubleVector muS2;
+    int _sumCount2;
 };
 
 #endif // GOMARKOVOPERATOR1_H

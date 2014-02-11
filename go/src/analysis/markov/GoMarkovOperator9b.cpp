@@ -35,15 +35,16 @@ void GoMarkovOperator9B::initCalculation(double interval)
     this->GoMarkovOperator9::initCalculation(interval);
     this->_lambdaS2Sum = 0.0;
     this->_muS2Sum = 0.0;
+    this->_sumCount2 = 0.0;
 }
 
-void GoMarkovOperator9B::prepareNextCalculation(int count, double time)
+void GoMarkovOperator9B::prepareSum()
 {
-    this->GoMarkovOperator9::prepareNextCalculation(count, time);
-    if (count > 0)
+    this->GoMarkovOperator9::prepareSum();
+    if (this->_currentCount > this->_sumCount2)
     {
-        DoubleVector lambdaS2 = this->getPrevMarkovStatus(0)->frequencyBreakdown();
-        DoubleVector muS2 = this->getPrevMarkovStatus(0)->frequencyRepair();
+        DoubleVector lambdaS2 = this->getPrevMarkovStatus(1)->frequencyBreakdown();
+        DoubleVector muS2 = this->getPrevMarkovStatus(1)->frequencyRepair();
         if (std::isinf(lambdaS2.getValue(0)) || std::isnan(lambdaS2.getValue(0)))
         {
             this->_lambdaS2Sum = this->_lambdaS2Sum + this->lambdaS2;
@@ -51,7 +52,7 @@ void GoMarkovOperator9B::prepareNextCalculation(int count, double time)
         else
         {
             this->_lambdaS2Sum = this->_lambdaS2Sum + lambdaS2;
-            this->lambdaS2 = this->_lambdaS2Sum / count;
+            this->lambdaS2 = this->_lambdaS2Sum / this->_currentCount;
         }
         if (std::isinf(muS2.getValue(0)) || std::isnan(muS2.getValue(0)))
         {
@@ -60,7 +61,8 @@ void GoMarkovOperator9B::prepareNextCalculation(int count, double time)
         else
         {
             this->_muS2Sum = this->_muS2Sum + muS2;
-            this->muS2 = this->_muS2Sum / count;
+            this->muS2 = this->_muS2Sum / this->_currentCount;
         }
+        ++this->_sumCount2;
     }
 }

@@ -22,12 +22,12 @@ public:
     virtual void initMarkovStatus(double time, double c12 = 0.0);
     virtual void initCalculation(double interval);
     virtual void prepareNextCalculation(int count, double time);
+    virtual void prepareSum();
     void save(QDomDocument &document, QDomElement &root);
     bool tryOpen(QDomElement &root);
 
 protected:
     int _feedbackNum;
-    int _calculateCount;
     GoMarkovStatus *_feedbackStatus;
     GoMarkovStatus *_feedbackStatus1;
     GoMarkovStatus *_feedbackStatus2;
@@ -40,6 +40,8 @@ protected:
     DoubleVector _muS1Sum;
     DoubleVector lambdaS1;
     DoubleVector muS1;
+    int _currentCount;
+    int _sumCount1;
 };
 
 #endif // GOMARKOVOPERATOR1_H
