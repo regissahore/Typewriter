@@ -9,7 +9,7 @@ using namespace std;
 DockParameter::DockParameter(QWidget *parent) : QDockWidget(parent), Messager()
 {
     this->setWindowTitle(tr("Parameter"));
-    this->setFeatures(QDockWidget::AllDockWidgetFeatures);
+    this->setFeatures(QDockWidget::DockWidgetMovable);
     this->_parameter = new ParameterAbstract(this);
     this->setWidget(this->_parameter);
 }

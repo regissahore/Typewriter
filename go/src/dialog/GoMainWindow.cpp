@@ -5,7 +5,6 @@
 #include <QDate>
 #include "GoMainWindow.h"
 #include "ui_GoMainWindow.h"
-#include "DialogAbout.h"
 #include "GlobalConfig.h"
 using namespace std;
 
@@ -66,23 +65,20 @@ void GoMainWindow::closeEvent(QCloseEvent *event)
 
 void GoMainWindow::initEditor()
 {
-    this->_dockToolbox.bindMessage();
-    this->_dockToolbox.setMaximumWidth(200);
-    this->_dockToolbox.setFeatures(0);
-    this->ui->widget->layout()->addWidget(&this->_dockToolbox);
-
     this->_editor.bindMessage();
-    this->ui->widget->layout()->addWidget(&this->_editor);
-
-    this->_dockParameter.bindMessage();
-    this->_dockParameter.setMaximumWidth(250);
-    this->_dockParameter.setFeatures(0);
-    this->_dockParameter.setFloating(false);
-    this->ui->widget->layout()->addWidget(&this->_dockParameter);
+    this->setCentralWidget(&this->_editor);
 }
 
 void GoMainWindow::initDock()
 {
+    this->ui->dockWidgetTab->setTitleBarWidget(new QWidget());
+
+    this->_dockToolbox.bindMessage();
+    this->addDockWidget(Qt::LeftDockWidgetArea, &this->_dockToolbox);
+
+    this->_dockParameter.bindMessage();
+    this->addDockWidget(Qt::RightDockWidgetArea, &this->_dockParameter);
+
     this->_dockMessage.bindMessage();
     this->addDockWidget(Qt::BottomDockWidgetArea, &this->_dockMessage);
 }

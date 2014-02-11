@@ -7,7 +7,7 @@ using namespace std;
 DockToolbox::DockToolbox(QWidget *parent) : QDockWidget(parent), Messager()
 {
     this->setWindowTitle(tr("Toolbox"));
-    this->setFeatures(QDockWidget::AllDockWidgetFeatures);
+    this->setFeatures(QDockWidget::DockWidgetMovable);
     this->_toolbox = nullptr;
     this->setMinimumWidth(150);
 }
