@@ -31,7 +31,7 @@ GoMarkovOperator19::~GoMarkovOperator19()
 void GoMarkovOperator19::calcQualitativeProbability()
 {
     DoubleVector IS = this->getPrevQualitativeStatus();
-    DoubleVector IC = this->getPrevSubQualitativeStatus();
+    DoubleVector IC = this->qualitativeStatus();
     DoubleVector IR1 = IS * IC;
     DoubleVector IR2 = IS * IC;
     this->_qualitativeOutput[0] = IR1;
