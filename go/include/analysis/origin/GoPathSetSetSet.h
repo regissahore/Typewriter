@@ -30,7 +30,7 @@ public:
     QVector<GoPathSetSet*>& list();
     QVector<End> endList() const;
     void sort();
-    double totalMarkovProbability(GoOperator *op) const;
+    double totalMarkovProbability(GoOperator *op, int outputIndex, int vectorIndex) const;
     double totalMarkovProbability(int index) const;
     double totalMarkovProbability(int index, int count);
     void setInterval(double interval);
@@ -42,7 +42,7 @@ public:
     void finishCalculation();
     void calcWithTime();
     double getProbability(int count, GoPathSet *path);
-    double getImportance(int count, GoPathSet *path, GoOperator* end);
+    double getImportance(int count, GoPathSet *path, GoOperator* end, int outputIndex, int vectorIndex);
     QMap<GoOperator*, QVector<double>>& probabilities();
 
 protected:

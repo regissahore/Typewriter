@@ -6,9 +6,9 @@ class GoCutSet : public GoPathSet
 {
 public:
     GoCutSet();
-    GoCutSet *copy();
-    double toProbability() const;
-    double toMarkovProbability() const;
+    GoCutSet *copy() override;
+    double toProbability() const override;
+    double toMarkovProbability() const override;
 };
 
 #endif // GOCUTSET_H

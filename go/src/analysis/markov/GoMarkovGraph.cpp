@@ -885,7 +885,7 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
                 double probability = path.list()[i]->list()[j]->toMarkovProbability();
-                double importance = path.list()[i]->list()[j]->toMarkovImportance();
+                double importance = probability / path.totalMarkovProbability(path.endList()[i].op, path.endList()[i].outputIndex, path.endList()[i].vectorIndex);
                 if (probability < 1e-10)
                 {
                     out << "<td>" + QString::number(probability, 'f', 15) + "</td>" << endl;
@@ -905,7 +905,7 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 for (int k = 0; k < path.count(); ++k)
                 {
                     probability = path.getProbability(k, path.list()[i]->list()[j]);
-                    importance = path.getImportance(k, path.list()[i]->list()[j], path.endList()[i].op);
+                    importance = path.getImportance(k, path.list()[i]->list()[j], path.endList()[i].op, path.endList()[i].outputIndex, path.endList()[i].vectorIndex);
                     if (probability < 1e-10)
                     {
                         out << "<td>" + QString::number(probability, 'f', 15) + "</td>" << endl;

@@ -100,11 +100,13 @@ void GoPathSetSetSet::sort()
     }
 }
 
-double GoPathSetSetSet::totalMarkovProbability(GoOperator *op) const
+double GoPathSetSetSet::totalMarkovProbability(GoOperator *op, int outputIndex, int vectorIndex) const
 {
     for (int i = 0; i < this->_endList.size(); ++i)
     {
-        if (this->_endList.at(i).op->realID() == op->realID())
+        if (this->_endList.at(i).op->realID() == op->realID() &&
+                this->_endList.at(i).outputIndex == outputIndex &&
+                this->_endList.at(i).vectorIndex == vectorIndex)
         {
             return this->_list[i]->totalMarkovProbability();
         }
@@ -272,13 +274,15 @@ double GoPathSetSetSet::getProbability(int count, GoPathSet *path)
     return res;
 }
 
-double GoPathSetSetSet::getImportance(int count, GoPathSet *path, GoOperator* end)
+double GoPathSetSetSet::getImportance(int count, GoPathSet *path, GoOperator* end, int outputIndex, int vectorIndex)
 {
     double probability = this->getProbability(count, path);
     double total = 0.0;
     for (int i = 0; i < this->_endList.size(); ++i)
     {
-        if (this->_endList[i].op == end)
+        if (this->_endList[i].op == end &&
+                this->_endList[i].outputIndex == outputIndex &&
+                this->_endList[i].vectorIndex == vectorIndex)
         {
             for (int j = 0; j < this->_list[i]->list().size(); ++j)
             {
