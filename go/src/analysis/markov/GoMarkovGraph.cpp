@@ -823,7 +823,26 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
     {
         for (int i = 0; i < path.list().size(); ++i)
         {
-            out << QObject::tr("<h2>Operator: %1 Output: %2 Index: %3</h2>").arg(path.endList().at(i).op->id()).arg(path.endList().at(i).outputIndex + 1).arg(path.endList().at(i).vectorIndex + 1) <<endl;
+            GoMarkovOperator* op = (GoMarkovOperator*)path.endList()[i].op;
+            out << "<h2>";
+            out << QObject::tr("Signal: ") << "P<sub>";
+            if (op->type() != GoMarkovOperatorFactory::Operator_Type_Split)
+            {
+                out << QString("R%1").arg(op->id());
+            }
+            else
+            {
+                out << QString("R%1").arg(op->getPrevOperator(0)->id());
+            }
+            if (op->output()->number() > 1)
+            {
+                out << QString("(%1)").arg(path.endList()[i].outputIndex + 1);
+            }
+            if (op->markovOutputStatus()->at(path.endList()[i].outputIndex)->frequencyBreakdown().length() > 1)
+            {
+                out << QString("-(%1)").arg(path.endList().at(i).vectorIndex + 1);
+            }
+            out << "</sub></h2>" << endl;
             out << "<table>" << endl;
             out << "<tr>" << endl;
             out << "<th>" + QObject::tr("No.") + "</th>" << endl;
