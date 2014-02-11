@@ -26,3 +26,9 @@
         }
     }
     
+# Action
+
+    CCAction {
+        CCFiniteTimeAction
+    }
+    
