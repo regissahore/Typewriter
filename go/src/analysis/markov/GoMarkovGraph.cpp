@@ -865,12 +865,44 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
                 out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
                 out << "<td>" + path.list().at(i)->list().at(j)->toIdString() + "</td>" << endl;
-                out << "<td>" + path.list().at(i)->list().at(j)->toMarkovProbabilityString() + "</td>" << endl;
-                out << "<td>" + QString::number(path.list().at(i)->list().at(j)->toMarkovProbability() / path.totalMarkovProbability(i), 'f', 10) + "</td>" << endl;
+                double probability = path.list()[i]->list()[j]->toMarkovProbability();
+                double importance = path.list()[i]->list()[j]->toMarkovImportance();
+                if (probability < 1e-10)
+                {
+                    out << "<td>" + QString::number(probability, 'f', 15) + "</td>" << endl;
+                }
+                else
+                {
+                    out << "<td>" + QString::number(probability, 'f', 10) + "</td>" << endl;
+                }
+                if (importance < 1e-10)
+                {
+                    out << "<td>" + QString::number(importance, 'f', 15) + "</td>" << endl;
+                }
+                else
+                {
+                    out << "<td>" + QString::number(importance, 'f', 10) + "</td>" << endl;
+                }
                 for (int k = 0; k < path.count(); ++k)
                 {
-                    out << "<td>" + QString::number(path.getProbability(k, path.list()[i]->list()[j]), 'f', 10) + "</td>" << endl;
-                    out << "<td>" + QString::number(path.getImportance(k, path.list()[i]->list()[j], path.endList()[i].op), 'f', 10) + "</td>" << endl;
+                    probability = path.getProbability(k, path.list()[i]->list()[j]);
+                    importance = path.getImportance(k, path.list()[i]->list()[j], path.endList()[i].op);
+                    if (probability < 1e-10)
+                    {
+                        out << "<td>" + QString::number(probability, 'f', 15) + "</td>" << endl;
+                    }
+                    else
+                    {
+                        out << "<td>" + QString::number(probability, 'f', 10) + "</td>" << endl;
+                    }
+                    if (importance < 1e-10)
+                    {
+                        out << "<td>" + QString::number(importance, 'f', 15) + "</td>" << endl;
+                    }
+                    else
+                    {
+                        out << "<td>" + QString::number(importance, 'f', 10) + "</td>" << endl;
+                    }
                 }
                 out << "</tr>" << endl;
             }

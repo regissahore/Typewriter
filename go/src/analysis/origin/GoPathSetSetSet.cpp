@@ -234,13 +234,9 @@ void GoPathSetSetSet::finishCalculation()
 
 void GoPathSetSetSet::calcWithTime()
 {
-    if (this->count() == 0)
-    {
-        return;
-    }
     this->_probabilities.clear();
     this->initCalculation();
-    for (int i = 0; i < this->_count; ++i)
+    for (int i = 0; i < this->_count || i < 1; ++i)
     {
         for (auto j = this->_operators.begin(); j != this->_operators.end(); ++j)
         {
