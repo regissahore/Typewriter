@@ -227,7 +227,7 @@ function updateLineChart() {
                 context.textAlign = 'left';
                 context.textBaseline = 'top';
                 context.font = "16px 微软雅黑";
-                context.fillText("时间：" + numToString(data.times[time]), 10, 0);
+                context.fillText("时间：" + data.times[time], 10, 0);
                 context.fillText("可用度：" + numToString(data.ps[index][time]), 10, 20);
                 context.fillText("不可用度：" + numToString(1.0 - data.ps[index][time]), 200, 20);
                 context.fillText("故障率：" + numToString(data.lambdas[index][time]), 10, 40);
@@ -485,7 +485,7 @@ function displayTable() {
         table += "<table>";
         for (var i = 0; i < data.times.length; ++i) {
             table += "<tr>";
-            table += "<td>" + numToString(data.times[i]) + "</td>";
+            table += "<td>" + data.times[i] + "</td>";
             for (var j = 0; j < data.names.length; ++j) {
                 if (!displayConfig.showName[data.names[j]]) {
                     continue;
@@ -533,7 +533,7 @@ function displayTable() {
                 table += "<tr>";
                 if (firstShow) {
                     firstShow = false;
-                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                    table += "<td>" + data.times[i] + "</td>";
                 } else {
                     table += "<td></td>";
                 }
@@ -550,7 +550,7 @@ function displayTable() {
                 table += "<tr>";
                 if (firstShow) {
                     firstShow = false;
-                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                    table += "<td>" + data.times[i] + "</td>";
                 } else {
                     table += "<td></td>";
                 }
@@ -567,7 +567,7 @@ function displayTable() {
                 table += "<tr>";
                 if (firstShow) {
                     firstShow = false;
-                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                    table += "<td>" + data.times[i] + "</td>";
                 } else {
                     table += "<td></td>";
                 }
@@ -584,7 +584,7 @@ function displayTable() {
                 table += "<tr>";
                 if (firstShow) {
                     firstShow = false;
-                    table += "<td>" + numToString(data.times[i]) + "</td>";
+                    table += "<td>" + data.times[i] + "</td>";
                 } else {
                     table += "<td></td>";
                 }
