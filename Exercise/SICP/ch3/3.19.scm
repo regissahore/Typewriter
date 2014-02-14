@@ -1,0 +1,8 @@
+(load "3.18.scm")
+(define (loop? lst)
+  (define (iter a b)
+    (cond ((or (null? a) (null? b) false))
+          ((null? (cdr b)) false)
+          ((eq? (car a) (cadr b)) true)
+          (else (iter (cdr a) (cddr b)))))
+  (iter lst lst))

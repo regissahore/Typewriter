@@ -1,0 +1,15 @@
+(load "3.16.scm")
+(define (count-pairs x)
+  (define (insert x l)
+    (cond ((null? l) (list x))
+          ((eq? x (car l)) l)
+          (else (append (list (car l)) (insert x (cdr l))))))
+  (define (count x l)
+    (if (not (pair? x))
+        l
+        (begin
+          (set! l (insert x l))
+          (set! l (count (car x) l))
+          (set! l (count (cdr x) l))
+          l)))
+  (length (count x '())))
