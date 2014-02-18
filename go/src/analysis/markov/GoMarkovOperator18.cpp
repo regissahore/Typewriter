@@ -1,5 +1,4 @@
 #include <qmath.h>
-#include "GoMarkovOperator18.h"
 #include "GoInput.h"
 #include "GoOutput.h"
 #include "GoStatus.h"
@@ -7,20 +6,18 @@
 #include "GoParameter.h"
 #include "GoMarkovStatus.h"
 #include "RungeKuttaMarkov18.h"
+#include "GoMarkovOperator18.h"
 
 GoMarkovOperator18::GoMarkovOperator18() : GoMarkovOperator()
 {
     this->input()->setNumber(2);
     this->subInput()->setNumber(0);
     this->output()->setNumber(1);
-    this->_rungeKutta = new RungeKuttaMarkov18();
-    this->_rungeKutta->setLambdaB1(0.0);
 }
 
 GoMarkovOperator18::~GoMarkovOperator18()
 {
     this->GoMarkovOperator::~GoMarkovOperator();
-    delete this->_rungeKutta;
 }
 
 void GoMarkovOperator18::calcQualitativeProbability()
@@ -31,14 +28,14 @@ void GoMarkovOperator18::calcQualitativeProbability()
     this->_qualitativeOutput[0] = IR;
 }
 
-DoubleVector GoMarkovOperator18::lambdaB1() const
+double GoMarkovOperator18::lambdaB1() const
 {
-    return this->_rungeKutta->lambdaB1();
+    return this->_lambdaB1;
 }
 
-void GoMarkovOperator18::setLambdaB1(DoubleVector value)
+void GoMarkovOperator18::setLambdaB1(double value)
 {
-    this->_rungeKutta->setLambdaB1(value);
+    this->_lambdaB1 = value;
 }
 
 void GoMarkovOperator18::calcOutputMarkovStatus(double time)
@@ -51,9 +48,21 @@ void GoMarkovOperator18::calcOutputMarkovStatus(double time)
     status = this->getPrevMarkovStatus(1);
     DoubleVector lambda2 = status->frequencyBreakdown();
     DoubleVector mu2 = status->frequencyRepair();
-    this->_rungeKutta->calcNormalProbability(time, lambda1, lambda2, mu1, mu2);
-    DoubleVector PR = PS1 + this->_rungeKutta->rk1();
-    DoubleVector lambdaR = (lambda1 * (PS1 - this->_rungeKutta->rk0()) + lambda2 * this->_rungeKutta->rk1()) / (PS1 + this->_rungeKutta->rk1());
+    this->_rk18.setLambda(lambda1.getValue(0), lambda2.getValue(0), this->_lambdaB1);
+    this->_rk18.setMu(mu1.getValue(0), mu2.getValue(0));
+    this->_rk18.setH(time / 10000);
+    this->_rk18.setX(0.0);
+    this->_rk18.setY(0, 1.0);
+    for (int i = 1; i < 4; ++i)
+    {
+        this->_rk18.setY(i, 0.0);
+    }
+    for (int i = 0; i < 10000; ++i)
+    {
+        this->_rk18.nextStep();
+    }
+    DoubleVector PR = PS1 + this->_rk18.getY(0);
+    DoubleVector lambdaR = (lambda1 * (PS1 - this->_rk18.getY(0)) + lambda2 * this->_rk18.getY(0)) / (PS1 + this->_rk18.getY(0));
     DoubleVector muR = mu1 + mu2;
     this->markovOutputStatus()->at(0)->setProbabilityNormal(PR);
     this->markovOutputStatus()->at(0)->setFrequencyBreakdown(lambdaR);
@@ -72,8 +81,20 @@ DoubleVector GoMarkovOperator18::calcTempOutputMarkovStatus(double time, QVector
     status = this->getPrevMarkovStatus(1);
     DoubleVector lambda2 = status->frequencyBreakdown();
     DoubleVector mu2 = status->frequencyRepair();
-    this->_rungeKutta->calcNormalProbability(time, lambda1, lambda2, mu1, mu2);
-    DoubleVector PR = PS1 + this->_rungeKutta->rk1();
+    this->_rk18.setLambda(lambda1.getValue(0), lambda2.getValue(0), this->_lambdaB1);
+    this->_rk18.setMu(mu1.getValue(0), mu2.getValue(0));
+    this->_rk18.setH(time / 10000);
+    this->_rk18.setX(0.0);
+    this->_rk18.setY(0, 1.0);
+    for (int i = 1; i < 4; ++i)
+    {
+        this->_rk18.setY(i, 0.0);
+    }
+    for (int i = 0; i < 10000; ++i)
+    {
+        this->_rk18.nextStep();
+    }
+    DoubleVector PR = PS1 + this->_rk18.getY(0);
     return PR;
 }
 
@@ -97,7 +118,7 @@ void GoMarkovOperator18::save(QDomDocument &document, QDomElement &root)
     element.setAttribute("breakdown", this->isBreakdownCorrelate());
     element.setAttribute("global_feedback", this->isGlobalFeedback());
     element.setAttribute("name", this->name());
-    element.setAttribute("lambdab1", this->_rungeKutta->lambdaB1().getValue(0));
+    element.setAttribute("lambdab1", this->lambdaB1());
     root.appendChild(element);
     this->status()->save(document, element);
     this->markovStatus()->save(document, element);
@@ -130,7 +151,7 @@ bool GoMarkovOperator18::tryOpen(QDomElement &root)
     this->setBreakdownCorrelate(root.attribute("breakdown").toInt());
     this->setIsGlobalFeedback(root.attribute("global_feedback", "0").toInt());
     this->setName(root.attribute("name", ""));
-    this->_rungeKutta->setLambdaB1(root.attribute("lambdab1").toDouble());
+    this->setLambdaB1(root.attribute("lambdab1").toDouble());
     QDomElement element = root.firstChildElement();
     if (!this->status()->tryOpen(element))
     {

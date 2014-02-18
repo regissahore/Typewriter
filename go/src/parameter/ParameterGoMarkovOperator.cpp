@@ -862,7 +862,7 @@ void ParameterGoMarkovOperator::addMarkov18LambdaB1Parameter()
         spin->setMaximum(1.0);
         spin->setDecimals(10);
         spin->setSingleStep(0.01);
-        spin->setValue(model->lambdaB1().getValue(0));
+        spin->setValue(model->lambdaB1());
         this->connect(spin, SIGNAL(valueChanged(double)), this, SLOT(setItemMarkov18LambdaB1(double)));
         this->_tableWidget->setCellWidget(this->_tableWidget->rowCount() - 1, 1, spin);
     }
