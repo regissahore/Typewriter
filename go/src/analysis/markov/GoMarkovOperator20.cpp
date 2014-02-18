@@ -26,6 +26,11 @@ void GoMarkovOperator20::calcQualitativeProbability()
     DoubleVector IR = IS1 - IS2;
     for (int i = 0; i < IR.length(); ++i)
     {
+        if (IS1.getValue(i) > 0.9 && IS2.getValue(i) > 0.9)
+        {
+            IR.setValue(i, 1.0);
+            continue;
+        }
         if (IR.getValue(i) < 0.5)
         {
             IR.setValue(i, 0.0);
