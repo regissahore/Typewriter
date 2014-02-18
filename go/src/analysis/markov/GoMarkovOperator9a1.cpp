@@ -6,6 +6,9 @@
 #include "GoSignal.h"
 #include "GoParameter.h"
 #include "GoMarkovStatus.h"
+#include "RungeKuttaBreakdown2.h"
+#include "RungeKuttaBreakdown3.h"
+#include "RungeKuttaBreakdown4.h"
 
 GoMarkovOperator9A1::GoMarkovOperator9A1() : GoMarkovOperator9A()
 {
@@ -26,6 +29,10 @@ void GoMarkovOperator9A1::calcOutputMarkovStatus(double time)
     DoubleVector muS = muS1;
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
+    if (this->breakdownNum() == 1)
+    {
+        muC = this->markovStatus1()->frequencyRepair();
+    }
     DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
     DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;

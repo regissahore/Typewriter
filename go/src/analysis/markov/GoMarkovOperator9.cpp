@@ -32,6 +32,13 @@ GoMarkovOperator9::~GoMarkovOperator9()
 {
     this->GoMarkovOperator::~GoMarkovOperator();
     delete this->_feedbackStatus;
+    delete this->_feedbackStatus1;
+    delete this->_feedbackStatus2;
+    delete this->_feedbackStatus3;
+    delete this->_feedbackStatus4;
+    delete this->_rkFeedback2;
+    delete this->_rkFeedback3;
+    delete this->_rkFeedback4;
 }
 
 int GoMarkovOperator9::feedbackNum() const
@@ -183,7 +190,7 @@ void GoMarkovOperator9::initMarkovStatus(double time, double c12)
         DoubleVector Qinf = 1.0 - Pinf;
         DoubleVector lambda = this->feedbackStatus()->frequencyBreakdown();
         DoubleVector mu = lambda * Pinf / Qinf;
-        this->feedbackStatus()->setFrequencyRepair(mu);
+        //this->feedbackStatus()->setFrequencyRepair(mu);
     }
     else if (this->feedbackNum() == 2)
     {
@@ -344,12 +351,6 @@ void GoMarkovOperator9::prepareSum()
             this->muS1 = this->_muS1Sum / this->_currentCount;
         }
         ++this->_sumCount1;
-        FILE *file = fopen("test.txt", "a");
-        fprintf(file, "\n\n9A Count %d\n", this->_currentCount);
-        fprintf(file, "\tS1: %lf %lf\n", lambdaS1.getValue(0), muS1.getValue(0));
-        fprintf(file, "\tSum: %lf %lf\n", _lambdaS1Sum.getValue(0), _muS1Sum.getValue(0));
-        fprintf(file, "\tAvr: %lf %lf\n", this->lambdaS1.getValue(0), this->muS1.getValue(0));
-        fclose(file);
     }
 }
 

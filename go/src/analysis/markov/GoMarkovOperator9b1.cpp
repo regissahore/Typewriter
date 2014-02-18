@@ -19,6 +19,10 @@ void GoMarkovOperator9B1::calcOutputMarkovStatus(double time)
     DoubleVector muS = (lambdaS1 + lambdaS2) * muS1 * muS2 / (muS1 * lambdaS2 + muS2 * lambdaS1 + lambdaS1 * lambdaS2);
     DoubleVector lambdaC = this->markovStatus()->frequencyBreakdown();
     DoubleVector muC = this->markovStatus()->frequencyRepair();
+    if (this->breakdownNum() == 1)
+    {
+        muC = this->markovStatus1()->frequencyRepair();
+    }
     DoubleVector lambdaF = this->feedbackStatus()->frequencyBreakdown();
     DoubleVector muF = this->feedbackStatus()->frequencyRepair();
     DoubleVector lambdaE = lambdaC + lambdaF;
