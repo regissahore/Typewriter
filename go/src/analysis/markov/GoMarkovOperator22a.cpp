@@ -19,6 +19,18 @@ GoMarkovOperator22A::~GoMarkovOperator22A()
     this->GoMarkovOperator::~GoMarkovOperator();
 }
 
+void GoMarkovOperator22A::calcQualitativeProbability()
+{
+    DoubleVector IS1 = this->getPrevQualitativeStatus();
+    DoubleVector IS2 = this->getPrevSubQualitativeStatus();
+    DoubleVector IC = this->qualitativeStatus();
+    for (int i = 0; i < this->output()->number(); ++i)
+    {
+        DoubleVector IR = IS1 * IS2.getValue(i) * IC;
+        this->setQualitativeOutput(i, IR);
+    }
+}
+
 void GoMarkovOperator22A::calcOutputMarkovStatus(double time)
 {
     GoMarkovStatus *status1 = this->getPrevMarkovStatus();

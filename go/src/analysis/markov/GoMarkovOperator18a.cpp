@@ -24,7 +24,7 @@ void GoMarkovOperator18A::calcQualitativeProbability()
 {
     DoubleVector IS1 = this->getPrevQualitativeStatus(0);
     DoubleVector IS2 = this->getPrevQualitativeStatus(1);
-    DoubleVector IR = IS1 * IS2;
+    DoubleVector IR = 1.0 - (1.0 - IS1) * (1.0 - IS2);
     this->_qualitativeOutput[0] = IR;
 }
 
