@@ -28,7 +28,7 @@ void GoMarkovOperator9B2::calcOutputMarkovStatus(double time)
     DoubleVector muE = lambdaE * muC * muF / (lambdaC * muF + lambdaF * muC + lambdaC * lambdaF);
     DoubleVector PR = (muS * muE +
                  lambdaE * muS * DoubleVector::Exp(-(muE + lambdaE) * time) +
-                 lambdaS * muE * DoubleVector::Exp(-(muS + lambdaS) * time) +
+                 lambdaS * muE * DoubleVector::Exp(-(muS + lambdaS) * time) -
                  lambdaS * lambdaE * DoubleVector::Exp(-(muE + lambdaE + muS + lambdaS) * time)) /
             ((muS + lambdaS) * (muE + lambdaE));
     DoubleVector QR = 1.0 - PR;
