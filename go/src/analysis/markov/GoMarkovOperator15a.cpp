@@ -23,7 +23,7 @@ void GoMarkovOperator15A::calcQualitativeProbability()
 {
     for (int i = 0; i < this->input()->number(); ++i)
     {
-        DoubleVector IS = this->getPrevQualitativeStatus();
+        DoubleVector IS = this->getPrevQualitativeStatus(i);
         DoubleVector IC = this->qualitativeStatus();
         DoubleVector IR = IS * IC;
         this->_qualitativeOutput[i] = IR;
