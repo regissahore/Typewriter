@@ -16,6 +16,7 @@ public:
     QVector<GoOperator*>& list();
     void sort();
     QString toIdString();
+    QString toNameString();
     QString toCompareString();
     virtual double toProbability() const;
     virtual double toMarkovProbability() const;

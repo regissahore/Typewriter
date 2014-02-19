@@ -2079,48 +2079,85 @@
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="851"/>
-        <source>Cut Property</source>
-        <translation>割集属性</translation>
+        <source>Cut Order</source>
+        <translation>割集阶数</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="855"/>
-        <source>Path Property</source>
-        <translation>路集属性</translation>
+        <source>Path Order</source>
+        <translation>路集阶数</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="859"/>
-        <source>Cut Member</source>
-        <translation>割集成员</translation>
+        <source>Cut ID</source>
+        <translation>操作符编号</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="860"/>
-        <source>Stable Breakdown Probability</source>
-        <translation>稳态不可用度</translation>
+        <source>Cut Probability</source>
+        <translation>割集概率</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="864"/>
-        <source>Path Member</source>
-        <translation>路集成员</translation>
+        <source>Path ID</source>
+        <translation>操作符编号</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="865"/>
-        <source>Stable Normal Probability</source>
-        <translation>稳态可用度</translation>
+        <source>Path Probability</source>
+        <translation>路集概率</translation>
     </message>
     <message>
         <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="867"/>
+        <source>Operator Names</source>
+        <translation>操作符名称</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="873"/>
+        <source>Cut Probability %1</source>
+        <translation>%1时刻割集概率</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="877"/>
+        <source>Path Probability %1</source>
+        <translation>%1时刻路集概率</translation>
+    </message>
+    <message>
+        <source>Cut Property</source>
+        <translation type="vanished">割集属性</translation>
+    </message>
+    <message>
+        <source>Path Property</source>
+        <translation type="vanished">路集属性</translation>
+    </message>
+    <message>
+        <source>Cut Member</source>
+        <translation type="vanished">割集成员</translation>
+    </message>
+    <message>
+        <source>Stable Breakdown Probability</source>
+        <translation type="vanished">稳态不可用度</translation>
+    </message>
+    <message>
+        <source>Path Member</source>
+        <translation type="vanished">路集成员</translation>
+    </message>
+    <message>
+        <source>Stable Normal Probability</source>
+        <translation type="vanished">稳态可用度</translation>
+    </message>
+    <message>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="868"/>
         <source>Stable Importance</source>
-        <translation>稳态重要度</translation>
+        <translation>稳态概率重要度</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="872"/>
         <source>Breakdown Probability %1</source>
-        <translation>时刻%1不可用度</translation>
+        <translation type="vanished">时刻%1不可用度</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="876"/>
         <source>Normal Probability %1</source>
-        <translation>时刻%1可用度</translation>
+        <translation type="vanished">时刻%1可用度</translation>
     </message>
     <message>
         <location filename="../src/analysis/origin/GoGraph.cpp" line="714"/>
@@ -2195,9 +2232,9 @@
         <translation type="vanished">时刻%1不可用度</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="878"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="879"/>
         <source>Importance %1</source>
-        <translation>时刻%1重要度</translation>
+        <translation>%1时刻概率重要度</translation>
     </message>
     <message>
         <location filename="../src/view/ItemGoText.cpp" line="113"/>
@@ -2357,77 +2394,77 @@
         <translation>等效不存在。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="301"/>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="309"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="302"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="310"/>
         <location filename="../src/analysis/markov/GoMarkovOperator11.cpp" line="276"/>
         <location filename="../src/analysis/markov/GoMarkovOperator11.cpp" line="281"/>
         <source>Error: Operator </source>
         <translation>错误: 操作符</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="301"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="302"/>
         <source>-%1 does not have input at %2.</source>
         <translation>-%1 在%2没有输入。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="309"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="310"/>
         <source>-%1 does not have sub input at %2.</source>
         <translation>-%1 在%2没有辅助输入。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="315"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="316"/>
         <source>Error: </source>
         <translation>错误：</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="315"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="316"/>
         <source>-%1 The total frequency of breakdown is greater than 1.</source>
         <translation>-%1 损坏率之和大于1。</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="593"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="594"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="139"/>
         <source>Lambda 1: %1</source>
         <translation>故障率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="594"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="595"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="140"/>
         <source>    Mu 1: %1</source>
         <translation>维修率1：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="599"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="600"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="145"/>
         <source>Lambda 2: %1</source>
         <translation>故障率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="600"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="601"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="146"/>
         <source>    Mu 2: %1</source>
         <translation>维修率2：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="605"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="606"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="151"/>
         <source>Lambda 3: %1</source>
         <translation>故障率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="606"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="607"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="152"/>
         <source>    Mu 3: %1</source>
         <translation>维修率3：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="611"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="612"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="157"/>
         <source>Lambda 4: %1</source>
         <translation>故障率4：%1</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="612"/>
+        <location filename="../src/analysis/markov/GoMarkovOperator.cpp" line="613"/>
         <location filename="../src/analysis/markov/GoMarkovOperator19.cpp" line="158"/>
         <source>    Mu 4: %1</source>
         <translation>维修率4：%1</translation>

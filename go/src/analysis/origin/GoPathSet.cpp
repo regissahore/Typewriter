@@ -66,6 +66,17 @@ QString GoPathSet::toIdString()
     return str;
 }
 
+QString GoPathSet::toNameString()
+{
+    this->sort();
+    QString str = "";
+    for (int i = 0; i < this->_list.size(); ++i)
+    {
+        str += this->_list[i]->name() + " ";
+    }
+    return str;
+}
+
 QString GoPathSet::toCompareString()
 {
     this->sort();
