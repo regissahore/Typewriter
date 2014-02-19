@@ -19,6 +19,20 @@ void RungeKuttaBreakdown3::setMu(double m1, double m2, double m3)
     mu3 = m3;
 }
 
+void RungeKuttaBreakdown3::calculateInfinity()
+{
+}
+
+double RungeKuttaBreakdown3::getInf(int index) const
+{
+    Q_UNUSED(index);
+    return mu1 * mu2 * mu3 /
+            (mu1 * mu2 * mu3 +
+             lambda1 * mu2 * mu3 +
+             lambda2 * mu1 * mu3 +
+             lambda3 * mu1 * mu2);
+}
+
 QVector<double> RungeKuttaBreakdown3::F(double x, QVector<double> y)
 {
     Q_UNUSED(x);

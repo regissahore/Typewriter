@@ -15,8 +15,8 @@ public:
     double getY(int index) const;
     QVector<double>& getY();
     void nextStep();
-    void calculateInfinity();
-    double getInf(int index) const;
+    virtual void calculateInfinity();
+    virtual double getInf(int index) const;
     QVector<double>& getInf();
 protected:
     virtual QVector<double> F(double x, QVector<double> y);

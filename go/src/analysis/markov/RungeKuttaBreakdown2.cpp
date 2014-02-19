@@ -17,6 +17,19 @@ void RungeKuttaBreakdown2::setMu(double m1, double m2)
     mu2 = m2;
 }
 
+void RungeKuttaBreakdown2::calculateInfinity()
+{
+}
+
+double RungeKuttaBreakdown2::getInf(int index) const
+{
+    Q_UNUSED(index);
+    return mu1 * mu2 /
+            (mu1 * mu2 +
+             lambda1 * mu2 +
+             lambda2 * mu1);
+}
+
 QVector<double> RungeKuttaBreakdown2::F(double x, QVector<double> y)
 {
     Q_UNUSED(x);
