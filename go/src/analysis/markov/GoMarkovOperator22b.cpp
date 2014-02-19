@@ -94,7 +94,7 @@ DoubleVector GoMarkovOperator22B::calcTempOutputMarkovStatus(double time, QVecto
     Q_UNUSED(index);
     DoubleVector PS1 = input[0];
     DoubleVector PS2 = subInput[0];
-    DoubleVector PS3 = input[2];
+    DoubleVector PS3 = input[1];
     DoubleVector PC1 = this->markovStatus()->probabilityNormal();
     double lambda = this->lambda2()->at(index);
     double mu = this->mu2()->at(index);

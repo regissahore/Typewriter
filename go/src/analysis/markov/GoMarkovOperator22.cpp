@@ -138,8 +138,8 @@ bool GoMarkovOperator22::tryOpen(QDomElement &root)
     QDomElement node = element.firstChildElement();
     for (int i = 0; i < this->output()->number(); ++i)
     {
-        this->lambda2()->push_back(node.attribute("lambda").toDouble());
-        this->mu2()->push_back(node.attribute("mu").toDouble());
+        this->lambda2()->push_back(node.attribute("lambda", "0.0").toDouble());
+        this->mu2()->push_back(node.attribute("mu", "1.0").toDouble());
         node = node.nextSiblingElement();
     }
     return true;
