@@ -21,8 +21,8 @@ GoMarkovOperator16::~GoMarkovOperator16()
 
 void GoMarkovOperator16::calcQualitativeProbability()
 {
-    DoubleVector IS1 = this->getPrevQualitativeStatus(0);
-    DoubleVector IS2 = this->getPrevQualitativeStatus(1);
+    DoubleVector IS1 = this->getPrevQualitativeStatus();
+    DoubleVector IS2 = this->getPrevSubQualitativeStatus();
     DoubleVector IC = this->qualitativeStatus();
     DoubleVector IR1 = IS1 * IC;
     DoubleVector IR2 = IS1 * IS2 * IC;

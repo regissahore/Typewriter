@@ -103,11 +103,19 @@ void ToolGoMarkovEquivalent::addEquivalent()
         ItemDrawable *item = (ItemDrawable*)items[i];
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
-            visit[((ItemGoMarkovOperator*)item)->model()->id()] = true;
+            ItemGoMarkovOperator* op = (ItemGoMarkovOperator*)item;
+            if (op->model()->id() < visit.size())
+            {
+                visit[op->model()->id()] = true;
+            }
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
-            visit[((ItemGoMarkovEquivalent*)item)->model()->id()] = true;
+            ItemGoMarkovEquivalent* eq = (ItemGoMarkovEquivalent*)item;
+            if (eq->model()->id() < visit.size())
+            {
+                visit[eq->model()->id()] = true;
+            }
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)

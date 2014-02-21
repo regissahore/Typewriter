@@ -215,12 +215,18 @@ void ToolGoMarkovOperator::setType(const int type)
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
-            visit[op->model()->id()] = true;
+            if (op->model()->id() < visit.size())
+            {
+                visit[op->model()->id()] = true;
+            }
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
-            visit[eq->id()] = true;
+            if (eq->id() < visit.size())
+            {
+                visit[eq->id()] = true;
+            }
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)
@@ -243,12 +249,18 @@ void ToolGoMarkovOperator::setType(const int type)
         if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_OPERATOR)
         {
             ItemGoMarkovOperator *op = (ItemGoMarkovOperator*)item;
-            visit[op->model()->realID()] = true;
+            if (op->model()->realID() < visit.size())
+            {
+                visit[op->model()->realID()] = true;
+            }
         }
         else if (item->TypedItem::type() == DefinationEditorSelectionType::EDITOR_SELECTION_GO_MARKOV_EQUIVALENT)
         {
             ItemGoMarkovEquivalent *eq = (ItemGoMarkovEquivalent*)item;
-            visit[eq->id()] = true;
+            if (eq->id() < visit.size())
+            {
+                visit[eq->id()] = true;
+            }
         }
     }
     for (int i = 1; i <= items.size() + 1; ++i)
