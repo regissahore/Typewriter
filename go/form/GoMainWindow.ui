@@ -130,75 +130,26 @@ QTabWidget::pane {
         </attribute>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
-          <widget class="QToolButton" name="toolButtonNew">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>80</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>80</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Segoe UI</family>
-            </font>
-           </property>
-           <property name="text">
-            <string>New</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/icon/resource/image/new.png</normaloff>:/icon/resource/image/new.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
-           </property>
-           <property name="shortcut">
-            <string>Ctrl+Shift+N</string>
-           </property>
-           <property name="checkable">
-            <bool>false</bool>
-           </property>
-           <property name="popupMode">
-            <enum>QToolButton::DelayedPopup</enum>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-           <property name="autoRaise">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
           <widget class="QToolButton" name="toolButtonMarkov">
            <property name="minimumSize">
             <size>
-             <width>60</width>
+             <width>100</width>
              <height>80</height>
             </size>
            </property>
            <property name="maximumSize">
             <size>
-             <width>60</width>
+             <width>100</width>
              <height>80</height>
             </size>
            </property>
            <property name="font">
             <font>
-             <family>Segoe UI</family>
+             <family>微软雅黑</family>
             </font>
            </property>
            <property name="text">
-            <string>Markov</string>
+            <string>Markov Model</string>
            </property>
            <property name="icon">
             <iconset resource="../resource.qrc">
@@ -491,46 +442,6 @@ QTabWidget::pane {
            </property>
            <property name="shortcut">
             <string>F9</string>
-           </property>
-           <property name="toolButtonStyle">
-            <enum>Qt::ToolButtonTextUnderIcon</enum>
-           </property>
-           <property name="autoRaise">
-            <bool>true</bool>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QToolButton" name="toolButtonPath">
-           <property name="minimumSize">
-            <size>
-             <width>60</width>
-             <height>80</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>60</width>
-             <height>80</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <family>Segoe UI</family>
-            </font>
-           </property>
-           <property name="text">
-            <string>Path</string>
-           </property>
-           <property name="icon">
-            <iconset resource="../resource.qrc">
-             <normaloff>:/icon/resource/image/path.png</normaloff>:/icon/resource/image/path.png</iconset>
-           </property>
-           <property name="iconSize">
-            <size>
-             <width>48</width>
-             <height>48</height>
-            </size>
            </property>
            <property name="toolButtonStyle">
             <enum>Qt::ToolButtonTextUnderIcon</enum>

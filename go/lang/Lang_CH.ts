@@ -763,142 +763,143 @@
         <translation>开始</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="152"/>
         <source>New</source>
-        <translation>新建</translation>
+        <translation type="vanished">新建</translation>
+    </message>
+    <message>
+        <source>Ctrl+Shift+N</source>
+        <translation type="vanished">Ctrl+Shift+N</translation>
+    </message>
+    <message>
+        <source>Markov</source>
+        <translation type="vanished">可修系统建模</translation>
+    </message>
+    <message>
+        <location filename="../form/GoMainWindow.ui" line="152"/>
+        <source>Markov Model</source>
+        <translation>可修系统建模</translation>
     </message>
     <message>
         <location filename="../form/GoMainWindow.ui" line="165"/>
-        <source>Ctrl+Shift+N</source>
-        <translation>Ctrl+Shift+N</translation>
-    </message>
-    <message>
-        <location filename="../form/GoMainWindow.ui" line="201"/>
-        <source>Markov</source>
-        <translation>Markov</translation>
-    </message>
-    <message>
-        <location filename="../form/GoMainWindow.ui" line="214"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="254"/>
+        <location filename="../form/GoMainWindow.ui" line="205"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="267"/>
+        <location filename="../form/GoMainWindow.ui" line="218"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="297"/>
+        <location filename="../form/GoMainWindow.ui" line="248"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="310"/>
+        <location filename="../form/GoMainWindow.ui" line="261"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="347"/>
+        <location filename="../form/GoMainWindow.ui" line="298"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="360"/>
+        <location filename="../form/GoMainWindow.ui" line="311"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="390"/>
+        <location filename="../form/GoMainWindow.ui" line="341"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="430"/>
+        <location filename="../form/GoMainWindow.ui" line="381"/>
         <source>Save All</source>
         <translation>保存所有</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="443"/>
+        <location filename="../form/GoMainWindow.ui" line="394"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="480"/>
+        <location filename="../form/GoMainWindow.ui" line="431"/>
         <source>Analysis</source>
         <translation>分析</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="493"/>
+        <location filename="../form/GoMainWindow.ui" line="444"/>
         <source>F9</source>
         <translation>F9</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="523"/>
         <source>Path</source>
-        <translation>路集</translation>
+        <translation type="vanished">路集</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="563"/>
+        <location filename="../form/GoMainWindow.ui" line="474"/>
         <source>Cut</source>
         <translation>割集</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="600"/>
+        <location filename="../form/GoMainWindow.ui" line="511"/>
         <source>Edit</source>
         <translation>编辑</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="623"/>
+        <location filename="../form/GoMainWindow.ui" line="534"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="663"/>
+        <location filename="../form/GoMainWindow.ui" line="574"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="710"/>
+        <location filename="../form/GoMainWindow.ui" line="621"/>
         <source>Zoom In</source>
         <translation>放大</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="723"/>
+        <location filename="../form/GoMainWindow.ui" line="634"/>
         <source>Ctrl+=</source>
         <translation>Ctrl+=</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="753"/>
+        <location filename="../form/GoMainWindow.ui" line="664"/>
         <source>Zoom Out</source>
         <translation>缩小</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="766"/>
+        <location filename="../form/GoMainWindow.ui" line="677"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="803"/>
+        <location filename="../form/GoMainWindow.ui" line="714"/>
         <source>Feedback</source>
         <translation>全局反馈</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="816"/>
+        <location filename="../form/GoMainWindow.ui" line="727"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="846"/>
+        <location filename="../form/GoMainWindow.ui" line="757"/>
         <source>Unlock-Fb</source>
         <translation>取消反馈</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="859"/>
+        <location filename="../form/GoMainWindow.ui" line="770"/>
         <source>Ctrl+Shift+G</source>
         <translation>Ctrl+Shift+G</translation>
     </message>
@@ -2093,32 +2094,33 @@
         <translation>操作符编号</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="860"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="861"/>
         <source>Cut Probability</source>
         <translation>割集概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="864"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="865"/>
         <source>Path ID</source>
         <translation>操作符编号</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="865"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="867"/>
         <source>Path Probability</source>
         <translation>路集概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="867"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="860"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="866"/>
         <source>Operator Names</source>
         <translation>操作符名称</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="873"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="874"/>
         <source>Cut Probability %1</source>
         <translation>%1时刻割集概率</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="877"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="878"/>
         <source>Path Probability %1</source>
         <translation>%1时刻路集概率</translation>
     </message>
@@ -2147,7 +2149,7 @@
         <translation type="vanished">稳态可用度</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="868"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="869"/>
         <source>Stable Importance</source>
         <translation>稳态概率重要度</translation>
     </message>
@@ -2232,7 +2234,7 @@
         <translation type="vanished">时刻%1不可用度</translation>
     </message>
     <message>
-        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="879"/>
+        <location filename="../src/analysis/markov/GoMarkovGraph.cpp" line="880"/>
         <source>Importance %1</source>
         <translation>%1时刻概率重要度</translation>
     </message>
@@ -2242,32 +2244,32 @@
         <translation>文字</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="231"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="237"/>
         <source>Input Number</source>
         <translation>输入数量</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="232"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="238"/>
         <source>The number of input: </source>
         <translation>输入的数量：</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="256"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="262"/>
         <source>Output Number</source>
         <translation>输出数量</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="257"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="263"/>
         <source>The number of output: </source>
         <translation>输出的数量：</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="280"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="286"/>
         <source>Input and Output Number</source>
         <translation>输入和输出数量</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoOperator.cpp" line="281"/>
+        <location filename="../src/tool/ToolGoOperator.cpp" line="287"/>
         <source>The number of input and output: </source>
         <translation>输入和输出的数量:</translation>
     </message>
@@ -2384,12 +2386,12 @@
         <translation type="obsolete">维修率</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoMarkovEquivalent.cpp" line="131"/>
+        <location filename="../src/tool/ToolGoMarkovEquivalent.cpp" line="139"/>
         <source>Error</source>
         <translation>错误</translation>
     </message>
     <message>
-        <location filename="../src/tool/ToolGoMarkovEquivalent.cpp" line="131"/>
+        <location filename="../src/tool/ToolGoMarkovEquivalent.cpp" line="139"/>
         <source>No equivalent is valid.</source>
         <translation>等效不存在。</translation>
     </message>
