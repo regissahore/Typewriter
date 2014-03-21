@@ -12,7 +12,6 @@ release
 *.doc
 material
 example
-*.html
 *.goc
 
 # Language Files

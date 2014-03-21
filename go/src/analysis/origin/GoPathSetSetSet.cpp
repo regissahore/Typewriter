@@ -30,6 +30,16 @@ bool GoPathSetSetSet::isCut() const
     return this->_isCut;
 }
 
+void GoPathSetSetSet::setMaxOrder(const int value)
+{
+    this->_maxOrder = value;
+}
+
+int GoPathSetSetSet::maxOrder() const
+{
+    return this->_maxOrder;
+}
+
 void GoPathSetSetSet::add(GoOperator *endOperator, GoPathSet* path, int outputIndex, int vectorIndex)
 {
     End end;

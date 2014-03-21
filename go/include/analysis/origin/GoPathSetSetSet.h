@@ -26,6 +26,8 @@ public:
     virtual ~GoPathSetSetSet();
     void setIsCut(bool value);
     bool isCut() const;
+    void setMaxOrder(const int value);
+    int maxOrder() const;
     void add(GoOperator *endOperator, GoPathSet* path, int outputIndex = 0, int vectorIndex = 0);
     QVector<GoPathSetSet*>& list();
     QVector<End> endList() const;
@@ -53,6 +55,7 @@ protected:
     QVector<End> _endList;
     double _interval;
     int _count;
+    int _maxOrder;
 };
 
 #endif // GOPATHSETSETSET_H

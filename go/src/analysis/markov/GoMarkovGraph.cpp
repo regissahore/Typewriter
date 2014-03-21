@@ -613,6 +613,7 @@ QVector< QVector<GoGraph::Output> > GoMarkovGraph::getAncestorList(GoOperator *o
 GoPathSetSetSet GoMarkovGraph::findCut(int order)
 {
     GoPathSetSetSet cut;
+    cut.setMaxOrder(order);
     int maxOrder = 0;
     QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
@@ -624,7 +625,7 @@ GoPathSetSetSet GoMarkovGraph::findCut(int order)
         op->setQualitativeStatus(1.0);
         maxOrder += !GoMarkovOperatorFactory::isLogical(op->type());
     }
-    order = min(order, maxOrder);
+    order = min(max(order, 4), maxOrder);
     this->calcAccumulativeProbability(1e10);
     GoCutSet tempPath;
     for (int i = 1; i <= order; ++i)
@@ -681,6 +682,7 @@ void GoMarkovGraph::findCutDfs(GoPathSetSetSet &cut, QVector<GoMarkovOperator *>
 GoPathSetSetSet GoMarkovGraph::findPath(int order)
 {
     GoPathSetSetSet path;
+    path.setMaxOrder(order);
     int maxOrder = 0;
     QVector<GoMarkovOperator*> list = this->getTopologicalOrder();
     for (int i = 0; i < list.size(); ++i)
@@ -692,7 +694,7 @@ GoPathSetSetSet GoMarkovGraph::findPath(int order)
         op->setQualitativeStatus(0.0);
         maxOrder += !GoMarkovOperatorFactory::isLogical(op->type());
     }
-    order = min(order, maxOrder);
+    order = min(max(order, 4), maxOrder);
     this->calcAccumulativeProbability(1e10);
     GoCutSet tempPath;
     for (int i = 1; i <= order; ++i)
@@ -882,6 +884,10 @@ bool GoMarkovGraph::saveAsHTML(const QString filePath, GoPathSetSetSet path)
             out << "</tr>" << endl;
             for (int j = 0; j < path.list().at(i)->list().size(); ++j)
             {
+                if (path.list().at(i)->list().at(j)->order() > path.maxOrder())
+                {
+                    continue;
+                }
                 out << "<tr>" << endl;
                 out << "<td>" + QString("%1").arg(j + 1) + "</td>" << endl;
                 out << "<td>" + QString("%1").arg(path.list().at(i)->list().at(j)->order()) + "</td>" << endl;
