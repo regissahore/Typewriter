@@ -758,9 +758,8 @@
         <translation>GO图分析</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="129"/>
         <source>Start</source>
-        <translation>开始</translation>
+        <translation type="vanished">开始</translation>
     </message>
     <message>
         <source>New</source>
@@ -775,96 +774,110 @@
         <translation type="vanished">可修系统建模</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="152"/>
+        <location filename="../form/GoMainWindow.ui" line="109"/>
+        <source>Tool</source>
+        <translation>工具</translation>
+    </message>
+    <message>
+        <location filename="../form/GoMainWindow.ui" line="132"/>
         <source>Markov Model</source>
         <translation>可修系统建模</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="165"/>
+        <location filename="../form/GoMainWindow.ui" line="148"/>
         <source>Ctrl+N</source>
         <translation>Ctrl+N</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="205"/>
+        <location filename="../form/GoMainWindow.ui" line="188"/>
         <source>Open</source>
         <translation>打开</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="218"/>
+        <location filename="../form/GoMainWindow.ui" line="204"/>
         <source>Ctrl+O</source>
         <translation>Ctrl+O</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="248"/>
+        <location filename="../form/GoMainWindow.ui" line="234"/>
         <source>Close</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="261"/>
+        <location filename="../form/GoMainWindow.ui" line="250"/>
         <source>Ctrl+W</source>
         <translation>Ctrl+W</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="298"/>
+        <location filename="../form/GoMainWindow.ui" line="287"/>
         <source>Save</source>
         <translation>保存</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="311"/>
+        <location filename="../form/GoMainWindow.ui" line="303"/>
         <source>Ctrl+S</source>
         <translation>Ctrl+S</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="341"/>
+        <location filename="../form/GoMainWindow.ui" line="333"/>
         <source>Save As</source>
         <translation>另存为</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="381"/>
+        <location filename="../form/GoMainWindow.ui" line="376"/>
         <source>Save All</source>
         <translation>保存所有</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="394"/>
+        <location filename="../form/GoMainWindow.ui" line="392"/>
         <source>Ctrl+Shift+S</source>
         <translation>Ctrl+Shift+S</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="431"/>
+        <location filename="../form/GoMainWindow.ui" line="429"/>
         <source>Analysis</source>
         <translation>分析</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="444"/>
+        <location filename="../form/GoMainWindow.ui" line="445"/>
         <source>F9</source>
         <translation>F9</translation>
+    </message>
+    <message>
+        <location filename="../form/GoMainWindow.ui" line="717"/>
+        <source>Global Feedback</source>
+        <translation>整体反馈</translation>
+    </message>
+    <message>
+        <location filename="../form/GoMainWindow.ui" line="763"/>
+        <source>Cancel Global Feedback</source>
+        <translation>取消整体反馈</translation>
     </message>
     <message>
         <source>Path</source>
         <translation type="vanished">路集</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="474"/>
+        <location filename="../form/GoMainWindow.ui" line="475"/>
         <source>Cut</source>
         <translation>割集</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="511"/>
         <source>Edit</source>
-        <translation>编辑</translation>
+        <translation type="vanished">编辑</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="534"/>
+        <location filename="../form/GoMainWindow.ui" line="525"/>
         <source>Copy</source>
         <translation>复制</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="574"/>
+        <location filename="../form/GoMainWindow.ui" line="568"/>
         <source>Delete</source>
         <translation>删除</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="621"/>
+        <location filename="../form/GoMainWindow.ui" line="618"/>
         <source>Zoom In</source>
         <translation>放大</translation>
     </message>
@@ -879,27 +892,25 @@
         <translation>缩小</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="677"/>
+        <location filename="../form/GoMainWindow.ui" line="680"/>
         <source>Ctrl+-</source>
         <translation>Ctrl+-</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="714"/>
         <source>Feedback</source>
-        <translation>全局反馈</translation>
+        <translation type="vanished">全局反馈</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="727"/>
+        <location filename="../form/GoMainWindow.ui" line="733"/>
         <source>Ctrl+G</source>
         <translation>Ctrl+G</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="757"/>
         <source>Unlock-Fb</source>
-        <translation>取消反馈</translation>
+        <translation type="vanished">取消反馈</translation>
     </message>
     <message>
-        <location filename="../form/GoMainWindow.ui" line="770"/>
+        <location filename="../form/GoMainWindow.ui" line="782"/>
         <source>Ctrl+Shift+G</source>
         <translation>Ctrl+Shift+G</translation>
     </message>
