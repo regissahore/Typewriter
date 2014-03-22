@@ -1,6 +1,6 @@
 #ifndef TOOLBOXABSTRACT_H
 #define TOOLBOXABSTRACT_H
-#include <QWidget>
+#include "stable.h"
 #include "TypedItem.h"
 #include "Messager.h"
 

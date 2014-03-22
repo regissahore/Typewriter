@@ -1,7 +1,7 @@
 #ifndef DIALOGMATRIXINPUT_H
 #define DIALOGMATRIXINPUT_H
 
-#include <QDialog>
+#include "stable.h"
 
 namespace Ui {
 class DialogMatrixInput;

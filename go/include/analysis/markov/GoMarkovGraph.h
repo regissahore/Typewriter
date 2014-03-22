@@ -1,6 +1,6 @@
 #ifndef GOMARKOVGRAPH_H
 #define GOMARKOVGRAPH_H
-#include <QSharedPointer>
+#include "stable.h"
 #include "GoGraph.h"
 #include "DoubleVector.h"
 

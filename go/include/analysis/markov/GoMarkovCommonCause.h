@@ -1,6 +1,6 @@
 #ifndef GOMARKOVCOMMONCAUSE_H
 #define GOMARKOVCOMMONCAUSE_H
-#include <QVector>
+#include "stable.h"
 #include "DomItem.h"
 
 class GoMarkovOperator;

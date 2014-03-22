@@ -1,7 +1,7 @@
 #ifndef DIALOGGOMARKOVCUT_H
 #define DIALOGGOMARKOVCUT_H
 
-#include <QDialog>
+#include "stable.h"
 
 namespace Ui {
 class DialogGoMarkovCut;

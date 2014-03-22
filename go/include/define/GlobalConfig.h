@@ -1,6 +1,6 @@
 #ifndef GLOBALCONFIG_H
 #define GLOBALCONFIG_H
-#include <QVector>
+#include "stable.h"
 
 class GlobalConfig
 {

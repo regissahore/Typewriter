@@ -1,7 +1,6 @@
 #ifndef MESSAGEFACTORY_H
 #define MESSAGEFACTORY_H
-#include <QSharedPointer>
-#include <QList>
+#include "stable.h"
 #include "Message.h"
 
 class MessageFactory

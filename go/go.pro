@@ -16,6 +16,8 @@ TEMPLATE = app
 
 RC_FILE = resource.rc
 
+PRECOMPILED_HEADER = include/stable.h
+
 QMAKE_CXXFLAGS += -std=c++0x
 QMAKE_LFLAGS = -static
 
@@ -188,7 +190,8 @@ HEADERS += \
     include/view/ViewGoMarkov.h \
     include/analysis/markov/RungeKutta.h \
     include/analysis/markov/RungeKuttaBreakdown2.h \
-    include/dialog/DialogGoMarkovCut.h
+    include/dialog/DialogGoMarkovCut.h \
+    include/stable.h
 
 SOURCES += \
     src/analysis/markov/DoubleVector.cpp \

@@ -1,6 +1,6 @@
 #ifndef MESSAGE_H
 #define MESSAGE_H
-#include <QString>
+#include "stable.h"
 #include "IdentifiedItem.h"
 #include "TypedItem.h"
 

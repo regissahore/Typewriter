@@ -1,7 +1,6 @@
 #ifndef GOPATHSETSET_H
 #define GOPATHSETSET_H
-#include <QVector>
-#include <QSet>
+#include "stable.h"
 
 class GoOperator;
 class GoPathSet;

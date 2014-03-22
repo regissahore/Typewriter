@@ -1,20 +1,14 @@
 #ifndef DOUBLEVECTOR_H
 #define DOUBLEVECTOR_H
-#include <map>
 #include <set>
-#include <QVector>
+#include <map>
+#include "stable.h"
 
 class DoubleVector
 {
 public:
-    /**
-     * 记录向量信号的来源。
-     */
     struct Head
     {
-        /**
-         * 记录属于哪个节点的哪个输出。
-         */
         struct Node
         {
             int id;

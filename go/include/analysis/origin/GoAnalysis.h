@@ -1,6 +1,6 @@
 #ifndef GOANALYSIS_H
 #define GOANALYSIS_H
-#include <QVector>
+#include "stable.h"
 
 class GoOperator;
 class GoAccumulative;

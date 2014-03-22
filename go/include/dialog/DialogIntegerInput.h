@@ -1,12 +1,6 @@
 #ifndef DIALOGINTEGERINPUT_H
 #define DIALOGINTEGERINPUT_H
-#include <QLabel>
-#include <QDialog>
-#include <QSpinBox>
-#include <QSpacerItem>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
+#include "stable.h"
 
 class DialogIntegerInput : public QDialog
 {

@@ -1,7 +1,6 @@
 #ifndef TOOLBOXGO_H
 #define TOOLBOXGO_H
-#include <QSharedPointer>
-#include <QWidget>
+#include "stable.h"
 #include "ToolboxAbstract.h"
 
 class QPushButton;

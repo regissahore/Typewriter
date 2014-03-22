@@ -1,10 +1,6 @@
 #ifndef EDITOR_H
 #define EDITOR_H
-#include <QSharedPointer>
-#include <QVector>
-#include <QWidget>
-#include <QTabWidget>
-#include <QVBoxLayout>
+#include "stable.h"
 #include "Messager.h"
 #include "EditorFactory.h"
 

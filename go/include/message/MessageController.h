@@ -1,9 +1,6 @@
 #ifndef MESSAGECONTROLLER_H
 #define MESSAGECONTROLLER_H
-#include <QSharedPointer>
-#include <QMap>
-#include <QVector>
-#include <QString>
+#include "stable.h"
 #include "Message.h"
 
 class Messager;

@@ -1,6 +1,6 @@
 #ifndef GOOUTPUT_H
 #define GOOUTPUT_H
-#include <QVector>
+#include "stable.h"
 
 class GoSignal;
 

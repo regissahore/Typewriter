@@ -1,8 +1,6 @@
 #ifndef ITEMGOFACTORY_H
 #define ITEMGOFACTORY_H
-#include <QList>
-#include <QGraphicsItem>
-#include <QGraphicsSceneMouseEvent>
+#include "stable.h"
 
 class Messager;
 class ItemDrawable;

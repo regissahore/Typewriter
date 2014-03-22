@@ -1,6 +1,6 @@
 #ifndef ITEMGOMARKOVEQUIVALENT_H
 #define ITEMGOMARKOVEQUIVALENT_H
-#include <QVector>
+#include "stable.h"
 #include "ItemMoveable.h"
 #include "IdentifiedItem.h"
 #include "DomItem.h"

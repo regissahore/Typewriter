@@ -1,7 +1,6 @@
 #ifndef PARAMETERABSTRACT_H
 #define PARAMETERABSTRACT_H
-#include <QWidget>
-#include <QTableWidget>
+#include "stable.h"
 #include "Messager.h"
 
 class QSpinBox;

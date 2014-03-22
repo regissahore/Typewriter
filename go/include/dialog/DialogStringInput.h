@@ -1,12 +1,6 @@
 #ifndef DIALOGSTRINGINPUT_H
 #define DIALOGSTRINGINPUT_H
-#include <QLabel>
-#include <QDialog>
-#include <QLineEdit>
-#include <QSpacerItem>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPushButton>
+#include "stable.h"
 
 class DialogStringInput : public QDialog
 {

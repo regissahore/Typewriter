@@ -1,10 +1,6 @@
 #ifndef EDITORGO_H
 #define EDITORGO_H
-#include <QLabel>
-#include <QWidget>
-#include <QSplitter>
-#include <QGridLayout>
-#include <QGraphicsView>
+#include "stable.h"
 #include "EditorAbstract.h"
 #include "ViewGo.h"
 #include "GoOperatorFactory.h"

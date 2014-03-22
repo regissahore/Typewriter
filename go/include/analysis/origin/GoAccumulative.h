@@ -1,7 +1,7 @@
 #ifndef GOACCUMULATIVE_H
 #define GOACCUMULATIVE_H
 
-#include <QVector>
+#include "stable.h"
 
 class GoAccumulative
 {

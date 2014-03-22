@@ -1,6 +1,6 @@
 #ifndef GOOPERATOR_H
 #define GOOPERATOR_H
-#include <QVector>
+#include "stable.h"
 #include "IdentifiedItem.h"
 #include "TypedItem.h"
 #include "DomItem.h"

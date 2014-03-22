@@ -1,6 +1,6 @@
 #ifndef GOPARAMETER_H
 #define GOPARAMETER_H
-#include <QVector>
+#include "stable.h"
 #include "DomItem.h"
 
 class GoParameter : public DomItem

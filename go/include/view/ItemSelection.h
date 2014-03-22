@@ -1,6 +1,6 @@
 #ifndef ITEMSELECTION_H
 #define ITEMSELECTION_H
-#include <QPainter>
+#include "stable.h"
 #include "ItemMoveable.h"
 
 class ItemSelection : public ItemMoveable

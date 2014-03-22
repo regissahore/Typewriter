@@ -1,6 +1,6 @@
 #ifndef GOMARKOVCHARTDATA_H
 #define GOMARKOVCHARTDATA_H
-#include <QVector>
+#include "stable.h"
 #include "DoubleVector.h"
 
 class GoMarkovChartData

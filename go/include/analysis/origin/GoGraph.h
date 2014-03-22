@@ -1,7 +1,6 @@
 #ifndef GOGRAPH_H
 #define GOGRAPH_H
-#include <QMap>
-#include <QVector>
+#include "stable.h"
 #include "Messager.h"
 
 class GoOperator;

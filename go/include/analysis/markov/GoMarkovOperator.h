@@ -1,6 +1,6 @@
 #ifndef GOMARKOVOPERATOR_H
 #define GOMARKOVOPERATOR_H
-#include <QVector>
+#include "stable.h"
 #include "GoOperator.h"
 #include "DoubleVector.h"
 

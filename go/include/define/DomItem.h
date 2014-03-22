@@ -1,7 +1,6 @@
 #ifndef DOMITEM_H
 #define DOMITEM_H
-#include <QDomDocument>
-#include <QDomElement>
+#include "stable.h"
 
 class DomItem
 {

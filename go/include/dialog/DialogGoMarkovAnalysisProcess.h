@@ -1,7 +1,6 @@
 #ifndef DIALOGGOMARKOVANALYSISPROCESS_H
 #define DIALOGGOMARKOVANALYSISPROCESS_H
-#include <QSharedPointer>
-#include <QDialog>
+#include "stable.h"
 
 class QTimer;
 class GoMarkovGraph;

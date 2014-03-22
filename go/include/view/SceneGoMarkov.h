@@ -1,6 +1,6 @@
 #ifndef SCENEGOMARKOV_H
 #define SCENEGOMARKOV_H
-#include <QSharedPointer>
+#include "stable.h"
 #include "SceneGo.h"
 
 class GoMarkovGraph;

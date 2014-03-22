@@ -1,7 +1,6 @@
 #ifndef DOCKTOOLBOX_H
 #define DOCKTOOLBOX_H
-#include <QSharedPointer>
-#include <QDockWidget>
+#include "stable.h"
 #include "Messager.h"
 #include "MessageFactory.h"
 #include "ToolboxFactory.h"

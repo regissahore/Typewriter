@@ -1,8 +1,6 @@
 #ifndef DOCKMESSAGE_H
 #define DOCKMESSAGE_H
-#include <QTabWidget>
-#include <QDockWidget>
-#include <QGridLayout>
+#include "stable.h"
 #include "Messager.h"
 
 class OutputConsole;

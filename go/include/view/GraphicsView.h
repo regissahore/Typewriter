@@ -1,7 +1,6 @@
 #ifndef GRAPHICSVIEW_H
 #define GRAPHICSVIEW_H
-#include <QWheelEvent>
-#include <QGraphicsView>
+#include "stable.h"
 
 class View;
 

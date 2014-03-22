@@ -1,7 +1,6 @@
 #ifndef GOMARKOVANALYSISTHREAD_H
 #define GOMARKOVANALYSISTHREAD_H
-#include <QSharedPointer>
-#include <QThread>
+#include "stable.h"
 
 class GoMarkovGraph;
 class GoMarkovChartData;

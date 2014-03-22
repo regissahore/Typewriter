@@ -1,7 +1,6 @@
 #ifndef OUTPUTCONSOLE_H
 #define OUTPUTCONSOLE_H
-#include <QSharedPointer>
-#include <QWidget>
+#include "stable.h"
 #include "Messager.h"
 
 namespace Ui {

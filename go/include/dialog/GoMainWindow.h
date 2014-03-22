@@ -1,8 +1,6 @@
 #ifndef GOMAINWINDOW_H
 #define GOMAINWINDOW_H
-#include <QSharedPointer>
-#include <QSettings>
-#include <QMainWindow>
+#include "stable.h"
 #include "Messager.h"
 #include "Editor.h"
 #include "DockMessage.h"

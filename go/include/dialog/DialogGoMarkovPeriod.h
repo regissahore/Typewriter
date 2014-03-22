@@ -1,6 +1,6 @@
 #ifndef DIALOGGOMARKOVPERIOD_H
 #define DIALOGGOMARKOVPERIOD_H
-#include <QDialog>
+#include "stable.h"
 
 namespace Ui {
 class DialogGoMarkovPeriod;

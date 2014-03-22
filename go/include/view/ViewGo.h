@@ -1,7 +1,6 @@
 #ifndef VIEWGO_H
 #define VIEWGO_H
-#include <QSharedPointer>
-#include <QGraphicsView>
+#include "stable.h"
 #include "GraphicsView.h"
 #include "SceneGo.h"
 #include "Messager.h"

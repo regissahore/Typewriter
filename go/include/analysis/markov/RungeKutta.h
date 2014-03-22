@@ -1,7 +1,7 @@
 #ifndef RUNGEKUTTA_H
 #define RUNGEKUTTA_H
 
-#include <QVector>
+#include "stable.h"
 #include "DoubleVector.h"
 
 class RungeKutta

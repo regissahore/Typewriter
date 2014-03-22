@@ -1,8 +1,6 @@
 #ifndef DIALOGGOPROBABILITY_H
 #define DIALOGGOPROBABILITY_H
-#include <QDialog>
-#include <QList>
-#include <QModelIndex>
+#include "stable.h"
 
 class QString;
 class QListView;

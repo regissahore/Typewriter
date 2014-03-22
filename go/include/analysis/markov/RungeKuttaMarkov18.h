@@ -1,6 +1,6 @@
 #ifndef RUNGEKUTTAMARKOV18_H
 #define RUNGEKUTTAMARKOV18_H
-#include <QObject>
+#include "stable.h"
 #include "RungeKutta.h"
 
 class RungeKuttaMarkov18 : public RungeKutta

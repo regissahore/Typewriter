@@ -1,7 +1,6 @@
 #ifndef SCENEGO_H
 #define SCENEGO_H
-#include <QSharedPointer>
-#include <QGraphicsScene>
+#include "stable.h"
 #include "DomItem.h"
 #include "Messager.h"
 

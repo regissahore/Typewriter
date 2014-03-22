@@ -1,6 +1,6 @@
 #ifndef GOMARKOVOPERATORFACTORY_H
 #define GOMARKOVOPERATORFACTORY_H
-#include <QString>
+#include "stable.h"
 
 class GoMarkovOperator;
 

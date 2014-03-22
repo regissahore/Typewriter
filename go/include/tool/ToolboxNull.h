@@ -1,7 +1,6 @@
 #ifndef TOOLBOXNULL_H
 #define TOOLBOXNULL_H
-#include <QLabel>
-#include <QGridLayout>
+#include "stable.h"
 #include "ToolboxAbstract.h"
 
 class ToolboxNull : public ToolboxAbstract

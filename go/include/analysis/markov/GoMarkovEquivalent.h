@@ -1,6 +1,6 @@
 #ifndef GOMARKOVEQUIVALENT_H
 #define GOMARKOVEQUIVALENT_H
-#include <QVector>
+#include "stable.h"
 #include "IdentifiedItem.h"
 #include "DomItem.h"
 

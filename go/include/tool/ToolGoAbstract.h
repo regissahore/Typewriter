@@ -1,9 +1,6 @@
 #ifndef TOOLGOABSTRACT_H
 #define TOOLGOABSTRACT_H
-#include <QKeyEvent>
-#include <QGraphicsScene>
-#include <QGraphicsSceneMouseEvent>
-#include <QGraphicsSceneWheelEvent>
+#include "stable.h"
 #include "GraphicsView.h"
 #include "TypedItem.h"
 

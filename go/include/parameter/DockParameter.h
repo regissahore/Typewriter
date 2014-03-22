@@ -1,7 +1,6 @@
 #ifndef DOCKPARAMETER_H
 #define DOCKPARAMETER_H
-#include <QSharedPointer>
-#include <QDockWidget>
+#include "stable.h"
 #include "Messager.h"
 
 class QVBoxLayout;

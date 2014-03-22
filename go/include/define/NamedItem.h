@@ -1,6 +1,6 @@
 #ifndef IDENTIFIEDNAMEDITEM_H
 #define IDENTIFIEDNAMEDITEM_H
-#include <QString>
+#include "stable.h"
 
 class NamedItem
 {

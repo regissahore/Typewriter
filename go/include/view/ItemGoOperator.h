@@ -1,6 +1,6 @@
 #ifndef ITEMGOOPERATOR_H
 #define ITEMGOOPERATOR_H
-#include <QVector>
+#include "stable.h"
 #include "ItemMoveable.h"
 
 class ItemArrow;

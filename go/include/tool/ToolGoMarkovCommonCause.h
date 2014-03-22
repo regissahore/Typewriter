@@ -1,6 +1,6 @@
 #ifndef TOOLGOMARKOVCOMMONCAUSE2_H
 #define TOOLGOMARKOVCOMMONCAUSE2_H
-#include <QVector>
+#include "stable.h"
 #include "ToolGoAbstract.h"
 
 class ItemGoMarkovOperator;

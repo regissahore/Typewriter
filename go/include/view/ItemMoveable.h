@@ -1,6 +1,6 @@
 #ifndef ITEMMOVEABLE_H
 #define ITEMMOVEABLE_H
-#include <QGraphicsSceneMouseEvent>
+#include "stable.h"
 #include "ItemDrawable.h"
 
 class ItemMoveable : public ItemDrawable

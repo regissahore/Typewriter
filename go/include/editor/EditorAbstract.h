@@ -1,8 +1,6 @@
 #ifndef EDITORABSTRACT_H
 #define EDITORABSTRACT_H
-#include <QWidget>
-#include <QFileDialog>
-#include <QMessageBox>
+#include "stable.h"
 #include "TypedItem.h"
 #include "Messager.h"
 #include "NamedItem.h"

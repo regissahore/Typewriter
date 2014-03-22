@@ -1,7 +1,6 @@
 #ifndef GOSTATUS_H
 #define GOSTATUS_H
-#include <QVector>
-#include <QString>
+#include "stable.h"
 #include "DomItem.h"
 
 class GoStatus : public DomItem

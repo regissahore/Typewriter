@@ -1,8 +1,6 @@
 #ifndef ITEMDRAWABLE_H
 #define ITEMDRAWABLE_H
-#include <qmath.h>
-#include <QPainter>
-#include <QGraphicsItem>
+#include "stable.h"
 #include "TypedItem.h"
 #include "DomItem.h"
 
