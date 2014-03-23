@@ -1,5 +1,6 @@
 body {
     font-family: 微软雅黑, Helvetica, Arial, sans-serif;
+    font-size: 16px;
 }
 
 fieldset {
@@ -51,7 +52,7 @@ fieldset input[type="checkbox"] {
 }
 
 fieldset span {
-    font-size: 18px;
+    font-size: 16px;
     margin-right: 10px;
 }
 
