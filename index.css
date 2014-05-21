@@ -1,3 +1,22 @@
 body {
-  margin: 0;
+  font-family: 'Consolas';
+  color: #005F00;
+}
+
+h1 a {
+  color: #005F00;
+}
+
+#Div_Body {
+  width: 800px;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+#Div_Console {
+  background: black;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
+  height: 115px;
 }
