@@ -66,10 +66,51 @@ class window.Executer
         @pen = 
             color: [255, 255, 255]
             down: true
+            show: true
         @imageData = new ImageData @width, @height
+        @turtle = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], 
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+                   [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 1, 1, 1, 0, 0], 
+                   [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0], 
+                   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0]]
         @update()
     toRgb: (data) =>
         return 'rgb(' + data[0] + ',' + data[1] + ',' + data[2] + ')'
+    drawTurtle: =>
+        if @pen.show
+            width = @turtle[0].length
+            height = @turtle.length
+            cx = width >> 1
+            cy = height >> 1
+            angle = @angle * Math.PI / 180.0
+            for i in [0..(width - 1)]
+                for j in [0..(height - 1)]
+                    if @turtle[j][i] == 1
+                        data = @context.createImageData(1, 1)
+                        for k in [0..2]
+                            data.data[k] = @pen.color[k]
+                        sx = i - cx
+                        sy = j - cy
+                        rx = Math.round sx * Math.cos(angle) - sy * Math.sin(angle)
+                        ry = Math.round sx * Math.sin(angle) + sy * Math.cos(angle)
+                        tx = module @x + rx, @width
+                        ty = module @y - ry, @height
+                        @context.putImageData data, tx, ty
     update: =>
         @context.beginPath
         @context.fillStyle = @toRgb @background
@@ -77,21 +118,22 @@ class window.Executer
         @context.fillRect 0, 0, @width, @height
         @context.endPath
         @imageData.draw @context
+        @drawTurtle()
     execute: (instructions) =>
         for instruction in instructions
             switch instruction.keyword
                 when 'FORWARD', 'FD'
                     length = parseInt instruction.parameter[0]
-                    dx = Math.round(length * Math.cos @angle * Math.PI / 180.0)
-                    dy = -Math.round(length * Math.sin @angle * Math.PI / 180.0)
+                    dx = Math.round length * Math.cos @angle * Math.PI / 180.0
+                    dy = -Math.round length * Math.sin @angle * Math.PI / 180.0
                     if @pen.down
                         @imageData.drawLine @x, @y, dx, dy, @pen.color
                     @x = module @x + dx, @width
                     @y = module @y + dy, @height
                 when 'BACK', 'BK'
                     length = parseInt instruction.parameter[0]
-                    dx = -Math.round(length * Math.cos @angle * Math.PI / 180.0)
-                    dy = Math.round(length * Math.sin @angle * Math.PI / 180.0)
+                    dx = -Math.round length * Math.cos @angle * Math.PI / 180.0
+                    dy = Math.round length * Math.sin @angle * Math.PI / 180.0
                     if @pen.down
                         @imageData.drawLine @x, @y, dx, dy, @pen.color
                     @x = module @x + dx, @width
