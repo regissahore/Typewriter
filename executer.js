@@ -175,9 +175,8 @@
       return this.drawTurtle();
     };
 
-    Executer.prototype.execute = function(instructions) {
-      var dx, dy, instruction, length, rotate, _i, _len, _results;
-      _results = [];
+    Executer.prototype.execute = function(instructions, depth) {
+      var dx, dy, i, instruction, length, repeat, rotate, _i, _j, _len;
       for (_i = 0, _len = instructions.length; _i < _len; _i++) {
         instruction = instructions[_i];
         switch (instruction.keyword) {
@@ -212,10 +211,25 @@
           case 'RT':
             rotate = parseInt(instruction.parameter[0]);
             this.angle -= rotate;
+            break;
+          case 'SHOWTURTLE':
+          case 'ST':
+            this.pen.show = true;
+            break;
+          case 'HIDETURTLE':
+          case 'HT':
+            this.pen.show = false;
+            break;
+          case 'REPEAT':
+            repeat = parseInt(instruction.parameter[0]);
+            for (i = _j = 1; 1 <= repeat ? _j <= repeat : _j >= repeat; i = 1 <= repeat ? ++_j : --_j) {
+              this.execute(instruction.parameter[1], depth + 1);
+            }
         }
-        _results.push(this.update());
       }
-      return _results;
+      if (depth === 0) {
+        return this.update();
+      }
     };
 
     return Executer;

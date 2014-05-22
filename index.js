@@ -13,7 +13,7 @@
   commandCallback = function(source) {
     var instructions;
     instructions = parser.parse(source);
-    return executer.execute(instructions);
+    return executer.execute(instructions, 0);
   };
 
   consoler = new Consoler(consoleDiv, 5, commandCallback);
