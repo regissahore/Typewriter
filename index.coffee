@@ -4,6 +4,6 @@ parser = new Parser
 executer = new Executer canvas
 commandCallback = (source) ->
     instructions = parser.parse source
-    executer.execute instructions
+    executer.execute instructions, 0
 consoler = new Consoler consoleDiv, 5, commandCallback
 document.onkeyup = consoler.onkeyup
