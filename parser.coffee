@@ -31,6 +31,21 @@ class window.Parser
                 when ']'
                     @index += 1
                     return instructions
+                when 'HOME', 'CLEARSCREEN', 'CS', 'DRAW'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    @index += 1
+                when 'PENDOWN', 'PD', 'PENUP', 'PU'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    @index += 1
+                when 'SETHEADING', 'SETH', 'SETX', 'SETY'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    instruction.parameter.push terms[@index + 1]
+                    @index += 2
+                when 'SETXY'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    instruction.parameter.push terms[@index + 1]
+                    instruction.parameter.push terms[@index + 2]
+                    @index += 3
                 else
                     @error = '"' + terms[@index] + '" is not defined.'
                     return

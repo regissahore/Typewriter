@@ -7,6 +7,8 @@ module = (x, mod) ->
 
 class ImageData
     constructor: (@width, @height) ->
+        @clear()
+    clear: =>
         size = @width * @height * 4
         @data = new Uint8ClampedArray size
     setPixel: (x, y, color) =>
@@ -140,10 +142,10 @@ class window.Executer
                     @y = module @y + dy, @height
                 when 'LEFT', 'LT'
                     rotate = parseInt instruction.parameter[0]
-                    @angle += rotate
+                    @angle = module @angle + rotate, 360
                 when 'RIGHT', 'RT'
                     rotate = parseInt instruction.parameter[0]
-                    @angle -= rotate
+                    @angle = module @angle - rotate, 360
                 when 'SHOWTURTLE', 'ST'
                     @pen.show = true
                 when 'HIDETURTLE', 'HT'
@@ -152,6 +154,30 @@ class window.Executer
                     repeat = parseInt instruction.parameter[0]
                     for i in [1..repeat]
                         @execute instruction.parameter[1], depth + 1
+                when 'HOME'
+                    @x = Math.round(@width * 0.5)
+                    @y = Math.round(@height * 0.5)
+                    @angle = 90
+                when 'CLEARSCREEN', 'CS'
+                    @imageData.clear()
+                when 'DRAW'
+                    @imageData.clear()
+                    @x = Math.round(@width * 0.5)
+                    @y = Math.round(@height * 0.5)
+                    @angle = 90
+                when 'PENDOWN', 'PD'
+                    @pen.draw = true
+                when 'PENUP', 'PU'
+                    @pen.draw = false
+                when 'SETHEADING', 'SETH'
+                    @angle = module parseInt(instruction.parameter[0]), 360
+                when 'SETX'
+                    @x = module parseInt(instruction.parameter[0]), @width
+                when 'SETY'
+                    @y = module parseInt(instruction.parameter[0]), @height
+                when 'SETXY'
+                    @x = module parseInt(instruction.parameter[0]), @width
+                    @y = module parseInt(instruction.parameter[0]), @height
         if depth == 0
             @update()
                     

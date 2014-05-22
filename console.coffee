@@ -30,6 +30,7 @@ class window.Consoler
                    (event.keyCode >= 96 and event.keyCode <= 105) or
                    event.keyCode == 32
                     @active += String.fromCharCode event.keyCode
+                    event.preventDefault()
                 switch event.keyCode
                     when 219
                         @active += '['
