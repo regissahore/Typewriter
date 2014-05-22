@@ -119,7 +119,7 @@ class window.Executer
         @context.endPath
         @imageData.draw @context
         @drawTurtle()
-    execute: (instructions) =>
+    execute: (instructions, depth) =>
         for instruction in instructions
             switch instruction.keyword
                 when 'FORWARD', 'FD'
@@ -144,5 +144,14 @@ class window.Executer
                 when 'RIGHT', 'RT'
                     rotate = parseInt instruction.parameter[0]
                     @angle -= rotate
+                when 'SHOWTURTLE', 'ST'
+                    @pen.show = true
+                when 'HIDETURTLE', 'HT'
+                    @pen.show = false
+                when 'REPEAT'
+                    repeat = parseInt instruction.parameter[0]
+                    for i in [1..repeat]
+                        @execute instruction.parameter[1], depth + 1
+        if depth == 0
             @update()
                     

@@ -8,7 +8,7 @@ class window.Consoler
         @active = ''
         @update()
     update: =>
-        @consoleDiv.innerHTML = @lines.join('<br>') + @active
+        @consoleDiv.innerHTML = @lines.join('<br>') + @active + '_'
     shift: =>
         @lines[@lineNumber - 1] += @active
         for i in [0..(@lineNumber - 2)]
@@ -27,6 +27,12 @@ class window.Consoler
             else
                 if (event.keyCode >= 48 and event.keyCode <= 57) or 
                    (event.keyCode >= 65 and event.keyCode <= 90) or 
+                   (event.keyCode >= 96 and event.keyCode <= 105) or
                    event.keyCode == 32
                     @active += String.fromCharCode event.keyCode
+                switch event.keyCode
+                    when 219
+                        @active += '['
+                    when 221
+                        @active += ']'
         @update()
