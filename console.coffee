@@ -37,3 +37,5 @@ class window.Consoler
                     when 221
                         @active += ']'
         @update()
+        return false
+        

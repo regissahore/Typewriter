@@ -4,6 +4,25 @@ module = (x, mod) ->
     if x < 0
         return (x % mod + mod) % mod
     return x
+    
+standardColor = (index) ->
+    switch module index, 16
+        when 0 then return [0, 0, 0]
+        when 1 then return [255, 255, 255]
+        when 2 then return [136, 0, 21]
+        when 3 then return [0, 162, 232]
+        when 4 then return [163, 73, 164]
+        when 5 then return [34, 177, 76]
+        when 6 then return [63, 72, 204]
+        when 7 then return [255, 201, 14]
+        when 8 then return [255, 127, 39]
+        when 9 then return [136, 0, 21]
+        when 10 then return [255, 174, 201]
+        when 11 then return [64, 64, 64]
+        when 12 then return [127, 127, 127]
+        when 13 then return [181, 230, 29]
+        when 14 then return [153, 217, 234]
+        when 15 then return [191, 191, 191]
 
 class ImageData
     constructor: (@width, @height) ->
@@ -106,6 +125,7 @@ class window.Executer
                         data = @context.createImageData(1, 1)
                         for k in [0..2]
                             data.data[k] = @pen.color[k]
+                        data.data[3] = 255
                         sx = i - cx
                         sy = j - cy
                         rx = Math.round sx * Math.cos(angle) - sy * Math.sin(angle)
@@ -178,6 +198,10 @@ class window.Executer
                 when 'SETXY'
                     @x = module parseInt(instruction.parameter[0]), @width
                     @y = module parseInt(instruction.parameter[0]), @height
+                when 'BACKGROUND', 'BG'
+                    @background = standardColor parseInt instruction.parameter[0]
+                when 'PENCOLOR', 'PC'
+                    @pen.color = standardColor parseInt instruction.parameter[0]
         if depth == 0
             @update()
                     

@@ -46,6 +46,10 @@ class window.Parser
                     instruction.parameter.push terms[@index + 1]
                     instruction.parameter.push terms[@index + 2]
                     @index += 3
+                when 'BACKGROUND', 'BG', 'PENCOLOR', 'PC'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    instruction.parameter.push terms[@index + 1]
+                    @index += 2
                 else
                     @error = '"' + terms[@index] + '" is not defined.'
                     return

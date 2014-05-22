@@ -89,6 +89,14 @@
             instruction.parameter.push(terms[this.index + 2]);
             this.index += 3;
             break;
+          case 'BACKGROUND':
+          case 'BG':
+          case 'PENCOLOR':
+          case 'PC':
+            instruction.keyword = terms[this.index].toUpperCase();
+            instruction.parameter.push(terms[this.index + 1]);
+            this.index += 2;
+            break;
           default:
             this.error = '"' + terms[this.index] + '" is not defined.';
             return;

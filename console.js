@@ -60,7 +60,8 @@
               this.active += ']';
           }
       }
-      return this.update();
+      this.update();
+      return false;
     };
 
     return Consoler;
