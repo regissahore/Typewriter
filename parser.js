@@ -61,6 +61,34 @@
           case ']':
             this.index += 1;
             return instructions;
+          case 'HOME':
+          case 'CLEARSCREEN':
+          case 'CS':
+          case 'DRAW':
+            instruction.keyword = terms[this.index].toUpperCase();
+            this.index += 1;
+            break;
+          case 'PENDOWN':
+          case 'PD':
+          case 'PENUP':
+          case 'PU':
+            instruction.keyword = terms[this.index].toUpperCase();
+            this.index += 1;
+            break;
+          case 'SETHEADING':
+          case 'SETH':
+          case 'SETX':
+          case 'SETY':
+            instruction.keyword = terms[this.index].toUpperCase();
+            instruction.parameter.push(terms[this.index + 1]);
+            this.index += 2;
+            break;
+          case 'SETXY':
+            instruction.keyword = terms[this.index].toUpperCase();
+            instruction.parameter.push(terms[this.index + 1]);
+            instruction.parameter.push(terms[this.index + 2]);
+            this.index += 3;
+            break;
           default:
             this.error = '"' + terms[this.index] + '" is not defined.';
             return;

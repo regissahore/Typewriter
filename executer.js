@@ -15,16 +15,21 @@
 
   ImageData = (function() {
     function ImageData(width, height) {
-      var size;
       this.width = width;
       this.height = height;
       this.drawLine = __bind(this.drawLine, this);
       this.draw = __bind(this.draw, this);
       this.getPixel = __bind(this.getPixel, this);
       this.setPixel = __bind(this.setPixel, this);
-      size = this.width * this.height * 4;
-      this.data = new Uint8ClampedArray(size);
+      this.clear = __bind(this.clear, this);
+      this.clear();
     }
+
+    ImageData.prototype.clear = function() {
+      var size;
+      size = this.width * this.height * 4;
+      return this.data = new Uint8ClampedArray(size);
+    };
 
     ImageData.prototype.setPixel = function(x, y, color) {
       var i, index, _i, _ref;
@@ -205,12 +210,12 @@
           case 'LEFT':
           case 'LT':
             rotate = parseInt(instruction.parameter[0]);
-            this.angle += rotate;
+            this.angle = module(this.angle + rotate, 360);
             break;
           case 'RIGHT':
           case 'RT':
             rotate = parseInt(instruction.parameter[0]);
-            this.angle -= rotate;
+            this.angle = module(this.angle - rotate, 360);
             break;
           case 'SHOWTURTLE':
           case 'ST':
@@ -225,6 +230,43 @@
             for (i = _j = 1; 1 <= repeat ? _j <= repeat : _j >= repeat; i = 1 <= repeat ? ++_j : --_j) {
               this.execute(instruction.parameter[1], depth + 1);
             }
+            break;
+          case 'HOME':
+            this.x = Math.round(this.width * 0.5);
+            this.y = Math.round(this.height * 0.5);
+            this.angle = 90;
+            break;
+          case 'CLEARSCREEN':
+          case 'CS':
+            this.imageData.clear();
+            break;
+          case 'DRAW':
+            this.imageData.clear();
+            this.x = Math.round(this.width * 0.5);
+            this.y = Math.round(this.height * 0.5);
+            this.angle = 90;
+            break;
+          case 'PENDOWN':
+          case 'PD':
+            this.pen.draw = true;
+            break;
+          case 'PENUP':
+          case 'PU':
+            this.pen.draw = false;
+            break;
+          case 'SETHEADING':
+          case 'SETH':
+            this.angle = module(parseInt(instruction.parameter[0]), 360);
+            break;
+          case 'SETX':
+            this.x = module(parseInt(instruction.parameter[0]), this.width);
+            break;
+          case 'SETY':
+            this.y = module(parseInt(instruction.parameter[0]), this.height);
+            break;
+          case 'SETXY':
+            this.x = module(parseInt(instruction.parameter[0]), this.width);
+            this.y = module(parseInt(instruction.parameter[0]), this.height);
         }
       }
       if (depth === 0) {
