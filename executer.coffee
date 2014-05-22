@@ -166,9 +166,9 @@ class window.Executer
                     @y = Math.round(@height * 0.5)
                     @angle = 90
                 when 'PENDOWN', 'PD'
-                    @pen.draw = true
+                    @pen.down = true
                 when 'PENUP', 'PU'
-                    @pen.draw = false
+                    @pen.down = false
                 when 'SETHEADING', 'SETH'
                     @angle = module parseInt(instruction.parameter[0]), 360
                 when 'SETX'

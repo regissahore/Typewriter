@@ -248,11 +248,11 @@
             break;
           case 'PENDOWN':
           case 'PD':
-            this.pen.draw = true;
+            this.pen.down = true;
             break;
           case 'PENUP':
           case 'PU':
-            this.pen.draw = false;
+            this.pen.down = false;
             break;
           case 'SETHEADING':
           case 'SETH':
