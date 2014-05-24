@@ -50,6 +50,23 @@ class window.Parser
                     instruction.keyword = terms[@index].toUpperCase()
                     instruction.parameter.push terms[@index + 1]
                     @index += 2
+                when 'MAKE'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    instruction.parameter.push terms[@index + 1]
+                    instruction.parameter.push terms[@index + 2]
+                    @index += 3
+                when 'TO'
+                    instruction.keyword = terms[@index].toUpperCase()
+                    instruction.parameter.push terms[@index + 1]
+                    @index += 2
+                    instruction.parameter[0] = []
+                    while @index < terms.length and terms[@index][0] == '"'
+                        instruction.parameter[0].push terms[@index]
+                        @index += 1
+                    instruction.parameter.push @read terms
+                when 'END'
+                    @index += 1
+                    return instructions
                 else
                     @error = '"' + terms[@index] + '" is not defined.'
                     return

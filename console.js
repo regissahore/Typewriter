@@ -52,12 +52,19 @@
             this.active += String.fromCharCode(event.keyCode);
             event.preventDefault();
           }
+          console.log(event.keyCode);
           switch (event.keyCode) {
+            case 186:
+              this.active += '"';
+              break;
             case 219:
               this.active += '[';
               break;
             case 221:
               this.active += ']';
+              break;
+            case 222:
+              this.active += '"';
           }
       }
       this.update();

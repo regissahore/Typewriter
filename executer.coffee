@@ -73,11 +73,60 @@ class ImageData
                     x = module x + ux, @width
                     eps -= dy
                 y = module y + uy, @height
-        
+
+class Environment
+    class Layer
+        constructor: ->
+            @variables = {}
+            @functions = {}
+        is_variable_exist: (name) =>
+            return name of @variables
+        if_function_exist: (name) =>
+            return name of @functions
+        get_variable: (name) =>
+            return @variables[name]
+        get_function: (name) =>
+            return @functions[name]
+        set_variable: (name, value) =>
+            @variables[name] = value
+        set_function: (name, parameters, value) =>
+            @functions[name] = [parameters, value]
+    constructor: ->
+        layers = [new Layer]
+    fill_layer: (layer) =>
+        while layers.length < layer
+            layers.push new Layer
+    is_variable_exist: (layer, name) =>
+        fill_layer layer
+        for i in [layer..0]
+            return true if layers[i].is_variable_exist name
+        return false
+    is_function_exist: (layer, name) =>
+        fill_layer layer
+        for i in [layer..0]
+            return true if layers[i].is_function_exist name
+        return true
+    get_variable: (layer, name) =>
+        fill_layer layer
+        for i in [layer..0]
+            return layers[i].get_variable(name) if layers[i].is_variable_exist name
+    get_function: (layer, name) =>
+        fill_layer layer
+        for i in [layer..0]
+            return layers[i].get_function(name) if layers[i].is_function_exist name
+    set_variable: (layer, name, value) =>
+        fill_layer layer
+        layers[layer].set_variable name, value
+    set_function: (layer, name, parameters, value) =>
+        fill_layer layer
+        layers[layer].set_function name, parameters, value
+    destroy_layer: (layer) =>
+        layers[layer] = new Layer
 
 class window.Executer
     constructor: (@canvas) ->
         @context = @canvas.getContext '2d'
+        @environment = new Environment
         @width = @canvas.width
         @height = @canvas.height
         @x = Math.round(@width * 0.5)
@@ -173,6 +222,7 @@ class window.Executer
                 when 'REPEAT'
                     repeat = parseInt instruction.parameter[0]
                     for i in [1..repeat]
+                        @environment.destroy_layer depth + 1
                         @execute instruction.parameter[1], depth + 1
                 when 'HOME'
                     @x = Math.round(@width * 0.5)
@@ -202,6 +252,17 @@ class window.Executer
                     @background = standardColor parseInt instruction.parameter[0]
                 when 'PENCOLOR', 'PC'
                     @pen.color = standardColor parseInt instruction.parameter[0]
+                when 'MAKE'
+                    name = instruction.parameter[0].substr 1
+                    value = instruction.parameter[1]
+                    if value[0] == ':'
+                        value = @environment.get_attribute layer, value.substr 1
+                    @environment.set_attribute layer, name, value
+                when 'TO'
+                    name = instruction.parameter[0]
+                    parameters = instructoin.parameter[1]
+                    value = instruction.parameter[2]
+                    @environment.set_function layer, name, parameters, value
         if depth == 0
             @update()
                     

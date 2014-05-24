@@ -97,6 +97,24 @@
             instruction.parameter.push(terms[this.index + 1]);
             this.index += 2;
             break;
+          case 'MAKE':
+            instruction.keyword = terms[this.index].toUpperCase();
+            instruction.parameter.push(terms[this.index + 1]);
+            this.index += 2;
+            break;
+          case 'TO':
+            instruction.keyword = terms[this.index].toUpperCase();
+            this.index += 1;
+            instruction.parameter[0] = [];
+            while (this.index < terms.length && terms[this.index][0] === '"') {
+              instruction.parameter[0].push(terms[this.index]);
+              this.index += 1;
+            }
+            instruction.parameter.push(this.read(terms));
+            break;
+          case 'END':
+            this.index += 1;
+            return instructions;
           default:
             this.error = '"' + terms[this.index] + '" is not defined.';
             return;

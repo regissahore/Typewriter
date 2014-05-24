@@ -31,11 +31,12 @@ class window.Consoler
                    event.keyCode == 32
                     @active += String.fromCharCode event.keyCode
                     event.preventDefault()
+                console.log event.keyCode
                 switch event.keyCode
-                    when 219
-                        @active += '['
-                    when 221
-                        @active += ']'
+                    when 186 then @active += '"'
+                    when 219 then @active += '['
+                    when 221 then @active += ']'
+                    when 222 then @active += '"'
         @update()
         return false
         
