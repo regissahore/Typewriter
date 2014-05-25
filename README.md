@@ -4,7 +4,7 @@
 
 ## Compile
 
-* coffee -cj editor.js tokenizer.coffee analyzer.coffee editor.coffee
+* coffee -cj editor.js tokenizer.coffee editor.coffee
 * coffee -cj logo.js tokenizer.coffee analyzer.coffee interpreter.coffee
 
 # Commands

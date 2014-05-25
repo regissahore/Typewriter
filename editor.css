@@ -1,0 +1,55 @@
+.editor {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 960px;
+  height: 540px;
+  border: solid #d9d9d9 1px;
+  border-radius: 3px;
+}
+.editor_toolbar {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 960px;
+  height: 40px;
+  line-height: 40px;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom: solid #d9d9d9 1px;
+  color: #555555;
+  background-color: #d8d8d8;
+}
+.editor_linenumber {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 40px;
+  width: 40px;
+  height: 460px;
+  border-right: solid #d9d9d9 1px;
+  border-top: solid #d9d9d9 1px;
+  color: #969696;
+  background-color: #e8e8e8;
+}
+.editor_code {
+  display: block;
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  width: 920px;
+  height: 460px;
+}
+.editor_statusbar {
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 500px;
+  width: 960px;
+  height: 40px;
+  background-color: #ebebeb;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border: solid #d9d9d9 1px;
+}
