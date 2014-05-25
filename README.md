@@ -2,6 +2,11 @@
 
 [LogoJS](http://cyberzhg.github.io/LogoJS/) is a online drawing tool based on Logo language.
 
+## Compile
+
+* coffee -cj editor.js tokenizer.coffee analyzer.coffee editor.coffee
+* coffee -cj logo.js tokenizer.coffee analyzer.coffee interpreter.coffee
+
 # Commands
 
 ## Movement
