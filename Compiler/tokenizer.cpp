@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <vector>
 #include <string>
+#include <map>
 #include <iostream>
 using namespace std;
 const int BUFFER_SIZE = 1024;
@@ -105,6 +106,8 @@ public:
     }
     void parse()
     {
+        identifierCount = 0;
+        identifierId.clear();
         while (true)
         {
             char ch = stream.getCurrent();
@@ -157,19 +160,15 @@ public:
     {
         for (auto token : tokens)
         {
-            cout << getTokenType(token.type) << "\t" << token.token << endl;
+            if (token.type == TOKEN_IDENTIFIER)
+            {
+                cout << getTokenType(token.type) << "\t" << token.token << "\t" << identifierId[token.token] << endl;
+            }
+            else
+            {
+                cout << getTokenType(token.type) << "\t" << token.token << endl;
+            }
         }
-    }
-    void printHTML()
-    {
-        cout << "<table>" << endl;
-        cout << "<tr><th>Token</th><th>Type</th></tr>" << endl;;
-        for (auto token : tokens)
-        {
-            cout << "<tr><td>" << getTokenType(token.type) << "</td>";
-            cout << "<td>" << token.token << "</td></tr>";
-        }
-        cout << "</table>" << endl;
     }
 private:
     Stream stream;
@@ -183,8 +182,11 @@ private:
     {
         string token;
         TokenType type;
+        int id;
     };
     vector<Token> tokens;
+    int identifierCount;
+    map<string, int> identifierId;
     string getTokenType(TokenType type)
     {
         switch (type)
@@ -372,7 +374,11 @@ private:
         }
         else
         {
-            tokens.push_back({token, TOKEN_IDENTIFIER});
+            if (identifierId.find(token) == identifierId.end())
+            {
+                identifierId[token] = identifierCount++;
+            }
+            tokens.push_back({token, TOKEN_IDENTIFIER, identifierId[token]});
         }
     }
     void parseDelimiter()
@@ -583,6 +589,6 @@ int main(int argc, char **argv)
 {
     Tokenizer tokenizer;
     tokenizer.parse();
-    tokenizer.printHTML();
+    tokenizer.print();
     return 0;
 }
