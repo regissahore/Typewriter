@@ -46,6 +46,15 @@ public:
         }
         return buffer[current][index];
     }
+    char prev()
+    {
+        --index;
+        if (index < 0)
+        {
+            swap(current, other);
+            index = BUFFER_SIZE - 1;
+        }
+    }
     string getToken()
     {
         string token = "";
@@ -494,6 +503,17 @@ private:
         while (stream.getCurrent() != '\n' and stream.getCurrent() != EOF)
         {
             stream.next();
+            if (stream.getCurrent() == '/')
+            {
+                stream.next();
+                if (stream.getCurrent() == '*')
+                {
+                    stream.prev();
+                    tokens.push_back({stream.getToken(), TOKEN_MARCO});
+                    parseComment();
+                    return;
+                }
+            }
         }
         tokens.push_back({stream.getToken(), TOKEN_MARCO});
     }
