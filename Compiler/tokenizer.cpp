@@ -176,7 +176,8 @@ private:
     enum TokenType
     {
         TOKEN_KEYWORD, TOKEN_IDENTIFIER, TOKEN_OPERATOR, TOKEN_DELIMITER,
-        TOKEN_CHARACTER, TOKEN_STRING, TOKEN_INTEGER, TOKEN_DOUBLE, TOKEN_MARCO
+        TOKEN_CHARACTER, TOKEN_STRING, TOKEN_INTEGER, TOKEN_DOUBLE,
+        TOKEN_OCTAL, TOKEN_HEX, TOKEN_MARCO
     };
     struct Token
     {
@@ -196,6 +197,8 @@ private:
         case TOKEN_STRING: return "String";
         case TOKEN_INTEGER: return "Integer";
         case TOKEN_DOUBLE: return "Double";
+        case TOKEN_OCTAL: return "Octal";
+        case TOKEN_HEX: return "Hex";
         case TOKEN_MARCO: return "Marco";
         default: return "Undefined";
         }
@@ -228,6 +231,16 @@ private:
         return ch == ' ' or ch == '\t' or ch == '\n' or
                ch == '\v' or ch == '\f' or ch == '\r';
     }
+    bool isOctal(char ch)
+    {
+        return ch >= '0' and ch <= '7';
+    }
+    bool isHex(char ch)
+    {
+        return (ch >= '0' and ch <= '9') or
+               (ch >= 'a' and ch <= 'f') or
+               (ch >= 'A' and ch <= 'F');
+    }
     bool isKeyword(string &word)
     {
         for (auto keyword : KEYWORD_LIST)
@@ -241,7 +254,7 @@ private:
     }
     void parseNumber()
     {
-        int state = 0;
+        int state = stream.getCurrent() == '0' ? 4 : 0;
         stream.next();
         while (true)
         {
@@ -286,6 +299,53 @@ private:
                     return;
                 }
                 break;
+            case 4:
+                if (ch == 'x' or ch == 'X')
+                {
+                    state = 5;
+                }
+                else if (isOctal(ch))
+                {
+                    state = 4;
+                }
+                else
+                {
+                    string token = stream.getToken();
+                    if (token.length() == 1)
+                    {
+                        tokens.push_back({token, TOKEN_INTEGER});
+                    }
+                    else
+                    {
+                        tokens.push_back({token, TOKEN_OCTAL});
+                    }
+                    return;
+                }
+                break;
+            case 5:
+                if (isHex(ch))
+                {
+                    state = 6;
+                }
+                else
+                {
+                    stream.next();
+                    fprintf(stderr, "The format of number is invalid: ");
+                    fprintf(stderr, stream.getToken().c_str());
+                    fprintf(stderr, "\n");
+                    return;
+                }
+                break;
+            case 6:
+                if (isHex(ch))
+                {
+                    state = 6;
+                }
+                else
+                {
+                    tokens.push_back({stream.getToken(), TOKEN_HEX});
+                    return;
+                }
             }
             stream.next();
         }
