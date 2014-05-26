@@ -84,6 +84,7 @@ private:
     int first, index;
     int current, other;
     char buffer[2][BUFFER_SIZE];
+
     void read()
     {
         for (int i = 0; i < BUFFER_SIZE; ++i)
