@@ -6,6 +6,17 @@
 using namespace std;
 const int BUFFER_SIZE = 1024;
 
+const int KEYWORD_NUM = 32;
+const string KEYWORD_LIST[] = {
+    "auto", "break", "case", "char", "const",
+    "continue", "default", "do", "double", "else",
+    "enum", "extern", "float", "for", "goto",
+    "if", "int", "long", "register", "return",
+    "short", "signed", "sizeof", "static", "struct",
+    "switch", "typedef", "union", "unsigned", "void",
+    "volatile", "while"
+};
+
 class Stream
 {
 public:
@@ -21,7 +32,7 @@ public:
     {
         return buffer[current][index];
     }
-    char getNext()
+    char next()
     {
         if (buffer[current][index] == EOF)
         {
@@ -55,6 +66,10 @@ public:
         }
         return token;
     }
+    void ignoreToken()
+    {
+        first = index;
+    }
 private:
     int first, index;
     int current, other;
@@ -64,7 +79,7 @@ private:
         for (int i = 0; i < BUFFER_SIZE; ++i)
         {
             char ch = getchar();
-            buffer[current][i++] = ch;
+            buffer[current][i] = ch;
             if (ch == EOF)
             {
                 break;
@@ -81,12 +96,62 @@ public:
     }
     void parse()
     {
-        if (isDigit(stream.getCurrent()))
+        while (true)
         {
-            //
+            char ch = stream.getCurrent();
+            if (isDigit(ch))
+            {
+                parseNumber();
+            }
+            else if (isAlpha(ch) or ch == '_')
+            {
+                parseIdentifier();
+            }
+            else if (isDelimiter(ch))
+            {
+                parseDelimiter();
+            }
+            else if (isOperator(ch))
+            {
+                parseOperator();
+            }
+            else if (ch == '\'')
+            {
+                parseChar();
+            }
+            else if (ch == '"')
+            {
+                parseString();
+            }
+            else if (ch == '#')
+            {
+                parseMarco();
+            }
+            else if (isWhitespace(ch))
+            {
+                stream.next();
+                stream.ignoreToken();
+            }
+            else if (ch == EOF)
+            {
+                return;
+            }
+            else
+            {
+                fprintf(stderr, "Invalid character: %c\n", stream.getCurrent());
+                stream.next();
+                stream.ignoreToken();
+            }
         }
     }
     void print()
+    {
+        for (auto token : tokens)
+        {
+            cout << getTokenType(token.type) << "\t" << token.token << endl;
+        }
+    }
+    void printHTML()
     {
         cout << "<table>" << endl;
         cout << "<tr><th>Token</th><th>Type</th></tr>" << endl;;
@@ -102,7 +167,7 @@ private:
     enum TokenType
     {
         TOKEN_KEYWORD, TOKEN_IDENTIFIER, TOKEN_OPERATOR, TOKEN_DELIMITER,
-        TOKEN_CHARACTER, TOKEN_STRING, TOKEN_INTEGER, TOKEN_DOUBLE
+        TOKEN_CHARACTER, TOKEN_STRING, TOKEN_INTEGER, TOKEN_DOUBLE, TOKEN_MARCO
     };
     struct Token
     {
@@ -122,16 +187,315 @@ private:
         case TOKEN_STRING: return "String";
         case TOKEN_INTEGER: return "Integer";
         case TOKEN_DOUBLE: return "Double";
+        case TOKEN_MARCO: return "Marco";
         default: return "Undefined";
         }
     }
     bool isAlpha(char ch)
     {
-        return ch >= 'a' && ch <= 'z' && ch >= 'A' && ch <= 'Z';
+        return (ch >= 'a' and ch <= 'z') or (ch >= 'A' and ch <= 'Z');
     }
     bool isDigit(char ch)
     {
-        return ch >= '0' && ch <= '9';
+        return ch >= '0' and ch <= '9';
+    }
+    bool isDelimiter(char ch)
+    {
+        return ch == '(' or ch == ')' or
+               ch == '{' or ch == '}' or
+               ch == ',' or ch == ';';
+    }
+    bool isOperator(char ch)
+    {
+        return ch == '+' or ch == '-' or ch == '*' or ch == '/' or ch == '%' or
+               ch == '<' or ch == '=' or ch == '>' or
+               ch == '&' or ch == '|' or ch == '!' or
+               ch == '^' or ch == '~' or
+               ch == '[' or ch == ']' or
+               ch == '?' or ch == ':' or ch == '.';
+    }
+    bool isWhitespace(char ch)
+    {
+        return ch == ' ' or ch == '\t' or ch == '\n' or
+               ch == '\v' or ch == '\f' or ch == '\r';
+    }
+    bool isKeyword(string &word)
+    {
+        for (auto keyword : KEYWORD_LIST)
+        {
+            if (keyword == word)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    void parseNumber()
+    {
+        int state = 0;
+        stream.next();
+        while (true)
+        {
+            char ch = stream.getCurrent();
+            switch (state)
+            {
+            case 0:
+                if (isDigit(ch)) state = 0;
+                else if (ch == '.') state = 1;
+                else if (ch == 'e' or ch == 'E') state = 2;
+                else
+                {
+                    tokens.push_back({stream.getToken(), TOKEN_INTEGER});
+                    return;
+                }
+                break;
+            case 1:
+                if (isDigit(ch)) state = 1;
+                else if (ch == 'e' or ch == 'E') state = 2;
+                else
+                {
+                    tokens.push_back({stream.getToken(), TOKEN_DOUBLE});
+                    return;
+                }
+                break;
+            case 2:
+                if (isDigit(ch)) state = 3;
+                else
+                {
+                    stream.next();
+                    fprintf(stderr, "The format of number is invalid: ");
+                    fprintf(stderr, stream.getToken().c_str());
+                    fprintf(stderr, "\n");
+                    return;
+                }
+                break;
+            case 3:
+                if (isDigit(ch)) state = 3;
+                else
+                {
+                    tokens.push_back({stream.getToken(), TOKEN_DOUBLE});
+                    return;
+                }
+                break;
+            }
+            stream.next();
+        }
+    }
+    void parseIdentifier()
+    {
+        stream.next();
+        while (true)
+        {
+            char ch = stream.getCurrent();
+            if (isDigit(ch) or isAlpha(ch) or ch == '_')
+            {
+                stream.next();
+            }
+            else
+            {
+                break;
+            }
+        }
+        string token = stream.getToken();
+        if (isKeyword(token))
+        {
+            tokens.push_back({token, TOKEN_KEYWORD});
+        }
+        else
+        {
+            tokens.push_back({token, TOKEN_IDENTIFIER});
+        }
+    }
+    void parseDelimiter()
+    {
+        stream.next();
+        tokens.push_back({stream.getToken(), TOKEN_DELIMITER});
+    }
+    void parseOperator()
+    {
+        char ch1 = stream.getCurrent();
+        stream.next();
+        char ch2 = stream.getCurrent();
+        switch (ch1)
+        {
+        case '=':
+            if (ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '+':
+            if (ch2 == '+' or ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '-':
+            if (ch2 == '-' or ch2 == '=' or ch2 == '>')
+            {
+                stream.next();
+            }
+            break;
+        case '*':
+        case '%':
+        case '!':
+        case '~':
+        case '^':
+            if (ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '/':
+            if (ch2 == '=')
+            {
+                stream.next();
+            }
+            else if (ch2 == '*')
+            {
+                parseComment();
+                return;
+            }
+            break;
+        case '&':
+            if (ch2 == '&' or ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '|':
+            if (ch2 == '|' or ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '>':
+            if (ch2 == '>')
+            {
+                stream.next();
+                if (stream.getCurrent() == '=')
+                {
+                    stream.next();
+                }
+            }
+            else if (ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        case '<':
+            if (ch2 == '<')
+            {
+                stream.next();
+                if (stream.getCurrent() == '=')
+                {
+                    stream.next();
+                }
+            }
+            else if (ch2 == '=')
+            {
+                stream.next();
+            }
+            break;
+        }
+        tokens.push_back({stream.getToken(), TOKEN_OPERATOR});
+    }
+    void parseComment()
+    {
+        while (true)
+        {
+            if (stream.getCurrent() == '*')
+            {
+                stream.next();
+                if (stream.getCurrent() == '/')
+                {
+                    stream.next();
+                    break;
+                }
+                stream.next();
+            }
+            else
+            {
+                stream.next();
+            }
+        }
+        stream.ignoreToken();
+    }
+    void parseChar()
+    {
+        bool valid = true;
+        stream.next();
+        if (stream.getCurrent() == '\\')
+        {
+            stream.next();
+            stream.next();
+            if (stream.getCurrent() == '\'')
+            {
+                stream.next();
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        else
+        {
+            if (stream.getCurrent() == '\'')
+            {
+                valid = false;
+            }
+            stream.next();
+            if (stream.getCurrent() == '\'')
+            {
+                stream.next();
+            }
+            else
+            {
+                valid = false;
+            }
+        }
+        if (valid)
+        {
+            tokens.push_back({stream.getToken(), TOKEN_CHARACTER});
+        }
+        else
+        {
+            stream.next();
+            fprintf(stderr, "The format of char is invalid: ");
+            fprintf(stderr, stream.getToken().c_str());
+            fprintf(stderr, "\n");
+        }
+    }
+    void parseString()
+    {
+        stream.next();
+        while (true)
+        {
+            if (stream.getCurrent() == '"')
+            {
+                stream.next();
+                tokens.push_back({stream.getToken(), TOKEN_STRING});
+                return;
+            }
+            else if (stream.getCurrent() == '\\')
+            {
+                stream.next();
+            }
+            stream.next();
+        }
+        stream.next();
+        fprintf(stderr, "The format of string is invalid: ");
+        fprintf(stderr, stream.getToken().c_str());
+        fprintf(stderr, "\n");
+    }
+    void parseMarco()
+    {
+        stream.next();
+        while (stream.getCurrent() != '\n' and stream.getCurrent() != EOF)
+        {
+            stream.next();
+        }
+        tokens.push_back({stream.getToken(), TOKEN_MARCO});
     }
 };
 
@@ -139,6 +503,6 @@ int main(int argc, char **argv)
 {
     Tokenizer tokenizer;
     tokenizer.parse();
-    tokenizer.print();
+    tokenizer.printHTML();
     return 0;
 }
