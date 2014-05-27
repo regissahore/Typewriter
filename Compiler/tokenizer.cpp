@@ -136,10 +136,6 @@ public:
             {
                 parseString();
             }
-            else if (ch == '#')
-            {
-                parseMarco();
-            }
             else if (isWhitespace(ch))
             {
                 stream.next();
@@ -177,7 +173,7 @@ private:
     {
         TOKEN_KEYWORD, TOKEN_IDENTIFIER, TOKEN_OPERATOR, TOKEN_DELIMITER,
         TOKEN_CHARACTER, TOKEN_STRING, TOKEN_INTEGER, TOKEN_DOUBLE,
-        TOKEN_OCTAL, TOKEN_HEX, TOKEN_MARCO
+        TOKEN_OCTAL, TOKEN_HEX
     };
     struct Token
     {
@@ -202,7 +198,6 @@ private:
         case TOKEN_DOUBLE: return "Double";
         case TOKEN_OCTAL: return "Octal";
         case TOKEN_HEX: return "Hex";
-        case TOKEN_MARCO: return "Marco";
         default: return "Undefined";
         }
     }
@@ -427,11 +422,6 @@ private:
             {
                 stream.next();
             }
-            else if (ch2 == '*')
-            {
-                parseComment();
-                return;
-            }
             break;
         case '&':
             if (ch2 == '&' or ch2 == '=')
@@ -475,27 +465,6 @@ private:
             break;
         }
         tokens.push_back({stream.getToken(), TOKEN_OPERATOR});
-    }
-    void parseComment()
-    {
-        while (true)
-        {
-            if (stream.getCurrent() == '*')
-            {
-                stream.next();
-                if (stream.getCurrent() == '/')
-                {
-                    stream.next();
-                    break;
-                }
-                stream.next();
-            }
-            else
-            {
-                stream.next();
-            }
-        }
-        stream.ignoreToken();
     }
     void parseChar()
     {
@@ -563,26 +532,6 @@ private:
         fprintf(stderr, "The format of string is invalid: ");
         fprintf(stderr, stream.getToken().c_str());
         fprintf(stderr, "\n");
-    }
-    void parseMarco()
-    {
-        stream.next();
-        while (stream.getCurrent() != '\n' and stream.getCurrent() != EOF)
-        {
-            stream.next();
-            if (stream.getCurrent() == '/')
-            {
-                stream.next();
-                if (stream.getCurrent() == '*')
-                {
-                    stream.prev();
-                    tokens.push_back({stream.getToken(), TOKEN_MARCO});
-                    parseComment();
-                    return;
-                }
-            }
-        }
-        tokens.push_back({stream.getToken(), TOKEN_MARCO});
     }
 };
 
