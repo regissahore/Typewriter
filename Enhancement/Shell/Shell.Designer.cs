@@ -1,6 +1,6 @@
 ﻿namespace Enhancement
 {
-    partial class Enhancement
+    partial class Shell
     {
         /// <summary>
         /// 必需的设计器变量。

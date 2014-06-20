@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace Enhancement
 {
-    public partial class Enhancement : Form
+    public partial class Shell : Form
     {
-        public Enhancement()
+        public Shell()
         {
             InitializeComponent();
         }

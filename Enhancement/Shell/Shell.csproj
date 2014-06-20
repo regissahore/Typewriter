@@ -44,16 +44,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Enhancement.cs">
+    <Compile Include="Shell.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Enhancement.Designer.cs">
-      <DependentUpon>Enhancement.cs</DependentUpon>
+    <Compile Include="Shell.Designer.cs">
+      <DependentUpon>Shell.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Enhancement.resx">
-      <DependentUpon>Enhancement.cs</DependentUpon>
+    <EmbeddedResource Include="Shell.resx">
+      <DependentUpon>Shell.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
