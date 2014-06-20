@@ -30,7 +30,7 @@ namespace Train
             this.b = 200.0 * (f(xyz.Y / XYZColor.D65.Y) - f(xyz.Z / XYZColor.D65.Z));
         }
 
-        public LabColor(double L, double a, double b)
+        public LabColor(double L = 0.0, double a = 0.0, double b = 0.0)
         {
             this.L = L;
             this.a = a;
@@ -49,6 +49,51 @@ namespace Train
             double Z = fz > delta ? XYZColor.D65.Z * Math.Pow(fz, 3.0) : (fz - 16.0 / 116.0) * 3 * (delta * delta) * XYZColor.D65.Z;
 
             return new XYZColor(X, Y, Z).RGB();
+        }
+
+        public static LabColor operator +(LabColor a, LabColor b)
+        {
+            LabColor c = new LabColor();
+            c.L = a.L + b.L;
+            c.a = a.a + b.a;
+            c.b = a.b + b.b;
+            return c;
+        }
+
+        public static LabColor operator -(LabColor a, LabColor b)
+        {
+            LabColor c = new LabColor();
+            c.L = a.L - b.L;
+            c.a = a.a - b.a;
+            c.b = a.b - b.b;
+            return c;
+        }
+
+        public static LabColor operator *(LabColor a, double b)
+        {
+            LabColor c = new LabColor();
+            c.L = a.L * b;
+            c.a = a.a * b;
+            c.b = a.b * b;
+            return c;
+        }
+
+        public static LabColor operator *(LabColor a, LabColor b)
+        {
+            LabColor c = new LabColor();
+            c.L = a.L * b.L;
+            c.a = a.a * b.a;
+            c.b = a.b * b.b;
+            return c;
+        }
+
+        public static LabColor operator /(LabColor a, LabColor b)
+        {
+            LabColor c = new LabColor();
+            c.L = a.L / b.L;
+            c.a = a.a / b.a;
+            c.b = a.b / b.b;
+            return c;
         }
     }
 }

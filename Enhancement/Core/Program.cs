@@ -10,8 +10,35 @@ namespace Train
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(args.Length);
-            Console.ReadLine();
+            if (args.Length >= 1)
+            {
+                if (args[0] == "train")
+                {
+                    if (args.Length >= 4)
+                    {
+                        new Train(args[1], args[2], args[3]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("train <low> <high> <save>");
+                    }
+                }
+                else if (args[0] == "enhance")
+                {
+                    if (args.Length >= 3)
+                    {
+                        new Enhance(args[1], args[2]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("enhance <input> <output>");
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("train/enhance <parameters>");
+            }
         }
     }
 }

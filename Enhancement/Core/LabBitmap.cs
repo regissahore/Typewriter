@@ -29,6 +29,18 @@ namespace Train
             }
         }
 
+        public LabBitmap(Bitmap bitmap)
+        {
+            this.image = new LabColor[bitmap.Width, bitmap.Height];
+            for (int i = 0; i < bitmap.Width; ++i)
+            {
+                for (int j = 0; j < bitmap.Height; ++j)
+                {
+                    this.image[i, j] = new LabColor(bitmap.GetPixel(i, j));
+                }
+            }
+        }
+
         public int Width()
         {
             return image.GetLength(0);
