@@ -1,7 +1,7 @@
 class Game
     constructor: (@gameDiv) ->
-        @stepx = [0, 1, 0, -1]
-        @stepy = [1, 0, -1, 0]
+        @stepX = [0, 1, 0, -1]
+        @stepY = [1, 0, -1, 0]
         
     init: =>
         @gameDiv.innerHTML = ''
@@ -103,8 +103,8 @@ class Game
         score = @board[x][y].num
         @board[x][y].visit = true
         for k in [0..3]
-            tx = x + @stepx[k]
-            ty = y + @stepy[k]
+            tx = x + @stepX[k]
+            ty = y + @stepY[k]
             if tx >= 0 and tx <= 4
                 if ty >= 0 and ty <= 4
                     if not @board[tx][ty].visit
@@ -138,7 +138,11 @@ class Game
                     @board[x][y].belong = 1
                     score = @minSearch alpha, depth - 1, num + 1
                     @board[x][y].belong = 0
-                    alpha = score if score > alpha
+                    if score > alpha
+                        alpha = score
+                        if num == @step
+                            @nextX = x
+                            @nextY = y
                     return alpha if alpha >= beta
         return alpha
         
@@ -155,8 +159,8 @@ class Game
                     if score < beta
                         beta = score 
                         if num == @step
-                            @nextx = x
-                            @nexty = y
+                            @nextX = x
+                            @nextY = y
                     return beta if alpha >= beta
         return beta
         
@@ -170,7 +174,7 @@ class Game
                     return
                 else
                     @minSearch -1e10, @depth, @step
-                    @setBelong @nextx, @nexty, 2
+                    @setBelong @nextX, @nextY, 2
                     @step += 1
                 @highLight()
                 @updateDisplay()
@@ -180,8 +184,8 @@ class Game
     highLightRegion: (x, y) =>
         @board[x][y].highLight = true
         for k in [0..3]
-            tx = x + @stepx[k]
-            ty = y + @stepy[k]
+            tx = x + @stepX[k]
+            ty = y + @stepY[k]
             if tx >= 0 and tx <= 4
                 if ty >= 0 and ty <= 4
                     if not @board[tx][ty].highLight
@@ -250,3 +254,15 @@ class Game
 gameDiv = document.getElementById 'game_div'
 game = new Game gameDiv
 game.init()
+query = window.location.search.substring 1
+values = query.split '&'
+for v in values
+    [key, val] = v.split '='
+    if key == 'auto' and val == 'true'
+        setInterval =>
+            if not game.win and not game.lose
+                game.maxSearch 1e10, game.depth, game.step
+                game.click game.nextX, game.nextY
+            else
+                game.click 0, 0
+        , 200

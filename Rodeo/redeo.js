@@ -1,5 +1,5 @@
 (function() {
-  var Game, game, gameDiv,
+  var Game, game, gameDiv, key, query, v, val, values, _i, _len, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Game = (function() {
@@ -26,8 +26,8 @@
       this.initBoard = __bind(this.initBoard, this);
       this.initDisplay = __bind(this.initDisplay, this);
       this.init = __bind(this.init, this);
-      this.stepx = [0, 1, 0, -1];
-      this.stepy = [1, 0, -1, 0];
+      this.stepX = [0, 1, 0, -1];
+      this.stepY = [1, 0, -1, 0];
     }
 
     Game.prototype.init = function() {
@@ -185,8 +185,8 @@
       score = this.board[x][y].num;
       this.board[x][y].visit = true;
       for (k = _i = 0; _i <= 3; k = ++_i) {
-        tx = x + this.stepx[k];
-        ty = y + this.stepy[k];
+        tx = x + this.stepX[k];
+        ty = y + this.stepY[k];
         if (tx >= 0 && tx <= 4) {
           if (ty >= 0 && ty <= 4) {
             if (!this.board[tx][ty].visit) {
@@ -242,6 +242,10 @@
             this.board[x][y].belong = 0;
             if (score > alpha) {
               alpha = score;
+              if (num === this.step) {
+                this.nextX = x;
+                this.nextY = y;
+              }
             }
             if (alpha >= beta) {
               return alpha;
@@ -267,8 +271,8 @@
             if (score < beta) {
               beta = score;
               if (num === this.step) {
-                this.nextx = x;
-                this.nexty = y;
+                this.nextX = x;
+                this.nextY = y;
               }
             }
             if (alpha >= beta) {
@@ -294,7 +298,7 @@
             return;
           } else {
             this.minSearch(-1e10, this.depth, this.step);
-            this.setBelong(this.nextx, this.nexty, 2);
+            this.setBelong(this.nextX, this.nextY, 2);
             this.step += 1;
           }
           this.highLight();
@@ -314,8 +318,8 @@
       this.board[x][y].highLight = true;
       _results = [];
       for (k = _i = 0; _i <= 3; k = ++_i) {
-        tx = x + this.stepx[k];
-        ty = y + this.stepy[k];
+        tx = x + this.stepX[k];
+        ty = y + this.stepY[k];
         if (tx >= 0 && tx <= 4) {
           if (ty >= 0 && ty <= 4) {
             if (!this.board[tx][ty].highLight) {
@@ -445,5 +449,26 @@
   game = new Game(gameDiv);
 
   game.init();
+
+  query = window.location.search.substring(1);
+
+  values = query.split('&');
+
+  for (_i = 0, _len = values.length; _i < _len; _i++) {
+    v = values[_i];
+    _ref = v.split('='), key = _ref[0], val = _ref[1];
+    if (key === 'auto' && val === 'true') {
+      setInterval((function(_this) {
+        return function() {
+          if (!game.win && !game.lose) {
+            game.maxSearch(1e10, game.depth, game.step);
+            return game.click(game.nextX, game.nextY);
+          } else {
+            return game.click(0, 0);
+          }
+        };
+      })(this), 200);
+    }
+  }
 
 }).call(this);
