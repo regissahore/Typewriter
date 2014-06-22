@@ -1,0 +1,87 @@
+@content_width: 800px;
+@element_width: 700px;
+@piece_margin: 20px;
+@piece_size: (@element_width - @piece_margin * 6) / 5 - 1;
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: #E7E7E7;
+  font-family: Consolas;
+}
+
+.content {
+  width: @content_width;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+}
+
+.element {
+  width: @element_width;
+  margin: 0 auto;
+}
+
+.game_board {
+  .element;
+  height: @element_width;
+  background-color: rgb(225, 225, 225);
+  padding: 0;
+  font-size: 0;
+  letter-spacing: 0px;
+  word-spacing: 0px;
+}
+
+.game_piece {
+  display: inline-block;
+  margin: @piece_margin 0 0 @piece_margin;
+  width: @piece_size;
+  height: @piece_size;
+  background-color: rgb(200, 200, 200);
+  border-radius: 5px;
+  font-size: 40px;
+  text-align: center;
+  line-height: @piece_size; 
+  overflow:hidden; 
+}
+
+.game_piece.belong1 {
+  color: white;
+  background-color: rgb(0, 162, 232);
+}
+
+.game_piece.belong2 {
+  color: white;
+  background-color: rgb(255, 127, 39);
+}
+
+.game_piece.region1 {
+  .game_piece.belong1;
+  box-shadow: 0 0 30px 10px rgba(0, 162, 232, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.game_piece.region2 {
+  .game_piece.belong2;
+  box-shadow: 0 0 30px 10px rgba(255, 127, 39, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.game_piece.text {
+  font-size: 18px;
+  line-height: @piece_size;
+}
+
+.game_display {
+  .element;
+}
+
+.game_display_text {
+  display: inline-block;
+  color: white;
+  background-color: rgb(50, 50, 50);
+  margin: 10px;
+  padding: 10px 20px 10px 10px;
+  border-radius: 10px;
+}
