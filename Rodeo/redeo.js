@@ -7,6 +7,9 @@
       this.gameDiv = gameDiv;
       this.doLose = __bind(this.doLose, this);
       this.doWin = __bind(this.doWin, this);
+      this.showLose = __bind(this.showLose, this);
+      this.showWin = __bind(this.showWin, this);
+      this.showWords = __bind(this.showWords, this);
       this.highLight = __bind(this.highLight, this);
       this.highLightRegion = __bind(this.highLightRegion, this);
       this.click = __bind(this.click, this);
@@ -259,7 +262,7 @@
         for (y = _j = 0; _j <= 4; y = ++_j) {
           if (this.board[x][y].belong === 0) {
             this.board[x][y].belong = 2;
-            score = this.maxSearch(alpha, depth - 1, num + 1);
+            score = this.maxSearch(beta, depth - 1, num + 1);
             this.board[x][y].belong = 0;
             if (score < beta) {
               beta = score;
@@ -281,14 +284,14 @@
       if (!this.win && !this.lose) {
         if (this.board[x][y].belong === 0) {
           this.setBelong(x, y, 1);
-          this.board[x][y].belong = 1;
           this.step += 1;
           if (this.step === 25) {
             if (this.getScore() > 0) {
-              this.doWin();
+              this.showWin();
             } else {
-              this.doLose();
+              this.showLose();
             }
+            return;
           } else {
             this.minSearch(-1e10, this.depth, this.step);
             this.setBelong(this.nextx, this.nexty, 2);
@@ -296,6 +299,12 @@
           }
           this.highLight();
           return this.updateDisplay();
+        }
+      } else {
+        if (this.win) {
+          return this.doWin();
+        } else {
+          return this.doLose();
         }
       }
     };
@@ -377,10 +386,43 @@
       return _results;
     };
 
+    Game.prototype.showWords = function(words) {
+      var word, x, y, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = words.length; _i < _len; _i++) {
+        word = words[_i];
+        _results.push((function() {
+          var _ref, _results1;
+          _results1 = [];
+          while (true) {
+            x = Math.floor(Math.random() * 5);
+            y = Math.floor(Math.random() * 5);
+            if ((_ref = this.board[x][y].div.innerText) === '+' || _ref === '-' || _ref === '++' || _ref === '') {
+              this.board[x][y].div.className += ' text';
+              this.board[x][y].div.innerText += word;
+              break;
+            } else {
+              _results1.push(void 0);
+            }
+          }
+          return _results1;
+        }).call(this));
+      }
+      return _results;
+    };
+
+    Game.prototype.showWin = function() {
+      this.win = true;
+      return this.showWords(['you', 'win', 'press', 'any', 'grid', 'to', 'continue']);
+    };
+
+    Game.prototype.showLose = function() {
+      this.lose = true;
+      return this.showWords(['you', 'lose', 'press', 'any', 'grid', 'to', 'retry']);
+    };
+
     Game.prototype.doWin = function() {
       var score;
-      console.log('win');
-      this.win = true;
       this.depth += 1;
       score = this.getScore();
       this.scores.push(score);
@@ -390,8 +432,6 @@
     };
 
     Game.prototype.doLose = function() {
-      console.log('lose');
-      this.lose = true;
       this.initGame();
       return this.updateDisplay();
     };

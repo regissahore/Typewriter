@@ -150,7 +150,7 @@ class Game
             for y in [0..4]
                 if @board[x][y].belong == 0
                     @board[x][y].belong = 2
-                    score = @maxSearch alpha, depth - 1, num + 1
+                    score = @maxSearch beta, depth - 1, num + 1
                     @board[x][y].belong = 0
                     if score < beta
                         beta = score 
@@ -164,16 +164,18 @@ class Game
         if not @win and not @lose
             if @board[x][y].belong == 0
                 @setBelong x, y, 1
-                @board[x][y].belong = 1
                 @step += 1
                 if @step == 25
-                    if @getScore() > 0 then @doWin() else @doLose()
+                    if @getScore() > 0 then @showWin() else @showLose()
+                    return
                 else
                     @minSearch -1e10, @depth, @step
                     @setBelong @nextx, @nexty, 2
                     @step += 1
                 @highLight()
                 @updateDisplay()
+        else
+            if @win then @doWin() else @doLose()
                 
     highLightRegion: (x, y) =>
         @board[x][y].highLight = true
@@ -213,19 +215,34 @@ class Game
         for i in [0..4]
             for j in [0..4]
                 @updateStyle i, j
+                
+    showWords: (words) =>
+        for word in words
+            while true
+                x = Math.floor Math.random() * 5
+                y = Math.floor Math.random() * 5
+                if @board[x][y].div.innerText in ['+', '-', '++', '']
+                    @board[x][y].div.className += ' text'
+                    @board[x][y].div.innerText += word
+                    break
+
+    showWin: =>
+        @win = true
+        @showWords ['you', 'win', 'press', 'any', 'grid', 'to', 'continue']
+    
+    showLose: =>
+        @lose = true
+        @showWords ['you', 'lose', 'press', 'any', 'grid', 'to', 'retry']
                     
     doWin: =>
-        console.log 'win'
-        @win = true
         @depth += 1
         score = @getScore()
         @scores.push score
         @total += score
         @initGame()
         @updateDisplay()
+        
     doLose: =>
-        console.log 'lose'
-        @lose = true
         @initGame()
         @updateDisplay()
     

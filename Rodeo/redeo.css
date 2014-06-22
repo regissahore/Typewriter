@@ -54,6 +54,10 @@ body {
   background-color: #ff7f27;
   box-shadow: 0 0 30px 10px rgba(255, 127, 39, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
+.game_piece.text {
+  font-size: 18px;
+  line-height: 115px;
+}
 .game_display {
   width: 700px;
   margin: 0 auto;
