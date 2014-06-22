@@ -4,14 +4,36 @@ class Game
         @stepy = [1, 0, -1, 0]
         
     init: =>
+        @gameDiv.innerHTML = ''
         @depth = 1
         @scores = []
         @total = 0
+        @initDisplay()
         @initBoard()
         @initGame()
+        @updateDisplay()
+        
+    initDisplay: =>
+        @display = {}
+        div = document.createElement 'div'
+        div.className = 'game_display'
+        @display.depth = document.createElement 'div'
+        @display.depth.className = 'game_display_text'
+        div.appendChild @display.depth
+        @display.score = document.createElement 'div'
+        @display.score.className = 'game_display_text'
+        div.appendChild @display.score
+        @display.scores = document.createElement 'div'
+        @display.scores.className = 'game_display_text'
+        div.appendChild @display.scores
+        @display.total = document.createElement 'div'
+        @display.total.className = 'game_display_text'
+        div.appendChild @display.total
+        @gameDiv.appendChild div
         
     initBoard: =>
-        @gameDiv.innerHTML = ''
+        gameBoard = document.createElement 'div'
+        gameBoard.className = 'game_board'
         @board = []
         for i in [0..4]
             @board.push []
@@ -24,7 +46,8 @@ class Game
                 @board[i][j].div = gamePiece
                 @board[i][j].div.onclick = do (i, j) =>
                     => @click i, j
-            @gameDiv.appendChild gameRow
+            gameBoard.appendChild gameRow
+        @gameDiv.appendChild gameBoard
             
     initGame: =>
         @turn = 1
@@ -44,6 +67,12 @@ class Game
                     if @board[x][y].num == 0
                         @setNum x, y, num
                         break
+                        
+    updateDisplay: =>
+        @display.depth.innerText = 'Depth: ' + @depth
+        @display.score.innerText = 'Score: ' + @getScore()
+        @display.scores.innerText = 'History: ' + @scores
+        @display.total.innerText = 'Total score: ' + @total
                         
     setNum: (x, y, num) =>
         @board[x][y].num = num
@@ -144,6 +173,7 @@ class Game
                     @setBelong @nextx, @nexty, 2
                     @step += 1
                 @highLight()
+                @updateDisplay()
                 
     highLightRegion: (x, y) =>
         @board[x][y].highLight = true
@@ -185,15 +215,19 @@ class Game
                 @updateStyle i, j
                     
     doWin: =>
+        console.log 'win'
         @win = true
         @depth += 1
         score = @getScore()
         @scores.push score
         @total += score
         @initGame()
+        @updateDisplay()
     doLose: =>
+        console.log 'lose'
         @lose = true
         @initGame()
+        @updateDisplay()
     
     
 gameDiv = document.getElementById 'game_div'

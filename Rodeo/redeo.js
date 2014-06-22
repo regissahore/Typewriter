@@ -18,26 +18,51 @@
       this.setHighLight = __bind(this.setHighLight, this);
       this.setBelong = __bind(this.setBelong, this);
       this.setNum = __bind(this.setNum, this);
+      this.updateDisplay = __bind(this.updateDisplay, this);
       this.initGame = __bind(this.initGame, this);
       this.initBoard = __bind(this.initBoard, this);
+      this.initDisplay = __bind(this.initDisplay, this);
       this.init = __bind(this.init, this);
       this.stepx = [0, 1, 0, -1];
       this.stepy = [1, 0, -1, 0];
     }
 
     Game.prototype.init = function() {
+      this.gameDiv.innerHTML = '';
       this.depth = 1;
       this.scores = [];
       this.total = 0;
+      this.initDisplay();
       this.initBoard();
-      return this.initGame();
+      this.initGame();
+      return this.updateDisplay();
+    };
+
+    Game.prototype.initDisplay = function() {
+      var div;
+      this.display = {};
+      div = document.createElement('div');
+      div.className = 'game_display';
+      this.display.depth = document.createElement('div');
+      this.display.depth.className = 'game_display_text';
+      div.appendChild(this.display.depth);
+      this.display.score = document.createElement('div');
+      this.display.score.className = 'game_display_text';
+      div.appendChild(this.display.score);
+      this.display.scores = document.createElement('div');
+      this.display.scores.className = 'game_display_text';
+      div.appendChild(this.display.scores);
+      this.display.total = document.createElement('div');
+      this.display.total.className = 'game_display_text';
+      div.appendChild(this.display.total);
+      return this.gameDiv.appendChild(div);
     };
 
     Game.prototype.initBoard = function() {
-      var gamePiece, gameRow, i, j, _i, _j, _results;
-      this.gameDiv.innerHTML = '';
+      var gameBoard, gamePiece, gameRow, i, j, _i, _j;
+      gameBoard = document.createElement('div');
+      gameBoard.className = 'game_board';
       this.board = [];
-      _results = [];
       for (i = _i = 0; _i <= 4; i = ++_i) {
         this.board.push([]);
         gameRow = document.createElement('div');
@@ -55,9 +80,9 @@
             };
           })(this)(i, j);
         }
-        _results.push(this.gameDiv.appendChild(gameRow));
+        gameBoard.appendChild(gameRow);
       }
-      return _results;
+      return this.gameDiv.appendChild(gameBoard);
     };
 
     Game.prototype.initGame = function() {
@@ -99,6 +124,13 @@
         }).call(this));
       }
       return _results;
+    };
+
+    Game.prototype.updateDisplay = function() {
+      this.display.depth.innerText = 'Depth: ' + this.depth;
+      this.display.score.innerText = 'Score: ' + this.getScore();
+      this.display.scores.innerText = 'History: ' + this.scores;
+      return this.display.total.innerText = 'Total score: ' + this.total;
     };
 
     Game.prototype.setNum = function(x, y, num) {
@@ -262,7 +294,8 @@
             this.setBelong(this.nextx, this.nexty, 2);
             this.step += 1;
           }
-          return this.highLight();
+          this.highLight();
+          return this.updateDisplay();
         }
       }
     };
@@ -346,17 +379,21 @@
 
     Game.prototype.doWin = function() {
       var score;
+      console.log('win');
       this.win = true;
       this.depth += 1;
       score = this.getScore();
       this.scores.push(score);
       this.total += score;
-      return this.initGame();
+      this.initGame();
+      return this.updateDisplay();
     };
 
     Game.prototype.doLose = function() {
+      console.log('lose');
       this.lose = true;
-      return this.initGame();
+      this.initGame();
+      return this.updateDisplay();
     };
 
     return Game;
