@@ -35,10 +35,10 @@ class Game
         gameBoard = document.createElement 'div'
         gameBoard.className = 'game_board'
         @board = []
-        for i in [0..4]
+        for i in [0..3]
             @board.push []
             gameRow = document.createElement 'div'
-            for j in [0..4]
+            for j in [0..3]
                 @board[i].push {}
                 gamePiece = document.createElement 'div'
                 gamePiece.className = 'game_piece'
@@ -54,16 +54,16 @@ class Game
         @step = 0
         @win = false
         @lose = false
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 @setNum i, j, 0
                 @setBelong i, j, 0
-        for i in [0..4]
-            for j in [-1..2]
+        for i in [0..3]
+            for j in [0..2]
                 num = if j == 0 then 1 else j 
                 while true
-                    x = Math.floor Math.random() * 5
-                    y = Math.floor Math.random() * 5
+                    x = Math.floor Math.random() * 4
+                    y = Math.floor Math.random() * 4
                     if @board[x][y].num == 0
                         @setNum x, y, num
                         break
@@ -105,21 +105,21 @@ class Game
         for k in [0..3]
             tx = x + @stepX[k]
             ty = y + @stepY[k]
-            if tx >= 0 and tx <= 4
-                if ty >= 0 and ty <= 4
+            if tx >= 0 and tx <= 3
+                if ty >= 0 and ty <= 3
                     if not @board[tx][ty].visit
                         if @board[tx][ty].belong == @board[x][y].belong
                             score += @getRegionScore tx, ty
         return score
         
     getScore: =>
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 @board[i][j].visit = false
         score1 = 0
         score2 = 0
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 if not @board[i][j].visit
                     score = @getRegionScore i, j
                     if @board[i][j].belong == 1
@@ -129,11 +129,11 @@ class Game
         score1 - score2
         
     maxSearch: (beta, depth, num) =>
-        if depth == 0 or num == 25
+        if depth == 0 or num == 16
             return @getScore()
         alpha = -1e10
-        for x in [0..4]
-            for y in [0..4]
+        for x in [0..3]
+            for y in [0..3]
                 if @board[x][y].belong == 0
                     @board[x][y].belong = 1
                     score = @minSearch alpha, depth - 1, num + 1
@@ -147,11 +147,11 @@ class Game
         return alpha
         
     minSearch: (alpha, depth, num) =>
-        if depth == 0 or num == 25
+        if depth == 0 or num == 16
             return @getScore()
         beta = 1e10
-        for x in [0..4]
-            for y in [0..4]
+        for x in [0..3]
+            for y in [0..3]
                 if @board[x][y].belong == 0
                     @board[x][y].belong = 2
                     score = @maxSearch beta, depth - 1, num + 1
@@ -169,13 +169,13 @@ class Game
             if @board[x][y].belong == 0
                 @setBelong x, y, 1
                 @step += 1
-                if @step != 25
+                if @step != 16
                     @minSearch -1e10, @depth, @step
                     @setBelong @nextX, @nextY, 2
                     @step += 1
                 @highLight()
                 @updateDisplay()
-                if @step == 25
+                if @step == 16
                     if @getScore() > 0 then @showWin() else @showLose()
         else
             if @win then @doWin() else @doLose()
@@ -185,22 +185,22 @@ class Game
         for k in [0..3]
             tx = x + @stepX[k]
             ty = y + @stepY[k]
-            if tx >= 0 and tx <= 4
-                if ty >= 0 and ty <= 4
+            if tx >= 0 and tx <= 3
+                if ty >= 0 and ty <= 3
                     if not @board[tx][ty].highLight
                         if @board[tx][ty].belong == @board[x][y].belong
                             @highLightRegion tx, ty 
                 
     highLight: () =>
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 @board[i][j].visit = false
                 @setHighLight i, j, false
         return if @step == 0
         score1 = 0
         score2 = 0
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 if not @board[i][j].visit
                     score = @getRegionScore i, j
                     if @board[i][j].belong == 1
@@ -215,15 +215,15 @@ class Game
                             score2 = score
         @highLightRegion x1, y1
         @highLightRegion x2, y2
-        for i in [0..4]
-            for j in [0..4]
+        for i in [0..3]
+            for j in [0..3]
                 @updateStyle i, j
                 
     showWords: (words, belong) =>
         for word in words
             while true
-                x = Math.floor Math.random() * 5
-                y = Math.floor Math.random() * 5
+                x = Math.floor Math.random() * 4
+                y = Math.floor Math.random() * 4
                 if @board[x][y].div.innerText in ['+', '-', '++', ''] and @board[x][y].belong == belong
                     @board[x][y].div.className += ' text'
                     @board[x][y].div.innerText += word
