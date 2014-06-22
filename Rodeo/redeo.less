@@ -28,7 +28,7 @@ html, body {
 .game_board {
   .element;
   height: @element_width;
-  background-color: rgb(185, 122, 87);
+  background-color: rgb(225, 225, 225);
   padding: 0;
   font-size: 0;
   letter-spacing: 0px;
@@ -40,10 +40,28 @@ html, body {
   margin: @piece_margin 0 0 @piece_margin;
   width: @piece_size;
   height: @piece_size;
-  background-color: rgb(239, 228, 176);
+  background-color: rgb(200, 200, 200);
   border-radius: 5px;
   font-size: 40px;
   text-align: center;
   line-height:@piece_size; 
   overflow:hidden; 
+}
+
+.game_piece.belong1 {
+  background-color: rgb(0, 162, 232);
+}
+
+.game_piece.belong2 {
+  background-color: rgb(255, 127, 39);
+}
+
+.game_piece.region1 {
+  .game_piece.belong1;
+  box-shadow: 0 0 30px 10px rgba(0, 162, 232, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
+}
+
+.game_piece.region2 {
+  .game_piece.belong2;
+  box-shadow: 0 0 30px 10px rgba(255, 127, 39, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.3);
 }
