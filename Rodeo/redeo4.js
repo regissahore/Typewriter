@@ -66,10 +66,10 @@
       gameBoard = document.createElement('div');
       gameBoard.className = 'game_board';
       this.board = [];
-      for (i = _i = 0; _i <= 4; i = ++_i) {
+      for (i = _i = 0; _i <= 3; i = ++_i) {
         this.board.push([]);
         gameRow = document.createElement('div');
-        for (j = _j = 0; _j <= 4; j = ++_j) {
+        for (j = _j = 0; _j <= 3; j = ++_j) {
           this.board[i].push({});
           gamePiece = document.createElement('div');
           gamePiece.className = 'game_piece';
@@ -94,25 +94,25 @@
       this.step = 0;
       this.win = false;
       this.lose = false;
-      for (i = _i = 0; _i <= 4; i = ++_i) {
-        for (j = _j = 0; _j <= 4; j = ++_j) {
+      for (i = _i = 0; _i <= 3; i = ++_i) {
+        for (j = _j = 0; _j <= 3; j = ++_j) {
           this.setNum(i, j, 0);
           this.setBelong(i, j, 0);
         }
       }
       _results = [];
-      for (i = _k = 0; _k <= 4; i = ++_k) {
+      for (i = _k = 0; _k <= 3; i = ++_k) {
         _results.push((function() {
           var _l, _results1;
           _results1 = [];
-          for (j = _l = -1; _l <= 2; j = ++_l) {
+          for (j = _l = 0; _l <= 2; j = ++_l) {
             num = j === 0 ? 1 : j;
             _results1.push((function() {
               var _results2;
               _results2 = [];
               while (true) {
-                x = Math.floor(Math.random() * 5);
-                y = Math.floor(Math.random() * 5);
+                x = Math.floor(Math.random() * 4);
+                y = Math.floor(Math.random() * 4);
                 if (this.board[x][y].num === 0) {
                   this.setNum(x, y, num);
                   break;
@@ -187,8 +187,8 @@
       for (k = _i = 0; _i <= 3; k = ++_i) {
         tx = x + this.stepX[k];
         ty = y + this.stepY[k];
-        if (tx >= 0 && tx <= 4) {
-          if (ty >= 0 && ty <= 4) {
+        if (tx >= 0 && tx <= 3) {
+          if (ty >= 0 && ty <= 3) {
             if (!this.board[tx][ty].visit) {
               if (this.board[tx][ty].belong === this.board[x][y].belong) {
                 score += this.getRegionScore(tx, ty);
@@ -202,15 +202,15 @@
 
     Game.prototype.getScore = function() {
       var i, j, score, score1, score2, _i, _j, _k, _l;
-      for (i = _i = 0; _i <= 4; i = ++_i) {
-        for (j = _j = 0; _j <= 4; j = ++_j) {
+      for (i = _i = 0; _i <= 3; i = ++_i) {
+        for (j = _j = 0; _j <= 3; j = ++_j) {
           this.board[i][j].visit = false;
         }
       }
       score1 = 0;
       score2 = 0;
-      for (i = _k = 0; _k <= 4; i = ++_k) {
-        for (j = _l = 0; _l <= 4; j = ++_l) {
+      for (i = _k = 0; _k <= 3; i = ++_k) {
+        for (j = _l = 0; _l <= 3; j = ++_l) {
           if (!this.board[i][j].visit) {
             score = this.getRegionScore(i, j);
             if (this.board[i][j].belong === 1) {
@@ -230,12 +230,12 @@
 
     Game.prototype.maxSearch = function(beta, depth, num) {
       var alpha, score, x, y, _i, _j;
-      if (depth === 0 || num === 25) {
+      if (depth === 0 || num === 16) {
         return this.getScore();
       }
       alpha = -1e10;
-      for (x = _i = 0; _i <= 4; x = ++_i) {
-        for (y = _j = 0; _j <= 4; y = ++_j) {
+      for (x = _i = 0; _i <= 3; x = ++_i) {
+        for (y = _j = 0; _j <= 3; y = ++_j) {
           if (this.board[x][y].belong === 0) {
             this.board[x][y].belong = 1;
             score = this.minSearch(alpha, depth - 1, num + 1);
@@ -258,12 +258,12 @@
 
     Game.prototype.minSearch = function(alpha, depth, num) {
       var beta, score, x, y, _i, _j;
-      if (depth === 0 || num === 25) {
+      if (depth === 0 || num === 16) {
         return this.getScore();
       }
       beta = 1e10;
-      for (x = _i = 0; _i <= 4; x = ++_i) {
-        for (y = _j = 0; _j <= 4; y = ++_j) {
+      for (x = _i = 0; _i <= 3; x = ++_i) {
+        for (y = _j = 0; _j <= 3; y = ++_j) {
           if (this.board[x][y].belong === 0) {
             this.board[x][y].belong = 2;
             score = this.maxSearch(beta, depth - 1, num + 1);
@@ -289,14 +289,14 @@
         if (this.board[x][y].belong === 0) {
           this.setBelong(x, y, 1);
           this.step += 1;
-          if (this.step !== 25) {
+          if (this.step !== 16) {
             this.minSearch(-1e10, this.depth, this.step);
             this.setBelong(this.nextX, this.nextY, 2);
             this.step += 1;
           }
           this.highLight();
           this.updateDisplay();
-          if (this.step === 25) {
+          if (this.step === 16) {
             if (this.getScore() > 0) {
               return this.showWin();
             } else {
@@ -320,8 +320,8 @@
       for (k = _i = 0; _i <= 3; k = ++_i) {
         tx = x + this.stepX[k];
         ty = y + this.stepY[k];
-        if (tx >= 0 && tx <= 4) {
-          if (ty >= 0 && ty <= 4) {
+        if (tx >= 0 && tx <= 3) {
+          if (ty >= 0 && ty <= 3) {
             if (!this.board[tx][ty].highLight) {
               if (this.board[tx][ty].belong === this.board[x][y].belong) {
                 _results.push(this.highLightRegion(tx, ty));
@@ -343,8 +343,8 @@
 
     Game.prototype.highLight = function() {
       var i, j, score, score1, score2, x1, x2, y1, y2, _i, _j, _k, _l, _m, _results;
-      for (i = _i = 0; _i <= 4; i = ++_i) {
-        for (j = _j = 0; _j <= 4; j = ++_j) {
+      for (i = _i = 0; _i <= 3; i = ++_i) {
+        for (j = _j = 0; _j <= 3; j = ++_j) {
           this.board[i][j].visit = false;
           this.setHighLight(i, j, false);
         }
@@ -354,8 +354,8 @@
       }
       score1 = 0;
       score2 = 0;
-      for (i = _k = 0; _k <= 4; i = ++_k) {
-        for (j = _l = 0; _l <= 4; j = ++_l) {
+      for (i = _k = 0; _k <= 3; i = ++_k) {
+        for (j = _l = 0; _l <= 3; j = ++_l) {
           if (!this.board[i][j].visit) {
             score = this.getRegionScore(i, j);
             if (this.board[i][j].belong === 1) {
@@ -377,11 +377,11 @@
       this.highLightRegion(x1, y1);
       this.highLightRegion(x2, y2);
       _results = [];
-      for (i = _m = 0; _m <= 4; i = ++_m) {
+      for (i = _m = 0; _m <= 3; i = ++_m) {
         _results.push((function() {
           var _n, _results1;
           _results1 = [];
-          for (j = _n = 0; _n <= 4; j = ++_n) {
+          for (j = _n = 0; _n <= 3; j = ++_n) {
             _results1.push(this.updateStyle(i, j));
           }
           return _results1;
@@ -399,8 +399,8 @@
           var _ref, _results1;
           _results1 = [];
           while (true) {
-            x = Math.floor(Math.random() * 5);
-            y = Math.floor(Math.random() * 5);
+            x = Math.floor(Math.random() * 4);
+            y = Math.floor(Math.random() * 4);
             if (((_ref = this.board[x][y].div.innerText) === '+' || _ref === '-' || _ref === '++' || _ref === '') && this.board[x][y].belong === belong) {
               this.board[x][y].div.className += ' text';
               this.board[x][y].div.innerText += word;
