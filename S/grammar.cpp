@@ -15,6 +15,7 @@ vector<SymbolNode> symbolTable;
 map<string, int> symbolMap;
 int labelIndex;
 vector<SymbolNode> labelTable;
+map<string, int> labelMap;
 
 void addSymbol(string &symbol) {
     symbolMap[symbol] = symbolTable.size();
@@ -31,28 +32,38 @@ int getSymbol(string &symbol) {
 
 string addTempSymbol() {
     char num[12];
-    sprintf(num, "%d", ++tempSymbolIndex);
-    string symbol = string("$") + num;
+    sprintf(num, "$%d", ++tempSymbolIndex);
+    string symbol(num);
     if (!isSymbolExist(symbol)) {
         addSymbol(symbol);
     }
     return symbol;
 }
 
-void addLabel(int pos) {
+string addLabel() {
     char num[12];
-    sprintf(num, "%d", ++labelIndex);
-    string label = string("#") + num;
-    labelTable.push_back({label, pos});
+    sprintf(num, "#%d", ++labelIndex);
+    string label(num);
+    labelMap[label] = labelTable.size();
+    labelTable.push_back({label, 0});
+    return label;
+}
+
+void setLabel(string &label, int value) {
+    labelTable[labelMap[label]].value = value;
+}
+
+int getLabel(string &label) {
+    return labelTable[labelMap[label]].value;
 }
 
 string addConst(int value) {
     char num[12];
-    sprintf(num, "%d", ++constIndex);
-    string constant = string("%") + num;
-    addSymbol(constant);
-    symbolTable[getSymbol(constant)].value = value;
-    return constant;
+    sprintf(num, "%%%d", ++constIndex);
+    string symbol(num);
+    addSymbol(symbol);
+    symbolTable[getSymbol(symbol)].value = value;
+    return symbol;
 }
 
 void addQuaternion(vector<Quaternion> &quats, string op, string symbol1, string symbol2, string symbol3) {
@@ -113,16 +124,27 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         ++index;
         if (tokens[index].type == TYPE_L_PARENTHESE) {
             ++index;
-            B(quats, tokens, index);
+            tempSymbolIndex = 0;
+            string condition = B(quats, tokens, index);
             if (tokens[index].type == TYPE_R_PARENTHESE) {
                 ++index;
                 if (tokens[index].type == TYPE_THEN) {
                     ++index;
+                    string label1 = addLabel();
+                    int pos1 = quats.size();
+                    addQuaternion(quats, "JZ", condition, "", label1);
                     L(quats, tokens, index);
+                    string label2 = addLabel();
+                    int pos2 = quats.size();
+                    addQuaternion(quats, "JP", "", "", label2);
+                    setLabel(label1, quats.size());
+                    quats[pos1].addr3 = quats.size();
                     if (tokens[index].type == TYPE_ELSE) {
                         ++index;
                         L(quats, tokens, index);
                     }
+                    setLabel(label2, quats.size());
+                    quats[pos2].addr3 = quats.size();
                 } else {
                     cerr << "'if' should be followed by 'then'." << endl;
                 }
@@ -134,14 +156,25 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         }
     } else if (tokens[index].type == TYPE_WHILE) {
         ++index;
+        string label1 = addLabel();
+        setLabel(label1, quats.size());
         if (tokens[index].type == TYPE_L_PARENTHESE) {
             ++index;
-            B(quats, tokens, index);
+            tempSymbolIndex = 0;
+            string condition = B(quats, tokens, index);
             if (tokens[index].type == TYPE_R_PARENTHESE) {
                 ++index;
+                string label2 = addLabel();
+                int pos2 = quats.size();
+                addQuaternion(quats, "JZ", condition, "", label2);
                 if (tokens[index].type == TYPE_DO) {
                     ++index;
                     L(quats, tokens, index);
+                    int pos1 = quats.size();
+                    addQuaternion(quats, "JP", condition, "", label1);
+                    quats[pos1].addr3 = getLabel(label1);
+                    setLabel(label2, quats.size());
+                    quats[pos2].addr3 = quats.size();
                 } else {
                     cerr << "'while' should be followed by 'do'." << endl;
                 }
@@ -164,6 +197,7 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         ++index;
         if (tokens[index].type == TYPE_ASSIGN) {
             ++index;
+            tempSymbolIndex = 0;
             string symbol2 = E(quats, tokens, index);
             addQuaternion(quats, "=", symbol2, "", symbol1);
         } else {
@@ -288,6 +322,7 @@ vector<Quaternion> getQuaternions(vector<Token> &tokens) {
     symbolMap.clear();
     labelIndex = 0;
     labelTable.clear();
+    labelMap.clear();
     P(quats, tokens, index);
     return quats;
 }
@@ -305,20 +340,34 @@ void printQuaternions(vector<Quaternion> &quaternions) {
         cout << labelTable[i].value << endl;
     }
     cout << "Quaternions with symbol: " << endl;
+    labelIndex = 0;
+    while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == 0) {
+        cout << labelTable[labelIndex++].symbol << ":" << endl;
+    }
     for (size_t i = 0; i < quaternions.size(); ++i) {
         Quaternion quat = quaternions[i];
         cout << i << "\t" << quat.op << "\t";
         cout << quat.symbol1 << "\t";
         cout << quat.symbol2 << "\t";
         cout << quat.symbol3 << endl;
+        while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == (int)i + 1) {
+            cout << labelTable[labelIndex++].symbol << ":" << endl;
+        }
     }
     cout << "Quaternions with address: " << endl;
+    labelIndex = 0;
+    while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == 0) {
+        cout << labelTable[labelIndex++].symbol << ":" << endl;
+    }
     for (size_t i = 0; i < quaternions.size(); ++i) {
         Quaternion quat = quaternions[i];
         cout << i << "\t" << quat.op << "\t";
         cout << quat.addr1 << "\t";
         cout << quat.addr2 << "\t";
         cout << quat.addr3 << endl;
+        while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == (int)i + 1) {
+            cout << labelTable[labelIndex++].symbol << ":" << endl;
+        }
     }
 }
 #endif // DEBUG
