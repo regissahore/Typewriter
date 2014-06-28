@@ -4,11 +4,6 @@
 #include "grammar.h"
 using namespace std;
 
-struct SymbolNode {
-    string symbol;
-    int value;
-};
-
 int constIndex;
 int tempSymbolIndex;
 vector<SymbolNode> symbolTable;
@@ -326,6 +321,22 @@ vector<Quaternion> getQuaternions(vector<Token> &tokens) {
     labelMap.clear();
     P(quats, tokens, index);
     return quats;
+}
+
+vector<SymbolNode> getSymbols() {
+    return symbolTable;
+}
+
+vector<SymbolNode> getLabels() {
+    return labelTable;
+}
+
+map<string, int> getSymbolMap() {
+    return symbolMap;
+}
+
+map<string, int> getLabelMap() {
+    return labelMap;
 }
 
 #ifdef DEBUG
