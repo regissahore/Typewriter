@@ -19,7 +19,7 @@ string getNewName(string symbol) {
     if (symbol[0] == '#') {
         return "LABEL_" + symbol.substr(1);
     }
-    return symbol;
+    return "var_" + symbol;
 }
 
 void printAssembly(vector<Quaternion> &quats,
@@ -50,10 +50,14 @@ void printAssembly(vector<Quaternion> &quats,
         cout << "\t" << node.symbol;
         cout << "\tDW\t" << node.value << endl;
     }
+    cout << "\tINPUT_BUFFER DB 128 DUP(0)" << endl;
     cout << "DATA ENDS" << endl;
+    bool hasRead = false, hasWrite = false;
     cout << "CODE SEGMENT" << endl;
-    cout << "\tASSUME CS:CODE" << endl;
+    cout << "\tASSUME CS: CODE, DS: DATA" << endl;
     cout << "START:" << endl;
+    cout << "\tMOV AX, DATA" << endl;
+    cout << "\tMOV DS, AX" << endl;
     for (size_t i = 0; i < quats.size(); ++i) {
         for (auto label : labelTable) {
             if (label.value == (int)i) {
@@ -74,6 +78,7 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tMUL " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", AX" << endl;
         } else if (op == "/") {
+            cout << "\tMOV DX, 0" << endl;
             cout << "\tMOV AX, " << quats[i].symbol1 << endl;
             cout << "\tDIV " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", AX" << endl;
@@ -93,7 +98,7 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tCMP AX, " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 1" << endl;
             string label = getBoolLabel(i);
-            cout << "\tJA " << label << endl;
+            cout << "\tJG " << label << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 0" << endl;
             cout << label << ":" << endl;
         } else if (op == "<") {
@@ -101,7 +106,7 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tCMP AX, " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 1" << endl;
             string label = getBoolLabel(i);
-            cout << "\tJB " << label << endl;
+            cout << "\tJL " << label << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 0" << endl;
             cout << label << ":" << endl;
         } else if (op == ">=") {
@@ -109,7 +114,7 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tCMP AX, " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 1" << endl;
             string label = getBoolLabel(i);
-            cout << "\tJAE " << label << endl;
+            cout << "\tJGE " << label << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 0" << endl;
             cout << label << ":" << endl;
         } else if (op == "<=") {
@@ -117,7 +122,7 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tCMP AX, " << quats[i].symbol2 << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 1" << endl;
             string label = getBoolLabel(i);
-            cout << "\tJBE " << label << endl;
+            cout << "\tJLE " << label << endl;
             cout << "\tMOV " << quats[i].symbol3 << ", 0" << endl;
             cout << label << ":" << endl;
         } else if (op == "==") {
@@ -142,6 +147,14 @@ void printAssembly(vector<Quaternion> &quats,
             cout << "\tJZ " << quats[i].symbol3 << endl;
         } else if (op == "JP") {
             cout << "\tJMP " << quats[i].symbol3 << endl;
+        } else if (op == "READ") {
+            hasRead = true;
+            cout << "\tCALL READ_INT" << endl;
+            cout << "\tMOV " << quats[i].symbol3 << ", BX" << endl;
+        } else if (op == "WRITE") {
+            hasWrite = true;
+            cout << "\tMOV BX, " << quats[i].symbol1 << endl;
+            cout << "\tCALL WRITE_INT" << endl;
         }
     }
     for (auto label : labelTable) {
@@ -149,8 +162,32 @@ void printAssembly(vector<Quaternion> &quats,
             cout << label.symbol << ":" << endl;
         }
     }
+    cout << "\tMOV AX, 4C00H" << endl;
     cout << "\tINT 21H" << endl;
-    cout << "\tRET" << endl;
+    if (hasRead) {
+        FILE *file = fopen("read_int.asm", "r");
+        char ch;
+        while ((ch = fgetc(file)) != EOF) {
+            putchar(ch);
+        }
+        fclose(file);
+    }
+    if (hasWrite) {
+        FILE *file = fopen("write_int.asm", "r");
+        char ch;
+        while ((ch = fgetc(file)) != EOF) {
+            putchar(ch);
+        }
+        fclose(file);
+    }
+    if (hasRead || hasWrite) {
+        FILE *file = fopen("write_newline.asm", "r");
+        char ch;
+        while ((ch = fgetc(file)) != EOF) {
+            putchar(ch);
+        }
+        fclose(file);
+    }
     cout << "CODE ENDS" << endl;
     cout << "END START" << endl;
 }

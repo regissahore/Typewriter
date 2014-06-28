@@ -199,6 +199,24 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         } else {
             cerr << "Should be assignment." << endl;
         }
+    } else if (tokens[index].type == TYPE_READ) {
+        ++index;
+        if (tokens[index].type == TYPE_ID) {
+            string symbol = tokens[index].token;
+            ++index;
+            addQuaternion(quats, "READ", "", "", symbol);
+        } else {
+            cerr << "Read should be identifier." << endl;
+        }
+    } else if (tokens[index].type == TYPE_WRITE) {
+        ++index;
+        if (tokens[index].type == TYPE_ID) {
+            string symbol = tokens[index].token;
+            ++index;
+            addQuaternion(quats, "WRITE", symbol, "", "");
+        } else {
+            cerr << "Write should be identifier." << endl;
+        }
     } else {
         cerr << "Invalid statement." << endl;
     }
