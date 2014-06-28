@@ -1,42 +1,6 @@
-#include <cstdio>
-#include <vector>
-#include <string>
 #include <iostream>
+#include "lex.h"
 using namespace std;
-const int BUFFER_LEN = 1024;
-const int TOKEN_LEN = 32;
-
-#define DEBUG
-
-enum TokenType {
-    TYPE_INT = 1,
-    TYPE_IF = 2,
-    TYPE_THEN = 3,
-    TYPE_ELSE = 4,
-    TYPE_WHILE = 5,
-    TYPE_DO = 6,
-    TYPE_ID = 7,
-    TYPE_CONST = 8,
-    TYPE_ADD = 9,
-    TYPE_SUB = 10,
-    TYPE_MUL = 11,
-    TYPE_DIV = 12,
-    TYPE_AND = 13,
-    TYPE_OR = 14,
-    TYPE_RELOP = 15,
-    TYPE_L_BRACKET = 16,
-    TYPE_R_BRACKET = 17,
-    TYPE_SEMICOLON = 18,
-    TYPE_L_PARENTHESE = 19,
-    TYPE_R_PARENTHESE = 20,
-    TYPE_ASSIGN = 21
-};
-
-struct Token {
-    TokenType type;
-    string mnemonic;
-    string token;
-};
 
 bool isAlphabeta(char ch) {
     return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
@@ -46,18 +10,15 @@ bool isDigit(char ch) {
     return ch >= '0' && ch <= '9';
 }
 
-string getTokenString(char buffer[BUFFER_LEN], int &prev, int index) {
-    static char temp[BUFFER_LEN];
-    for (int i = prev; i < index; ++i) {
-        temp[i - prev] = buffer[i];
-    }
-    temp[index - prev] = 0;
+string getTokenString(string &buffer, int &prev, int index) {
+    int temp = prev;
     prev = index;
-    return string(temp);
+    return buffer.substr(temp, index - temp);
 }
 
-void parse(vector<Token> &tokens, char buffer[BUFFER_LEN]) {
+void parse(vector<Token> &tokens, string &buffer) {
     int state = 0, index = 0, prev = 0;
+    buffer += (char)0;
     while (true) {
         char ch = buffer[index];
         switch (state) {
@@ -130,9 +91,7 @@ void parse(vector<Token> &tokens, char buffer[BUFFER_LEN]) {
                     break;
                 default:
                     ++index;
-                    fprintf(stderr, "Invalid Character: ");
-                    fprintf(stderr, getTokenString(buffer, prev, index).c_str());
-                    fprintf(stderr, "\n");
+                    cerr << "Invalid character: " << getTokenString(buffer, prev, index) << endl;
                     break;
                 }
             }
@@ -155,6 +114,10 @@ void parse(vector<Token> &tokens, char buffer[BUFFER_LEN]) {
                     tokens.push_back({TYPE_WHILE, "while", ""});
                 } else if (token == string("do")) {
                     tokens.push_back({TYPE_DO, "do", ""});
+                } else if (token == string("read")) {
+                    tokens.push_back({TYPE_READ, "read", ""});
+                } else if (token == string("write")) {
+                    tokens.push_back({TYPE_WRITE, "write", ""});
                 } else {
                     tokens.push_back({TYPE_ID, "ID", token});
                 }
@@ -177,7 +140,7 @@ void parse(vector<Token> &tokens, char buffer[BUFFER_LEN]) {
                 if (buffer[prev] != '!') {
                     tokens.push_back({TYPE_RELOP, "relop", getTokenString(buffer, prev, index)});
                 } else {
-                    fprintf(stderr, "Invalid Character: !\n");
+                    cerr << "Invalid Character: '!'" << endl;
                 }
             }
             break;
@@ -198,15 +161,18 @@ void parse(vector<Token> &tokens, char buffer[BUFFER_LEN]) {
     }
 }
 
-int main() {
+vector<Token> getTokens() {
     int lineNum = 0;
-    char buffer[BUFFER_LEN];
+    string buffer;
     vector<Token> tokens;
-    while (gets(buffer)) {
+    while (getline(cin, buffer)) {
         ++lineNum;
         parse(tokens, buffer);
     }
-    #ifdef DEBUG
+    return tokens;
+}
+
+void printTokens(vector<Token> &tokens) {
     for (auto token : tokens) {
         cout << token.type << "\t" << token.mnemonic << "\t";
         if (token.token.length() > 0) {
@@ -215,6 +181,4 @@ int main() {
             cout << "---" << endl;
         }
     }
-    #endif // DEBUG
-    return 0;
 }
