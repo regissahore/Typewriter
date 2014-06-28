@@ -96,7 +96,7 @@ void P(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
     if (tokens[index].type == TYPE_L_BRACKET) {
         ++index;
         D(quats, tokens, index);
-        L(quats, tokens, index);
+        S(quats, tokens, index);
     } else {
         cerr << "Program should start with '{'." << endl;
     }
@@ -133,7 +133,7 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
                     string label1 = addLabel();
                     int pos1 = quats.size();
                     addQuaternion(quats, "JZ", condition, "", label1);
-                    L(quats, tokens, index);
+                    S(quats, tokens, index);
                     string label2 = addLabel();
                     int pos2 = quats.size();
                     addQuaternion(quats, "JP", "", "", label2);
@@ -141,7 +141,7 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
                     quats[pos1].addr3 = quats.size();
                     if (tokens[index].type == TYPE_ELSE) {
                         ++index;
-                        L(quats, tokens, index);
+                        S(quats, tokens, index);
                     }
                     setLabel(label2, quats.size());
                     quats[pos2].addr3 = quats.size();
@@ -169,7 +169,7 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
                 addQuaternion(quats, "JZ", condition, "", label2);
                 if (tokens[index].type == TYPE_DO) {
                     ++index;
-                    L(quats, tokens, index);
+                    S(quats, tokens, index);
                     int pos1 = quats.size();
                     addQuaternion(quats, "JP", condition, "", label1);
                     quats[pos1].addr3 = getLabel(label1);
@@ -190,6 +190,7 @@ void S(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         if (tokens[index].type == TYPE_R_BRACKET) {
             ++index;
         } else {
+            cout << index << endl;
             cerr << "The brackets are mismatched." << endl;
         }
     } else if (tokens[index].type == TYPE_ID) {
@@ -340,34 +341,20 @@ void printQuaternions(vector<Quaternion> &quaternions) {
         cout << labelTable[i].value << endl;
     }
     cout << "Quaternions with symbol: " << endl;
-    labelIndex = 0;
-    while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == 0) {
-        cout << labelTable[labelIndex++].symbol << ":" << endl;
-    }
     for (size_t i = 0; i < quaternions.size(); ++i) {
-        Quaternion quat = quaternions[i];
+        Quaternion &quat = quaternions[i];
         cout << i << "\t" << quat.op << "\t";
         cout << quat.symbol1 << "\t";
         cout << quat.symbol2 << "\t";
         cout << quat.symbol3 << endl;
-        while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == (int)i + 1) {
-            cout << labelTable[labelIndex++].symbol << ":" << endl;
-        }
     }
     cout << "Quaternions with address: " << endl;
-    labelIndex = 0;
-    while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == 0) {
-        cout << labelTable[labelIndex++].symbol << ":" << endl;
-    }
     for (size_t i = 0; i < quaternions.size(); ++i) {
-        Quaternion quat = quaternions[i];
+        Quaternion &quat = quaternions[i];
         cout << i << "\t" << quat.op << "\t";
         cout << quat.addr1 << "\t";
         cout << quat.addr2 << "\t";
         cout << quat.addr3 << endl;
-        while (labelIndex < (int)labelTable.size() && labelTable[labelIndex].value == (int)i + 1) {
-            cout << labelTable[labelIndex++].symbol << ":" << endl;
-        }
     }
 }
 #endif // DEBUG

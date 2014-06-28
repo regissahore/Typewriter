@@ -174,7 +174,9 @@ vector<Token> getTokens() {
 
 #ifdef DEBUG
 void printTokens(vector<Token> &tokens) {
-    for (auto token : tokens) {
+    for (size_t i = 0; i < tokens.size(); ++i) {
+        Token &token = tokens[i];
+        cout << i << "\t";
         cout << token.type << "\t" << token.mnemonic << "\t";
         if (token.token.length() > 0) {
             cout << token.token << endl;
