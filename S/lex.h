@@ -23,6 +23,8 @@ struct Token {
 };
 
 std::vector<Token> getTokens();
+#ifdef DEBUG
 void printTokens(std::vector<Token> &tokens);
+#endif // DEBUG
 
 #endif // LEX_H_INCLUDED

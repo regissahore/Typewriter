@@ -172,6 +172,7 @@ vector<Token> getTokens() {
     return tokens;
 }
 
+#ifdef DEBUG
 void printTokens(vector<Token> &tokens) {
     for (auto token : tokens) {
         cout << token.type << "\t" << token.mnemonic << "\t";
@@ -182,3 +183,4 @@ void printTokens(vector<Token> &tokens) {
         }
     }
 }
+#endif // DEBUG
