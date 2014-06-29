@@ -92,6 +92,11 @@ void P(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
         ++index;
         D(quats, tokens, index);
         S(quats, tokens, index);
+        if (tokens[index].type == TYPE_R_BRACKET) {
+            ++index;
+        } else {
+            cerr << "Program should end up with '}'." << endl;
+        }
     } else {
         cerr << "Program should start with '{'." << endl;
     }
