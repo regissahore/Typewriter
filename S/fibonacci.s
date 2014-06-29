@@ -5,17 +5,15 @@
         read n;
         if (n >= 1) then 
         {
-            i = 1;
-            write i
+            a = 1;
+            write a
         };
         if (n >= 2) then 
         {
-            i = 2;
-            write i
+            b = 2;
+            write b
         };
         i = 3;
-        a = 1;
-        b = 2;
         while (i <= n) do
         {
             c = a + b;
