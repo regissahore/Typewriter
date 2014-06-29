@@ -236,6 +236,8 @@ void L_(vector<Quaternion> &quats, vector<Token> &tokens, int &index) {
     if (tokens[index].type == TYPE_SEMICOLON) {
         ++index;
         L(quats, tokens, index);
+    } else if (tokens[index].type != TYPE_R_BRACKET) {
+        cerr << "Statement should end up with '}'." << endl;
     }
 }
 
