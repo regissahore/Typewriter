@@ -42,7 +42,7 @@ class Ball
         if @x >= 0 and @x < width and @y >= 0 and @y < height
             for ball in board[Math.floor @x][Math.floor @y]
                 ball.moving = true
-                ball.setVelocity @vx, Math.abs @vy
+                ball.setVelocity 0.0, Math.abs @vy
                 board[Math.floor @x][Math.floor @y] = []
                 @setVelocity -@vx, Math.abs @vy
         

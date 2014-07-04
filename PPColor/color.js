@@ -91,7 +91,7 @@
         for (_k = 0, _len = _ref2.length; _k < _len; _k++) {
           ball = _ref2[_k];
           ball.moving = true;
-          ball.setVelocity(this.vx, Math.abs(this.vy));
+          ball.setVelocity(0.0, Math.abs(this.vy));
           board[Math.floor(this.x)][Math.floor(this.y)] = [];
           _results.push(this.setVelocity(-this.vx, Math.abs(this.vy)));
         }
