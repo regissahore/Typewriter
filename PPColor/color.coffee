@@ -2,17 +2,11 @@ canvas = document.getElementById 'game_canvas'
 width = canvas.width
 height = canvas.height
 context = canvas.getContext '2d'
-WOOD_WIDTH = width / 4.0
+WOOD_WIDTH = width / 8.0 + 0.9
 WOOD_HEIGHT = 8
 SPEED = 2.5
-block = if Math.random() < 0.05 then true else false
-WOOD_WIDTH = width * 0.9 if block
 
 board = []
-for x in [0 .. (width - 1)]
-    board.push []
-    for y in [0 .. (height - 1)]
-        board[x].push []
 
 class Ball
     constructor: ->
@@ -20,39 +14,51 @@ class Ball
         @dead = false
     setLocation: (@x, @y) =>
     setVelocity: (@vx, @vy) =>
-        @vx += (Math.random() - 0.5) * 0.1
-        @vy += (Math.random() - 0.5) * 0.1
     setColor: (@r, @g, @b) =>
-    draw: (context) =>
-        context.fillStyle = 'rgb(' + @r + ',' + @g + ',' + @b + ')'
-        context.fillRect Math.floor(@x), Math.floor(@y), 1, 1
     move: (wood) =>
+        if not @moving
+            return
+        if @x >= 0 and @x < width and @y >= 0 and @y < height
+            balls = board[Math.floor @x][Math.floor @y]
+            for i in [(balls.length - 1) .. 0]
+                if balls[i] == @
+                    balls.splice i, 1
+                    if balls.length == 0
+                        context.fillStyle = '#FFFFFF'
+                        context.fillRect Math.floor(@x), Math.floor(@y), 1, 1
+                    break
         @x += @vx
         @y += @vy
+        @vy += 0.001
+        if @x >= 0 and @x < width and @y >= 0 and @y < height
+            board[Math.floor @x][Math.floor @y].push @
+            context.fillStyle = 'rgb(' + @r + ',' + @g + ',' + @b + ')'
+            context.fillRect Math.floor(@x), Math.floor(@y), 1, 1
         @vx = Math.abs @vx if @x < 0.0
         @vx = - Math.abs @vx if @x > width
         @vy = Math.abs @vy if @y < 0.0
         if @y >= height - WOOD_HEIGHT and @y < height
             if @x >= wood.x and @x <= wood.x + WOOD_WIDTH
-                bias = wood.x + WOOD_WIDTH / 2 - @x
-                angle = Math.PI / 2 + bias / WOOD_WIDTH * Math.PI * 0.9
-                @vx = SPEED * Math.cos angle
-                @vy = - SPEED * Math.sin angle
-                @x += @vx
-                @y += @vy
+                bias = (wood.x + WOOD_WIDTH / 2 - @x) / WOOD_WIDTH * 2
+                angle = Math.PI / 2 + bias * Math.PI * 0.45
+                speed = SPEED * (1.0 + Math.abs bias)
+                @vx = speed * Math.cos angle
+                @vy = - speed * Math.sin angle
         @dead = true if @y > height
         if @x >= 0 and @x < width and @y >= 0 and @y < height
             for ball in board[Math.floor @x][Math.floor @y]
-                ball.moving = true
-                ball.setVelocity 0.0, SPEED
-                board[Math.floor @x][Math.floor @y] = []
-                @setVelocity -@vx, Math.abs @vy
+                if not ball.moving
+                    ball.moving = true
+                    ball.setVelocity @vx * 0.81, Math.abs @vy
+                    @setVelocity @vx * 0.8, Math.abs @vy
         
 class Wood
     setLocation: (@x) =>
         @x = 0 if x < 0
         @x = width - WOOD_WIDTH if @x + WOOD_WIDTH >= width
-    draw: (context) =>
+    draw: =>
+        context.fillStyle = '#FFFFFF'
+        context.fillRect 0, height - WOOD_HEIGHT, width, WOOD_HEIGHT
         context.fillStyle = '#777777'
         context.fillRect @x, height - WOOD_HEIGHT, WOOD_WIDTH, WOOD_HEIGHT
    
@@ -61,6 +67,9 @@ wood.setLocation width / 2 - WOOD_WIDTH / 2
  
 balls = []
 for x in [0 .. (width - 1)]
+    board.push []
+    for y in [0 .. (height - 1)]
+        board[x].push []
     for y in [0 .. (width - 1)]
         h = x * 360 / width
         s = 1
@@ -81,30 +90,25 @@ for x in [0 .. (width - 1)]
             when 3 then ball.setColor p, q, v
             when 4 then ball.setColor t, p, v
             when 5 then ball.setColor v, p, q
-        if not block
-            ball.r = Math.floor ball.r * (width - y) / width
-            ball.g = Math.floor ball.g * (width - y) / width
-            ball.b = Math.floor ball.b * (width - y) / width
+        ball.r = Math.floor ball.r * (width - y) / width
+        ball.g = Math.floor ball.g * (width - y) / width
+        ball.b = Math.floor ball.b * (width - y) / width
+        context.fillStyle = 'rgb(' + ball.r + ',' + ball.g + ',' + ball.b + ')'
+        context.fillRect Math.floor(x), Math.floor(y), 1, 1
         balls.push ball
-ball = new Ball
-ball.setLocation width / 2, height - WOOD_HEIGHT
-ball.setVelocity Math.random() - 0.5, -SPEED
-ball.setColor 0, 0, 0
-ball.setColor 255, 255, 255 if block
-ball.moving = true
-balls.push ball
+        board[x][y].push ball
 
-for ball in balls
-    if not ball.moving
-        board[ball.x][ball.y].push ball
-        
 drawBoard = ->
-    context.fillStyle = if block then '#000000' else '#FFFFFF'
-    context.fillRect 0, 0, width, height
-    wood.draw context
+    wood.draw()
+    if Math.random() < 0.1
+        ball = new Ball
+        ball.setLocation wood.x + WOOD_WIDTH / 2 + (Math.random() - 0.5) * 10, height - WOOD_HEIGHT
+        ball.setVelocity (Math.random() - 0.5), -SPEED
+        ball.setColor 0, 0, 0
+        ball.moving = true
+        balls.push ball
     for ball in balls
-        ball.move wood if ball.moving
-        ball.draw context
+        ball.move wood
     for i in [(balls.length - 1) .. 0]
         balls.splice i, 1 if balls[i].dead
         
