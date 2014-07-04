@@ -5,6 +5,8 @@ context = canvas.getContext '2d'
 WOOD_WIDTH = width / 4.0
 WOOD_HEIGHT = 8
 SPEED = 2.5
+block = if Math.random() < 0.05 then true else false
+WOOD_WIDTH = width * 0.9 if block
 
 board = []
 for x in [0 .. (width - 1)]
@@ -42,7 +44,7 @@ class Ball
         if @x >= 0 and @x < width and @y >= 0 and @y < height
             for ball in board[Math.floor @x][Math.floor @y]
                 ball.moving = true
-                ball.setVelocity @vx, Math.abs @vy
+                ball.setVelocity 0.0, SPEED
                 board[Math.floor @x][Math.floor @y] = []
                 @setVelocity -@vx, Math.abs @vy
         
@@ -79,14 +81,16 @@ for x in [0 .. (width - 1)]
             when 3 then ball.setColor p, q, v
             when 4 then ball.setColor t, p, v
             when 5 then ball.setColor v, p, q
-        ball.r = Math.floor ball.r * (width - y) / width
-        ball.g = Math.floor ball.g * (width - y) / width
-        ball.b = Math.floor ball.b * (width - y) / width
+        if not block
+            ball.r = Math.floor ball.r * (width - y) / width
+            ball.g = Math.floor ball.g * (width - y) / width
+            ball.b = Math.floor ball.b * (width - y) / width
         balls.push ball
 ball = new Ball
 ball.setLocation width / 2, height - WOOD_HEIGHT
 ball.setVelocity Math.random() - 0.5, -SPEED
 ball.setColor 0, 0, 0
+ball.setColor 255, 255, 255 if block
 ball.moving = true
 balls.push ball
 
@@ -95,7 +99,7 @@ for ball in balls
         board[ball.x][ball.y].push ball
         
 drawBoard = ->
-    context.fillStyle = '#FFFFFF'
+    context.fillStyle = if block then '#000000' else '#FFFFFF'
     context.fillRect 0, 0, width, height
     wood.draw context
     for ball in balls

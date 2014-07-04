@@ -1,5 +1,5 @@
 (function() {
-  var Ball, SPEED, WOOD_HEIGHT, WOOD_WIDTH, Wood, ball, balls, board, canvas, context, drawBoard, f, h, height, hi, p, q, s, t, v, width, wood, x, y, _i, _j, _k, _l, _len, _m, _ref, _ref1, _ref2, _ref3,
+  var Ball, SPEED, WOOD_HEIGHT, WOOD_WIDTH, Wood, ball, balls, block, board, canvas, context, drawBoard, f, h, height, hi, p, q, s, t, v, width, wood, x, y, _i, _j, _k, _l, _len, _m, _ref, _ref1, _ref2, _ref3,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   canvas = document.getElementById('game_canvas');
@@ -15,6 +15,12 @@
   WOOD_HEIGHT = 8;
 
   SPEED = 2.5;
+
+  block = Math.random() < 0.05 ? true : false;
+
+  if (block) {
+    WOOD_WIDTH = width * 0.9;
+  }
 
   board = [];
 
@@ -91,7 +97,7 @@
         for (_k = 0, _len = _ref2.length; _k < _len; _k++) {
           ball = _ref2[_k];
           ball.moving = true;
-          ball.setVelocity(this.vx, Math.abs(this.vy));
+          ball.setVelocity(0.0, SPEED);
           board[Math.floor(this.x)][Math.floor(this.y)] = [];
           _results.push(this.setVelocity(-this.vx, Math.abs(this.vy)));
         }
@@ -167,9 +173,11 @@
         case 5:
           ball.setColor(v, p, q);
       }
-      ball.r = Math.floor(ball.r * (width - y) / width);
-      ball.g = Math.floor(ball.g * (width - y) / width);
-      ball.b = Math.floor(ball.b * (width - y) / width);
+      if (!block) {
+        ball.r = Math.floor(ball.r * (width - y) / width);
+        ball.g = Math.floor(ball.g * (width - y) / width);
+        ball.b = Math.floor(ball.b * (width - y) / width);
+      }
       balls.push(ball);
     }
   }
@@ -181,6 +189,10 @@
   ball.setVelocity(Math.random() - 0.5, -SPEED);
 
   ball.setColor(0, 0, 0);
+
+  if (block) {
+    ball.setColor(255, 255, 255);
+  }
 
   ball.moving = true;
 
@@ -195,7 +207,7 @@
 
   drawBoard = function() {
     var i, _len1, _n, _o, _ref4, _results;
-    context.fillStyle = '#FFFFFF';
+    context.fillStyle = block ? '#000000' : '#FFFFFF';
     context.fillRect(0, 0, width, height);
     wood.draw(context);
     for (_n = 0, _len1 = balls.length; _n < _len1; _n++) {
