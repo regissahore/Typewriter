@@ -64,7 +64,7 @@
       }
       this.x += this.vx;
       this.y += this.vy;
-      this.vy += 0.001;
+      this.vy += this.vy > 0 ? 0.02 : 0.001;
       if (this.x >= 0 && this.x < width && this.y >= 0 && this.y < height) {
         board[Math.floor(this.x)][Math.floor(this.y)].push(this);
         context.fillStyle = 'rgb(' + this.r + ',' + this.g + ',' + this.b + ')';
@@ -82,7 +82,7 @@
       if (this.y >= height - WOOD_HEIGHT && this.y < height) {
         if (this.x >= wood.x && this.x <= wood.x + WOOD_WIDTH) {
           bias = (wood.x + WOOD_WIDTH / 2 - this.x) / WOOD_WIDTH * 2;
-          angle = Math.PI / 2 + bias * Math.PI * 0.45;
+          angle = Math.PI / 2 + bias * Math.PI * 0.35;
           speed = SPEED * (1.0 + Math.abs(bias));
           this.vx = speed * Math.cos(angle);
           this.vy = -speed * Math.sin(angle);
@@ -195,9 +195,10 @@
   drawBoard = function() {
     var i, _l, _len, _m, _ref3, _results;
     wood.draw();
-    if (Math.random() < 0.1) {
+    if (Math.random() < 0.7) {
+      SPEED += 0.0005;
       ball = new Ball;
-      ball.setLocation(wood.x + WOOD_WIDTH / 2 + (Math.random() - 0.5) * 10, height - WOOD_HEIGHT);
+      ball.setLocation(wood.x + (Math.random() > 0.5 ? WOOD_WIDTH : 0.0), height - WOOD_HEIGHT);
       ball.setVelocity(Math.random() - 0.5, -SPEED);
       ball.setColor(0, 0, 0);
       ball.moving = true;

@@ -29,7 +29,7 @@ class Ball
                     break
         @x += @vx
         @y += @vy
-        @vy += 0.001
+        @vy += if @vy > 0 then 0.02 else 0.001
         if @x >= 0 and @x < width and @y >= 0 and @y < height
             board[Math.floor @x][Math.floor @y].push @
             context.fillStyle = 'rgb(' + @r + ',' + @g + ',' + @b + ')'
@@ -40,7 +40,7 @@ class Ball
         if @y >= height - WOOD_HEIGHT and @y < height
             if @x >= wood.x and @x <= wood.x + WOOD_WIDTH
                 bias = (wood.x + WOOD_WIDTH / 2 - @x) / WOOD_WIDTH * 2
-                angle = Math.PI / 2 + bias * Math.PI * 0.45
+                angle = Math.PI / 2 + bias * Math.PI * 0.35
                 speed = SPEED * (1.0 + Math.abs bias)
                 @vx = speed * Math.cos angle
                 @vy = - speed * Math.sin angle
@@ -100,9 +100,10 @@ for x in [0 .. (width - 1)]
 
 drawBoard = ->
     wood.draw()
-    if Math.random() < 0.1
+    if Math.random() < 0.7
+        SPEED += 0.0005
         ball = new Ball
-        ball.setLocation wood.x + WOOD_WIDTH / 2 + (Math.random() - 0.5) * 10, height - WOOD_HEIGHT
+        ball.setLocation wood.x + (if Math.random() > 0.5 then WOOD_WIDTH  else 0.0), height - WOOD_HEIGHT
         ball.setVelocity (Math.random() - 0.5), -SPEED
         ball.setColor 0, 0, 0
         ball.moving = true
