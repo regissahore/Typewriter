@@ -37,14 +37,14 @@
       var color = ['#ED1C24', '#22B14C', '#00A2E8', '#000000']
       var dec = [[0, 1, 1], [1, 0, 1], [1, 1, 0], [1, 1, 1]]
       var step = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-      for (var i = 0; i < 4; ++i) {
+      for (var i = 0; i < 3; ++i) {
         var x = walkers[i][0];
         var y = walkers[i][1];
         context.strokeStyle = color[i];
         context.strokeRect(sx + x * BLOCK_SIZE + 1, sy + y * BLOCK_SIZE + 1, BLOCK_SIZE - 2, BLOCK_SIZE - 2);
       }
       setInterval(function() {
-          for (var i = 0; i < 4; ++i) {
+          for (var i = 0; i < 3; ++i) {
             var x = walkers[i][0];
             var y = walkers[i][1];
             context.fillStyle = 'rgb(' + grid[x][y][0] + ',' + grid[x][y][1] + ',' + grid[x][y][2] + ')';
@@ -85,13 +85,13 @@
             walkers[i][0] = x;
             walkers[i][1] = y;
           }
-          for (var i = 0; i < 4; ++i) {
+          for (var i = 0; i < 3; ++i) {
             var x = walkers[i][0];
             var y = walkers[i][1];
             context.strokeStyle = color[i];
             context.strokeRect(sx + x * BLOCK_SIZE + 1, sy + y * BLOCK_SIZE + 1, BLOCK_SIZE - 2, BLOCK_SIZE - 2);
           }
-      }, 100);
+      }, 20);
     </script>
   </body>
 </html>
