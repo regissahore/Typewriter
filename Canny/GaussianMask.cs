@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Train
+namespace Canny
 {
     class GaussianMask
     {
@@ -35,16 +35,6 @@ namespace Train
                     this.mask[r, c] /= sum;
                 }
             }
-        }
-
-        public int rowNum()
-        {
-            return mask.GetLength(0);
-        }
-
-        public int colNum()
-        {
-            return mask.GetLength(1);
         }
     }
 }
