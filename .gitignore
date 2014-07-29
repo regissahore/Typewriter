@@ -11,3 +11,10 @@
 *.lai
 *.la
 *.a
+
+# Visual studio files
+*.sdf
+*.opensdf
+*.vcxproj.filters
+Debug
+Release
