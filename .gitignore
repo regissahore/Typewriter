@@ -13,8 +13,10 @@
 *.a
 
 # Visual studio files
+*.suo
 *.sdf
 *.opensdf
+*.vcxproj.user
 *.vcxproj.filters
 Debug
 Release
