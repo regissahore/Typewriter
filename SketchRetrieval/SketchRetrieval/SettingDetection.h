@@ -1,12 +1,12 @@
 #pragma once
 #include "Setting.h"
 
-class SettingEdgeDetect :
+class SettingDetection :
     public Setting
 {
 public:
-    SettingEdgeDetect();
-    virtual ~SettingEdgeDetect();
+    SettingDetection();
+    virtual ~SettingDetection();
 
     enum Method
     {

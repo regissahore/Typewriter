@@ -125,15 +125,19 @@ opencv_ts249.lib
     <ClInclude Include="Dataset.h" />
     <ClInclude Include="DatasetSHoG.h" />
     <ClInclude Include="Detector.h" />
+    <ClInclude Include="DistanceRanking.h" />
     <ClInclude Include="EdgeDetection.h" />
     <ClInclude Include="Extractor.h" />
     <ClInclude Include="ExtractorHoG.h" />
     <ClInclude Include="FeatureExtraction.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="RankingEucilid.h" />
     <ClInclude Include="Setting.h" />
     <ClInclude Include="SettingControl.h" />
     <ClInclude Include="SettingDataset.h" />
-    <ClInclude Include="SettingEdgeDetect.h" />
+    <ClInclude Include="SettingDetection.h" />
     <ClInclude Include="SettingFeature.h" />
+    <ClInclude Include="SettingRanking.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -142,15 +146,19 @@ opencv_ts249.lib
     <ClCompile Include="Dataset.cpp" />
     <ClCompile Include="DatasetSHoG.cpp" />
     <ClCompile Include="Detector.cpp" />
+    <ClCompile Include="DistanceRanking.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
     <ClCompile Include="Extractor.cpp" />
     <ClCompile Include="ExtractorHoG.cpp" />
     <ClCompile Include="FeatureExtraction.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="RankingEucilid.cpp" />
     <ClCompile Include="Setting.cpp" />
     <ClCompile Include="SettingControl.cpp" />
     <ClCompile Include="SettingDataset.cpp" />
-    <ClCompile Include="SettingEdgeDetect.cpp" />
+    <ClCompile Include="SettingDetection.cpp" />
     <ClCompile Include="SettingFeature.cpp" />
+    <ClCompile Include="SettingRanking.cpp" />
     <ClCompile Include="SketchRetrieval.cpp" />
     <ClCompile Include="stdafx.cpp" />
   </ItemGroup>

@@ -1,7 +1,7 @@
 #include <fstream>
 #include <cassert>
 #include "SettingControl.h"
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 #include "SettingFeature.h"
 using namespace std;
 
@@ -53,10 +53,11 @@ void SettingFeature::saveParameter(const char *filePath) const
 {
     fstream fout;
     fout.open(filePath, ios::out);
-    fout << "Edge: " << SettingControl::getInstance().edgeDetect.getUniqueString() << endl;
+    fout << "Edge: " << SettingControl::getInstance().detect.getUniqueString() << endl;
     switch (this->_method)
     {
     case METHOD_HOG:
+        fout << "Feature: HoG" << endl;
         fout << "Window Width: " << this->_parameter.hog.windowW << endl;
         fout << "Window Height: " << this->_parameter.hog.windowH << endl;
         fout << "Block Width: " << this->_parameter.hog.blockW << endl;
@@ -83,7 +84,8 @@ void SettingFeature::saveParameter(const char *filePath) const
 vector<double> SettingFeature::getUniqueVector() const
 {
     vector<double> unique;
-    unique.push_back((double)SettingControl::getInstance().edgeDetect.getUniqueNumber());
+    unique.push_back((double)SettingControl::getInstance().detect.getUniqueNumber());
+    unique.push_back(this->_method);
     switch (this->_method)
     {
     case METHOD_HOG:

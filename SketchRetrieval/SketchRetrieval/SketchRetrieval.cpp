@@ -7,8 +7,8 @@
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-    EdgeDetection edgeDetection;
-    edgeDetection.detect();
+    EdgeDetection detection;
+    detection.detect();
     FeatureExtraction extraction;
     extraction.extract();
 	return 0;

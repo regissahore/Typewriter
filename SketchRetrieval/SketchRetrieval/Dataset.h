@@ -13,9 +13,11 @@ public:
     std::string getSketchFolder() const;
     virtual std::vector<std::string> getCategoryList() = 0;
     virtual std::vector<std::string> getSketchList() = 0;
-    virtual std::vector<std::string> getSketchList(std::string category) = 0;
+    virtual std::string getSketch(std::string category) = 0;
     virtual std::vector<std::string> getImageList() = 0;
     virtual std::vector<std::string> getImageList(std::string category) = 0;
+    virtual std::vector<std::string> getImageNames() = 0;
+    virtual std::vector<std::string> getImageNames(std::string category) = 0;
 
 protected:
     std::string _basePath;

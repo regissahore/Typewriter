@@ -1,26 +1,26 @@
 #include <fstream>
 #include <cassert>
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 #include "SettingDataset.h"
 #include "SettingControl.h"
 using namespace std;
 
-SettingEdgeDetect::SettingEdgeDetect()
+SettingDetection::SettingDetection()
 {
-    this->_settingName = "EdgeDetection";
+    this->_settingName = "Detection";
     this->selectMethod(METHOD_CANNY);
 }
 
-SettingEdgeDetect::~SettingEdgeDetect()
+SettingDetection::~SettingDetection()
 {
 }
 
-SettingEdgeDetect::Method SettingEdgeDetect::getMethod() const
+SettingDetection::Method SettingDetection::getMethod() const
 {
     return this->_method;
 }
 
-void SettingEdgeDetect::selectMethod(Method method)
+void SettingDetection::selectMethod(Method method)
 {
     this->_method = method;
     switch (method)
@@ -33,20 +33,21 @@ void SettingEdgeDetect::selectMethod(Method method)
     }
 }
 
-void SettingEdgeDetect::setCannyParameter(int windowW, int windowH, double thresholdLow, double thresholdHigh, int apertureSize)
+void SettingDetection::setCannyParameter(int windowW, int windowH, double thresholdLow, double thresholdHigh, int apertureSize)
 {
     this->_parameters.canny = { windowW, windowH, thresholdLow, thresholdHigh, apertureSize };
 }
 
-SettingEdgeDetect::Paramters SettingEdgeDetect::getParameters() const
+SettingDetection::Paramters SettingDetection::getParameters() const
 {
     return this->_parameters;
 }
 
-vector<double> SettingEdgeDetect::getUniqueVector() const
+vector<double> SettingDetection::getUniqueVector() const
 {
     vector<double> unique;
     unique.push_back((double)SettingControl::getInstance().dataset.getUniqueNumber());
+    unique.push_back(this->_method);
     switch (this->_method)
     {
     case METHOD_CANNY:
@@ -62,7 +63,7 @@ vector<double> SettingEdgeDetect::getUniqueVector() const
     return unique;
 }
 
-void SettingEdgeDetect::saveParameter(const char *filePath) const
+void SettingDetection::saveParameter(const char *filePath) const
 {
     fstream fout;
     fout.open(filePath, ios::out);

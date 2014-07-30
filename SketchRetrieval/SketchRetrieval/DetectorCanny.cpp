@@ -1,7 +1,7 @@
 #include <opencv2/opencv.hpp>
 #include "DetectorCanny.h"
 #include "SettingControl.h"
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 using namespace cv;
 
 DetectorCanny::DetectorCanny()
@@ -15,8 +15,8 @@ DetectorCanny::~DetectorCanny()
 
 void DetectorCanny::detect(const char *srcPath, const char *dstPath)
 {
-    SettingEdgeDetect setting = SettingControl::getInstance().edgeDetect;
-    SettingEdgeDetect::Paramters parameter = setting.getParameters();
+    SettingDetection setting = SettingControl::getInstance().detect;
+    SettingDetection::Paramters parameter = setting.getParameters();
     int windowW = parameter.canny.windowW;
     int windowH = parameter.canny.windowH;
     double thresholdLow = parameter.canny.thresholdLow;

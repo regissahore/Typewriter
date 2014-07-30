@@ -7,7 +7,7 @@
 #include "Dataset.h"
 #include "SettingControl.h"
 #include "SettingDataset.h"
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 #include "SettingFeature.h"
 #include "Extractor.h"
 #include "ExtractorHoG.h"
@@ -25,7 +25,7 @@ FeatureExtraction::~FeatureExtraction()
 void FeatureExtraction::extract()
 {
     SettingDataset& datasetSetting = SettingControl::getInstance().dataset;
-    SettingEdgeDetect& edgeSetting = SettingControl::getInstance().edgeDetect;
+    SettingDetection& edgeSetting = SettingControl::getInstance().detect;
     SettingFeature& featureSetting = SettingControl::getInstance().feature;
     string basePath = datasetSetting.getDataset()->getBasePath();
     string sketchFolder = datasetSetting.getDataset()->getSketchFolder();

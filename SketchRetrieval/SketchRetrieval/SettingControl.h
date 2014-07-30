@@ -1,8 +1,9 @@
 #pragma once
 
 #include "SettingDataset.h"
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 #include "SettingFeature.h"
+#include "SettingRanking.h"
 
 class SettingControl
 {
@@ -11,8 +12,9 @@ public:
     virtual ~SettingControl();
 
     SettingDataset dataset;
-    SettingEdgeDetect edgeDetect;
+    SettingDetection detect;
     SettingFeature feature;
+    SettingRanking ranking;
 
 private:
     static SettingControl *control;

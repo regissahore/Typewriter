@@ -5,7 +5,7 @@
 #include "Dataset.h"
 #include "SettingControl.h"
 #include "SettingDataset.h"
-#include "SettingEdgeDetect.h"
+#include "SettingDetection.h"
 #include "EdgeDetection.h"
 #include "Detector.h"
 #include "DetectorCanny.h"
@@ -23,7 +23,7 @@ EdgeDetection::~EdgeDetection()
 void EdgeDetection::detect()
 {
     SettingDataset& datasetSetting = SettingControl::getInstance().dataset;
-    SettingEdgeDetect& edgeSetting = SettingControl::getInstance().edgeDetect;
+    SettingDetection& edgeSetting = SettingControl::getInstance().detect;
     string basePath = datasetSetting.getDataset()->getBasePath();
     string sketchFolder = datasetSetting.getDataset()->getSketchFolder();
     string imageFolder = datasetSetting.getDataset()->getImageFolder();
@@ -47,7 +47,7 @@ void EdgeDetection::detect()
     shared_ptr<Detector> detector;
     switch (edgeSetting.getMethod())
     {
-    case SettingEdgeDetect::METHOD_CANNY:
+    case SettingDetection::METHOD_CANNY:
         detector = shared_ptr<Detector>(new DetectorCanny());
         break;
     default:
@@ -57,7 +57,7 @@ void EdgeDetection::detect()
     for (auto sketch : sketchList)
     {
         string target = edgeFolder + "/" + sketch;
-        if ((_access(target.c_str(), 0)) == -1)
+        if (_access(target.c_str(), 0) == -1)
         {
             DetectorCanny canny;
             string source = basePath + sketch;
@@ -68,7 +68,7 @@ void EdgeDetection::detect()
     for (auto image : imageList)
     {
         string target = edgeFolder + "/" + image;
-        if ((_access(target.c_str(), 0)) == -1)
+        if (_access(target.c_str(), 0) == -1)
         {
             DetectorCanny canny;
             string source = basePath + image;

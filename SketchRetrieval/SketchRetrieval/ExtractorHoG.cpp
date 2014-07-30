@@ -14,10 +14,9 @@ ExtractorHoG::ExtractorHoG()
 ExtractorHoG::~ExtractorHoG()
 {
 }
-#include <iostream>
+
 void ExtractorHoG::extract(const char *srcPath, const char *dstPath)
 {
-    cout << srcPath << " " << dstPath << endl;
     SettingFeature setting = SettingControl::getInstance().feature;
     SettingFeature::Parameter parameter = setting.getParameter();
     int windowW = parameter.hog.windowW;
