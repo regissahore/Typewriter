@@ -1,5 +1,6 @@
-#include <Windows.h>
+#include <fstream>
 #include <cassert>
+#include <Windows.h>
 #include "Setting.h"
 using namespace std;
 
@@ -14,13 +15,7 @@ Setting::~Setting()
 
 string Setting::getFolderName() const
 {
-    string setting;
-    vector<double> unqiue = getUniqueVector();
-    for (auto variable : unqiue)
-    {
-        setting = setting + to_string(variable) + " ";
-    }
-    string folderName = this->_settingName + "/" + ull2hex(BKDRHash(setting));
+    string folderName = this->_settingName + "/" + ull2hex(getUniqueNumber());
     if (!CreateDirectory(this->_settingName.c_str(), NULL))
     {
         assert("Unable to create folder.");
@@ -29,7 +24,28 @@ string Setting::getFolderName() const
     {
         assert("Unable to create folder.");
     }
+    string parameterFile = folderName + "/parameter.txt";
+    this->saveParameter(parameterFile.c_str());
     return folderName;
+}
+
+void Setting::saveParameter(const char *filePath) const
+{
+    fstream fout;
+    fout.open(filePath, ios::out);
+    fout.flush();
+    fout.close();
+}
+
+unsigned long long Setting::getUniqueNumber() const
+{
+    string setting;
+    vector<double> unqiue = getUniqueVector();
+    for (auto variable : unqiue)
+    {
+        setting = setting + to_string(variable) + " ";
+    }
+    return BKDRHash(setting);
 }
 
 vector<double> Setting::getUniqueVector() const

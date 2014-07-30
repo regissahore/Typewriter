@@ -28,6 +28,7 @@ public:
     Paramters getParameters() const;
 
 protected:
+    virtual void saveParameter(const char *filePath) const override final;
     virtual std::vector<double> getUniqueVector() const override final;
 
 private:

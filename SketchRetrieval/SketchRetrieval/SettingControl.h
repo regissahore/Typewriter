@@ -1,5 +1,6 @@
 #pragma once
 
+#include "SettingDataset.h"
 #include "SettingEdgeDetect.h"
 
 class SettingControl
@@ -7,6 +8,8 @@ class SettingControl
 public:
     static SettingControl& getInstance();
     virtual ~SettingControl();
+
+    SettingDataset dataset;
     SettingEdgeDetect edgeDetect;
 
 private:
