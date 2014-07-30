@@ -16,15 +16,16 @@ public:
     {
         struct 
         {
-            double threshold1;
-            double threshold2;
-            int aperture_size;
+            int windowW, windowH;
+            double thresholdLow;
+            double thresholdHigh;
+            int apertureSize;
         } canny;
     };
 
     Method getMethod() const;
     void selectMethod(Method method);
-    void setCannyParameter(double threshold1 = 50.0, double threshold2 = 200.0, int aperture_size = 3);
+    void setCannyParameter(int windowW = 640, int windowH = 640, double thresholdLow = 50.0, double thresholdHigh = 200.0, int apertureSize = 3);
     Paramters getParameters() const;
 
 protected:

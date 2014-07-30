@@ -70,6 +70,7 @@ void DatasetSHoG::initInfo()
         file >> sketch;
         string cat = sketch.substr(0, sketch.length() - 4);
         this->_categories.push_back(cat);
+        sketch = this->_sketchFolder + sketch;
         this->_sketchList.push_back(sketch);
         this->_sketchMap[cat].push_back(sketch);
     }
@@ -82,6 +83,7 @@ void DatasetSHoG::initInfo()
         {
             string image;
             file >> image;
+            image = this->_imageFolder + image;
             this->_imageList.push_back(image);
             this->_imageMap[cat].push_back(image);
         }

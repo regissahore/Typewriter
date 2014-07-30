@@ -15,7 +15,7 @@ Setting::~Setting()
 
 string Setting::getFolderName() const
 {
-    string folderName = this->_settingName + "/" + ull2hex(getUniqueNumber());
+    string folderName = this->_settingName + "/" + getUniqueString();
     if (!CreateDirectory(this->_settingName.c_str(), NULL))
     {
         assert("Unable to create folder.");
@@ -46,6 +46,11 @@ unsigned long long Setting::getUniqueNumber() const
         setting = setting + to_string(variable) + " ";
     }
     return BKDRHash(setting);
+}
+
+string Setting::getUniqueString() const
+{
+    return ull2hex(getUniqueNumber());
 }
 
 vector<double> Setting::getUniqueVector() const

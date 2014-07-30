@@ -10,6 +10,7 @@ public:
     virtual ~Setting();
     std::string getFolderName() const;
     unsigned long long getUniqueNumber() const;
+    std::string getUniqueString() const;
 
 protected:
     std::string _settingName;

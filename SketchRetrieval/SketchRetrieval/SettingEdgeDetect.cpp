@@ -9,7 +9,6 @@ SettingEdgeDetect::SettingEdgeDetect()
 {
     this->_settingName = "EdgeDetection";
     this->selectMethod(METHOD_CANNY);
-    this->setCannyParameter();
 }
 
 SettingEdgeDetect::~SettingEdgeDetect()
@@ -34,11 +33,9 @@ void SettingEdgeDetect::selectMethod(Method method)
     }
 }
 
-void SettingEdgeDetect::setCannyParameter(double threshold1, double threshold2, int aperture_size)
+void SettingEdgeDetect::setCannyParameter(int windowW, int windowH, double thresholdLow, double thresholdHigh, int apertureSize)
 {
-    this->_parameters.canny.threshold1 = threshold1;
-    this->_parameters.canny.threshold2 = threshold2;
-    this->_parameters.canny.aperture_size = aperture_size;
+    this->_parameters.canny = { windowW, windowH, thresholdLow, thresholdHigh, apertureSize };
 }
 
 SettingEdgeDetect::Paramters SettingEdgeDetect::getParameters() const
@@ -53,9 +50,11 @@ vector<double> SettingEdgeDetect::getUniqueVector() const
     switch (this->_method)
     {
     case METHOD_CANNY:
-        unique.push_back(this->_parameters.canny.threshold1);
-        unique.push_back(this->_parameters.canny.threshold2);
-        unique.push_back((double)this->_parameters.canny.aperture_size);
+        unique.push_back(this->_parameters.canny.windowW);
+        unique.push_back(this->_parameters.canny.windowH);
+        unique.push_back(this->_parameters.canny.thresholdLow);
+        unique.push_back(this->_parameters.canny.thresholdHigh);
+        unique.push_back((double)this->_parameters.canny.apertureSize);
         break;
     default:
         assert("Edge detection method is not defined.");
@@ -81,9 +80,11 @@ void SettingEdgeDetect::saveParameter(const char *filePath) const
     {
     case METHOD_CANNY:
         fout << "Method: Canny" << endl;
-        fout << "Threshold Low: " << this->_parameters.canny.threshold1 << endl;
-        fout << "Threshold High: " << this->_parameters.canny.threshold2 << endl;
-        fout << "Aperture Size: " << this->_parameters.canny.aperture_size << endl;
+        fout << "Width: " << this->_parameters.canny.windowW << endl;
+        fout << "Height: " << this->_parameters.canny.windowH << endl;
+        fout << "Threshold Low: " << this->_parameters.canny.thresholdLow << endl;
+        fout << "Threshold High: " << this->_parameters.canny.thresholdHigh << endl;
+        fout << "Aperture Size: " << this->_parameters.canny.apertureSize << endl;
         break;
     default:
         assert("Edge detection method is not defined.");

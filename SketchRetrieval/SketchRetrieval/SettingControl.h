@@ -2,6 +2,7 @@
 
 #include "SettingDataset.h"
 #include "SettingEdgeDetect.h"
+#include "SettingFeature.h"
 
 class SettingControl
 {
@@ -11,6 +12,7 @@ public:
 
     SettingDataset dataset;
     SettingEdgeDetect edgeDetect;
+    SettingFeature feature;
 
 private:
     static SettingControl *control;
