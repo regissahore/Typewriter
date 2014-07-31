@@ -41,8 +41,12 @@ void DistanceRanking::ranking()
     }
     for (auto cat : categories)
     {
-        string sketchPath = dataset->getSketch(cat);
+        string sketchPath = featureFolder + "/" + dataset->getSketch(cat);
         vector<string> imagePath = dataset->getImageList(cat);
+        for (unsigned int i = 0; i < imagePath.size(); ++i)
+        {
+            imagePath[i] = featureFolder + "/" + imagePath[i];
+        }
         vector<string> imageName = dataset->getImageNames(cat);
         string resultPath = rankingFolder + "/" + cat;
         ranking->ranking(sketchPath, imagePath, imageName, resultPath);
