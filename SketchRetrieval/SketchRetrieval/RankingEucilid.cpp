@@ -10,10 +10,9 @@ RankingEucilid::RankingEucilid()
 RankingEucilid::~RankingEucilid()
 {
 }
-#include <iostream>
+
 void RankingEucilid::ranking(string sketchPath, vector<string> imagePath, std::vector<std::string> imageName, string resultPath)
 {
-    cout << sketchPath << " " << imagePath[0] << " " << resultPath << endl;
     vector<float> sketchFeature;
     vector<float> imageFeature;
     vector<DistNode> dists;

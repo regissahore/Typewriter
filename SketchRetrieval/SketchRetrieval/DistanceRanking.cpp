@@ -1,6 +1,7 @@
 #include <string>
 #include <memory>
 #include <cassert>
+#include <io.h>
 #include "SettingControl.h"
 #include "SettingDataset.h"
 #include "SettingFeature.h"
@@ -41,14 +42,17 @@ void DistanceRanking::ranking()
     }
     for (auto cat : categories)
     {
-        string sketchPath = featureFolder + "/" + dataset->getSketch(cat);
-        vector<string> imagePath = dataset->getImageList(cat);
-        for (unsigned int i = 0; i < imagePath.size(); ++i)
+        string resultPath = rankingFolder + cat;
+        if (_access(resultPath.c_str(), 0) == -1)
         {
-            imagePath[i] = featureFolder + "/" + imagePath[i];
+            string sketchPath = featureFolder + dataset->getSketch(cat);
+            vector<string> imagePath = dataset->getImageList(cat);
+            for (unsigned int i = 0; i < imagePath.size(); ++i)
+            {
+                imagePath[i] = featureFolder + imagePath[i];
+            }
+            vector<string> imageName = dataset->getImageNames(cat);
+            ranking->ranking(sketchPath, imagePath, imageName, resultPath);
         }
-        vector<string> imageName = dataset->getImageNames(cat);
-        string resultPath = rankingFolder + "/" + cat;
-        ranking->ranking(sketchPath, imagePath, imageName, resultPath);
     }
 }

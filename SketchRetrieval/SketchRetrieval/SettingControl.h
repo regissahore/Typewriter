@@ -4,6 +4,7 @@
 #include "SettingDetection.h"
 #include "SettingFeature.h"
 #include "SettingRanking.h"
+#include "SettingEvaluate.h"
 
 class SettingControl
 {
@@ -15,9 +16,14 @@ public:
     SettingDetection detect;
     SettingFeature feature;
     SettingRanking ranking;
+    SettingEvaluate evaluate;
+
+    void finishExperiment();
 
 private:
     static SettingControl *control;
     SettingControl();
+
+    void readAndPrint(std::string inputPath, std::string outputPath);
 };
 

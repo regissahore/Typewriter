@@ -33,17 +33,17 @@ void FeatureExtraction::extract()
     string edgeFolder = edgeSetting.getFolderName();
     string featureFolder = featureSetting.getFolderName();
     vector<string> categories = datasetSetting.getDataset()->getCategoryList();
-    if (!CreateDirectory((featureFolder + "/" + sketchFolder).c_str(), NULL))
+    if (!CreateDirectory((featureFolder + sketchFolder).c_str(), NULL))
     {
         assert("Unable to create folder.");
     }
-    if (!CreateDirectory((featureFolder + "/" + imageFolder).c_str(), NULL))
+    if (!CreateDirectory((featureFolder + imageFolder).c_str(), NULL))
     {
         assert("Unable to create folder.");
     }
     for (auto cat : categories)
     {
-        if (!CreateDirectory((featureFolder + "/" + imageFolder + "/" + cat).c_str(), NULL))
+        if (!CreateDirectory((featureFolder + imageFolder + cat).c_str(), NULL))
         {
             assert("Unable to create folder.");
         }
@@ -66,20 +66,20 @@ void FeatureExtraction::extract()
     vector<string> sketchList = datasetSetting.getDataset()->getSketchList();
     for (auto sketch : sketchList)
     {
-        string target = featureFolder + "/" + sketch;
+        string target = featureFolder + sketch;
         if (_access(target.c_str(), 0) == -1)
         {
-            string source = edgeFolder + "/" + sketch;
+            string source = edgeFolder + sketch;
             extractor->extract(source.c_str(), target.c_str());
         }
     }
     vector<string> imageList = datasetSetting.getDataset()->getImageList();
     for (auto image : imageList)
     {
-        string target = featureFolder + "/" + image;
+        string target = featureFolder + image;
         if (_access(target.c_str(), 0) == -1)
         {
-            string source = edgeFolder + "/" + image;
+            string source = edgeFolder + image;
             extractor->extract(source.c_str(), target.c_str());
         }
     }

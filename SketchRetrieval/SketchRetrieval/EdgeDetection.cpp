@@ -29,17 +29,17 @@ void EdgeDetection::detect()
     string imageFolder = datasetSetting.getDataset()->getImageFolder();
     string edgeFolder = edgeSetting.getFolderName();
     vector<string> categories = datasetSetting.getDataset()->getCategoryList();
-    if (!CreateDirectory((edgeFolder + "/" + sketchFolder).c_str(), NULL))
+    if (!CreateDirectory((edgeFolder + sketchFolder).c_str(), NULL))
     {
         assert("Unable to create folder.");
     }
-    if (!CreateDirectory((edgeFolder + "/" + imageFolder).c_str(), NULL))
+    if (!CreateDirectory((edgeFolder + imageFolder).c_str(), NULL))
     {
         assert("Unable to create folder.");
     }
     for (auto cat : categories)
     {
-        if (!CreateDirectory((edgeFolder + "/" + imageFolder + "/" + cat).c_str(), NULL))
+        if (!CreateDirectory((edgeFolder + imageFolder + cat).c_str(), NULL))
         {
             assert("Unable to create folder.");
         }
@@ -56,7 +56,7 @@ void EdgeDetection::detect()
     vector<string> sketchList = datasetSetting.getDataset()->getSketchList();
     for (auto sketch : sketchList)
     {
-        string target = edgeFolder + "/" + sketch;
+        string target = edgeFolder + sketch;
         if (_access(target.c_str(), 0) == -1)
         {
             DetectorCanny canny;
@@ -67,7 +67,7 @@ void EdgeDetection::detect()
     vector<string> imageList = datasetSetting.getDataset()->getImageList();
     for (auto image : imageList)
     {
-        string target = edgeFolder + "/" + image;
+        string target = edgeFolder + image;
         if (_access(target.c_str(), 0) == -1)
         {
             DetectorCanny canny;

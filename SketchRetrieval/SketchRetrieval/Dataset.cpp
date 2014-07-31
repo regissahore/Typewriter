@@ -25,3 +25,8 @@ string Dataset::getSketchFolder() const
 {
     return this->_sketchFolder;
 }
+
+string Dataset::getTruthFolder() const
+{
+    return this->_truthFolder;
+}

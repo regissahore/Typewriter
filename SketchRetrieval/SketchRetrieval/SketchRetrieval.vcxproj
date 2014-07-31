@@ -127,6 +127,9 @@ opencv_ts249.lib
     <ClInclude Include="Detector.h" />
     <ClInclude Include="DistanceRanking.h" />
     <ClInclude Include="EdgeDetection.h" />
+    <ClInclude Include="EvaluateResult.h" />
+    <ClInclude Include="Evaluator.h" />
+    <ClInclude Include="EvaluatorKendall.h" />
     <ClInclude Include="Extractor.h" />
     <ClInclude Include="ExtractorHoG.h" />
     <ClInclude Include="FeatureExtraction.h" />
@@ -136,6 +139,7 @@ opencv_ts249.lib
     <ClInclude Include="SettingControl.h" />
     <ClInclude Include="SettingDataset.h" />
     <ClInclude Include="SettingDetection.h" />
+    <ClInclude Include="SettingEvaluate.h" />
     <ClInclude Include="SettingFeature.h" />
     <ClInclude Include="SettingRanking.h" />
     <ClInclude Include="stdafx.h" />
@@ -148,6 +152,9 @@ opencv_ts249.lib
     <ClCompile Include="Detector.cpp" />
     <ClCompile Include="DistanceRanking.cpp" />
     <ClCompile Include="EdgeDetection.cpp" />
+    <ClCompile Include="EvaluateResult.cpp" />
+    <ClCompile Include="Evaluator.cpp" />
+    <ClCompile Include="EvaluatorKendall.cpp" />
     <ClCompile Include="Extractor.cpp" />
     <ClCompile Include="ExtractorHoG.cpp" />
     <ClCompile Include="FeatureExtraction.cpp" />
@@ -157,6 +164,7 @@ opencv_ts249.lib
     <ClCompile Include="SettingControl.cpp" />
     <ClCompile Include="SettingDataset.cpp" />
     <ClCompile Include="SettingDetection.cpp" />
+    <ClCompile Include="SettingEvaluate.cpp" />
     <ClCompile Include="SettingFeature.cpp" />
     <ClCompile Include="SettingRanking.cpp" />
     <ClCompile Include="SketchRetrieval.cpp" />

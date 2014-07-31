@@ -8,6 +8,7 @@ DatasetSHoG::DatasetSHoG()
     this->_basePath = "Dataset/SHoG/";
     this->_imageFolder = "images/";
     this->_sketchFolder = "sketches/";
+    this->_truthFolder = "truth/";
 }
 
 DatasetSHoG::~DatasetSHoG()

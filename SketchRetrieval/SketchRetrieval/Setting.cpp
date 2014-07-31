@@ -15,7 +15,7 @@ Setting::~Setting()
 
 string Setting::getFolderName() const
 {
-    string folderName = this->_settingName + "/" + getUniqueString();
+    string folderName = this->_settingName + "/" + getUniqueString() + "/";
     if (!CreateDirectory(this->_settingName.c_str(), NULL))
     {
         assert("Unable to create folder.");
