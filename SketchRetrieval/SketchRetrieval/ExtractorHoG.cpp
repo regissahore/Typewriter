@@ -33,7 +33,7 @@ void ExtractorHoG::extract(const char *srcPath, const char *dstPath)
     cvResize(srcImage, resizeImage);
     HOGDescriptor hog (cvSize(windowW, windowH), cvSize(blockW, blockH), cvSize(shiftW, shiftH), cvSize(cellW, cellH), nBins);
     vector<float> descriptors;
-    hog.compute(resizeImage, descriptors, Size(0, 0), Size(0, 0));
+    hog.compute(resizeImage, descriptors);
     cvReleaseImage(&srcImage);
     cvReleaseImage(&resizeImage);
     fstream fout;

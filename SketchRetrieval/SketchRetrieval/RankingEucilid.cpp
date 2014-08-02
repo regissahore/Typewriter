@@ -44,9 +44,8 @@ vector<float> RankingEucilid::readFeature(string path) const
     fstream fin;
     float value;
     fin.open(path.c_str(), ios::in);
-    while (!fin.eof())
+    while (fin >> value)
     {
-        fin >> value;
         feature.push_back(value);
     }
     fin.close();

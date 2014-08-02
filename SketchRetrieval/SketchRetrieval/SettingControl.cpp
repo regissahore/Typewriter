@@ -28,14 +28,7 @@ SettingControl& SettingControl::getInstance()
 
 void SettingControl::finishExperiment()
 {
-    int exp = 0;
-    if (_access("expriment.txt", 0) != -1)
-    {
-        fstream fin;
-        fin.open("expriment.txt", ios::in);
-        fin >> exp;
-        fin.close();
-    }
+    int exp = getExperimentIndex();
     ++exp;
     if (!CreateDirectory("Experiment", NULL))
     {
@@ -55,6 +48,19 @@ void SettingControl::finishExperiment()
     fout << exp << endl;
     fout.flush();
     fout.close();
+}
+
+int SettingControl::getExperimentIndex() const
+{
+    int exp = 0;
+    if (_access("expriment.txt", 0) != -1)
+    {
+        fstream fin;
+        fin.open("expriment.txt", ios::in);
+        fin >> exp;
+        fin.close();
+    }
+    return exp;
 }
 
 void SettingControl::readAndPrint(string inputPath, string outputPath)

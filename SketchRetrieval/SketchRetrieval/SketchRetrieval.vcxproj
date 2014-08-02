@@ -132,6 +132,7 @@ opencv_ts249.lib
     <ClInclude Include="EvaluatorKendall.h" />
     <ClInclude Include="Extractor.h" />
     <ClInclude Include="ExtractorHoG.h" />
+    <ClInclude Include="ExtractorPHoG.h" />
     <ClInclude Include="FeatureExtraction.h" />
     <ClInclude Include="Ranking.h" />
     <ClInclude Include="RankingEucilid.h" />
@@ -157,6 +158,7 @@ opencv_ts249.lib
     <ClCompile Include="EvaluatorKendall.cpp" />
     <ClCompile Include="Extractor.cpp" />
     <ClCompile Include="ExtractorHoG.cpp" />
+    <ClCompile Include="ExtractorPHoG.cpp" />
     <ClCompile Include="FeatureExtraction.cpp" />
     <ClCompile Include="Ranking.cpp" />
     <ClCompile Include="RankingEucilid.cpp" />

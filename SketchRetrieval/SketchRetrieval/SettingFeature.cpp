@@ -29,6 +29,7 @@ void SettingFeature::selectMethod(SettingFeature::Method method)
         this->setHoGParameter();
         break;
     case METHOD_PHOG:
+        this->setPHoGParameter();
         break;
     case METHOD_SHOG:
         break;
@@ -47,6 +48,11 @@ SettingFeature::Parameter SettingFeature::getParameter() const
 void SettingFeature::setHoGParameter(int windowW, int windowH, int blockW, int blockH, int cellW, int cellH, int shiftW, int shiftH, int nBins)
 {
     this->_parameter.hog = { windowW, windowH, blockW, blockH, cellW, cellH, shiftW, shiftH, nBins };
+}
+
+void SettingFeature::setPHoGParameter(int windowW, int windowH, int nBins, int layer)
+{
+    this->_parameter.pHog = { windowW, windowH, nBins, layer };
 }
 
 void SettingFeature::saveParameter(const char *filePath) const
@@ -69,6 +75,11 @@ void SettingFeature::saveParameter(const char *filePath) const
         fout << "Bin Number: " << this->_parameter.hog.nBins << endl;
         break;
     case METHOD_PHOG:
+        fout << "Feature: PHoG" << endl;
+        fout << "Window Width: " << this->_parameter.pHog.windowW << endl;
+        fout << "Window Height: " << this->_parameter.pHog.windowH << endl;
+        fout << "Bin Number: " << this->_parameter.pHog.nBins << endl;
+        fout << "Layer: " << this->_parameter.pHog.layer << endl;
         break;
     case METHOD_SHOG:
         break;
@@ -100,6 +111,10 @@ vector<double> SettingFeature::getUniqueVector() const
         unique.push_back(this->_parameter.hog.nBins);
         break;
     case METHOD_PHOG:
+        unique.push_back(this->_parameter.pHog.windowW);
+        unique.push_back(this->_parameter.pHog.windowH);
+        unique.push_back(this->_parameter.pHog.nBins);
+        unique.push_back(this->_parameter.pHog.layer);
         break;
     case METHOD_SHOG:
         break;

@@ -83,10 +83,9 @@ void DatasetSHoG::initInfo()
     fstream file;
     string sketchFile = this->_basePath + "/sketches.order";
     file.open(sketchFile.c_str(), ios::in);
-    while (!file.eof())
+    string sketch;
+    while (file >> sketch)
     {
-        string sketch;
-        file >> sketch;
         string cat = sketch.substr(0, sketch.length() - 4);
         this->_categories.push_back(cat);
         sketch = this->_sketchFolder + sketch;

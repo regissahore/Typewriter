@@ -25,16 +25,22 @@ public:
             int shiftW, shiftH;
             int nBins;
         } hog;
+        struct
+        {
+            int windowW, windowH;
+            int nBins, layer;
+        } pHog;
     };
 
     Method getMethod() const;
     void selectMethod(Method method);
     Parameter getParameter() const;    
     void setHoGParameter(int windowW = 640, int windowH = 640,
-                         int blockW = 64, int blockH = 64,
-                         int cellW = 32, int cellH = 32,
-                         int shiftW = 32, int shiftH = 32,
-                         int nBins = 9);
+        int blockW = 64, int blockH = 64,
+        int cellW = 32, int cellH = 32,
+        int shiftW = 32, int shiftH = 32,
+        int nBins = 9);
+    void setPHoGParameter(int windowW = 640, int windowH = 640, int nBins = 9, int layer = 3);
 
 protected:
     virtual void saveParameter(const char *filePath) const override final;

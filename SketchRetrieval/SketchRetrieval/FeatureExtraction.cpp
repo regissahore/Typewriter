@@ -11,6 +11,7 @@
 #include "SettingFeature.h"
 #include "Extractor.h"
 #include "ExtractorHoG.h"
+#include "ExtractorPHoG.h"
 #include "FeatureExtraction.h"
 using namespace std;
 
@@ -55,6 +56,7 @@ void FeatureExtraction::extract()
         extractor = shared_ptr<Extractor>(new ExtractorHoG());
         break;
     case SettingFeature::METHOD_PHOG:
+        extractor = shared_ptr<Extractor>(new ExtractorPHoG());
         break;
     case SettingFeature::METHOD_SHOG:
         break;

@@ -19,6 +19,7 @@ public:
     SettingEvaluate evaluate;
 
     void finishExperiment();
+    int getExperimentIndex() const;
 
 private:
     static SettingControl *control;
