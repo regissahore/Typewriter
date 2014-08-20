@@ -6,16 +6,17 @@
     <link type="text/css" rel="stylesheet" href="editor.css">
   </head>
   <body>
-    <div class="editor">
-      <div class="editor_toolbar">
-        LogoJS Editor
+    <div id="editor">
+      <div id="editor_toolbar">
       </div>
-      <div class="editor_linenumber">
+      <div id="editor_linenumber">
       </div>
-      <div class="editor_code">
-        <textarea class="editor_textarea"></textarea>
+      <div id="editor_code">
+        <textarea id="editor_textarea"></textarea>
       </div>
-      <div class="editor_statusbar">
+      <div id="editor_statusbar">
+        <button id="editor_button_restore">Restore</button>
+        <button id="editor_button_run">Run</button>
       </div>
     </div>
     <script type="text/javascript" src="editor.js"></script>

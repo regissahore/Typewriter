@@ -1,4 +1,4 @@
-.editor {
+#editor {
   display: block;
   position: relative;
   overflow: hidden;
@@ -6,8 +6,9 @@
   height: 540px;
   border: solid #d9d9d9 1px;
   border-radius: 3px;
+  font-family: consolas;
 }
-.editor_toolbar {
+#editor_toolbar {
   display: block;
   position: absolute;
   left: 0;
@@ -20,8 +21,9 @@
   border-bottom: solid #d9d9d9 1px;
   color: #555555;
   background-color: #d8d8d8;
+  padding-left: 10px;
 }
-.editor_linenumber {
+#editor_linenumber {
   display: block;
   position: absolute;
   left: 0;
@@ -33,7 +35,7 @@
   color: #969696;
   background-color: #e8e8e8;
 }
-.editor_code {
+#editor_code {
   display: block;
   position: absolute;
   left: 40px;
@@ -41,7 +43,7 @@
   width: 920px;
   height: 460px;
 }
-.editor_statusbar {
+#editor_statusbar {
   display: block;
   position: absolute;
   left: 0;
@@ -52,4 +54,19 @@
   border-bottom-left-radius: 3px;
   border-bottom-right-radius: 3px;
   border: solid #d9d9d9 1px;
+  text-align: right;
+  padding-top: 5px;
+}
+#editor_statusbar button {
+  width: 80px;
+  height: 30px;
+  margin-right: 20px;
+}
+#editor_textarea {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  font-size: 16px;
+  font-family: consolas;
+  line-height: 24px;
 }

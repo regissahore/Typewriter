@@ -36,10 +36,6 @@
 
 * __REPEAT times [instructions]__, repeat the instructions in bracket.
 
-## Expression
-
-* Not suppot yet.
-
 ## Variable
 
 * __MAKE "variable_name constant/expression__, create variable or change variable value.
@@ -48,7 +44,3 @@
 ## Function
 
 * __TO variable_list expressions END__
-
-## Math
-
-* Not support yet.
