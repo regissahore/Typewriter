@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="UTF-8">
+  <title>Gravity</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <canvas id="g_canvas"></canvas>
+  <script>
+  window.requestAnimFrame =
+      window.requestAnimationFrame ||
+      window.webkitRequestAnimationFrame ||
+      window.mozRequestAnimationFrame ||
+      window.oRequestAnimationFrame ||
+      window.msRequestAnimationFrame ||
+      function(callback) {
+          window.setTimeout(callback, 1000 / 60);
+  };
+  var canvas = document.getElementById('g_canvas');
+  var ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  var solars = [];
+  var flag = true;
+  while (flag) {
+    var x = Math.random() * canvas.width * 0.8 + canvas.width * 0.1;
+    var y = Math.random() * canvas.height * 0.8 + canvas.height * 0.1;
+    var mass = 10 + Math.pow(Math.random() * 10000000, 0.5);
+    solars.push({x: x, y: y, mass: mass});
+    flag = Math.random() > 0.01;
+  }
+  var stars = [];
+  var starNum = 0;
+  var lastUpdate = false;
+  function generateStars() {
+    for (var i = 0; i < 100; ++i) {
+      if (starNum >= 2000) {
+        continue;
+      }
+      var x = Math.random() * (canvas.width + 4) - 2;
+      var y = Math.random() * (canvas.height + 4) - 2;
+      if (x < 0 || x > canvas.width || y < 0 || y > canvas.height) { 
+        var angle = Math.atan2(canvas.height * 0.5 - y, canvas.width * 0.5 - x);
+        angle += Math.random() * Math.PI * 0.1 - Math.PI * 0.05;
+        var speed = Math.random() * 0.000001;
+        var vx = speed * Math.cos(angle);
+        var vy = speed * Math.sin(angle);
+        if (starNum < stars.length) {
+          stars[starNum] = {x: x, y: y, vx: vx, vy: vy};
+        } else {
+          stars.push({x: x, y: y, vx: vx, vy: vy});
+        }
+        starNum += 1;
+      }
+    }
+  }
+  function removeStar(i) {
+    starNum -= 1;
+    stars[i] = stars[starNum];
+  }
+  function moveStars() {
+    if (!lastUpdate) {
+        lastUpdate = Date.now();
+        return;
+    }
+    var time = (Date.now() - lastUpdate) / 1000;
+    var solarRadius = [];
+    var solarRadius2 = [];
+    for (var i = 0; i < solars.length; ++i) {
+      solarRadius.push(0.5 * Math.pow(solars[i].mass, 1.0 / 3.0));
+      solarRadius2.push(solarRadius[i] * solarRadius[i]);
+    }
+    for (var i = starNum - 1; i >= 0; --i) {
+      if (stars[i].x < -100 || stars[i].x > canvas.width + 100 ||
+          stars[i].y < -100 || stars[i].y > canvas.height + 100) {
+        removeStar(i)
+        continue;
+      }
+      var alive = true;
+      for (var j = 0; j < solars.length; ++j) {
+        var dist2 = (stars[i].x - solars[j].x) * (stars[i].x - solars[j].x) + 
+                    (stars[i].y - solars[j].y) * (stars[i].y - solars[j].y);
+        if (dist2 < solarRadius2[j]) {
+          removeStar(i)
+          solars[j].mass += 500;
+          alive = false;
+          break;
+        }
+        var angle = Math.atan2(solars[j].y - stars[i].y, solars[j].x - stars[i].x);
+        var force = 0.00098 * Math.sqrt(solars[j].mass) / dist2;
+        stars[i].vx += force * Math.cos(angle);
+        stars[i].vy += force * Math.sin(angle);
+      }
+      if (alive) {
+        stars[i].x += stars[i].vx * time;
+        stars[i].y += stars[i].vy * time;
+      }
+    }
+    for (var i = 0; i < solars.length; ++i) {
+      for (var j = i + 1; j < solars.length; ++j) {
+        var dist2 = (solars[i].x - solars[j].x) * (solars[i].x - solars[j].x) + 
+                    (solars[i].y - solars[j].y) * (solars[i].y - solars[j].y);
+        var dist = Math.sqrt(dist2);
+        if (dist < solarRadius[i] + solarRadius[j]) {
+          solars[i].x = (solars[i].x * solars[i].mass + solars[j].x * solars[j].mass) / (solars[i].mass + solars[j].mass);
+          solars[i].y = (solars[i].y * solars[i].mass + solars[j].y * solars[j].mass) / (solars[i].mass + solars[j].mass);
+          solars[i].mass += solars[j].mass;
+          solars.splice(j, 1);
+          return;
+        }
+      }
+    }
+  }
+  function draw() {
+    ctx.fillStyle = 'rgb(45, 45, 45)';
+    for (var i = 0; i < starNum; ++i) {
+      ctx.beginPath();
+      ctx.arc(stars[i].x, stars[i].y, 1.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    ctx.fillStyle = 'rgb(255, 127, 39)';
+    for (var i = 0; i < solars.length; ++i) {
+      ctx.beginPath();
+      ctx.arc(solars[i].x, solars[i].y, 0.5 * Math.pow(solars[i].mass, 1.0 / 3.0), 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+  function infinity() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    generateStars();
+    moveStars();
+    draw();
+    requestAnimFrame(infinity);
+  }
+  infinity();
+  </script>
+</body>
