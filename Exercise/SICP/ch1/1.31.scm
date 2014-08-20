@@ -1,0 +1,18 @@
+(define (product term a next b)
+    (if (> a b)
+        1.0
+        (* (term a) (product term (next a) next b))))
+(define (product term a next b)
+    (define (iter a result)
+        (if (> a b)
+            result
+            (iter (next a) (* result (term a)))))
+    (iter a 1.0))
+(define (factorial n)
+    (define (f-term x) x)
+    (define (f-next x) (+ x 1))
+    (product f-term 1 f-next n))
+(define (pi)
+    (define (pi-term x) (/ (* (+ x 1) (- x 1)) (square x)))
+    (define (pi-next x) (+ x 2))
+    (* 4 (product pi-term 3 pi-next 100000)))

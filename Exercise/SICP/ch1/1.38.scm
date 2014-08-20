@@ -1,0 +1,7 @@
+(load "1.37.scm")
+(+ (cont-frac (lambda (x) 1.0)
+              (lambda (x) (if (= (remainder x 3) 2)
+                              (* (/ (+ x 1) 3) 2)
+                              1.0))
+              10)
+    2)

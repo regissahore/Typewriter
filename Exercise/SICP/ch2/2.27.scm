@@ -1,0 +1,7 @@
+(load "2.18.scm")
+(define (deep-reverse tree)
+    (cond ((null? tree) (list))
+          ((not (pair? tree)) tree)
+          ((null? (cdr tree)) (deep-reverse (car tree)))
+          (else (reverse (list (deep-reverse (car tree)) 
+                               (deep-reverse (cdr tree)))))))

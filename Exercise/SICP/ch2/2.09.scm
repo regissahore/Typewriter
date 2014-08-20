@@ -1,0 +1,8 @@
+(load "2.08.scm")
+(define (display-interval int)
+    (newline)
+    (display "[")
+    (display (lower-bound int))
+    (display ", ")
+    (display (upper-bound int))
+    (display "]"))

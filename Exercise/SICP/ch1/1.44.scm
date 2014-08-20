@@ -1,0 +1,8 @@
+(load "1.43.scm")
+(define dx 0.001)
+(define (smooth f)
+    (lambda (x) (+ (f (- x dx))
+                   (f x)
+                   (f (+ x dx)))))
+(define (smooth-n f n)
+    ((repeated smooth n) f)
