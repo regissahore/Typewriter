@@ -1,8 +1,0 @@
-WRITE_NEWLINE:
-    MOV DL, 0DH
-    MOV AH, 02H
-    INT 21H
-    MOV DL, 0AH
-    MOV AH, 02H
-    INT 21H
-    RET
