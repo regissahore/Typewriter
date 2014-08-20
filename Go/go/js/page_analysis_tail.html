@@ -1,0 +1,20 @@
+        </script>
+        <fieldset>
+            <legend>设置</legend>
+            <span>
+                <span>选择显示方式：</span>
+                <select onchange="updateDisplayType(this)">
+                    <option value="line-chart" selected="selected">折线图</option>
+                    <option value="table">表格</option>
+                </select>
+                <span>数字显示方式：</span>
+                <select onchange="updateNumberDisplayType(this)">
+                    <option value="float" selected="selected">小数</option>
+                    <option value="science">科学计数法</option>
+                </select>
+            </span>
+            <span id="div_config"></span>
+        </fieldset>
+        <div id="div_display"></div>
+    </body>
+</html>
