@@ -1,0 +1,87 @@
+@editor_width: 960px;
+@editor_height: 540px;
+@toolbar_height: 40px;
+@statusbar_height: 40px;
+@linenumber_width: 40px;
+
+@border: solid rgb(217, 217, 217) 1px;
+@border-radius: 3px;
+
+#editor {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    width: @editor_width;
+    height: @editor_height;
+    border: @border;
+    border-radius: @border-radius;
+    font-family: consolas;
+}
+
+#editor_toolbar {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: @editor_width;
+    height: @toolbar_height;
+    line-height: @toolbar_height;
+    border-top-left-radius: @border-radius;
+    border-top-right-radius: @border-radius;
+    border-bottom: @border;
+    color: rgb(85, 85, 85);
+    background-color: rgb(216, 216, 216);
+    padding-left: 10px;
+}
+
+#editor_linenumber {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: @toolbar_height;
+    width: @linenumber_width;
+    height: @editor_height - @toolbar_height - @statusbar_height;
+    border-right: @border;
+    border-top: @border;
+    color: rgb(150, 150, 150);
+    background-color: rgb(232, 232, 232);
+}
+
+#editor_code {
+    display: block;
+    position: absolute;
+    left: @linenumber_width;
+    top: @toolbar_height;
+    width: @editor_width - @linenumber_width;
+    height: @editor_height - @toolbar_height - @statusbar_height;
+}
+
+#editor_statusbar {
+    display: block;
+    position: absolute;
+    left: 0;
+    top: @editor_height - @statusbar_height;
+    width: @editor_width;
+    height: @toolbar_height;
+    background-color: rgb(235, 235, 235);
+    border-bottom-left-radius: @border-radius;
+    border-bottom-right-radius: @border-radius;
+    border: @border;
+    text-align: right;
+    padding-top: 5px;
+}
+
+#editor_statusbar button {
+    width: 80px;
+    height: 30px;
+    margin-right: 20px;
+}
+
+#editor_textarea {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    font-size: 16px;
+    font-family: consolas;
+    line-height: 24px;
+}
