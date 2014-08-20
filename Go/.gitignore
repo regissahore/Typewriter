@@ -1,0 +1,22 @@
+# Build Folders 
+ZGo-build-desktop*
+build-*
+release
+
+# Local Project Files
+*.user
+*.user.*
+*.layout
+
+# Documents
+*.doc
+material
+example
+*.goc
+
+# Language Files
+*.qm
+
+# Photoshop Files
+*.psd
+
