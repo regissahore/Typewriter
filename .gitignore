@@ -1,7 +1,0 @@
-*.o
-*.exe
-*.pdb
-*.sln
-*.suo
-bin
-obj
