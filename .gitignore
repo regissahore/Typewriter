@@ -1,3 +1,23 @@
-# Compiled files
+# Compiled Object files
+*.slo
+*.lo
 *.o
 *.exe
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+
+# Visual studio files
+*.suo
+*.sdf
+*.opensdf
+*.vcxproj.user
+*.vcxproj.filters
+Debug
+Release

@@ -1,0 +1,178 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{EF069AA2-3C23-4927-BEB2-2CE3BCB3B712}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>SketchRetrieval</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <LibraryPath>F:\OpenCV\build\x86\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\OpenCV\build\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <LibraryPath>F:\OpenCV\build\x64\vc12\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>F:\OpenCV\build\include;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>opencv_calib3d249d.lib;
+opencv_contrib249d.lib
+;opencv_core249d.lib;
+opencv_features2d249d.lib;
+opencv_flann249d.lib
+;opencv_gpu249d.lib;
+opencv_highgui249d.lib;
+opencv_imgproc249d.lib
+;opencv_legacy249d.lib;
+opencv_ml249d.lib
+;opencv_nonfree249d.lib;
+opencv_objdetect249d.lib
+;opencv_ocl249d.lib
+;opencv_photo249d.lib;
+opencv_stitching249d.lib
+;opencv_superres249d.lib;
+opencv_ts249d.lib
+;opencv_video249d.lib
+;opencv_videostab249d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>opencv_calib3d249.lib;
+opencv_contrib249.lib
+;opencv_core249.lib;
+opencv_features2d249.lib;
+opencv_flann249.lib
+;opencv_gpu249.lib;
+opencv_highgui249.lib;
+opencv_imgproc249.lib
+;opencv_legacy249.lib;
+opencv_ml249.lib
+;opencv_nonfree249.lib;
+opencv_objdetect249.lib
+;opencv_ocl249.lib
+;opencv_photo249.lib;
+opencv_stitching249.lib
+;opencv_superres249.lib;
+opencv_ts249.lib
+;opencv_video249.lib
+;opencv_videostab249.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DetectorCanny.h" />
+    <ClInclude Include="Dataset.h" />
+    <ClInclude Include="DatasetSHoG.h" />
+    <ClInclude Include="Detector.h" />
+    <ClInclude Include="DistanceRanking.h" />
+    <ClInclude Include="EdgeDetection.h" />
+    <ClInclude Include="EvaluateResult.h" />
+    <ClInclude Include="Evaluator.h" />
+    <ClInclude Include="EvaluatorKendall.h" />
+    <ClInclude Include="Extractor.h" />
+    <ClInclude Include="ExtractorHoG.h" />
+    <ClInclude Include="ExtractorPHoG.h" />
+    <ClInclude Include="FeatureExtraction.h" />
+    <ClInclude Include="Ranking.h" />
+    <ClInclude Include="RankingEucilid.h" />
+    <ClInclude Include="Setting.h" />
+    <ClInclude Include="SettingControl.h" />
+    <ClInclude Include="SettingDataset.h" />
+    <ClInclude Include="SettingDetection.h" />
+    <ClInclude Include="SettingEvaluate.h" />
+    <ClInclude Include="SettingFeature.h" />
+    <ClInclude Include="SettingRanking.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="DetectorCanny.cpp" />
+    <ClCompile Include="Dataset.cpp" />
+    <ClCompile Include="DatasetSHoG.cpp" />
+    <ClCompile Include="Detector.cpp" />
+    <ClCompile Include="DistanceRanking.cpp" />
+    <ClCompile Include="EdgeDetection.cpp" />
+    <ClCompile Include="EvaluateResult.cpp" />
+    <ClCompile Include="Evaluator.cpp" />
+    <ClCompile Include="EvaluatorKendall.cpp" />
+    <ClCompile Include="Extractor.cpp" />
+    <ClCompile Include="ExtractorHoG.cpp" />
+    <ClCompile Include="ExtractorPHoG.cpp" />
+    <ClCompile Include="FeatureExtraction.cpp" />
+    <ClCompile Include="Ranking.cpp" />
+    <ClCompile Include="RankingEucilid.cpp" />
+    <ClCompile Include="Setting.cpp" />
+    <ClCompile Include="SettingControl.cpp" />
+    <ClCompile Include="SettingDataset.cpp" />
+    <ClCompile Include="SettingDetection.cpp" />
+    <ClCompile Include="SettingEvaluate.cpp" />
+    <ClCompile Include="SettingFeature.cpp" />
+    <ClCompile Include="SettingRanking.cpp" />
+    <ClCompile Include="SketchRetrieval.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
