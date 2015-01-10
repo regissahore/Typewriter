@@ -29,6 +29,10 @@ func (elem *ElementLeafHorizontalRule) CloseString() string {
 	return ""
 }
 
+func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
+	return true
+}
+
 func isHorizontalRuleSymbol(r rune) bool {
 	return r == '-' || r == '_' || r == '*'
 }

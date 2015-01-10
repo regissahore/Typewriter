@@ -46,6 +46,10 @@ func (elem *ElementInlineTextualContent) CloseString() string {
 	return ""
 }
 
+func (elem *ElementInlineTextualContent) TryClose(last IElement) bool {
+	return true
+}
+
 func ParseInlineTextualContent(doc *Document, line *UTF8String, offset int) (bool, int) {
 	lastOpen := doc.GetLastOpen()
 	if lastOpen.GetElement().functionType == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
