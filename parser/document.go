@@ -46,7 +46,7 @@ func (doc *Document) AddElement(elem IElement) {
 	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
 	// Try to close the open blocks.
 	for lastOpen.TryClose(elem) {
-		doc.openStack = doc.openStack[1 : len(doc.openStack)-1]
+		doc.openStack = doc.openStack[0 : len(doc.openStack)-1]
 		lastOpen = doc.GetLastOpen()
 	}
 	if elem.GetElement().isOpen {
