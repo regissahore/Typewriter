@@ -26,7 +26,15 @@ func (elem *ElementLeafParagraph) OpenString() string {
 }
 
 func (elem *ElementLeafParagraph) CloseString() string {
-	return "</p>"
+	return "</p>\n"
+}
+
+func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
+	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_PARAGRAPH {
+		elem.GetElement().text = elem.GetElement().text.Append(last.GetElement().text)
+		return true
+	}
+	return false
 }
 
 func (elem *ElementLeafParagraph) TryClose(last IElement) bool {

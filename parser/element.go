@@ -51,5 +51,6 @@ type IElement interface {
 	GetElement() *Element
 	OpenString() string
 	CloseString() string
+	TryAppend(last IElement) bool
 	TryClose(last IElement) bool
 }

@@ -26,7 +26,11 @@ func (elem *ElementLeafHorizontalRule) OpenString() string {
 }
 
 func (elem *ElementLeafHorizontalRule) CloseString() string {
-	return ""
+	return "\n"
+}
+
+func (elem *ElementLeafHorizontalRule) TryAppend(last IElement) bool {
+	return false
 }
 
 func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {

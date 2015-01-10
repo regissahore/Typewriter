@@ -26,7 +26,11 @@ func (elem *ElementLeafBlankLine) OpenString() string {
 }
 
 func (elem *ElementLeafBlankLine) CloseString() string {
-	return ""
+	return "\n"
+}
+
+func (elem *ElementLeafBlankLine) TryAppend(last IElement) bool {
+	return false
 }
 
 func (elem *ElementLeafBlankLine) TryClose(last IElement) bool {

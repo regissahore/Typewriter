@@ -31,6 +31,10 @@ func (doc *Document) CloseString() string {
 	return ""
 }
 
+func (doc *Document) TryAppend(last IElement) bool {
+	return false
+}
+
 // The document will never be closed to prevent the doc.openStack from being empty.
 func (doc *Document) TryClose(last IElement) bool {
 	return false
@@ -42,6 +46,10 @@ func (doc *Document) GetLastOpen() IElement {
 
 func (doc *Document) AddElement(elem IElement) {
 	lastOpen := doc.GetLastOpen()
+	// Try to append homogeneous element.
+	if lastOpen.TryAppend(elem) {
+		return
+	}
 	elem.GetElement().parent = lastOpen
 	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
 	// Try to close the open blocks.

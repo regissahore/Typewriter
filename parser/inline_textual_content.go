@@ -46,16 +46,19 @@ func (elem *ElementInlineTextualContent) CloseString() string {
 	return ""
 }
 
+func (elem *ElementInlineTextualContent) TryAppend(last IElement) bool {
+	if last.GetElement().functionType == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
+		elem.element.text = elem.element.text.Append(last.GetElement().text)
+		return true
+	}
+	return false
+}
+
 func (elem *ElementInlineTextualContent) TryClose(last IElement) bool {
 	return true
 }
 
 func ParseInlineTextualContent(doc *Document, line *UTF8String, offset int) (bool, int) {
-	lastOpen := doc.GetLastOpen()
-	if lastOpen.GetElement().functionType == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
-		lastOpen.GetElement().text = lastOpen.GetElement().text.Append(NewUTF8String(string(line.RuneAt(offset))))
-	} else {
-		doc.AddElement(NewElementInlineTextualContent(line.RuneAt(offset)))
-	}
+	doc.AddElement(NewElementInlineTextualContent(line.RuneAt(offset)))
 	return true, 1
 }
