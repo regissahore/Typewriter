@@ -56,6 +56,7 @@ func testCase(testName string) bool {
 	stdOutput, _ := readWithoutEOL(stdOutputName)
 	testOutput, err := readWithoutEOL(testOutputName)
 	if err != nil {
+		fmt.Println(err)
 		return false
 	}
 	return stdOutput == testOutput

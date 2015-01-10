@@ -19,7 +19,7 @@ func ReadDocumentFromFile(filePath string, input chan<- string, errors chan<- er
 	}
 }
 
-func WriteDocumentToFile(filePath string, output <-chan string, errors chan<- error) {
+func WriteDocumentToFile(filePath string, output <-chan string, errors chan<- error, finished chan<- bool) {
 	file, err := os.Create(filePath)
 	defer file.Close()
 	if err != nil {
@@ -29,8 +29,9 @@ func WriteDocumentToFile(filePath string, output <-chan string, errors chan<- er
 	for {
 		line, ok := <-output
 		if !ok {
+			finished <- true
 			return
 		}
-		file.WriteString(line + "\n")
+		file.WriteString(line)
 	}
 }
