@@ -18,3 +18,19 @@ func ReadDocumentFromFile(filePath string, input chan<- string, errors chan<- er
 		input <- scanner.Text()
 	}
 }
+
+func WriteDocumentToFile(filePath string, output <-chan string, errors chan<- error) {
+	file, err := os.Create(filePath)
+	defer file.Close()
+	if err != nil {
+		errors <- err
+		return
+	}
+	for {
+		line, ok := <-output
+		if !ok {
+			return
+		}
+		file.WriteString(line + "\n")
+	}
+}

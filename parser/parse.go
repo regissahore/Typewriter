@@ -5,25 +5,31 @@ import (
 	"os"
 )
 
-func Parse(inputPath, outputPath string) {
+func ParseFile(inputPath, outputPath string) {
 	outputFile, err := os.Create(outputPath)
 	defer outputFile.Close()
 	if err != nil {
-		log.Fatal(err)
+		log.Panic(err)
 		return
 	}
 	input := make(chan string)
+	output := make(chan string)
 	errors := make(chan error)
+	go Parse(input, output, errors)
 	go ReadDocumentFromFile(inputPath, input, errors)
+	go WriteDocumentToFile(outputPath, output, errors)
+}
+
+func Parse(input <-chan string, output chan<- string, errors <-chan error) {
+	defer close(output)
 	for {
 		select {
 		case line, ok := <-input:
 			if !ok {
 				return
 			}
-			outputFile.WriteString(line + "\n")
-		case err := <-errors:
-			log.Fatal(err)
+			output <- line
+		case <-errors:
 			return
 		}
 	}

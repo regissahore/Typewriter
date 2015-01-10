@@ -52,7 +52,7 @@ func testCase(testName string) bool {
 	stdInputName := "test/" + testName + ".in"
 	stdOutputName := "test/" + testName + ".out"
 	testOutputName := "test/" + testName + ".test"
-	parser.Parse(stdInputName, testOutputName)
+	parser.ParseFile(stdInputName, testOutputName)
 	stdOutput, _ := readWithoutEOL(stdOutputName)
 	testOutput, err := readWithoutEOL(testOutputName)
 	if err != nil {
