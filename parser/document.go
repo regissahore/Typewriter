@@ -31,8 +31,12 @@ func (doc *Document) CloseString() string {
 	return ""
 }
 
+func (doc *Document) GetLastOpen() IElement {
+	return doc.openStack[len(doc.openStack)-1]
+}
+
 func (doc *Document) AddElement(elem IElement) {
-	lastOpen := doc.openStack[len(doc.openStack)-1]
+	lastOpen := doc.GetLastOpen()
 	elem.GetElement().parent = lastOpen
 	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
 	if elem.GetElement().isOpen {

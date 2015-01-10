@@ -12,6 +12,7 @@ func NewElementLeafHorizontalRule() *ElementLeafHorizontalRule {
 		isOpen:        false,
 		parent:        nil,
 		children:      make([]IElement, 0),
+		text:          NewUTF8String(""),
 	}
 	return elem
 }

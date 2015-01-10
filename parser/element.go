@@ -40,6 +40,7 @@ type Element struct {
 	isOpen        bool
 	parent        IElement
 	children      []IElement
+	text          *UTF8String
 }
 
 func (elem *Element) Close() {
