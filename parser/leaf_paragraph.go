@@ -41,17 +41,14 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 	switch last.GetElement().functionType {
 	case ELEMENT_TYPE_LEAF_BLANK_LINE:
 		return true
+	case ELEMENT_TYPE_LEAF_ATX_HEADER:
+		return true
 	}
 	return false
 }
 
 func ParseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
-	lastOpen := doc.GetLastOpen()
-	if lastOpen.GetElement().functionType == ELEMENT_TYPE_LEAF_PARAGRAPH {
-		lastOpen.GetElement().text = lastOpen.GetElement().text.Append(line.Substring(offset, length-offset))
-	} else {
-		doc.AddElement(NewElementLeafParagraph(line.Substring(offset, length-offset)))
-	}
+	doc.AddElement(NewElementLeafParagraph(line.Substring(offset, length-offset).Trim().Append(NewUTF8String("\n"))))
 	return true, length - offset
 }

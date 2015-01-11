@@ -49,6 +49,11 @@ func (elem *ElementLeafIndentedCodeBlock) TryClose(last IElement) bool {
 }
 
 func ParseLeafIndentedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
+	// Cannot interrupt paragraph.
+	if doc.GetLastOpen().GetElement().functionType == ELEMENT_TYPE_LEAF_PARAGRAPH {
+		return false, 0
+	}
+	// Count spaces.
 	spaceNum := 0
 	length := line.Length()
 	for i := offset; i < length; i++ {

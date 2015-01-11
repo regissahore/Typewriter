@@ -50,13 +50,15 @@ func (doc *Document) AddElement(elem IElement) {
 	if lastOpen.TryAppend(elem) {
 		return
 	}
-	elem.GetElement().parent = lastOpen
-	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
 	// Try to close the open blocks.
 	for lastOpen.TryClose(elem) {
 		doc.openStack = doc.openStack[0 : len(doc.openStack)-1]
 		lastOpen = doc.GetLastOpen()
 	}
+	// Add to last open block.
+	elem.GetElement().parent = lastOpen
+	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
+	// Add to open block stack.
 	if elem.GetElement().isOpen {
 		doc.openStack = append(doc.openStack, elem)
 	}

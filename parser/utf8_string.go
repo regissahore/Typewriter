@@ -38,6 +38,28 @@ func (str *UTF8String) Append(tail *UTF8String) *UTF8String {
 	return &UTF8String{append(str.Text, tail.Text...)}
 }
 
+func (str *UTF8String) Trim() *UTF8String {
+	length := str.Length()
+	var begin int = length
+	for i := 0; i < length; i++ {
+		if !IsWhitespace(str.RuneAt(i)) {
+			begin = i
+			break
+		}
+	}
+	if begin == length {
+		return NewUTF8String("")
+	}
+	var end int
+	for i := length - 1; i >= begin; i-- {
+		if !IsWhitespace(str.RuneAt(i)) {
+			end = i + 1
+			break
+		}
+	}
+	return str.Substring(begin, end-begin)
+}
+
 func (str *UTF8String) First() rune {
 	if str.Length() == 0 {
 		return 0
