@@ -22,24 +22,7 @@ func (elem *ElementInlineTextualContent) GetElement() *Element {
 }
 
 func (elem *ElementInlineTextualContent) OpenString() string {
-	str := NewUTF8String("")
-	length := elem.element.text.Length()
-	for i := 0; i < length; i++ {
-		r := elem.element.text.RuneAt(i)
-		switch r {
-		case '"':
-			str = str.Append(NewUTF8String("&quot;"))
-		case '&':
-			str = str.Append(NewUTF8String("&amp;"))
-		case '<':
-			str = str.Append(NewUTF8String("&lt;"))
-		case '>':
-			str = str.Append(NewUTF8String("&gt;"))
-		default:
-			str.Text = append(str.Text, r)
-		}
-	}
-	return str.String()
+	return elem.element.text.TranslateHTML()
 }
 
 func (elem *ElementInlineTextualContent) CloseString() string {

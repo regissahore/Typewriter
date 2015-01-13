@@ -54,6 +54,8 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 		fallthrough
 	case ELEMENT_TYPE_LEAF_HORIZONTAL_RULE:
 		fallthrough
+	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
+		fallthrough
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
 		return true
 	}
