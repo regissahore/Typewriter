@@ -2,6 +2,7 @@ package parser
 
 type ElementLeafIndentedCodeBlock struct {
 	element *Element
+	code *UTF8String
 }
 
 func NewElementLeafIndentedCodeBlock(text *UTF8String) *ElementLeafIndentedCodeBlock {
@@ -12,8 +13,9 @@ func NewElementLeafIndentedCodeBlock(text *UTF8String) *ElementLeafIndentedCodeB
 		isOpen:        true,
 		parent:        nil,
 		children:      make([]IElement, 0),
-		text:          text,
+		text:          NewUTF8String(""),
 	}
+	elem.code = text
 	return elem
 }
 
@@ -22,7 +24,7 @@ func (elem *ElementLeafIndentedCodeBlock) GetElement() *Element {
 }
 
 func (elem *ElementLeafIndentedCodeBlock) OpenString() string {
-	return "<pre><code>"
+	return "<pre><code>" + elem.code.Left(elem.code.Length() - 1).TranslateHTML()
 }
 
 func (elem *ElementLeafIndentedCodeBlock) CloseString() string {
@@ -31,7 +33,7 @@ func (elem *ElementLeafIndentedCodeBlock) CloseString() string {
 
 func (elem *ElementLeafIndentedCodeBlock) TryAppend(last IElement) bool {
 	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK {
-		elem.element.text = elem.element.text.Append(last.GetElement().text)
+		elem.code = elem.code.Append(last.(*ElementLeafIndentedCodeBlock).code)
 		return true
 	} else if last.GetElement().functionType == ELEMENT_TYPE_LEAF_BLANK_LINE {
 		if last.GetElement().text.Length() > 4 {

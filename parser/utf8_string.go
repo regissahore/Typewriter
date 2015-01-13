@@ -94,6 +94,45 @@ func IsDigit(r rune) bool {
 	return '0' <= r && r <= '9'
 }
 
+func IsPunction(r rune) bool {
+	switch r {
+		case '!':fallthrough
+		case '"': fallthrough
+		case '#': fallthrough
+		case '$': fallthrough
+		case '%': fallthrough
+		case '&': fallthrough
+		case '\'': fallthrough
+		case '(': fallthrough
+		case ')': fallthrough
+		case '*': fallthrough
+		case '+': fallthrough
+		case ',': fallthrough
+		case '-': fallthrough
+		case '.': fallthrough
+		case '/': fallthrough
+		case ':': fallthrough
+		case ';': fallthrough
+		case '<': fallthrough
+		case '=': fallthrough
+		case '>': fallthrough
+		case '?': fallthrough
+		case '@': fallthrough
+		case '[': fallthrough
+		case '\\': fallthrough
+		case ']': fallthrough
+		case '^': fallthrough
+		case '_': fallthrough
+		case '`': fallthrough
+		case '{': fallthrough
+		case '|': fallthrough
+		case '}': fallthrough
+		case '~': 
+		return true
+	}
+	return false
+}
+
 func IsAlphaOrDigit(r rune) bool {
 	return IsAlpha(r) || IsDigit(r)
 }

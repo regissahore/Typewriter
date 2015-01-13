@@ -142,6 +142,9 @@ func ParseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 	for i := tagBegin; i < length; i++ {
 		r := line.RuneAt(i)
 		if !IsAlphaOrDigit(r) {
+			if !IsWhitespace(r) && r != '/' && r != '>' {
+				return false, 0
+			}
 			tagEnd = i
 			break
 		}
