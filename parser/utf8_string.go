@@ -86,6 +86,18 @@ func IsWhitespace(r rune) bool {
 	return r == 0x0020 || r == 0x0009 || r == 0x000D || r == 0x000A
 }
 
+func IsAlpha(r rune) bool {
+	return ('a' <= r && r <= 'z') || ('A' <= r && r <= 'Z')
+}
+
+func IsDigit(r rune) bool {
+	return '0' <= r && r <= '9'
+}
+
+func IsAlphaOrDigit(r rune) bool {
+	return IsAlpha(r) || IsDigit(r)
+}
+
 func (str *UTF8String) TranslateHTML() string {
 	html := ""
 	length := str.Length()

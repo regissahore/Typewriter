@@ -64,3 +64,13 @@ func SkipLeadingSpace(line *UTF8String, offset int) int {
 	}
 	return length
 }
+
+func SkipLeadingNonspace(line *UTF8String, offset int) int {
+	length := line.Length()
+	for i := offset; i < length; i++ {
+		if IsWhitespace(line.RuneAt(i)) {
+			return i
+		}
+	}
+	return length
+}

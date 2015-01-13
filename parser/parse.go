@@ -29,6 +29,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	blockParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
 	blockParsers = append(blockParsers, ParseLeafFencedCodeBlock)
 	blockParsers = append(blockParsers, ParseLeafBlankLine)
+	blockParsers = append(blockParsers, ParseLeafHTMLBlock)
 	blockParsers = append(blockParsers, ParseLeafIndentedCodeBlock)
 	blockParsers = append(blockParsers, ParseLeafATXHeader)
 	blockParsers = append(blockParsers, ParseLeafSetextHeader)

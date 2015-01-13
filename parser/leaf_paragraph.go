@@ -56,6 +56,8 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 		fallthrough
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
 		fallthrough
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		fallthrough
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
 		return true
 	}
@@ -80,6 +82,6 @@ func paragraphTrim(line *UTF8String) *UTF8String {
 
 func ParseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
-	doc.AddElement(NewElementLeafParagraph(paragraphTrim(line.Substring(offset, length-offset))))
+	doc.AddElement(NewElementLeafParagraph(paragraphTrim(line.Right(offset))))
 	return true, length - offset
 }

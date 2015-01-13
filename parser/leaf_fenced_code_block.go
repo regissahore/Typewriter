@@ -102,6 +102,10 @@ func (elem *ElementLeafFencedCodeBlock) TryClose(last IElement) bool {
 }
 
 func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) bool {
+	switch doc.GetLastOpen().GetElement().functionType {
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		return false
+	}
 	length := line.Length()
 	leading := SkipLeadingSpace(line, offset)
 	if leading == length || leading-offset >= 4 {
@@ -122,6 +126,7 @@ func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) 
 			break
 		}
 	}
+	index = SkipLeadingSpace(line, index)
 	first := true
 	info := NewUTF8String("")
 	for i := index; i < length; i++ {
