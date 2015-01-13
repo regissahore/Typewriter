@@ -37,25 +37,23 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 	return true
 }
 
-func isHorizontalRuleSymbol(r rune) bool {
-	return r == '-' || r == '_' || r == '*'
-}
-
 func ParseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
-	var symbol rune
-	var symbolNum int
 	length := line.Length()
-	for i := offset; i < length; i++ {
+	index := SkipLeadingSpace(line, offset)
+	if index == length || index-offset >= 4 {
+		return false, 0
+	}
+	symbol := line.RuneAt(index)
+	if symbol != '-' && symbol != '_' && symbol != '*' {
+		return false, 0
+	}
+	symbolNum := 1
+	for i := index; i < length; i++ {
 		r := line.RuneAt(i)
 		if IsWhitespace(r) {
 			continue
 		}
-		if isHorizontalRuleSymbol(r) {
-			if symbol == 0 {
-				symbol = r
-			} else if symbol != r {
-				return false, 0
-			}
+		if r == symbol {
 			symbolNum++
 		} else {
 			return false, 0

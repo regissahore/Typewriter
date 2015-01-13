@@ -46,24 +46,16 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 func ParseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Skip leading blanks.
 	length := line.Length()
-	var beginIndex int
-	for i := offset; i < length; i++ {
-		r := line.RuneAt(i)
-		if IsWhitespace(r) {
-			continue
-		} else if r == '#' {
-			beginIndex = i + 1
-			break
-		} else {
-			return false, 0
-		}
+	beginIndex := SkipLeadingSpace(line, offset)
+	if beginIndex == length || beginIndex-offset >= 4 {
+		return false, 0
 	}
-	if beginIndex-offset >= 4 {
+	if line.RuneAt(beginIndex) != '#' {
 		return false, 0
 	}
 	// Count levels.
 	level := 1
-	for i := beginIndex; i < length; i++ {
+	for i := beginIndex + 1; i < length; i++ {
 		r := line.RuneAt(i)
 		if r == '#' {
 			level++

@@ -54,3 +54,13 @@ type IElement interface {
 	TryAppend(last IElement) bool
 	TryClose(last IElement) bool
 }
+
+func SkipLeadingSpace(line *UTF8String, offset int) int {
+	length := line.Length()
+	for i := offset; i < length; i++ {
+		if !IsWhitespace(line.RuneAt(i)) {
+			return i
+		}
+	}
+	return length
+}

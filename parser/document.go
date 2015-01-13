@@ -44,6 +44,10 @@ func (doc *Document) GetLastOpen() IElement {
 	return doc.openStack[len(doc.openStack)-1]
 }
 
+func (doc *Document) RemoveLastOpen() {
+	doc.openStack = doc.openStack[0 : len(doc.openStack)-1]
+}
+
 func (doc *Document) AddElement(elem IElement) {
 	lastOpen := doc.GetLastOpen()
 	// Try to append homogeneous element.

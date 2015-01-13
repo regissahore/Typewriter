@@ -27,10 +27,11 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	// Initialize document and parsers.
 	doc := NewDocument()
 	blockParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
-	blockParsers = append(blockParsers, ParseLeafHorizontalRule)
 	blockParsers = append(blockParsers, ParseLeafBlankLine)
 	blockParsers = append(blockParsers, ParseLeafIndentedCodeBlock)
 	blockParsers = append(blockParsers, ParseLeafATXHeader)
+	blockParsers = append(blockParsers, ParseLeafSetextHeader)
+	blockParsers = append(blockParsers, ParseLeafHorizontalRule)
 	blockParsers = append(blockParsers, ParseLeafParagraph)
 	inlineParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
 	inlineParsers = append(inlineParsers, ParseInlineHardLineBreak)
@@ -47,16 +48,14 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 			line := NewUTF8String(text + "\n")
 			var offset int
 			for {
-				parsed := false
 				for _, parser := range blockParsers {
 					success, length := parser(doc, line, offset)
 					if success {
-						parsed = true
 						offset += length
 						break
 					}
 				}
-				if !parsed || offset == line.Length() {
+				if offset == line.Length() {
 					break
 				}
 			}
@@ -85,17 +84,12 @@ func parseInline(node IElement,
 			offset := 0
 			length := node.GetElement().text.Length()
 			for offset < length {
-				parsed := false
 				for _, parser := range inlineParsers {
 					success, length := parser(subDoc, node.GetElement().text, offset)
 					if success {
-						parsed = true
 						offset += length
 						break
 					}
-				}
-				if !parsed {
-					break
 				}
 			}
 			node.GetElement().children = append(node.GetElement().children, subDoc)
