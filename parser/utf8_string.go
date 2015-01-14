@@ -8,6 +8,14 @@ func NewUTF8String(str string) *UTF8String {
 	return &UTF8String{[]rune(str)}
 }
 
+func NewUTF8StringEmpty() *UTF8String {
+	return &UTF8String{make([]rune, 0)}
+}
+
+func NewUTF8StringWithRunes(text []rune) *UTF8String {
+	return &UTF8String{text}
+}
+
 func (str *UTF8String) Length() int {
 	return len(str.Text)
 }
@@ -94,40 +102,71 @@ func IsDigit(r rune) bool {
 	return '0' <= r && r <= '9'
 }
 
-func IsPunction(r rune) bool {
+func IsPunctuation(r rune) bool {
 	switch r {
-		case '!':fallthrough
-		case '"': fallthrough
-		case '#': fallthrough
-		case '$': fallthrough
-		case '%': fallthrough
-		case '&': fallthrough
-		case '\'': fallthrough
-		case '(': fallthrough
-		case ')': fallthrough
-		case '*': fallthrough
-		case '+': fallthrough
-		case ',': fallthrough
-		case '-': fallthrough
-		case '.': fallthrough
-		case '/': fallthrough
-		case ':': fallthrough
-		case ';': fallthrough
-		case '<': fallthrough
-		case '=': fallthrough
-		case '>': fallthrough
-		case '?': fallthrough
-		case '@': fallthrough
-		case '[': fallthrough
-		case '\\': fallthrough
-		case ']': fallthrough
-		case '^': fallthrough
-		case '_': fallthrough
-		case '`': fallthrough
-		case '{': fallthrough
-		case '|': fallthrough
-		case '}': fallthrough
-		case '~': 
+	case '!':
+		fallthrough
+	case '"':
+		fallthrough
+	case '#':
+		fallthrough
+	case '$':
+		fallthrough
+	case '%':
+		fallthrough
+	case '&':
+		fallthrough
+	case '\'':
+		fallthrough
+	case '(':
+		fallthrough
+	case ')':
+		fallthrough
+	case '*':
+		fallthrough
+	case '+':
+		fallthrough
+	case ',':
+		fallthrough
+	case '-':
+		fallthrough
+	case '.':
+		fallthrough
+	case '/':
+		fallthrough
+	case ':':
+		fallthrough
+	case ';':
+		fallthrough
+	case '<':
+		fallthrough
+	case '=':
+		fallthrough
+	case '>':
+		fallthrough
+	case '?':
+		fallthrough
+	case '@':
+		fallthrough
+	case '[':
+		fallthrough
+	case '\\':
+		fallthrough
+	case ']':
+		fallthrough
+	case '^':
+		fallthrough
+	case '_':
+		fallthrough
+	case '`':
+		fallthrough
+	case '{':
+		fallthrough
+	case '|':
+		fallthrough
+	case '}':
+		fallthrough
+	case '~':
 		return true
 	}
 	return false

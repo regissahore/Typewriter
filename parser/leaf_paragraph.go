@@ -50,10 +50,14 @@ func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
 
 func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 	switch last.GetElement().functionType {
-	case ELEMENT_TYPE_LEAF_BLANK_LINE: fallthrough
-	case ELEMENT_TYPE_LEAF_HORIZONTAL_RULE: fallthrough
-	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK: fallthrough
-	case ELEMENT_TYPE_LEAF_HTML_BLOCK: fallthrough
+	case ELEMENT_TYPE_LEAF_BLANK_LINE:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_HORIZONTAL_RULE:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		fallthrough
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
 		return true
 	}

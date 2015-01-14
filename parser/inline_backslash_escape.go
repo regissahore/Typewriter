@@ -2,7 +2,7 @@ package parser
 
 type ElementInlineBackslashEscape struct {
 	element *Element
-	symbol	*UTF8String
+	symbol  *UTF8String
 }
 
 func NewElementInlineBackslashEscape(symbol *UTF8String) *ElementInlineBackslashEscape {
@@ -49,9 +49,9 @@ func ParseInlineBackslashEscape(doc *Document, line *UTF8String, offset int) (bo
 			return false, 0
 		}
 	}
-	if offset < length - 1 {
-		if IsPunction(line.RuneAt(offset + 1)) {
-			doc.AddElement(NewElementInlineBackslashEscape(line.Substring(offset + 1, 1)))
+	if offset < length-1 {
+		if IsPunctuation(line.RuneAt(offset + 1)) {
+			doc.AddElement(NewElementInlineBackslashEscape(line.Substring(offset+1, 1)))
 			return true, 2
 		}
 	}
