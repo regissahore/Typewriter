@@ -43,7 +43,7 @@ func (str *UTF8String) Right(start int) *UTF8String {
 }
 
 func (str *UTF8String) Append(tail *UTF8String) *UTF8String {
-	return &UTF8String{append(str.Text, tail.Text...)}
+	return NewUTF8String(str.String() + tail.String())
 }
 
 func (str *UTF8String) LeadingSpaceNum() int {
@@ -100,6 +100,24 @@ func IsAlpha(r rune) bool {
 
 func IsDigit(r rune) bool {
 	return '0' <= r && r <= '9'
+}
+
+func IsDex(r rune) bool {
+	return IsDigit(r) || ('a' <= r && r <= 'f') || ('A' <= r && r <= 'F')
+}
+
+func Dex2Int(r rune) int {
+	if '0' <= r && r <= '9' {
+		return int(r - '0')
+	}
+	if 'a' <= r && r <= 'f' {
+		return int(r - 'a' + 10)
+	}
+	return int(r - 'A' + 10)
+}
+
+func Dec2Int(r rune) int {
+	return int(r - '0')
 }
 
 func IsPunctuation(r rune) bool {

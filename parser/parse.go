@@ -38,6 +38,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	inlineParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
 	inlineParsers = append(inlineParsers, ParseInlineHardLineBreak)
 	inlineParsers = append(inlineParsers, ParseInlineBackslashEscape)
+	inlineParsers = append(inlineParsers, ParseInlineEntity)
 	inlineParsers = append(inlineParsers, ParseInlineTextualContent)
 	// First phase: build the tree structure of block elements.
 	var readFinished bool = false
