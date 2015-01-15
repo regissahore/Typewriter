@@ -29,7 +29,7 @@ func Test() {
 		}
 	}
 	elapsed := time.Since(start)
-	message += fmt.Sprintln("=========================")
+	message += fmt.Sprintln("====================")
 	if errorNum == 0 {
 		message += fmt.Sprintln("Passed all test cases.")
 	} else {

@@ -1,7 +1,8 @@
 package parser
 
+// Types of the elements.
 const (
-	ELEMENT_TYPE_ROOT      = iota
+	ELEMENT_TYPE_DOCUMENT  = iota
 	ELEMENT_TYPE_LEAF      = iota
 	ELEMENT_TYPE_CONTAINER = iota
 	ELEMENT_TYPE_INLINE    = iota
@@ -35,42 +36,31 @@ const (
 )
 
 type Element struct {
-	structureType int
-	functionType  int
-	isOpen        bool
-	parent        IElement
-	children      []IElement
-	text          *UTF8String
+	Structure int  // Document, leaf, container or inline.
+	Function  int  // Specific type of the element.
+	Open      bool // Used for parsing the structure of the document.
+	Children  []IElement
+	Inlines   []*UTF8String // Inline texts to be parsed.
 }
 
-func (elem *Element) Close() {
-	elem.isOpen = false
+func (elem *Element) AddChild(child IElement) {
+	if elem.Children == nil {
+		elem.Children = make([]IElement, 0)
+	}
+	elem.Children = append(elem.Children, child)
 }
 
 type IElement interface {
-	GetElement() *Element
-	OpenString() string
-	CloseString() string
-	TryAppend(last IElement) bool
-	TryClose(last IElement) bool
+	GetBase() *Element
+	Translate(output chan<- string) // Translate to HTML.
+	TryAppend(last IElement) bool   // Used for parsing the structure of the document.
+	TryClose(last IElement) bool    // Used for parsing the structure of the document.
 }
 
-func SkipLeadingSpace(line *UTF8String, offset int) int {
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		if !IsWhitespace(line.RuneAt(i)) {
-			return i
+func (elem *Element) TranslateAllChildren(output chan<- string) {
+	if elem.Children != nil {
+		for _, child := range elem.Children {
+			child.Translate(output)
 		}
 	}
-	return length
-}
-
-func SkipLeadingNonspace(line *UTF8String, offset int) int {
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		if IsWhitespace(line.RuneAt(i)) {
-			return i
-		}
-	}
-	return length
 }

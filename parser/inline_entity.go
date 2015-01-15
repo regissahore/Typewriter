@@ -5,34 +5,29 @@ import (
 )
 
 type ElementInlineEntity struct {
-	element    *Element
-	translated *UTF8String
+	Base       *Element
+	Translated *UTF8String
 }
 
 func NewElementInlineEntity(translated *UTF8String) *ElementInlineEntity {
 	elem := &ElementInlineEntity{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_INLINE,
-		functionType:  ELEMENT_TYPE_INLINE_ENTITY,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_INLINE,
+		Function:  ELEMENT_TYPE_INLINE_ENTITY,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
-	elem.translated = translated
+	elem.Translated = translated
 	return elem
 }
 
-func (elem *ElementInlineEntity) GetElement() *Element {
-	return elem.element
+func (elem *ElementInlineEntity) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementInlineEntity) OpenString() string {
-	return elem.translated.TranslateHTML()
-}
-
-func (elem *ElementInlineEntity) CloseString() string {
-	return ""
+func (elem *ElementInlineEntity) Translate(output chan<- string) {
+	output <- elem.Translated.TranslateHTML()
 }
 
 func (elem *ElementInlineEntity) TryAppend(last IElement) bool {

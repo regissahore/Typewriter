@@ -1,32 +1,27 @@
 package parser
 
 type ElementInlineHardLineBreak struct {
-	element *Element
+	Base *Element
 }
 
 func NewElementInlineHardLineBreak() *ElementInlineHardLineBreak {
 	elem := &ElementInlineHardLineBreak{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_INLINE,
-		functionType:  ELEMENT_TYPE_INLINE_HARD_LINE_BREAK,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_INLINE,
+		Function:  ELEMENT_TYPE_INLINE_HARD_LINE_BREAK,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
 	return elem
 }
 
-func (elem *ElementInlineHardLineBreak) GetElement() *Element {
-	return elem.element
+func (elem *ElementInlineHardLineBreak) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementInlineHardLineBreak) OpenString() string {
-	return "<br />\n"
-}
-
-func (elem *ElementInlineHardLineBreak) CloseString() string {
-	return ""
+func (elem *ElementInlineHardLineBreak) Translate(output chan<- string) {
+	output <- "<br />\n"
 }
 
 func (elem *ElementInlineHardLineBreak) TryAppend(last IElement) bool {

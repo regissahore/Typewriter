@@ -1,37 +1,40 @@
 package parser
 
 type ElementInlineTextualContent struct {
-	element *Element
+	Base *Element
 }
 
-func NewElementInlineTextualContent(r rune) *ElementInlineTextualContent {
+func NewElementInlineTextualContent(text *UTF8String) *ElementInlineTextualContent {
 	elem := &ElementInlineTextualContent{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_INLINE,
-		functionType:  ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(string(r)),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_INLINE,
+		Function:  ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   []*UTF8String{text},
 	}
 	return elem
 }
 
-func (elem *ElementInlineTextualContent) GetElement() *Element {
-	return elem.element
+func (elem *ElementInlineTextualContent) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementInlineTextualContent) OpenString() string {
-	return elem.element.text.TranslateHTML()
+func (elem *ElementInlineTextualContent) Translate(output chan<- string) {
+	if len(elem.Base.Children) == 0 {
+		output <- elem.Base.Inlines[0].TranslateHTML()
+	} else {
+		elem.Base.TranslateAllChildren(output)
+	}
 }
 
-func (elem *ElementInlineTextualContent) CloseString() string {
+func (elem *ElementInlineTextualContent) GetCloseString() string {
 	return ""
 }
 
 func (elem *ElementInlineTextualContent) TryAppend(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
-		elem.element.text = elem.element.text.Append(last.GetElement().text)
+	if last.GetBase().Function == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
+		elem.Base.Inlines[0] = elem.Base.Inlines[0].Append(last.GetBase().Inlines[0])
 		return true
 	}
 	return false
@@ -39,9 +42,4 @@ func (elem *ElementInlineTextualContent) TryAppend(last IElement) bool {
 
 func (elem *ElementInlineTextualContent) TryClose(last IElement) bool {
 	return true
-}
-
-func ParseInlineTextualContent(doc *Document, line *UTF8String, offset int) (bool, int) {
-	doc.AddElement(NewElementInlineTextualContent(line.RuneAt(offset)))
-	return true, 1
 }

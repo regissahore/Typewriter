@@ -5,96 +5,91 @@ import (
 )
 
 type ElementLeafFencedCodeBlock struct {
-	element   *Element
-	symbol    rune
-	symbolLen int
-	leading   int
-	info      *UTF8String
-	code      *UTF8String
-	end       bool
+	Base      *Element
+	Symbol    rune
+	SymbolLen int
+	Leading   int
+	Info      *UTF8String
+	Code      *UTF8String
+	End       bool
 }
 
 func NewElementLeafFencedCodeBlockBegin(symbol rune, symbolLen int, leading int, info *UTF8String) *ElementLeafFencedCodeBlock {
 	elem := &ElementLeafFencedCodeBlock{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
-	elem.symbol = symbol
-	elem.symbolLen = symbolLen
-	elem.leading = leading
-	elem.info = info
-	elem.code = NewUTF8String("")
-	elem.end = false
+	elem.Symbol = symbol
+	elem.SymbolLen = symbolLen
+	elem.Leading = leading
+	elem.Info = info
+	elem.Code = NewUTF8String("")
+	elem.End = false
 	return elem
 }
 
 func NewElementLeafFencedCodeBlockCode(code *UTF8String) *ElementLeafFencedCodeBlock {
 	elem := &ElementLeafFencedCodeBlock{}
-	elem.element = &Element{
-		functionType: ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
+	elem.Base = &Element{
+		Function: ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
 	}
-	elem.code = code
-	elem.end = false
+	elem.Code = code
+	elem.End = false
 	return elem
 }
 
 func NewElementLeafFencedCodeBlockEnd() *ElementLeafFencedCodeBlock {
 	elem := &ElementLeafFencedCodeBlock{}
-	elem.element = &Element{
-		functionType: ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
+	elem.Base = &Element{
+		Function: ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
 	}
-	elem.end = true
+	elem.End = true
 	return elem
 }
 
-func (elem *ElementLeafFencedCodeBlock) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafFencedCodeBlock) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafFencedCodeBlock) OpenString() string {
-	if elem.end {
-		return ""
+func (elem *ElementLeafFencedCodeBlock) Translate(output chan<- string) {
+	if elem.End {
+		return
 	}
-	if elem.info != nil {
-		if elem.info.Length() != 0 {
-			return fmt.Sprintf("<pre><code class=\"language-%s\">\n", elem.info) + elem.code.TranslateHTML()
+	pre := "<pre><code>\n"
+	if elem.Info != nil {
+		if elem.Info.Length() != 0 {
+			pre = fmt.Sprintf("<pre><code class=\"language-%s\">\n", elem.Info) + elem.Code.TranslateHTML()
 		}
 	}
-	return "<pre><code>\n" + elem.code.TranslateHTML()
-}
-
-func (elem *ElementLeafFencedCodeBlock) CloseString() string {
-	if elem.end {
-		return ""
-	}
-	return "</code></pre>\n"
+	output <- pre
+	output <- elem.Code.TranslateHTML()
+	output <- "</code></pre>\n"
 }
 
 func (elem *ElementLeafFencedCodeBlock) TryAppend(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
-		if last.(*ElementLeafFencedCodeBlock).end {
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
+		if last.(*ElementLeafFencedCodeBlock).End {
 			return false
 		}
-		lastCode := last.(*ElementLeafFencedCodeBlock).code
+		lastCode := last.(*ElementLeafFencedCodeBlock).Code
 		spaceNum := lastCode.LeadingSpaceNum()
-		if elem.leading < spaceNum {
-			spaceNum = elem.leading
+		if elem.Leading < spaceNum {
+			spaceNum = elem.Leading
 		}
 		lastCode = lastCode.Right(spaceNum)
-		elem.code = elem.code.Append(lastCode)
+		elem.Code = elem.Code.Append(lastCode)
 		return true
 	}
 	return false
 }
 
 func (elem *ElementLeafFencedCodeBlock) TryClose(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
-		if last.(*ElementLeafFencedCodeBlock).end {
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
+		if last.(*ElementLeafFencedCodeBlock).End {
 			return true
 		}
 	}
@@ -102,7 +97,7 @@ func (elem *ElementLeafFencedCodeBlock) TryClose(last IElement) bool {
 }
 
 func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) bool {
-	switch doc.GetLastOpen().GetElement().functionType {
+	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
 		return false
 	}
@@ -151,7 +146,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 		return false
 	}
 	symbol := line.RuneAt(index)
-	if symbol != doc.GetLastOpen().(*ElementLeafFencedCodeBlock).symbol {
+	if symbol != doc.GetLastOpen().(*ElementLeafFencedCodeBlock).Symbol {
 		return false
 	}
 	symbolLen := 1
@@ -172,7 +167,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 			return false
 		}
 	}
-	if symbolLen < doc.GetLastOpen().(*ElementLeafFencedCodeBlock).symbolLen {
+	if symbolLen < doc.GetLastOpen().(*ElementLeafFencedCodeBlock).SymbolLen {
 		return false
 	}
 	doc.AddElement(NewElementLeafFencedCodeBlockEnd())
@@ -182,7 +177,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 func ParseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	// Inherit from last open code block.
-	if doc.GetLastOpen().GetElement().functionType == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
+	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
 		if parseLeafFencedCodeBlockEnd(doc, line, offset) {
 			return true, length - offset
 		}

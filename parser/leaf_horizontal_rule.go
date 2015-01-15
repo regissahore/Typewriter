@@ -1,32 +1,27 @@
 package parser
 
 type ElementLeafHorizontalRule struct {
-	element *Element
+	Base *Element
 }
 
 func NewElementLeafHorizontalRule() *ElementLeafHorizontalRule {
 	elem := &ElementLeafHorizontalRule{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_HORIZONTAL_RULE,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_HORIZONTAL_RULE,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
 	return elem
 }
 
-func (elem *ElementLeafHorizontalRule) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafHorizontalRule) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafHorizontalRule) OpenString() string {
-	return "<hr />"
-}
-
-func (elem *ElementLeafHorizontalRule) CloseString() string {
-	return "\n"
+func (elem *ElementLeafHorizontalRule) Translate(output chan<- string) {
+	output <- "<hr />\n"
 }
 
 func (elem *ElementLeafHorizontalRule) TryAppend(last IElement) bool {

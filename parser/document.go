@@ -1,51 +1,47 @@
 package parser
 
 type Document struct {
-	element   *Element
-	openStack []IElement
+	Base         *Element
+	OpenElements []IElement
 }
 
 func NewDocument() *Document {
 	doc := &Document{}
-	doc.element = &Element{
-		structureType: ELEMENT_TYPE_ROOT,
-		functionType:  ELEMENT_TYPE_ROOT,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
+	doc.Base = &Element{
+		Structure: ELEMENT_TYPE_DOCUMENT,
+		Function:  ELEMENT_TYPE_DOCUMENT,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
-	doc.openStack = make([]IElement, 0)
-	doc.openStack = append(doc.openStack, doc)
+	doc.OpenElements = make([]IElement, 0)
+	doc.OpenElements = append(doc.OpenElements, doc)
 	return doc
 }
 
-func (doc *Document) GetElement() *Element {
-	return doc.element
+func (doc *Document) GetBase() *Element {
+	return doc.Base
 }
 
-func (doc *Document) OpenString() string {
-	return ""
-}
-
-func (doc *Document) CloseString() string {
-	return ""
+func (doc *Document) Translate(output chan<- string) {
+	doc.Base.TranslateAllChildren(output)
 }
 
 func (doc *Document) TryAppend(last IElement) bool {
 	return false
 }
 
-// The document will never be closed to prevent the doc.openStack from being empty.
+// The document will never be closed to prevent the doc.OpenElements from being empty.
 func (doc *Document) TryClose(last IElement) bool {
 	return false
 }
 
 func (doc *Document) GetLastOpen() IElement {
-	return doc.openStack[len(doc.openStack)-1]
+	return doc.OpenElements[len(doc.OpenElements)-1]
 }
 
 func (doc *Document) RemoveLastOpen() {
-	doc.openStack = doc.openStack[0 : len(doc.openStack)-1]
+	doc.OpenElements = doc.OpenElements[0 : len(doc.OpenElements)-1]
 }
 
 func (doc *Document) AddElement(elem IElement) {
@@ -56,14 +52,13 @@ func (doc *Document) AddElement(elem IElement) {
 	}
 	// Try to close the open blocks.
 	for lastOpen.TryClose(elem) {
-		doc.openStack = doc.openStack[0 : len(doc.openStack)-1]
+		doc.OpenElements = doc.OpenElements[0 : len(doc.OpenElements)-1]
 		lastOpen = doc.GetLastOpen()
 	}
 	// Add to last open block.
-	elem.GetElement().parent = lastOpen
-	lastOpen.GetElement().children = append(lastOpen.GetElement().children, elem)
+	lastOpen.GetBase().Children = append(lastOpen.GetBase().Children, elem)
 	// Add to open block stack.
-	if elem.GetElement().isOpen {
-		doc.openStack = append(doc.openStack, elem)
+	if elem.GetBase().Open {
+		doc.OpenElements = append(doc.OpenElements, elem)
 	}
 }

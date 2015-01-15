@@ -1,53 +1,48 @@
 package parser
 
 type ElementLeafHTMLBlock struct {
-	element *Element
-	raw     *UTF8String
+	Base *Element
+	Raw  *UTF8String
 }
 
 func NewElementLeafHTMLBlock(raw *UTF8String) *ElementLeafHTMLBlock {
 	elem := &ElementLeafHTMLBlock{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_HTML_BLOCK,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_HTML_BLOCK,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
-	elem.raw = raw
+	elem.Raw = raw
 	return elem
 }
 
-func (elem *ElementLeafHTMLBlock) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafHTMLBlock) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafHTMLBlock) OpenString() string {
-	return elem.raw.String()
-}
-
-func (elem *ElementLeafHTMLBlock) CloseString() string {
-	return ""
+func (elem *ElementLeafHTMLBlock) Translate(output chan<- string) {
+	output <- elem.Raw.String()
 }
 
 func (elem *ElementLeafHTMLBlock) TryAppend(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_HTML_BLOCK {
-		elem.raw = elem.raw.Append(last.(*ElementLeafHTMLBlock).raw)
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+		elem.Raw = elem.Raw.Append(last.(*ElementLeafHTMLBlock).Raw)
 		return true
 	}
 	return false
 }
 
 func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_BLANK_LINE {
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_BLANK_LINE {
 		return true
 	}
 	return false
 }
 
 func ParseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
-	switch doc.GetLastOpen().GetElement().functionType {
+	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
 		return false, 0
 	}
@@ -56,7 +51,7 @@ func ParseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 	if index == length {
 		return false, 0
 	}
-	if doc.GetLastOpen().GetElement().functionType == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
 		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
 		return true, length - offset
 	}

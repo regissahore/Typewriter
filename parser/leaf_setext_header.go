@@ -5,34 +5,31 @@ import (
 )
 
 type ElementLeafSetextHeader struct {
-	element *Element
-	level   int
+	Base  *Element
+	Level int
 }
 
 func NewElementLeafSetextHeader(text *UTF8String, level int) *ElementLeafSetextHeader {
 	elem := &ElementLeafSetextHeader{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_SETEXT_HEADER,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          text,
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_SETEXT_HEADER,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   []*UTF8String{text},
 	}
-	elem.level = level
+	elem.Level = level
 	return elem
 }
 
-func (elem *ElementLeafSetextHeader) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafSetextHeader) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafSetextHeader) OpenString() string {
-	return fmt.Sprintf("<h%d>", elem.level)
-}
-
-func (elem *ElementLeafSetextHeader) CloseString() string {
-	return fmt.Sprintf("</h%d>\n\n", elem.level)
+func (elem *ElementLeafSetextHeader) Translate(output chan<- string) {
+	output <- fmt.Sprintf("<h%d>", elem.Level)
+	elem.Base.TranslateAllChildren(output)
+	output <- fmt.Sprintf("</h%d>\n\n", elem.Level)
 }
 
 func (elem *ElementLeafSetextHeader) TryAppend(last IElement) bool {
@@ -46,10 +43,10 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 func ParseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Check whether the last open block is a single line paragraph.
 	lastOpen := doc.GetLastOpen()
-	if lastOpen.GetElement().functionType != ELEMENT_TYPE_LEAF_PARAGRAPH {
+	if lastOpen.GetBase().Function != ELEMENT_TYPE_LEAF_PARAGRAPH {
 		return false, 0
 	}
-	if lastOpen.(*ElementLeafParagraph).lineNum != 1 {
+	if lastOpen.(*ElementLeafParagraph).LineNum != 1 {
 		return false, 0
 	}
 	// Skip leading blanks.
@@ -85,8 +82,10 @@ func ParseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 	if symbol == '-' {
 		level = 2
 	}
-	text := lastOpen.GetElement().text.Trim()
-	lastOpen.(*ElementLeafParagraph).Abondon()
+	text := lastOpen.GetBase().Inlines[0].Trim()
+	lastOpen.(*ElementLeafParagraph).Abondon = true
+	lastOpen.(*ElementLeafParagraph).Base.Inlines = nil
+	lastOpen.(*ElementLeafParagraph).Base.Open = false
 	doc.RemoveLastOpen()
 	doc.AddElement(NewElementLeafATXHeader(text, level))
 	return true, length - offset

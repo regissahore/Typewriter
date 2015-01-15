@@ -23,7 +23,7 @@ func ParseFile(inputPath, outputPath string) {
 }
 
 var blockParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)
-var spanParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)
+var spanParsers []func(line *UTF8String) (bool, int, int, IElement)
 
 func GetBlockParsers() []func(doc *Document, line *UTF8String, offset int) (bool, int) {
 	if blockParsers == nil {
@@ -40,13 +40,13 @@ func GetBlockParsers() []func(doc *Document, line *UTF8String, offset int) (bool
 	return blockParsers
 }
 
-func GetSpanParsers() []func(doc *Document, line *UTF8String, offset int) (bool, int) {
+func GetSpanParsers() []func(line *UTF8String) (bool, int, int, IElement) {
 	if spanParsers == nil {
-		spanParsers = make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
-		spanParsers = append(spanParsers, ParseInlineHardLineBreak)
-		spanParsers = append(spanParsers, ParseInlineBackslashEscape)
-		spanParsers = append(spanParsers, ParseInlineEntity)
-		spanParsers = append(spanParsers, ParseInlineTextualContent)
+		spanParsers = make([]func(line *UTF8String) (bool, int, int, IElement), 0)
+		//spanParsers = append(spanParsers, ParseInlineHardLineBreak)
+		//spanParsers = append(spanParsers, ParseInlineBackslashEscape)
+		//spanParsers = append(spanParsers, ParseInlineEntity)
+		//spanParsers = append(spanParsers, ParseInlineTextualContent)
 	}
 	return spanParsers
 }
@@ -55,6 +55,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	defer close(output)
 	// Initialize document and parsers.
 	doc := NewDocument()
+	GetSpanParsers()
 	parsers := GetBlockParsers()
 	// First phase: build the tree structure of block elements.
 	var readFinished bool = false
@@ -84,48 +85,61 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 		}
 	}
 	// Second phase: detect inline elements.
-	progress := make(chan bool)
-	totalNum := parseInline(doc, progress)
-	for totalNum > 0 {
-		<-progress
-		totalNum--
+	progress := make(chan int)
+	sum := 0
+	go func() {
+		progress <- 1
+		parseInline(doc, progress)
+		progress <- -1
+	}()
+	for {
+		sum += <-progress
+		if sum == 0 {
+			break
+		}
 	}
 	// Third phase: transform elements to strings.
-	parseToString(doc, output)
+	doc.Translate(output)
 }
 
-func parseInline(node IElement, progress chan bool) int {
-	num := 0
-	if node.GetElement().structureType == ELEMENT_TYPE_LEAF {
-		go func() {
-			parsers := GetSpanParsers()
-			subDoc := NewDocument()
-			offset := 0
-			length := node.GetElement().text.Length()
-			for offset < length {
-				for _, parser := range parsers {
-					success, length := parser(subDoc, node.GetElement().text, offset)
-					if success {
-						offset += length
-						break
+func parseInline(node IElement, progress chan int) {
+	if len(node.GetBase().Children) > 0 {
+		for _, child := range node.GetBase().Children {
+			parseInline(child, progress)
+		}
+	} else {
+		if node.GetBase().Inlines != nil {
+			node.GetBase().Children = make([]IElement, len(node.GetBase().Inlines))
+			for index, inline := range node.GetBase().Inlines {
+				progress <- 1
+				go func() {
+					parsers := GetSpanParsers()
+					parsed := false
+					for _, parser := range parsers {
+						success, offset, length, elem := parser(inline)
+						if success {
+							parsed = true
+							node.GetBase().Children[index] = NewDocument()
+							if offset > 0 {
+								textElem := NewElementInlineTextualContent(inline.Left(offset))
+								node.GetBase().Children[index].GetBase().AddChild(textElem)
+							}
+							node.GetBase().Children[index].GetBase().AddChild(elem)
+							if length < inline.Length() {
+								textElem := NewElementInlineTextualContent(inline.Right(length))
+								node.GetBase().Children[index].GetBase().AddChild(textElem)
+							}
+							parseInline(node.GetBase().Children[index], progress)
+							break
+						}
 					}
-				}
+					if !parsed {
+						textElem := NewElementInlineTextualContent(inline)
+						node.GetBase().Children[index] = textElem
+					}
+					progress <- -1
+				}()
 			}
-			node.GetElement().children = append(node.GetElement().children, subDoc)
-			progress <- true
-		}()
-		num++
+		}
 	}
-	for _, child := range node.GetElement().children {
-		num += parseInline(child, progress)
-	}
-	return num
-}
-
-func parseToString(node IElement, output chan<- string) {
-	output <- node.OpenString()
-	for _, child := range node.GetElement().children {
-		parseToString(child, output)
-	}
-	output <- node.CloseString()
 }

@@ -1,55 +1,49 @@
 package parser
 
 type ElementLeafParagraph struct {
-	element *Element
-	lineNum int
-	abondon bool // Change to setext header.
+	Base    *Element
+	LineNum int
+	Abondon bool // Change to setext header.
 }
 
 func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
 	elem := &ElementLeafParagraph{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_PARAGRAPH,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          text,
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_PARAGRAPH,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   []*UTF8String{text},
 	}
-	elem.lineNum = 1
-	elem.abondon = false
+	elem.LineNum = 1
+	elem.Abondon = false
 	return elem
 }
 
-func (elem *ElementLeafParagraph) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafParagraph) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafParagraph) OpenString() string {
-	if elem.abondon {
-		return ""
+func (elem *ElementLeafParagraph) Translate(output chan<- string) {
+	if elem.Abondon {
+		return
 	}
-	return "<p>"
-}
-
-func (elem *ElementLeafParagraph) CloseString() string {
-	if elem.abondon {
-		return ""
-	}
-	return "</p>\n"
+	output <- "<p>"
+	elem.Base.TranslateAllChildren(output)
+	output <- "</p>\n"
 }
 
 func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_PARAGRAPH {
-		elem.GetElement().text = elem.GetElement().text.Append(NewUTF8String("\n").Append(last.GetElement().text))
-		elem.lineNum++
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {
+		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(last.GetBase().Inlines[0]))
+		elem.LineNum++
 		return true
 	}
 	return false
 }
 
 func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
-	switch last.GetElement().functionType {
+	switch last.GetBase().Function {
 	case ELEMENT_TYPE_LEAF_BLANK_LINE:
 		fallthrough
 	case ELEMENT_TYPE_LEAF_HORIZONTAL_RULE:
@@ -62,12 +56,6 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 		return true
 	}
 	return false
-}
-
-func (elem *ElementLeafParagraph) Abondon() {
-	elem.abondon = true
-	elem.element.text = NewUTF8String("")
-	elem.element.isOpen = false
 }
 
 func paragraphTrim(line *UTF8String) *UTF8String {

@@ -1,45 +1,43 @@
 package parser
 
 type ElementLeafIndentedCodeBlock struct {
-	element *Element
-	code *UTF8String
+	Base *Element
+	Code *UTF8String
 }
 
 func NewElementLeafIndentedCodeBlock(text *UTF8String) *ElementLeafIndentedCodeBlock {
 	elem := &ElementLeafIndentedCodeBlock{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK,
-		isOpen:        true,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK,
+		Open:      true,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
-	elem.code = text
+	elem.Code = text
 	return elem
 }
 
-func (elem *ElementLeafIndentedCodeBlock) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafIndentedCodeBlock) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafIndentedCodeBlock) OpenString() string {
-	return "<pre><code>" + elem.code.Left(elem.code.Length() - 1).TranslateHTML()
-}
-
-func (elem *ElementLeafIndentedCodeBlock) CloseString() string {
-	return "</code></pre>\n"
+func (elem *ElementLeafIndentedCodeBlock) Translate(output chan<- string) {
+	output <- "<pre><code>"
+	output <- elem.Code.Left(elem.Code.Length() - 1).TranslateHTML()
+	output <- "</code></pre>\n"
 }
 
 func (elem *ElementLeafIndentedCodeBlock) TryAppend(last IElement) bool {
-	if last.GetElement().functionType == ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK {
-		elem.code = elem.code.Append(last.(*ElementLeafIndentedCodeBlock).code)
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK {
+		elem.Code = elem.Code.Append(last.(*ElementLeafIndentedCodeBlock).Code)
 		return true
-	} else if last.GetElement().functionType == ELEMENT_TYPE_LEAF_BLANK_LINE {
-		if last.GetElement().text.Length() > 4 {
-			elem.element.text = elem.element.text.Append(last.GetElement().text.Right(4))
+	} else if last.GetBase().Function == ELEMENT_TYPE_LEAF_BLANK_LINE {
+		blank := last.(*ElementLeafBlankLine).Blank
+		if blank.Length() > 4 {
+			elem.Code = elem.Code.Append(blank.Right(4))
 		} else {
-			elem.element.text = elem.element.text.Append(NewUTF8String("\n"))
+			elem.Code = elem.Code.Append(NewUTF8String("\n"))
 		}
 		return true
 	}
@@ -52,7 +50,7 @@ func (elem *ElementLeafIndentedCodeBlock) TryClose(last IElement) bool {
 
 func ParseLeafIndentedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Cannot interrupt paragraph.
-	if doc.GetLastOpen().GetElement().functionType == ELEMENT_TYPE_LEAF_PARAGRAPH {
+	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {
 		return false, 0
 	}
 	// Count spaces.

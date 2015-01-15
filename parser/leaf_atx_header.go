@@ -5,34 +5,31 @@ import (
 )
 
 type ElementLeafATXHeader struct {
-	element *Element
-	level   int
+	Base  *Element
+	Level int
 }
 
 func NewElementLeafATXHeader(text *UTF8String, level int) *ElementLeafATXHeader {
 	elem := &ElementLeafATXHeader{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_ATX_HEADER,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          text,
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_ATX_HEADER,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   []*UTF8String{text},
 	}
-	elem.level = level
+	elem.Level = level
 	return elem
 }
 
-func (elem *ElementLeafATXHeader) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafATXHeader) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafATXHeader) OpenString() string {
-	return fmt.Sprintf("<h%d>", elem.level)
-}
-
-func (elem *ElementLeafATXHeader) CloseString() string {
-	return fmt.Sprintf("</h%d>\n", elem.level)
+func (elem *ElementLeafATXHeader) Translate(output chan<- string) {
+	output <- fmt.Sprintf("<h%d>", elem.Level)
+	elem.Base.TranslateAllChildren(output)
+	output <- fmt.Sprintf("</h%d>\n", elem.Level)
 }
 
 func (elem *ElementLeafATXHeader) TryAppend(last IElement) bool {

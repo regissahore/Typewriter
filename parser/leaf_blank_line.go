@@ -1,32 +1,29 @@
 package parser
 
 type ElementLeafBlankLine struct {
-	element *Element
+	Base  *Element
+	Blank *UTF8String
 }
 
-func NewElementLeafBlankLine() *ElementLeafBlankLine {
+func NewElementLeafBlankLine(blank *UTF8String) *ElementLeafBlankLine {
 	elem := &ElementLeafBlankLine{}
-	elem.element = &Element{
-		structureType: ELEMENT_TYPE_LEAF,
-		functionType:  ELEMENT_TYPE_LEAF_BLANK_LINE,
-		isOpen:        false,
-		parent:        nil,
-		children:      make([]IElement, 0),
-		text:          NewUTF8String(""),
+	elem.Base = &Element{
+		Structure: ELEMENT_TYPE_LEAF,
+		Function:  ELEMENT_TYPE_LEAF_BLANK_LINE,
+		Open:      false,
+		Children:  make([]IElement, 0),
+		Inlines:   nil,
 	}
+	elem.Blank = blank
 	return elem
 }
 
-func (elem *ElementLeafBlankLine) GetElement() *Element {
-	return elem.element
+func (elem *ElementLeafBlankLine) GetBase() *Element {
+	return elem.Base
 }
 
-func (elem *ElementLeafBlankLine) OpenString() string {
-	return ""
-}
-
-func (elem *ElementLeafBlankLine) CloseString() string {
-	return "\n"
+func (elem *ElementLeafBlankLine) Translate(output chan<- string) {
+	output <- "\n"
 }
 
 func (elem *ElementLeafBlankLine) TryAppend(last IElement) bool {
@@ -44,6 +41,6 @@ func ParseLeafBlankLine(doc *Document, line *UTF8String, offset int) (bool, int)
 			return false, 0
 		}
 	}
-	doc.AddElement(NewElementLeafBlankLine())
+	doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
 	return true, length - offset
 }
