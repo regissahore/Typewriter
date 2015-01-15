@@ -1,1 +1,1 @@
-<p>foo <!ELEMENT br EMPTY></p>
+<p>foo &lt;!-- not a comment -- two hyphens --&gt;</p>

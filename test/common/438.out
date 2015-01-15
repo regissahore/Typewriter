@@ -1,1 +1,2 @@
-<p><a href="/url" title="title">foo</a></p>
+<p>[foo][ref[bar]]</p>
+<p>[ref[bar]]: /uri</p>

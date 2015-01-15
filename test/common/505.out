@@ -1,1 +1,2 @@
-<p>foo <![CDATA[>&<]]></p>
+<p>foo &lt;!--&gt; foo --&gt;</p>
+<p>foo &lt;!-- foo---&gt;</p>

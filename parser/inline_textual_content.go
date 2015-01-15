@@ -28,10 +28,6 @@ func (elem *ElementInlineTextualContent) Translate(output chan<- string) {
 	}
 }
 
-func (elem *ElementInlineTextualContent) GetCloseString() string {
-	return ""
-}
-
 func (elem *ElementInlineTextualContent) TryAppend(last IElement) bool {
 	if last.GetBase().Function == ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT {
 		elem.Base.Inlines[0] = elem.Base.Inlines[0].Append(last.GetBase().Inlines[0])

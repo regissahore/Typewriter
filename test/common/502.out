@@ -1,1 +1,1 @@
-<p>foo &lt;!-- not a comment -- two hyphens --&gt;</p>
+<p>&lt;/a href=&quot;foo&quot;&gt;</p>

@@ -1,2 +1,1 @@
-<p>![[foo]]</p>
-<p>[[foo]]: /url &quot;title&quot;</p>
+<p><img src="/url" alt="foo" title="title" /></p>

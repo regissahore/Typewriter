@@ -1,1 +1,1 @@
-<p>`foo</p>
+<p><a href="http://foo.bar.%60baz">http://foo.bar.`baz</a>`</p>
