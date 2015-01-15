@@ -1,60 +1,61 @@
 package parser
 
-var htmlBlockTrie *Trie
+var _htmlBlockMap map[string]bool
 
-func GetHTMLBlockTrie() *Trie {
-	if htmlBlockTrie == nil {
-		htmlBlockTrie = NewTrie()
-		htmlBlockTrie.AddWord(NewUTF8String("article"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("header"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("aside"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("hgroup"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("blockquote"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("hr"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("iframe"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("body"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("li"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("map"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("button"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("object"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("canvas"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("ol"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("caption"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("output"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("col"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("p"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("colgroup"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("pre"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("dd"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("progress"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("div"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("section"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("dl"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("table"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("td"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("dt"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("tbody"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("embed"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("textarea"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("fieldset"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("tfoot"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("figcaption"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("th"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("figure"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("thead"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("footer"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("tr"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("form"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("ul"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h1"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h2"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h3"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h4"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h5"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("h6"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("video"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("script"), 0, NewUTF8StringEmpty())
-		htmlBlockTrie.AddWord(NewUTF8String("style"), 0, NewUTF8StringEmpty())
+func GetHTMLBlockMap() map[string]bool {
+	if _htmlBlockMap == nil {
+		_htmlBlockMap = map[string]bool{
+			"article":    true,
+			"header":     true,
+			"aside":      true,
+			"hgroup":     true,
+			"blockquote": true,
+			"hr":         true,
+			"iframe":     true,
+			"body":       true,
+			"li":         true,
+			"map":        true,
+			"button":     true,
+			"object":     true,
+			"canvas":     true,
+			"ol":         true,
+			"caption":    true,
+			"output":     true,
+			"col":        true,
+			"p":          true,
+			"colgroup":   true,
+			"pre":        true,
+			"dd":         true,
+			"progress":   true,
+			"div":        true,
+			"section":    true,
+			"dl":         true,
+			"table":      true,
+			"td":         true,
+			"dt":         true,
+			"tbody":      true,
+			"embed":      true,
+			"textarea":   true,
+			"fieldset":   true,
+			"tfoot":      true,
+			"figcaption": true,
+			"th":         true,
+			"figure":     true,
+			"thead":      true,
+			"footer":     true,
+			"tr":         true,
+			"form":       true,
+			"ul":         true,
+			"h1":         true,
+			"h2":         true,
+			"h3":         true,
+			"h4":         true,
+			"h5":         true,
+			"h6":         true,
+			"video":      true,
+			"script":     true,
+			"style":      true,
+		}
 	}
-	return htmlBlockTrie
+	return _htmlBlockMap
 }

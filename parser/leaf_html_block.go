@@ -91,8 +91,8 @@ func ParseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 		}
 	}
 	tag := line.Substring(tagBegin, tagEnd-tagBegin)
-	exists, _ := GetHTMLBlockTrie().FindWord(tag, 0)
-	if exists {
+	_, exist := GetHTMLBlockMap()[tag.String()]
+	if exist {
 		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
 		return true, length - offset
 	}

@@ -126,8 +126,7 @@ func ParseInlineEntity(doc *Document, line *UTF8String, offset int) (bool, int) 
 		}
 		if semicolon {
 			name := line.Substring(offset+1, nameLength)
-			nameTrie := GetNamedEntitiesTrie()
-			exist, value := nameTrie.FindWord(name, 0)
+			value, exist := GetNamedEntityMap()[name.String()]
 			if exist {
 				doc.AddElement(NewElementInlineEntity(value))
 				return true, nameLength + 2

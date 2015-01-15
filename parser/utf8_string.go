@@ -43,7 +43,7 @@ func (str *UTF8String) Right(start int) *UTF8String {
 }
 
 func (str *UTF8String) Append(tail *UTF8String) *UTF8String {
-	return NewUTF8String(str.String() + tail.String())
+	return &UTF8String{append(str.Text, tail.Text...)}
 }
 
 func (str *UTF8String) LeadingSpaceNum() int {

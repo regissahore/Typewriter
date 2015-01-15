@@ -22,24 +22,40 @@ func ParseFile(inputPath, outputPath string) {
 	<-finished
 }
 
+var blockParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)
+var spanParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)
+
+func GetBlockParsers() []func(doc *Document, line *UTF8String, offset int) (bool, int) {
+	if blockParsers == nil {
+		blockParsers = make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
+		blockParsers = append(blockParsers, ParseLeafFencedCodeBlock)
+		blockParsers = append(blockParsers, ParseLeafBlankLine)
+		blockParsers = append(blockParsers, ParseLeafHTMLBlock)
+		blockParsers = append(blockParsers, ParseLeafIndentedCodeBlock)
+		blockParsers = append(blockParsers, ParseLeafATXHeader)
+		blockParsers = append(blockParsers, ParseLeafSetextHeader)
+		blockParsers = append(blockParsers, ParseLeafHorizontalRule)
+		blockParsers = append(blockParsers, ParseLeafParagraph)
+	}
+	return blockParsers
+}
+
+func GetSpanParsers() []func(doc *Document, line *UTF8String, offset int) (bool, int) {
+	if spanParsers == nil {
+		spanParsers = make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
+		spanParsers = append(spanParsers, ParseInlineHardLineBreak)
+		spanParsers = append(spanParsers, ParseInlineBackslashEscape)
+		spanParsers = append(spanParsers, ParseInlineEntity)
+		spanParsers = append(spanParsers, ParseInlineTextualContent)
+	}
+	return spanParsers
+}
+
 func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	defer close(output)
 	// Initialize document and parsers.
 	doc := NewDocument()
-	blockParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
-	blockParsers = append(blockParsers, ParseLeafFencedCodeBlock)
-	blockParsers = append(blockParsers, ParseLeafBlankLine)
-	blockParsers = append(blockParsers, ParseLeafHTMLBlock)
-	blockParsers = append(blockParsers, ParseLeafIndentedCodeBlock)
-	blockParsers = append(blockParsers, ParseLeafATXHeader)
-	blockParsers = append(blockParsers, ParseLeafSetextHeader)
-	blockParsers = append(blockParsers, ParseLeafHorizontalRule)
-	blockParsers = append(blockParsers, ParseLeafParagraph)
-	inlineParsers := make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
-	inlineParsers = append(inlineParsers, ParseInlineHardLineBreak)
-	inlineParsers = append(inlineParsers, ParseInlineBackslashEscape)
-	inlineParsers = append(inlineParsers, ParseInlineEntity)
-	inlineParsers = append(inlineParsers, ParseInlineTextualContent)
+	parsers := GetBlockParsers()
 	// First phase: build the tree structure of block elements.
 	var readFinished bool = false
 	for !readFinished {
@@ -52,7 +68,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 			line := NewUTF8String(text + "\n")
 			var offset int
 			for {
-				for _, parser := range blockParsers {
+				for _, parser := range parsers {
 					success, length := parser(doc, line, offset)
 					if success {
 						offset += length
@@ -69,7 +85,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	}
 	// Second phase: detect inline elements.
 	progress := make(chan bool)
-	totalNum := parseInline(doc, progress, inlineParsers)
+	totalNum := parseInline(doc, progress)
 	for totalNum > 0 {
 		<-progress
 		totalNum--
@@ -78,17 +94,16 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	parseToString(doc, output)
 }
 
-func parseInline(node IElement,
-	progress chan bool,
-	inlineParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)) int {
+func parseInline(node IElement, progress chan bool) int {
 	num := 0
 	if node.GetElement().structureType == ELEMENT_TYPE_LEAF {
 		go func() {
+			parsers := GetSpanParsers()
 			subDoc := NewDocument()
 			offset := 0
 			length := node.GetElement().text.Length()
 			for offset < length {
-				for _, parser := range inlineParsers {
+				for _, parser := range parsers {
 					success, length := parser(subDoc, node.GetElement().text, offset)
 					if success {
 						offset += length
@@ -102,7 +117,7 @@ func parseInline(node IElement,
 		num++
 	}
 	for _, child := range node.GetElement().children {
-		num += parseInline(child, progress, inlineParsers)
+		num += parseInline(child, progress)
 	}
 	return num
 }
