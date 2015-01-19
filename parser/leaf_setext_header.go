@@ -40,7 +40,7 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 	return true
 }
 
-func ParseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Check whether the last open block is a single line paragraph.
 	lastOpen := doc.GetLastOpen()
 	if lastOpen.GetBase().Function != ELEMENT_TYPE_LEAF_PARAGRAPH {
@@ -51,10 +51,7 @@ func ParseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 	}
 	// Skip leading blanks.
 	length := line.Length()
-	index := SkipLeadingSpace(line, offset)
-	if index == length || index-offset >= 4 {
-		return false, 0
-	}
+	index := offset
 	symbol := line.RuneAt(index)
 	if symbol != '=' && symbol != '-' {
 		return false, 0
@@ -83,10 +80,6 @@ func ParseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 		level = 2
 	}
 	text := lastOpen.GetBase().Inlines[0].Trim()
-	lastOpen.(*ElementLeafParagraph).Abondon = true
-	lastOpen.(*ElementLeafParagraph).Base.Inlines = nil
-	lastOpen.(*ElementLeafParagraph).Base.Open = false
-	doc.RemoveLastOpen()
-	doc.AddElement(NewElementLeafATXHeader(text, level))
+	doc.AddElement(NewElementLeafSetextHeader(text, level))
 	return true, length - offset
 }

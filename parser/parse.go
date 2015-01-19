@@ -22,23 +22,7 @@ func ParseFile(inputPath, outputPath string) {
 	<-finished
 }
 
-var blockParsers []func(doc *Document, line *UTF8String, offset int) (bool, int)
 var spanParsers []func(line *UTF8String) (bool, int, int, IElement)
-
-func GetBlockParsers() []func(doc *Document, line *UTF8String, offset int) (bool, int) {
-	if blockParsers == nil {
-		blockParsers = make([]func(doc *Document, line *UTF8String, offset int) (bool, int), 0)
-		blockParsers = append(blockParsers, ParseLeafFencedCodeBlock)
-		blockParsers = append(blockParsers, ParseLeafBlankLine)
-		blockParsers = append(blockParsers, ParseLeafHTMLBlock)
-		blockParsers = append(blockParsers, ParseLeafIndentedCodeBlock)
-		blockParsers = append(blockParsers, ParseLeafATXHeader)
-		blockParsers = append(blockParsers, ParseLeafSetextHeader)
-		blockParsers = append(blockParsers, ParseLeafHorizontalRule)
-		blockParsers = append(blockParsers, ParseLeafParagraph)
-	}
-	return blockParsers
-}
 
 func GetSpanParsers() []func(line *UTF8String) (bool, int, int, IElement) {
 	if spanParsers == nil {
@@ -56,7 +40,6 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	// Initialize document and parsers.
 	doc := NewDocument()
 	GetSpanParsers()
-	parsers := GetBlockParsers()
 	// First phase: build the tree structure of block elements.
 	var readFinished bool = false
 	for !readFinished {
@@ -66,20 +49,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 				readFinished = true
 				break
 			}
-			line := NewUTF8String(text + "\n")
-			var offset int
-			for {
-				for _, parser := range parsers {
-					success, length := parser(doc, line, offset)
-					if success {
-						offset += length
-						break
-					}
-				}
-				if offset == line.Length() {
-					break
-				}
-			}
+			parseBlock(doc, text)
 		case <-errors:
 			return
 		}

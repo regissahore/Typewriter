@@ -35,9 +35,18 @@ func (elem *ElementLeafParagraph) Translate(output chan<- string) {
 
 func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
 	if last.GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {
-		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(last.GetBase().Inlines[0]))
+		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(paragraphTrim(last.GetBase().Inlines[0])))
 		elem.LineNum++
 		return true
+	}
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK {
+		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(paragraphTrim(last.(*ElementLeafIndentedCodeBlock).Code)))
+		elem.LineNum++
+		return true
+	}
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_SETEXT_HEADER {
+		elem.Abondon = true
+		elem.Base.Inlines = nil
 	}
 	return false
 }
@@ -53,6 +62,8 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
 		fallthrough
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_SETEXT_HEADER:
 		return true
 	}
 	return false
