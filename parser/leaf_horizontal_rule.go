@@ -33,12 +33,13 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 
 func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
-	symbol := line.RuneAt(offset)
+	index := SkipLeadingSpace(line, offset)
+	symbol := line.RuneAt(index)
 	if symbol != '-' && symbol != '_' && symbol != '*' {
 		return false, 0
 	}
 	symbolNum := 1
-	for i := offset + 1; i < length; i++ {
+	for i := index + 1; i < length; i++ {
 		r := line.RuneAt(i)
 		if IsWhitespace(r) {
 			continue

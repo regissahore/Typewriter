@@ -83,6 +83,16 @@ func (elem *ElementLeafFencedCodeBlock) TryAppend(last IElement) bool {
 		elem.Code = elem.Code.Append(lastCode)
 		return true
 	}
+	if last.GetBase().Function == ELEMENT_TYPE_LEAF_BLANK_LINE {
+		blank := last.(*ElementLeafBlankLine).Blank
+		spaceNum := blank.LeadingSpaceNum()
+		if elem.Leading < spaceNum {
+			spaceNum = elem.Leading
+		}
+		lastCode := blank.Right(spaceNum)
+		elem.Code = elem.Code.Append(lastCode)
+		return true
+	}
 	return false
 }
 
@@ -101,7 +111,7 @@ func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) 
 		return false
 	}
 	length := line.Length()
-	leading := offset
+	leading := SkipLeadingSpace(line, offset)
 	symbol := line.RuneAt(leading)
 	if symbol != '`' && symbol != '~' {
 		return false

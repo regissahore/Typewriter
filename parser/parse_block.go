@@ -2,8 +2,12 @@ package parser
 
 func parseBlock(doc *Document, text string) {
 	line := NewUTF8String(text + "\n")
-	for offset := 0; offset < line.Length(); {
+	offset := 0
+	for {
 		offset += parseBlockSub(doc, line, offset)
+		if offset == line.Length() {
+			break
+		}
 	}
 }
 
@@ -14,40 +18,50 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
 		return length - offset
 	}
+	success := false
+	switch doc.GetLastOpen().GetBase().Function {
+	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
+		success, length = parseLeafFencedCodeBlock(doc, line, offset)
+	}
 	if first-offset >= 4 {
 		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
 		return length - offset
 	}
-	success := false
-	increase := 0
+	switch doc.GetLastOpen().GetBase().Function {
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		success, length = parseLeafHTMLBlock(doc, line, offset)
+	}
+	if success {
+		return length
+	}
 	switch line.RuneAt(first) {
 	case '=':
-		success, increase = parseLeafSetextHeader(doc, line, first)
+		success, length = parseLeafSetextHeader(doc, line, offset)
 	case '-':
 		// Setext header has higher priority than horizontal rule.
-		success, increase = parseLeafSetextHeader(doc, line, first)
+		success, length = parseLeafSetextHeader(doc, line, offset)
 		if !success {
-			success, increase = parseLeafHorizontalRule(doc, line, first)
+			success, length = parseLeafHorizontalRule(doc, line, offset)
 		}
 	case '_':
 		fallthrough
 	case '*':
-		success, increase = parseLeafHorizontalRule(doc, line, first)
+		success, length = parseLeafHorizontalRule(doc, line, offset)
 	case '#':
-		success, increase = parseLeafATXHeader(doc, line, first)
+		success, length = parseLeafATXHeader(doc, line, offset)
 	case '`':
 		fallthrough
 	case '~':
-		success, increase = parseLeafFencedCodeBlock(doc, line, first)
+		success, length = parseLeafFencedCodeBlock(doc, line, offset)
 	case '<':
-		success, increase = parseLeafHTMLBlock(doc, line, first)
+		success, length = parseLeafHTMLBlock(doc, line, offset)
 	case '[':
-		success, increase = parseLinkReferenceDefination(doc, line, first)
+		success, length = parseLinkReferenceDefination(doc, line, offset)
 	case '>':
-		//success, increase := ParseLeafBlockQuote(doc, line, first)
+		//success, length := ParseLeafBlockQuote(doc, line, offset)
 	}
 	if !success {
-		_, increase = parseLeafParagraph(doc, line, first)
+		_, length = parseLeafParagraph(doc, line, offset)
 	}
-	return increase + first - offset
+	return length
 }

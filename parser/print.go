@@ -4,14 +4,14 @@ import (
 	"fmt"
 )
 
-func Print(a ...interface{}) {
+func print(a ...interface{}) {
 	fmt.Print(a)
 }
 
-func Printf(format string, a ...interface{}) {
+func printf(format string, a ...interface{}) {
 	fmt.Printf(format, a)
 }
 
-func Println(a ...interface{}) {
+func println(a ...interface{}) {
 	fmt.Println(a)
 }

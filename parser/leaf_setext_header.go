@@ -50,7 +50,7 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 	}
 	// Skip leading blanks.
 	length := line.Length()
-	index := offset
+	index := SkipLeadingSpace(line, offset)
 	symbol := line.RuneAt(index)
 	if symbol != '=' && symbol != '-' {
 		return false, 0

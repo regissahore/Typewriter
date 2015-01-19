@@ -42,7 +42,7 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Skip leading blanks.
 	length := line.Length()
-	beginIndex := offset
+	beginIndex := SkipLeadingSpace(line, offset)
 	if line.RuneAt(beginIndex) != '#' {
 		return false, 0
 	}

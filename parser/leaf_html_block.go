@@ -46,7 +46,7 @@ func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 		return false, 0
 	}
 	length := line.Length()
-	index := offset
+	index := SkipLeadingSpace(line, offset)
 	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
 		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
 		return true, length - offset
