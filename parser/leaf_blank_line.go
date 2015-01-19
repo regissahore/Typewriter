@@ -8,11 +8,10 @@ type ElementLeafBlankLine struct {
 func NewElementLeafBlankLine(blank *UTF8String) *ElementLeafBlankLine {
 	elem := &ElementLeafBlankLine{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_BLANK_LINE,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_LEAF_BLANK_LINE,
+		Open:     false,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Blank = blank
 	return elem

@@ -9,11 +9,10 @@ type ElementLeafParagraph struct {
 func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
 	elem := &ElementLeafParagraph{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_PARAGRAPH,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   []*UTF8String{text},
+		Function: ELEMENT_TYPE_LEAF_PARAGRAPH,
+		Open:     true,
+		Children: nil,
+		Inlines:  []*UTF8String{text},
 	}
 	elem.LineNum = 1
 	elem.Abondon = false

@@ -12,11 +12,10 @@ type ElementLeafATXHeader struct {
 func NewElementLeafATXHeader(text *UTF8String, level int) *ElementLeafATXHeader {
 	elem := &ElementLeafATXHeader{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_ATX_HEADER,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   []*UTF8String{text},
+		Function: ELEMENT_TYPE_LEAF_ATX_HEADER,
+		Open:     false,
+		Children: nil,
+		Inlines:  []*UTF8String{text},
 	}
 	elem.Level = level
 	return elem

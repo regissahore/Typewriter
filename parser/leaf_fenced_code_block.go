@@ -17,11 +17,10 @@ type ElementLeafFencedCodeBlock struct {
 func NewElementLeafFencedCodeBlockBegin(symbol rune, symbolLen int, leading int, info *UTF8String) *ElementLeafFencedCodeBlock {
 	elem := &ElementLeafFencedCodeBlock{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK,
+		Open:     true,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Symbol = symbol
 	elem.SymbolLen = symbolLen

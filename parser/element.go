@@ -6,6 +6,7 @@ const (
 	ELEMENT_TYPE_LEAF      = iota
 	ELEMENT_TYPE_CONTAINER = iota
 	ELEMENT_TYPE_INLINE    = iota
+	ELEMENT_TYPE_INVALID   = iota
 
 	ELEMENT_TYPE_LEAF_HORIZONTAL_RULE           = iota
 	ELEMENT_TYPE_LEAF_ATX_HEADER                = iota
@@ -36,11 +37,10 @@ const (
 )
 
 type Element struct {
-	Structure int  // Document, leaf, container or inline.
-	Function  int  // Specific type of the element.
-	Open      bool // Used for parsing the structure of the document.
-	Children  []IElement
-	Inlines   []*UTF8String // Inline texts to be parsed.
+	Function int  // Specific type of the element.
+	Open     bool // Used for parsing the structure of the document.
+	Children []IElement
+	Inlines  []*UTF8String // Inline texts to be parsed.
 }
 
 func (elem *Element) AddChild(child IElement) {
@@ -63,4 +63,63 @@ func (elem *Element) TranslateAllChildren(output chan<- string) {
 			child.Translate(output)
 		}
 	}
+}
+
+func (elem *Element) Structure() int {
+	switch elem.Function {
+	case ELEMENT_TYPE_DOCUMENT:
+		return ELEMENT_TYPE_DOCUMENT
+
+	case ELEMENT_TYPE_LEAF_HORIZONTAL_RULE:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_ATX_HEADER:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_SETEXT_HEADER:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_PARAGRAPH:
+		fallthrough
+	case ELEMENT_TYPE_LEAF_BLANK_LINE:
+		return ELEMENT_TYPE_LEAF
+
+	case ELEMENT_TYPE_CONTAINER_BLOCK_QUOTE:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ITEM:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST:
+		return ELEMENT_TYPE_CONTAINER
+
+	case ELEMENT_TYPE_INLINE_BACKSLASH_ESCAPE:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_ENTITY:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_CODE_SPAN:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_EMPHASIS:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_STRONG_EMPHASIS:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_LINK:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_IMAGE:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_AUTOLINK:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_RAW_HTML:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_HARD_LINE_BREAK:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_SOFT_LINE_BREAK:
+		fallthrough
+	case ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT:
+		return ELEMENT_TYPE_INLINE
+	}
+	return ELEMENT_TYPE_INVALID
 }

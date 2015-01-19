@@ -9,11 +9,10 @@ type ElementLeafLinkReferenceDefination struct {
 func NewElementLeafLinkReferenceDefination(text *UTF8String, level int) *ElementLeafLinkReferenceDefination {
 	elem := &ElementLeafLinkReferenceDefination{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   []*UTF8String{text},
+		Function: ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION,
+		Open:     false,
+		Children: nil,
+		Inlines:  []*UTF8String{text},
 	}
 	return elem
 }

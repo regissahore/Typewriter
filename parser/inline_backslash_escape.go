@@ -8,11 +8,10 @@ type ElementInlineBackslashEscape struct {
 func NewElementInlineBackslashEscape(symbol *UTF8String) *ElementInlineBackslashEscape {
 	elem := &ElementInlineBackslashEscape{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_INLINE,
-		Function:  ELEMENT_TYPE_INLINE_BACKSLASH_ESCAPE,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_INLINE_BACKSLASH_ESCAPE,
+		Open:     false,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Symbol = symbol
 	return elem

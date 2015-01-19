@@ -12,11 +12,10 @@ type ElementLeafSetextHeader struct {
 func NewElementLeafSetextHeader(text *UTF8String, level int) *ElementLeafSetextHeader {
 	elem := &ElementLeafSetextHeader{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_SETEXT_HEADER,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   []*UTF8String{text},
+		Function: ELEMENT_TYPE_LEAF_SETEXT_HEADER,
+		Open:     false,
+		Children: nil,
+		Inlines:  []*UTF8String{text},
 	}
 	elem.Level = level
 	return elem

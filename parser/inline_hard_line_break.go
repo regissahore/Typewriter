@@ -7,11 +7,10 @@ type ElementInlineHardLineBreak struct {
 func NewElementInlineHardLineBreak() *ElementInlineHardLineBreak {
 	elem := &ElementInlineHardLineBreak{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_INLINE,
-		Function:  ELEMENT_TYPE_INLINE_HARD_LINE_BREAK,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_INLINE_HARD_LINE_BREAK,
+		Open:     false,
+		Children: nil,
+		Inlines:  nil,
 	}
 	return elem
 }

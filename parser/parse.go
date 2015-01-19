@@ -73,7 +73,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 }
 
 func parseInline(node IElement, progress chan int) {
-	if len(node.GetBase().Children) > 0 {
+	if node.GetBase().Children != nil && len(node.GetBase().Children) > 0 {
 		for _, child := range node.GetBase().Children {
 			parseInline(child, progress)
 		}

@@ -27,12 +27,12 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 		// Setext header has higher priority than horizontal rule.
 		success, increase = parseLeafSetextHeader(doc, line, first)
 		if !success {
-			success, increase = ParseLeafHorizontalRule(doc, line, first)
+			success, increase = parseLeafHorizontalRule(doc, line, first)
 		}
 	case '_':
 		fallthrough
 	case '*':
-		success, increase = ParseLeafHorizontalRule(doc, line, first)
+		success, increase = parseLeafHorizontalRule(doc, line, first)
 	case '#':
 		success, increase = ParseLeafATXHeader(doc, line, first)
 	case '`':

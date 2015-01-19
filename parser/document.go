@@ -8,11 +8,10 @@ type Document struct {
 func NewDocument() *Document {
 	doc := &Document{}
 	doc.Base = &Element{
-		Structure: ELEMENT_TYPE_DOCUMENT,
-		Function:  ELEMENT_TYPE_DOCUMENT,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_DOCUMENT,
+		Open:     true,
+		Children: nil,
+		Inlines:  nil,
 	}
 	doc.OpenElements = make([]IElement, 0)
 	doc.OpenElements = append(doc.OpenElements, doc)
@@ -56,7 +55,7 @@ func (doc *Document) AddElement(elem IElement) {
 		lastOpen = doc.GetLastOpen()
 	}
 	// Add to last open block.
-	lastOpen.GetBase().Children = append(lastOpen.GetBase().Children, elem)
+	lastOpen.GetBase().AddChild(elem)
 	// Add to open block stack.
 	if elem.GetBase().Open {
 		doc.OpenElements = append(doc.OpenElements, elem)

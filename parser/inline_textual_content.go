@@ -7,11 +7,10 @@ type ElementInlineTextualContent struct {
 func NewElementInlineTextualContent(text *UTF8String) *ElementInlineTextualContent {
 	elem := &ElementInlineTextualContent{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_INLINE,
-		Function:  ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   []*UTF8String{text},
+		Function: ELEMENT_TYPE_INLINE_TEXTUAL_CONTENT,
+		Open:     true,
+		Children: nil,
+		Inlines:  []*UTF8String{text},
 	}
 	return elem
 }

@@ -8,11 +8,10 @@ type ElementLeafHTMLBlock struct {
 func NewElementLeafHTMLBlock(raw *UTF8String) *ElementLeafHTMLBlock {
 	elem := &ElementLeafHTMLBlock{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_HTML_BLOCK,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_LEAF_HTML_BLOCK,
+		Open:     true,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Raw = raw
 	return elem

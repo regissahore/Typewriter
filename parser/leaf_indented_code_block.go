@@ -8,11 +8,10 @@ type ElementLeafIndentedCodeBlock struct {
 func NewElementLeafIndentedCodeBlock(text *UTF8String) *ElementLeafIndentedCodeBlock {
 	elem := &ElementLeafIndentedCodeBlock{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK,
-		Open:      true,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_LEAF_INDENTED_CODE_BLOCK,
+		Open:     true,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Code = text
 	return elem

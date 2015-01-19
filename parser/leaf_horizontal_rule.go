@@ -7,11 +7,10 @@ type ElementLeafHorizontalRule struct {
 func NewElementLeafHorizontalRule() *ElementLeafHorizontalRule {
 	elem := &ElementLeafHorizontalRule{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_LEAF,
-		Function:  ELEMENT_TYPE_LEAF_HORIZONTAL_RULE,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_LEAF_HORIZONTAL_RULE,
+		Open:     false,
+		Children: nil,
+		Inlines:  nil,
 	}
 	return elem
 }
@@ -32,18 +31,14 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 	return true
 }
 
-func ParseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
-	index := SkipLeadingSpace(line, offset)
-	if index == length || index-offset >= 4 {
-		return false, 0
-	}
-	symbol := line.RuneAt(index)
+	symbol := line.RuneAt(offset)
 	if symbol != '-' && symbol != '_' && symbol != '*' {
 		return false, 0
 	}
 	symbolNum := 1
-	for i := index; i < length; i++ {
+	for i := offset + 1; i < length; i++ {
 		r := line.RuneAt(i)
 		if IsWhitespace(r) {
 			continue

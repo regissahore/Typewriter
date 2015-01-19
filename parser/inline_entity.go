@@ -12,11 +12,10 @@ type ElementInlineEntity struct {
 func NewElementInlineEntity(translated *UTF8String) *ElementInlineEntity {
 	elem := &ElementInlineEntity{}
 	elem.Base = &Element{
-		Structure: ELEMENT_TYPE_INLINE,
-		Function:  ELEMENT_TYPE_INLINE_ENTITY,
-		Open:      false,
-		Children:  make([]IElement, 0),
-		Inlines:   nil,
+		Function: ELEMENT_TYPE_INLINE_ENTITY,
+		Open:     false,
+		Children: nil,
+		Inlines:  nil,
 	}
 	elem.Translated = translated
 	return elem
