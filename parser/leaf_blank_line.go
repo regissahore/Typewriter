@@ -32,14 +32,3 @@ func (elem *ElementLeafBlankLine) TryAppend(last IElement) bool {
 func (elem *ElementLeafBlankLine) TryClose(last IElement) bool {
 	return true
 }
-
-func ParseLeafBlankLine(doc *Document, line *UTF8String, offset int) (bool, int) {
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		if !IsWhitespace(line.RuneAt(i)) {
-			return false, 0
-		}
-	}
-	doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
-	return true, length - offset
-}

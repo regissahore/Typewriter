@@ -46,24 +46,3 @@ func (elem *ElementLeafIndentedCodeBlock) TryAppend(last IElement) bool {
 func (elem *ElementLeafIndentedCodeBlock) TryClose(last IElement) bool {
 	return true
 }
-
-func ParseLeafIndentedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
-	// Cannot interrupt paragraph.
-	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {
-		return false, 0
-	}
-	// Count spaces.
-	spaceNum := 0
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		if line.RuneAt(i) != ' ' {
-			return false, 0
-		}
-		spaceNum++
-		if spaceNum == 4 {
-			break
-		}
-	}
-	doc.AddElement(NewElementLeafIndentedCodeBlock(line.Substring(offset+4, length-offset-4)))
-	return true, length - offset
-}

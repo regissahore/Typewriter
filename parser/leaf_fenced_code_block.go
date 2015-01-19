@@ -101,10 +101,7 @@ func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) 
 		return false
 	}
 	length := line.Length()
-	leading := SkipLeadingSpace(line, offset)
-	if leading == length || leading-offset >= 4 {
-		return false
-	}
+	leading := offset
 	symbol := line.RuneAt(leading)
 	if symbol != '`' && symbol != '~' {
 		return false
@@ -173,7 +170,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 	return true
 }
 
-func ParseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	// Inherit from last open code block.
 	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {

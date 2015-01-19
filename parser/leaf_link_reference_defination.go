@@ -32,7 +32,8 @@ func (elem *ElementLeafLinkReferenceDefination) TryClose(last IElement) bool {
 	return true
 }
 
-func ParseLinkReferenceDefination(doc *Document, line *UTF8String, offset int) (bool, int) {
-	length := line.Length()
-	return true, length - offset
+func parseLinkReferenceDefination(doc *Document, line *UTF8String, offset int) (bool, int) {
+	return false, 0
+	//length := line.Length()
+	//return true, length - offset
 }

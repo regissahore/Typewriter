@@ -15,7 +15,7 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 		return length - offset
 	}
 	if first-offset >= 4 {
-		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset)))
+		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
 		return length - offset
 	}
 	success := false
@@ -34,18 +34,20 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 	case '*':
 		success, increase = parseLeafHorizontalRule(doc, line, first)
 	case '#':
-		success, increase = ParseLeafATXHeader(doc, line, first)
+		success, increase = parseLeafATXHeader(doc, line, first)
 	case '`':
-		success, increase = ParseLeafFencedCodeBlock(doc, line, first)
+		fallthrough
+	case '~':
+		success, increase = parseLeafFencedCodeBlock(doc, line, first)
 	case '<':
-		success, increase = ParseLeafHTMLBlock(doc, line, first)
+		success, increase = parseLeafHTMLBlock(doc, line, first)
 	case '[':
-		success, increase = ParseLinkReferenceDefination(doc, line, first)
+		success, increase = parseLinkReferenceDefination(doc, line, first)
 	case '>':
 		//success, increase := ParseLeafBlockQuote(doc, line, first)
 	}
 	if !success {
-		_, increase = ParseLeafParagraph(doc, line, first)
+		_, increase = parseLeafParagraph(doc, line, first)
 	}
 	return increase + first - offset
 }

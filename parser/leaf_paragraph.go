@@ -78,7 +78,7 @@ func paragraphTrim(line *UTF8String) *UTF8String {
 	return line.Trim()
 }
 
-func ParseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	doc.AddElement(NewElementLeafParagraph(paragraphTrim(line.Right(offset))))
 	return true, length - offset
