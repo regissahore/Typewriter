@@ -3,6 +3,7 @@ package parser
 type Document struct {
 	Base         *Element
 	OpenElements []IElement
+	LinkRefDefs  []*ElementLeafLinkReferenceDefination
 }
 
 func NewDocument() *Document {
@@ -60,4 +61,8 @@ func (doc *Document) AddElement(elem IElement) {
 	if elem.GetBase().Open {
 		doc.OpenElements = append(doc.OpenElements, elem)
 	}
+}
+
+func (doc *Document) AddLinkReferenceDefinations(elem *ElementLeafLinkReferenceDefination) {
+	doc.LinkRefDefs = append(doc.LinkRefDefs, elem)
 }

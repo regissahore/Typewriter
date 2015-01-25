@@ -30,13 +30,13 @@ const (
              |Error|
              +-----+
 */
-func parseLinkLabel(line *UTF8String, offset int) (state int, label *UTF8String, index int) {
+func parseLinkLabel(source *UTF8String, offset int) (state int, label *UTF8String, index int) {
 	index = offset
-	length := line.Length()
+	length := source.Length()
 	state = STATE_START
 	label = NewUTF8StringEmpty()
 	for state != STATE_ERROR && state != STATE_ACCEPT && index < length {
-		r := line.RuneAt(index)
+		r := source.RuneAt(index)
 		index++
 		switch state {
 		case STATE_START:
@@ -95,14 +95,14 @@ func parseLinkLabel(line *UTF8String, offset int) (state int, label *UTF8String,
                     |Escape|
                     +------+
 */
-func parseLinkDestination(line *UTF8String, offset int) (state int, destination *UTF8String, index int) {
+func parseLinkDestination(source *UTF8String, offset int) (state int, destination *UTF8String, index int) {
 	index = offset
-	length := line.Length()
+	length := source.Length()
 	state = STATE_START
 	destination = NewUTF8StringEmpty()
 	bracketStack := 0
 	for state != STATE_ERROR && state != STATE_ACCEPT && index < length {
-		r := line.RuneAt(index)
+		r := source.RuneAt(index)
 		index++
 		switch state {
 		case STATE_START:
@@ -143,7 +143,7 @@ func parseLinkDestination(line *UTF8String, offset int) (state int, destination 
 				destination.AppendRune(r)
 				if r == '(' {
 					bracketStack++
-				} else {
+				} else if r == ')' {
 					bracketStack--
 					if bracketStack < 0 {
 						state = STATE_ERROR
@@ -172,14 +172,14 @@ func parseLinkDestination(line *UTF8String, offset int) (state int, destination 
 |Start|-------->|Title|-------->|Accept|
 +-----+         +-----+  " ' )  +------+
 */
-func parseLinkTitle(line *UTF8String, offset int) (state int, title *UTF8String, index int) {
+func parseLinkTitle(source *UTF8String, offset int) (state int, title *UTF8String, index int) {
 	index = offset
-	length := line.Length()
+	length := source.Length()
 	state = STATE_START
 	title = NewUTF8StringEmpty()
 	var closeRune rune
 	for state != STATE_ERROR && state != STATE_ACCEPT && index < length {
-		r := line.RuneAt(index)
+		r := source.RuneAt(index)
 		index++
 		switch state {
 		case STATE_START:
