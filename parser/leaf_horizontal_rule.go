@@ -31,6 +31,9 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 	return true
 }
 
+// Horizontal rule contains at least 3 '-', '_' or '*' and cannot be mixed.
+// Only spaces could exist around or inside the characters.
+// Has lower priority than Setext header.
 func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	index := SkipLeadingSpace(line, offset)

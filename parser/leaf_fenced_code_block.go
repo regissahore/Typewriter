@@ -180,6 +180,11 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 	return true
 }
 
+// Fenced code blocks begins with at least 3 consecutive '`'s or '~'s.
+// Ends with at least the same number '`'s or '~'s.
+// '`' and '~' cannot be mixed.
+// Info string is optional and should not contain '`'.
+// Indentation will be removed the same length as the leading code fence.
 func parseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	// Inherit from last open code block.

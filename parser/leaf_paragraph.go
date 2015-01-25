@@ -78,6 +78,8 @@ func paragraphTrim(line *UTF8String) *UTF8String {
 	return line.Trim()
 }
 
+// Paragraph will be interrupted by blank line.
+// Leading and tailing spaces will be removed in each line except hard line break.
 func parseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
 	length := line.Length()
 	doc.AddElement(NewElementLeafParagraph(paragraphTrim(line.Right(offset))))

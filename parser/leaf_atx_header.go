@@ -39,6 +39,10 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 	return true
 }
 
+// ATX Header may have 0~3 leading spaces.
+// Begins with 1~6 consecutive '#'s and one space.
+// Ends with one space and any number of consecutive '#'s follows any number of tailing spaces.
+// Leading and tailing spaces will be removed in the header.
 func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Skip leading blanks.
 	length := line.Length()

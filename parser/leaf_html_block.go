@@ -40,6 +40,8 @@ func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
 	return false
 }
 
+// HTML block begins with "<valid-tag>", "<!" or "<?".
+// Ends with blank line.
 func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
 	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:

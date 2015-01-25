@@ -39,6 +39,12 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 	return true
 }
 
+// Setext header containing at least one '=' or '-' and cannot be mixed.
+// There is no space between '=' or '-'.
+// Cannot interrupt paragraph.
+// Leading spaces and tailing spaces will be removed in the header.
+// Has lower priority than list.
+// Has higher priority than horizontal rule.
 func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
 	// Check whether the last open block is a single line paragraph.
 	lastOpen := doc.GetLastOpen()
