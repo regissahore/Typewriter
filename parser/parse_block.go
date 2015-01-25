@@ -1,69 +1,73 @@
 package parser
 
-func parseBlock(doc *Document, text string) {
-	line := NewUTF8String(text + "\n")
+func parseBlock(source *UTF8String) *Document {
+	doc := NewDocument()
 	offset := 0
-	for {
-		offset += parseBlockSub(doc, line, offset)
-		if offset == line.Length() {
-			break
-		}
+	length := source.Length()
+	for offset < length {
+		offset += parseBlockSub(doc, source, offset)
 	}
+	return doc
 }
 
-func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
-	length := line.Length()
-	first := SkipLeadingSpace(line, offset)
-	if first == length {
-		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
-		return length - offset
+func parseBlockSub(doc *Document, source *UTF8String, offset int) int {
+	length := source.Length()
+	first := SkipLeadingSpace(source, offset)
+	last := FindLineEnd(source, offset)
+	// The transformed source code will always ends with a '\n'.
+	if source.RuneAt(first) == '\n' {
+		doc.AddElement(NewElementLeafBlankLine(source.Substring(offset, last-offset)))
+		return last - offset
 	}
 	success := false
 	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		success, length = parseLeafFencedCodeBlock(doc, line, offset)
+		success, length = parseLeafFencedCodeBlock(doc, source, offset, last)
 	case ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION:
-		success, length = parseLeafLinkReferenceDefination(doc, line, offset)
-	}
-	if first-offset >= 4 {
-		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
-		return length - offset
-	}
-	switch doc.GetLastOpen().GetBase().Function {
-	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
-		success, length = parseLeafHTMLBlock(doc, line, offset)
+		success, length = parseLeafLinkReferenceDefination(doc, source, offset, last)
 	}
 	if success {
 		return length
 	}
-	switch line.RuneAt(first) {
+	if first-offset >= 4 {
+		doc.AddElement(NewElementLeafIndentedCodeBlock(source.Substring(offset+4, last-offset-4)))
+		return last - offset
+	}
+	switch doc.GetLastOpen().GetBase().Function {
+	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
+		success, length = parseLeafHTMLBlock(doc, source, offset, last)
+	}
+	if success {
+		return length
+	}
+	switch source.RuneAt(first) {
 	case '=':
-		success, length = parseLeafSetextHeader(doc, line, offset)
+		success, length = parseLeafSetextHeader(doc, source, offset, last)
 	case '-':
 		// Setext header has higher priority than horizontal rule.
-		success, length = parseLeafSetextHeader(doc, line, offset)
+		success, length = parseLeafSetextHeader(doc, source, offset, last)
 		if !success {
-			success, length = parseLeafHorizontalRule(doc, line, offset)
+			success, length = parseLeafHorizontalRule(doc, source, offset, last)
 		}
 	case '_':
 		fallthrough
 	case '*':
-		success, length = parseLeafHorizontalRule(doc, line, offset)
+		success, length = parseLeafHorizontalRule(doc, source, offset, last)
 	case '#':
-		success, length = parseLeafATXHeader(doc, line, offset)
+		success, length = parseLeafATXHeader(doc, source, offset, last)
 	case '`':
 		fallthrough
 	case '~':
-		success, length = parseLeafFencedCodeBlock(doc, line, offset)
+		success, length = parseLeafFencedCodeBlock(doc, source, offset, last)
 	case '<':
-		success, length = parseLeafHTMLBlock(doc, line, offset)
+		success, length = parseLeafHTMLBlock(doc, source, offset, last)
 	case '[':
-		success, length = parseLeafLinkReferenceDefination(doc, line, offset)
+		success, length = parseLeafLinkReferenceDefination(doc, source, offset, last)
 	case '>':
-		//success, length := ParseLeafBlockQuote(doc, line, offset)
+		//success, length := ParseLeafBlockQuote(doc, source, offset, last)
 	}
 	if !success {
-		_, length = parseLeafParagraph(doc, line, offset)
+		_, length = parseLeafParagraph(doc, source, offset, last)
 	}
 	return length
 }

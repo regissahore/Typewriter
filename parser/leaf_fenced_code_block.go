@@ -105,21 +105,20 @@ func (elem *ElementLeafFencedCodeBlock) TryClose(last IElement) bool {
 	return false
 }
 
-func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) bool {
+func parseLeafFencedCodeBlockBegin(doc *Document, source *UTF8String, offset, last int) bool {
 	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
 		return false
 	}
-	length := line.Length()
-	leading := SkipLeadingSpace(line, offset)
-	symbol := line.RuneAt(leading)
+	leading := SkipLeadingSpace(source, offset)
+	symbol := source.RuneAt(leading)
 	if symbol != '`' && symbol != '~' {
 		return false
 	}
 	symbolLen := 1
-	index := length
-	for i := leading + 1; i < length; i++ {
-		r := line.RuneAt(i)
+	index := last
+	for i := leading + 1; i < last; i++ {
+		r := source.RuneAt(i)
 		if r == symbol {
 			symbolLen++
 		} else {
@@ -127,17 +126,17 @@ func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) 
 			break
 		}
 	}
-	index = SkipLeadingSpace(line, index)
+	index = SkipLeadingSpace(source, index)
 	first := true
 	info := NewUTF8String("")
-	for i := index; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := index; i < last; i++ {
+		r := source.RuneAt(i)
 		if r == '`' {
 			return false
 		} else if IsWhitespace(r) {
 			if first {
 				first = false
-				info = line.Substring(index, i-index)
+				info = source.Substring(index, i-index)
 			}
 		}
 	}
@@ -145,19 +144,18 @@ func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) 
 	return true
 }
 
-func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bool {
-	length := line.Length()
-	index := SkipLeadingSpace(line, offset)
-	if index == length || index-offset >= 4 {
+func parseLeafFencedCodeBlockEnd(doc *Document, source *UTF8String, offset, last int) bool {
+	index := SkipLeadingSpace(source, offset)
+	if index == last || index-offset >= 4 {
 		return false
 	}
-	symbol := line.RuneAt(index)
+	symbol := source.RuneAt(index)
 	if symbol != doc.GetLastOpen().(*ElementLeafFencedCodeBlock).Symbol {
 		return false
 	}
 	symbolLen := 1
-	for i := index + 1; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := index + 1; i < last; i++ {
+		r := source.RuneAt(i)
 		if r == symbol {
 			symbolLen++
 		} else if IsWhitespace(r) {
@@ -167,8 +165,8 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 			return false
 		}
 	}
-	for i := index + 1; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := index + 1; i < last; i++ {
+		r := source.RuneAt(i)
 		if !IsWhitespace(r) {
 			return false
 		}
@@ -185,19 +183,18 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 // '`' and '~' cannot be mixed.
 // Info string is optional and should not contain '`'.
 // Indentation will be removed the same length as the leading code fence.
-func parseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
-	length := line.Length()
+func parseLeafFencedCodeBlock(doc *Document, source *UTF8String, offset, last int) (bool, int) {
 	// Inherit from last open code block.
 	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
-		if parseLeafFencedCodeBlockEnd(doc, line, offset) {
-			return true, length - offset
+		if parseLeafFencedCodeBlockEnd(doc, source, offset, last) {
+			return true, last - offset
 		}
-		doc.AddElement(NewElementLeafFencedCodeBlockCode(line.Right(offset)))
-		return true, length - offset
+		doc.AddElement(NewElementLeafFencedCodeBlockCode(source.Substring(offset, last-offset)))
+		return true, last - offset
 	}
 	// Whether code block begins.
-	if parseLeafFencedCodeBlockBegin(doc, line, offset) {
-		return true, length - offset
+	if parseLeafFencedCodeBlockBegin(doc, source, offset, last) {
+		return true, last - offset
 	}
 	return false, 0
 }

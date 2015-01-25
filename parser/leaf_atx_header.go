@@ -43,17 +43,16 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 // Begins with 1~6 consecutive '#'s and one space.
 // Ends with one space and any number of consecutive '#'s follows any number of tailing spaces.
 // Leading and tailing spaces will be removed in the header.
-func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafATXHeader(doc *Document, source *UTF8String, offset, last int) (bool, int) {
 	// Skip leading blanks.
-	length := line.Length()
-	beginIndex := SkipLeadingSpace(line, offset)
-	if line.RuneAt(beginIndex) != '#' {
+	beginIndex := SkipLeadingSpace(source, offset)
+	if source.RuneAt(beginIndex) != '#' {
 		return false, 0
 	}
 	// Count levels.
 	level := 1
-	for i := beginIndex + 1; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := beginIndex + 1; i < last; i++ {
+		r := source.RuneAt(i)
 		if r == '#' {
 			level++
 			if level > 6 {
@@ -68,10 +67,10 @@ func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int)
 	}
 	// Skip tailing blanks.
 	var endIndex int = beginIndex
-	if beginIndex != length {
+	if beginIndex != last {
 		var tailSpaceIndex int = beginIndex
-		for i := length - 1; i >= beginIndex; i-- {
-			r := line.RuneAt(i)
+		for i := last - 1; i >= beginIndex; i-- {
+			r := source.RuneAt(i)
 			if IsWhitespace(r) {
 				continue
 			} else {
@@ -81,7 +80,7 @@ func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int)
 		}
 		// Skip tailing sharps.
 		for i := tailSpaceIndex; i >= beginIndex; i-- {
-			r := line.RuneAt(i)
+			r := source.RuneAt(i)
 			if r == '#' {
 				continue
 			} else if IsWhitespace(r) {
@@ -93,6 +92,6 @@ func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) (bool, int)
 			}
 		}
 	}
-	doc.AddElement(NewElementLeafATXHeader(line.Substring(beginIndex, endIndex-beginIndex).Trim(), level))
-	return true, length - offset
+	doc.AddElement(NewElementLeafATXHeader(source.Substring(beginIndex, endIndex-beginIndex).Trim(), level))
+	return true, last - offset
 }

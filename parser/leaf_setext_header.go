@@ -45,7 +45,7 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 // Leading spaces and tailing spaces will be removed in the header.
 // Has lower priority than list.
 // Has higher priority than horizontal rule.
-func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
+func parseLeafSetextHeader(doc *Document, source *UTF8String, offset, last int) (bool, int) {
 	// Check whether the last open block is a single line paragraph.
 	lastOpen := doc.GetLastOpen()
 	if lastOpen.GetBase().Function != ELEMENT_TYPE_LEAF_PARAGRAPH {
@@ -55,15 +55,14 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 		return false, 0
 	}
 	// Skip leading blanks.
-	length := line.Length()
-	index := SkipLeadingSpace(line, offset)
-	symbol := line.RuneAt(index)
+	index := SkipLeadingSpace(source, offset)
+	symbol := source.RuneAt(index)
 	if symbol != '=' && symbol != '-' {
 		return false, 0
 	}
 	// Skip symbols.
-	for i := index + 1; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := index + 1; i < last; i++ {
+		r := source.RuneAt(i)
 		if r == symbol {
 			continue
 		} else if IsWhitespace(r) {
@@ -74,8 +73,8 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 		}
 	}
 	// Skip tailing blanks.
-	for i := index; i < length; i++ {
-		r := line.RuneAt(i)
+	for i := index; i < last; i++ {
+		r := source.RuneAt(i)
 		if !IsWhitespace(r) {
 			return false, 0
 		}
@@ -86,5 +85,5 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 	}
 	text := lastOpen.GetBase().Inlines[0].Trim()
 	doc.AddElement(NewElementLeafSetextHeader(text, level))
-	return true, length - offset
+	return true, last - offset
 }

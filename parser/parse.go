@@ -37,24 +37,25 @@ func GetSpanParsers() []func(line *UTF8String) (bool, int, int, IElement) {
 
 func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	defer close(output)
-	// Initialize document and parsers.
-	doc := NewDocument()
 	GetSpanParsers()
-	// First phase: build the tree structure of block elements.
+	// First phase: read the entire document.
+	source := NewUTF8StringEmpty()
 	var readFinished bool = false
 	for !readFinished {
 		select {
-		case text, ok := <-input:
+		case line, ok := <-input:
 			if !ok {
 				readFinished = true
 				break
 			}
-			parseBlock(doc, text)
+			source = source.Append(NewUTF8String(line + "\n"))
 		case <-errors:
 			return
 		}
 	}
-	// Second phase: detect inline elements.
+	// Second phase: parse block elements and form the tree structure.
+	doc := parseBlock(source)
+	// Third phase: parse inline elements.
 	progress := make(chan int)
 	sum := 0
 	go func() {
@@ -68,7 +69,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 			break
 		}
 	}
-	// Third phase: transform elements to strings.
+	// Fourth phase: translate to HTML and output.
 	doc.Translate(output)
 }
 
