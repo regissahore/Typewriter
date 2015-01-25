@@ -22,6 +22,8 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
 		success, length = parseLeafFencedCodeBlock(doc, line, offset)
+	case ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION:
+		success, length = parseLeafLinkReferenceDefination(doc, line, offset)
 	}
 	if first-offset >= 4 {
 		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
@@ -56,7 +58,7 @@ func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
 	case '<':
 		success, length = parseLeafHTMLBlock(doc, line, offset)
 	case '[':
-		success, length = parseLinkReferenceDefination(doc, line, offset)
+		success, length = parseLeafLinkReferenceDefination(doc, line, offset)
 	case '>':
 		//success, length := ParseLeafBlockQuote(doc, line, offset)
 	}

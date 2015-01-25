@@ -1,5 +1,9 @@
 package parser
 
+import (
+	"unicode"
+)
+
 type UTF8String struct {
 	Text []rune
 }
@@ -46,6 +50,10 @@ func (str *UTF8String) Append(tail *UTF8String) *UTF8String {
 	return &UTF8String{append(str.Text, tail.Text...)}
 }
 
+func (str *UTF8String) AppendRune(r rune) {
+	str.Text = append(str.Text, r)
+}
+
 func (str *UTF8String) LeadingSpaceNum() int {
 	length := str.Length()
 	for i := 0; i < length; i++ {
@@ -72,6 +80,43 @@ func (str *UTF8String) Trim() *UTF8String {
 	return str.Substring(begin, end-begin)
 }
 
+func (str *UTF8String) Collapse() *UTF8String {
+	collapsed := NewUTF8StringEmpty()
+	length := str.Length()
+	lastIsSpace := false
+	for i := 0; i < length; i++ {
+		r := str.RuneAt(i)
+		if IsWhitespace(r) {
+			if !lastIsSpace {
+				collapsed.AppendRune(' ')
+				lastIsSpace = true
+			}
+		} else {
+			collapsed.AppendRune(r)
+			lastIsSpace = false
+		}
+	}
+	return collapsed
+}
+
+func (str *UTF8String) Lower() *UTF8String {
+	lower := NewUTF8StringEmpty()
+	length := str.Length()
+	for i := 0; i < length; i++ {
+		lower.AppendRune(unicode.ToLower(str.RuneAt(i)))
+	}
+	return lower
+}
+
+func (str *UTF8String) Upper() *UTF8String {
+	upper := NewUTF8StringEmpty()
+	length := str.Length()
+	for i := 0; i < length; i++ {
+		upper.AppendRune(unicode.ToUpper(str.RuneAt(i)))
+	}
+	return upper
+}
+
 func (str *UTF8String) First() rune {
 	if str.Length() == 0 {
 		return 0
@@ -91,7 +136,7 @@ func (str *UTF8String) RuneAt(index int) rune {
 }
 
 func IsWhitespace(r rune) bool {
-	return r == 0x0020 || r == 0x0009 || r == 0x000D || r == 0x000A
+	return unicode.IsSpace(r)
 }
 
 func IsAlpha(r rune) bool {
