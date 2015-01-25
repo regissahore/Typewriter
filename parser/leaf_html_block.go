@@ -42,51 +42,52 @@ func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
 
 // HTML block begins with "<valid-tag>", "<!" or "<?".
 // Ends with blank line.
-func parseLeafHTMLBlock(doc *Document, source *UTF8String, offset, last int) (bool, int) {
+func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) bool {
+	length := line.Length()
 	switch doc.GetLastOpen().GetBase().Function {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		return false, 0
+		return false
 	}
-	index := SkipLeadingSpace(source, offset)
+	index := SkipLeadingSpace(line, offset)
 	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
-		doc.AddElement(NewElementLeafHTMLBlock(source.Substring(offset, last-offset)))
-		return true, last - offset
+		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
+		return true
 	}
 	if index-offset >= 4 {
-		return false, 0
+		return false
 	}
-	if source.RuneAt(index) != '<' {
-		return false, 0
+	if line.RuneAt(index) != '<' {
+		return false
 	}
-	if index <= last-2 {
-		if source.RuneAt(index+1) == '?' || source.RuneAt(index+1) == '!' {
-			doc.AddElement(NewElementLeafHTMLBlock(source.Substring(offset, last-offset)))
-			return true, last - offset
+	if index <= length-2 {
+		if line.RuneAt(index+1) == '?' || line.RuneAt(index+1) == '!' {
+			doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
+			return true
 		}
 	}
-	tagBegin := SkipLeadingSpace(source, index+1)
-	if tagBegin >= last-1 {
-		return false, 0
+	tagBegin := SkipLeadingSpace(line, index+1)
+	if tagBegin >= length-1 {
+		return false
 	}
-	if source.RuneAt(tagBegin) == '/' {
-		tagBegin = SkipLeadingSpace(source, tagBegin+1)
+	if line.RuneAt(tagBegin) == '/' {
+		tagBegin = SkipLeadingSpace(line, tagBegin+1)
 	}
-	tagEnd := last
-	for i := tagBegin; i < last; i++ {
-		r := source.RuneAt(i)
+	tagEnd := length
+	for i := tagBegin; i < length; i++ {
+		r := line.RuneAt(i)
 		if !IsAlphaOrDigit(r) {
 			if !IsWhitespace(r) && r != '/' && r != '>' {
-				return false, 0
+				return false
 			}
 			tagEnd = i
 			break
 		}
 	}
-	tag := source.Substring(tagBegin, tagEnd-tagBegin)
+	tag := line.Substring(tagBegin, tagEnd-tagBegin)
 	_, exist := GetHTMLBlockMap()[tag.String()]
 	if exist {
-		doc.AddElement(NewElementLeafHTMLBlock(source.Substring(offset, last-offset)))
-		return true, last - offset
+		doc.AddElement(NewElementLeafHTMLBlock(line.Substring(offset, length-offset)))
+		return true
 	}
-	return false, 0
+	return false
 }

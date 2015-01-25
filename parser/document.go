@@ -4,6 +4,7 @@ type Document struct {
 	Base         *Element
 	OpenElements []IElement
 	LinkRefDefs  []*ElementLeafLinkReferenceDefination
+	LinkRefMap   map[*UTF8String]*ElementLeafLinkReferenceDefination
 }
 
 func NewDocument() *Document {
@@ -16,6 +17,8 @@ func NewDocument() *Document {
 	}
 	doc.OpenElements = make([]IElement, 0)
 	doc.OpenElements = append(doc.OpenElements, doc)
+	doc.LinkRefDefs = make([]*ElementLeafLinkReferenceDefination, 0)
+	doc.LinkRefMap = make(map[*UTF8String]*ElementLeafLinkReferenceDefination)
 	return doc
 }
 
@@ -65,4 +68,11 @@ func (doc *Document) AddElement(elem IElement) {
 
 func (doc *Document) AddLinkReferenceDefinations(elem *ElementLeafLinkReferenceDefination) {
 	doc.LinkRefDefs = append(doc.LinkRefDefs, elem)
+	refDef, exist := doc.LinkRefMap[elem.Label]
+	if exist && refDef.Destination == nil {
+		exist = false
+	}
+	if !exist {
+		doc.LinkRefMap[elem.Label] = elem
+	}
 }

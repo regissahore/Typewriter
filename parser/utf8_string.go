@@ -264,19 +264,8 @@ func SkipLeadingSpace(line *UTF8String, offset int) int {
 	length := line.Length()
 	for i := offset; i < length; i++ {
 		r := line.RuneAt(i)
-		if r == '\n' || !IsWhitespace(r) {
+		if !IsWhitespace(r) {
 			return i
-		}
-	}
-	return length
-}
-
-func FindLineEnd(line *UTF8String, offset int) int {
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		r := line.RuneAt(i)
-		if r == '\n' {
-			return i + 1
 		}
 	}
 	return length

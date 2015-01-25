@@ -43,34 +43,35 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 // Begins with 1~6 consecutive '#'s and one space.
 // Ends with one space and any number of consecutive '#'s follows any number of tailing spaces.
 // Leading and tailing spaces will be removed in the header.
-func parseLeafATXHeader(doc *Document, source *UTF8String, offset, last int) (bool, int) {
+func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) bool {
+	length := line.Length()
 	// Skip leading blanks.
-	beginIndex := SkipLeadingSpace(source, offset)
-	if source.RuneAt(beginIndex) != '#' {
-		return false, 0
+	beginIndex := SkipLeadingSpace(line, offset)
+	if line.RuneAt(beginIndex) != '#' {
+		return false
 	}
 	// Count levels.
 	level := 1
-	for i := beginIndex + 1; i < last; i++ {
-		r := source.RuneAt(i)
+	for i := beginIndex + 1; i < length; i++ {
+		r := line.RuneAt(i)
 		if r == '#' {
 			level++
 			if level > 6 {
-				return false, 0
+				return false
 			}
 		} else if IsWhitespace(r) {
 			beginIndex = i + 1
 			break
 		} else {
-			return false, 0
+			return false
 		}
 	}
 	// Skip tailing blanks.
 	var endIndex int = beginIndex
-	if beginIndex != last {
+	if beginIndex != length {
 		var tailSpaceIndex int = beginIndex
-		for i := last - 1; i >= beginIndex; i-- {
-			r := source.RuneAt(i)
+		for i := length - 1; i >= beginIndex; i-- {
+			r := line.RuneAt(i)
 			if IsWhitespace(r) {
 				continue
 			} else {
@@ -80,7 +81,7 @@ func parseLeafATXHeader(doc *Document, source *UTF8String, offset, last int) (bo
 		}
 		// Skip tailing sharps.
 		for i := tailSpaceIndex; i >= beginIndex; i-- {
-			r := source.RuneAt(i)
+			r := line.RuneAt(i)
 			if r == '#' {
 				continue
 			} else if IsWhitespace(r) {
@@ -92,6 +93,6 @@ func parseLeafATXHeader(doc *Document, source *UTF8String, offset, last int) (bo
 			}
 		}
 	}
-	doc.AddElement(NewElementLeafATXHeader(source.Substring(beginIndex, endIndex-beginIndex).Trim(), level))
-	return true, last - offset
+	doc.AddElement(NewElementLeafATXHeader(line.Substring(beginIndex, endIndex-beginIndex).Trim(), level))
+	return true
 }

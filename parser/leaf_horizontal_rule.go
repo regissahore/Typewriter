@@ -34,27 +34,28 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 // Horizontal rule contains at least 3 '-', '_' or '*' and cannot be mixed.
 // Only spaces could exist around or inside the characters.
 // Has lower priority than Setext header.
-func parseLeafHorizontalRule(doc *Document, source *UTF8String, offset, last int) (bool, int) {
-	index := SkipLeadingSpace(source, offset)
-	symbol := source.RuneAt(index)
+func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) bool {
+	length := line.Length()
+	index := SkipLeadingSpace(line, offset)
+	symbol := line.RuneAt(index)
 	if symbol != '-' && symbol != '_' && symbol != '*' {
-		return false, 0
+		return false
 	}
 	symbolNum := 1
-	for i := index + 1; i < last; i++ {
-		r := source.RuneAt(i)
+	for i := index + 1; i < length; i++ {
+		r := line.RuneAt(i)
 		if IsWhitespace(r) {
 			continue
 		}
 		if r == symbol {
 			symbolNum++
 		} else {
-			return false, 0
+			return false
 		}
 	}
 	if symbolNum < 3 {
-		return false, 0
+		return false
 	}
 	doc.AddElement(NewElementLeafHorizontalRule())
-	return true, last - offset
+	return true
 }
