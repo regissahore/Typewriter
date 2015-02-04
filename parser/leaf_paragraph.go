@@ -3,7 +3,7 @@ package parser
 type ElementLeafParagraph struct {
 	Base    *Element
 	LineNum int
-	Abondon bool // Change to setext header.
+	Loose   bool
 }
 
 func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
@@ -15,7 +15,7 @@ func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
 		Inlines:  []*UTF8String{text},
 	}
 	elem.LineNum = 1
-	elem.Abondon = false
+	elem.Loose = true
 	return elem
 }
 
@@ -24,12 +24,13 @@ func (elem *ElementLeafParagraph) GetBase() *Element {
 }
 
 func (elem *ElementLeafParagraph) Translate(output chan<- string) {
-	if elem.Abondon {
-		return
+	if elem.Loose {
+		output <- "<p>"
 	}
-	output <- "<p>"
 	elem.Base.TranslateAllChildren(output)
-	output <- "</p>\n"
+	if elem.Loose {
+		output <- "</p>\n"
+	}
 }
 
 func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
@@ -42,10 +43,6 @@ func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
 		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(paragraphTrim(last.(*ElementLeafIndentedCodeBlock).Code)))
 		elem.LineNum++
 		return true
-	}
-	if last.GetBase().Function == ELEMENT_TYPE_LEAF_SETEXT_HEADER {
-		elem.Abondon = true
-		elem.Base.Inlines = nil
 	}
 	return false
 }

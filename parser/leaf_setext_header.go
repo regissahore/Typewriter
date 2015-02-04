@@ -84,6 +84,7 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) bool {
 	if symbol == '-' {
 		level = 2
 	}
+	doc.RemoveLastLeaf()
 	text := lastOpen.GetBase().Inlines[0].Trim()
 	doc.AddElement(NewElementLeafSetextHeader(text, level))
 	return true

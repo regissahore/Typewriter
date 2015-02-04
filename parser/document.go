@@ -1,10 +1,12 @@
 package parser
 
 type Document struct {
-	Base         *Element
-	OpenElements []IElement
-	LinkRefDefs  []*ElementLeafLinkReferenceDefination
-	LinkRefMap   map[*UTF8String]*ElementLeafLinkReferenceDefination
+	Base           *Element
+	OpenElements   []IElement
+	LastLeaf       IElement
+	LastLeafParent IElement
+	LinkRefDefs    []*ElementLeafLinkReferenceDefination
+	LinkRefMap     map[*UTF8String]*ElementLeafLinkReferenceDefination
 }
 
 func NewDocument() *Document {
@@ -47,6 +49,19 @@ func (doc *Document) RemoveLastOpen() {
 	doc.OpenElements = doc.OpenElements[0 : len(doc.OpenElements)-1]
 }
 
+/**
+ * Only used for discarding:
+ * 1. the paragraph followed by setext header.
+ * 2. the link label of link reference defination with no link destination.
+ */
+func (doc *Document) RemoveLastLeaf() {
+	elem := doc.LastLeafParent.GetBase()
+	elem.Children = elem.Children[:len(elem.Children)-1]
+	if doc.LastLeaf.GetBase().Open {
+		doc.RemoveLastOpen()
+	}
+}
+
 func (doc *Document) AddElement(elem IElement) {
 	lastOpen := doc.GetLastOpen()
 	// Try to append homogeneous element.
@@ -60,6 +75,10 @@ func (doc *Document) AddElement(elem IElement) {
 	}
 	// Add to last open block.
 	lastOpen.GetBase().AddChild(elem)
+	if elem.GetBase().Structure() == ELEMENT_TYPE_LEAF {
+		doc.LastLeaf = elem
+		doc.LastLeafParent = lastOpen
+	}
 	// Add to open block stack.
 	if elem.GetBase().Open {
 		doc.OpenElements = append(doc.OpenElements, elem)
