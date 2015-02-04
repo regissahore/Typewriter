@@ -44,12 +44,12 @@ func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
 // Ends with blank line.
 func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) bool {
 	length := line.Length()
-	switch doc.GetLastOpen().GetBase().Function {
+	switch doc.GetLastLeafFunction() {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
 		return false
 	}
 	index := SkipLeadingSpace(line, offset)
-	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+	if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_HTML_BLOCK {
 		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
 		return true
 	}

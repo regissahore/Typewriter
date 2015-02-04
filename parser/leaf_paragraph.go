@@ -60,6 +60,16 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
 		fallthrough
 	case ELEMENT_TYPE_LEAF_SETEXT_HEADER:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_BLOCK_QUOTE:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_BULLET:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ORDERED:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ITEM_BULLET:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ITEM_ORDERED:
 		return true
 	}
 	return false

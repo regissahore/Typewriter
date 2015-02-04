@@ -60,8 +60,8 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 	isParseTitle := true
 	index := SkipLeadingSpace(line, offset)
 	if index == length || line.RuneAt(index) != '[' {
-		if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION {
-			lastDef := doc.GetLastOpen().(*ElementLeafLinkReferenceDefination)
+		if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION {
+			lastDef := doc.LastLeaf.(*ElementLeafLinkReferenceDefination)
 			if lastDef.Destination == nil {
 				isParseLabel = false
 			} else if lastDef.Title == nil {
@@ -87,7 +87,7 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 	if isParseDestination {
 		state, destination, index = parseLinkDestination(line, index)
 		if state != STATE_ACCEPT {
-			if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION {
+			if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION {
 				// The leaf element of last line should be paragraph.
 				text := doc.LastLeaf.(*ElementLeafLinkReferenceDefination).Origin
 				text = paragraphTrim(text)

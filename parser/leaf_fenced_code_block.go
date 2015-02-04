@@ -107,7 +107,7 @@ func (elem *ElementLeafFencedCodeBlock) TryClose(last IElement) bool {
 
 func parseLeafFencedCodeBlockBegin(doc *Document, line *UTF8String, offset int) bool {
 	length := line.Length()
-	switch doc.GetLastOpen().GetBase().Function {
+	switch doc.GetLastLeafFunction() {
 	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
 		return false
 	}
@@ -152,7 +152,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 		return false
 	}
 	symbol := line.RuneAt(index)
-	if symbol != doc.GetLastOpen().(*ElementLeafFencedCodeBlock).Symbol {
+	if symbol != doc.LastLeaf.(*ElementLeafFencedCodeBlock).Symbol {
 		return false
 	}
 	symbolLen := 1
@@ -173,7 +173,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 			return false
 		}
 	}
-	if symbolLen < doc.GetLastOpen().(*ElementLeafFencedCodeBlock).SymbolLen {
+	if symbolLen < doc.LastLeaf.(*ElementLeafFencedCodeBlock).SymbolLen {
 		return false
 	}
 	doc.AddElement(NewElementLeafFencedCodeBlockEnd())
@@ -187,7 +187,7 @@ func parseLeafFencedCodeBlockEnd(doc *Document, line *UTF8String, offset int) bo
 // Indentation will be removed the same length as the leading code fence.
 func parseLeafFencedCodeBlock(doc *Document, line *UTF8String, offset int) bool {
 	// Inherit from length open code block.
-	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
+	if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK {
 		if parseLeafFencedCodeBlockEnd(doc, line, offset) {
 			return true
 		}

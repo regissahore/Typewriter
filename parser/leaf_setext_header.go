@@ -48,11 +48,10 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) bool {
 	length := line.Length()
 	// Check whether the length open block is a single line paragraph.
-	lastOpen := doc.GetLastOpen()
-	if lastOpen.GetBase().Function != ELEMENT_TYPE_LEAF_PARAGRAPH {
+	if doc.GetLastLeafFunction() != ELEMENT_TYPE_LEAF_PARAGRAPH {
 		return false
 	}
-	if lastOpen.(*ElementLeafParagraph).LineNum != 1 {
+	if doc.LastLeaf.(*ElementLeafParagraph).LineNum != 1 {
 		return false
 	}
 	// Skip leading blanks.
@@ -85,7 +84,7 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) bool {
 		level = 2
 	}
 	doc.RemoveLastLeaf()
-	text := lastOpen.GetBase().Inlines[0].Trim()
+	text := doc.LastLeaf.GetBase().Inlines[0].Trim()
 	doc.AddElement(NewElementLeafSetextHeader(text, level))
 	return true
 }
