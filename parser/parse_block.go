@@ -13,14 +13,8 @@ func parseContainer(doc *Document, line *UTF8String) int {
 func parseLeaf(doc *Document, line *UTF8String, offset int) {
 	length := line.Length()
 	first := SkipLeadingSpace(line, offset)
-	if first == length {
-		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
-		return
-	}
 	success := false
 	switch doc.GetLastOpen().GetBase().Function {
-	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
-		success = parseLeafHTMLBlock(doc, line, offset)
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
 		success = parseLeafFencedCodeBlock(doc, line, offset)
 	case ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION:
@@ -28,6 +22,15 @@ func parseLeaf(doc *Document, line *UTF8String, offset int) {
 	}
 	if success {
 		return
+	}
+	if first == length {
+		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
+		return
+	}
+	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+		if parseLeafHTMLBlock(doc, line, offset) {
+			return
+		}
 	}
 	if first-offset >= 4 {
 		if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {

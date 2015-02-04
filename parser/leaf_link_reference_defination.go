@@ -2,12 +2,13 @@ package parser
 
 type ElementLeafLinkReferenceDefination struct {
 	Base        *Element
+	Origin      *UTF8String
 	Label       *UTF8String
 	Destination *UTF8String
 	Title       *UTF8String
 }
 
-func NewElementLeafLinkReferenceDefination(label, destination, title *UTF8String) *ElementLeafLinkReferenceDefination {
+func NewElementLeafLinkReferenceDefination(origin, label, destination, title *UTF8String) *ElementLeafLinkReferenceDefination {
 	elem := &ElementLeafLinkReferenceDefination{}
 	elem.Base = &Element{
 		Function: ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION,
@@ -15,6 +16,7 @@ func NewElementLeafLinkReferenceDefination(label, destination, title *UTF8String
 		Children: nil,
 		Inlines:  nil,
 	}
+	elem.Origin = origin
 	elem.Label = label
 	elem.Destination = destination
 	elem.Title = title
@@ -85,6 +87,13 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 	if isParseDestination {
 		state, destination, index = parseLinkDestination(line, index)
 		if state != STATE_ACCEPT {
+			if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION {
+				// The leaf element of last line should be paragraph.
+				text := doc.LastLeaf.(*ElementLeafLinkReferenceDefination).Origin
+				text = paragraphTrim(text)
+				doc.RemoveLastLeaf()
+				doc.AddElement(NewElementLeafParagraph(text))
+			}
 			return false
 		}
 		index = SkipLeadingSpace(line, index)
@@ -103,7 +112,7 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 			return false
 		}
 	}
-	elem := NewElementLeafLinkReferenceDefination(label, destination, title)
+	elem := NewElementLeafLinkReferenceDefination(line.Right(offset), label, destination, title)
 	doc.AddElement(elem)
 	if isParseLabel {
 		doc.AddLinkReferenceDefinations(elem)
