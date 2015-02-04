@@ -1,11 +1,12 @@
 package parser
 
 type ElementLeafBlankLine struct {
-	Base  *Element
-	Blank *UTF8String
+	Base    *Element
+	Blank   *UTF8String
+	LineNum int
 }
 
-func NewElementLeafBlankLine(blank *UTF8String) *ElementLeafBlankLine {
+func NewElementLeafBlankLine(blank *UTF8String, lineNum int) *ElementLeafBlankLine {
 	elem := &ElementLeafBlankLine{}
 	elem.Base = &Element{
 		Function: ELEMENT_TYPE_LEAF_BLANK_LINE,
@@ -14,6 +15,7 @@ func NewElementLeafBlankLine(blank *UTF8String) *ElementLeafBlankLine {
 		Inlines:  nil,
 	}
 	elem.Blank = blank
+	elem.LineNum = lineNum
 	return elem
 }
 

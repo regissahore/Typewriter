@@ -12,6 +12,27 @@ func NewUTF8String(str string) *UTF8String {
 	return &UTF8String{[]rune(str)}
 }
 
+func NewUTF8StringExpanded(str string) *UTF8String {
+	raw := NewUTF8String(str)
+	expanded := NewUTF8StringEmpty()
+	pos := 0
+	length := raw.Length()
+	for i := 0; i < length; i++ {
+		r := raw.RuneAt(i)
+		if r == '\t' {
+			spaceNum := 4 - pos%4
+			for j := 0; j < spaceNum; j++ {
+				expanded.AppendRune(' ')
+			}
+			pos += spaceNum
+		} else {
+			expanded.AppendRune(r)
+			pos++
+		}
+	}
+	return expanded
+}
+
 func NewUTF8StringEmpty() *UTF8String {
 	return &UTF8String{make([]rune, 0)}
 }

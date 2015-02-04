@@ -34,7 +34,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 				readFinished = true
 				break
 			}
-			parseBlock(doc, NewUTF8String(line+"\n"))
+			parseBlock(doc, NewUTF8StringExpanded(line+"\n"))
 		case <-errors:
 			return
 		}

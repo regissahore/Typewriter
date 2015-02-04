@@ -24,7 +24,13 @@ func parseLeaf(doc *Document, line *UTF8String, offset int) {
 		return
 	}
 	if first == length {
-		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
+		lineNum := 1
+		if doc.LastLeaf != nil {
+			if doc.LastLeaf.GetBase().Function == ELEMENT_TYPE_LEAF_BLANK_LINE {
+				lineNum = doc.LastLeaf.(*ElementLeafBlankLine).LineNum + 1
+			}
+		}
+		doc.AddElement(NewElementLeafBlankLine(line.Right(offset), lineNum))
 		return
 	}
 	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {

@@ -7,6 +7,8 @@ type Document struct {
 	LastLeafParent IElement
 	LinkRefDefs    []*ElementLeafLinkReferenceDefination
 	LinkRefMap     map[*UTF8String]*ElementLeafLinkReferenceDefination
+	LastIndent     int
+	LastContainers []IElement
 }
 
 func NewDocument() *Document {
@@ -19,8 +21,12 @@ func NewDocument() *Document {
 	}
 	doc.OpenElements = make([]IElement, 0)
 	doc.OpenElements = append(doc.OpenElements, doc)
+	doc.LastLeaf = nil
+	doc.LastLeafParent = nil
 	doc.LinkRefDefs = make([]*ElementLeafLinkReferenceDefination, 0)
 	doc.LinkRefMap = make(map[*UTF8String]*ElementLeafLinkReferenceDefination)
+	doc.LastIndent = 0
+	doc.LastContainers = make([]IElement, 0)
 	return doc
 }
 
