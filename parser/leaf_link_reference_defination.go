@@ -53,7 +53,7 @@ func (elem *ElementLeafLinkReferenceDefination) TryClose(last IElement) bool {
 // Link reference: <Link label>: <Link destination> <Optional link title>
 // There is at most one line break between label and destination.
 // There is at most one line break between destination and title.
-func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset int) bool {
+func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset int, firstLine bool) IElement {
 	length := line.Length()
 	isParseLabel := true
 	isParseDestination := true
@@ -70,12 +70,15 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 			}
 		}
 	}
+	if firstLine && !isParseLabel {
+		return nil
+	}
 	var state int
 	var label *UTF8String = nil
 	if isParseLabel {
 		state, label, index = parseLinkLabel(line, index)
 		if state != STATE_ACCEPT || line.RuneAt(index) != ':' {
-			return false
+			return nil
 		}
 		index = SkipLeadingSpace(line, index+1)
 		if index == length {
@@ -94,7 +97,7 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 				doc.RemoveLastLeaf()
 				doc.AddElement(NewElementLeafParagraph(text))
 			}
-			return false
+			return nil
 		}
 		index = SkipLeadingSpace(line, index)
 		if index == length {
@@ -105,17 +108,16 @@ func parseLeafLinkReferenceDefination(doc *Document, line *UTF8String, offset in
 	if isParseTitle {
 		state, title, index = parseLinkTitle(line, index)
 		if state != STATE_ACCEPT {
-			return false
+			return nil
 		}
 		index = SkipLeadingSpace(line, index)
 		if index != length {
-			return false
+			return nil
 		}
 	}
 	elem := NewElementLeafLinkReferenceDefination(line.Right(offset), label, destination, title)
-	doc.AddElement(elem)
 	if isParseLabel {
 		doc.AddLinkReferenceDefinations(elem)
 	}
-	return true
+	return elem
 }

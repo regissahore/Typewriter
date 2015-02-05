@@ -42,32 +42,30 @@ func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
 
 // HTML block begins with "<valid-tag>", "<!" or "<?".
 // Ends with blank line.
-func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) bool {
+func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int, firstLine bool) IElement {
 	length := line.Length()
 	switch doc.GetLastLeafFunction() {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		return false
+		return nil
 	}
 	index := SkipLeadingSpace(line, offset)
-	if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_HTML_BLOCK {
-		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
-		return true
+	if !firstLine && doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+		return NewElementLeafHTMLBlock(line.Right(offset))
 	}
 	if index-offset >= 4 {
-		return false
+		return nil
 	}
 	if line.RuneAt(index) != '<' {
-		return false
+		return nil
 	}
 	if index <= length-2 {
 		if line.RuneAt(index+1) == '?' || line.RuneAt(index+1) == '!' {
-			doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
-			return true
+			return NewElementLeafHTMLBlock(line.Right(offset))
 		}
 	}
 	tagBegin := SkipLeadingSpace(line, index+1)
 	if tagBegin >= length-1 {
-		return false
+		return nil
 	}
 	if line.RuneAt(tagBegin) == '/' {
 		tagBegin = SkipLeadingSpace(line, tagBegin+1)
@@ -77,7 +75,7 @@ func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) bool {
 		r := line.RuneAt(i)
 		if !IsAlphaOrDigit(r) {
 			if !IsWhitespace(r) && r != '/' && r != '>' {
-				return false
+				return nil
 			}
 			tagEnd = i
 			break
@@ -86,8 +84,7 @@ func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) bool {
 	tag := line.Substring(tagBegin, tagEnd-tagBegin)
 	_, exist := GetHTMLBlockMap()[tag.String()]
 	if exist {
-		doc.AddElement(NewElementLeafHTMLBlock(line.Substring(offset, length-offset)))
-		return true
+		return NewElementLeafHTMLBlock(line.Substring(offset, length-offset))
 	}
-	return false
+	return nil
 }

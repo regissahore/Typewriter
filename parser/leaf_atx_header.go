@@ -43,12 +43,12 @@ func (elem *ElementLeafATXHeader) TryClose(last IElement) bool {
 // Begins with 1~6 consecutive '#'s and one space.
 // Ends with one space and any number of consecutive '#'s follows any number of tailing spaces.
 // Leading and tailing spaces will be removed in the header.
-func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) bool {
+func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) IElement {
 	length := line.Length()
 	// Skip leading blanks.
 	beginIndex := SkipLeadingSpace(line, offset)
 	if line.RuneAt(beginIndex) != '#' {
-		return false
+		return nil
 	}
 	// Count levels.
 	level := 1
@@ -57,13 +57,13 @@ func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) bool {
 		if r == '#' {
 			level++
 			if level > 6 {
-				return false
+				return nil
 			}
 		} else if IsWhitespace(r) {
 			beginIndex = i + 1
 			break
 		} else {
-			return false
+			return nil
 		}
 	}
 	// Skip tailing blanks.
@@ -93,6 +93,5 @@ func parseLeafATXHeader(doc *Document, line *UTF8String, offset int) bool {
 			}
 		}
 	}
-	doc.AddElement(NewElementLeafATXHeader(line.Substring(beginIndex, endIndex-beginIndex).Trim(), level))
-	return true
+	return NewElementLeafATXHeader(line.Substring(beginIndex, endIndex-beginIndex).Trim(), level)
 }

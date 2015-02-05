@@ -32,9 +32,24 @@ func (elem *ElementContainerBlockQuote) TryAppend(last IElement) bool {
 }
 
 func (elem *ElementContainerBlockQuote) TryClose(last IElement) bool {
-	return true
+	return false
 }
 
-func parseContainerBlockQuote(doc *Document, line *UTF8String, offset, last int) (bool, int) {
+func parseContainerBlockQuote(doc *Document, line *UTF8String, offset int) (bool, int) {
+	length := line.Length()
+	start := SkipLeadingSpace(line, offset)
+	if start == length || start-offset >= 4 {
+		return false, 0
+	}
+	if line.RuneAt(start) == '>' {
+		doc.AddCurrentContainer(NewElementContainerBlockQuote(start))
+		if line.RuneAt(start+1) == '\n' {
+			return true, start - offset + 1
+		}
+		if IsWhitespace(line.RuneAt(start + 1)) {
+			return true, start - offset + 2
+		}
+		return true, start - offset + 1
+	}
 	return false, 0
 }

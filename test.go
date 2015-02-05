@@ -23,11 +23,16 @@ func Test() {
 	for scanner.Scan() {
 		testName := scanner.Text()
 		totalNum++
+		fmt.Print(totalNum, "\t")
+		if totalNum%10 == 0 {
+			fmt.Println()
+		}
 		if !testCase(testName) {
 			errorNum++
 			message += fmt.Sprintf("[%d/%d] %s\n", errorNum, totalNum, testName)
 		}
 	}
+	fmt.Println()
 	elapsed := time.Since(start)
 	message += fmt.Sprintln("====================")
 	if errorNum == 0 {

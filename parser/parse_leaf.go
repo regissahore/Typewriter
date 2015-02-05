@@ -1,17 +1,17 @@
 package parser
 
-func parseLeaf(doc *Document, line *UTF8String, offset int) {
+func parseLeaf(doc *Document, line *UTF8String, offset int, firstLine bool) IElement {
+	var elem IElement
 	length := line.Length()
 	first := SkipLeadingSpace(line, offset)
-	success := false
 	switch doc.GetLastLeafFunction() {
 	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		success = parseLeafFencedCodeBlock(doc, line, offset)
+		elem = parseLeafFencedCodeBlock(doc, line, offset, firstLine)
 	case ELEMENT_TYPE_LEAF_LINK_REFERENCE_DEFINATION:
-		success = parseLeafLinkReferenceDefination(doc, line, offset)
+		elem = parseLeafLinkReferenceDefination(doc, line, offset, firstLine)
 	}
-	if success {
-		return
+	if elem != nil {
+		return elem
 	}
 	if first == length {
 		lineNum := 1
@@ -20,52 +20,47 @@ func parseLeaf(doc *Document, line *UTF8String, offset int) {
 				lineNum = doc.LastLeaf.(*ElementLeafBlankLine).LineNum + 1
 			}
 		}
-		doc.AddElement(NewElementLeafBlankLine(line.Right(offset), lineNum))
-		return
+		return NewElementLeafBlankLine(line.Right(offset), lineNum)
 	}
 	if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_HTML_BLOCK {
-		if parseLeafHTMLBlock(doc, line, offset) {
-			return
+		elem := parseLeafHTMLBlock(doc, line, offset, firstLine)
+		if elem != nil {
+			return elem
 		}
 	}
 	if first-offset >= 4 {
 		if doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_PARAGRAPH {
-			parseLeafParagraph(doc, line, offset)
-			return
+			return parseLeafParagraph(doc, line, offset)
 		} else {
-			doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
-			return
+			return NewElementLeafIndentedCodeBlock(line.Right(offset + 4))
 		}
-	}
-	if success {
-		return
 	}
 	switch line.RuneAt(first) {
 	case '=':
-		success = parseLeafSetextHeader(doc, line, offset)
+		elem = parseLeafSetextHeader(doc, line, offset, firstLine)
 	case '-':
 		// Setext header has higher priority than horizontal rule.
-		success = parseLeafSetextHeader(doc, line, offset)
-		if !success {
-			success = parseLeafHorizontalRule(doc, line, offset)
+		elem = parseLeafSetextHeader(doc, line, offset, firstLine)
+		if elem == nil {
+			elem = parseLeafHorizontalRule(doc, line, offset)
 		}
 	case '_':
 		fallthrough
 	case '*':
-		success = parseLeafHorizontalRule(doc, line, offset)
+		elem = parseLeafHorizontalRule(doc, line, offset)
 	case '#':
-		success = parseLeafATXHeader(doc, line, offset)
+		elem = parseLeafATXHeader(doc, line, offset)
 	case '`':
 		fallthrough
 	case '~':
-		success = parseLeafFencedCodeBlock(doc, line, offset)
+		elem = parseLeafFencedCodeBlock(doc, line, offset, firstLine)
 	case '<':
-		success = parseLeafHTMLBlock(doc, line, offset)
+		elem = parseLeafHTMLBlock(doc, line, offset, firstLine)
 	case '[':
-		success = parseLeafLinkReferenceDefination(doc, line, offset)
+		elem = parseLeafLinkReferenceDefination(doc, line, offset, firstLine)
 	}
-	if success {
-		return
+	if elem != nil {
+		return elem
 	}
-	parseLeafParagraph(doc, line, offset)
+	return parseLeafParagraph(doc, line, offset)
 }

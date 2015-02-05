@@ -56,7 +56,12 @@ func (doc *Document) TryClose(last IElement) bool {
  */
 func (doc *Document) RemoveLastLeaf() {
 	elem := doc.LastLeafParent.GetBase()
-	elem.Children = elem.Children[:len(elem.Children)-1]
+	for i := 0; i < len(elem.Children); i++ {
+		if elem.Children[i] == doc.LastLeaf {
+			elem.Children = append(elem.Children[:i], elem.Children[i+1:]...)
+			break
+		}
+	}
 	if doc.LastLeaf.GetBase().Open {
 		for i := 0; i < len(doc.OpenElements); i++ {
 			if doc.OpenElements[i] == doc.LastLeaf {
@@ -72,6 +77,16 @@ func (doc *Document) GetLastLeafFunction() int {
 		return ELEMENT_TYPE_INVALID
 	}
 	return doc.LastLeaf.GetBase().Function
+}
+
+func (doc *Document) CloseTo(elem IElement) {
+	for {
+		lastOpen := doc.OpenElements[len(doc.OpenElements)-1]
+		doc.OpenElements = doc.OpenElements[0 : len(doc.OpenElements)-1]
+		if lastOpen == elem {
+			break
+		}
+	}
 }
 
 func (doc *Document) AddElement(elem IElement) {
@@ -95,6 +110,10 @@ func (doc *Document) AddElement(elem IElement) {
 	if elem.GetBase().Open {
 		doc.OpenElements = append(doc.OpenElements, elem)
 	}
+}
+
+func (doc *Document) AddCurrentContainer(elem IElement) {
+	doc.CurrentContainers = append(doc.CurrentContainers, elem)
 }
 
 func (doc *Document) AddLinkReferenceDefinations(elem *ElementLeafLinkReferenceDefination) {
