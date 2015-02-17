@@ -12,8 +12,8 @@ func ParseFile(inputPath, outputPath string) {
 		log.Panic(err)
 		return
 	}
-	input := make(chan string)
-	output := make(chan string)
+	input := make(chan string, 10)
+	output := make(chan string, 10)
 	errors := make(chan error)
 	finished := make(chan bool)
 	go Parse(input, output, errors)
@@ -55,7 +55,7 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 		}
 	}
 	// Second phase: detect inline elements.
-	progress := make(chan int)
+	progress := make(chan int, 100)
 	sum := 0
 	go func() {
 		progress <- 1
