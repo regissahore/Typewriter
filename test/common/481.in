@@ -1,1 +1,3 @@
-<MAILTO:FOO@BAR.BAZ>
+\![foo]
+
+[foo]: /url "title"

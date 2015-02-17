@@ -31,12 +31,15 @@ func (elem *ElementLeafHorizontalRule) TryClose(last IElement) bool {
 	return true
 }
 
-func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool, int) {
+// Horizontal rule contains at least 3 '-', '_' or '*' and cannot be mixed.
+// Only spaces could exist around or inside the characters.
+// Has lower priority than Setext header.
+func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) IElement {
 	length := line.Length()
 	index := SkipLeadingSpace(line, offset)
 	symbol := line.RuneAt(index)
 	if symbol != '-' && symbol != '_' && symbol != '*' {
-		return false, 0
+		return nil
 	}
 	symbolNum := 1
 	for i := index + 1; i < length; i++ {
@@ -47,12 +50,11 @@ func parseLeafHorizontalRule(doc *Document, line *UTF8String, offset int) (bool,
 		if r == symbol {
 			symbolNum++
 		} else {
-			return false, 0
+			return nil
 		}
 	}
 	if symbolNum < 3 {
-		return false, 0
+		return nil
 	}
-	doc.AddElement(NewElementLeafHorizontalRule())
-	return true, length - offset
+	return NewElementLeafHorizontalRule()
 }

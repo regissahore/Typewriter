@@ -40,32 +40,32 @@ func (elem *ElementLeafHTMLBlock) TryClose(last IElement) bool {
 	return false
 }
 
-func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int) {
-	switch doc.GetLastOpen().GetBase().Function {
-	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		return false, 0
-	}
+// HTML block begins with "<valid-tag>", "<!" or "<?".
+// Ends with blank line.
+func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int, firstLine bool) IElement {
 	length := line.Length()
+	switch doc.GetLastLeafFunction() {
+	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
+		return nil
+	}
 	index := SkipLeadingSpace(line, offset)
-	if doc.GetLastOpen().GetBase().Function == ELEMENT_TYPE_LEAF_HTML_BLOCK {
-		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
-		return true, length - offset
+	if !firstLine && doc.GetLastLeafFunction() == ELEMENT_TYPE_LEAF_HTML_BLOCK {
+		return NewElementLeafHTMLBlock(line.Right(offset))
 	}
 	if index-offset >= 4 {
-		return false, 0
+		return nil
 	}
 	if line.RuneAt(index) != '<' {
-		return false, 0
+		return nil
 	}
 	if index <= length-2 {
 		if line.RuneAt(index+1) == '?' || line.RuneAt(index+1) == '!' {
-			doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
-			return true, length - offset
+			return NewElementLeafHTMLBlock(line.Right(offset))
 		}
 	}
 	tagBegin := SkipLeadingSpace(line, index+1)
 	if tagBegin >= length-1 {
-		return false, 0
+		return nil
 	}
 	if line.RuneAt(tagBegin) == '/' {
 		tagBegin = SkipLeadingSpace(line, tagBegin+1)
@@ -75,7 +75,7 @@ func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 		r := line.RuneAt(i)
 		if !IsAlphaOrDigit(r) {
 			if !IsWhitespace(r) && r != '/' && r != '>' {
-				return false, 0
+				return nil
 			}
 			tagEnd = i
 			break
@@ -84,8 +84,7 @@ func parseLeafHTMLBlock(doc *Document, line *UTF8String, offset int) (bool, int)
 	tag := line.Substring(tagBegin, tagEnd-tagBegin)
 	_, exist := GetHTMLBlockMap()[tag.String()]
 	if exist {
-		doc.AddElement(NewElementLeafHTMLBlock(line.Right(offset)))
-		return true, length - offset
+		return NewElementLeafHTMLBlock(line.Substring(offset, length-offset))
 	}
-	return false, 0
+	return nil
 }

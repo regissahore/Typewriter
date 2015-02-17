@@ -1,11 +1,36 @@
 package parser
 
+import (
+	"unicode"
+)
+
 type UTF8String struct {
 	Text []rune
 }
 
 func NewUTF8String(str string) *UTF8String {
 	return &UTF8String{[]rune(str)}
+}
+
+func NewUTF8StringExpanded(str string) *UTF8String {
+	raw := NewUTF8String(str)
+	expanded := NewUTF8StringEmpty()
+	pos := 0
+	length := raw.Length()
+	for i := 0; i < length; i++ {
+		r := raw.RuneAt(i)
+		if r == '\t' {
+			spaceNum := 4 - pos%4
+			for j := 0; j < spaceNum; j++ {
+				expanded.AppendRune(' ')
+			}
+			pos += spaceNum
+		} else {
+			expanded.AppendRune(r)
+			pos++
+		}
+	}
+	return expanded
 }
 
 func NewUTF8StringEmpty() *UTF8String {
@@ -46,6 +71,10 @@ func (str *UTF8String) Append(tail *UTF8String) *UTF8String {
 	return &UTF8String{append(str.Text, tail.Text...)}
 }
 
+func (str *UTF8String) AppendRune(r rune) {
+	str.Text = append(str.Text, r)
+}
+
 func (str *UTF8String) LeadingSpaceNum() int {
 	length := str.Length()
 	for i := 0; i < length; i++ {
@@ -72,6 +101,43 @@ func (str *UTF8String) Trim() *UTF8String {
 	return str.Substring(begin, end-begin)
 }
 
+func (str *UTF8String) Collapse() *UTF8String {
+	collapsed := NewUTF8StringEmpty()
+	length := str.Length()
+	lastIsSpace := false
+	for i := 0; i < length; i++ {
+		r := str.RuneAt(i)
+		if IsWhitespace(r) {
+			if !lastIsSpace {
+				collapsed.AppendRune(' ')
+				lastIsSpace = true
+			}
+		} else {
+			collapsed.AppendRune(r)
+			lastIsSpace = false
+		}
+	}
+	return collapsed
+}
+
+func (str *UTF8String) Lower() *UTF8String {
+	lower := NewUTF8StringEmpty()
+	length := str.Length()
+	for i := 0; i < length; i++ {
+		lower.AppendRune(unicode.ToLower(str.RuneAt(i)))
+	}
+	return lower
+}
+
+func (str *UTF8String) Upper() *UTF8String {
+	upper := NewUTF8StringEmpty()
+	length := str.Length()
+	for i := 0; i < length; i++ {
+		upper.AppendRune(unicode.ToUpper(str.RuneAt(i)))
+	}
+	return upper
+}
+
 func (str *UTF8String) First() rune {
 	if str.Length() == 0 {
 		return 0
@@ -91,7 +157,7 @@ func (str *UTF8String) RuneAt(index int) rune {
 }
 
 func IsWhitespace(r rune) bool {
-	return r == 0x0020 || r == 0x0009 || r == 0x000D || r == 0x000A
+	return unicode.IsSpace(r)
 }
 
 func IsAlpha(r rune) bool {
@@ -218,17 +284,8 @@ func (str *UTF8String) TranslateHTML() string {
 func SkipLeadingSpace(line *UTF8String, offset int) int {
 	length := line.Length()
 	for i := offset; i < length; i++ {
-		if !IsWhitespace(line.RuneAt(i)) {
-			return i
-		}
-	}
-	return length
-}
-
-func SkipLeadingNonspace(line *UTF8String, offset int) int {
-	length := line.Length()
-	for i := offset; i < length; i++ {
-		if IsWhitespace(line.RuneAt(i)) {
+		r := line.RuneAt(i)
+		if !IsWhitespace(r) {
 			return i
 		}
 	}

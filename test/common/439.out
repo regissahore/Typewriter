@@ -1,2 +1,1 @@
-<p>[[[foo]]]</p>
-<p>[[[foo]]]: /url</p>
+<p><a href="/url1">bar</a></p>

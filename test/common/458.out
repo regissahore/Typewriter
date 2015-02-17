@@ -1,1 +1,1 @@
-<p><img src="/url2" alt="foo bar" /></p>
+<p><a href="/url2">foo</a><a href="/url1">baz</a></p>

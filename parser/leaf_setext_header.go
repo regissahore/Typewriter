@@ -39,21 +39,29 @@ func (elem *ElementLeafSetextHeader) TryClose(last IElement) bool {
 	return true
 }
 
-func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, int) {
-	// Check whether the last open block is a single line paragraph.
-	lastOpen := doc.GetLastOpen()
-	if lastOpen.GetBase().Function != ELEMENT_TYPE_LEAF_PARAGRAPH {
-		return false, 0
+// Setext header containing at least one '=' or '-' and cannot be mixed.
+// There is no space between '=' or '-'.
+// Cannot interrupt paragraph.
+// Leading spaces and tailing spaces will be removed in the header.
+// Has lower priority than list.
+// Has higher priority than horizontal rule.
+func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int, firstLine bool) IElement {
+	if firstLine {
+		return nil
 	}
-	if lastOpen.(*ElementLeafParagraph).LineNum != 1 {
-		return false, 0
+	length := line.Length()
+	// Check whether the length open block is a single line paragraph.
+	if doc.GetLastLeafFunction() != ELEMENT_TYPE_LEAF_PARAGRAPH {
+		return nil
+	}
+	if doc.LastLeaf.(*ElementLeafParagraph).LineNum != 1 {
+		return nil
 	}
 	// Skip leading blanks.
-	length := line.Length()
 	index := SkipLeadingSpace(line, offset)
 	symbol := line.RuneAt(index)
 	if symbol != '=' && symbol != '-' {
-		return false, 0
+		return nil
 	}
 	// Skip symbols.
 	for i := index + 1; i < length; i++ {
@@ -64,21 +72,21 @@ func parseLeafSetextHeader(doc *Document, line *UTF8String, offset int) (bool, i
 			index = i + 1
 			break
 		} else {
-			return false, 0
+			return nil
 		}
 	}
 	// Skip tailing blanks.
 	for i := index; i < length; i++ {
 		r := line.RuneAt(i)
 		if !IsWhitespace(r) {
-			return false, 0
+			return nil
 		}
 	}
 	level := 1
 	if symbol == '-' {
 		level = 2
 	}
-	text := lastOpen.GetBase().Inlines[0].Trim()
-	doc.AddElement(NewElementLeafSetextHeader(text, level))
-	return true, length - offset
+	doc.RemoveLastLeaf()
+	text := doc.LastLeaf.GetBase().Inlines[0].Trim()
+	return NewElementLeafSetextHeader(text, level)
 }

@@ -1,1 +1,2 @@
-<p><a href="http://foo.bar.baz">http://foo.bar.baz</a></p>
+<p>![[foo]]</p>
+<p>[[foo]]: /url &quot;title&quot;</p>

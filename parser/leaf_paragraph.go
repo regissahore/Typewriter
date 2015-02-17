@@ -3,7 +3,7 @@ package parser
 type ElementLeafParagraph struct {
 	Base    *Element
 	LineNum int
-	Abondon bool // Change to setext header.
+	Loose   bool
 }
 
 func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
@@ -15,7 +15,7 @@ func NewElementLeafParagraph(text *UTF8String) *ElementLeafParagraph {
 		Inlines:  []*UTF8String{text},
 	}
 	elem.LineNum = 1
-	elem.Abondon = false
+	elem.Loose = true
 	return elem
 }
 
@@ -24,12 +24,13 @@ func (elem *ElementLeafParagraph) GetBase() *Element {
 }
 
 func (elem *ElementLeafParagraph) Translate(output chan<- string) {
-	if elem.Abondon {
-		return
+	if elem.Loose {
+		output <- "<p>"
 	}
-	output <- "<p>"
 	elem.Base.TranslateAllChildren(output)
-	output <- "</p>\n"
+	if elem.Loose {
+		output <- "</p>\n"
+	}
 }
 
 func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
@@ -42,10 +43,6 @@ func (elem *ElementLeafParagraph) TryAppend(last IElement) bool {
 		elem.GetBase().Inlines[0] = elem.GetBase().Inlines[0].Append(NewUTF8String("\n").Append(paragraphTrim(last.(*ElementLeafIndentedCodeBlock).Code)))
 		elem.LineNum++
 		return true
-	}
-	if last.GetBase().Function == ELEMENT_TYPE_LEAF_SETEXT_HEADER {
-		elem.Abondon = true
-		elem.Base.Inlines = nil
 	}
 	return false
 }
@@ -63,6 +60,16 @@ func (elem *ElementLeafParagraph) TryClose(last IElement) bool {
 	case ELEMENT_TYPE_LEAF_ATX_HEADER:
 		fallthrough
 	case ELEMENT_TYPE_LEAF_SETEXT_HEADER:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_BLOCK_QUOTE:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_BULLET:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ORDERED:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ITEM_BULLET:
+		fallthrough
+	case ELEMENT_TYPE_CONTAINER_LIST_ITEM_ORDERED:
 		return true
 	}
 	return false
@@ -78,8 +85,8 @@ func paragraphTrim(line *UTF8String) *UTF8String {
 	return line.Trim()
 }
 
-func parseLeafParagraph(doc *Document, line *UTF8String, offset int) (bool, int) {
-	length := line.Length()
-	doc.AddElement(NewElementLeafParagraph(paragraphTrim(line.Right(offset))))
-	return true, length - offset
+// Paragraph will be interrupted by blank line.
+// Leading and tailing spaces will be removed in each line except hard line break.
+func parseLeafParagraph(doc *Document, line *UTF8String, offset int) IElement {
+	return NewElementLeafParagraph(paragraphTrim(line.Right(offset)))
 }

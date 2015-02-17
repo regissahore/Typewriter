@@ -1,1 +1,1 @@
-foo <![CDATA[>&<]]>
+foo <!-- not a comment -- two hyphens -->

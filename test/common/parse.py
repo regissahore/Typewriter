@@ -1,4 +1,4 @@
-# Version 0.15 (2014-12-31)
+# Version 0.17 (2015-01-24)
 import codecs
 from pyquery import PyQuery
 import HTMLParser  
@@ -10,7 +10,7 @@ def translate(s):
     
 spec = open('spec.html', 'r').read()
 d = PyQuery(spec)
-total_num = 531
+total_num = 535
 for i in range(0, total_num):
     num = str(i + 1)
     div_name = 'example-' + num

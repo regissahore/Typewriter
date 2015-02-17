@@ -22,39 +22,24 @@ func ParseFile(inputPath, outputPath string) {
 	<-finished
 }
 
-var spanParsers []func(line *UTF8String) (bool, int, int, IElement)
-
-func GetSpanParsers() []func(line *UTF8String) (bool, int, int, IElement) {
-	if spanParsers == nil {
-		spanParsers = make([]func(line *UTF8String) (bool, int, int, IElement), 0)
-		//spanParsers = append(spanParsers, ParseInlineHardLineBreak)
-		//spanParsers = append(spanParsers, ParseInlineBackslashEscape)
-		//spanParsers = append(spanParsers, ParseInlineEntity)
-		//spanParsers = append(spanParsers, ParseInlineTextualContent)
-	}
-	return spanParsers
-}
-
 func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 	defer close(output)
-	// Initialize document and parsers.
+	// First phase: parse block elements and form the tree structure.
 	doc := NewDocument()
-	GetSpanParsers()
-	// First phase: build the tree structure of block elements.
 	var readFinished bool = false
 	for !readFinished {
 		select {
-		case text, ok := <-input:
+		case line, ok := <-input:
 			if !ok {
 				readFinished = true
 				break
 			}
-			parseBlock(doc, text)
+			parseBlock(doc, NewUTF8StringExpanded(line+"\n"))
 		case <-errors:
 			return
 		}
 	}
-	// Second phase: detect inline elements.
+	// Second phase: parse inline elements.
 	progress := make(chan int, 100)
 	sum := 0
 	go func() {
@@ -68,48 +53,6 @@ func Parse(input <-chan string, output chan<- string, errors <-chan error) {
 			break
 		}
 	}
-	// Third phase: transform elements to strings.
+	// Third phase: translate to HTML and output.
 	doc.Translate(output)
-}
-
-func parseInline(node IElement, progress chan int) {
-	if node.GetBase().Children != nil && len(node.GetBase().Children) > 0 {
-		for _, child := range node.GetBase().Children {
-			parseInline(child, progress)
-		}
-	} else {
-		if node.GetBase().Inlines != nil {
-			node.GetBase().Children = make([]IElement, len(node.GetBase().Inlines))
-			for index, inline := range node.GetBase().Inlines {
-				progress <- 1
-				go func() {
-					parsers := GetSpanParsers()
-					parsed := false
-					for _, parser := range parsers {
-						success, offset, length, elem := parser(inline)
-						if success {
-							parsed = true
-							node.GetBase().Children[index] = NewDocument()
-							if offset > 0 {
-								textElem := NewElementInlineTextualContent(inline.Left(offset))
-								node.GetBase().Children[index].GetBase().AddChild(textElem)
-							}
-							node.GetBase().Children[index].GetBase().AddChild(elem)
-							if length < inline.Length() {
-								textElem := NewElementInlineTextualContent(inline.Right(length))
-								node.GetBase().Children[index].GetBase().AddChild(textElem)
-							}
-							parseInline(node.GetBase().Children[index], progress)
-							break
-						}
-					}
-					if !parsed {
-						textElem := NewElementInlineTextualContent(inline)
-						node.GetBase().Children[index] = textElem
-					}
-					progress <- -1
-				}()
-			}
-		}
-	}
 }

@@ -1,67 +1,37 @@
 package parser
 
-func parseBlock(doc *Document, text string) {
-	line := NewUTF8String(text + "\n")
-	offset := 0
-	for {
-		offset += parseBlockSub(doc, line, offset)
-		if offset == line.Length() {
+func parseBlock(doc *Document, line *UTF8String) *Document {
+	offset, firstLine := parseContainer(doc, line)
+	leaf := parseLeaf(doc, line, offset, firstLine)
+	// Add container element(s).
+	var i int
+	for i = 0; i < len(doc.CurrentContainers) && i < len(doc.LastContainers); i++ {
+		if doc.CurrentContainers[i].GetBase().Function != doc.LastContainers[i].GetBase().Function {
 			break
 		}
 	}
-}
-
-func parseBlockSub(doc *Document, line *UTF8String, offset int) int {
-	length := line.Length()
-	first := SkipLeadingSpace(line, offset)
-	if first == length {
-		doc.AddElement(NewElementLeafBlankLine(line.Right(offset)))
-		return length - offset
-	}
-	success := false
-	switch doc.GetLastOpen().GetBase().Function {
-	case ELEMENT_TYPE_LEAF_FENCED_CODE_BLOCK:
-		success, length = parseLeafFencedCodeBlock(doc, line, offset)
-	}
-	if first-offset >= 4 {
-		doc.AddElement(NewElementLeafIndentedCodeBlock(line.Right(offset + 4)))
-		return length - offset
-	}
-	switch doc.GetLastOpen().GetBase().Function {
-	case ELEMENT_TYPE_LEAF_HTML_BLOCK:
-		success, length = parseLeafHTMLBlock(doc, line, offset)
-	}
-	if success {
-		return length
-	}
-	switch line.RuneAt(first) {
-	case '=':
-		success, length = parseLeafSetextHeader(doc, line, offset)
-	case '-':
-		// Setext header has higher priority than horizontal rule.
-		success, length = parseLeafSetextHeader(doc, line, offset)
-		if !success {
-			success, length = parseLeafHorizontalRule(doc, line, offset)
+	if i == len(doc.CurrentContainers) {
+		if i == len(doc.LastContainers) {
+			// The status is unchanged.
+		} else {
+			if leaf.GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH && doc.LastLeaf.GetBase().Function == ELEMENT_TYPE_LEAF_PARAGRAPH {
+				// Lazy.
+			} else {
+				// Non-lazy.
+				doc.CloseTo(doc.LastContainers[i])
+				doc.LastContainers = doc.LastContainers[:i]
+			}
 		}
-	case '_':
-		fallthrough
-	case '*':
-		success, length = parseLeafHorizontalRule(doc, line, offset)
-	case '#':
-		success, length = parseLeafATXHeader(doc, line, offset)
-	case '`':
-		fallthrough
-	case '~':
-		success, length = parseLeafFencedCodeBlock(doc, line, offset)
-	case '<':
-		success, length = parseLeafHTMLBlock(doc, line, offset)
-	case '[':
-		success, length = parseLinkReferenceDefination(doc, line, offset)
-	case '>':
-		//success, length := ParseLeafBlockQuote(doc, line, offset)
+	} else {
+		if i < len(doc.LastContainers) {
+			doc.CloseTo(doc.LastContainers[i])
+		}
+		for j := i; j < len(doc.CurrentContainers); j++ {
+			doc.AddElement(doc.CurrentContainers[j])
+		}
+		doc.LastContainers = append(doc.LastContainers[:i], doc.CurrentContainers[i:]...)
 	}
-	if !success {
-		_, length = parseLeafParagraph(doc, line, offset)
-	}
-	return length
+	// Add leaf element.
+	doc.AddElement(leaf)
+	return doc
 }
