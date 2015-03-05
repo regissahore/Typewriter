@@ -1,0 +1,61 @@
+package parser
+
+var _htmlBlockMap map[string]bool
+
+func GetHTMLBlockMap() map[string]bool {
+	if _htmlBlockMap == nil {
+		_htmlBlockMap = map[string]bool{
+			"article":    true,
+			"header":     true,
+			"aside":      true,
+			"hgroup":     true,
+			"blockquote": true,
+			"hr":         true,
+			"iframe":     true,
+			"body":       true,
+			"li":         true,
+			"map":        true,
+			"button":     true,
+			"object":     true,
+			"canvas":     true,
+			"ol":         true,
+			"caption":    true,
+			"output":     true,
+			"col":        true,
+			"p":          true,
+			"colgroup":   true,
+			"pre":        true,
+			"dd":         true,
+			"progress":   true,
+			"div":        true,
+			"section":    true,
+			"dl":         true,
+			"table":      true,
+			"td":         true,
+			"dt":         true,
+			"tbody":      true,
+			"embed":      true,
+			"textarea":   true,
+			"fieldset":   true,
+			"tfoot":      true,
+			"figcaption": true,
+			"th":         true,
+			"figure":     true,
+			"thead":      true,
+			"footer":     true,
+			"tr":         true,
+			"form":       true,
+			"ul":         true,
+			"h1":         true,
+			"h2":         true,
+			"h3":         true,
+			"h4":         true,
+			"h5":         true,
+			"h6":         true,
+			"video":      true,
+			"script":     true,
+			"style":      true,
+		}
+	}
+	return _htmlBlockMap
+}
